@@ -18,31 +18,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/tihonove/workspace/forms",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "CodeLensConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/tihonove/workspace/forms&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;CodeLensConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "clickhouse"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;clickhouse&quot;
     ],
-    "rider.external.source.directories": [
-      "/home/tihonove/.config/JetBrains/Rider2023.1/resharper-host/DecompilerCache",
-      "/home/tihonove/.config/JetBrains/Rider2023.1/resharper-host/SourcesCache",
-      "/home/tihonove/.local/share/Symbols/src"
+    &quot;rider.external.source.directories&quot;: [
+      &quot;/home/tihonove/.config/JetBrains/Rider2023.1/resharper-host/DecompilerCache&quot;,
+      &quot;/home/tihonove/.config/JetBrains/Rider2023.1/resharper-host/SourcesCache&quot;,
+      &quot;/home/tihonove/.local/share/Symbols/src&quot;
     ]
   }
-}]]></component>
-  <component name="RunManager" selected="257d0253-82a3-434e-aef5-6458df6754b8">
+}</component>
+  <component name="RunManager" selected=".NET Project.Reporter.Cli">
     <configuration name="Reporter.Cli" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -75,6 +75,7 @@
       <workItem from="1694286238174" duration="571000" />
       <workItem from="1694343766391" duration="3651000" />
       <workItem from="1694365421769" duration="4257000" />
+      <workItem from="1695483886631" duration="2373000" />
     </task>
     <servers />
   </component>
@@ -89,13 +90,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Reporter.Tests/Class1.cs</url>
-          <line>72</line>
+          <line>73</line>
           <properties documentPath="$PROJECT_DIR$/Reporter.Tests/Class1.cs" initialLine="72" containingFunctionPresentation="Method 'ReadFromTeamcityTestReport'">
             <startOffsets>
-              <option value="1975" />
+              <option value="2006" />
             </startOffsets>
             <endOffsets>
-              <option value="2023" />
+              <option value="2053" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="2" />

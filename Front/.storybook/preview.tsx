@@ -7,18 +7,16 @@ import * as React from "react";
 import {ThemeProvider} from "styled-components";
 import {darkTheme} from "../src/Theme/ITheme";
 import {GlobalStyle} from "../src/CommonStyles/GlobalStyle";
-
+import {TestAnalyticsThemeProvider} from "../src/Theme/TestAnalyticsThemeProvider";
 
 
 const preview: Preview = {
     decorators: [
         (Story) => (
-            <ThemeContext.Provider value={THEME_2022_DARK}>
-                <ThemeProvider theme={darkTheme}>
-                    <GlobalStyle />
-                    <Story />
-                </ThemeProvider>
-            </ThemeContext.Provider>
+            <TestAnalyticsThemeProvider>
+                <GlobalStyle/>
+                <Story/>
+            </TestAnalyticsThemeProvider>
         ),
     ],
     parameters: {

@@ -5,7 +5,7 @@ export interface ITheme {
     primaryTextColor: ThemeColor;
 }
 
-export const darkTheme: ITheme = {
-    primaryBackground: "rgb(31, 31, 31)",
-    primaryTextColor: "rgba(255, 255, 255, 0.867)",
+export const normalTheme: ITheme = {
+    primaryBackground: "#fff",
+    primaryTextColor: "#333",
 }

@@ -1,6 +1,7 @@
 ﻿using ClickHouse.Client.ADO;
 using ClickHouse.Client.ADO.Parameters;
 using ClickHouse.Client.Copy;
+using ClickHouse.Client.Utility;
 using Kontur.TestAnalytics.Reporter.Cli;
 using NUnit.Framework;
 
@@ -12,7 +13,7 @@ public class Class1
     public async Task Test01()
     {
         await using var connection =
-            new ClickHouseConnection("Host=172.17.0.2;Port=8123;Username=default;password=;Database=default");
+            new ClickHouseConnection("Host=localhost;Port=8123;Username=default;password=;Database=default");
         await using var command = connection.CreateCommand();
         command.CommandText = @"INSERT INTO default.TestRuns (TestId) VALUES ('123');";
         await command.ExecuteNonQueryAsync();
@@ -22,7 +23,7 @@ public class Class1
     public async Task Test013()
     {
         await using var connection =
-            new ClickHouseConnection("Host=172.17.0.2;Port=8123;Username=default;password=;Database=default");
+            new ClickHouseConnection("Host=localhost;Port=8123;Username=default;password=;Database=default");
         var files = Directory.GetFileSystemEntries(
             Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "TestData"), "*.csv");
         var dateTime = DateTime.Now;
@@ -44,7 +45,7 @@ public class Class1
     public async Task Test012()
     {
         await using var connection =
-            new ClickHouseConnection("Host=172.17.0.2;Port=8123;Username=default;password=;Database=default");
+            new ClickHouseConnection("Host=localhost;Port=8123;Username=default;password=;Database=default");
         
         using var bulkCopyInterface = new ClickHouseBulkCopy(connection)
         {
@@ -78,18 +79,19 @@ public class Class1
     public async Task Test04()
     {
         await using var connection =
-            new ClickHouseConnection("Host=172.17.0.2;Port=8123;Username=default;password=;Database=default");
+            new ClickHouseConnection("Host=localhost;Port=8123;Username=default;password=;Database=default");
         var lines = TestRunsReader.ReadFromTeamcityTestReport("/home/tihonove/Downloads/Wolfs_Unit_tests_11509-tests.csv");
         var uploader = new TestRunsUploader(connection);
         await uploader.UploadAsync("Forms_UnitTests", "32028281", "master", lines, DateTime.Now, "AGENT-1", "Windows");
     }
 
     [Test]
-    public async Task Test02()
+    public async Task RecretateTable()
     {
-        var dropTableScript = @"DROP TABLE TestRuns"; 
-        Console.WriteLine(dropTableScript);
-        
+        await using var connection =
+            new ClickHouseConnection("Host=localhost;Port=8123;Username=default;password=;Database=default");
+        var dropTableScript = @"DROP TABLE IF EXISTS TestRuns"; 
+       
         var createTableScript = @"
             create table default.TestRuns
             (
@@ -105,7 +107,8 @@ public class Class1
             )
             engine = Memory;
         ";
-        Console.WriteLine(createTableScript);
+        await connection.ExecuteStatementAsync(dropTableScript);
+        await connection.ExecuteStatementAsync(createTableScript);
     }
 }
 

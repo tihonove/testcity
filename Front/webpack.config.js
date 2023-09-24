@@ -31,7 +31,7 @@ module.exports = {
     devServer: {
         allowedHosts: "all",
         proxy: {
-            '/': 'http://172.17.0.2:8123/',
+            '/': 'http://localhost:8123/',
         },
     }
 };
