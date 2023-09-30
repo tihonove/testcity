@@ -28,10 +28,4 @@ module.exports = {
         new HtmlWebpackPlugin({inject: "body", template: "./src/index.html"}),
         new HtmlWebpackPlugin({inject: "body", template: "./src/index.html", filename: "history/index.html"})
     ],
-    devServer: {
-        allowedHosts: "all",
-        proxy: {
-            '/': 'http://localhost:8123/',
-        },
-    }
 };

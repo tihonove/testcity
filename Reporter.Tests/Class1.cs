@@ -12,8 +12,7 @@ public class Class1
     [Test]
     public async Task Test01()
     {
-        await using var connection =
-            new ClickHouseConnection("Host=localhost;Port=8123;Username=default;password=;Database=default");
+        await using var connection = CreateConnection();
         await using var command = connection.CreateCommand();
         command.CommandText = @"INSERT INTO default.TestRuns (TestId) VALUES ('123');";
         await command.ExecuteNonQueryAsync();
@@ -22,8 +21,7 @@ public class Class1
     [Test]
     public async Task Test013()
     {
-        await using var connection =
-            new ClickHouseConnection("Host=localhost;Port=8123;Username=default;password=;Database=default");
+        await using var connection = CreateConnection();
         var files = Directory.GetFileSystemEntries(
             Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "TestData"), "*.csv");
         var dateTime = DateTime.Now;
@@ -78,8 +76,7 @@ public class Class1
     [Test]
     public async Task Test04()
     {
-        await using var connection =
-            new ClickHouseConnection("Host=localhost;Port=8123;Username=default;password=;Database=default");
+        await using var connection = CreateConnection();
         var lines = TestRunsReader.ReadFromTeamcityTestReport("/home/tihonove/Downloads/Wolfs_Unit_tests_11509-tests.csv");
         var uploader = new TestRunsUploader(connection);
         await uploader.UploadAsync("Forms_UnitTests", "32028281", "master", lines, DateTime.Now, "AGENT-1", "Windows");
@@ -88,12 +85,11 @@ public class Class1
     [Test]
     public async Task RecretateTable()
     {
-        await using var connection =
-            new ClickHouseConnection("Host=localhost;Port=8123;Username=default;password=;Database=default");
+        await using var connection = CreateConnection();
         var dropTableScript = @"DROP TABLE IF EXISTS TestRuns"; 
        
         var createTableScript = @"
-            create table default.TestRuns
+            create table test_analytics.TestRuns
             (
                 JobId String,
                 JobRunId String,
@@ -110,6 +106,11 @@ public class Class1
         await connection.ExecuteStatementAsync(dropTableScript);
         await connection.ExecuteStatementAsync(createTableScript);
     }
+
+    private static ClickHouseConnection CreateConnection()
+    {
+        return new ClickHouseConnection("Host=vm-ch2-stg.dev.kontur.ru;Port=8123;Username=tihonove;password=12487562;Database=test_analytics");
+    }
 }
 
 public class TestRunsUploader
@@ -125,7 +126,7 @@ public class TestRunsUploader
     {
         using var bulkCopyInterface = new ClickHouseBulkCopy(connection)
         {
-            DestinationTableName = "default.TestRuns",
+            DestinationTableName = "TestRuns",
             BatchSize = 100
         };
         await foreach (var testRuns in lines.Batches(100))
