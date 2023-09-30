@@ -6,6 +6,7 @@ pages:
   script:
     - cd Front
     - npm ci
+    - npm run build
   artifacts:
     paths:
       - public
