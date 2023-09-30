@@ -12,12 +12,12 @@ import fetchIntercept from 'fetch-intercept';
 
 const unregister = fetchIntercept.register({
     request: function (url, config) {
-        return [url.replace(/singular--TestAnalytics.nginx-clickhouse-proxy/i, "singular/TestAnalytics.nginx-clickhouse-proxy/"), config];
+        return [url.replace("http://zzz", "/test-analytics/clickhouse"), config];
     },
 });
 
 const client = createClient({
-    host: "http://singular--TestAnalytics.nginx-clickhouse-proxy",
+    host: "http://zzz",
     database: "test_analytics",
     username: "tihonove",
     password: "12487562",

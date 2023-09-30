@@ -5,7 +5,7 @@ module.exports = {
     mode: "development",
     entry: './src/index.tsx',
     output: {
-        path: resolve(__dirname, '..', 'public'),
+        path: resolve(__dirname, 'nginx-clickhouse-proxy', 'content'),
         filename: 'index.js',
         publicPath: "/test-analytics"
     },
