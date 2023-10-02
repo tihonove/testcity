@@ -7,6 +7,7 @@ import {RunStatisticsChart} from "../RunStatisticsChart/RunStatisticsChart";
 import {formatDuration} from "../RunStatisticsChart/DurationUtils";
 
 interface TestHistoryProps {
+    testId: string;
     jobId: undefined | string;
     onChangeJobId: (value: undefined | string) => void;
     jobIds: string[];
@@ -32,11 +33,21 @@ interface TestHistoryProps {
     ]>;
 }
 
+function splitTestId(testId: string): [string, string] {
+    const testIdParts = testId.match(/(?:[^\."]+|"[^"]*")+/g)
+    if (testIdParts == null || testIdParts.length < 3) {
+        return ["", testId];
+    }
+    return [testIdParts.slice(0, -2).join("."), testIdParts.slice(-2).join(".")];
+}
+
 export function TestHistory(props: TestHistoryProps): React.JSX.Element {
+    const [suiteId, testId] = splitTestId(props.testId);
+
     return <ColumnStack gap={4} block stretch>
         <Fit>
-            <Title>Test History: PackagePatcherDIModuleTests.KernelGet_EchelonExecutor_IsNotNull</Title>
-            <div>Test History: PackagePatcherDIModuleTests.KernelGet_EchelonExecutor_IsNotNull</div>
+            <Title>Test History: {testId}</Title>
+            <div>{suiteId}</div>
         </Fit>
         <Fit>
             {props.stats.reduce((x, y) => y[0] == "Success" ? x + 1 : x, 0)} Success

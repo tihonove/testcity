@@ -8,4 +8,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Reporter.Client\Reporter.Client.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -28,4 +28,12 @@ module.exports = {
         new HtmlWebpackPlugin({inject: "body", template: "./src/index.html"}),
         new HtmlWebpackPlugin({inject: "body", template: "./src/index.html", filename: "history/index.html"})
     ],
+    devServer: {
+        proxy: {
+            '/test-analytics/clickhouse/': {
+                target: 'http://vm-ch2-stg.dev.kontur.ru:8123',
+                pathRewrite: { '^/test-analytics/clickhouse': '' },
+            },
+        },
+    },
 };

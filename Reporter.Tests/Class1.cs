@@ -1,8 +1,8 @@
 ﻿using ClickHouse.Client.ADO;
-using ClickHouse.Client.ADO.Parameters;
 using ClickHouse.Client.Copy;
 using ClickHouse.Client.Utility;
 using Kontur.TestAnalytics.Reporter.Cli;
+using Kontur.TestAnalytics.Reporter.Client;
 using NUnit.Framework;
 
 namespace Kontur.TestAnalytics.Reporter.Tests;
@@ -32,25 +32,44 @@ public class Class1
             Console.WriteLine(buildId);
             var lines = TestRunsReader.ReadFromTeamcityTestReport(file);
             dateTime = dateTime.AddDays(-1);
-            var uploader = new TestRunsUploader(connection);
-            await uploader.UploadAsync("Forms_UnitTests", buildId + "1", "master", lines, dateTime, "KE-FRM-AGENT-01", "Windows");
-            await uploader.UploadAsync("Forms_UnitTests", buildId + "2", "tihonove/branch-1", lines, dateTime, "KE-FRM-AGENT-01", "Windows");
-            await uploader.UploadAsync("Forms_UnitTests", buildId + "3", "tihonove/branch-2", lines, dateTime, "KE-FRM-AGENT-01", "Linux");
+            await TestRunsUploader.UploadAsync(new JobRunInfo
+            {
+                JobId = "Forms_UnitTests",
+                JobRunId = buildId + "1",
+                BranchName = "master",
+                AgentName = "KE-FRM-AGENT-01",
+                AgentOSName = "Windows"
+            }, lines);
+            await TestRunsUploader.UploadAsync(new JobRunInfo
+            {
+                JobId = "Forms_UnitTests",
+                JobRunId = buildId + "2",
+                BranchName = "tihonove/branch-1",
+                AgentName = "KE-FRM-AGENT-01",
+                AgentOSName = "Windows"
+            }, lines);
+            await TestRunsUploader.UploadAsync(new JobRunInfo
+            {
+                JobId = "Forms_UnitTests",
+                JobRunId = buildId + "3",
+                BranchName = "tihonove/branch-2",
+                AgentName = "KE-FRM-AGENT-01",
+                AgentOSName = "Linux"
+            }, lines);
         }
     }
 
     [Test]
     public async Task Test012()
     {
-        await using var connection =
-            new ClickHouseConnection("Host=localhost;Port=8123;Username=default;password=;Database=default");
-        
+        await using var connection = CreateConnection();
+
         using var bulkCopyInterface = new ClickHouseBulkCopy(connection)
         {
             DestinationTableName = "default.TestRuns",
             BatchSize = 100
         };
-        var values = new [] { new object[] { "jobId", "jobRunId", "branchName", "lines", "Success", (long)123123 } };
+        var values = new[] { new object[] { "jobId", "jobRunId", "branchName", "lines", "Success", (long)123123 } };
         await bulkCopyInterface.WriteToServerAsync(values);
         Console.WriteLine(bulkCopyInterface.RowsWritten);
 
@@ -76,18 +95,25 @@ public class Class1
     [Test]
     public async Task Test04()
     {
-        await using var connection = CreateConnection();
-        var lines = TestRunsReader.ReadFromTeamcityTestReport("/home/tihonove/Downloads/Wolfs_Unit_tests_11509-tests.csv");
-        var uploader = new TestRunsUploader(connection);
-        await uploader.UploadAsync("Forms_UnitTests", "32028281", "master", lines, DateTime.Now, "AGENT-1", "Windows");
+        var lines = TestRunsReader.ReadFromTeamcityTestReport(
+            "/home/tihonove/Downloads/Wolfs_Unit_tests_11509-tests.csv");
+        var runInfo = new JobRunInfo
+        {
+            JobId = "Forms_UnitTests",
+            JobRunId = "32028281",
+            BranchName = "master",
+            AgentName = "AGENT-1",
+            AgentOSName = "Windows"
+        };
+        await TestRunsUploader.UploadAsync(runInfo, lines);
     }
 
     [Test]
     public async Task RecretateTable()
     {
         await using var connection = CreateConnection();
-        var dropTableScript = @"DROP TABLE IF EXISTS TestRuns"; 
-       
+        var dropTableScript = @"DROP TABLE IF EXISTS TestRuns";
+
         var createTableScript = @"
             create table test_analytics.TestRuns
             (
@@ -101,7 +127,8 @@ public class Class1
                 AgentName String,
                 AgentOSName String
             )
-            engine = Memory;
+            engine = MergeTree()
+            ORDER BY (JobId, JobRunId, BranchName, TestId);
         ";
         await connection.ExecuteStatementAsync(dropTableScript);
         await connection.ExecuteStatementAsync(createTableScript);
@@ -109,52 +136,7 @@ public class Class1
 
     private static ClickHouseConnection CreateConnection()
     {
-        return new ClickHouseConnection("Host=vm-ch2-stg.dev.kontur.ru;Port=8123;Username=tihonove;password=12487562;Database=test_analytics");
-    }
-}
-
-public class TestRunsUploader
-{
-    private readonly ClickHouseConnection connection;
-
-    public TestRunsUploader(ClickHouseConnection connection)
-    {
-        this.connection = connection;
-    }
-
-    public async Task UploadAsync(string jobId, string jobRunId, string branchName, IAsyncEnumerable<TestRun> lines, DateTime dateTimeString, string agentName, string agentOSName)
-    {
-        using var bulkCopyInterface = new ClickHouseBulkCopy(connection)
-        {
-            DestinationTableName = "TestRuns",
-            BatchSize = 100
-        };
-        await foreach (var testRuns in lines.Batches(100))
-        {
-            var values=  testRuns.Select(x =>
-                new object[] { jobId, jobRunId, branchName, x.TestId, (int)x.TestResult, x.Duration, dateTimeString.ToUniversalTime(), agentName, agentOSName }
-            );
-            await bulkCopyInterface.WriteToServerAsync(values);
-            Console.WriteLine(bulkCopyInterface.RowsWritten);
-        }
-    }
-}
-
-static class AsyncEnumerableExtensions
-{
-    public static async IAsyncEnumerable<List<T>> Batches<T>(this IAsyncEnumerable<T> items, int batchSize)
-    {
-        var currentBatch = new List<T>();
-        await foreach (var item in items)
-        {
-            currentBatch.Add(item);
-            if (currentBatch.Count >= batchSize)
-            {
-                yield return currentBatch;
-                currentBatch = new List<T>();
-            }
-        }
-        if (currentBatch.Count > 0)
-            yield return currentBatch;
+        return new ClickHouseConnection(
+            "Host=vm-ch2-stg.dev.kontur.ru;Port=8123;Username=tihonove;password=12487562;Database=test_analytics");
     }
 }

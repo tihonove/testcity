@@ -1,11 +1,13 @@
 using System.Text;
+using Kontur.TestAnalytics.Reporter.Client;
 using Microsoft.VisualBasic.FileIO;
 
 namespace Kontur.TestAnalytics.Reporter.Cli;
 
 public static class TestRunsReader
 {
-    public static async IAsyncEnumerable<TestRun> ReadFromTeamcityTestReport(string filePath)
+    public static async IAsyncEnumerable<TestRun> ReadFromTeamcityTestReport(string filePath,
+        DateTime? explicitStartDateTime = null)
     {
         await using var fileStream = File.OpenRead(filePath);
         using var parser = new TextFieldParser(fileStream, Encoding.UTF8);
@@ -21,6 +23,7 @@ public static class TestRunsReader
                 TestId = parts[1],
                 TestResult = FromTeamcityStatusToTestResult(parts[2]),
                 Duration = long.Parse(parts[3]),
+                StartDateTime = explicitStartDateTime ?? DateTime.Now
             };
         }
     }

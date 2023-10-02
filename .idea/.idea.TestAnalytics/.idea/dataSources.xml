@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:clickhouse://localhost:8123</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="test_analytics@vm-ch2-stg.dev.kontur.ru" uuid="56b5bac7-2411-4950-9d96-f85e9f89225e">
+      <driver-ref>clickhouse</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.clickhouse.jdbc.ClickHouseDriver</jdbc-driver>
+      <jdbc-url>jdbc:clickhouse://vm-ch2-stg.dev.kontur.ru:8123/test_analytics</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

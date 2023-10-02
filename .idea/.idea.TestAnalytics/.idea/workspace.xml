@@ -13,6 +13,12 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3ab314ebead446308093a0e9d922cbc11b200/ec/22b8e74d/ClickHouseBulkCopy.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectId" id="2V9tE7h3QhhnlgAGmeAgLVJaE20" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -76,6 +82,9 @@
       <workItem from="1694343766391" duration="3651000" />
       <workItem from="1694365421769" duration="4257000" />
       <workItem from="1695483886631" duration="2373000" />
+      <workItem from="1696067213348" duration="7350000" />
+      <workItem from="1696149116920" duration="8663000" />
+      <workItem from="1696160522264" duration="4904000" />
     </task>
     <servers />
   </component>
@@ -84,25 +93,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Reporter.Tests/Class1.cs</url>
-          <line>73</line>
-          <properties documentPath="$PROJECT_DIR$/Reporter.Tests/Class1.cs" initialLine="72" containingFunctionPresentation="Method 'ReadFromTeamcityTestReport'">
-            <startOffsets>
-              <option value="2006" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2053" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -13,5 +13,18 @@
         </introspection-scope>
       </schema-mapping>
     </data-source>
+    <data-source name="test_analytics@vm-ch2-stg.dev.kontur.ru" uuid="56b5bac7-2411-4950-9d96-f85e9f89225e">
+      <database-info product="ClickHouse" version="23.3.7.5" jdbc-version="4.2" driver-name="ClickHouse JDBC Driver" driver-version="0.4.2 (revision: 1513b27)" dbms="CLICKHOUSE" exact-version="23.3.7.5" exact-driver-version="0.4">
+        <identifier-quote-string>`</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>tihonove</user-name>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="schema" qname="@" />
+        </introspection-scope>
+      </schema-mapping>
+    </data-source>
   </component>
 </project>

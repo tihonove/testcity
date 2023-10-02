@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <AssemblyName>Kontur.TestAnalytics.Reporter.Client</AssemblyName>
+        <RootNamespace>Kontur.TestAnalytics.Reporter.Client</RootNamespace>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>11</LangVersion>
+        <OutputPath>bin</OutputPath>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ClickHouse.Client" Version="6.7.4" />
+    </ItemGroup>
+
+</Project>

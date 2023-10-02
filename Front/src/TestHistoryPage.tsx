@@ -33,6 +33,7 @@ export function TestHistoryPage(): React.JSX.Element {
 
     return <div>
         <TestHistory
+            testId={testId}
             jobIds={jobIds.map(x => x[0])}
             jobId={currentJobId}
             onChangeJobId={setCurrentJobId}
