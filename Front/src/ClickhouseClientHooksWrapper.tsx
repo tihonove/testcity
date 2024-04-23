@@ -1,7 +1,8 @@
 import * as React from "react";
-import {WebClickHouseClient} from "@clickhouse/client-web/dist/client";
-const {createClient} = require('@clickhouse/client-web');
-import fetchIntercept from 'fetch-intercept';
+import { WebClickHouseClient } from "@clickhouse/client-web/dist/client";
+const { createClient } = require("@clickhouse/client-web");
+import fetchIntercept from "fetch-intercept";
+import usePromise from "react-promise-suspense";
 
 // const client = createClient({
 //     host: "http://localhost:8080",
@@ -9,7 +10,7 @@ import fetchIntercept from 'fetch-intercept';
 //     clickhouse_settings: {},
 // })
 
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const unregister = fetchIntercept.register({
     request: function (url, config) {
         return [url.replace("http://zzz", "/test-analytics/clickhouse"), config];
@@ -24,15 +25,29 @@ const client = createClient({
     clickhouse_settings: {
         add_http_cors_header: "true",
     },
-})
+});
 
 export function useClickhouseClient(): ClickhouseClientHooksWrapper {
     return new ClickhouseClientHooksWrapper(client);
 }
 
-let value = 0;
 function getQueryId() {
-    return (value++).toString();
+    return uuidv4();
+}
+
+function uuidv4() {
+    if (typeof crypto != "undefined") {
+        return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+            (+c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (+c / 4)))).toString(16)
+        );
+    } else {
+        const w = () => {
+            return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+        };
+        return `${w()}${w()}-${w()}-${w()}-${w()}-${w()}${w()}${w()}`;
+    }
 }
 
 class ClickhouseClientHooksWrapper {
@@ -43,12 +58,12 @@ class ClickhouseClientHooksWrapper {
     }
 
     public useData<T>(query: string, deps?: React.DependencyList): [data: T[], loading: boolean] {
-        const [data, setData] = React.useState();
+        const [data, setData] = React.useState<T[]>([]);
         const [loading, setLoading] = React.useState(true);
         React.useEffect(() => {
             setLoading(true);
             (async () => {
-                const response = await client.query({query: query, format: "JSONCompact", query_id: getQueryId() });
+                const response = await client.query({ query: query, format: "JSONCompact", query_id: getQueryId() });
                 const result = await response.json();
                 if (typeof result === "object") {
                     setData(result["data"]);
@@ -57,9 +72,21 @@ class ClickhouseClientHooksWrapper {
                     throw new Error("Invalid output");
                 }
             })();
-
         }, deps);
 
         return [data, loading];
+    }
+
+    public useData2<T>(query: string, deps?: React.DependencyList): T[] {
+        const inputs = [...(deps ?? [])];
+        return usePromise(async () => {
+            const response = await client.query({ query: query, format: "JSONCompact", query_id: getQueryId() });
+            const result = await response.json();
+            if (typeof result === "object") {
+                return result["data"];
+            } else {
+                throw new Error("Invalid output");
+            }
+        }, inputs);
     }
 }

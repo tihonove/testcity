@@ -1,34 +1,42 @@
 import * as React from "react";
 import styled from "styled-components";
-import {Button} from "@skbkontur/react-ui";
-import {formatDuration} from "./DurationUtils";
+import { Button, Tooltip } from "@skbkontur/react-ui";
+import { formatDuration } from "./DurationUtils";
+import { useLayoutEffect, useRef } from "react";
 
 interface RunStatisticsChartProps {
     value: Array<[state: string, duration: number, startDate: string]>;
 }
 
+function reverse<T>(items: T[]): T[] {
+    const result = [];
+    for (let i = 0; i < items.length; i++) {
+        result[items.length - 1 - i] = items[i];
+    }
+    return result;
+}
+
 export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.Element {
     const [scale, setScale] = React.useState(1);
     const maxVisibleDuration = React.useMemo(() => {
-        const maxDuration = props.value.reduce((x, y) => x > y[1] ? x : y[1], 0);
-        if (maxDuration == 0)
-            return 100;
-        if (maxDuration < 100)
-            return 100;
-        if (maxDuration < 1000)
-            return Math.ceil(maxDuration / 100) * 100;
-        if (maxDuration < 0.8 * 60 * 1000)
-            return Math.ceil(maxDuration / 1000) * 1000;
-        if (maxDuration <= 60 * 1000)
-            return 60 * 1000;
-        if (maxDuration < 0.8 * 60 * 60 * 1000)
-            return Math.ceil(maxDuration / (60 * 1000)) * (60 * 1000);
-        if (maxDuration <= 60 * 60 * 1000)
-            return 60 * 60 * 1000;
+        const maxDuration = props.value.reduce((x, y) => (x > y[1] ? x : y[1]), 0);
+        if (maxDuration == 0) return 100;
+        if (maxDuration < 10) return 10;
+        if (maxDuration < 100) return 100;
+        if (maxDuration < 1000) return Math.ceil(maxDuration / 100) * 100;
+        if (maxDuration < 0.8 * 60 * 1000) return Math.ceil(maxDuration / 1000) * 1000;
+        if (maxDuration <= 60 * 1000) return 60 * 1000;
+        if (maxDuration < 0.8 * 60 * 60 * 1000) return Math.ceil(maxDuration / (60 * 1000)) * (60 * 1000);
+        if (maxDuration <= 60 * 60 * 1000) return 60 * 60 * 1000;
         return Math.ceil(maxDuration / (60 * 1000)) * (60 * 1000);
     }, [props.value]);
 
     const durationLabelStep = maxVisibleDuration / 4;
+    const scrollContainer = useRef<HTMLDivElement>(null);
+
+    useLayoutEffect(() => {
+        if (scrollContainer.current != undefined) scrollContainer.current.scrollLeft = 100000;
+    }, []);
 
     return (
         <ChartContainer>
@@ -37,27 +45,42 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
                 <Button onClick={() => setScale(scale * 2)}>+</Button>
             </ScaleButtons>
             <GaugeLabels>
-                <GaugeLabel index={0}>{formatDuration(maxVisibleDuration, maxVisibleDuration - 0 * durationLabelStep)}</GaugeLabel>
-                <GaugeLabel index={1}>{formatDuration(maxVisibleDuration, maxVisibleDuration - 1 * durationLabelStep)}</GaugeLabel>
-                <GaugeLabel index={2}>{formatDuration(maxVisibleDuration, maxVisibleDuration - 2 * durationLabelStep)}</GaugeLabel>
-                <GaugeLabel index={3}>{formatDuration(maxVisibleDuration, maxVisibleDuration - 3 * durationLabelStep)}</GaugeLabel>
-                <GaugeLabel index={4}>{formatDuration(maxVisibleDuration, maxVisibleDuration - 4 * durationLabelStep)}</GaugeLabel>
+                <GaugeLabel index={0}>
+                    {formatDuration(maxVisibleDuration, maxVisibleDuration - 0 * durationLabelStep)}
+                </GaugeLabel>
+                <GaugeLabel index={1}>
+                    {formatDuration(maxVisibleDuration, maxVisibleDuration - 1 * durationLabelStep)}
+                </GaugeLabel>
+                <GaugeLabel index={2}>
+                    {formatDuration(maxVisibleDuration, maxVisibleDuration - 2 * durationLabelStep)}
+                </GaugeLabel>
+                <GaugeLabel index={3}>
+                    {formatDuration(maxVisibleDuration, maxVisibleDuration - 3 * durationLabelStep)}
+                </GaugeLabel>
+                <GaugeLabel index={4}>
+                    {formatDuration(maxVisibleDuration, maxVisibleDuration - 4 * durationLabelStep)}
+                </GaugeLabel>
             </GaugeLabels>
             <GridLine index={0} />
             <GridLine index={1} />
             <GridLine index={2} />
             <GridLine index={3} />
-            <ScrollContainer>
+            <ScrollContainer ref={scrollContainer}>
                 <Container>
-                    {props.value.map((x, index) =>
-                        <CharBar
-                            success={x[0] == "Success"}
-                            scale={scale}
-                            key={index}
-                            style={{height: 100 * (x[1] / maxVisibleDuration)}}
-                        />
-                    )}
+                    {reverse(props.value)
+                        .map((x, index) => (
+                            <Tooltip trigger={"hover"} render={() => x[2]}>
+                                <ChartBar
+                                    success={x[0] == "Success"}
+                                    scale={scale}
+                                    key={index}
+                                    style={{ height: 100 * (x[1] / maxVisibleDuration) }}>
+                                    {index % (8 / scale) === 0 && <DateLabel>{x[2]}</DateLabel>}
+                                </ChartBar>
+                            </Tooltip>
+                        ))}
                 </Container>
+                <DatesContainer></DatesContainer>
             </ScrollContainer>
         </ChartContainer>
     );
@@ -77,6 +100,14 @@ const ScrollContainer = styled.div({
     position: "relative",
 });
 
+const GaugeLabel = styled.div<{ index: number }>(props => ({
+    position: "absolute",
+    top: 10 + props.index * 25 - 10,
+    right: 5,
+    textAlign: "right",
+    fontSize: "12px",
+}));
+
 const GaugeLabels = styled.div({
     flexBasis: 50,
     flexShrink: 0,
@@ -84,14 +115,6 @@ const GaugeLabels = styled.div({
     width: 50,
     position: "relative",
 });
-
-const GaugeLabel = styled.div<{ index: number }>(props => ({
-    position: "absolute",
-    top: 10 + (props.index * 25) - 10,
-    right: 5,
-    textAlign: "right",
-    fontSize: "12px",
-}));
 
 const GridLine = styled.div<{ index: number }>(props => ({
     position: "absolute",
@@ -112,22 +135,47 @@ const ScaleButtons = styled.div({
 const Container = styled.div({
     display: "flex",
     flexDirection: "row",
+    flexFlow: "revert",
     alignItems: "flex-end",
     height: 110,
     position: "relative",
 });
 
-const CharBar = styled.div<{ scale: number, success: boolean }>(props => ({
-    flexGrow: 0,
-    flexShrink: 0,
-    flexBasis: 16 * props.scale,
-    backgroundColor: "red",
-    borderTop: "2px solid rgba(0,0,0,0.4)",
-    marginLeft: 1,
-    boxSizing: "border-box",
-}), props => props.success
-    ? ({backgroundColor: "rgba(0, 0, 0, 0.1)"})
-    : ({
-        backgroundColor: "rgba(255, 0, 0, 0.4)"
-    }))
+const ChartBar = styled.div<{ scale: number; success: boolean }>(
+    props => ({
+        flexGrow: 0,
+        flexShrink: 0,
+        flexBasis: 16 * props.scale,
+        backgroundColor: "red",
+        borderTop: "2px solid rgba(0,0,0,0.4)",
+        marginLeft: 1,
+        boxSizing: "border-box",
+        position: "relative",
+    }),
+    props =>
+        props.success
+            ? {
+                  backgroundColor: "rgba(0, 0, 0, 0.1)",
+                  "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.2)" },
+              }
+            : {
+                  backgroundColor: "rgba(255, 0, 0, 0.4)",
+                  ":hover": { backgroundColor: "rgba(255, 0, 0, 0.6)" },
+              }
+);
 
+const DatesContainer = styled.div`
+    height: 20px;
+`;
+
+const DateLabel = styled.div`
+    background-color: transparent;
+    &:hover {
+        background-color: transparent;
+    }
+    font-size: 12px;
+    position: absolute;
+    bottom: -16px;
+    left: 0;
+    width: 140px;
+`;

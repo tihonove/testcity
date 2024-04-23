@@ -3,9 +3,23 @@ type ThemeColor = string;
 export interface ITheme {
     primaryBackground: ThemeColor;
     primaryTextColor: ThemeColor;
+
+    activeLinkColor: ThemeColor;
+
+    backgroundColor1: ThemeColor;
+    failedTextColor: ThemeColor;
+    successTextColor: ThemeColor;
+    smallTextSize: ThemeColor;
+    mutedTextColor: ThemeColor;
 }
 
 export const normalTheme: ITheme = {
     primaryBackground: "#fff",
-    primaryTextColor: "#333",
-}
+    backgroundColor1: "rgba(0,0,0,0.05)",
+    primaryTextColor: "#3D3D3D",
+    activeLinkColor: "#000",
+    failedTextColor: "#CB3D35",
+    successTextColor: "#538A1B",
+    smallTextSize: "14px",
+    mutedTextColor: "rgba(0, 0, 0, 0.48)",
+};

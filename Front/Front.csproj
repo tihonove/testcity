@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <LangVersion>11</LangVersion>
+        <AssemblyName>Kontur.TestAnalytics.Front</AssemblyName>
+        <RootNamespace>Kontur.TestAnalytics.Front</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Remove="node_modules/**" />
+        <Content Remove="node_modules/**" />
+        <None Remove="node_modules/**" />
+
+        <Compile Remove="dist/**" />
+        <Content Remove="dist/**" />
+        <None Remove="dist/**" />
+
+        <TypeScriptCompile Include="src/**/*.tsx" />
+        <TypeScriptCompile Include="src/**/*.ts" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Vostok.Logging.Abstractions" Version="1.0.32" />
+    </ItemGroup>
+
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+        <Exec Command="npm install" />
+        <Exec Command="npm run build" Condition="'$(Configuration)' == 'Debug'" />
+        <Exec Command="npm run build -- --mode=production" Condition="'$(Configuration)' == 'Release'" />
+
+        <ItemGroup>
+            <EmbeddedResource Include="dist\**\*" />
+        </ItemGroup>
+    </Target>
+
+</Project>
