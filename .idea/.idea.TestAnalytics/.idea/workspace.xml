@@ -9,29 +9,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="04e1ca0e-fe42-4c92-8171-7b5f7aafb823" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Api/Api.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Front/src/Pages/TestHistoryPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TestAnalytics/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TestAnalytics/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TestAnalytics/.idea/dataSources/1048c150-169d-4b7c-84f0-7bc9e8c3251c.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TestAnalytics/.idea/dataSources/56b5bac7-2411-4950-9d96-f85e9f89225e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TestAnalytics/.idea/dataSources/56b5bac7-2411-4950-9d96-f85e9f89225e.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TestAnalytics/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TestAnalytics/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/dist/history/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Front/dist/history/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Api/Controllers/StaticFilesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Api/Controllers/StaticFilesController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Api/Kontur.TestAnalytics.Api.1.0.0.nupkg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Front/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Front/dist/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/Front/dist/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Front/dist/static/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/Front/dist/static/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Front/dist/static/index.js.LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Front/dist/static/index.js.LICENSE.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Front/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Front/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Front/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Front/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/src/ClickhouseClientHooksWrapper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Front/src/ClickhouseClientHooksWrapper.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/src/CommonStyles/GlobalStyle.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Front/src/CommonStyles/GlobalStyle.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/src/Declarations/styled-components.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Front/src/Declarations/styled-components.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/src/TestHistory/TestHistory.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Front/src/TestHistory/TestHistory.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/src/TestHistoryPage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/src/Theme/ITheme.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Front/src/Theme/ITheme.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/src/Utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Front/src/Utils.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Front/src/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/Front/webpack.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestAnalytics.sln" beforeDir="false" afterPath="$PROJECT_DIR$/TestAnalytics.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestAnalytics.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/TestAnalytics.sln.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Front/src/Pages/JobRunPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Front/src/Pages/JobRunPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/publish.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/publish.cmd" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,32 +46,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/tihonove/workspace/forms",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "CodeLensConfigurable",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\JetBrains Rider 2022.3.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/tihonove/workspace/forms&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;CodeLensConfigurable&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\JetBrains Rider 2022.3.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "clickhouse"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;clickhouse&quot;
     ],
-    "rider.external.source.directories": [
-      "C:\\Users\\tihonove\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\tihonove\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\tihonove\\AppData\\Local\\Symbols\\src"
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\tihonove\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\tihonove\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\tihonove\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Project.Reporter.Server">
     <configuration name="Reporter.Cli" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
@@ -141,6 +129,7 @@
       <workItem from="1696160522264" duration="4904000" />
       <workItem from="1713436236184" duration="1671000" />
       <workItem from="1713438714526" duration="23308000" />
+      <workItem from="1713779583662" duration="19204000" />
     </task>
     <servers />
   </component>
@@ -156,10 +145,10 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Api/Controllers/ClickhouseProxyController.cs</url>
-          <line>12</line>
+          <line>13</line>
           <properties documentPath="C:\Users\tihonove\workspace\test-analytics\Api\Controllers\ClickhouseProxyController.cs" initialLine="12" containingFunctionPresentation="method 'Proxy'">
             <startOffsets>
-              <option value="324" />
+              <option value="359" />
             </startOffsets>
             <endOffsets>
               <option value="450" />

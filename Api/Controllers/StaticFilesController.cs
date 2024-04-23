@@ -21,6 +21,10 @@ public class StaticFilesController : ControllerBase
     [AcceptVerbs("GET", "POST", "PUT", "DELETE")]
     public Stream HistoryHome() => TestAnalyticsFrontContent.GetFile("history/index.html");
 
+    [Route("jobs/{*pathInfo}")]
+    [AcceptVerbs("GET", "POST", "PUT", "DELETE")]
+    public Stream JobsHome() => TestAnalyticsFrontContent.GetFile("history/index.html");
+
     [Route("static/{*pathInfo}")]
     [AcceptVerbs("GET", "POST", "PUT", "DELETE")]
     public Stream StaticFiles(string pathInfo) => TestAnalyticsFrontContent.GetFile("static/" + pathInfo);

@@ -166,6 +166,7 @@ export function JobRunPage(): React.JSX.Element {
                 <Fit></Fit>
                 <Fit>
                     <Header3>Tests</Header3>
+                    <Link to={`/test-analytics/jobs/${jobId}/runs/${jobRunId}/treemap`}>Open tree map</Link>
                 </Fit>
                 <Fit>
                     <Input

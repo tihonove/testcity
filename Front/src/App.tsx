@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { JobsPage } from "./Pages/JobsPage";
 import { JobRunsPage } from "./Pages/JobRunsPage";
 import { JobRunPage } from "./Pages/JobRunPage";
+import { TestsTreeMapChart } from "./Pages/TestsTreeMapChart";
 
 export function App(): React.JSX.Element {
     return (
@@ -15,6 +16,7 @@ export function App(): React.JSX.Element {
                     <Route path="jobs" element={<JobsPage />} />
                     <Route path="jobs/:jobId" element={<JobRunsPage />} />
                     <Route path="jobs/:jobId/runs/:jobRunId" element={<JobRunPage />} />
+                    <Route path="jobs/:jobId/runs/:jobRunId/treemap" element={<TestsTreeMapChart />} />
                     <Route path="history" element={<TestHistoryPage />} />
                 </Route>
             </Routes>

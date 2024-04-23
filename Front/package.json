@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@carrotsearch/foamtree": "^3.5.1",
     "@clickhouse/client-web": "^0.2.2",
     "@skbkontur/icons": "^1.5.0",
     "@skbkontur/react-stack-layout": "^1.2.0",
