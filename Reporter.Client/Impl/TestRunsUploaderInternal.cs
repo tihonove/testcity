@@ -12,8 +12,7 @@ internal class TestRunsUploaderInternal
         this.connection = connection;
     }
 
-    public async Task UploadAsync(string jobId, string jobRunId, string branchName, IAsyncEnumerable<TestRun> lines,
-        string agentName, string agentOSName)
+    public async Task UploadAsync(JobRunInfo info, IAsyncEnumerable<TestRun> lines)
     {
         using var bulkCopyInterface = new ClickHouseBulkCopy(connection)
         {
@@ -25,11 +24,24 @@ internal class TestRunsUploaderInternal
             var values = testRuns.Select(x =>
                 new object[]
                 {
-                    jobId, jobRunId, branchName, x.TestId, (int)x.TestResult, x.Duration,
-                    x.StartDateTime.ToUniversalTime(), agentName, agentOSName
+                    info.JobId, info.JobRunId, info.BranchName, x.TestId, (int)x.TestResult, x.Duration,
+                    x.StartDateTime.ToUniversalTime(), info.AgentName, info.AgentOSName, info.JobUrl
                 }
             );
-            await bulkCopyInterface.WriteToServerAsync(values);
+            await bulkCopyInterface.WriteToServerAsync(values, Fields);
         }
     }
+
+    private static readonly string[] Fields = {
+        "JobId",
+        "JobRunId",
+        "BranchName",
+        "TestId",
+        "State",
+        "Duration",
+        "StartDateTime",
+        "AgentName",
+        "AgentOSName",
+        "JobUrl"
+    };
 }

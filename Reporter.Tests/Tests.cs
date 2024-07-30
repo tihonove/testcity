@@ -7,14 +7,14 @@ using NUnit.Framework;
 
 namespace Kontur.TestAnalytics.Reporter.Tests;
 
-public class Class1
+public class Tests
 {
     [Test]
     public async Task Test01()
     {
         await using var connection = CreateConnection();
         await using var command = connection.CreateCommand();
-        command.CommandText = @"INSERT INTO default.TestRuns (TestId) VALUES ('123');";
+        command.CommandText = @"INSERT INTO tihonovetest.TestRuns (TestId) VALUES ('123');";
         await command.ExecuteNonQueryAsync();
     }
 
@@ -38,7 +38,8 @@ public class Class1
                 JobRunId = buildId + "1",
                 BranchName = "master",
                 AgentName = "KE-FRM-AGENT-01",
-                AgentOSName = "Windows"
+                AgentOSName = "Windows",
+                JobUrl = "https://kontur.ru"
             }, lines);
             await TestRunsUploader.UploadAsync(new JobRunInfo
             {
@@ -46,7 +47,8 @@ public class Class1
                 JobRunId = buildId + "2",
                 BranchName = "tihonove/branch-1",
                 AgentName = "KE-FRM-AGENT-01",
-                AgentOSName = "Windows"
+                AgentOSName = "Windows",
+                JobUrl = "https://kontur.ru"
             }, lines);
             await TestRunsUploader.UploadAsync(new JobRunInfo
             {
@@ -54,7 +56,8 @@ public class Class1
                 JobRunId = buildId + "3",
                 BranchName = "tihonove/branch-2",
                 AgentName = "KE-FRM-AGENT-01",
-                AgentOSName = "Linux"
+                AgentOSName = "Linux",
+                JobUrl = "https://kontur.ru"
             }, lines);
         }
     }
@@ -66,23 +69,23 @@ public class Class1
 
         using var bulkCopyInterface = new ClickHouseBulkCopy(connection)
         {
-            DestinationTableName = "default.TestRuns",
+            DestinationTableName = "tihonovetest.TestRuns",
             BatchSize = 100
         };
-        var values = new[] { new object[] { "jobId", "jobRunId", "branchName", "lines", "Success", (long)123123 } };
-        await bulkCopyInterface.WriteToServerAsync(values);
+        var values = new[] { new object[] { "1", "1", "1", "1", 1, 1, DateTime.Now.ToUniversalTime(), "1" } };
+        await bulkCopyInterface.WriteToServerAsync(values, new []
+        {
+            "JobId",
+            "JobRunId",
+            "BranchName",
+            "TestId",
+            "State",
+            "Duration",
+            "StartDateTime",
+            "AgentName",
+            "AgentOSName"
+        });
         Console.WriteLine(bulkCopyInterface.RowsWritten);
-
-        // var command = connection.CreateCommand();
-        // command.CommandText =
-        //     @"insert into TestRuns (JobId, JobRunId, BranchName, TestId, State, Duration) values ({JobId:String, JobRunId:String, BranchName:String, TestId:String, State:Enum8('Success' = 1, 'Failed' = 2, 'Skipped' = 3), Duration:Decimal64(0)});";
-        // command.Parameters.Add(new ClickHouseDbParameter { ParameterName = "JobId", Value = "jobId" });
-        // command.Parameters.Add(new ClickHouseDbParameter { ParameterName = "JobRunId", Value = "jobRunId" });
-        // command.Parameters.Add(new ClickHouseDbParameter { ParameterName = "BranchName", Value = "branchName" });
-        // command.Parameters.Add(new ClickHouseDbParameter { ParameterName = "TestId", Value = "lines" });
-        // command.Parameters.Add(new ClickHouseDbParameter { ParameterName = "State", Value = "2" });
-        // command.Parameters.Add(new ClickHouseDbParameter { ParameterName = "Duration", Value = (long)123445 });
-        // await command.ExecuteNonQueryAsync();
     }
 
     [Test]
@@ -103,19 +106,21 @@ public class Class1
             JobRunId = "32028281",
             BranchName = "master",
             AgentName = "AGENT-1",
-            AgentOSName = "Windows"
+            AgentOSName = "Windows",
+            JobUrl = "https://kontur.ru"
         };
         await TestRunsUploader.UploadAsync(runInfo, lines);
     }
 
+    [Explicit("для ручного запуска")]
     [Test]
-    public async Task RecretateTable()
+    public async Task RecreateTable()
     {
         await using var connection = CreateConnection();
-        var dropTableScript = @"DROP TABLE IF EXISTS TestRuns";
+        var dropTableScript = @"DROP TABLE IF EXISTS tihonovetest.TestRuns";
 
         var createTableScript = @"
-            create table test_analytics.TestRuns
+            create table tihonovetest.TestRuns
             (
                 JobId String,
                 JobRunId String,
@@ -125,7 +130,9 @@ public class Class1
                 Duration Decimal64(0),
                 StartDateTime DateTime,
                 AgentName String,
-                AgentOSName String
+                AgentOSName String,
+                GroupId String,
+                ProjectId String
             )
             engine = MergeTree()
             ORDER BY (JobId, JobRunId, BranchName, TestId);
@@ -139,4 +146,5 @@ public class Class1
         return new ClickHouseConnection(
             "Host=vm-ch2-stg.dev.kontur.ru;Port=8123;Username=tihonove;password=12487562;Database=test_analytics");
     }
+
 }

@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
-import { RunStatus } from "./RunStatus";
 import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
 import CarrotSearchFoamTree from "@carrotsearch/foamtree";
 import { useMemo } from "react";

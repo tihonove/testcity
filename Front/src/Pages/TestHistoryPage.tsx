@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
-import { TestHistory } from "../TestHistory/TestHistory";
+import { RunStatus, TestHistory } from "../TestHistory/TestHistory";
 import { useSearchParamAsState } from "../Utils";
 
 export function TestHistoryPage(): React.JSX.Element {
@@ -32,15 +32,18 @@ export function TestHistoryPage(): React.JSX.Element {
         `SELECT TOP 1000 State, Duration, StartDateTime FROM TestRuns WHERE ${condition} ORDER BY StartDateTime DESC`,
         [condition]
     );
+
     const [testRunsPage, setTestRunsPage] = useState(1);
-    const [testRuns, testRunsLoading] = client.useData(
-        `SELECT JobId, JobRunId, BranchName, State, Duration, StartDateTime, AgentName, AgentOSName FROM TestRuns WHERE ${condition} ORDER BY StartDateTime DESC LIMIT ${50 * (testRunsPage - 1)}, 50`,
+    const [testRuns, _] = client.useData<[string, string, string, RunStatus, number, string, string, string, string]>(
+        `SELECT JobId, JobRunId, BranchName, State, Duration, StartDateTime, AgentName, AgentOSName, JobUrl FROM TestRuns WHERE ${condition} ORDER BY StartDateTime DESC LIMIT ${50 * (testRunsPage - 1)}, 50`,
         [testId, testRunsPage, condition]
     );
+
     const [totalRunCount, totalRunCountLoading] = client.useData<[string]>(
         `SELECT COUNT(*) FROM TestRuns WHERE ${condition}`,
         [condition]
     );
+
     if (jobLoading || branchesLoading || statsLoading || totalRunCountLoading || testRuns == undefined)
         return <div>Loading</div>;
 

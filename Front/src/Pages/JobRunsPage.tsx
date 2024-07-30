@@ -12,7 +12,7 @@ export function JobRunsPage(): React.JSX.Element {
     const [currentBranchName, setCurrentBranchName] = useSearchParamAsState("branch");
     const client = useClickhouseClient();
 
-    const jobRuns = client.useData2<[string, string, string, string, string, string, string]>(
+    const jobRuns = client.useData2<[string, string, string, string, string, string, string, string, string]>(
         `
         SELECT 
             JobId,

@@ -4,12 +4,6 @@ const { createClient } = require("@clickhouse/client-web");
 import fetchIntercept from "fetch-intercept";
 import usePromise from "react-promise-suspense";
 
-// const client = createClient({
-//     host: "http://localhost:8080",
-//     database: "default",
-//     clickhouse_settings: {},
-// })
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const unregister = fetchIntercept.register({
     request: function (url, config) {

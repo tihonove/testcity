@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import * as React from "react";
-import { Dispatch, SetStateAction, Suspense, useDeferredValue, useMemo, useState } from "react";
+import { Suspense, useDeferredValue, useMemo } from "react";
 import { DropdownMenu, Input, MenuItem, Spinner } from "@skbkontur/react-ui";
 import styled from "styled-components";
 import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
@@ -14,17 +14,14 @@ import {
     ShareNetworkIcon,
     UiFilterSortADefaultIcon16Regular,
     UiFilterSortAHighToLowIcon16Regular,
-    UiFilterSortALowToHighIcon,
-    UiFilterSortALowToHighIcon16Light,
     UiFilterSortALowToHighIcon16Regular,
     UiMenuDots3VIcon16Regular,
 } from "@skbkontur/icons";
 import { ColumnStack, Fit } from "@skbkontur/react-stack-layout";
-import { useDebounce } from "use-debounce";
 import { RouterLinkAdapter } from "../Components/RouterLinkAdapter";
-import { RunStatus } from "./RunStatus";
 import { formatDuration } from "../RunStatisticsChart/DurationUtils";
 import { useSearchParamAsState, useSearchParamDebouncedAsState } from "../Utils";
+import { RunStatus } from "../TestHistory/TestHistory";
 
 function JonIcon(props: { size: 16 | 24 | 32; status?: RunStatus }) {
     switch (props.size) {
@@ -121,8 +118,8 @@ export function JobRunPage(): React.JSX.Element {
 
     const client = useClickhouseClient();
 
-    const [[testMaxDate, testMinDate, branchName]] = client.useData2<[string, string]>(
-        `select EndDateTime, StartDateTime, BranchName from JobRunsMV where JobId = '${jobId}' and JobRunId = '${jobRunId}'`,
+    const [[testMinDate, branchName]] = client.useData2<[string, string]>(
+        `select StartDateTime, BranchName from JobRunsMV where JobId = '${jobId}' and JobRunId = '${jobRunId}'`,
         [jobId, jobRunId]
     );
 
@@ -149,7 +146,7 @@ export function JobRunPage(): React.JSX.Element {
                 <Fit>
                     <JobHeader>
                         <Link to={`/test-analytics/jobs/${jobId}`}>
-                            <JonIcon status={"Neutral"} size={16} /> {jobId}
+                            <JonIcon size={16} /> {jobId}
                         </Link>
                     </JobHeader>
                 </Fit>
