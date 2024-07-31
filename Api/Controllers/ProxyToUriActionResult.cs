@@ -29,11 +29,9 @@ internal class ProxyToUriActionResult : IActionResult
         if (sourceRequest.Method != "GET")
         {
             request.Content = new StreamContent(sourceRequest.Body);
-
         }
 
         var responseFromTarget = await httpClient.SendAsync(request);
-
         var clientResponse = context.HttpContext.Response;
 
         foreach (var responseHeader in responseFromTarget.Headers)

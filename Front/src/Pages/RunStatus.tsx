@@ -1,1 +1,0 @@
-export type RunStatus = "Neutral" | "Success" | "Failed" | "InProgress";

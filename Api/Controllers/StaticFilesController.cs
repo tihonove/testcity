@@ -14,20 +14,19 @@ public class StaticFilesController : ControllerBase
     }
 
     [Route("")]
-    [AcceptVerbs("GET", "POST", "PUT", "DELETE")]
+    [HttpGet]
     public Stream Home() => TestAnalyticsFrontContent.GetFile("index.html");
 
     [Route("history")]
-    [AcceptVerbs("GET", "POST", "PUT", "DELETE")]
+    [HttpGet]
     public Stream HistoryHome() => TestAnalyticsFrontContent.GetFile("history/index.html");
 
     [Route("jobs/{*pathInfo}")]
-    [AcceptVerbs("GET", "POST", "PUT", "DELETE")]
+    [HttpGet]
     public Stream JobsHome() => TestAnalyticsFrontContent.GetFile("history/index.html");
 
     [Route("static/{*pathInfo}")]
-    [AcceptVerbs("GET", "POST", "PUT", "DELETE")]
+    [HttpGet]
     public Stream StaticFiles(string pathInfo) => TestAnalyticsFrontContent.GetFile("static/" + pathInfo);
-
     private readonly ILog log;
 }

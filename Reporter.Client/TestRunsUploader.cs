@@ -9,18 +9,12 @@ public static class TestRunsUploader
     {
         await using var connection = CreateConnection();
         var uploader = new TestRunsUploaderInternal(connection);
-        await uploader.UploadAsync(jobRunInfo.JobId, jobRunInfo.JobRunId, jobRunInfo.BranchName, lines,
-            jobRunInfo.AgentName,
-            jobRunInfo.AgentOSName);
+        await uploader.UploadAsync(jobRunInfo, lines);
     }
 
-    public static async Task UploadAsync(JobRunInfo jobRunInfo, IEnumerable<TestRun> lines)
+    public static Task UploadAsync(JobRunInfo jobRunInfo, IEnumerable<TestRun> lines)
     {
-        await using var connection = CreateConnection();
-        var uploader = new TestRunsUploaderInternal(connection);
-        await uploader.UploadAsync(jobRunInfo.JobId, jobRunInfo.JobRunId, jobRunInfo.BranchName,
-            lines.ToAsyncEnumerable(), jobRunInfo.AgentName,
-            jobRunInfo.AgentOSName);
+        return UploadAsync(jobRunInfo, lines.ToAsyncEnumerable());
     }
 
     private static ClickHouseConnection CreateConnection()

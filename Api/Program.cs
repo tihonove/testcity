@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Kontur.TestAnalytics.Api;
 using Vostok.Hosting;
 using Vostok.Hosting.Houston;
 using Vostok.Hosting.Houston.Abstractions;

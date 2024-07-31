@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { ColumnStack, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import { ComboBox, MenuSeparator, Paging } from "@skbkontur/react-ui";
 import {
+    ArrowUiCornerOutUpRightIcon,
     LogoMicrosoftIcon,
     MediaUiAPlayIcon,
     QuestionCircleIcon, ShapeCircleMIcon16Regular,
@@ -13,7 +14,6 @@ import { RunStatisticsChart } from "../RunStatisticsChart/RunStatisticsChart";
 import { formatDuration } from "../RunStatisticsChart/DurationUtils";
 import { Link } from "react-router-dom";
 import { BranchSelect } from "./BranchSelect";
-import { useEffect } from "react";
 
 export type RunStatus = "Success" | "Failed";
 
@@ -42,6 +42,7 @@ interface TestHistoryProps {
             startDateTime: string,
             agentName: string,
             agentOSName: string,
+            jobUrl: string,
         ]
     >;
 }
@@ -130,6 +131,7 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
                             <th>Build</th>
                             <th>Agent</th>
                             <th>Started</th>
+                            <th>Job Url</th>
                         </TestRunsTableHeadRow>
                     </thead>
                     <tbody>
@@ -153,6 +155,7 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
                                     {x[7] == "Windows" ? <LogoMicrosoftIcon /> : <QuestionCircleIcon />} {x[6]}
                                 </td>
                                 <StartDateCell>{x[5]}</StartDateCell>
+                                {x[8] && <GitLabLinkCell><Link to={x[8]} target="_blank" ><ArrowUiCornerOutUpRightIcon/></Link></GitLabLinkCell>}
                             </TestRunsTableRow>
                         ))}
                     </tbody>
@@ -181,11 +184,11 @@ const DurationCell = styled.td`
     width: 100px;
 `;
 
+const GitLabLinkCell = styled.td`
+    text-align: center !important;
+`;
+
 const BranchCell = styled.td``;
-
-const BuildCell = styled.td``;
-
-const AgentCell = styled.td``;
 
 const StartDateCell = styled.td`
     width: 200px;

@@ -1,14 +1,10 @@
 import { ColumnStack, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import * as React from "react";
 import styled from "styled-components";
-import { Input } from "@skbkontur/react-ui";
 import {
     LogoMicrosoftIcon,
-    MediaUiCirclePlayIcon32Regular,
     QuestionCircleIcon,
-    SearchLoupeIcon,
     ShapeSquareIcon16Regular,
-    ShapeSquareIcon32Regular,
     ShareNetworkIcon,
 } from "@skbkontur/icons";
 import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
@@ -24,7 +20,7 @@ export function JobsPage(): React.JSX.Element {
         .useData2<[string]>(`SELECT DISTINCT JobId FROM TestRuns WHERE StartDateTime >= DATE_ADD(MONTH, -1, NOW());`)
         .filter(x => x[0] != null && x[0].trim() !== "");
 
-    const allJobRuns = client.useData2<[string, string, string, string]>(
+    const allJobRuns = client.useData2<[string, string, string, string, string, string, string, string, string]>(
         `
 SELECT bb.JobId,
         aa.JobRunId,
@@ -93,7 +89,7 @@ SELECT bb.JobId,
                         <>
                             <thead>
                                 <tr>
-                                    <JobHeader colspan={6}>
+                                    <JobHeader colSpan={6}>
                                         <ShapeSquareIcon16Regular />{" "}
                                         <Link className="no-underline" to={`/test-analytics/jobs/${jobId[0]}`}>
                                             {jobId[0]}
@@ -106,7 +102,7 @@ SELECT bb.JobId,
                                     .filter(x => x[0] === jobId[0])
                                     .map(x => (
                                         <tr>
-                                            <PaddingCell></PaddingCell>
+                                            <PaddingCell />
                                             <NumberCell>
                                                 <Link
                                                     className="no-underline"
