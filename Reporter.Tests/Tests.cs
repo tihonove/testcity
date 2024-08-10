@@ -131,8 +131,7 @@ public class Tests
                 StartDateTime DateTime,
                 AgentName String,
                 AgentOSName String,
-                GroupId String,
-                ProjectId String
+                JobUrl String
             )
             engine = MergeTree()
             ORDER BY (JobId, JobRunId, BranchName, TestId);
