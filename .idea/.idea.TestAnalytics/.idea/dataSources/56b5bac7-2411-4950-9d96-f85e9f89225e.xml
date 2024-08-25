@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="test_analytics@vm-ch2-stg.dev.kontur.ru">
-  <database-model serializer="dbm" dbms="CLICKHOUSE" family-id="CLICKHOUSE" format-version="4.45">
+  <database-model serializer="dbm" dbms="CLICKHOUSE" family-id="CLICKHOUSE" format-version="4.52">
     <root id="1">
       <ServerVersion>23.3.7.5</ServerVersion>
     </root>
