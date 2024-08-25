@@ -62,7 +62,7 @@ public class JunitReporter
                 TestId = testId,
                 TestResult = GetTestCaseResult(testCase.Element("skipped") is not null, failure is not null),
                 Duration = double.TryParse(testCase.Attribute("time")!.Value, CultureInfo.InvariantCulture, out var time) 
-                    ? TimeSpan.FromSeconds(time).Ticks 
+                    ? TimeSpan.FromSeconds(time).Milliseconds 
                     : 0,
                 StartDateTime = DateTime.TryParse(testSuite.Attribute("timestamp")?.Value, out var timeStamp)
                     ? timeStamp
@@ -97,14 +97,17 @@ public class JunitReporter
     
     private async Task UploadTestRuns(IEnumerable<TestRun> testRunLines)
     {
+        var testRuns = testRunLines.ToList();
         if (options.DryRun)
         {
-            var runLines = testRunLines.ToList();
-            log.Info($"Test runs will be uploaded to Test History Analytics. Batch size: ({runLines.Count})");
-            await Task.FromResult(runLines);
+            log.Info($"Test runs will be uploaded to Test History Analytics. Batch size: ({testRuns.Count})");
+            await Task.FromResult(testRuns);
         }
         else
-            await TestRunsUploader.UploadAsync(GetJobRunInfo(), testRunLines);
+        {
+            await TestRunsUploader.UploadAsync(GetJobRunInfo(), testRuns);
+            log.Info($"Test runs uploaded to Test History Analytics. Batch size: ({testRuns.Count})");
+        }
     }
     
     private static JobRunInfo GetJobRunInfo() =>

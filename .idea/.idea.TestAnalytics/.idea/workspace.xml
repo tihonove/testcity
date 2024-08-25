@@ -9,15 +9,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="04e1ca0e-fe42-4c92-8171-7b5f7aafb823" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TestAnalytics/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TestAnalytics/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TestAnalytics/.idea/dataSources/56b5bac7-2411-4950-9d96-f85e9f89225e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TestAnalytics/.idea/dataSources/56b5bac7-2411-4950-9d96-f85e9f89225e.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TestAnalytics/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TestAnalytics/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Reporter.Cli/JunitReporter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Reporter.Cli/JunitReporter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Reporter.Cli/JunitRepoterOptions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Reporter.Cli/Options.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Reporter.Cli/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Reporter.Cli/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestAnalytics.sln.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/TestAnalytics.sln.DotSettings" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,10 +77,10 @@
     ]
   }
 }]]></component>
-  <component name="RunManager" selected="Publish to folder.Publish Reporter.Cli to folder">
+  <component name="RunManager" selected=".NET Project.Reporter.Cli">
     <configuration name="Reporter.Cli" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="$PROJECT_DIR$/Reporter.Cli/bin/Debug/net7.0/Reporter.Cli.exe" />
-      <option name="PROGRAM_PARAMETERS" value="-d -f &quot;C:\Users\milkov.de\Downloads\Forms.IntegrationTests-1723031118047848830 (1).xml&quot;" />
+      <option name="PROGRAM_PARAMETERS" value="-d -f &quot;C:\Users\milkov.de\Downloads\candy-ui.xml&quot;" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Reporter.Cli/bin/Debug/net7.0" />
       <option name="PASS_PARENT_ENVS" value="1" />
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
@@ -189,6 +182,19 @@
           <line>27</line>
           <properties documentPath="C:\Users\tihonove\workspace\test-analytics\Api\TestAnalyticsApiApplication.cs" containingFunctionPresentation="method 'BuildContainer'" />
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Reporter.Cli/JunitReporter.cs</url>
+          <line>28</line>
+          <properties documentPath="D:\src\mono-root\test-analytics\Reporter.Cli\JunitReporter.cs" containingFunctionPresentation="Method 'DoAsync'">
+            <startOffsets>
+              <option value="992" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1027" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
