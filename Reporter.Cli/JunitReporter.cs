@@ -1,6 +1,10 @@
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Xml.Linq;
+using System.Xml.XPath;
 using Kontur.TestAnalytics.Reporter.Client;
 using Vostok.Logging.Abstractions;
 
@@ -8,40 +12,43 @@ namespace Kontur.TestAnalytics.Reporter.Cli;
 
 public class JunitReporter
 {
-    public JunitReporter(JunitRepoterOptions options, ILog log)
+    public JunitReporter(JunitReporterOptions options, ILog log)
     {
         this.options = options;
         this.log = log;
     }
 
-    public Task DoAsync()
+    public async Task DoAsync()
     {
-        var startDateTime = DateTime.Now;
         var reportPaths = ReportPathResolver.GetReportPaths(options.ReportsPaths);
 
-        var testRunLines = reportPaths.SelectMany(p => HandleReport(p, startDateTime));
-
-        return options.DryRun ? Task.FromResult(testRunLines.ToList()) : TestRunsUploader.UploadAsync(GetJobRunInfo(), testRunLines);
+        foreach (var reportPath in reportPaths)
+        {
+            var testRunLines = HandleReport(reportPath);
+            await UploadTestRuns(testRunLines);
+        }
     }
 
-    private IEnumerable<TestRun> HandleReport(string reportPath, DateTime startDateTime)
+    private IEnumerable<TestRun> HandleReport(string reportPath)
     {
-        log.Info("Start habdle report {Path}", reportPath);
+        log.Info($"Start handling the report {reportPath}");
+        
+        var startDateTime = DateTime.Now;
         var report = XDocument.Load(reportPath);
         var isReportModified = false;
         var root = report.Root!;
         
         if (root.Name.LocalName != "testsuites")
         {
-            log.Error("File is not junit report: {Path}", reportPath);
+            log.Error($"File is not junit report: {reportPath}");
             yield break;
         }
 
-        foreach (var testCase in root.Elements("testsuite").Select(e => e.Element("testcase")))
+        foreach (var testCase in root.XPathSelectElements("./testsuite/testcase"))
         {
-            var testSuite = testCase!.Parent!;
-            var testId = $"{testSuite.Attribute("name")!.Value}: {testCase.Attribute("classname")!.Value}{testCase.Attribute("name")!.Value}";
-            _ = double.TryParse(testCase.Attribute("time")!.Value, CultureInfo.InvariantCulture, out var time);
+            var testSuite = testCase.Parent!;
+            var testId = $"{testSuite.Attribute("name")!.Value.Replace(".dll", "")}: " +
+                         $"{testCase.Attribute("classname")!.Value}.{testCase.Attribute("name")!.Value}";
 
             var failure = testCase.Element("failure");
             if (failure is not null && !failure.Value.Contains("Test history"))
@@ -54,18 +61,26 @@ public class JunitReporter
             {
                 TestId = testId,
                 TestResult = GetTestCaseResult(testCase.Element("skipped") is not null, failure is not null),
-                Duration = TimeSpan.FromSeconds(time).Ticks,
+                Duration = double.TryParse(testCase.Attribute("time")!.Value, CultureInfo.InvariantCulture, out var time) 
+                    ? TimeSpan.FromSeconds(time).Ticks 
+                    : 0,
                 StartDateTime = DateTime.TryParse(testSuite.Attribute("timestamp")?.Value, out var timeStamp)
                     ? timeStamp
                     : startDateTime
             };
         }
 
-        if (options.DryRun || !isReportModified)
+        if (options.DryRun)
+        {
+            log.Info($"Report file {reportPath} will be modified by Test Analytics");
             yield break;
+        }
 
-        log.Info("Modify report {File} for Test Analytics", reportPath);
-        report.Save(reportPath);
+        if (isReportModified)
+        {
+            report.Save(reportPath);
+            log.Info($"Report file {reportPath} modified by Test Analytics");
+        }
     }
 
     private static TestResult GetTestCaseResult(bool isSkipped, bool isFailed)
@@ -73,12 +88,25 @@ public class JunitReporter
         if (isSkipped)
             return TestResult.Skipped;
 
+        // ReSharper disable once ConvertIfStatementToReturnStatement
         if (isFailed)
             return TestResult.Failed;
 
         return TestResult.Success;
     }
-
+    
+    private async Task UploadTestRuns(IEnumerable<TestRun> testRunLines)
+    {
+        if (options.DryRun)
+        {
+            var runLines = testRunLines.ToList();
+            log.Info($"Test runs will be uploaded to Test History Analytics. Batch size: ({runLines.Count})");
+            await Task.FromResult(runLines);
+        }
+        else
+            await TestRunsUploader.UploadAsync(GetJobRunInfo(), testRunLines);
+    }
+    
     private static JobRunInfo GetJobRunInfo() =>
         new()
         {
@@ -90,6 +118,6 @@ public class JunitReporter
             AgentOSName = Environment.GetEnvironmentVariable("WRAPPER_OS") ?? RuntimeInformation.OSDescription
         };
 
-    private readonly JunitRepoterOptions options;
+    private readonly JunitReporterOptions options;
     private readonly ILog log;
 }

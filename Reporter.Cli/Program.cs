@@ -4,8 +4,9 @@ using Kontur.TestAnalytics.Reporter.Cli;
 using Vostok.Logging.Console;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();
+var options = Parser.Default.ParseArguments<JunitReporterOptions>(args).GetOptionsOrThrow();
 
-await Parser.Default.ParseArguments<JunitRepoterOptions>(args)
-    .MapResult( 
-        (JunitRepoterOptions options) => new JunitReporter(options, new ConsoleLog()).DoAsync(),
-        errs => throw new ArgumentException());
+var reporter = new JunitReporter(options, new ConsoleLog());
+await reporter.DoAsync();
+
+ConsoleLog.Flush();

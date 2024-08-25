@@ -3,8 +3,12 @@ using CommandLine;
 namespace Kontur.TestAnalytics.Reporter.Cli;
 
 [Verb("junit-report")]
-public class JunitRepoterOptions : Options
+// ReSharper disable once ClassNeverInstantiated.Global
+public class JunitReporterOptions
 {
     [Option('f', "reportsPaths", Required = true)]
     public required IEnumerable<string> ReportsPaths { get; set; }
+    
+    [Option('d', "dry-run")]
+    public bool DryRun { get; set; }
 }
