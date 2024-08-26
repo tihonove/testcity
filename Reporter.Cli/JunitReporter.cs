@@ -1,8 +1,6 @@
 using System.Globalization;
 using System.Runtime.InteropServices;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using Kontur.TestAnalytics.Reporter.Client;
@@ -114,12 +112,26 @@ public class JunitReporter
         new()
         {
             JobUrl = Environment.GetEnvironmentVariable("CI_JOB_URL") ?? string.Empty,
-            JobId = Environment.GetEnvironmentVariable("TEAMCITY_BUILDTYPE_ID") ?? Environment.GetEnvironmentVariable("CI_JOB_NAME") ?? string.Empty,
+            JobId = Environment.GetEnvironmentVariable("TEAMCITY_BUILDTYPE_ID") ?? GetNormalizedJobName() ?? string.Empty,
             JobRunId = Environment.GetEnvironmentVariable("BUILD_ID") ?? Environment.GetEnvironmentVariable("CI_JOB_ID") ?? string.Empty,
             BranchName = Environment.GetEnvironmentVariable("TEAMCITY_BRANCH") ?? Environment.GetEnvironmentVariable("CI_COMMIT_BRANCH") ?? string.Empty,
             AgentName = Environment.GetEnvironmentVariable("COMPUTERNAME") ?? Environment.GetEnvironmentVariable("HOSTNAME") ?? string.Empty,
             AgentOSName = Environment.GetEnvironmentVariable("WRAPPER_OS") ?? RuntimeInformation.OSDescription
         };
+
+    private static string? GetNormalizedJobName()
+    {
+        var jobName = Environment.GetEnvironmentVariable("CI_JOB_NAME");
+        if (jobName is null)
+            return null;
+
+        var match = new Regex(@"(.*?)([\b\s:]+((\[.*\])|(\d+[\s:\/\\]+\d+))){1,3}\s*\z").Match(jobName);
+        // ReSharper disable once ConvertIfStatementToReturnStatement
+        if (match.Success)
+            return match.Groups[1].Value;
+        
+        return jobName;
+    }
 
     private readonly JunitReporterOptions options;
     private readonly ILog log;

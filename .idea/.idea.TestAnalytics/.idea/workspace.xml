@@ -24,6 +24,7 @@
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/00e5bdf129e542e18aa101d6e5d0cda8218a0/6e/c5881b02/TextEncoderSettings.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/478e7311c77b43979fb8c270108b0a6a8000/ca/f015143b/ConsoleLog.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ae7b821dd3ae45b4a8027ef197e5363fb1e910/94/1a4bd6d8/Environment.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c453ace1e4574cfe83f15ca8c8f735bf37000/54/33836936/Error.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c453ace1e4574cfe83f15ca8c8f735bf37000/8e/a854c4a8/ParserResultExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c453ace1e4574cfe83f15ca8c8f735bf37000/c0/7655382d/TokenError.cs" root0="SKIP_HIGHLIGHTING" />
@@ -77,12 +78,15 @@
     ]
   }
 }]]></component>
-  <component name="RunManager" selected=".NET Project.Reporter.Cli">
+  <component name="RunManager" selected="Publish to folder.Publish Reporter.Cli to folder">
     <configuration name="Reporter.Cli" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="$PROJECT_DIR$/Reporter.Cli/bin/Debug/net7.0/Reporter.Cli.exe" />
       <option name="PROGRAM_PARAMETERS" value="-d -f &quot;C:\Users\milkov.de\Downloads\candy-ui.xml&quot;" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Reporter.Cli/bin/Debug/net7.0" />
       <option name="PASS_PARENT_ENVS" value="1" />
+      <envs>
+        <env name="CI_JOB_NAME" value="Keweb tests 2/2" />
+      </envs>
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <option name="USE_MONO" value="0" />
       <option name="RUNTIME_ARGUMENTS" value="" />
@@ -182,19 +186,6 @@
           <line>27</line>
           <properties documentPath="C:\Users\tihonove\workspace\test-analytics\Api\TestAnalyticsApiApplication.cs" containingFunctionPresentation="method 'BuildContainer'" />
           <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Reporter.Cli/JunitReporter.cs</url>
-          <line>28</line>
-          <properties documentPath="D:\src\mono-root\test-analytics\Reporter.Cli\JunitReporter.cs" containingFunctionPresentation="Method 'DoAsync'">
-            <startOffsets>
-              <option value="992" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1027" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
