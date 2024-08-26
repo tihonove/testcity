@@ -12,4 +12,11 @@
       <ProjectReference Include="..\Reporter.Client\Reporter.Client.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="CommandLineParser" Version="2.9.1" />
+      <PackageReference Include="dotenv.net" Version="3.2.0" />
+      <PackageReference Include="Vostok.Logging.Abstractions" Version="1.0.32" />
+      <PackageReference Include="Vostok.Logging.Console" Version="1.0.10" />
+    </ItemGroup>
+
 </Project>

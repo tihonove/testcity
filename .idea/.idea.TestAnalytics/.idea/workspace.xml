@@ -10,16 +10,7 @@
   <component name="ChangeListManager">
     <list default="true" id="04e1ca0e-fe42-4c92-8171-7b5f7aafb823" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TestAnalytics/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TestAnalytics/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Api/Controllers/StaticFilesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Api/Controllers/StaticFilesController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Api/Kontur.TestAnalytics.Api.1.0.0.nupkg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Front/dist/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/dist/static/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/Front/dist/static/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/dist/static/index.js.LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Front/dist/static/index.js.LICENSE.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Front/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Front/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Front/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Front/src/Pages/JobRunPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Front/src/Pages/JobRunPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/publish.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/publish.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Reporter.Cli/JunitReporter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Reporter.Cli/JunitReporter.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +21,17 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/00e5bdf129e542e18aa101d6e5d0cda8218a0/6e/c5881b02/TextEncoderSettings.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/478e7311c77b43979fb8c270108b0a6a8000/ca/f015143b/ConsoleLog.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ae7b821dd3ae45b4a8027ef197e5363fb1e910/94/1a4bd6d8/Environment.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c453ace1e4574cfe83f15ca8c8f735bf37000/54/33836936/Error.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c453ace1e4574cfe83f15ca8c8f735bf37000/8e/a854c4a8/ParserResultExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c453ace1e4574cfe83f15ca8c8f735bf37000/c0/7655382d/TokenError.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c453ace1e4574cfe83f15ca8c8f735bf37000/ce/452e44ec/BadVerbSelectedError.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/e6f563e5fc75434de367a6da528a7ca5266eca0c92fb293eda6d65530a7c3/ILog.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/eb3d6b30572fb68b80ca8f54be6d11a21d5afeba7ff9704167954eea949fa787/ConsoleLog.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/faf214364a2a956aecf1dd5ed21d07e5666f6d1e1022c8dfdb574e144ea1b/LogExtensions_Interpolated.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Api/Program.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -46,38 +48,45 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/tihonove/workspace/forms&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;CodeLensConfigurable&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\JetBrains Rider 2022.3.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Project.Reporter.Cli.executor": "Debug",
+    ".NET Project.Reporter.Server.executor": "Run",
+    "Publish to folder.Publish Reporter.Cli to folder.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "ostanin.i/reporter-cli",
+    "last_opened_file_path": "/home/tihonove/workspace/forms",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "CodeLensConfigurable",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\JetBrains Rider 2022.3.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;clickhouse&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "clickhouse"
     ],
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\tihonove\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\tihonove\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\tihonove\\AppData\\Local\\Symbols\\src&quot;
+    "rider.external.source.directories": [
+      "C:\\Users\\tihonove\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache",
+      "C:\\Users\\tihonove\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache",
+      "C:\\Users\\tihonove\\AppData\\Local\\Symbols\\src"
     ]
   }
-}</component>
-  <component name="RunManager" selected=".NET Project.Reporter.Server">
+}]]></component>
+  <component name="RunManager" selected="Publish to folder.Publish Reporter.Cli to folder">
     <configuration name="Reporter.Cli" type="DotNetProject" factoryName=".NET Project">
-      <option name="EXE_PATH" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
+      <option name="EXE_PATH" value="$PROJECT_DIR$/Reporter.Cli/bin/Debug/net7.0/Reporter.Cli.exe" />
+      <option name="PROGRAM_PARAMETERS" value="-d -f &quot;C:\Users\milkov.de\Downloads\candy-ui.xml&quot;" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Reporter.Cli/bin/Debug/net7.0" />
       <option name="PASS_PARENT_ENVS" value="1" />
+      <envs>
+        <env name="CI_JOB_NAME" value="Keweb tests 2/2" />
+      </envs>
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <option name="USE_MONO" value="0" />
       <option name="RUNTIME_ARGUMENTS" value="" />
@@ -86,7 +95,7 @@
       <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
       <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
       <option name="PROJECT_KIND" value="DotNetCore" />
-      <option name="PROJECT_TFM" value="" />
+      <option name="PROJECT_TFM" value="net7.0" />
       <method v="2">
         <option name="Build" />
       </method>
@@ -109,6 +118,11 @@
         <option name="Build" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue=".NET Project.Reporter.Cli" />
+      <item itemvalue=".NET Project.Reporter.Server" />
+      <item itemvalue="Publish to folder.Publish Reporter.Cli to folder" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -136,7 +150,19 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
@@ -146,40 +172,19 @@
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Api/Controllers/ClickhouseProxyController.cs</url>
           <line>13</line>
-          <properties documentPath="C:\Users\tihonove\workspace\test-analytics\Api\Controllers\ClickhouseProxyController.cs" initialLine="12" containingFunctionPresentation="method 'Proxy'">
-            <startOffsets>
-              <option value="359" />
-            </startOffsets>
-            <endOffsets>
-              <option value="450" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="C:\Users\tihonove\workspace\test-analytics\Api\Controllers\ClickhouseProxyController.cs" containingFunctionPresentation="method 'Proxy'" />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Api/Controllers/аа.cs</url>
           <line>17</line>
-          <properties documentPath="C:\Users\tihonove\workspace\test-analytics\Api\Controllers\аа.cs" initialLine="17" containingFunctionPresentation="method 'ExecuteResultAsync'">
-            <startOffsets>
-              <option value="611" />
-            </startOffsets>
-            <endOffsets>
-              <option value="649" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="C:\Users\tihonove\workspace\test-analytics\Api\Controllers\аа.cs" containingFunctionPresentation="method 'ExecuteResultAsync'" />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Api/TestAnalyticsApiApplication.cs</url>
           <line>27</line>
-          <properties documentPath="C:\Users\tihonove\workspace\test-analytics\Api\TestAnalyticsApiApplication.cs" initialLine="27" containingFunctionPresentation="method 'BuildContainer'">
-            <startOffsets>
-              <option value="1185" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1294" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="C:\Users\tihonove\workspace\test-analytics\Api\TestAnalyticsApiApplication.cs" containingFunctionPresentation="method 'BuildContainer'" />
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>

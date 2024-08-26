@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="dataSourceStorageLocal" created-in="RD-223.8836.53">
+  <component name="dataSourceStorageLocal" created-in="RD-241.18034.76">
     <data-source name="@localhost" uuid="1048c150-169d-4b7c-84f0-7bc9e8c3251c">
       <database-info product="ClickHouse" version="23.8.2.7" jdbc-version="4.2" driver-name="ClickHouse JDBC Driver" driver-version="0.4.2 (revision: 1513b27)" dbms="CLICKHOUSE" exact-version="23.8.2.7" exact-driver-version="0.4">
         <identifier-quote-string>`</identifier-quote-string>

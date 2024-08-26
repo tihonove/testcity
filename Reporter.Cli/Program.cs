@@ -1,3 +1,12 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using CommandLine;
+using dotenv.net;
+using Kontur.TestAnalytics.Reporter.Cli;
+using Vostok.Logging.Console;
 
-Console.WriteLine("Hello, World!");
+DotEnv.Fluent().WithProbeForEnv(10).Load();
+var options = Parser.Default.ParseArguments<JunitReporterOptions>(args).GetOptionsOrThrow();
+
+var reporter = new JunitReporter(options, new ConsoleLog());
+await reporter.DoAsync();
+
+ConsoleLog.Flush();
