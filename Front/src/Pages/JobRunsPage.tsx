@@ -97,10 +97,10 @@ export function JobRunsPage(): React.JSX.Element {
                                 <BranchCell>
                                     <ShareNetworkIcon/> {x[2]}
                                 </BranchCell>
-                                <CountCell failedCount={x[8]}>
-                                    <Link to={getLinkToJob(x[1], x[3])}>
+                                <CountCell>
+                                    <JobLinkWithResults failedCount={x[8]} to={getLinkToJob(x[1], x[3])}>
                                         {formatTestCounts(x[5], x[6], x[7], x[8])}
-                                    </Link>
+                                    </JobLinkWithResults>
                                 </CountCell>
                                 <AgentCell>
                                     {/windows/.test(x[9]) ? <LogoMicrosoftIcon /> : <QuestionCircleIcon />} {x[3]}
@@ -148,11 +148,14 @@ const NumberCell = styled.td`
 
 const BranchCell = styled.td``;
 
-const CountCell = styled.td<{ failedCount: string }>`
+const CountCell = styled.td``;
+
+const JobLinkWithResults = styled(Link)<{ failedCount: string }>`
     color: ${props =>
-    props.failedCount === "0"
-        ? props.theme.successTextColor
-        : props.theme.failedTextColor};
+            props.failedCount === "0"
+                    ? props.theme.successTextColor
+                    : props.theme.failedTextColor};
+    text-decoration: none;
 `;
 
 const AgentCell = styled.td``;
