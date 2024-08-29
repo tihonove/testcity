@@ -13,7 +13,7 @@ export function JobRunsPage(): React.JSX.Element {
     const [currentBranchName, setCurrentBranchName] = useSearchParamAsState("branch");
     const client = useClickhouseClient();
 
-    const jobRuns = client.useData2<[string, string, string, string, string, string, string, string, string, string, string, string]>(
+    const jobRuns = client.useData2<[string, string, string, string, string, string, string, string, string, string, string, string, string]>(
         `
         SELECT
             JobId,
@@ -25,7 +25,8 @@ export function JobRunsPage(): React.JSX.Element {
             countIf(b.State = 'Success') AS SuccessCount,
             countIf(b.State = 'Skipped') AS SkippedCount,
             countIf(b.State = 'Failed') AS FailedCount,
-            first_value(b.AgentOSName)  AS AgentOSName
+            first_value(b.AgentOSName)  AS AgentOSName,
+            max(b.StartDateTime) - min(b.StartDateTime) AS Duration
         FROM TestRunsByRun b
         WHERE b.JobId = '${jobId}' ${currentBranchName ? ` AND b.BranchName = '${currentBranchName}'` : ""}
         GROUP BY JobId, JobRunId
@@ -35,13 +36,30 @@ export function JobRunsPage(): React.JSX.Element {
         [currentBranchName]
     );
 
-    function getTestCounts(x: [string, string, string, string, string, string, string, string, string, string, string, string]): string {
+    function formatTestDuration(seconds: string): string {
+        let sec = Number(seconds);
+        return new Date(sec * 1000).toISOString().slice(11, 19)
+            .replace(/(\d{2}):(\d{2}):(\d{2})/, "$1h $2m $3s")
+            .replace("00h 00m ", "")
+            .replace("00h ", "");
+    }
+    
+    function formatTestCounts(total: string, passed: string, ignored: string, failed: string): string {
         let out = "Tests "
-        if (x[8] !== '0') out += `failed: ${x[8]} `
-        if (x[6] !== '0') out += `passed: ${x[6]} `
-        if (x[7] !== '0') out += `ignored: ${x[7]} `
-        // out += `total: ${x[5]}`
+        if (failed !== '0') out += `failed: ${failed} `
+        if (passed !== '0') out += `passed: ${passed} `
+        if (ignored !== '0') out += `ignored: ${ignored} `
+        // out += `total: ${total}`
         return out.trim();
+    }
+
+    function getLinkToJob(jobRunId: string, agentName: string) {
+        let project = /17358/.test(agentName) 
+            ? "forms" 
+            : /19371/.test(agentName) 
+                ? "extern.forms" 
+                : undefined;
+        return project ? `https://git.skbkontur.ru/forms/${project}/-/jobs/${jobRunId}` : "https://git.skbkontur.ru/";
     }
 
     return (
@@ -67,6 +85,7 @@ export function JobRunsPage(): React.JSX.Element {
                             <th></th>
                             <th>agent</th>
                             <th>started</th>
+                            <th>duration</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,11 +97,16 @@ export function JobRunsPage(): React.JSX.Element {
                                 <BranchCell>
                                     <ShareNetworkIcon/> {x[2]}
                                 </BranchCell>
-                                <CountCell failedCount={x[8]}>{getTestCounts(x)}</CountCell>
+                                <CountCell failedCount={x[8]}>
+                                    <Link to={getLinkToJob(x[1], x[3])}>
+                                        {formatTestCounts(x[5], x[6], x[7], x[8])}
+                                    </Link>
+                                </CountCell>
                                 <AgentCell>
                                     {/windows/.test(x[9]) ? <LogoMicrosoftIcon /> : <QuestionCircleIcon />} {x[3]}
                                 </AgentCell>
                                 <StartedCell>{x[4]}</StartedCell>
+                                <DurationCell>{formatTestDuration(x[10])}</DurationCell>
                             </tr>
                         ))}
                     </tbody>
@@ -134,3 +158,5 @@ const CountCell = styled.td<{ failedCount: string }>`
 const AgentCell = styled.td``;
 
 const StartedCell = styled.td``;
+
+const DurationCell = styled.td``;
