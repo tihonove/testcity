@@ -12,15 +12,18 @@ export function JobRunsPage(): React.JSX.Element {
     const [currentBranchName, setCurrentBranchName] = useSearchParamAsState("branch");
     const client = useClickhouseClient();
 
-    const jobRuns = client.useData2<[string, string, string, string, string, string, string, string, string]>(
+    const jobRuns = client.useData2<[string, string, string, string, string, string, string, string, string, string, string, string]>(
         `
-        SELECT 
+        SELECT
             JobId,
             JobRunId,
             first_value(b.BranchName) AS BranchName,
             first_value(b.AgentName)  AS AgentName,
             min(b.StartDateTime)      AS StartDateTime,
             count(b.TestId)           AS TotalTestCount,
+            countIf(b.State = 'Success') AS SuccessCount,
+            countIf(b.State = 'Skipped') AS SkippedCount,
+            countIf(b.State = 'Failed') AS FailedCount,
             first_value(b.AgentOSName)  AS AgentOSName
         FROM TestRunsByRun b
         WHERE b.JobId = '${jobId}' ${currentBranchName ? ` AND b.BranchName = '${currentBranchName}'` : ""}
@@ -30,6 +33,15 @@ export function JobRunsPage(): React.JSX.Element {
         `,
         [currentBranchName]
     );
+
+    function getTestCounts(x: [string, string, string, string, string, string, string, string, string, string, string, string]): string {
+        let out = "Tests "
+        if (x[8] !== '0') out += `failed: ${x[8]} `
+        if (x[6] !== '0') out += `passed: ${x[6]} `
+        if (x[7] !== '0') out += `ignored: ${x[7]} `
+        out += `total: ${x[5]}`
+        return out.trim();
+    }
 
     return (
         <ColumnStack block stretch gap={2}>
@@ -63,11 +75,11 @@ export function JobRunsPage(): React.JSX.Element {
                                     <Link to={`/test-analytics/jobs/${jobId}/runs/${x[1]}`}>#{x[1]}</Link>
                                 </NumberCell>
                                 <BranchCell>
-                                    <ShareNetworkIcon /> {x[2]}
+                                    <ShareNetworkIcon/> {x[2]}
                                 </BranchCell>
-                                <CountCell>Total count: {x[5]}</CountCell>
+                                <CountCell>{getTestCounts(x)}</CountCell>
                                 <AgentCell>
-                                    {/windows/.test(x[6]) ? <LogoMicrosoftIcon /> : <QuestionCircleIcon />} {x[3]}
+                                    {/windows/.test(x[9]) ? <LogoMicrosoftIcon /> : <QuestionCircleIcon />} {x[3]}
                                 </AgentCell>
                                 <StartedCell>{x[4]}</StartedCell>
                             </tr>
