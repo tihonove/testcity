@@ -6,6 +6,7 @@ import { LogoMicrosoftIcon, QuestionCircleIcon, ShapeSquareIcon32Regular, ShareN
 import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
 import { ColumnStack, Fit } from "@skbkontur/react-stack-layout";
 import styled from "styled-components";
+import {RunStatus} from "../TestHistory/TestHistory";
 
 export function JobRunsPage(): React.JSX.Element {
     const { jobId } = useParams();
@@ -39,7 +40,7 @@ export function JobRunsPage(): React.JSX.Element {
         if (x[8] !== '0') out += `failed: ${x[8]} `
         if (x[6] !== '0') out += `passed: ${x[6]} `
         if (x[7] !== '0') out += `ignored: ${x[7]} `
-        out += `total: ${x[5]}`
+        // out += `total: ${x[5]}`
         return out.trim();
     }
 
@@ -77,7 +78,7 @@ export function JobRunsPage(): React.JSX.Element {
                                 <BranchCell>
                                     <ShareNetworkIcon/> {x[2]}
                                 </BranchCell>
-                                <CountCell>{getTestCounts(x)}</CountCell>
+                                <CountCell failedCount={x[8]}>{getTestCounts(x)}</CountCell>
                                 <AgentCell>
                                     {/windows/.test(x[9]) ? <LogoMicrosoftIcon /> : <QuestionCircleIcon />} {x[3]}
                                 </AgentCell>
@@ -123,7 +124,12 @@ const NumberCell = styled.td`
 
 const BranchCell = styled.td``;
 
-const CountCell = styled.td``;
+const CountCell = styled.td<{ failedCount: string }>`
+    color: ${props =>
+    props.failedCount === "0"
+        ? props.theme.successTextColor
+        : props.theme.failedTextColor};
+`;
 
 const AgentCell = styled.td``;
 
