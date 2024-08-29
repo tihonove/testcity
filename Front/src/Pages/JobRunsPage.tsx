@@ -156,6 +156,9 @@ const JobLinkWithResults = styled(Link)<{ failedCount: string }>`
                     ? props.theme.successTextColor
                     : props.theme.failedTextColor};
     text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
 `;
 
 const AgentCell = styled.td``;
