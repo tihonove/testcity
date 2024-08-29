@@ -92,13 +92,13 @@ export function JobRunsPage(): React.JSX.Element {
                         {jobRuns.map(x => (
                             <tr>
                                 <NumberCell>
-                                    <Link to={`/test-analytics/jobs/${jobId}/runs/${x[1]}`}>#{x[1]}</Link>
+                                    <Link to={getLinkToJob(x[1], x[3])}>#{x[1]}</Link>
                                 </NumberCell>
                                 <BranchCell>
                                     <ShareNetworkIcon/> {x[2]}
                                 </BranchCell>
                                 <CountCell>
-                                    <JobLinkWithResults failedCount={x[8]} to={getLinkToJob(x[1], x[3])}>
+                                    <JobLinkWithResults failedCount={x[8]} to={`/test-analytics/jobs/${jobId}/runs/${x[1]}`}>
                                         {formatTestCounts(x[5], x[6], x[7], x[8])}
                                     </JobLinkWithResults>
                                 </CountCell>
