@@ -2,8 +2,6 @@ import {ColumnStack, Fit, RowStack} from "@skbkontur/react-stack-layout";
 import * as React from "react";
 import styled from "styled-components";
 import {
-    LogoMicrosoftIcon,
-    QuestionCircleIcon,
     ShapeSquareIcon16Regular,
     ShareNetworkIcon,
 } from "@skbkontur/icons";
@@ -109,7 +107,7 @@ export function JobsPage(): React.JSX.Element {
                                 <>
                                     <thead>
                                     <tr>
-                                        <JobHeader colSpan={7}>
+                                        <JobHeader colSpan={6}>
                                             <ShapeSquareIcon16Regular/>{" "}
                                             <Link className="no-underline" to={`/test-analytics/jobs/${jobId[0]}`}>
                                                 {jobId[0]}
@@ -135,10 +133,6 @@ export function JobsPage(): React.JSX.Element {
                                                         {formatTestCounts(x[5], x[8], x[9], x[10])}
                                                     </JobLinkWithResults>
                                                 </CountCell>
-                                                <AgentCell>
-                                                    {/windows/.test(x[6]) ? <LogoMicrosoftIcon/> : <QuestionCircleIcon/>}{" "}
-                                                    {x[3]}
-                                                </AgentCell>
                                                 <StartedCell>{x[4]}</StartedCell>
                                                 <DurationCell>{formatTestDuration(x[7])}</DurationCell>
                                             </tr>
@@ -214,19 +208,12 @@ const BranchCell = styled.td`
 `;
 
 const CountCell = styled.td`
-    max-width: 200px;
+    max-width: 300px;
     white-space: nowrap;
-`;
-
-const AgentCell = styled.td`
-    max-width: 200px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 `;
 
 const StartedCell = styled.td`
-    max-width: 140px;
+    max-width: 150px;
     white-space: nowrap;
 `;
 
@@ -241,4 +228,7 @@ const JobLinkWithResults = styled(Link)<{ failedCount: string }>`
     }
 `;
 
-const DurationCell = styled.td``;
+const DurationCell = styled.td`
+    max-width: 140px;
+    white-space: nowrap;
+`;
