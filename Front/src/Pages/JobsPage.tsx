@@ -9,7 +9,7 @@ import {
 } from "@skbkontur/icons";
 import {useClickhouseClient} from "../ClickhouseClientHooksWrapper";
 import {BranchSelect} from "../TestHistory/BranchSelect";
-import {useSearchParamAsState} from "../Utils";
+import {formatTestCounts, formatTestDuration, getLinkToJob, useSearchParamAsState} from "../Utils";
 import {Link} from "react-router-dom";
 
 export function JobsPage(): React.JSX.Element {
@@ -23,7 +23,7 @@ export function JobsPage(): React.JSX.Element {
                              WHERE StartDateTime >= DATE_ADD(MONTH, -1, NOW());`)
         .filter(x => x[0] != null && x[0].trim() !== "");
 
-    const allJobRuns = client.useData2<[string, string, string, string, string, string, string, string, string]>(
+    const allJobRuns = client.useData2<[string, string, string, string, string, string, string, string, string, string, string]>(
         `
             SELECT bb.JobId,
                    aa.JobRunId,
@@ -31,7 +31,11 @@ export function JobsPage(): React.JSX.Element {
                    aa.AgentName,
                    bb.MaxStartDateTime,
                    aa.TestCount,
-                   aa.AgentOSName
+                   aa.AgentOSName,
+                   aa.Duration,
+                   aa.SuccessCount,
+                   aa.SkippedCount,
+                   aa.FailedCount
             FROM (SELECT a.JobId,
                          a.BranchName,
                          max(a.StartDateTime) MaxStartDateTime
@@ -48,10 +52,14 @@ export function JobsPage(): React.JSX.Element {
                      INNER JOIN (SELECT JobId,
                                         JobRunId,
                                         count(z.TestId)            as TestCount,
+                                        countIf(z.State = 'Success') AS SuccessCount,
+                                        countIf(z.State = 'Skipped') AS SkippedCount,
+                                        countIf(z.State = 'Failed') AS FailedCount,
                                         first_value(z.BranchName)  AS BranchName,
                                         first_value(z.AgentName)   AS AgentName,
                                         first_value(z.AgentOSName) AS AgentOSName,
-                                        min(z.StartDateTime)       AS StartDateTime
+                                        min(z.StartDateTime)       AS StartDateTime,
+                                        max(z.StartDateTime) - min(z.StartDateTime) AS Duration
                                  FROM TestRunsByRun z
                                  where z.StartDateTime >= DATE_ADD(DAY, -3, NOW()) ${currentBranchName ? ` AND z.BranchName = '${currentBranchName}'` : ""}
                                  GROUP BY JobId,
@@ -101,7 +109,7 @@ export function JobsPage(): React.JSX.Element {
                                 <>
                                     <thead>
                                     <tr>
-                                        <JobHeader colSpan={6}>
+                                        <JobHeader colSpan={7}>
                                             <ShapeSquareIcon16Regular/>{" "}
                                             <Link className="no-underline" to={`/test-analytics/jobs/${jobId[0]}`}>
                                                 {jobId[0]}
@@ -112,31 +120,32 @@ export function JobsPage(): React.JSX.Element {
                                     <tbody>
                                     {allJobRuns
                                         .filter(x => x[0] === jobId[0])
+                                        .sort((a,b) => Number(a[1]) - Number(b[1]))
                                         .map(x => (
                                             <tr>
                                                 <PaddingCell/>
                                                 <NumberCell>
-                                                    <Link
-                                                        className="no-underline"
-                                                        to={`/test-analytics/jobs/${jobId}/runs/${x[1]}`}>
-                                                        #{x[1]}
-                                                    </Link>
+                                                    <Link to={getLinkToJob(x[1], x[6])}>#{x[1]}</Link>
                                                 </NumberCell>
                                                 <BranchCell>
                                                     <ShareNetworkIcon/> {x[2]}
                                                 </BranchCell>
-                                                <CountCell>Total count: {x[5]}</CountCell>
+                                                <CountCell>
+                                                    <JobLinkWithResults failedCount={x[8]} to={`/test-analytics/jobs/${jobId}/runs/${x[1]}`}>
+                                                        {formatTestCounts(x[5], x[8], x[9], x[10])}
+                                                    </JobLinkWithResults>
+                                                </CountCell>
                                                 <AgentCell>
                                                     {/windows/.test(x[6]) ? <LogoMicrosoftIcon/> : <QuestionCircleIcon/>}{" "}
                                                     {x[3]}
                                                 </AgentCell>
                                                 <StartedCell>{x[4]}</StartedCell>
+                                                <DurationCell>{formatTestDuration(x[7])}</DurationCell>
                                             </tr>
                                         ))}
                                     </tbody>
                                 </>
                             ))}
-                            )
                         </JobList></>))}
             </ColumnStack>
         </Root>
@@ -220,3 +229,16 @@ const StartedCell = styled.td`
     max-width: 140px;
     white-space: nowrap;
 `;
+
+const JobLinkWithResults = styled(Link)<{ failedCount: string }>`
+    color: ${props =>
+    props.failedCount === "0"
+        ? props.theme.successTextColor
+        : props.theme.failedTextColor};
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+`;
+
+const DurationCell = styled.td``;
