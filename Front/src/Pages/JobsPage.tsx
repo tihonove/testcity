@@ -129,7 +129,7 @@ export function JobsPage(): React.JSX.Element {
                                                     <ShareNetworkIcon/> {x[2]}
                                                 </BranchCell>
                                                 <CountCell>
-                                                    <JobLinkWithResults failedCount={x[8]} to={`/test-analytics/jobs/${jobId}/runs/${x[1]}`}>
+                                                    <JobLinkWithResults failedCount={x[10]} to={`/test-analytics/jobs/${jobId}/runs/${x[1]}`}>
                                                         {formatTestCounts(x[5], x[8], x[9], x[10])}
                                                     </JobLinkWithResults>
                                                 </CountCell>
