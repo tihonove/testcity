@@ -123,7 +123,7 @@ export function JobsPage(): React.JSX.Element {
                                             <tr>
                                                 <PaddingCell/>
                                                 <NumberCell>
-                                                    <Link to={getLinkToJob(x[1], x[6])}>#{x[1]}</Link>
+                                                    <Link to={getLinkToJob(x[1], x[3])}>#{x[1]}</Link>
                                                 </NumberCell>
                                                 <BranchCell>
                                                     <ShareNetworkIcon/> {x[2]}
