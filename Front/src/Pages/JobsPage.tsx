@@ -18,7 +18,9 @@ export function JobsPage(): React.JSX.Element {
 
     const sections = ["Wolfs", "Forms mastering", "Utilities"]
     const allJobs = client
-        .useData2<[string]>(`SELECT DISTINCT JobId FROM TestRuns WHERE StartDateTime >= DATE_ADD(MONTH, -1, NOW());`)
+        .useData2<[string]>(`SELECT DISTINCT JobId
+                             FROM TestRuns
+                             WHERE StartDateTime >= DATE_ADD(MONTH, -1, NOW());`)
         .filter(x => x[0] != null && x[0].trim() !== "");
 
     const allJobRuns = client.useData2<[string, string, string, string, string, string, string, string, string]>(
@@ -74,18 +76,20 @@ export function JobsPage(): React.JSX.Element {
                             <BranchSelect
                                 branch={currentBranchName}
                                 onChangeBranch={setCurrentBranchName}
-                                branchQuery={`SELECT DISTINCT BranchName FROM TestRuns WHERE StartDateTime >= DATE_ADD(MONTH, -1, NOW());`}
+                                branchQuery={`SELECT DISTINCT BranchName
+                                              FROM TestRuns
+                                              WHERE StartDateTime >= DATE_ADD(MONTH, -1, NOW());`}
                             />
                         </Fit>
                     </RowStack>
                 </Fit>
-                <JobList>
-                    {sections.map(section => (
-                        <>
-                            <Fit>
-                                <Header3>{section}</Header3>
-                            </Fit>
-                            <>{allJobs.filter(x => {
+                {sections.map(section => (
+                    <>
+                        <Fit>
+                            <Header3>{section}</Header3>
+                        </Fit>
+                        <JobList>
+                            {allJobs.filter(x => {
                                 if (section === "Wolfs")
                                     return !x[0].includes("FM · ") && !x[0].includes("Run ");
                                 else if (section === "Forms mastering")
@@ -131,9 +135,9 @@ export function JobsPage(): React.JSX.Element {
                                         ))}
                                     </tbody>
                                 </>
-                            ))}</>
-                        </>))}
-                </JobList>
+                            ))}
+                            )
+                        </JobList></>))}
             </ColumnStack>
         </Root>
     );
@@ -179,7 +183,7 @@ const Header2 = styled.h2`
 `;
 
 const Header3 = styled.h3`
-    font-size: 16px;
+    font-size: 22px;
     line-height: 20px;
     margin-top: 16px;
 `;
