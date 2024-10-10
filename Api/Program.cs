@@ -12,10 +12,17 @@ Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 var host = new HoustonHost(
     config =>
     {
-        config.Everywhere.SetupEnvironment(
+        
+        config.OutOfHouston.SetupEnvironment(
             builder =>
             {
                 builder.SetPort(8124);
+            }
+        );
+        
+        config.Everywhere.SetupEnvironment(
+            builder =>
+            {
                 builder.SetBaseUrlPath("test-analytics");
                 builder.SetBeaconApplication("test-analytics");
                 builder.SetupApplicationIdentity(
