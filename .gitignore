@@ -1,6 +1,7 @@
 **/bin/*
 **/obj/*
 public
+Front/dist/static
 
 # Idea files
 **/.idea/workspace.xml
