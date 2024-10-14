@@ -8,6 +8,7 @@ public
 **/.idea/misc.xml
 **/.idea/*.iws
 **/.idea/vcs.xml
+**/.idea/projectSettingsUpdater.xml
 **/.idea/shelf/**
 .teamcity/.idea
 .teamcity/*.iml
