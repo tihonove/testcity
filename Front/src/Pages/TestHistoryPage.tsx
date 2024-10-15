@@ -12,11 +12,11 @@ export function TestHistoryPage(): React.JSX.Element {
     if (testId == null) return <div>Test id not specified</div>;
 
     const client = useClickhouseClient();
-    const [jobIds, jobLoading] = client.useData<[string]>(
+    const jobIds = client.useData2<[string]>(
         `SELECT DISTINCT JobId FROM TestRuns WHERE TestId = '${testId}'`,
         [testId]
     );
-    const [branches, branchesLoading] = client.useData<[string]>(
+    const branches = client.useData2<[string]>(
         `SELECT DISTINCT BranchName FROM TestRuns WHERE TestId = '${testId}'`,
         [testId, currentJobId]
     );
@@ -28,24 +28,21 @@ export function TestHistoryPage(): React.JSX.Element {
         return result;
     }, [testId, currentJobId, currentBranchName]);
 
-    const [stats, statsLoading] = client.useData<[string, number, string]>(
-        `SELECT TOP 1000 State, Duration, StartDateTime FROM TestRuns WHERE ${condition} ORDER BY StartDateTime DESC`,
+    const stats = client.useData2<[string, number, string]>(
+        `SELECT TOP 1000 State, Duration, StartDateTime FROM TestRuns WHERE ${condition} ORDER BY StartDateTime DESC;`,
         [condition]
     );
 
     const [testRunsPage, setTestRunsPage] = useState(1);
-    const [testRuns, _] = client.useData<[string, string, string, RunStatus, number, string, string, string, string]>(
+    const testRuns = client.useData2<[string, string, string, RunStatus, number, string, string, string, string]>(
         `SELECT JobId, JobRunId, BranchName, State, Duration, StartDateTime, AgentName, AgentOSName, JobUrl FROM TestRuns WHERE ${condition} ORDER BY StartDateTime DESC LIMIT ${50 * (testRunsPage - 1)}, 50`,
         [testId, testRunsPage, condition]
     );
 
-    const [totalRunCount, totalRunCountLoading] = client.useData<[string]>(
+    const totalRunCount = client.useData2<[string]>(
         `SELECT COUNT(*) FROM TestRuns WHERE ${condition}`,
         [condition]
     );
-
-    if (jobLoading || branchesLoading || statsLoading || totalRunCountLoading || testRuns == undefined)
-        return <div>Loading</div>;
 
     return (
         <div>

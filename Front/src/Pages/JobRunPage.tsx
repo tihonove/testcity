@@ -108,8 +108,8 @@ function SortHeaderLink(props: SortHeaderLinkProps): React.JSX.Element {
 
 export function JobRunPage(): React.JSX.Element {
     const { jobId, jobRunId } = useParams();
-    const [sortField, setSortField] = useSearchParamAsState("sort");
-    const [sortDirection, setSortDirection] = useSearchParamAsState("direction");
+    const [sortField, setSortField] = useSearchParamAsState("sort", "State");
+    const [sortDirection, setSortDirection] = useSearchParamAsState("direction", "desc");
     const [searchText, setSearchText, debouncedSearchValue, setSearchTextImmediate] = useSearchParamDebouncedAsState(
         "filter",
         500,
@@ -139,6 +139,17 @@ export function JobRunPage(): React.JSX.Element {
             ),
         [condition, sortField, sortDirection]
     );
+    
+    const sortStatus = (a: RunStatus, b: RunStatus): number => {
+        const order: Record<RunStatus, number> = {
+            'Failed': 1,
+            'Skipped': 2,
+            'Success': 3
+        };
+        
+        return order[a] - order[b];
+    };
+
 
     return (
         <Root>
@@ -208,7 +219,10 @@ export function JobRunPage(): React.JSX.Element {
                                         </TestRunsTableHeadRow>
                                     </thead>
                                     <tbody>
-                                        {testList.map(x => (
+                                        {(sortField === 'State' && sortDirection === 'desc' 
+                                            ? testList.sort((a, b) => sortStatus(a[0], b[0])) 
+                                            : testList)
+                                            .map(x => (
                                             <TestRunsTableRow>
                                                 <StatusCell status={x[0]}>{x[0]}</StatusCell>
                                                 <TestNameCell>
@@ -222,7 +236,7 @@ export function JobRunPage(): React.JSX.Element {
                                                     <DropdownMenu caption={<KebabButton />}>
                                                         <MenuItem
                                                             component={RouterLinkAdapter}
-                                                            href={`/test-analytics/history?id=${encodeURIComponent(x[1])}&branch=${branchName}`}>
+                                                            href={`/test-analytics/history?id=${encodeURIComponent(x[1])}`}>
                                                             Show test history
                                                         </MenuItem>
                                                     </DropdownMenu>

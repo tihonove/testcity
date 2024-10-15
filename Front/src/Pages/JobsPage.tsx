@@ -2,19 +2,23 @@ import {ColumnStack, Fit, RowStack} from "@skbkontur/react-stack-layout";
 import * as React from "react";
 import styled from "styled-components";
 import {
+    MediaUiAPlayIcon,
     ShapeSquareIcon16Regular,
     ShareNetworkIcon,
 } from "@skbkontur/icons";
 import {useClickhouseClient} from "../ClickhouseClientHooksWrapper";
 import {BranchSelect} from "../TestHistory/BranchSelect";
-import {formatTestCounts, formatTestDuration, getLinkToJob, useSearchParamAsState} from "../Utils";
+import {formatTestCounts, formatTestDuration, getLinkToJob, toLocalTimeFromUtc, useSearchParamAsState} from "../Utils";
 import {Link} from "react-router-dom";
+import {ComboBox, MenuSeparator} from "@skbkontur/react-ui";
+import {JobComboBox} from "../Components/JobComboBox";
 
 export function JobsPage(): React.JSX.Element {
     const client = useClickhouseClient();
     const [currentBranchName, setCurrentBranchName] = useSearchParamAsState("branch");
+    const [currentGroup, setCurrentGroup] = useSearchParamAsState("group");
 
-    const sections = ["Wolfs", "Forms mastering", "Utilities"]
+    const allGroup = ["Wolfs", "Forms mastering", "Utilities"]
     const allJobs = client
         .useData2<[string]>(`SELECT DISTINCT JobId
                              FROM TestRuns
@@ -56,7 +60,7 @@ export function JobsPage(): React.JSX.Element {
                                         first_value(z.BranchName)  AS BranchName,
                                         first_value(z.AgentName)   AS AgentName,
                                         first_value(z.AgentOSName) AS AgentOSName,
-                                        min(z.StartDateTime)       AS StartDateTime,
+                                        min(z.StartDateTime) AS StartDateTime,
                                         max(z.StartDateTime) - min(z.StartDateTime) AS Duration
                                  FROM TestRunsByRun z
                                  where z.StartDateTime >= DATE_ADD(DAY, -3, NOW()) ${currentBranchName ? ` AND z.BranchName = '${currentBranchName}'` : ""}
@@ -64,7 +68,7 @@ export function JobsPage(): React.JSX.Element {
                                      JobRunId) AS aa
                                 ON aa.JobId == bb.JobId and aa.BranchName == bb.BranchName and
                        aa.StartDateTime == bb.MaxStartDateTime`,
-        ["1", currentBranchName]
+        ["1", currentBranchName, currentGroup]
     );
 
     return (
@@ -76,7 +80,7 @@ export function JobsPage(): React.JSX.Element {
                 <Fit>
                     <RowStack block baseline gap={2}>
                         <Fit>
-                            <Header2>All jobs</Header2>
+                            <JobComboBox value={currentGroup} items={allGroup} handler={setCurrentGroup}/>
                         </Fit>
                         <Fit>
                             <BranchSelect
@@ -89,7 +93,9 @@ export function JobsPage(): React.JSX.Element {
                         </Fit>
                     </RowStack>
                 </Fit>
-                {sections.map(section => (
+                {allGroup
+                    .filter(s => !currentGroup || s === currentGroup)
+                    .map(section => (
                     <>
                         <Fit>
                             <Header3>{section}</Header3>
@@ -118,7 +124,7 @@ export function JobsPage(): React.JSX.Element {
                                     <tbody>
                                     {allJobRuns
                                         .filter(x => x[0] === jobId[0])
-                                        .sort((a,b) => Number(a[1]) - Number(b[1]))
+                                        .sort((a,b) => Number(b[1]) - Number(a[1]))
                                         .map(x => (
                                             <tr>
                                                 <PaddingCell/>
@@ -133,7 +139,7 @@ export function JobsPage(): React.JSX.Element {
                                                         {formatTestCounts(x[5], x[8], x[9], x[10])}
                                                     </JobLinkWithResults>
                                                 </CountCell>
-                                                <StartedCell>{x[4]}</StartedCell>
+                                                <StartedCell>{toLocalTimeFromUtc(x[4])}</StartedCell>
                                                 <DurationCell>{formatTestDuration(x[7])}</DurationCell>
                                             </tr>
                                         ))}

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { ColumnStack, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import { ComboBox, MenuSeparator, Paging } from "@skbkontur/react-ui";
 import {
-    ArrowUiCornerOutUpRightIcon,
+    ArrowUiCornerOutUpRightIcon, BuildingHomeIcon16Regular, BuildingHomeIcon24Regular, BuildingHomeIcon32Regular,
     LogoMicrosoftIcon,
     MediaUiAPlayIcon,
     QuestionCircleIcon, ShapeCircleMIcon16Regular,
@@ -14,8 +14,10 @@ import { RunStatisticsChart } from "../RunStatisticsChart/RunStatisticsChart";
 import { formatDuration } from "../RunStatisticsChart/DurationUtils";
 import { Link } from "react-router-dom";
 import { BranchSelect } from "./BranchSelect";
+import {getOffsetTitle, toLocalTimeFromUtc} from "../Utils";
+import {JobComboBox} from "../Components/JobComboBox";
 
-export type RunStatus = "Success" | "Failed";
+export type RunStatus = 'Failed' | 'Skipped' | 'Success';
 
 interface TestHistoryProps {
     testId: string;
@@ -61,6 +63,13 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
     return (
         <ColumnStack gap={4} block stretch>
             <Fit>
+                <HomeHeader>
+                    <Link to={`/test-analytics/jobs`}>
+                        <HomeIcon size={16} /> All jobs
+                    </Link>
+                </HomeHeader>
+            </Fit>
+            <Fit>
                 <Title>Test History: {testId}</Title>
                 <SuiteName>{suiteId}</SuiteName>
             </Fit>
@@ -72,42 +81,7 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
             <Fit>
                 <RowStack gap={2}>
                     <Fit>
-                        <ComboBox
-                            value={props.jobId}
-                            getItems={async () => [undefined, <MenuSeparator />, ...props.jobIds]}
-                            onValueChange={x => {
-                                if (typeof x === "string" || x == undefined) props.onChangeJobId(x);
-                            }}
-                            itemToValue={x => (typeof x === "string" ? x : "")}
-                            valueToString={x => (typeof x === "string" ? x : "")}
-                            placeholder={"All jobs"}
-                            renderValue={x =>
-                                x == undefined ? (
-                                    <span>
-                                        {" "}
-                                        <MediaUiAPlayIcon /> All jobs
-                                    </span>
-                                ) : (
-                                    <span>
-                                        {" "}
-                                        <MediaUiAPlayIcon /> {x}
-                                    </span>
-                                )
-                            }
-                            renderItem={x =>
-                                x == undefined ? (
-                                    <span>
-                                        {" "}
-                                        <MediaUiAPlayIcon /> All jobs
-                                    </span>
-                                ) : (
-                                    <span>
-                                        {" "}
-                                        <MediaUiAPlayIcon /> {x}
-                                    </span>
-                                )
-                            }
-                        />
+                        <JobComboBox value={props.jobId} items={props.jobIds} handler={props.onChangeJobId}/>
                     </Fit>
                     <Fit>
                         <BranchSelect
@@ -130,7 +104,7 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
                             <th>Branch</th>
                             <th>Build</th>
                             <th>Agent</th>
-                            <th>Started</th>
+                            <th>Started {getOffsetTitle()}</th>
                             <th>Job Url</th>
                         </TestRunsTableHeadRow>
                     </thead>
@@ -154,7 +128,7 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
                                 <td>
                                     {x[7] == "Windows" ? <LogoMicrosoftIcon /> : <QuestionCircleIcon />} {x[6]}
                                 </td>
-                                <StartDateCell>{x[5]}</StartDateCell>
+                                <StartDateCell>{toLocalTimeFromUtc(x[5])}</StartDateCell>
                                 {x[8] && <GitLabLinkCell><Link to={x[8]} target="_blank" ><ArrowUiCornerOutUpRightIcon/></Link></GitLabLinkCell>}
                             </TestRunsTableRow>
                         ))}
@@ -168,6 +142,22 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
             </Fit>
         </ColumnStack>
     );
+}
+
+const HomeHeader = styled.h2``;
+
+function HomeIcon(props: { size: 16 | 24 | 32; }) {
+    switch (props.size) {
+        case 16:
+            return <BuildingHomeIcon16Regular />;
+            break;
+        case 24:
+            return <BuildingHomeIcon24Regular />;
+            break;
+        case 32:
+            return <BuildingHomeIcon32Regular />;
+            break;
+    }
 }
 
 const StatusCell = styled.td<{ status: RunStatus }>`

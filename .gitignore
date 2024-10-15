@@ -16,3 +16,4 @@ Front/dist/static
 .teamcity/target
 InspectCodeCache/**
 **/.idea/dictionaries
+**/.idea/dataSources*

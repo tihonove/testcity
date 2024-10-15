@@ -8,6 +8,7 @@ import "./CommonStyles/Fonts.css";
 import "./CommonStyles/Reset.css";
 import { GlobalStyle } from "./CommonStyles/GlobalStyle";
 import {Suspense} from "react";
+import {Loader} from "./Components/Loader";
 
 const root = createRoot(document.getElementById("root")!);
 
@@ -15,7 +16,7 @@ root.render(
     <React.StrictMode>
         <BrowserRouter>
             <TestAnalyticsThemeProvider>
-                <Suspense fallback="Loading...">
+                <Suspense fallback={<Loader />}>
                     <GlobalStyle />
                     <App />
                 </Suspense>

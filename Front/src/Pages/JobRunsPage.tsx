@@ -1,12 +1,25 @@
 import * as React from "react";
 import { Link, useParams } from "react-router-dom";
-import {formatTestCounts, formatTestDuration, getLinkToJob, useSearchParamAsState} from "../Utils";
+import {
+    formatTestCounts,
+    formatTestDuration,
+    getLinkToJob,
+    getOffsetTitle,
+    toLocalTimeFromUtc,
+    useSearchParamAsState
+} from "../Utils";
 import { BranchSelect } from "../TestHistory/BranchSelect";
-import { LogoMicrosoftIcon, QuestionCircleIcon, ShapeSquareIcon32Regular, ShareNetworkIcon } from "@skbkontur/icons";
+import {
+    BuildingHomeIcon16Regular,
+    BuildingHomeIcon24Regular, BuildingHomeIcon32Regular,
+    LogoMicrosoftIcon,
+    QuestionCircleIcon,
+    ShapeSquareIcon32Regular,
+    ShareNetworkIcon
+} from "@skbkontur/icons";
 import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
 import { ColumnStack, Fit } from "@skbkontur/react-stack-layout";
 import styled from "styled-components";
-import {RunStatus} from "../TestHistory/TestHistory";
 
 export function JobRunsPage(): React.JSX.Element {
     const { jobId } = useParams();
@@ -20,7 +33,7 @@ export function JobRunsPage(): React.JSX.Element {
             JobRunId,
             first_value(b.BranchName) AS BranchName,
             first_value(b.AgentName)  AS AgentName,
-            min(b.StartDateTime)      AS StartDateTime,
+            min(b.StartDateTime) AS StartDateTime,
             count(b.TestId)           AS TotalTestCount,
             countIf(b.State = 'Success') AS SuccessCount,
             countIf(b.State = 'Skipped') AS SkippedCount,
@@ -38,6 +51,13 @@ export function JobRunsPage(): React.JSX.Element {
     
     return (
         <ColumnStack block stretch gap={2}>
+            <Fit>
+                <HomeHeader>
+                    <Link to={`/test-analytics/jobs`}>
+                        <HomeIcon size={16} /> All jobs
+                    </Link>
+                </HomeHeader>
+            </Fit>
             <Fit>
                 <Header1>
                     <ShapeSquareIcon32Regular /> {jobId}
@@ -58,7 +78,7 @@ export function JobRunsPage(): React.JSX.Element {
                             <th>branch</th>
                             <th></th>
                             <th>agent</th>
-                            <th>started</th>
+                            <th>started {getOffsetTitle()}</th>
                             <th>duration</th>
                         </tr>
                     </thead>
@@ -79,7 +99,7 @@ export function JobRunsPage(): React.JSX.Element {
                                 <AgentCell>
                                     {/windows/.test(x[9]) ? <LogoMicrosoftIcon /> : <QuestionCircleIcon />} {x[3]}
                                 </AgentCell>
-                                <StartedCell>{x[4]}</StartedCell>
+                                <StartedCell>{toLocalTimeFromUtc(x[4])}</StartedCell>
                                 <DurationCell>{formatTestDuration(x[10])}</DurationCell>
                             </tr>
                         ))}
@@ -88,6 +108,22 @@ export function JobRunsPage(): React.JSX.Element {
             </Fit>
         </ColumnStack>
     );
+}
+
+const HomeHeader = styled.h2``;
+
+function HomeIcon(props: { size: 16 | 24 | 32; }) {
+    switch (props.size) {
+        case 16:
+            return <BuildingHomeIcon16Regular />;
+            break;
+        case 24:
+            return <BuildingHomeIcon24Regular />;
+            break;
+        case 32:
+            return <BuildingHomeIcon32Regular />;
+            break;
+    }
 }
 
 const Header1 = styled.h1`
