@@ -1,0 +1,15 @@
+tpsa: Application/41b44950db6049b8a2d57db5b078fe95
+configurations:
+  - configuration:
+      binaryDefaults:
+        binaryPackageName: Kontur.TestAnalytics.Api
+        entryPointName: TestAnalyticsApiApplication
+  - environment: Environment/85769deb7fbf4625a81817c6ce0d688d # Cloud
+    configuration:
+      resources:
+        cpu:
+          request: 0.02
+          limit: 1
+        memory:
+          request: 110 MB
+          limit: 512 MB

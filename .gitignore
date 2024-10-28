@@ -17,3 +17,5 @@ Front/dist/static
 InspectCodeCache/**
 **/.idea/dictionaries
 **/.idea/dataSources*
+
+.env
