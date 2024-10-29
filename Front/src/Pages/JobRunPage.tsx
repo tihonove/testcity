@@ -134,7 +134,7 @@ export function JobRunPage(): React.JSX.Element {
     const getTestList = React.useCallback(
         () =>
             client.useData2<[RunStatus, string, number, string]>(
-                `SELECT TOP 100 State, TestId, Duration, StartDateTime FROM TestRuns WHERE ${condition} ORDER BY ${sortField ?? "StartDateTime"} ${sortDirection ?? "ASC"}`,
+                `SELECT TOP 100 State, TestId, Duration, StartDateTime FROM TestRunsByRun WHERE ${condition} ORDER BY ${sortField ?? "StartDateTime"} ${sortDirection ?? "ASC"}`,
                 [condition, sortField, sortDirection]
             ),
         [condition, sortField, sortDirection]

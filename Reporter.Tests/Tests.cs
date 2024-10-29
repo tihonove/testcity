@@ -112,7 +112,7 @@ public class Tests
         await TestRunsUploader.UploadAsync(runInfo, lines);
     }
 
-    [Explicit("для ручного запуска")]
+    [Ignore("для ручного запуска")]
     [Test]
     public async Task RecreateTable()
     {
