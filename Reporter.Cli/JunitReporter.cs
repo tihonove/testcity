@@ -8,7 +8,7 @@ using Vostok.Logging.Abstractions;
 
 namespace Kontur.TestAnalytics.Reporter.Cli;
 
-public class JunitReporter
+public  class JunitReporter
 {
     public JunitReporter(JunitReporterOptions options, ILog log)
     {
@@ -18,93 +18,179 @@ public class JunitReporter
 
     public async Task DoAsync()
     {
-        var reportPaths = ReportPathResolver.GetReportPaths(options.ReportsPaths);
-
-        foreach (var reportPath in reportPaths)
+        var testCountForWholeJob = new TestCount();
+        var testRunsForWholeJob = new List<TestRun>();
+        foreach (var reportPath in ReportPathResolver.GetReportPaths(options.ReportsPaths))
         {
-            var testRunLines = HandleReport(reportPath);
-            await UploadTestRuns(testRunLines);
+            log.Info($"Start handling the report {reportPath}");
+            
+            var testRunsFromReport = CollectTestRunsFromJunit(reportPath);
+            testCountForWholeJob += testRunsFromReport.counter;
+            testRunsForWholeJob.AddRange(testRunsFromReport.testRuns);
+            
+            log.Debug(testRunsFromReport.counter.ToString());
         }
+        
+        log.Debug(testCountForWholeJob.ToString());
+        await UploadTestRuns(testRunsForWholeJob);
+        
+        ВзорватьсяЕслиНетТестов(testCountForWholeJob);
+
+        var jobInfo = GetFullJobInfo(testCountForWholeJob);
+        await UploadJobInfo(jobInfo);
     }
 
-    private IEnumerable<TestRun> HandleReport(string reportPath)
+    private void ВзорватьсяЕслиНетТестов(TestCount testCountForWholeJob)
     {
-        log.Info($"Start handling the report {reportPath}");
-        
-        var startDateTime = DateTime.Now;
-        var report = XDocument.Load(reportPath);
+        //TODO: скорей всего стоит удалить 1.12.2024,
+        //TODO: взрываемся если не нашли junit/тесты в нём и при этом не проставили флаг noJunit 
+        if (testCountForWholeJob.Total == 0 && !options.NoJunit)
+            throw new Exception($"Не нашли ни одного junit отчёта или теста в них по маске {options.ReportsPaths}. " +
+                                "Если хочешь отправлять метрику по не тестовым Job'ам, проставь флаг --noJunit");
+    }
+
+    private (TestCount counter, List<TestRun> testRuns) CollectTestRunsFromJunit(string reportPath)
+    {
         var isReportModified = false;
+        var report = XDocument.Load(reportPath);
         var root = report.Root!;
         
+        var testRuns = new List<TestRun>();
         if (root.Name.LocalName != "testsuites")
         {
             log.Error($"File is not junit report: {reportPath}");
-            yield break;
+            return (new TestCount(), testRuns);
         }
 
+        var testCount = new TestCount();
+        var startDateTime = GetStartDateTime();
         foreach (var testCase in root.XPathSelectElements("./testsuite/testcase"))
         {
             var testSuite = testCase.Parent!;
             var testId = $"{testSuite.Attribute("name")!.Value.Replace(".dll", "")}: " +
-                         $"{testCase.Attribute("classname")!.Value}.{testCase.Attribute("name")!.Value}";
+                         $"{string.Join(".", testCase.Attribute("classname")!.Value.Split(".").SkipLast(1))}." +
+                         $"{testCase.Attribute("name")!.Value}";
 
             var failure = testCase.Element("failure");
+            var skipped = testCase.Element("skipped");
             if (failure is not null && !failure.Value.Contains("Test history"))
             {
                 isReportModified = true;
                 failure.Value = $"{failure.Value}\n\nTest history http://singular/test-analytics/history/?id={Uri.EscapeDataString(testId)}";
             }
 
-            yield return new TestRun
+            var testStatus = GetStatus(skipped is not null, failure is not null);
+            CalculateTestCount(testStatus, testCount);
+            
+            testRuns.Add(new TestRun
             {
                 TestId = testId,
-                TestResult = GetTestCaseResult(testCase.Element("skipped") is not null, failure is not null),
+                TestResult = testStatus,
                 Duration = double.TryParse(testCase.Attribute("time")!.Value, CultureInfo.InvariantCulture, out var time) 
                     ? TimeSpan.FromSeconds(time).Milliseconds 
                     : 0,
-                StartDateTime = DateTime.TryParse(testSuite.Attribute("timestamp")?.Value, out var timeStamp)
-                    ? timeStamp
-                    : startDateTime
-            };
+                StartDateTime = startDateTime
+            });
         }
 
+        if (isReportModified) 
+            SaveModifiedReport(reportPath, report);
+        
+        return (testCount, testRuns);
+    }
+
+    private static FullJobInfo GetFullJobInfo(TestCount testCount)
+    {
+        var startDateTime = GetStartDateTime();
+        var endDateTime = DateTime.Now;
+        
+        var shortJobInfo = GetJobRunInfo();
+        return new FullJobInfo
+        {
+            JobUrl = shortJobInfo.JobUrl,
+            JobId = shortJobInfo.JobId,
+            JobRunId = shortJobInfo.JobRunId,
+            BranchName = shortJobInfo.BranchName,
+            AgentName = shortJobInfo.AgentName,
+            AgentOSName = shortJobInfo.AgentOSName,
+            State = GetJobStatus(),
+            StartDateTime = startDateTime,
+            EndDateTime = endDateTime,
+            Duration = (long)(endDateTime - startDateTime).TotalMilliseconds,
+            Triggered = Environment.GetEnvironmentVariable("GITLAB_USER_EMAIL") ?? throw new InvalidOperationException("GITLAB_USER_EMAIL environment variable is not set."),
+            PipelineSource = Environment.GetEnvironmentVariable("CI_PIPELINE_SOURCE") ?? throw new InvalidOperationException("CI_PIPELINE_SOURCE environment variable is not set."),
+            CommitSha = Environment.GetEnvironmentVariable("CI_COMMIT_SHA") ?? throw new InvalidOperationException("CI_COMMIT_SHA environment variable is not set."),
+            CommitMessage = Environment.GetEnvironmentVariable("CI_COMMIT_MESSAGE") ?? throw new InvalidOperationException("CI_COMMIT_MESSAGE environment variable is not set."),
+            CommitAuthor = Environment.GetEnvironmentVariable("CI_COMMIT_AUTHOR") ?? throw new InvalidOperationException("CI_COMMIT_AUTHOR environment variable is not set."),
+            ProjectId = Environment.GetEnvironmentVariable("CI_PROJECT_ID") ?? throw new InvalidOperationException("CI_PROJECT_ID environment variable is not set."),
+            CustomStatusMessage = Environment.GetEnvironmentVariable("CUSTOM_STATUS_MESSAGE") ?? string.Empty,
+            TotalTestsCount = testCount.Total,
+            SuccessTestsCount = testCount.Success,
+            FailedTestsCount = testCount.Failed,
+            SkippedTestsCount = testCount.Skipped
+        };
+    }
+
+    private static DateTime GetStartDateTime() =>
+        DateTime.Parse(Environment.GetEnvironmentVariable("CI_JOB_STARTED_AT")
+                       ?? throw new InvalidOperationException("CI_JOB_STARTED_AT environment variable is not set."));
+
+    private static JobStatus GetJobStatus() =>
+        new Dictionary<string, JobStatus>
+        {
+            { "success", JobStatus.Success },
+            { "failed", JobStatus.Failed },
+            { "canceled", JobStatus.Canceled },
+            { "timedout", JobStatus.Timeouted },
+        }[Environment.GetEnvironmentVariable("CI_JOB_STATUS") ?? throw new InvalidOperationException("CI_JOB_STATUS environment variable is not set.")];
+
+    private static TestResult GetStatus(bool isSkipped, bool isFailed)
+    {
+        if (isSkipped) return TestResult.Skipped;
+        if (isFailed) return TestResult.Failed;
+        return TestResult.Success;
+    }
+    private static void CalculateTestCount(TestResult status, TestCount testCount)
+    {
+        testCount.Total++;
+        if (status == TestResult.Success) testCount.Success++;
+        if (status == TestResult.Failed) testCount.Failed++;
+        if (status == TestResult.Skipped) testCount.Skipped++;
+    }
+
+    private void SaveModifiedReport(string reportPath, XDocument report)
+    {
         if (options.DryRun)
         {
             log.Info($"Report file {reportPath} will be modified by Test Analytics");
-            yield break;
         }
-
-        if (isReportModified)
+        else
         {
             report.Save(reportPath);
             log.Info($"Report file {reportPath} modified by Test Analytics");
         }
     }
-
-    private static TestResult GetTestCaseResult(bool isSkipped, bool isFailed)
-    {
-        if (isSkipped)
-            return TestResult.Skipped;
-
-        // ReSharper disable once ConvertIfStatementToReturnStatement
-        if (isFailed)
-            return TestResult.Failed;
-
-        return TestResult.Success;
-    }
     
-    private async Task UploadTestRuns(IEnumerable<TestRun> testRunLines)
+    private async Task UploadTestRuns(List<TestRun> testRuns)
     {
-        var testRuns = testRunLines.ToList();
         if (options.DryRun)
-        {
             log.Info($"Test runs will be uploaded to Test History Analytics. Batch size: ({testRuns.Count})");
-            await Task.FromResult(testRuns);
-        }
         else
         {
-            await TestRunsUploader.UploadAsync(GetJobRunInfo(), testRuns);
+            if (testRuns.Count > 0)
+                await TestRunsUploader.UploadAsync(GetJobRunInfo(), testRuns);
             log.Info($"Test runs uploaded to Test History Analytics. Batch size: ({testRuns.Count})");
+        }
+    }
+    
+    private async Task UploadJobInfo(FullJobInfo jobInfo)
+    {
+        if (options.DryRun)
+            log.Info("Job Info will be uploaded to Test History Analytics");
+        else
+        {
+            await TestRunsUploader.JobInfoUploadAsync(jobInfo);
+            log.Info("Job Info uploaded to Test History Analytics");
         }
     }
     

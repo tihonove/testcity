@@ -16,6 +16,13 @@ public static class TestRunsUploader
     {
         return UploadAsync(jobRunInfo, lines.ToAsyncEnumerable());
     }
+    
+    public static async Task JobInfoUploadAsync(FullJobInfo jobInfo)
+    {
+        await using var connection = CreateConnection();
+        var uploader = new JobInfoUploaderInternal(connection);
+        await uploader.UploadAsync(jobInfo);
+    }
 
     private static ClickHouseConnection CreateConnection()
     {
