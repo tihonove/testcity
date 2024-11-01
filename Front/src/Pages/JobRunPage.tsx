@@ -74,9 +74,9 @@ function TestName(props: TestNameProps): React.JSX.Element {
     }, [props.value]);
     return (
         <>
-            {splitValue.slice(-2).join(".")}
-            <TestNamePrefix onClick={() => props.onSetSearchValue(splitValue.slice(0, -2).join("."))}>
-                {splitValue.slice(0, -2).join(".")}
+            {splitValue[1]}
+            <TestNamePrefix onClick={() => props.onSetSearchValue(splitValue[0])}>
+                {splitValue[0]}
             </TestNamePrefix>
         </>
     );
