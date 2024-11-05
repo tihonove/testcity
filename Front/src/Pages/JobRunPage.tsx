@@ -100,7 +100,7 @@ export function JobRunPage(): React.JSX.Element {
     const client = useClickhouseClient();
 
     const [[testMinDate, branchName]] = client.useData2<[string, string]>(
-        `select StartDateTime, BranchName from JobRunsMV where JobId = '${jobId}' and JobRunId = '${jobRunId}'`,
+        `select StartDateTime, BranchName from JobInfo where JobId = '${jobId}' and JobRunId = '${jobRunId}'`,
         [jobId, jobRunId]
     );
 
@@ -138,11 +138,11 @@ export function JobRunPage(): React.JSX.Element {
                 <Fit>
                     <JobHeader>
                         <Link to={`/test-analytics/jobs`}>
-                            <HomeIcon size={16} /> All jobs  
+                            <HomeIcon size={16} /> All jobs
                         </Link>
                         <ArrowARightIcon size={16} />
                         <Link to={`/test-analytics/jobs/${jobId}`}>
-                            <JonIcon size={16} />  {jobId}
+                            <JonIcon size={16} /> {jobId}
                         </Link>
                     </JobHeader>
                 </Fit>
@@ -221,7 +221,7 @@ export function JobRunPage(): React.JSX.Element {
                                                     <DropdownMenu caption={<KebabButton />}>
                                                         <MenuItem
                                                             component={RouterLinkAdapter}
-                                                            href={`/test-analytics/history?id=${encodeURIComponent(x[1])}`}>
+                                                            href={`/test-analytics/history?id=${encodeURIComponent(x[1])}&runId=${jobRunId}`}>
                                                             Show test history
                                                         </MenuItem>
                                                     </DropdownMenu>

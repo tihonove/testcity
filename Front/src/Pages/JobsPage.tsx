@@ -1,6 +1,6 @@
 import {ColumnStack, Fit, RowStack} from "@skbkontur/react-stack-layout";
 import * as React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import {
     ShapeSquareIcon16Regular,
     ShareNetworkIcon,
@@ -110,7 +110,7 @@ export function JobsPage(): React.JSX.Element {
                                                 <NumberCell>
                                                     <Link to={getLinkToJob(x[1], x[3])}>#{x[1]}</Link>
                                                 </NumberCell>
-                                                <BranchCell>
+                                                <BranchCell branch={x[2]}>
                                                     <ShareNetworkIcon/> {x[2]}
                                                 </BranchCell>
                                                 <CountCell>
@@ -185,11 +185,18 @@ const PaddingCell = styled.td`
     width: 12px;
 `;
 
-const BranchCell = styled.td`
+const BranchCell = styled.td<{ branch: string }>`
     max-width: 200px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    
+    ${props => props.branch == "master" && css`
+        border-radius: 20px;
+        background: #8ccbff;
+        display: inline;
+        padding: 2px 13px 2px 8px !important;
+  `}
 `;
 
 const CountCell = styled.td`

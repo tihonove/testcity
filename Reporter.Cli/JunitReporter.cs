@@ -94,7 +94,7 @@ public  class JunitReporter
                 TestId = testId,
                 TestResult = testStatus,
                 Duration = double.TryParse(testCase.Attribute("time")!.Value, CultureInfo.InvariantCulture, out var time) 
-                    ? TimeSpan.FromSeconds(time).Milliseconds 
+                    ? (long)TimeSpan.FromSeconds(time).TotalMilliseconds
                     : 0,
                 StartDateTime = startDateTime
             });

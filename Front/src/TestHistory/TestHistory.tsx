@@ -47,6 +47,7 @@ interface TestHistoryProps {
             jobUrl: string,
         ]
     >;
+    runIdBreadcrumb: string | undefined;
 }
 
 function splitTestId(testId: string): [string, string] {
@@ -65,12 +66,19 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
             <Fit>
                 <HomeHeader>
                     <Link to={`/test-analytics/jobs`}>
-                        <HomeIcon size={16} /> All jobs  
+                        <HomeIcon size={16} /> All jobs
                     </Link>
                     <ArrowARightIcon size={16} />
                     <Link to={`/test-analytics/jobs/${props.jobIds[0]}`}>
-                        <JonIcon size={16} />  {props.jobIds[0]}  
+                        <JonIcon size={16} /> {props.jobIds[0]}
                     </Link>
+                    {props.runIdBreadcrumb && <>
+                        <ArrowARightIcon size={16}/>
+                        <Link to={`/test-analytics/jobs/${props.jobIds[0]}/runs/${props.runIdBreadcrumb}`}>
+                            <JonIcon size={16}/> {props.runIdBreadcrumb}
+                        </Link>
+                    </>
+                    }
                 </HomeHeader>
             </Fit>
             <Fit>

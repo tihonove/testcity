@@ -10,11 +10,6 @@ import {
     ShapeSquareIcon16Regular,
     ShapeSquareIcon24Regular,
     ShapeSquareIcon32Regular,
-    ShareNetworkIcon,
-    UiFilterSortADefaultIcon16Regular,
-    UiFilterSortAHighToLowIcon16Regular,
-    UiFilterSortALowToHighIcon16Regular,
-    UiMenuDots3VIcon16Regular,
     BuildingHomeIcon16Regular,
     BuildingHomeIcon24Regular, 
     BuildingHomeIcon32Regular
@@ -56,7 +51,7 @@ export function HomeIcon(props: { size: 16 | 24 | 32; }) {
 export function ArrowARightIcon(props: { size: 16 | 24 | 32; }) {
     switch (props.size) {
         case 16:
-            return <ArrowARightIcon16Regular/>;
+            return <ArrowARightIcon16Regular style={{ margin: "auto 5px" }}/>;
         case 24:
             return <ArrowARightIcon24Regular />;
         case 32:

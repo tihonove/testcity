@@ -7,6 +7,7 @@ import { useSearchParamAsState } from "../Utils";
 export function TestHistoryPage(): React.JSX.Element {
     const [testId] = useSearchParamAsState("id");
     const [currentJobId, setCurrentJobId] = useSearchParamAsState("job");
+    const [runId, _] = useSearchParamAsState("runId");
     const [currentBranchName, setCurrentBranchName] = useSearchParamAsState("branch");
 
     if (testId == null) return <div>Test id not specified</div>;
@@ -59,6 +60,7 @@ export function TestHistoryPage(): React.JSX.Element {
                 totalRunCount={Number(totalRunCount[0][0])}
                 runsPage={testRunsPage}
                 onRunsPageChange={setTestRunsPage}
+                runIdBreadcrumb={runId}
             />
         </div>
     );
