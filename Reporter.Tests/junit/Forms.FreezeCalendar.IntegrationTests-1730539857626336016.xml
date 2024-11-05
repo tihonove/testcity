@@ -1,0 +1,17 @@
+<testsuites>
+  <testsuite name="Forms.FreezeCalendar.IntegrationTests.dll" tests="4" skipped="0" failures="0" errors="0" time="14.074309000000001" timestamp="2024-11-02T09:30:58" hostname="runner-xwgvg2526-project-17358-concurrent-9-fvrbtobs" id="0" package="Forms.FreezeCalendar.IntegrationTests.dll">
+    <properties />
+    <testcase classname="Kontur.Forms.FreezeCalendar.IntegrationTests.FreezeCalendarServiceTests" name="FreezeCalendarServiceTests.ChangeResources_ServiceShouldReturnNewItemOrNo(&quot;27.05.20xx|УОСН|NEW BAD TEST TITLE$&quot;,False)" time="7.0168400" />
+    <testcase classname="Kontur.Forms.FreezeCalendar.IntegrationTests.FreezeCalendarServiceTests" name="FreezeCalendarServiceTests.ChangeResources_ServiceShouldReturnNewItemOrNo(&quot;27.05.2777|УОСН|NEW GOOD TEST TITLE$&quot;,True)" time="6.9802950" />
+    <testcase classname="Kontur.Forms.FreezeCalendar.IntegrationTests.FreezeCalendarServiceTests" name="FreezeCalendarServiceTests.TestAuthoritySmokeRequest" time="0.0529030" />
+    <testcase classname="Kontur.Forms.FreezeCalendar.IntegrationTests.FreezeCalendarServiceTests" name="FreezeCalendarServiceTests.TestCalendarSmokeRequest" time="0.0242710" />
+    <system-out>
+Test Framework Informational Messages:
+NUnit Adapter 4.5.0.0: Test execution started
+Running all tests in /builds/forms/forms/freeze-calendar/FreezeCalendar.IntegrationTests/bin/Forms.FreezeCalendar.IntegrationTests.dll
+   NUnit3TestExecutor discovered 4 of 4 NUnit test cases using Current Discovery mode, Non-Explicit run
+NUnit Adapter 4.5.0.0: Test execution complete
+</system-out>
+    <system-err></system-err>
+  </testsuite>
+</testsuites>

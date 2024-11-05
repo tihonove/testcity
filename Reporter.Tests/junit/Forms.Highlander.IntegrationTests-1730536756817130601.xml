@@ -1,0 +1,54 @@
+<testsuites>
+  <testsuite name="Forms.Highlander.IntegrationTests.dll" tests="29" skipped="0" failures="0" errors="0" time="36.924104" timestamp="2024-11-02T08:39:18" hostname="runner-xwgvg2526-project-17358-concurrent-9-fvrbtobs" id="0" package="Forms.Highlander.IntegrationTests.dll">
+    <properties />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.AddImageAttachmentCommandTests" name="AddImageAttachmentCommandTests.BadImage_FixImage_ReturnOk(&quot;/builds/forms/forms/forms.tests/Highlander.IntegrationTests/TestData/AddAttachmentCommand/BadImage_FixImage_ReturnOk/zapiska_invalid.jpg&quot;)" time="5.4180130" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.AddImageAttachmentCommandTests" name="AddImageAttachmentCommandTests.BadImage_FixImage_ReturnOk(&quot;/builds/forms/forms/forms.tests/Highlander.IntegrationTests/TestData/AddAttachmentCommand/BadImage_FixImage_ReturnOk/zapiska_invalid.tif&quot;)" time="3.1107550" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.AddImageAttachmentCommandTests" name="AddImageAttachmentCommandTests.NotImageOrCorrupted_Throw(&quot;/builds/forms/forms/forms.tests/Highlander.IntegrationTests/TestData/AddAttachmentCommand/NotImage_Throw/not_image.jpg&quot;)" time="0.4611030" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.CheckCommandsTests" name="CheckCommandsTests.OK" time="9.8772600" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.CheckCommandsTests" name="CheckCommandsTests.OK_if_anotherGfv" time="3.4591320" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.CheckExternalUrlTests" name="CheckExternalUrlTests.TestBaseUriForLocalServices" time="0.2978430" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.GetPropertiesCommandTests" name="GetPropertiesCommandTests.OK(101012)" time="0.2653700" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.GetPropertiesCommandTests" name="GetPropertiesCommandTests.OK(103604)" time="0.6890860" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.GetPropertiesCommandTests" name="GetPropertiesCommandTests.OK(105605)" time="1.1183950" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.GetPropertiesCommandTests" name="GetPropertiesCommandTests.Throw_if_reportGuid_is_unknown(101012)" time="0.2282900" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.GetPropertiesCommandTests" name="GetPropertiesCommandTests.Throw_if_reportGuid_is_unknown(103604)" time="0.0804250" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.GetPropertiesCommandTests" name="GetPropertiesCommandTests.Throw_if_reportGuid_is_unknown(105605)" time="0.0272590" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.MakeAttachmentCommandTests" name="MakeAttachmentCommandTests.Ok_AndMakeFufMustUseItProperties" time="3.4616450" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.MakeCommandTests" name="MakeCommandTests.MakeFufWithAttachments" time="1.3535320" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.MakeCommandTests" name="MakeCommandTests.OK(101012)" time="0.3824850" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.MakeCommandTests" name="MakeCommandTests.OK(103604)" time="0.4671640" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.MakeCommandTests" name="MakeCommandTests.OK(105605)" time="0.5395130" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.MakeCommandTests" name="MakeCommandTests.Throw_if_reportGuid_is_unknown(101012)" time="0.0200930" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.MakeCommandTests" name="MakeCommandTests.Throw_if_reportGuid_is_unknown(103604)" time="0.0183440" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.MakeCommandTests" name="MakeCommandTests.Throw_if_reportGuid_is_unknown(105605)" time="0.0173090" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.MakeFufCommandTests" name="MakeFufCommandTests.MakeFufWithAttachments" time="0.5585450" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.MakeFufCommandTests" name="MakeFufCommandTests.MakeFufWithFormalAttachments" time="2.6119790" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.MakeFufCommandTests" name="MakeFufCommandTests.OK(101012)" time="0.7668260" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.MakeFufCommandTests" name="MakeFufCommandTests.OK(103604)" time="0.4735540" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.MakeFufCommandTests" name="MakeFufCommandTests.OK(105605)" time="0.2760510" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.MakeFufCommandTests" name="MakeFufCommandTests.TestDateInBankNotification" time="0.8479550" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.MakeFufCommandTests" name="MakeFufCommandTests.Throw_if_reportGuid_is_unknown(101012)" time="0.0661960" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.MakeFufCommandTests" name="MakeFufCommandTests.Throw_if_reportGuid_is_unknown(103604)" time="0.0177790" />
+    <testcase classname="Kontur.Forms.Highlander.IntegrationTests.MakeFufCommandTests" name="MakeFufCommandTests.Throw_if_reportGuid_is_unknown(105605)" time="0.0122030" />
+    <system-out>Got prop: c21f9ce6-7617-4c83-9c5c-49edc91c6af4:Файл/Документ/СвОбъектНал/СведТС/ТрСред/ДокРегТС/@НаимФайлДРТС|ca95728a-d110-4d8b-b2b5-a208821ceb12:Файл/Документ/СвОбъектНал/СведТС/ТрСред/ДокРегТС[2]/@НаимФайлДРТС
+
+Got prop: d332094b-1a95-4bca-97b0-68503aefb3c4:Файл/Документ/СвОбъектНал/СведТС/ТрСред/ДокРегТС/@НаимФайлДРТС|997eef12-4ed5-417f-a742-f59f3612c172:Файл/Документ/СвОбъектНал/СведТС/ТрСред/ДокРегТС[2]/@НаимФайлДРТС
+
+Got prop: НаимРеестрЖДТр_13:KO_RRGDTRNDS.2_6699_6677_0000000000000000000_20241102_a217ce29-7570-40ec-938f-3a4982b3c5c1.xml
+
+
+Test Framework Informational Messages:
+NUnit Adapter 4.5.0.0: Test execution started
+Running all tests in /builds/forms/forms/forms.tests/Highlander.IntegrationTests/bin/Forms.Highlander.IntegrationTests.dll
+   NUnit3TestExecutor discovered 29 of 29 NUnit test cases using Current Discovery mode, Non-Explicit run
+NUnit Adapter 4.5.0.0: Test execution complete
+</system-out>
+    <system-err>Warning - Got prop: c21f9ce6-7617-4c83-9c5c-49edc91c6af4:Файл/Документ/СвОбъектНал/СведТС/ТрСред/ДокРегТС/@НаимФайлДРТС|ca95728a-d110-4d8b-b2b5-a208821ceb12:Файл/Документ/СвОбъектНал/СведТС/ТрСред/ДокРегТС[2]/@НаимФайлДРТС
+
+Warning - Got prop: d332094b-1a95-4bca-97b0-68503aefb3c4:Файл/Документ/СвОбъектНал/СведТС/ТрСред/ДокРегТС/@НаимФайлДРТС|997eef12-4ed5-417f-a742-f59f3612c172:Файл/Документ/СвОбъектНал/СведТС/ТрСред/ДокРегТС[2]/@НаимФайлДРТС
+
+Warning - Got prop: НаимРеестрЖДТр_13:KO_RRGDTRNDS.2_6699_6677_0000000000000000000_20241102_a217ce29-7570-40ec-938f-3a4982b3c5c1.xml
+
+</system-err>
+  </testsuite>
+</testsuites>

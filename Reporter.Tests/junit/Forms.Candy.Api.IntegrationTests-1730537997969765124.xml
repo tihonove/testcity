@@ -1,0 +1,1348 @@
+<testsuites>
+  <testsuite name="Forms.Candy.Api.IntegrationTests.dll" tests="310" skipped="8" failures="0" errors="0" time="1169.0248804000014" timestamp="2024-11-02T08:59:59" hostname="runner-xwgvg2526-project-17358-concurrent-9-fvrbtobs" id="0" package="Forms.Candy.Api.IntegrationTests.dll">
+    <properties />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.AttachmentsController.AttachmentTests" name="AttachmentTests.AddLoadedAttachmentAsync" time="2.3670890" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.AttachmentsController.AttachmentTests" name="AttachmentTests.CreateEmptyAttachmentAsDraft" time="2.0863130" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.AttachmentsController.AttachmentTests" name="AttachmentTests.OpenLoadedAttachmentAsDraftAsync" time="1.3399890" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.AttachmentsController.AttachmentTests" name="AttachmentTests.OpenLoadedAttachmentAsDraftAsync2" time="0.0011900">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.AttachmentsController.AttachmentTests" name="AttachmentTests.OpenLoadedAttachmentAsDraftAsync3" time="0.0000150">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ExplanatoryNoteTests" name="ExplanatoryNoteTests.GetExpertErrorLogCorrectInnFromClientInfo" time="5.2365270" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ExplanatoryNoteTests" name="ExplanatoryNoteTests.GetExpertErrorLog" time="5.2575670" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ExplanatoryNoteTests" name="ExplanatoryNoteTests.GetExpertErrorLogInvalidInn" time="3.2820950" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ExplanatoryNoteTests" name="ExplanatoryNoteTests.GetExpertErrorLogInvalidKpp" time="3.2884180" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ExplanatoryNoteTests" name="ExplanatoryNoteTests.GetExpertErrorLogInvalidOkopf" time="2.0527680" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ExplanatoryNoteTests" name="ExplanatoryNoteTests.GetExpertErrorLogInvalidOkopf2" time="2.9288580" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ExplanatoryNoteTests" name="ExplanatoryNoteTests.GetExpertErrorLogInvalidOkved2" time="1.7950540" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ExplanatoryNoteTests" name="ExplanatoryNoteTests.GetExpertErrorLogInvalidOkved" time="3.4232320" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ExplanatoryNoteTests" name="ExplanatoryNoteTests.GetExpertErrorLogValidationErrorOkei" time="3.1267500" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ExplanatoryNoteTests" name="ExplanatoryNoteTests.GetExpertErrorLogValidationErrorPassiv" time="3.1834650" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ExplanatoryNoteTests" name="ExplanatoryNoteTests.GetExplanatoryNoteCorrectInnFromClientInfo" time="0.0000200">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FufController.DraftWithAttachmentTests" name="DraftWithAttachmentTests.ExistingDraft_GetZip(&quot;00000000-0000-0000-0000-000000000000&quot;,&quot;ce6cf03f-26d3-48b3-bc9b-faaf04f494be&quot;)" time="0.0003940">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ExplanatoryNoteTests" name="ExplanatoryNoteTests.GetExplanatoryNoteInvalidInn" time="0.0000110">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ExplanatoryNoteTests" name="ExplanatoryNoteTests.GetExplanatoryNoteInvalidKpp" time="1.0189080" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ExplanatoryNoteTests" name="ExplanatoryNoteTests.GetExplanatoryNoteInvalidOkopf" time="0.6601620" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ExplanatoryNoteTests" name="ExplanatoryNoteTests.GetExplanatoryNoteInvalidOkopf2" time="0.7782160" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FufController.DraftWithAttachmentTests" name="DraftWithAttachmentTests.SetInnerWithAttachmentAndTask_118001_WaitForTaskEnd" time="2.8384070" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ExplanatoryNoteTests" name="ExplanatoryNoteTests.GetExplanatoryNoteInvalidOkved" time="0.5819660" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ExplanatoryNoteTests" name="ExplanatoryNoteTests.GetExplanatoryNote" time="11.0820010" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FufController.DraftWithAttachmentTests" name="DraftWithAttachmentTests.SetInnerWithAttachmentAndTask_118001_WaitForTaskEnd_CheckFileChange" time="4.9314170" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ExplanatoryNoteTests" name="ExplanatoryNoteTests.GetExplanatoryNoteInvalidOkved2" time="0.9408200" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FufController.DraftWithAttachmentTests" name="DraftWithAttachmentTests.SetInnerWithSingleAttachment_118001_ReturnsFufWithOneAttachment" time="0.5128210" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ExplanatoryNoteTests" name="ExplanatoryNoteTests.GetExplanatoryNoteValidationErrorOkei" time="1.3759459" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FufController.DraftWithAttachmentTests" name="DraftWithAttachmentTests.SetRpnInnerWithTwoAttachments_1700202_ReturnsFufZip" time="0.0000150">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FufController.DraftWithAttachmentTests" name="DraftWithAttachmentTests.SetInnerWithSingleAttachment_118001_ReturnsFufZip" time="2.2020880" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FufController.GetPartialFufTests" name="GetPartialFufTests.GetPartialInnerNdflPersonTestAsync" time="26.9060780" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FufController.GetFufTests" name="GetFufTests.Envd" time="0.4847620" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FufController.GetFufTests" name="GetFufTests.stat" time="0.4585000" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FufController.GetFufTests" name="GetFufTests.Fss" time="0.5962970" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FufController.GetFufTests" name="GetFufTests.GetFuf_FileNameWithClientInfo_ShouldContainPfrCode(1103301)" time="1.5741200" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FufController.GetFufTests" name="GetFufTests.GetFuf_IsStatForm_ReturnsUtfWithBom" time="0.6837730" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FufController.GetFufTests" name="GetFufTests.GetFuf_PossibleConvertInFlashWay_ConvertedInFlashWay(110302)" time="0.5800610" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FufController.GetFufTests" name="GetFufTests.GetFuf_PossibleConvertInFlashWay_ConvertedInFlashWay(110303)" time="2.4881829" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FufController.GetFufTests" name="GetFufTests.GetFuf_PossibleConvertInFlashWay_ConvertedInFlashWay(110203)" time="6.2482850" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FufController.GetFufTests" name="GetFufTests.GetFuf_ReturnsUtfWithoutBom" time="0.9807430" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FufController.GetFufTests" name="GetFufTests.GetFufWithAttachments_AttachmentWithoutContent_InResult" time="0.6040790" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FufController.GetFufTests" name="GetFufTests.GetFufWithAttachments_HasAttachments_Returns" time="0.9049170" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FufController.GetFufTests" name="GetFufTests.GetFufWithAttachments_HasMultipleAttachments_Returns" time="0.4888980" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FufController.GetFufTests" name="GetFufTests.GetFufWithAttachments_HasNoAttachments_ReturnsEmpty" time="0.5443380" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPatch_Should_ConsiderOrderOfIndexesInChildren" time="1.2126050" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;Файл/1/Документ/1/НДФЛ6.2/1/СправДох&quot;,&quot;Файл/Документ/НДФЛ6.2/СправДох&quot;,113103,&quot;fuf.xml&quot;)" time="0.9470110" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох&quot;,&quot;Файл/Документ/НДФЛ6.2/СправДох&quot;,113103,&quot;fuf.xml&quot;)" time="0.8686400" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/1&quot;,&quot;Файл/Документ/НДФЛ6.2/СправДох/0&quot;,113103,&quot;fuf.xml&quot;)" time="0.8378820" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/2&quot;,&quot;Файл/Документ/НДФЛ6.2/СправДох/1&quot;,113103,&quot;fuf.xml&quot;)" time="1.5235290" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/ОбязНА&quot;,&quot;Файл/Документ/НДФЛ6.2/ОбязНА&quot;,113103,&quot;fuf.xml&quot;)" time="0.9337560" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/ОбязНА/1&quot;,&quot;Файл/Документ/НДФЛ6.2/ОбязНА/0&quot;,113103,&quot;fuf.xml&quot;)" time="0.6903880" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/[НомСпр=1]&quot;,&quot;Файл/Документ/НДФЛ6.2/СправДох/0&quot;,113103,&quot;fuf.xml&quot;)" time="0.6730910" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/[НомСпр=1]/ПолучДох/1/УдЛичнФЛ&quot;,&quot;Файл/Документ/НДФЛ6.2/СправДох/0/ПолучДох/УдЛичнФЛ&quot;,113103,&quot;fuf.xml&quot;)" time="1.0148820" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/[НомКорр=00]&quot;,&quot;Файл/Документ/НДФЛ6.2/СправДох/0&quot;,113103,&quot;fuf.xml&quot;)" time="0.8380200" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/[НомКорр=00][1]&quot;,&quot;Файл/Документ/НДФЛ6.2/СправДох/0&quot;,113103,&quot;fuf.xml&quot;)" time="0.5797420" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/[НомКорр=00][2]&quot;,&quot;Файл/Документ/НДФЛ6.2/СправДох/1&quot;,113103,&quot;fuf.xml&quot;)" time="0.7032310" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/[НомКорр=00]&quot;,&quot;Файл/Документ/НДФЛ6.2/СправДох/0&quot;,113103,&quot;fuf.xml&quot;)" time="0.9773030" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/1/СведДох/[Ставка=13][СумИтНалПер/НалПеречисл=110]&quot;,&quot;Файл/Документ/НДФЛ6.2/СправДох/0/СведДох/0&quot;,113103,&quot;fuf.xml&quot;)" time="0.6991820" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/1/СведДох/[СумИтНалПер/НалПеречисл=110]&quot;,&quot;Файл/Документ/НДФЛ6.2/СправДох/0/СведДох/0&quot;,113103,&quot;fuf.xml&quot;)" time="0.9895210" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/2/СведДох/[СумИтНалПер/НалПеречисл=2]&quot;,&quot;Файл/Документ/НДФЛ6.2/СправДох/1/СведДох/0&quot;,113103,&quot;fuf.xml&quot;)" time="0.8874240" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FufController.GetPartialFufTests" name="GetPartialFufTests.GetPartialInnerRSVPersonTestAsync" time="62.1925650" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;Файл/1/Документ/1/1/НДФЛ6.2/1/СправДох&quot;,&quot;Файл/Документ/НДФЛ6.2/СправДох&quot;,113103,&quot;fuf.xml&quot;)" time="0.9527150" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/[НомСпр=1]  /ПолучДох/1/УдЛичнФЛ&quot;,&quot;Файл/Документ/НДФЛ6.2/СправДох/0/ПолучДох/УдЛичнФЛ&quot;,113103,&quot;fuf.xml&quot;)" time="0.7796220" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.PrintController.PrintServiceTests" name="PrintServiceTests.PrintPersonTestAsync" time="13.0643150" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.PrintController.PrintServiceTests" name="PrintServiceTests.PrintTableToExcelTestAsync" time="7.8973810" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;/ЭДПФР/1/ЕФС-1/1/СЗВ/1/ЗЛ/[СНИЛС/1/innerText=834-882-238 38]&quot;,&quot;ЭДПФР/ЕФС-1/СЗВ/ЗЛ/0&quot;,3000102,&quot;3000102_1.xml&quot;)" time="43.3137320" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;/ЭДПФР/1/ЕФС-1/1/СЗВ/1/ЗЛ/СНИЛС/1&quot;,&quot;ЭДПФР/ЕФС-1/СЗВ/ЗЛ/СНИЛС&quot;,3000102,&quot;3000102_1.xml&quot;)" time="45.0579070" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;/ЭДПФР/1/ЕФС-1/1/СЗВ/1/ЗЛ/[СНИЛС/1/innerText=834-882-238 38]/СЗПГос/1/УЗиЗП/1/Период/1&quot;,&quot;ЭДПФР/ЕФС-1/СЗВ/ЗЛ/0/СЗПГос/0/УЗиЗП/0/Период&quot;,3000102,&quot;3000102_1.xml&quot;)" time="0.6219550" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;/ЭДПФР/1/ЕФС-1/1/СЗВ/1/ЗЛ/[СНИЛС/1/innerText=834-882-238 38]/СЗПГос/1/УЗиЗП/1/Период/1&quot;,&quot;ЭДПФР/ЕФС-1/СЗВ/ЗЛ/0/СЗПГос/0/УЗиЗП/0/Период&quot;,3000102,&quot;3000102_1.xml&quot;)" time="0.6756610" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;Файл/1/Документ/1/РасчетСВ/1/ОбязПлатСВ_КФХ/1/РасчСВ_КФХ/1/СведЧлКФХ/[СНИЛС=453-543-543 53][ФИО/1/Фамилия=пра][ФИО/1/Имя=рпарап][ФИО/1/Отчество=]/СНИЛС&quot;,&quot;Файл/Документ/РасчетСВ/ОбязПлатСВ_КФХ/РасчСВ_КФХ/СведЧлКФХ/0/СНИЛС&quot;,117206,&quot;fuf_1.xml&quot;)" time="1.4067680" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;/ЭДПФР/1/ЕФС-1/1/СЗВ/1/ЗЛ/[СНИЛС/1/innerText=834-882-238 38]/СЗПГос/1/УЗиЗП/1/Период/1/По/1/innerText&quot;,&quot;ЭДПФР/ЕФС-1/СЗВ/ЗЛ/0/СЗПГос/0/УЗиЗП/0/Период/По&quot;,3000102,&quot;3000102_1.xml&quot;)" time="1.9748240" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;Файл/1/Документ/1/РасчетСВ/1/ОбязПлатСВ_КФХ/1/РасчСВ_КФХ/1/СведЧлКФХ/[ФИО/Фамилия=пра]&quot;,&quot;Файл/Документ/РасчетСВ/ОбязПлатСВ_КФХ/РасчСВ_КФХ/СведЧлКФХ/0&quot;,117206,&quot;fuf_1.xml&quot;)" time="1.6255460" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;Файл/1/Документ/1/РасчетСВ/1/ОбязПлатСВ_КФХ/1/РасчСВ_КФХ/1/СведЧлКФХ/[ФИО/1/Фамилия=пра]&quot;,&quot;Файл/Документ/РасчетСВ/ОбязПлатСВ_КФХ/РасчСВ_КФХ/СведЧлКФХ/0&quot;,117206,&quot;fuf_1.xml&quot;)" time="1.2879430" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Should_Throw(&quot;Файл/1/Документ/1/НДФЛ6.2/1/СправДох/Test&quot;,&quot;InvalidPresentationPath: Path * not matches to schema (gfv 113103)&quot;,113103,&quot;fuf.xml&quot;)" time="0.6285309" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Should_Throw(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/[]&quot;,&quot;InvalidPresentationPath: Expression * must contain one equal character.&quot;,113103,&quot;fuf.xml&quot;)" time="0.6342880" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Should_Throw(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/[НомКорр=00][0]&quot;,&quot;InvalidPresentationPath: Index was out of range. *&quot;,113103,&quot;fuf.xml&quot;)" time="1.0829410" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Should_Throw(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/[a=b=c]&quot;,&quot;InvalidPresentationPath: Expression * must contain one equal character.&quot;,113103,&quot;fuf.xml&quot;)" time="0.9776080" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Should_Throw(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/[test]&quot;,&quot;InvalidPresentationPath: Expression * must contain one equal character.&quot;,113103,&quot;fuf.xml&quot;)" time="0.9012630" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Should_Throw(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/[НомКорр=00][test]&quot;,&quot;InvalidPresentationPath: The input string * was not in a correct format.&quot;,113103,&quot;fuf.xml&quot;)" time="0.7729440" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Returns_ResolvedPath(&quot;ЭДПФР/1/ЕФС-1/1/СЗВ/1/ДСВ/[ПлатежноеПоручение/1/Реквизиты/1/Номер/1/innerText=1][ПлатежноеПоручение/1/Реквизиты/1/Дата/1/innerText=2023-05-10][ПлатежноеПоручение/1/ДатаИсполнения/1/innerText=2023-05-10][Период/1/innerText=2023]/РеестрДСВ/1/ЗЛ/[ФИО/1/Фамилия/1/innerText=Хороший][ФИО/1/Имя/1/innerText=Сотрудник][ФИО/1/Отчество/1/innerText=Организации][СНИЛС/1/innerText=]/СНИЛС/1&quot;,&quot;ЭДПФР/ЕФС-1/СЗВ/ДСВ/0/РеестрДСВ/ЗЛ/44/СНИЛС&quot;,3000102,&quot;3000102_2.xml&quot;)" time="5.4394830" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Should_Throw(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/[НомКорр=00][]&quot;,&quot;InvalidPresentationPath: The input string * was not in a correct format.&quot;,113103,&quot;fuf.xml&quot;)" time="0.5281150" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Should_Throw(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/НомСпр=1]&quot;,&quot;InvalidPresentationPath: Path * not matches to schema (gfv 113103)&quot;,113103,&quot;fuf.xml&quot;)" time="0.7106430" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Should_Throw(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/[НомСпр=1&quot;,&quot;InvalidPresentationPath: Path * not matches to schema (gfv 113103)&quot;,113103,&quot;fuf.xml&quot;)" time="0.6264200" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Should_Throw(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/[[НомСпр=1]&quot;,&quot;InvalidPresentationPath: The input string * contain nested square brackets.&quot;,113103,&quot;fuf.xml&quot;)" time="0.5783700" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Should_Throw(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/[[НомСпр=1]]&quot;,&quot;InvalidPresentationPath: The input string * contain nested square brackets.&quot;,113103,&quot;fuf.xml&quot;)" time="0.6527500" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Should_Throw(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/[Test=0]&quot;,&quot;InvalidPresentationPath: PathNotFound: Can't find instance for path&quot;,113103,&quot;fuf.xml&quot;)" time="0.6561520" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Should_Throw(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/[НомСпр=1000]&quot;,&quot;InvalidPresentationPath: PathNotFound: Can't find instance for path&quot;,113103,&quot;fuf.xml&quot;)" time="0.5895280" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Should_Throw(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/[НомСпр=]&quot;,&quot;InvalidPresentationPath: PathNotFound: Can't find instance for path&quot;,113103,&quot;fuf.xml&quot;)" time="0.5804560" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Should_Throw(&quot;/Файл/1/Документ/1/НДФЛ6.2/1/СправДох/1/СведДох/[Ставка=13/\\]&quot;,&quot;InvalidPresentationPath: PathNotFound: Can't find instance for path&quot;,113103,&quot;fuf.xml&quot;)" time="0.5770769" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.ResolvePathTests" name="ResolvePathTests.ResolveInnerPath_Should_Throw(&quot;Файл/1/Документ/1/РасчетСВ/1/ОбязПлатСВ_КФХ/1/РасчСВ_КФХ/1/СведЧлКФХ/[ФИО/2/Фамилия=пра]&quot;,&quot;InvalidPresentationPath: PathNotFound: Can't find instance for path&quot;,117206,&quot;fuf_1.xml&quot;)" time="1.1714020" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.ConvertDraftTests" name="ConvertDraftTests.Convert_OldFss_OK(1900106,1900107)" time="0.9949510" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.ConvertDraftTests" name="ConvertDraftTests.ConvertDraft_DstIdUnknown_Throw" time="0.2009710" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.ConvertDraftTests" name="ConvertDraftTests.ConvertDraft_SrcIdUnknown_Throw" time="0.2607280" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.ConvertDraftTests" name="ConvertDraftTests.ConvertFromBO_ToBSO_Default_OK" time="13.0358610" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.ConvertDraftTests" name="ConvertDraftTests.ConvertFromBO_ToBSO_ThruFuf_Error" time="0.7170700" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.ConvertDraftTests" name="ConvertDraftTests.ConvertFromBO_ToBSO_ThruInner_OK" time="0.4898770" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.ConvertDraftTests" name="ConvertDraftTests.ConvertThruFuf" time="1.3592370" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.ConvertDraftTests" name="ConvertDraftTests.ConvertThruFuf_InvalidArgs_Throw" time="0.4275630" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.ConvertDraftTests" name="ConvertDraftTests.ConvertThruFuf_InvalidGfvs_Throw" time="0.4111950" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.ConvertDraftTests" name="ConvertDraftTests.ConvertThruFuf_SourceHasAttachments_AttachmentsIsNotCopied" time="1.3828890" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.ConvertDraftTests" name="ConvertDraftTests.ConvertThruFuf_ValidGfvs" time="1.0849000" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.ConvertDraftTests" name="ConvertDraftTests.ConvertThruInner" time="1.3135490" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.ConvertDraftTests" name="ConvertDraftTests.ConvertThruInner_FormDoesNotSupportAttachments_SourceHasAttachments_NotCopied" time="2.0896200" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.ConvertDraftTests" name="ConvertDraftTests.ConvertThruInner_InvalidArgs_Throw" time="0.4663360" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.ConvertDraftTests" name="ConvertDraftTests.ConvertThruInner_InvalidGfvs_Throw" time="0.3452820" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.ConvertDraftTests" name="ConvertDraftTests.ConvertThruInner_SameGfv_SourceHasAttachments_AttachmentsCopied" time="0.7732310" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.ConvertDraftTests" name="ConvertDraftTests.ConvertThruInner_SameGfv_SourceHasNotAttachments_DstHasNotAttachments" time="0.8211460" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.GetConvertionDestinationTests" name="GetConvertionDestinationTests.GetConvertionDestination" time="0.0323920" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.GetConvertionDestinationTests" name="GetConvertionDestinationTests.GetDestinationDestination_UnknownGfv_ReturnsEmptyList" time="0.0134540" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.GetConvertionSourceTests" name="GetConvertionSourceTests.GetConvertionSource" time="0.0132930" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.GetConvertionSourceTests" name="GetConvertionSourceTests.GetConvertionSource_UnknownGfv_ReturnsEmptyList" time="0.0057220" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.GfvListWithConvertersTests" name="GfvListWithConvertersTests.GetConversionDestinations" time="0.1129880" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ConvertController.GfvListWithConvertersTests" name="GfvListWithConvertersTests.GetConversionSources" time="0.0091830" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.CreateDraftController.CreateDraftFromFufTests" name="CreateDraftFromFufTests.CreateDraftFromBoFuf_WithStatScenario_ResultDraftHas4Group" time="0.3470829" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.CreateDraftController.CreateDraftFromFufTests" name="CreateDraftFromFufTests.CreateDraftFromDrive_OK" time="0.4084130" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.CreateDraftController.CreateDraftFromFufTests" name="CreateDraftFromFufTests.CreateDraftFromFuf_InvalidXml_ThrowsBadRequest" time="0.0527660" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.CreateDraftController.CreateDraftFromFufTests" name="CreateDraftFromFufTests.CreateDraftFromFuf_NotSupportedGfv_Throws" time="0.0312980" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.CreateDraftController.CreateDraftFromFufTests" name="CreateDraftFromFufTests.CreateDraftFromFuf_TooLarge_Throws" time="0.3277230" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.CreateDraftController.CreateDraftFromFufTests" name="CreateDraftFromFufTests.CreateDraftFromFuf_WithDraftId" time="0.4062480" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.CreateDraftController.CreateDraftFromFufTests" name="CreateDraftFromFufTests.CreateDraftFromFuf_WithExistentDeletedDraftId_ThrowsConflict" time="0.2248930" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.CreateDraftController.CreateDraftFromFufTests" name="CreateDraftFromFufTests.CreateDraftFromFuf_WithExistentDraftId_ThrowsConflict" time="0.1531200" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.CreateDraftController.CreateEmtpyDraftTests" name="CreateEmtpyDraftTests.CreateEmpty_DraftForNotSupportedGfv_Throw" time="0.0131890" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.CreateDraftController.CreateEmtpyDraftTests" name="CreateEmtpyDraftTests.CreateEmpty_NoDraftId" time="0.1093700" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.CreateDraftController.CreateEmtpyDraftTests" name="CreateEmtpyDraftTests.CreateEmpty_WithDraftId" time="0.2264310" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.DraftController.DraftControllerTests" name="DraftControllerTests.ClearDraft" time="1.1725220" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.DraftController.DraftControllerTests" name="DraftControllerTests.CopyDraft_CopiesInnerPresentationOnly" time="0.4755660" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.DraftController.DraftControllerTests" name="DraftControllerTests.CopyDraft_CopyAnotherNs_CopySuccessful" time="0.2323700" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.DraftController.DraftControllerTests" name="DraftControllerTests.CopyDraft_ToExistingDraftWithForceFlag_CopiesInnerPresentation" time="0.3555479" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.DraftController.DraftControllerTests" name="DraftControllerTests.DeleteDraft" time="0.1313350" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.DraftController.DraftControllerTests" name="DraftControllerTests.DraftExists" time="0.1086540" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.DraftController.DraftControllerTests" name="DraftControllerTests.GetDrafts" time="0.3408440" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.DraftController.DraftControllerTests" name="DraftControllerTests.GetProperties_DraftPropertiesDisabled_Throw" time="0.2206860" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.DraftController.DraftControllerTests" name="DraftControllerTests.GetProperties_DraftPropertiesEnabled_ReturnWithoutFufUri" time="1.2669550" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.DraftController.DraftControllerTests" name="DraftControllerTests.NormalizeDraft_NoNormalizationRules_Throw" time="0.3783970" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.DraftController.DraftControllerTests" name="DraftControllerTests.NormalizeDraft_RulesExists_Normalized" time="15.7816670" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.DraftController.DraftControllerTests" name="DraftControllerTests.RestoreDraft" time="0.1578510" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.EditorController.EditorControllerTests" name="EditorControllerTests.GetEditorInfo" time="2.0937860" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.EditorController.EditorControllerTests" name="EditorControllerTests.GetEditorUrl" time="0.0379640" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.CheckByPopdTests" name="CheckByPopdTests.Check_Ok" time="44.9774970" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ErrorLogTests" name="ErrorLogTests.ErrorLogFromHL_PassesErrorLogNameAndPropsName" time="3.3362900" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ErrorLogTests" name="ErrorLogTests.PrintErrorLog_OK" time="7.5045210" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ErrorLogTests" name="ErrorLogTests.PrintErrorLog_WrongErrorLogContentName_BadRequest" time="0.6035000" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ErrorLogController.ErrorLogTests" name="ErrorLogTests.PrintErrorLog_WrongPropsLogContentName_BadRequest" time="0.9689770" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ExternalControllers.DraftSettingsTests" name="DraftSettingsTests.GetDraftSettingsAsync_WhenDraftNotFound_Throws" time="0.0338330" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ExternalControllers.DraftSettingsTests" name="DraftSettingsTests.GetDraftSettingsAsync_NoSettings_SuccessPath" time="1.1492680" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ExternalControllers.DraftSettingsTests" name="DraftSettingsTests.SetDraftSettingsAsync_WhenDraftNotFound_Throws" time="0.0241469" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.ExternalControllers.DraftSettingsTests" name="DraftSettingsTests.SetDraftSettingsAsync_SuccessPath" time="1.1511920" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FileController.GetPropertiesTests" name="GetPropertiesTests.GetProperties_FromParsedExcel_ShouldReturnSomeProps" time="4.5446470" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FileController.ParseExcelTests" name="ParseExcelTests.ParseExcels_NoExcels_ThrowsException" time="0.0180720" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FileController.ParseExcelTests" name="ParseExcelTests.ParseExcels_OneFailed" time="6.4679900" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FileController.ParseExcelTests" name="ParseExcelTests.ParseExcels_OneParsed" time="6.5271840" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FileController.ParseExcelTests" name="ParseExcelTests.ParseExcels_TwoFailed" time="6.4315580" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FileController.ParseExcelTests" name="ParseExcelTests.ParseExcels_TwoParsed" time="6.3959800" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FileController.ParseExcelTests" name="ParseExcelTests.ParseExcels_TwoParsed_TwoFailed" time="6.3714620" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.FileController.PatchXmlTests" name="PatchXmlTests.WithAttachment_CorrectAttachmentFilename" time="0.2951760" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetDigestTests.GetDigestTests" name="GetDigestTests.GetDigest_FindExactBik" time="0.1105820" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.FocusTests" name="FocusTests.GetNameByInnTest" time="0.3311080" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.FocusTests" name="FocusTests.GetOneInn_ReturnsActiveOrg" time="0.1916620" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.FocusTests" name="FocusTests.GetOrgWithNoShortName_ReturnsLongName" time="0.1474880" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.FocusTests" name="FocusTests.GetSeveralEqualNamesByInnTest" time="0.1590990" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.FocusTests" name="FocusTests.GetSeveralNamesByInnTest" time="0.2478020" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.FocusTests" name="FocusTests.GetWrongAndGoodInn_NoException_GoodInnReturnsName" time="0.2392250" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.FocusTests" name="FocusTests.GetWrongInn_NoException" time="0.2630140" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.FocusTests" name="FocusTests.HandleTwelveNinesTest" time="0.1684090" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.FormsClientInfoRequisitesTests" name="FormsClientInfoRequisitesTests.GetOldRequisites_NoException" time="0.2038059" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.GetInnerDigestTests" name="GetInnerDigestTests.ПолучитьСправочник_СправочникаНет_ВернутьНепустойDigest" time="0.1263080" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.GetInnerDigestTests" name="GetInnerDigestTests.ПолучитьСправочник_СФильтрами_ПоискПоДвумКолонкам_ФильтрРаботает" time="0.5488140" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.GetInnerTests" name="GetInnerTests.FufHasDoubleSchemaLocationAttrs" time="0.5884730" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.GetInnerTests" name="GetInnerTests.GetCertificateExternalPaths_ResultIsValidAndNotEmpty" time="0.6560080" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.GetInnerTests" name="GetInnerTests.GetInner" time="0.4759850" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.GetInnerTests" name="GetInnerTests.GetInner_FormWithNormalization_OneConversionExpected" time="0.2400930" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.GetInnerTests" name="GetInnerTests.GetInner_WithExternalAndInternalPaths_ShouldCreateInnerInDraft" time="0.2775869" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.GetInnerTests" name="GetInnerTests.GetInner_WithExternalPathsOnly_ShouldNotConvertFufToInner" time="0.1724790" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.GetInnerTests" name="GetInnerTests.GetInnerAsync_BothInternalAndExternalPaths_ReturnBothData" time="0.1241170" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.GetInnerTests" name="GetInnerTests.GetTask_InvalidAttachment_ReturnError" time="1.4174770" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.GetInnerTests" name="GetInnerTests.HlInnerToInner_400106_Ok" time="0.6428640" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.GetInnerTests" name="GetInnerTests.SetHlInner_GetInner_400106" time="0.2652000" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.GetInnerTests" name="GetInnerTests.GetCurrentDateFromExternalPath" time="0.1223410" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.GetInnerController.GetRequisitesTests" name="GetRequisitesTests.GetRequisitesExternalPaths__ResultIsValidAndNotEmpty" time="0.1603980" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.CustomNormalizationTests" name="CustomNormalizationTests.CustomNormalize_WithEmptyRulesList_ShouldNormalizeAllDraft" time="13.7866690" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.CustomNormalizationTests" name="CustomNormalizationTests.CustomNormalize_WithPrefixPathContainedDoubleMultiplicity_ShouldHandle" time="1.3610020" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.CustomNormalizationTests" name="CustomNormalizationTests.CustomNormalize_WithPrefixPathContainedOneMultiplicity_ShouldHandle" time="1.4180700" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.Efs1DeleteInstancesTests" name="Efs1DeleteInstancesTests.DeleteAllPersons" time="65.5225360" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.Efs1DeleteInstancesTests" name="Efs1DeleteInstancesTests.DeleteAllWorkingEventsFromPerson" time="5.3991160" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.Efs1DeleteInstancesTests" name="Efs1DeleteInstancesTests.DeleteInstances_NormalizationWorked" time="1.7634390" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.Efs1DeleteInstancesTests" name="Efs1DeleteInstancesTests.DeleteSingleField" time="1.2516890" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.Efs1DeleteInstancesTests" name="Efs1DeleteInstancesTests.DeleteSinglePerson" time="1.4741740" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.Efs1DeleteInstancesTests" name="Efs1DeleteInstancesTests.DeleteSingleWorkingEventFromPerson" time="1.4533060" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.InnerNormalizationTests" name="InnerNormalizationTests.NormalizeDirtyMasks_ShouldUpdateCheckboxesAndPerformNormalization_IfDirtyMasksExists" time="1.2035120" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.InnerQueryTests" name="InnerQueryTests.QueryCollection_WithCountAggregation_Returns_OneItemWithCountValue" time="0.2016380" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.InnerQueryTests" name="InnerQueryTests.QueryCollection_WithFlatRequestOfInstances_Returns_FewItems" time="0.2590250" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.InnerQueryTests" name="InnerQueryTests.QueryCollection_WithNestedMultiplicityAndFixedFirstMultiplicity_Returns_OneItemWithCountValue" time="0.0265820" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.InnerQueryTests" name="InnerQueryTests.QueryCollection_WithNestedMultiplicityForSumAndCount_Returns_OneItemWithSumAndCountValues" time="0.1011590" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.InnerQueryTests" name="InnerQueryTests.QueryCollection_WithNestedMultiplicityWithoutFixedParentForSumAndCount_Returns_OneItemWithSumCountValues" time="0.0241530" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.InnerQueryTests" name="InnerQueryTests.QueryCollection_WithSkipTopFlatRequest_Returns_OneItem" time="0.0261000" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.InnerQueryTests" name="InnerQueryTests.QueryCollection_WithSumAndCountGrouppedByField_Returns_TwoItemsEachForGroup" time="0.0750300" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.InnerQueryTests" name="InnerQueryTests.QueryCollection_WithSumAndCountInOneRequest_Returns_OneItemWithSumAndCountValues" time="0.0261020" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.InnerQueryTests" name="InnerQueryTests.QueryCollection_WithSumGrouppedByFieldWithTernary_Returns_TwoItemsEachForGroup" time="0.0251030" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.InnerQueryTests" name="InnerQueryTests.QueryCollection_WithSumOfIncomeAggregation_Returns_OneItemWithCSumValue" time="0.0577220" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.PatchWithNormalizationTests" name="PatchWithNormalizationTests.PatchWithNormalizationTest" time="1.0140849" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.RsvMassActionTests" name="RsvMassActionTests.RsvAddMassActionTest" time="85.9598830" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.RsvMassActionTests" name="RsvMassActionTests.RsvAddReplaceActionTest" time="3.1308790" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.RsvMassActionTests" name="RsvMassActionTests.SmokeTest" time="1.4090430" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.SetValueMultipleTests" name="SetValueMultipleTests.SetMultipleForEfs1TestAsync" time="0.7309679" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.SzvmDeleteInstancesTests" name="SzvmDeleteInstancesTests.DeleteInstances_Should_CorrectDeleteInstances_WithSingleMultiplicity(Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.SzvmDeleteInstancesTests+DeleteInstancesTestCase)" time="1.4572200" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.SzvmDeleteInstancesTests" name="SzvmDeleteInstancesTests.DeleteInstances_Should_CorrectDeleteInstances_WithSingleMultiplicity(Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.SzvmDeleteInstancesTests+DeleteInstancesTestCase)" time="1.5821890" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.SzvmDeleteInstancesTests" name="SzvmDeleteInstancesTests.DeleteInstances_Should_CorrectDeleteInstances_WithSingleMultiplicity(Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.SzvmDeleteInstancesTests+DeleteInstancesTestCase)" time="1.4349130" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.SzvmDeleteInstancesTests" name="SzvmDeleteInstancesTests.DeleteInstances_Should_CorrectDeleteInstances_WithSingleMultiplicity(Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.SzvmDeleteInstancesTests+DeleteInstancesTestCase)" time="1.1851290" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.SzvmDeleteInstancesTests" name="SzvmDeleteInstancesTests.DeleteInstances_WithInsufficientParameters_Should_Return_400([],&quot;ЭДПФР/СЗВ-М/СписокЗЛ/ЗЛ&quot;)" time="0.1086660" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.SzvmDeleteInstancesTests" name="SzvmDeleteInstancesTests.DeleteInstances_WithInsufficientParameters_Should_Return_400(null,&quot;ЭДПФР/СЗВ-М/СписокЗЛ/ЗЛ&quot;)" time="0.0931500" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.SzvmDeleteInstancesTests" name="SzvmDeleteInstancesTests.DeleteInstances_WithInsufficientParameters_Should_Return_400([0],null)" time="0.0936910" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.SzvmDeleteInstancesTests" name="SzvmDeleteInstancesTests.DeleteInstances_WithInsufficientParameters_Should_Return_400([0],&quot;&quot;)" time="0.0882060" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.UtilSborDeleteInstancesTests" name="UtilSborDeleteInstancesTests.DeleteInstances_Should_CorrectDeleteInstances_WithFirstMultiplicity" time="1.4002690" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.InnerController.UtilSborDeleteInstancesTests" name="UtilSborDeleteInstancesTests.DeleteInstances_Should_CorrectDeleteInstances_WithNestedMultiplicity" time="1.3360920" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.StaticController.StaticControllerTests" name="StaticControllerTests.GetStatic_InvalidPathInfo_BadRequest(&quot;public/scripts/severity.js.map\&quot;],\&quot;sourceRoot\&quot;:\&quot;\0\&quot;}&quot;)" time="0.0083740" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.StaticController.StaticControllerTests" name="StaticControllerTests.GetStatic_NotExistedFileInfo_NotFound" time="0.1396260" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.StaticController.StaticControllerTests" name="StaticControllerTests.GetStatic_UnsafePath_NotFound(&quot;/etc/hosts&quot;)" time="0.0080730" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.CombinePersonsWithFufsTests" name="CombinePersonsWithFufsTests.CombineWithFufs_MergeSeveralValidFiles(113103)" time="22.4462270" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.CombinePersonsWithFufsTests" name="CombinePersonsWithFufsTests.CombineWithFufs_Combine_WithValidInput(113103)" time="22.5180120" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.CombinePersonsWithFufsTests" name="CombinePersonsWithFufsTests.CombineWithFufs_ThrowException_WithNotSupportedInput(113103,104813)" time="5.4155010" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.CombinePersonsWithFufsTests" name="CombinePersonsWithFufsTests.CombineWithFufs_ThrowException_WithNotSupportedInput(104813,113103)" time="5.2613860" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.CombinePersonsWithFufsTests" name="CombinePersonsWithFufsTests.CombineWithFufs_ReplaceSeveral_AllFilesInResult(113103)" time="22.8854760" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.CombineWithFufsTests" name="CombineWithFufsTests.TestCombineEfs1WithFufs([&quot;efs_1_1_from3000101&quot;],5,0,0)" time="22.5913020" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.CombineWithFufsTests" name="CombineWithFufsTests.TestCombineEfs1WithFufs([&quot;efs_1_2_from3000101&quot;],0,5,0)" time="5.5602840" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.CombineWithFufsTests" name="CombineWithFufsTests.TestCombineEfs1WithFufs([&quot;efs_1_3_from3000101&quot;],0,0,5)" time="5.5047250" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.CombineWithFufsTests" name="CombineWithFufsTests.TestCombineEfs1WithFufs([&quot;efs_1_1_from3000101&quot;, &quot;efs_1_2_from3000101&quot;],5,5,0)" time="22.5377910" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.CombineWithFufsTests" name="CombineWithFufsTests.TestCombineEfs1WithFufs([&quot;efs_1_1_from3000101&quot;, &quot;efs_1_2_from3000101&quot;, &quot;efs_1_3_from3000101&quot;],5,5,5)" time="23.2910110" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.ByPathCombinator_ImportFromPartialFuf_EmptyDraft_Single_SuccessPath(Replace)" time="5.8766239" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.ByPathCombinator_ImportFromPartialFuf_EmptyDraft_Single_SuccessPath(AddToEnd)" time="5.9391299" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.ByPathCombinator_ImportFromPartialFuf_Merge_ThrowsNotSupported" time="5.4167370" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.ByPathCombinator_ImportFromPartialFuf_Multiple_DifferentExcels_SuccessPath(AddToEnd,7)" time="6.2561320" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.ByPathCombinator_ImportFromPartialFuf_Multiple_DifferentExcels_SuccessPath(Replace,5)" time="6.1748710" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.ByPathCombinator_ImportFromPartialFuf_Multiple_SameExcels_SuccessPath(AddToEnd,6)" time="6.2545030" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.ByPathCombinator_ImportFromPartialFuf_Multiple_SameExcels_SuccessPath(Replace,4)" time="6.3308740" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.ByPathCombinator_ImportFromPartialFuf_Single_SuccessPath(AddToEnd,4)" time="6.3782010" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.ByPathCombinator_ImportFromPartialFuf_Single_SuccessPath(Replace,2)" time="6.0698220" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.Combinator_ImportFromPartialFuf_EmptyDraft_Single_SuccessPath(Merge)" time="5.6842020" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.Combinator_ImportFromPartialFuf_EmptyDraft_Single_SuccessPath(Replace)" time="5.5644360" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.Combinator_ImportFromPartialFuf_EmptyDraft_Single_SuccessPath(AddToEnd)" time="5.9084560" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.Combinator_ImportFromPartialFuf_Multiple_DifferentExcels_SuccessPath(Merge,7)" time="22.9282630" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.Combinator_ImportFromPartialFuf_Multiple_DifferentExcels_SuccessPath(AddToEnd,7)" time="23.3500290" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.Combinator_ImportFromPartialFuf_Multiple_DifferentExcels_SuccessPath(Replace,5)" time="6.5889490" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.Combinator_ImportFromPartialFuf_Multiple_SameExcels_SuccessPath(Merge,4)" time="6.0585690" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.Combinator_ImportFromPartialFuf_Multiple_SameExcels_SuccessPath(AddToEnd,6)" time="23.1267000" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.Combinator_ImportFromPartialFuf_Multiple_SameExcels_SuccessPath(Replace,2)" time="22.4666260" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.Combinator_ImportFromPartialFuf_Single_SuccessPath(Merge,4)" time="6.0374430" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.Combinator_ImportFromPartialFuf_Single_SuccessPath(AddToEnd,4)" time="6.6077890" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.ImportFromPartialFuf_NoExcels_ThrowsException(Merge,Default)" time="0.1978380" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.ImportFromPartialFuf_NoExcels_ThrowsException(Replace,Default)" time="0.0935940" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.ImportFromPartialFuf_NoExcels_ThrowsException(AddToEnd,Default)" time="0.1695980" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.ImportFromPartialFuf_NoExcels_ThrowsException(Merge,XmlCombinatorByPath)" time="0.1182990" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.ImportFromPartialFuf_NoExcels_ThrowsException(Replace,XmlCombinatorByPath)" time="0.1560770" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.ImportFromPartialFuf_NoExcels_ThrowsException(AddToEnd,XmlCombinatorByPath)" time="0.3346199" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.ApiControllerTests.TransferController.ImportFromPartialFufTests" name="ImportFromPartialFufTests.Combinator_ImportFromPartialFuf_Single_SuccessPath(Replace,2)" time="6.0693190" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.Format3Tests" name="Format3Tests.CreateEmpty" time="0.5520220" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.Format3Tests" name="Format3Tests.CreateFromFuf" time="0.8345640" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.Format3Tests" name="Format3Tests.GetErrorLog" time="3.3631550" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.Format3Tests" name="Format3Tests.SetBadSymbolsInInner_GetFufWorks" time="0.7212150" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.FufFilenameHelperTests" name="FufFilenameHelperTests.GetFilename([&quot;1900106&quot;, &quot;fuf.xml&quot;],1900106,&quot;0000000012_2015_06.xml&quot;)" time="0.0098780" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.FufFilenameHelperTests" name="FufFilenameHelperTests.GetFilename([&quot;423203&quot;, &quot;fuf.xml&quot;],423203,&quot;NO_BUHOTCH_1001_1001_7224030406722401001_20180228_fc7c0657-aff4-45b8-ab47-f276dd22c7b4.xml&quot;)" time="0.0028390" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.InternalApiTests.InternalApiScenarioTests" name="InternalApiScenarioTests.Create" time="0.1345370" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.InternalApiTests.InternalApiScenarioTests" name="InternalApiScenarioTests.MakeFuf_FromChangedDraft_FufIsChanged" time="0.6714460" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.InternalApiTests.InternalApiScenarioTests" name="InternalApiScenarioTests.MakeFuf_FromEmptyDraft" time="0.2937060" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.InternalApiTests.InternalApiScenarioTests" name="InternalApiScenarioTests.MakeFuf_InvalidDraftId_Throws" time="0.0283660" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.InternalApiTests.InternalApiScenarioTests" name="InternalApiScenarioTests.MakeFuf_NewDraftFromFuf_MakeIsFromInner" time="0.4914560" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.InternalApiTests.InternalApiScenarioTests" name="InternalApiScenarioTests.PatchFuf_FromEmptyDraft" time="0.3588460" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.InternalApiTests.InternalApiScenarioTests" name="InternalApiScenarioTests.UploadFuf_DraftWithActualInner_FufSameVersion_InnerUpVersion" time="0.7650200" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.InternalApiTests.InternalApiScenarioTests" name="InternalApiScenarioTests.UploadFuf_EmptyDraft_FufSameVersion_InnerUpVersionToFuf" time="0.3527480" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.InternalApiTests.InternalApiScenarioTests" name="InternalApiScenarioTests.UploadFuf_InvalidUri_ThrowsHttpResponseException" time="0.6841210" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.InternalApiTests.InternalApiScenarioTests" name="InternalApiScenarioTests.UploadFuf_NewDraft_SetsNewFufAndGeneratesInnerSameVersions" time="0.6724329" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.InternalApiTests.InternalController.GetInnerVersionTests" name="GetInnerVersionTests.GetInnerVersion_HasInner_Returns" time="0.1851020" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.InternalApiTests.InternalController.GetInnerVersionTests" name="GetInnerVersionTests.GetInnerVersion_InnerIsAbsent_ReturnsNull" time="0.1442600" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.InternalApiTests.InternalController.GetInnerVersionTests" name="GetInnerVersionTests.GetInnerVersion_UnknownDraft_DraftNotFound" time="0.0194530" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.PlaygroundTests" name="PlaygroundTests.GetPlaygroundPage_NoExceptions" time="1.4403350" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.RecognitionServiceWrapper_SyncCheckFnsRequirements_CheckFakePdfGetException" time="0.9285730" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;clarificationDemand.pdf&quot;,pdf, [pdf], =&gt; (isFixed=False, result=application/pdf))" time="1.2619720" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;SampleTorg12.pdf&quot;,pdf, [pdf], =&gt; (isFixed=False, result=application/pdf))" time="0.5985980" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;long1.pdf&quot;,pdf, [pdf], =&gt; (isFixed=False, result=application/pdf))" time="1.6339410" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;torg12_1.jpg&quot;,pdf, [pdf], =&gt; (isFixed=True, result=application/pdf))" time="3.6126810" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;tif_file.tif&quot;,pdf, [pdf], =&gt; (isFixed=True, result=application/pdf))" time="2.8952750" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;torg12_1.jpg&quot;,pdf, [pdf], =&gt; (isFixed=True, result=application/pdf))" time="3.5026400" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;tif_file.tif&quot;,pdf, [pdf], =&gt; (isFixed=True, result=application/pdf))" time="4.3682940" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;PNG_file.png&quot;,pdf, [pdf], =&gt; (isFixed=True, result=application/pdf))" time="2.9001220" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;JPG_as_PDF.pdf&quot;,pdf, [pdf], =&gt; (isFixed=True, result=application/pdf))" time="3.5995510" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;PNG_as_PDF.pdf&quot;,pdf, [pdf], =&gt; (isFixed=True, result=application/pdf))" time="2.6413990" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;clarificationDemand.pdf&quot;,png, [png], =&gt; (isFixed=False, result=application/pdf))" time="1.8851390" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;TIF_as_PDF.pdf&quot;,pdf, [pdf], =&gt; (isFixed=True, result=application/pdf))" time="4.1294370" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;SampleTorg12.pdf&quot;,png, [png], =&gt; (isFixed=False, result=application/pdf))" time="1.8192570" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;long1.pdf&quot;,png, [png], =&gt; (isFixed=False, result=application/pdf))" time="1.7600670" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;torg12_1.jpg&quot;,png, [png], =&gt; (isFixed=True, result=image/png))" time="5.2969280" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;tif_file.tif&quot;,png, [png], =&gt; (isFixed=True, result=image/png))" time="6.0755800" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;PNG_file.png&quot;,png, [png], =&gt; (isFixed=True, result=image/png))" time="3.0224260" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;JPG_as_PNG.png&quot;,png, [png], =&gt; (isFixed=True, result=image/png))" time="5.7799960" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;TIF_as_PNG.png&quot;,png, [png], =&gt; (isFixed=True, result=image/png))" time="7.0463390" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;PDF_as_PNG.png&quot;,png, [png], =&gt; (isFixed=False, result=image/png))" time="1.7549950" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;torg12_1.jpg&quot;,jpg, [jpg], =&gt; (isFixed=True, result=image/jpeg) - IsBUG!)" time="3.4920340">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;tif_file.tif&quot;,jpg, [jpg], =&gt; (isFixed=True, result=image/jpeg))" time="6.1728480" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;PNG_file.png&quot;,jpg, [jpg], =&gt; (isFixed=True, result=image/jpeg))" time="3.3219650" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;PDF_as_JPG.jpg&quot;,jpg, [jpg], =&gt; (isFixed=False, result=image/jpeg))" time="2.9837340" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;PNG_as_JPG.jpg&quot;,jpg, [jpg], =&gt; (isFixed=True, result=image/jpeg))" time="2.3574330" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;clarificationDemand.pdf&quot;,tif, [tif], =&gt; (isFixed=False, result=application/pdf))" time="4.8074220" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;TIF_as_JPG.jpg&quot;,jpg, [jpg], =&gt; (isFixed=True, result=image/jpeg))" time="4.8253210" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;SampleTorg12.pdf&quot;,tif, [tif], =&gt; (isFixed=False, result=application/pdf))" time="1.8058890" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;long1.pdf&quot;,tif, [tif], =&gt; (isFixed=False, result=application/pdf))" time="1.8498910" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;torg12_1.jpg&quot;,tif, [tif], =&gt; (isFixed=True, result=image/tiff))" time="5.0364070" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;tif_file.tif&quot;,tif, [tif], =&gt; (isFixed=True, result=image/tiff))" time="5.0015320" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;JPG_as_TIF.tif&quot;,tif, [tif], =&gt; (isFixed=True, result=image/tiff))" time="4.1854970" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;PNG_file.png&quot;,tif, [tif], =&gt; (isFixed=True, result=image/tiff))" time="5.1654340" />
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;PDF_as_TIF.tif&quot;,tif, [tif], =&gt; (isFixed=False, result=image/tiff) - IsBUG!)" time="4.2303930">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.Candy.Api.IntegrationTests.TaskTests.RecognitionIntegrationTests" name="RecognitionIntegrationTests.Test(&quot;PNG_as_TIF.tif&quot;,tif, [tif], =&gt; (isFixed=True, result=image/tiff))" time="6.4759529" />
+    <system-out>Run only on windows: На тимсити этот тест замьючен, на линуксе пока так отключен
+Run only on windows: На тимсити этот тест замьючен, на линуксе пока так отключен
+Чинят сервис
+
+Чинят сервис
+Used rpn resources
+System.Collections.Generic.Dictionary`2[System.String,System.String]
+
+System.Collections.Generic.Dictionary`2[System.String,System.String]
+
+
+resultDstFufStr:
+&lt;?xml version="1.0" encoding="windows-1251"?&gt;&lt;?F4FORM version="0.8"?&gt;&lt;F4REPORT xsd:schemaLocation="http://fz122.fss.ru/doc/f4form_2016.xsd" xmlns="http://fz122.fss.ru" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"&gt;&lt;TITLE REG_NUM="" KPS_NUM="" INN="" KPP="" NAME="" CRE_DATE="2024-11-02" CEO=" " Upoln="" /&gt;&lt;/F4REPORT&gt;
+
+&lt;?xml version="1.0" encoding="windows-1251"?&gt;&lt;Файл ИдФайл="NO_ENVD_6600_6600__20241102_d4b53300-1a5a-4030-948f-62e0aa8730b9" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 16.0" ВерсФорм="5.08"&gt;&lt;Документ КНД="1152016" КодНО="6600" ПоМесту="214" ДатаДок="02.11.2024"&gt;&lt;СвНП Тлф=""&gt;&lt;НПЮЛ НаимОрг="" ИННЮЛ="" КПП="669977001" /&gt;&lt;/СвНП&gt;&lt;Подписант ПрПодп="2"&gt;&lt;ФИО Фамилия="" Имя="" /&gt;&lt;СвПред НаимДок="" /&gt;&lt;/Подписант&gt;&lt;ЕНВД&gt;&lt;СумНалПУВД&gt;
+        &lt;СумПУВД ОКТМО="10000000" НалПУ="0"&gt;
+          &lt;РасчНалВД КодВД="01"&gt;
+            &lt;АдрПредДеят Индекс="111111" КодРегион="05" /&gt;
+            &lt;РасчНалВДАдр БазДоход="7500" К1="1.798" К2="1" НалБазаМес1="0" НалБазаМес2="0" НалБазаМес3="0" НалБаза="0" Ставка="0" СумНалИсчисл="0" /&gt;
+          &lt;/РасчНалВД&gt;
+        &lt;/СумПУВД&gt;
+      &lt;/СумНалПУВД&gt;&lt;СумНалПУ ПризнакНП="1" СумНалИсчислОбщ="0" НалПУРасч="0" /&gt;&lt;/ЕНВД&gt;&lt;/Документ&gt;&lt;/Файл&gt;
+
+&lt;?xml version="1.0" encoding="windows-1251"?&gt;&lt;Файл ИдФайл="NO_ENVD_0000_0000__20241102_65ddfec4-d2ea-4a34-b5f2-9b474b822619" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 16.0" ВерсФорм="5.09"&gt;&lt;Документ КНД="1152016" КодНО="0000" ПоМесту="215" ДатаДок="02.11.2024"&gt;&lt;СвНП&gt;&lt;НПЮЛ НаимОрг="ЗАО ПФ СКБ КОНТУР 111" ИННЮЛ="" КПП="669901001" /&gt;&lt;/СвНП&gt;&lt;Подписант ПрПодп="" /&gt;&lt;ЕНВД&gt;&lt;СумНалПУВД&gt;
+        &lt;СумПУВД ОКТМО="05000000" НалПУ="215433"&gt;
+          &lt;РасчНалВД КодВД="07"&gt;
+            &lt;АдрПредДеят КодРегион="77" /&gt;
+            &lt;РасчНалВДАдр БазДоход="1800" К1="1.798" К2="1" ФизПокМес1="111" КолДнейМес1="2" НалБазаМес1="23177" ФизПокМес2="22" НалБазаМес2="71201" ФизПокМес3="2" НалБазаМес3="6473" НалБаза="100851" Ставка="0" СумНалИсчисл="0" /&gt;
+          &lt;/РасчНалВД&gt;
+          &lt;РасчНалВД КодВД="09"&gt;
+            &lt;АдрПредДеят КодРегион="66" /&gt;
+            &lt;РасчНалВДАдр БазДоход="1800" К1="1.798" К2="1" ФизПокМес1="555" НалБазаМес1="1796202" НалБазаМес2="0" НалБазаМес3="0" НалБаза="1796202" Ставка="12" СумНалИсчисл="215544" /&gt;
+          &lt;/РасчНалВД&gt;
+        &lt;/СумПУВД&gt;
+      &lt;/СумНалПУВД&gt;&lt;СумНалПУ ПризнакНП="1" СумНалИсчислОбщ="215544" СумСВУм346.32.2="111" НалПУРасч="215433" /&gt;&lt;/ЕНВД&gt;&lt;/Документ&gt;&lt;/Файл&gt;
+
+&lt;?xml version="1.0" encoding="windows-1251"?&gt;&lt;Файл ИдФайл="NO_ENVD_6600_6600__20241102_bb21fa86-1609-4518-8a6e-527cc85dcf23" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 16.0" ВерсФорм="5.08"&gt;&lt;Документ КНД="1152016" КодНО="6600" ПоМесту="214" ДатаДок="02.11.2024"&gt;&lt;СвНП Тлф=""&gt;&lt;НПЮЛ НаимОрг="" ИННЮЛ="" КПП="669977001" /&gt;&lt;/СвНП&gt;&lt;Подписант ПрПодп="2"&gt;&lt;ФИО Фамилия="" Имя="" /&gt;&lt;СвПред НаимДок="" /&gt;&lt;/Подписант&gt;&lt;ЕНВД&gt;&lt;СумНалПУВД&gt;&lt;СумПУВД ОКТМО="10000000" НалПУ="0"&gt;&lt;РасчНалВД КодВД="01"&gt;&lt;АдрПредДеят Индекс="111111" КодРегион="05" /&gt;&lt;РасчНалВДАдр БазДоход="7500" К1="1.798" К2="1" НалБазаМес1="0" НалБазаМес2="0" НалБазаМес3="0" НалБаза="0" Ставка="0" СумНалИсчисл="0" /&gt;&lt;/РасчНалВД&gt;&lt;/СумПУВД&gt;&lt;/СумНалПУВД&gt;&lt;СумНалПУ ПризнакНП="1" СумНалИсчислОбщ="0" НалПУРасч="0" /&gt;&lt;/ЕНВД&gt;&lt;/Документ&gt;&lt;/Файл&gt;
+
+inner: {}
+
+
+&lt;!DOCTYPE html&gt;
+&lt;html class="page"&gt;
+&lt;head&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"/&gt;
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8"/&gt;
+    &lt;title&gt;Редактирование отчета&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;script src=" https://localhost:9182/candy/static/public/scripts/polyfill.min.js"&gt;&lt;/script&gt;
+&lt;script src=" https://localhost:9182/candy/v1/client.js"&gt;&lt;/script&gt;
+&lt;div id="pageContent"&gt;&lt;/div&gt;
+
+&lt;script type="text/javascript"&gt;
+    (function() {
+            window.CF.start("#pageContent",
+                {"ns":"e07bb1c2-2653-47d5-a876-d14f46a07e89","draftId":"6374f267-fb81-4bfa-b735-3ebd25c6e5d0","keformsUrl":"https://localhost:9182/candy/","kladrUrlBase":"https://kladr.dev.kontur","kladrUrlSuggest":"https://kladr.dev.kontur/v1/suggest","kladrUrlVerify":"https://kladr.dev.kontur/v1/verify","isIndividual":false,"isForeign":false,"abonId":"00000000-0000-0000-0000-000000000000","userId":"00000000-0000-0000-0000-000000000000","orgId":"00000000-0000-0000-0000-000000000000","year":"","period":"","prevGfvDraftId":"","theme":""},
+                function(error, form) {
+                    if (error) throw error;
+                    form.on("save", function () {
+                        window.top.close();
+                    });
+                });
+    })();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+{"Data":[["040173749","КУ ООО \"КБ \"ТАЛЬМЕНКА-БАНК\" - ГК \"АСВ\"","30101810000000000749","2277004739","222401001","Москва","г"]],"Meta":{"caption":"Справочник банков","columns":[{"headerText":"БИК","name":"code","withMarkdown":false},{"headerText":"Наименование банка","name":"name","withMarkdown":false},{"headerText":"Корр. счет","name":"correspondent-account","withMarkdown":false},{"headerText":"ИНН","name":"inn","withMarkdown":false},{"headerText":"КПП","name":"kpp","withMarkdown":false},{"headerText":"Адрес","name":"address","withMarkdown":false},{"headerText":"Тип места","name":"place-type","withMarkdown":false}],"defaultOrder":"code","gid":"4633"},"Verified":true,"SuitableCount":1}
+
+0000000012_2015_06.xml
+
+NO_BUHOTCH_1001_1001_7224030406722401001_20180228_fc7c0657-aff4-45b8-ab47-f276dd22c7b4.xml
+
+﻿&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Файл ВерсПрог="111" ВерсФорм="5.06"&gt;&lt;Документ КНД="1152016" /&gt;&lt;/Файл&gt;
+&lt;?xml version="1.0" encoding="windows-1251"?&gt;&lt;Файл ИдФайл="NO_ENVD____20241102_d7a52e9e-e905-4389-9650-c04f3ac98fb6" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 16.0" ВерсФорм="5.06"&gt;&lt;Документ КНД="1152016" ДатаДок="02.11.2024"&gt;&lt;СвНП ОКВЭД=""&gt;&lt;НПЮЛ НаимОрг="" ИННЮЛ="" КПП="" /&gt;&lt;/СвНП&gt;&lt;Подписант /&gt;&lt;ЕНВД /&gt;&lt;/Документ&gt;&lt;/Файл&gt;
+
+﻿&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Файл ВерсФорм="5.06"&gt;&lt;Документ КНД="1152016" /&gt;&lt;/Файл&gt;
+
+&lt;?xml version="1.0" encoding="windows-1251"?&gt;
+&lt;���� ������="NO_ENVD_6623_6600_6699000000669901001_20160628_ca175963-6f18-4708-9980-35fe706e1a55" ��������="������-�������, ������ 12.0" ��������="5.06"&gt;
+  &lt;�������� ���="1152016" ������="21" ��������="2016" �����="6600" �������="0" �������="214" �������="28.06.2016"&gt;
+    &lt;���� �����="01" ���="1234567890"&gt;
+      &lt;���� �������="���� � ��������� ��� � 32" �����="6699000000" ���="669977001" /&gt;
+    &lt;/����&gt;
+    &lt;��������� ������="2"&gt;
+      &lt;��� �������="���" ���="����" ��������="����������" /&gt;
+      &lt;������ �������="27" �������="���� � ��������� ��� � 32" /&gt;
+    &lt;/���������&gt;
+    &lt;����&gt;
+      &lt;����������&gt;
+        &lt;������� �����="10000000" �����="0"&gt;
+          &lt;��������� �����="01"&gt;
+            &lt;����������� ������="111111" ���������="05" /&gt;
+            &lt;������������ ��������="7500" �1="1.798" �2="1" ����������1="0" ����������2="0" ����������3="0" �������="0" ������="0" ������������="0" /&gt;
+          &lt;/���������&gt;
+        &lt;/�������&gt;
+      &lt;/����������&gt;
+      &lt;�������� ���������="1" ���������������="0" ���������="0" /&gt;
+    &lt;/����&gt;
+  &lt;/��������&gt;
+&lt;/����&gt;
+
+patchFufResult.Name: NO_BUHOTCH_0000_0000_6699000000669901001_20241102_f8a08bef-5600-42fd-b3ac-9f3b4b60bd52.xml
+&lt;?xml version="1.0" encoding="windows-1251"?&gt;&lt;Файл ИдФайл="NO_BUHOTCH_0000_0000_6699000000669901001_20241102_f8a08bef-5600-42fd-b3ac-9f3b4b60bd52" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 16.0" ВерсФорм="5.07"&gt;&lt;Документ КНД="0710099" ДатаДок="02.11.2024" Период="34" ОтчетГод="2018" НомКорр="0" ОКЕИ="384"&gt;&lt;СвНП ОКВЭД="12.00" ОКФС="10" ОКОПФ="11000"&gt;&lt;НПЮЛ НаимОрг="" ИННЮЛ="7401000000" КПП="669901001"&gt;&lt;АдрРФ КодРегион="" /&gt;&lt;/НПЮЛ&gt;&lt;/СвНП&gt;&lt;Подписант ПрПодп="1"&gt;&lt;ФИО Фамилия="ФамРук" Имя="ИмяРук" Отчество="ОтчРук" /&gt;&lt;/Подписант&gt;&lt;Баланс ОКУД="0710001"&gt;
+      &lt;Актив Пояснения="154" СумОтч="4760" СумПрдщ="4781" СумПрдшв="4790"&gt;
+        &lt;ВнеОбА Пояснения="87" СумОтч="422" СумПрдщ="433" СумПрдшв="441"&gt;
+          &lt;НематАкт Пояснения="1" СумОтч="2" СумПрдщ="3" СумПрдшв="4"&gt;
+            &lt;ВПокОПП Пояснения="5" НаимПок="6" СумОтч="7" СумПрдщ="9" СумПрдшв="8" /&gt;
+          &lt;/НематАкт&gt;
+          &lt;РезИсслед Пояснения="10" СумОтч="11" СумПрдщ="12" СумПрдшв="13"&gt;
+            &lt;ВПокОПП Пояснения="14" НаимПок="15" СумОтч="16" СумПрдщ="18" СумПрдшв="17" /&gt;
+          &lt;/РезИсслед&gt;
+          &lt;НеМатПоискАкт Пояснения="19" СумОтч="20" СумПрдщ="21" СумПрдшв="22"&gt;
+            &lt;ВПокОПП Пояснения="23" НаимПок="24" СумОтч="25" СумПрдщ="27" СумПрдшв="26" /&gt;
+          &lt;/НеМатПоискАкт&gt;
+          &lt;МатПоискАкт Пояснения="28" СумОтч="29" СумПрдщ="30" СумПрдшв="31"&gt;
+            &lt;ВПокОПП Пояснения="32" НаимПок="33" СумОтч="34" СумПрдщ="36" СумПрдшв="35" /&gt;
+          &lt;/МатПоискАкт&gt;
+          &lt;ОснСр Пояснения="37" СумОтч="38" СумПрдщ="39" СумПрдшв="40"&gt;
+            &lt;ВПокОПП Пояснения="41" НаимПок="42" СумОтч="43" СумПрдщ="45" СумПрдшв="44" /&gt;
+          &lt;/ОснСр&gt;
+          &lt;ВлМатЦен Пояснения="46" СумОтч="47" СумПрдщ="48" СумПрдшв="49"&gt;
+            &lt;ВПокОПП Пояснения="50" НаимПок="51" СумОтч="52" СумПрдщ="54" СумПрдшв="53" /&gt;
+          &lt;/ВлМатЦен&gt;
+          &lt;ФинВлож Пояснения="55" СумОтч="56" СумПрдщ="57" СумПрдшв="58"&gt;
+            &lt;ВПокОПП Пояснения="59" НаимПок="60" СумОтч="61" СумПрдщ="63" СумПрдшв="62" /&gt;
+          &lt;/ФинВлож&gt;
+          &lt;ОтлНалАкт Пояснения="64" СумОтч="65" СумПрдщ="66" СумПрдшв="67"&gt;
+            &lt;ВПокОПП Пояснения="68" НаимПок="69" СумОтч="70" СумПрдщ="72" СумПрдшв="71" /&gt;
+          &lt;/ОтлНалАкт&gt;
+          &lt;ВПокВнеОбА Пояснения="73" НаимПок="74" СумОтч="75" СумПрдщ="77" СумПрдшв="76" /&gt;
+          &lt;ПрочВнеОбА Пояснения="78" СумОтч="79" СумПрдщ="80" СумПрдшв="81"&gt;
+            &lt;ВПокОПП Пояснения="82" НаимПок="83" СумОтч="84" СумПрдщ="86" СумПрдшв="85" /&gt;
+          &lt;/ПрочВнеОбА&gt;
+        &lt;/ВнеОбА&gt;
+        &lt;ОбА Пояснения="150" СумОтч="4338" СумПрдщ="4348" СумПрдшв="4349"&gt;
+          &lt;Запасы Пояснения="91" СумОтч="3600" СумПрдщ="3603" СумПрдшв="3600"&gt;
+            &lt;ВПокОПП Пояснения="95" НаимПок="96" СумОтч="97" СумПрдщ="99" СумПрдшв="98" /&gt;
+          &lt;/Запасы&gt;
+          &lt;НДСПриобрЦен Пояснения="100" СумОтч="101" СумПрдщ="102" СумПрдшв="103"&gt;
+            &lt;ВПокОПП Пояснения="104" НаимПок="105" СумОтч="106" СумПрдщ="108" СумПрдшв="107" /&gt;
+          &lt;/НДСПриобрЦен&gt;
+          &lt;ДебЗад Пояснения="109" СумОтч="110" СумПрдщ="111" СумПрдшв="112"&gt;
+            &lt;ВПокОПП Пояснения="113" НаимПок="114" СумОтч="115" СумПрдщ="117" СумПрдшв="116" /&gt;
+          &lt;/ДебЗад&gt;
+          &lt;ФинВлож Пояснения="118" СумОтч="119" СумПрдщ="120" СумПрдшв="121"&gt;
+            &lt;ВПокОПП Пояснения="122" НаимПок="123" СумОтч="124" СумПрдщ="126" СумПрдшв="125" /&gt;
+          &lt;/ФинВлож&gt;
+          &lt;ДенежнСр Пояснения="127" СумОтч="128" СумПрдщ="129" СумПрдшв="130"&gt;
+            &lt;ВПокОПП Пояснения="131" НаимПок="132" СумОтч="133" СумПрдщ="135" СумПрдшв="134" /&gt;
+          &lt;/ДенежнСр&gt;
+          &lt;ВПокОбА Пояснения="136" НаимПок="137" СумОтч="138" СумПрдщ="140" СумПрдшв="139" /&gt;
+          &lt;ПрочОбА Пояснения="141" СумОтч="142" СумПрдщ="143" СумПрдшв="144"&gt;
+            &lt;ВПокОПП Пояснения="145" НаимПок="146" СумОтч="147" СумПрдщ="149" СумПрдшв="148" /&gt;
+          &lt;/ПрочОбА&gt;
+        &lt;/ОбА&gt;
+      &lt;/Актив&gt;
+      &lt;Пассив Пояснения="374" СумОтч="4760" СумПрдщ="4781" СумПрдшв="4790"&gt;
+        &lt;КапРез Пояснения="217" СумОтч="1235" СумПрдщ="1243" СумПрдшв="1245"&gt;
+          &lt;УставКапитал Пояснения="158" СумОтч="159" СумПрдщ="160" СумПрдшв="161"&gt;
+            &lt;ВПокОПП Пояснения="162" НаимПок="163" СумОтч="164" СумПрдщ="166" СумПрдшв="165" /&gt;
+            &lt;ВПокОПП Пояснения="225" НаимПок="226" СумОтч="227" СумПрдщ="229" СумПрдшв="228" /&gt;
+          &lt;/УставКапитал&gt;
+          &lt;СобствАкции Пояснения="167" СумОтч="168" СумПрдщ="169" СумПрдшв="170"&gt;
+            &lt;ВПокОПП Пояснения="171" НаимПок="172" СумОтч="173" СумПрдщ="175" СумПрдшв="174" /&gt;
+            &lt;ВПокОПП Пояснения="234" НаимПок="235" СумОтч="236" СумПрдщ="238" СумПрдшв="237" /&gt;
+          &lt;/СобствАкции&gt;
+          &lt;ПереоцВнеОбА Пояснения="176" СумОтч="177" СумПрдщ="178" СумПрдшв="179"&gt;
+            &lt;ВПокОПП Пояснения="180" НаимПок="181" СумОтч="182" СумПрдщ="184" СумПрдшв="183" /&gt;
+          &lt;/ПереоцВнеОбА&gt;
+          &lt;ДобКапитал Пояснения="185" СумОтч="186" СумПрдщ="187" СумПрдшв="188"&gt;
+            &lt;ВПокОПП Пояснения="189" НаимПок="190" СумОтч="191" СумПрдщ="193" СумПрдшв="192" /&gt;
+            &lt;ВПокОПП Пояснения="243" НаимПок="244" СумОтч="245" СумПрдщ="247" СумПрдшв="246" /&gt;
+          &lt;/ДобКапитал&gt;
+          &lt;РезКапитал Пояснения="194" СумОтч="195" СумПрдщ="196" СумПрдшв="197"&gt;
+            &lt;ВПокОПП Пояснения="198" НаимПок="199" СумОтч="200" СумПрдщ="202" СумПрдшв="201" /&gt;
+            &lt;ВПокОПП Пояснения="252" НаимПок="253" СумОтч="254" СумПрдщ="256" СумПрдшв="255" /&gt;
+          &lt;/РезКапитал&gt;
+          &lt;НераспПриб Пояснения="203" СумОтч="204" СумПрдщ="205" СумПрдшв="206"&gt;
+            &lt;ВПокОПП Пояснения="207" НаимПок="208" СумОтч="209" СумПрдщ="211" СумПрдшв="210" /&gt;
+            &lt;ВПокОПП Пояснения="261" НаимПок="262" СумОтч="263" СумПрдщ="265" СумПрдшв="264" /&gt;
+          &lt;/НераспПриб&gt;
+          &lt;ВПокКапРез Пояснения="212" НаимПок="213" СумОтч="214" СумПрдщ="216" СумПрдшв="215" /&gt;
+          &lt;ВПокКапРез Пояснения="266" НаимПок="267" СумОтч="268" СумПрдщ="270" СумПрдшв="269" /&gt;
+        &lt;/КапРез&gt;
+        &lt;ДолгосрОбяз Пояснения="316" СумОтч="1467" СумПрдщ="1473" СумПрдшв="1476"&gt;
+          &lt;ЗаемСредств Пояснения="275" СумОтч="276" СумПрдщ="277" СумПрдшв="278"&gt;
+            &lt;ВПокОПП Пояснения="279" НаимПок="280" СумОтч="281" СумПрдщ="283" СумПрдшв="282" /&gt;
+          &lt;/ЗаемСредств&gt;
+          &lt;ОтложНалОбяз Пояснения="284" СумОтч="285" СумПрдщ="286" СумПрдшв="287"&gt;
+            &lt;ВПокОПП Пояснения="288" НаимПок="289" СумОтч="290" СумПрдщ="292" СумПрдшв="291" /&gt;
+          &lt;/ОтложНалОбяз&gt;
+          &lt;ОценОбяз Пояснения="293" СумОтч="294" СумПрдщ="295" СумПрдшв="296"&gt;
+            &lt;ВПокОПП Пояснения="297" НаимПок="298" СумОтч="299" СумПрдщ="301" СумПрдшв="300" /&gt;
+          &lt;/ОценОбяз&gt;
+          &lt;ВПокДолгОб Пояснения="302" НаимПок="303" СумОтч="304" СумПрдщ="306" СумПрдшв="305" /&gt;
+          &lt;ПрочОбяз Пояснения="307" СумОтч="308" СумПрдщ="309" СумПрдшв="310"&gt;
+            &lt;ВПокОПП Пояснения="311" НаимПок="312" СумОтч="313" СумПрдщ="315" СумПрдшв="314" /&gt;
+          &lt;/ПрочОбяз&gt;
+        &lt;/ДолгосрОбяз&gt;
+        &lt;КраткосрОбяз Пояснения="370" СумОтч="2058" СумПрдщ="2065" СумПрдшв="2069"&gt;
+          &lt;ЗаемСредств Пояснения="320" СумОтч="321" СумПрдщ="322" СумПрдшв="323"&gt;
+            &lt;ВПокОПП Пояснения="324" НаимПок="325" СумОтч="326" СумПрдщ="328" СумПрдшв="327" /&gt;
+          &lt;/ЗаемСредств&gt;
+          &lt;КредитЗадолж Пояснения="329" СумОтч="330" СумПрдщ="331" СумПрдшв="332"&gt;
+            &lt;ВПокОПП Пояснения="333" НаимПок="334" СумОтч="335" СумПрдщ="337" СумПрдшв="336" /&gt;
+          &lt;/КредитЗадолж&gt;
+          &lt;ДоходБудущ Пояснения="338" СумОтч="339" СумПрдщ="340" СумПрдшв="341"&gt;
+            &lt;ВПокОПП Пояснения="342" НаимПок="343" СумОтч="344" СумПрдщ="346" СумПрдшв="345" /&gt;
+          &lt;/ДоходБудущ&gt;
+          &lt;ОценОбяз Пояснения="347" СумОтч="348" СумПрдщ="349" СумПрдшв="350"&gt;
+            &lt;ВПокОПП Пояснения="351" НаимПок="352" СумОтч="353" СумПрдщ="355" СумПрдшв="354" /&gt;
+          &lt;/ОценОбяз&gt;
+          &lt;ВПокКратОб Пояснения="356" НаимПок="357" СумОтч="358" СумПрдщ="360" СумПрдшв="359" /&gt;
+          &lt;ПрочОбяз Пояснения="361" СумОтч="362" СумПрдщ="363" СумПрдшв="364"&gt;
+            &lt;ВПокОПП Пояснения="365" НаимПок="366" СумОтч="367" СумПрдщ="369" СумПрдшв="368" /&gt;
+          &lt;/ПрочОбяз&gt;
+        &lt;/КраткосрОбяз&gt;
+      &lt;/Пассив&gt;
+    &lt;/Баланс&gt;&lt;ПрибУб ОКУД="0710002"&gt;
+      &lt;Выруч Пояснения="378" СумОтч="379" СумПред="380"&gt;
+        &lt;ДопПокОП Пояснения="381" НаимПок="382" СумОтч="383" СумПред="384" /&gt;
+      &lt;/Выруч&gt;
+      &lt;СебестПрод Пояснения="385" СумОтч="386" СумПред="387"&gt;
+        &lt;ДопПокОП Пояснения="388" НаимПок="389" СумОтч="390" СумПред="391" /&gt;
+      &lt;/СебестПрод&gt;
+      &lt;ВаловаяПрибыль Пояснения="392" СумОтч="-7" СумПред="-7"&gt;
+        &lt;ДопПокОП Пояснения="395" НаимПок="396" СумОтч="397" СумПред="398" /&gt;
+      &lt;/ВаловаяПрибыль&gt;
+      &lt;КомРасход Пояснения="399" СумОтч="400" СумПред="401"&gt;
+        &lt;ДопПокОП Пояснения="402" НаимПок="403" СумОтч="404" СумПред="405" /&gt;
+      &lt;/КомРасход&gt;
+      &lt;УпрРасход Пояснения="406" СумОтч="407" СумПред="408"&gt;
+        &lt;ДопПокОП Пояснения="409" НаимПок="410" СумОтч="411" СумПред="412" /&gt;
+      &lt;/УпрРасход&gt;
+      &lt;ПрибПрод Пояснения="413" СумОтч="-814" СумПред="-816"&gt;
+        &lt;ДопПокОП Пояснения="416" НаимПок="417" СумОтч="418" СумПред="419" /&gt;
+      &lt;/ПрибПрод&gt;
+      &lt;ДоходОтУчаст Пояснения="420" СумОтч="421" СумПред="422"&gt;
+        &lt;ДопПокОП Пояснения="423" НаимПок="424" СумОтч="425" СумПред="426" /&gt;
+      &lt;/ДоходОтУчаст&gt;
+      &lt;ПроцПолуч Пояснения="427" СумОтч="428" СумПред="429"&gt;
+        &lt;ДопПокОП Пояснения="430" НаимПок="431" СумОтч="432" СумПред="433" /&gt;
+      &lt;/ПроцПолуч&gt;
+      &lt;ПроцУпл Пояснения="434" СумОтч="435" СумПред="436"&gt;
+        &lt;ДопПокОП Пояснения="437" НаимПок="438" СумОтч="439" СумПред="440" /&gt;
+      &lt;/ПроцУпл&gt;
+      &lt;ПрочДоход Пояснения="441" СумОтч="442" СумПред="443"&gt;
+        &lt;ДопПокОП Пояснения="444" НаимПок="445" СумОтч="446" СумПред="447" /&gt;
+      &lt;/ПрочДоход&gt;
+      &lt;ПрочРасход Пояснения="448" СумОтч="449" СумПред="450"&gt;
+        &lt;ДопПокОП Пояснения="451" НаимПок="452" СумОтч="453" СумПред="454" /&gt;
+      &lt;/ПрочРасход&gt;
+      &lt;ПрибУбДоНал Пояснения="455" СумОтч="-407" СумПред="-408"&gt;
+        &lt;ДопПокОП Пояснения="458" НаимПок="459" СумОтч="460" СумПред="461" /&gt;
+      &lt;/ПрибУбДоНал&gt;
+      &lt;ТекНалПриб Пояснения="462" СумОтч="463" СумПред="464" /&gt;
+      &lt;ПостНалОбяз Пояснения="465" СумОтч="466" СумПред="467"&gt;
+        &lt;ДопПокОП Пояснения="468" НаимПок="469" СумОтч="470" СумПред="471" /&gt;
+      &lt;/ПостНалОбяз&gt;
+      &lt;ИзмНалОбяз Пояснения="472" СумОтч="473" СумПред="474"&gt;
+        &lt;ДопПокОП Пояснения="475" НаимПок="476" СумОтч="477" СумПред="478" /&gt;
+      &lt;/ИзмНалОбяз&gt;
+      &lt;ИзмНалАктив Пояснения="479" СумОтч="480" СумПред="481"&gt;
+        &lt;ДопПокОП Пояснения="482" НаимПок="483" СумОтч="484" СумПред="485" /&gt;
+      &lt;/ИзмНалАктив&gt;
+      &lt;Прочее Пояснения="486" СумОтч="487" СумПред="488"&gt;
+        &lt;ДопПокОП Пояснения="489" НаимПок="490" СумОтч="491" СумПред="492" /&gt;
+      &lt;/Прочее&gt;
+      &lt;ЧистПрибУб Пояснения="493" СумОтч="570" СумПред="571" /&gt;
+      &lt;РезПрцВОАНеЧист Пояснения="496" СумОтч="497" СумПред="498"&gt;
+        &lt;ДопПокОП Пояснения="499" НаимПок="500" СумОтч="501" СумПред="502" /&gt;
+      &lt;/РезПрцВОАНеЧист&gt;
+      &lt;РезПрОпНеЧист Пояснения="503" СумОтч="504" СумПред="505"&gt;
+        &lt;ДопПокОП Пояснения="506" НаимПок="507" СумОтч="508" СумПред="509" /&gt;
+      &lt;/РезПрОпНеЧист&gt;
+      &lt;СовФинРез Пояснения="600" СумОтч="1571" СумПред="1574" /&gt;
+      &lt;Справочно&gt;
+        &lt;БазПрибылАкц Пояснения="603" СумОтч="604" СумПред="605" /&gt;
+        &lt;РазводПрибылАкц Пояснения="606" СумОтч="607" СумПред="608" /&gt;
+      &lt;/Справочно&gt;
+    &lt;/ПрибУб&gt;&lt;Пояснения ОКУД="0710005" НаимФайлПЗ="" /&gt;&lt;АудитЗакл НаимФайлАЗ="" /&gt;&lt;/Документ&gt;&lt;/Файл&gt;
+
+fuf:
+&lt;?xml version="1.0" encoding="windows-1251"?&gt;
+&lt;Файл ИдФайл="NO_ENVD_6623_6600_6699000000669901001_20160628_ca175963-6f18-4708-9980-35fe706e1a55" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1152016" Период="21" ОтчетГод="2016" КодНО="6600" НомКорр="0" ПоМесту="214" ДатаДок="28.06.2016"&gt;
+    &lt;СвНП ОКВЭД="01" Тлф="1234567890"&gt;
+      &lt;НПЮЛ НаимОрг="МБОУ Г АСТРАХАНИ СОШ № 32" ИННЮЛ="6699000000" КПП="669977001" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="2"&gt;
+      &lt;ФИО Фамилия="КАЦ" Имя="ОЛЕГ" Отчество="ЕВГЕНЬЕВИЧ" /&gt;
+      &lt;СвПред НаимДок="27" НаимОрг="МБОУ Г АСТРАХАНИ СОШ № 32" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЕНВД&gt;
+      &lt;СумНалПУВД&gt;
+        &lt;СумПУВД ОКТМО="10000000" НалПУ="0"&gt;
+          &lt;РасчНалВД КодВД="01"&gt;
+            &lt;АдрПредДеят Индекс="111111" КодРегион="05" /&gt;
+            &lt;РасчНалВДАдр БазДоход="7500" К1="1.798" К2="1" НалБазаМес1="0" НалБазаМес2="0" НалБазаМес3="0" НалБаза="0" Ставка="0" СумНалИсчисл="0" /&gt;
+          &lt;/РасчНалВД&gt;
+        &lt;/СумПУВД&gt;
+      &lt;/СумНалПУВД&gt;
+      &lt;СумНалПУ ПризнакНП="1" СумНалИсчислОбщ="0" НалПУРасч="0" /&gt;
+    &lt;/ЕНВД&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+fuf:
+&lt;?xml version="1.0" encoding="windows-1251"?&gt;
+&lt;Файл ИдФайл="NO_ENVD_6623_6600_6699000000669901001_20160628_ca175963-6f18-4708-9980-35fe706e1a55" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1152016" Период="21" ОтчетГод="2016" КодНО="6600" НомКорр="0" ПоМесту="214" ДатаДок="28.06.2016"&gt;
+    &lt;СвНП ОКВЭД="01" Тлф="1234567890"&gt;
+      &lt;НПЮЛ НаимОрг="МБОУ Г АСТРАХАНИ СОШ № 32" ИННЮЛ="6699000000" КПП="669977001" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="2"&gt;
+      &lt;ФИО Фамилия="КАЦ" Имя="ОЛЕГ" Отчество="ЕВГЕНЬЕВИЧ" /&gt;
+      &lt;СвПред НаимДок="27" НаимОрг="МБОУ Г АСТРАХАНИ СОШ № 32" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЕНВД&gt;
+      &lt;СумНалПУВД&gt;
+        &lt;СумПУВД ОКТМО="10000000" НалПУ="0"&gt;
+          &lt;РасчНалВД КодВД="01"&gt;
+            &lt;АдрПредДеят Индекс="111111" КодРегион="05" /&gt;
+            &lt;РасчНалВДАдр БазДоход="7500" К1="1.798" К2="1" НалБазаМес1="0" НалБазаМес2="0" НалБазаМес3="0" НалБаза="0" Ставка="0" СумНалИсчисл="0" /&gt;
+          &lt;/РасчНалВД&gt;
+        &lt;/СумПУВД&gt;
+      &lt;/СумНалПУВД&gt;
+      &lt;СумНалПУ ПризнакНП="1" СумНалИсчислОбщ="0" НалПУРасч="0" /&gt;
+    &lt;/ЕНВД&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+fuf:
+&lt;?xml version="1.0" encoding="windows-1251"?&gt;
+&lt;Файл ИдФайл="NO_ENVD_6623_6600_6699000000669901001_20160628_ca175963-6f18-4708-9980-35fe706e1a55" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1152016" Период="21" ОтчетГод="2016" КодНО="6600" НомКорр="0" ПоМесту="214" ДатаДок="28.06.2016"&gt;
+    &lt;СвНП ОКВЭД="01" Тлф="1234567890"&gt;
+      &lt;НПЮЛ НаимОрг="МБОУ Г АСТРАХАНИ СОШ № 32" ИННЮЛ="6699000000" КПП="669977001" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="2"&gt;
+      &lt;ФИО Фамилия="КАЦ" Имя="ОЛЕГ" Отчество="ЕВГЕНЬЕВИЧ" /&gt;
+      &lt;СвПред НаимДок="27" НаимОрг="МБОУ Г АСТРАХАНИ СОШ № 32" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЕНВД&gt;
+      &lt;СумНалПУВД&gt;
+        &lt;СумПУВД ОКТМО="10000000" НалПУ="0"&gt;
+          &lt;РасчНалВД КодВД="01"&gt;
+            &lt;АдрПредДеят Индекс="111111" КодРегион="05" /&gt;
+            &lt;РасчНалВДАдр БазДоход="7500" К1="1.798" К2="1" НалБазаМес1="0" НалБазаМес2="0" НалБазаМес3="0" НалБаза="0" Ставка="0" СумНалИсчисл="0" /&gt;
+          &lt;/РасчНалВД&gt;
+        &lt;/СумПУВД&gt;
+      &lt;/СумНалПУВД&gt;
+      &lt;СумНалПУ ПризнакНП="1" СумНалИсчислОбщ="0" НалПУРасч="0" /&gt;
+    &lt;/ЕНВД&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+fuf:
+&lt;?xml version="1.0" encoding="windows-1251"?&gt;&lt;Файл ИдФайл="NO_ENVD_6600_6600__20241102_b34aeab7-5ae3-47f0-b0eb-30752b92d6f7" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 16.0" ВерсФорм="5.06"&gt;&lt;Документ КНД="1152016" Период="21" ОтчетГод="2016" КодНО="6600" НомКорр="0" ПоМесту="214" ДатаДок="02.11.2024"&gt;&lt;СвНП ОКВЭД="01" Тлф=""&gt;&lt;НПЮЛ НаимОрг="" ИННЮЛ="" КПП="669977001" /&gt;&lt;/СвНП&gt;&lt;Подписант ПрПодп="2"&gt;&lt;ФИО Фамилия="" Имя="" /&gt;&lt;СвПред НаимДок="" /&gt;&lt;/Подписант&gt;&lt;ЕНВД&gt;&lt;СумНалПУВД&gt;&lt;СумПУВД ОКТМО="10000000" НалПУ="0"&gt;&lt;РасчНалВД КодВД="01"&gt;&lt;АдрПредДеят Индекс="111111" КодРегион="05" /&gt;&lt;РасчНалВДАдр БазДоход="7500" К1="1.798" К2="1" НалБазаМес1="0" НалБазаМес2="0" НалБазаМес3="0" НалБаза="0" Ставка="0" СумНалИсчисл="0" /&gt;&lt;/РасчНалВД&gt;&lt;/СумПУВД&gt;&lt;/СумНалПУВД&gt;&lt;СумНалПУ ПризнакНП="1" СумНалИсчислОбщ="0" НалПУРасч="0" /&gt;&lt;/ЕНВД&gt;&lt;/Документ&gt;&lt;/Файл&gt;
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/clarificationDemand.pdf; isFixed=False
+{"Id":"7a747e25-bd69-4195-aab1-52d9be51de41","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/bad119a0-e754-4c6d-9ad1-4d1cf96f37e1","Meta":{"fileSize":"135964"},"AdditionalMeta":{}}
+(filePath: clarificationDemand.pdf, mimeType: application/pdf) =&gt; {"IsFixed":false,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/SampleTorg12.pdf; isFixed=False
+{"Id":"1068c5e5-fd17-4c62-af8e-0813205c2a20","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/8aaeef9f-1870-46b1-a196-2054f0b7ad7a","Meta":{"fileSize":"104808"},"AdditionalMeta":{}}
+(filePath: SampleTorg12.pdf, mimeType: application/pdf) =&gt; {"IsFixed":false,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/long1.pdf; isFixed=False
+{"Id":"50982f5d-a55d-4960-9c86-21030ef48bcf","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/9a50f54b-e029-4b78-9d77-2c98bf808a04","Meta":{"fileSize":"2500330"},"AdditionalMeta":{}}
+(filePath: long1.pdf, mimeType: application/pdf) =&gt; {"IsFixed":false,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/torg12_1.jpg; isFixed=True
+{"Id":"428524d5-878c-443b-b54a-71020b2e94d0","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/0798f5cf-4829-4a15-99af-f560ef109a7b","Meta":{"fileSize":"973548"},"AdditionalMeta":{}}
+(filePath: torg12_1.jpg, mimeType: image/jpeg) =&gt; {"IsFixed":true,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/tif_file.tif; isFixed=True
+{"Id":"59b08e3a-fb57-4d20-98f5-79759c45ba30","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/e3d7ba8a-6814-4453-b9a5-261e17a00827","Meta":{"fileSize":"1440424"},"AdditionalMeta":{}}
+(filePath: tif_file.tif, mimeType: image/tiff) =&gt; {"IsFixed":true,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/torg12_1.jpg; isFixed=True
+{"Id":"d4e166f5-bccd-4678-91fe-0b411ab55a92","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/7376f057-8b4a-41a8-b053-d5c84ed0794c","Meta":{"fileSize":"973548"},"AdditionalMeta":{}}
+(filePath: torg12_1.jpg, mimeType: image/jpeg) =&gt; {"IsFixed":true,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/tif_file.tif; isFixed=True
+{"Id":"84e86db7-a95b-48df-8bdf-28658115b306","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/f441e0ee-a4aa-42f5-9afe-e97fbd9cee86","Meta":{"fileSize":"1440424"},"AdditionalMeta":{}}
+(filePath: tif_file.tif, mimeType: image/tiff) =&gt; {"IsFixed":true,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/PNG_file.png; isFixed=True
+{"Id":"c63d877b-f462-425d-937a-55108d42bd5e","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/d77cadf8-2312-40b5-ad28-d64f41d01c40","Meta":{"fileSize":"122521"},"AdditionalMeta":{}}
+(filePath: PNG_file.png, mimeType: image/png) =&gt; {"IsFixed":true,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/JPG_as_PDF.pdf; isFixed=True
+{"Id":"38bf47f1-66ef-4447-846d-1cdb3920d9df","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/c6e747ee-d3da-44df-8776-4096e92579a6","Meta":{"fileSize":"973548"},"AdditionalMeta":{}}
+(filePath: JPG_as_PDF.pdf, mimeType: application/pdf) =&gt; {"IsFixed":true,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/PNG_as_PDF.pdf; isFixed=True
+{"Id":"9e0a419e-e7cd-4c0d-b5c2-6f0b521fff3d","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/4ac8f80b-4172-4b82-b44c-641e7d5ae740","Meta":{"fileSize":"122521"},"AdditionalMeta":{}}
+(filePath: PNG_as_PDF.pdf, mimeType: application/pdf) =&gt; {"IsFixed":true,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/clarificationDemand.pdf; isFixed=False
+{"Id":"43877903-f1b3-4138-bf4b-8852a63ff3f9","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/7538004e-37c8-4ff8-b87c-b7c4488c68b7","Meta":{"fileSize":"135964"},"AdditionalMeta":{}}
+(filePath: clarificationDemand.pdf, mimeType: application/pdf) =&gt; {"IsFixed":false,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/TIF_as_PDF.pdf; isFixed=True
+{"Id":"375a1e6b-0933-4e63-b609-00652f8551b7","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/a768fe9b-0fa0-4805-993d-398bf2edab64","Meta":{"fileSize":"1440424"},"AdditionalMeta":{}}
+(filePath: TIF_as_PDF.pdf, mimeType: application/pdf) =&gt; {"IsFixed":true,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/SampleTorg12.pdf; isFixed=False
+{"Id":"1cb736f6-d2d1-4a4b-90db-bf5163d193d6","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/65d9a7e1-967d-49b1-bb07-bc10457a1163","Meta":{"fileSize":"104808"},"AdditionalMeta":{}}
+(filePath: SampleTorg12.pdf, mimeType: application/pdf) =&gt; {"IsFixed":false,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/long1.pdf; isFixed=False
+{"Id":"733e2406-c8e4-4272-9784-0373e7efb76e","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/f88ae712-b73e-4ae2-88a5-4819c2d8b33d","Meta":{"fileSize":"2500330"},"AdditionalMeta":{}}
+(filePath: long1.pdf, mimeType: application/pdf) =&gt; {"IsFixed":false,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/torg12_1.jpg; isFixed=True
+{"Id":"0351bdf6-ce5b-4705-8613-49f4075e7270","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/26d33e8b-8406-4d50-95de-6095dd728771","Meta":{"fileSize":"973548"},"AdditionalMeta":{}}
+(filePath: torg12_1.jpg, mimeType: image/jpeg) =&gt; {"IsFixed":true,"ResultMimeType":"image/png","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/tif_file.tif; isFixed=True
+{"Id":"bcaa1e3b-af77-46b5-9e85-a170e66dbfd5","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/ada2767a-6d9a-4fd5-ac05-27111780661c","Meta":{"fileSize":"1440424"},"AdditionalMeta":{}}
+(filePath: tif_file.tif, mimeType: image/tiff) =&gt; {"IsFixed":true,"ResultMimeType":"image/png","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/PNG_file.png; isFixed=True
+{"Id":"7c010609-b33a-4d74-bf34-3dae79768345","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/e73e37f6-800a-4dc6-a06b-8778be1d4185","Meta":{"fileSize":"122521"},"AdditionalMeta":{}}
+(filePath: PNG_file.png, mimeType: image/png) =&gt; {"IsFixed":true,"ResultMimeType":"image/png","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/JPG_as_PNG.png; isFixed=True
+{"Id":"82f032b8-f9f2-4205-a984-37ccb2a34891","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/18c687ec-53a6-4796-bff6-4b65d18c1ebc","Meta":{"fileSize":"973548"},"AdditionalMeta":{}}
+(filePath: JPG_as_PNG.png, mimeType: image/png) =&gt; {"IsFixed":true,"ResultMimeType":"image/png","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/TIF_as_PNG.png; isFixed=True
+{"Id":"d7bab391-2816-4827-b925-0f83f545675e","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/78b56dc0-44a5-4ab9-bf8c-7ed705b8dad2","Meta":{"fileSize":"1440424"},"AdditionalMeta":{}}
+(filePath: TIF_as_PNG.png, mimeType: image/png) =&gt; {"IsFixed":true,"ResultMimeType":"image/png","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/PDF_as_PNG.png; isFixed=False
+{"Id":"a96f32b3-e35c-4fc0-80b8-bd58652f1faa","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/7f031201-09db-4795-875f-738952d678eb","Meta":{"fileSize":"104808"},"AdditionalMeta":{}}
+(filePath: PDF_as_PNG.png, mimeType: image/png) =&gt; {"IsFixed":false,"ResultMimeType":"image/png","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/torg12_1.jpg; isFixed=True
+{"Id":"661649d3-d32f-4d93-bc6a-6ea1aba25163","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/f1aba75c-3ca1-4710-b58f-cb281245f9bc","Meta":{"fileSize":"973548"},"AdditionalMeta":{}}
+(filePath: torg12_1.jpg, mimeType: image/jpeg) =&gt; {"IsFixed":true,"ResultMimeType":"image/jpeg","IgnoreMessage":null}
+
+Need fix bug: Need fix in Krec
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/tif_file.tif; isFixed=True
+{"Id":"ba9dae9e-ef8c-4112-939c-eb4b2567863f","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/84be12a3-5d29-4188-8bb8-42563a9202a6","Meta":{"fileSize":"1440424"},"AdditionalMeta":{}}
+(filePath: tif_file.tif, mimeType: image/tiff) =&gt; {"IsFixed":true,"ResultMimeType":"image/jpeg","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/PNG_file.png; isFixed=True
+{"Id":"b7441d2c-5819-4a27-82e9-3cc627f05315","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/235318a9-25bd-4b90-ac56-82a70ff7a471","Meta":{"fileSize":"122521"},"AdditionalMeta":{}}
+(filePath: PNG_file.png, mimeType: image/png) =&gt; {"IsFixed":true,"ResultMimeType":"image/jpeg","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/PDF_as_JPG.jpg; isFixed=False
+{"Id":"46ccbed4-9f91-4f0e-9169-3157ef4f6a30","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/de0d12a0-e96e-49e7-b531-c9dd531c1c5c","Meta":{"fileSize":"104808"},"AdditionalMeta":{}}
+(filePath: PDF_as_JPG.jpg, mimeType: image/jpeg) =&gt; {"IsFixed":false,"ResultMimeType":"image/jpeg","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/PNG_as_JPG.jpg; isFixed=True
+{"Id":"d9416581-2b7f-4503-8708-949302826950","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/a58888d3-638d-4109-a400-9ffb7226aabb","Meta":{"fileSize":"16593"},"AdditionalMeta":{}}
+(filePath: PNG_as_JPG.jpg, mimeType: image/jpeg) =&gt; {"IsFixed":true,"ResultMimeType":"image/jpeg","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/clarificationDemand.pdf; isFixed=False
+{"Id":"b00fea6b-1d63-424c-8ca0-21aeff2b6079","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/33d6be82-9d2d-40f9-a125-7b278243182c","Meta":{"fileSize":"135964"},"AdditionalMeta":{}}
+(filePath: clarificationDemand.pdf, mimeType: application/pdf) =&gt; {"IsFixed":false,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/TIF_as_JPG.jpg; isFixed=True
+{"Id":"9b8b003a-4648-40e7-8fec-bd204a31f4e9","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/2dc9769b-e57d-4172-a36e-ea31932abf2a","Meta":{"fileSize":"1440424"},"AdditionalMeta":{}}
+(filePath: TIF_as_JPG.jpg, mimeType: image/jpeg) =&gt; {"IsFixed":true,"ResultMimeType":"image/jpeg","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/SampleTorg12.pdf; isFixed=False
+{"Id":"1bef631a-a0e2-4b00-8882-07aee4cfd181","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/8f7fe2c7-a4b8-4fc4-a843-a59fd70b1dc1","Meta":{"fileSize":"104808"},"AdditionalMeta":{}}
+(filePath: SampleTorg12.pdf, mimeType: application/pdf) =&gt; {"IsFixed":false,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/long1.pdf; isFixed=False
+{"Id":"a713be3f-20c4-46dc-a78e-7398962ab1d7","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/f11f66fd-1a39-45e8-975b-5337944b8bad","Meta":{"fileSize":"2500330"},"AdditionalMeta":{}}
+(filePath: long1.pdf, mimeType: application/pdf) =&gt; {"IsFixed":false,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/torg12_1.jpg; isFixed=True
+{"Id":"b3b397e9-1f4d-444b-99b2-3ca81dc0e40b","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/a9e0fa59-4a17-44eb-ade8-d870a5b031de","Meta":{"fileSize":"973548"},"AdditionalMeta":{}}
+(filePath: torg12_1.jpg, mimeType: image/jpeg) =&gt; {"IsFixed":true,"ResultMimeType":"image/tiff","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/tif_file.tif; isFixed=True
+{"Id":"97d8fea4-8ca4-4de5-bebf-e1e15c7c2b6d","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/52805125-cfeb-45c9-9089-458e93e1808d","Meta":{"fileSize":"1440424"},"AdditionalMeta":{}}
+(filePath: tif_file.tif, mimeType: image/tiff) =&gt; {"IsFixed":true,"ResultMimeType":"image/tiff","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/JPG_as_TIF.tif; isFixed=True
+{"Id":"c80ea512-5362-43c0-86ba-0b818227e5e8","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/823b0ee0-fff6-4dac-b069-27da834288e2","Meta":{"fileSize":"973548"},"AdditionalMeta":{}}
+(filePath: JPG_as_TIF.tif, mimeType: image/tiff) =&gt; {"IsFixed":true,"ResultMimeType":"image/tiff","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/PNG_file.png; isFixed=True
+{"Id":"29ecc21c-fee3-4cf5-b256-add23a0372d0","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/da4b4204-6c25-449a-976b-e452b1326b20","Meta":{"fileSize":"122521"},"AdditionalMeta":{}}
+(filePath: PNG_file.png, mimeType: image/png) =&gt; {"IsFixed":true,"ResultMimeType":"image/tiff","IgnoreMessage":null}
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/PDF_as_TIF.tif; isFixed=False
+{"Id":"41b8593f-4453-45d4-871c-36fd37277a3b","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/5c0012de-9834-40b0-bf3e-1320d2ea79f4","Meta":{"fileSize":"104808"},"AdditionalMeta":{}}
+(filePath: PDF_as_TIF.tif, mimeType: image/tiff) =&gt; {"IsFixed":false,"ResultMimeType":"image/tiff","IgnoreMessage":null}
+
+Need fix bug: MimeType не поменялся, потому что до Fix не дошли (если контен проходит по первичным проверкам)
+
+srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/PNG_as_TIF.tif; isFixed=True
+{"Id":"3645f887-7c09-4aa4-b14c-cfdc3fede092","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/4a51a76d-5284-4255-bc8a-6e60ee2f730c","Meta":{"fileSize":"122521"},"AdditionalMeta":{}}
+(filePath: PNG_as_TIF.tif, mimeType: image/tiff) =&gt; {"IsFixed":true,"ResultMimeType":"image/tiff","IgnoreMessage":null}
+
+
+Test Framework Informational Messages:
+NUnit Adapter 4.5.0.0: Test execution started
+Running all tests in /builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/Forms.Candy.Api.IntegrationTests.dll
+   NUnit3TestExecutor discovered 309 of 310 NUnit test cases using Current Discovery mode, Non-Explicit run
+OpenLoadedAttachmentAsDraftAsync2: Run only on windows: На тимсити этот тест замьючен, на линуксе пока так отключен
+OpenLoadedAttachmentAsDraftAsync3: Run only on windows: На тимсити этот тест замьючен, на линуксе пока так отключен
+GetExplanatoryNoteCorrectInnFromClientInfo: Чинят сервис
+GetExplanatoryNoteInvalidInn: Чинят сервис
+SetRpnInnerWithTwoAttachments_1700202_ReturnsFufZip: Used rpn resources
+Test("torg12_1.jpg",jpg, [jpg], =&gt; (isFixed=True, result=image/jpeg) - IsBUG!): Need fix bug: Need fix in Krec
+
+Test("PDF_as_TIF.tif",tif, [tif], =&gt; (isFixed=False, result=image/tiff) - IsBUG!): Need fix bug: MimeType не поменялся, потому что до Fix не дошли (если контен проходит по первичным проверкам)
+
+NUnit Adapter 4.5.0.0: Test execution complete
+</system-out>
+    <system-err>Warning - System.Collections.Generic.Dictionary`2[System.String,System.String]
+
+Warning - System.Collections.Generic.Dictionary`2[System.String,System.String]
+
+Warning - 
+resultDstFufStr:
+&lt;?xml version="1.0" encoding="windows-1251"?&gt;&lt;?F4FORM version="0.8"?&gt;&lt;F4REPORT xsd:schemaLocation="http://fz122.fss.ru/doc/f4form_2016.xsd" xmlns="http://fz122.fss.ru" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"&gt;&lt;TITLE REG_NUM="" KPS_NUM="" INN="" KPP="" NAME="" CRE_DATE="2024-11-02" CEO=" " Upoln="" /&gt;&lt;/F4REPORT&gt;
+
+Warning - &lt;?xml version="1.0" encoding="windows-1251"?&gt;&lt;Файл ИдФайл="NO_ENVD_6600_6600__20241102_d4b53300-1a5a-4030-948f-62e0aa8730b9" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 16.0" ВерсФорм="5.08"&gt;&lt;Документ КНД="1152016" КодНО="6600" ПоМесту="214" ДатаДок="02.11.2024"&gt;&lt;СвНП Тлф=""&gt;&lt;НПЮЛ НаимОрг="" ИННЮЛ="" КПП="669977001" /&gt;&lt;/СвНП&gt;&lt;Подписант ПрПодп="2"&gt;&lt;ФИО Фамилия="" Имя="" /&gt;&lt;СвПред НаимДок="" /&gt;&lt;/Подписант&gt;&lt;ЕНВД&gt;&lt;СумНалПУВД&gt;
+        &lt;СумПУВД ОКТМО="10000000" НалПУ="0"&gt;
+          &lt;РасчНалВД КодВД="01"&gt;
+            &lt;АдрПредДеят Индекс="111111" КодРегион="05" /&gt;
+            &lt;РасчНалВДАдр БазДоход="7500" К1="1.798" К2="1" НалБазаМес1="0" НалБазаМес2="0" НалБазаМес3="0" НалБаза="0" Ставка="0" СумНалИсчисл="0" /&gt;
+          &lt;/РасчНалВД&gt;
+        &lt;/СумПУВД&gt;
+      &lt;/СумНалПУВД&gt;&lt;СумНалПУ ПризнакНП="1" СумНалИсчислОбщ="0" НалПУРасч="0" /&gt;&lt;/ЕНВД&gt;&lt;/Документ&gt;&lt;/Файл&gt;
+
+Warning - &lt;?xml version="1.0" encoding="windows-1251"?&gt;&lt;Файл ИдФайл="NO_ENVD_0000_0000__20241102_65ddfec4-d2ea-4a34-b5f2-9b474b822619" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 16.0" ВерсФорм="5.09"&gt;&lt;Документ КНД="1152016" КодНО="0000" ПоМесту="215" ДатаДок="02.11.2024"&gt;&lt;СвНП&gt;&lt;НПЮЛ НаимОрг="ЗАО ПФ СКБ КОНТУР 111" ИННЮЛ="" КПП="669901001" /&gt;&lt;/СвНП&gt;&lt;Подписант ПрПодп="" /&gt;&lt;ЕНВД&gt;&lt;СумНалПУВД&gt;
+        &lt;СумПУВД ОКТМО="05000000" НалПУ="215433"&gt;
+          &lt;РасчНалВД КодВД="07"&gt;
+            &lt;АдрПредДеят КодРегион="77" /&gt;
+            &lt;РасчНалВДАдр БазДоход="1800" К1="1.798" К2="1" ФизПокМес1="111" КолДнейМес1="2" НалБазаМес1="23177" ФизПокМес2="22" НалБазаМес2="71201" ФизПокМес3="2" НалБазаМес3="6473" НалБаза="100851" Ставка="0" СумНалИсчисл="0" /&gt;
+          &lt;/РасчНалВД&gt;
+          &lt;РасчНалВД КодВД="09"&gt;
+            &lt;АдрПредДеят КодРегион="66" /&gt;
+            &lt;РасчНалВДАдр БазДоход="1800" К1="1.798" К2="1" ФизПокМес1="555" НалБазаМес1="1796202" НалБазаМес2="0" НалБазаМес3="0" НалБаза="1796202" Ставка="12" СумНалИсчисл="215544" /&gt;
+          &lt;/РасчНалВД&gt;
+        &lt;/СумПУВД&gt;
+      &lt;/СумНалПУВД&gt;&lt;СумНалПУ ПризнакНП="1" СумНалИсчислОбщ="215544" СумСВУм346.32.2="111" НалПУРасч="215433" /&gt;&lt;/ЕНВД&gt;&lt;/Документ&gt;&lt;/Файл&gt;
+
+Warning - &lt;?xml version="1.0" encoding="windows-1251"?&gt;&lt;Файл ИдФайл="NO_ENVD_6600_6600__20241102_bb21fa86-1609-4518-8a6e-527cc85dcf23" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 16.0" ВерсФорм="5.08"&gt;&lt;Документ КНД="1152016" КодНО="6600" ПоМесту="214" ДатаДок="02.11.2024"&gt;&lt;СвНП Тлф=""&gt;&lt;НПЮЛ НаимОрг="" ИННЮЛ="" КПП="669977001" /&gt;&lt;/СвНП&gt;&lt;Подписант ПрПодп="2"&gt;&lt;ФИО Фамилия="" Имя="" /&gt;&lt;СвПред НаимДок="" /&gt;&lt;/Подписант&gt;&lt;ЕНВД&gt;&lt;СумНалПУВД&gt;&lt;СумПУВД ОКТМО="10000000" НалПУ="0"&gt;&lt;РасчНалВД КодВД="01"&gt;&lt;АдрПредДеят Индекс="111111" КодРегион="05" /&gt;&lt;РасчНалВДАдр БазДоход="7500" К1="1.798" К2="1" НалБазаМес1="0" НалБазаМес2="0" НалБазаМес3="0" НалБаза="0" Ставка="0" СумНалИсчисл="0" /&gt;&lt;/РасчНалВД&gt;&lt;/СумПУВД&gt;&lt;/СумНалПУВД&gt;&lt;СумНалПУ ПризнакНП="1" СумНалИсчислОбщ="0" НалПУРасч="0" /&gt;&lt;/ЕНВД&gt;&lt;/Документ&gt;&lt;/Файл&gt;
+
+Warning - inner: {}
+
+Warning - 
+&lt;!DOCTYPE html&gt;
+&lt;html class="page"&gt;
+&lt;head&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"/&gt;
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8"/&gt;
+    &lt;title&gt;Редактирование отчета&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;script src=" https://localhost:9182/candy/static/public/scripts/polyfill.min.js"&gt;&lt;/script&gt;
+&lt;script src=" https://localhost:9182/candy/v1/client.js"&gt;&lt;/script&gt;
+&lt;div id="pageContent"&gt;&lt;/div&gt;
+
+&lt;script type="text/javascript"&gt;
+    (function() {
+            window.CF.start("#pageContent",
+                {"ns":"e07bb1c2-2653-47d5-a876-d14f46a07e89","draftId":"6374f267-fb81-4bfa-b735-3ebd25c6e5d0","keformsUrl":"https://localhost:9182/candy/","kladrUrlBase":"https://kladr.dev.kontur","kladrUrlSuggest":"https://kladr.dev.kontur/v1/suggest","kladrUrlVerify":"https://kladr.dev.kontur/v1/verify","isIndividual":false,"isForeign":false,"abonId":"00000000-0000-0000-0000-000000000000","userId":"00000000-0000-0000-0000-000000000000","orgId":"00000000-0000-0000-0000-000000000000","year":"","period":"","prevGfvDraftId":"","theme":""},
+                function(error, form) {
+                    if (error) throw error;
+                    form.on("save", function () {
+                        window.top.close();
+                    });
+                });
+    })();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+Warning - {"Data":[["040173749","КУ ООО \"КБ \"ТАЛЬМЕНКА-БАНК\" - ГК \"АСВ\"","30101810000000000749","2277004739","222401001","Москва","г"]],"Meta":{"caption":"Справочник банков","columns":[{"headerText":"БИК","name":"code","withMarkdown":false},{"headerText":"Наименование банка","name":"name","withMarkdown":false},{"headerText":"Корр. счет","name":"correspondent-account","withMarkdown":false},{"headerText":"ИНН","name":"inn","withMarkdown":false},{"headerText":"КПП","name":"kpp","withMarkdown":false},{"headerText":"Адрес","name":"address","withMarkdown":false},{"headerText":"Тип места","name":"place-type","withMarkdown":false}],"defaultOrder":"code","gid":"4633"},"Verified":true,"SuitableCount":1}
+
+Warning - 0000000012_2015_06.xml
+
+Warning - NO_BUHOTCH_1001_1001_7224030406722401001_20180228_fc7c0657-aff4-45b8-ab47-f276dd22c7b4.xml
+
+Warning - ﻿&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Файл ВерсПрог="111" ВерсФорм="5.06"&gt;&lt;Документ КНД="1152016" /&gt;&lt;/Файл&gt;
+&lt;?xml version="1.0" encoding="windows-1251"?&gt;&lt;Файл ИдФайл="NO_ENVD____20241102_d7a52e9e-e905-4389-9650-c04f3ac98fb6" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 16.0" ВерсФорм="5.06"&gt;&lt;Документ КНД="1152016" ДатаДок="02.11.2024"&gt;&lt;СвНП ОКВЭД=""&gt;&lt;НПЮЛ НаимОрг="" ИННЮЛ="" КПП="" /&gt;&lt;/СвНП&gt;&lt;Подписант /&gt;&lt;ЕНВД /&gt;&lt;/Документ&gt;&lt;/Файл&gt;
+
+Warning - ﻿&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;Файл ВерсФорм="5.06"&gt;&lt;Документ КНД="1152016" /&gt;&lt;/Файл&gt;
+
+Warning - &lt;?xml version="1.0" encoding="windows-1251"?&gt;
+&lt;���� ������="NO_ENVD_6623_6600_6699000000669901001_20160628_ca175963-6f18-4708-9980-35fe706e1a55" ��������="������-�������, ������ 12.0" ��������="5.06"&gt;
+  &lt;�������� ���="1152016" ������="21" ��������="2016" �����="6600" �������="0" �������="214" �������="28.06.2016"&gt;
+    &lt;���� �����="01" ���="1234567890"&gt;
+      &lt;���� �������="���� � ��������� ��� � 32" �����="6699000000" ���="669977001" /&gt;
+    &lt;/����&gt;
+    &lt;��������� ������="2"&gt;
+      &lt;��� �������="���" ���="����" ��������="����������" /&gt;
+      &lt;������ �������="27" �������="���� � ��������� ��� � 32" /&gt;
+    &lt;/���������&gt;
+    &lt;����&gt;
+      &lt;����������&gt;
+        &lt;������� �����="10000000" �����="0"&gt;
+          &lt;��������� �����="01"&gt;
+            &lt;����������� ������="111111" ���������="05" /&gt;
+            &lt;������������ ��������="7500" �1="1.798" �2="1" ����������1="0" ����������2="0" ����������3="0" �������="0" ������="0" ������������="0" /&gt;
+          &lt;/���������&gt;
+        &lt;/�������&gt;
+      &lt;/����������&gt;
+      &lt;�������� ���������="1" ���������������="0" ���������="0" /&gt;
+    &lt;/����&gt;
+  &lt;/��������&gt;
+&lt;/����&gt;
+
+Warning - patchFufResult.Name: NO_BUHOTCH_0000_0000_6699000000669901001_20241102_f8a08bef-5600-42fd-b3ac-9f3b4b60bd52.xml
+&lt;?xml version="1.0" encoding="windows-1251"?&gt;&lt;Файл ИдФайл="NO_BUHOTCH_0000_0000_6699000000669901001_20241102_f8a08bef-5600-42fd-b3ac-9f3b4b60bd52" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 16.0" ВерсФорм="5.07"&gt;&lt;Документ КНД="0710099" ДатаДок="02.11.2024" Период="34" ОтчетГод="2018" НомКорр="0" ОКЕИ="384"&gt;&lt;СвНП ОКВЭД="12.00" ОКФС="10" ОКОПФ="11000"&gt;&lt;НПЮЛ НаимОрг="" ИННЮЛ="7401000000" КПП="669901001"&gt;&lt;АдрРФ КодРегион="" /&gt;&lt;/НПЮЛ&gt;&lt;/СвНП&gt;&lt;Подписант ПрПодп="1"&gt;&lt;ФИО Фамилия="ФамРук" Имя="ИмяРук" Отчество="ОтчРук" /&gt;&lt;/Подписант&gt;&lt;Баланс ОКУД="0710001"&gt;
+      &lt;Актив Пояснения="154" СумОтч="4760" СумПрдщ="4781" СумПрдшв="4790"&gt;
+        &lt;ВнеОбА Пояснения="87" СумОтч="422" СумПрдщ="433" СумПрдшв="441"&gt;
+          &lt;НематАкт Пояснения="1" СумОтч="2" СумПрдщ="3" СумПрдшв="4"&gt;
+            &lt;ВПокОПП Пояснения="5" НаимПок="6" СумОтч="7" СумПрдщ="9" СумПрдшв="8" /&gt;
+          &lt;/НематАкт&gt;
+          &lt;РезИсслед Пояснения="10" СумОтч="11" СумПрдщ="12" СумПрдшв="13"&gt;
+            &lt;ВПокОПП Пояснения="14" НаимПок="15" СумОтч="16" СумПрдщ="18" СумПрдшв="17" /&gt;
+          &lt;/РезИсслед&gt;
+          &lt;НеМатПоискАкт Пояснения="19" СумОтч="20" СумПрдщ="21" СумПрдшв="22"&gt;
+            &lt;ВПокОПП Пояснения="23" НаимПок="24" СумОтч="25" СумПрдщ="27" СумПрдшв="26" /&gt;
+          &lt;/НеМатПоискАкт&gt;
+          &lt;МатПоискАкт Пояснения="28" СумОтч="29" СумПрдщ="30" СумПрдшв="31"&gt;
+            &lt;ВПокОПП Пояснения="32" НаимПок="33" СумОтч="34" СумПрдщ="36" СумПрдшв="35" /&gt;
+          &lt;/МатПоискАкт&gt;
+          &lt;ОснСр Пояснения="37" СумОтч="38" СумПрдщ="39" СумПрдшв="40"&gt;
+            &lt;ВПокОПП Пояснения="41" НаимПок="42" СумОтч="43" СумПрдщ="45" СумПрдшв="44" /&gt;
+          &lt;/ОснСр&gt;
+          &lt;ВлМатЦен Пояснения="46" СумОтч="47" СумПрдщ="48" СумПрдшв="49"&gt;
+            &lt;ВПокОПП Пояснения="50" НаимПок="51" СумОтч="52" СумПрдщ="54" СумПрдшв="53" /&gt;
+          &lt;/ВлМатЦен&gt;
+          &lt;ФинВлож Пояснения="55" СумОтч="56" СумПрдщ="57" СумПрдшв="58"&gt;
+            &lt;ВПокОПП Пояснения="59" НаимПок="60" СумОтч="61" СумПрдщ="63" СумПрдшв="62" /&gt;
+          &lt;/ФинВлож&gt;
+          &lt;ОтлНалАкт Пояснения="64" СумОтч="65" СумПрдщ="66" СумПрдшв="67"&gt;
+            &lt;ВПокОПП Пояснения="68" НаимПок="69" СумОтч="70" СумПрдщ="72" СумПрдшв="71" /&gt;
+          &lt;/ОтлНалАкт&gt;
+          &lt;ВПокВнеОбА Пояснения="73" НаимПок="74" СумОтч="75" СумПрдщ="77" СумПрдшв="76" /&gt;
+          &lt;ПрочВнеОбА Пояснения="78" СумОтч="79" СумПрдщ="80" СумПрдшв="81"&gt;
+            &lt;ВПокОПП Пояснения="82" НаимПок="83" СумОтч="84" СумПрдщ="86" СумПрдшв="85" /&gt;
+          &lt;/ПрочВнеОбА&gt;
+        &lt;/ВнеОбА&gt;
+        &lt;ОбА Пояснения="150" СумОтч="4338" СумПрдщ="4348" СумПрдшв="4349"&gt;
+          &lt;Запасы Пояснения="91" СумОтч="3600" СумПрдщ="3603" СумПрдшв="3600"&gt;
+            &lt;ВПокОПП Пояснения="95" НаимПок="96" СумОтч="97" СумПрдщ="99" СумПрдшв="98" /&gt;
+          &lt;/Запасы&gt;
+          &lt;НДСПриобрЦен Пояснения="100" СумОтч="101" СумПрдщ="102" СумПрдшв="103"&gt;
+            &lt;ВПокОПП Пояснения="104" НаимПок="105" СумОтч="106" СумПрдщ="108" СумПрдшв="107" /&gt;
+          &lt;/НДСПриобрЦен&gt;
+          &lt;ДебЗад Пояснения="109" СумОтч="110" СумПрдщ="111" СумПрдшв="112"&gt;
+            &lt;ВПокОПП Пояснения="113" НаимПок="114" СумОтч="115" СумПрдщ="117" СумПрдшв="116" /&gt;
+          &lt;/ДебЗад&gt;
+          &lt;ФинВлож Пояснения="118" СумОтч="119" СумПрдщ="120" СумПрдшв="121"&gt;
+            &lt;ВПокОПП Пояснения="122" НаимПок="123" СумОтч="124" СумПрдщ="126" СумПрдшв="125" /&gt;
+          &lt;/ФинВлож&gt;
+          &lt;ДенежнСр Пояснения="127" СумОтч="128" СумПрдщ="129" СумПрдшв="130"&gt;
+            &lt;ВПокОПП Пояснения="131" НаимПок="132" СумОтч="133" СумПрдщ="135" СумПрдшв="134" /&gt;
+          &lt;/ДенежнСр&gt;
+          &lt;ВПокОбА Пояснения="136" НаимПок="137" СумОтч="138" СумПрдщ="140" СумПрдшв="139" /&gt;
+          &lt;ПрочОбА Пояснения="141" СумОтч="142" СумПрдщ="143" СумПрдшв="144"&gt;
+            &lt;ВПокОПП Пояснения="145" НаимПок="146" СумОтч="147" СумПрдщ="149" СумПрдшв="148" /&gt;
+          &lt;/ПрочОбА&gt;
+        &lt;/ОбА&gt;
+      &lt;/Актив&gt;
+      &lt;Пассив Пояснения="374" СумОтч="4760" СумПрдщ="4781" СумПрдшв="4790"&gt;
+        &lt;КапРез Пояснения="217" СумОтч="1235" СумПрдщ="1243" СумПрдшв="1245"&gt;
+          &lt;УставКапитал Пояснения="158" СумОтч="159" СумПрдщ="160" СумПрдшв="161"&gt;
+            &lt;ВПокОПП Пояснения="162" НаимПок="163" СумОтч="164" СумПрдщ="166" СумПрдшв="165" /&gt;
+            &lt;ВПокОПП Пояснения="225" НаимПок="226" СумОтч="227" СумПрдщ="229" СумПрдшв="228" /&gt;
+          &lt;/УставКапитал&gt;
+          &lt;СобствАкции Пояснения="167" СумОтч="168" СумПрдщ="169" СумПрдшв="170"&gt;
+            &lt;ВПокОПП Пояснения="171" НаимПок="172" СумОтч="173" СумПрдщ="175" СумПрдшв="174" /&gt;
+            &lt;ВПокОПП Пояснения="234" НаимПок="235" СумОтч="236" СумПрдщ="238" СумПрдшв="237" /&gt;
+          &lt;/СобствАкции&gt;
+          &lt;ПереоцВнеОбА Пояснения="176" СумОтч="177" СумПрдщ="178" СумПрдшв="179"&gt;
+            &lt;ВПокОПП Пояснения="180" НаимПок="181" СумОтч="182" СумПрдщ="184" СумПрдшв="183" /&gt;
+          &lt;/ПереоцВнеОбА&gt;
+          &lt;ДобКапитал Пояснения="185" СумОтч="186" СумПрдщ="187" СумПрдшв="188"&gt;
+            &lt;ВПокОПП Пояснения="189" НаимПок="190" СумОтч="191" СумПрдщ="193" СумПрдшв="192" /&gt;
+            &lt;ВПокОПП Пояснения="243" НаимПок="244" СумОтч="245" СумПрдщ="247" СумПрдшв="246" /&gt;
+          &lt;/ДобКапитал&gt;
+          &lt;РезКапитал Пояснения="194" СумОтч="195" СумПрдщ="196" СумПрдшв="197"&gt;
+            &lt;ВПокОПП Пояснения="198" НаимПок="199" СумОтч="200" СумПрдщ="202" СумПрдшв="201" /&gt;
+            &lt;ВПокОПП Пояснения="252" НаимПок="253" СумОтч="254" СумПрдщ="256" СумПрдшв="255" /&gt;
+          &lt;/РезКапитал&gt;
+          &lt;НераспПриб Пояснения="203" СумОтч="204" СумПрдщ="205" СумПрдшв="206"&gt;
+            &lt;ВПокОПП Пояснения="207" НаимПок="208" СумОтч="209" СумПрдщ="211" СумПрдшв="210" /&gt;
+            &lt;ВПокОПП Пояснения="261" НаимПок="262" СумОтч="263" СумПрдщ="265" СумПрдшв="264" /&gt;
+          &lt;/НераспПриб&gt;
+          &lt;ВПокКапРез Пояснения="212" НаимПок="213" СумОтч="214" СумПрдщ="216" СумПрдшв="215" /&gt;
+          &lt;ВПокКапРез Пояснения="266" НаимПок="267" СумОтч="268" СумПрдщ="270" СумПрдшв="269" /&gt;
+        &lt;/КапРез&gt;
+        &lt;ДолгосрОбяз Пояснения="316" СумОтч="1467" СумПрдщ="1473" СумПрдшв="1476"&gt;
+          &lt;ЗаемСредств Пояснения="275" СумОтч="276" СумПрдщ="277" СумПрдшв="278"&gt;
+            &lt;ВПокОПП Пояснения="279" НаимПок="280" СумОтч="281" СумПрдщ="283" СумПрдшв="282" /&gt;
+          &lt;/ЗаемСредств&gt;
+          &lt;ОтложНалОбяз Пояснения="284" СумОтч="285" СумПрдщ="286" СумПрдшв="287"&gt;
+            &lt;ВПокОПП Пояснения="288" НаимПок="289" СумОтч="290" СумПрдщ="292" СумПрдшв="291" /&gt;
+          &lt;/ОтложНалОбяз&gt;
+          &lt;ОценОбяз Пояснения="293" СумОтч="294" СумПрдщ="295" СумПрдшв="296"&gt;
+            &lt;ВПокОПП Пояснения="297" НаимПок="298" СумОтч="299" СумПрдщ="301" СумПрдшв="300" /&gt;
+          &lt;/ОценОбяз&gt;
+          &lt;ВПокДолгОб Пояснения="302" НаимПок="303" СумОтч="304" СумПрдщ="306" СумПрдшв="305" /&gt;
+          &lt;ПрочОбяз Пояснения="307" СумОтч="308" СумПрдщ="309" СумПрдшв="310"&gt;
+            &lt;ВПокОПП Пояснения="311" НаимПок="312" СумОтч="313" СумПрдщ="315" СумПрдшв="314" /&gt;
+          &lt;/ПрочОбяз&gt;
+        &lt;/ДолгосрОбяз&gt;
+        &lt;КраткосрОбяз Пояснения="370" СумОтч="2058" СумПрдщ="2065" СумПрдшв="2069"&gt;
+          &lt;ЗаемСредств Пояснения="320" СумОтч="321" СумПрдщ="322" СумПрдшв="323"&gt;
+            &lt;ВПокОПП Пояснения="324" НаимПок="325" СумОтч="326" СумПрдщ="328" СумПрдшв="327" /&gt;
+          &lt;/ЗаемСредств&gt;
+          &lt;КредитЗадолж Пояснения="329" СумОтч="330" СумПрдщ="331" СумПрдшв="332"&gt;
+            &lt;ВПокОПП Пояснения="333" НаимПок="334" СумОтч="335" СумПрдщ="337" СумПрдшв="336" /&gt;
+          &lt;/КредитЗадолж&gt;
+          &lt;ДоходБудущ Пояснения="338" СумОтч="339" СумПрдщ="340" СумПрдшв="341"&gt;
+            &lt;ВПокОПП Пояснения="342" НаимПок="343" СумОтч="344" СумПрдщ="346" СумПрдшв="345" /&gt;
+          &lt;/ДоходБудущ&gt;
+          &lt;ОценОбяз Пояснения="347" СумОтч="348" СумПрдщ="349" СумПрдшв="350"&gt;
+            &lt;ВПокОПП Пояснения="351" НаимПок="352" СумОтч="353" СумПрдщ="355" СумПрдшв="354" /&gt;
+          &lt;/ОценОбяз&gt;
+          &lt;ВПокКратОб Пояснения="356" НаимПок="357" СумОтч="358" СумПрдщ="360" СумПрдшв="359" /&gt;
+          &lt;ПрочОбяз Пояснения="361" СумОтч="362" СумПрдщ="363" СумПрдшв="364"&gt;
+            &lt;ВПокОПП Пояснения="365" НаимПок="366" СумОтч="367" СумПрдщ="369" СумПрдшв="368" /&gt;
+          &lt;/ПрочОбяз&gt;
+        &lt;/КраткосрОбяз&gt;
+      &lt;/Пассив&gt;
+    &lt;/Баланс&gt;&lt;ПрибУб ОКУД="0710002"&gt;
+      &lt;Выруч Пояснения="378" СумОтч="379" СумПред="380"&gt;
+        &lt;ДопПокОП Пояснения="381" НаимПок="382" СумОтч="383" СумПред="384" /&gt;
+      &lt;/Выруч&gt;
+      &lt;СебестПрод Пояснения="385" СумОтч="386" СумПред="387"&gt;
+        &lt;ДопПокОП Пояснения="388" НаимПок="389" СумОтч="390" СумПред="391" /&gt;
+      &lt;/СебестПрод&gt;
+      &lt;ВаловаяПрибыль Пояснения="392" СумОтч="-7" СумПред="-7"&gt;
+        &lt;ДопПокОП Пояснения="395" НаимПок="396" СумОтч="397" СумПред="398" /&gt;
+      &lt;/ВаловаяПрибыль&gt;
+      &lt;КомРасход Пояснения="399" СумОтч="400" СумПред="401"&gt;
+        &lt;ДопПокОП Пояснения="402" НаимПок="403" СумОтч="404" СумПред="405" /&gt;
+      &lt;/КомРасход&gt;
+      &lt;УпрРасход Пояснения="406" СумОтч="407" СумПред="408"&gt;
+        &lt;ДопПокОП Пояснения="409" НаимПок="410" СумОтч="411" СумПред="412" /&gt;
+      &lt;/УпрРасход&gt;
+      &lt;ПрибПрод Пояснения="413" СумОтч="-814" СумПред="-816"&gt;
+        &lt;ДопПокОП Пояснения="416" НаимПок="417" СумОтч="418" СумПред="419" /&gt;
+      &lt;/ПрибПрод&gt;
+      &lt;ДоходОтУчаст Пояснения="420" СумОтч="421" СумПред="422"&gt;
+        &lt;ДопПокОП Пояснения="423" НаимПок="424" СумОтч="425" СумПред="426" /&gt;
+      &lt;/ДоходОтУчаст&gt;
+      &lt;ПроцПолуч Пояснения="427" СумОтч="428" СумПред="429"&gt;
+        &lt;ДопПокОП Пояснения="430" НаимПок="431" СумОтч="432" СумПред="433" /&gt;
+      &lt;/ПроцПолуч&gt;
+      &lt;ПроцУпл Пояснения="434" СумОтч="435" СумПред="436"&gt;
+        &lt;ДопПокОП Пояснения="437" НаимПок="438" СумОтч="439" СумПред="440" /&gt;
+      &lt;/ПроцУпл&gt;
+      &lt;ПрочДоход Пояснения="441" СумОтч="442" СумПред="443"&gt;
+        &lt;ДопПокОП Пояснения="444" НаимПок="445" СумОтч="446" СумПред="447" /&gt;
+      &lt;/ПрочДоход&gt;
+      &lt;ПрочРасход Пояснения="448" СумОтч="449" СумПред="450"&gt;
+        &lt;ДопПокОП Пояснения="451" НаимПок="452" СумОтч="453" СумПред="454" /&gt;
+      &lt;/ПрочРасход&gt;
+      &lt;ПрибУбДоНал Пояснения="455" СумОтч="-407" СумПред="-408"&gt;
+        &lt;ДопПокОП Пояснения="458" НаимПок="459" СумОтч="460" СумПред="461" /&gt;
+      &lt;/ПрибУбДоНал&gt;
+      &lt;ТекНалПриб Пояснения="462" СумОтч="463" СумПред="464" /&gt;
+      &lt;ПостНалОбяз Пояснения="465" СумОтч="466" СумПред="467"&gt;
+        &lt;ДопПокОП Пояснения="468" НаимПок="469" СумОтч="470" СумПред="471" /&gt;
+      &lt;/ПостНалОбяз&gt;
+      &lt;ИзмНалОбяз Пояснения="472" СумОтч="473" СумПред="474"&gt;
+        &lt;ДопПокОП Пояснения="475" НаимПок="476" СумОтч="477" СумПред="478" /&gt;
+      &lt;/ИзмНалОбяз&gt;
+      &lt;ИзмНалАктив Пояснения="479" СумОтч="480" СумПред="481"&gt;
+        &lt;ДопПокОП Пояснения="482" НаимПок="483" СумОтч="484" СумПред="485" /&gt;
+      &lt;/ИзмНалАктив&gt;
+      &lt;Прочее Пояснения="486" СумОтч="487" СумПред="488"&gt;
+        &lt;ДопПокОП Пояснения="489" НаимПок="490" СумОтч="491" СумПред="492" /&gt;
+      &lt;/Прочее&gt;
+      &lt;ЧистПрибУб Пояснения="493" СумОтч="570" СумПред="571" /&gt;
+      &lt;РезПрцВОАНеЧист Пояснения="496" СумОтч="497" СумПред="498"&gt;
+        &lt;ДопПокОП Пояснения="499" НаимПок="500" СумОтч="501" СумПред="502" /&gt;
+      &lt;/РезПрцВОАНеЧист&gt;
+      &lt;РезПрОпНеЧист Пояснения="503" СумОтч="504" СумПред="505"&gt;
+        &lt;ДопПокОП Пояснения="506" НаимПок="507" СумОтч="508" СумПред="509" /&gt;
+      &lt;/РезПрОпНеЧист&gt;
+      &lt;СовФинРез Пояснения="600" СумОтч="1571" СумПред="1574" /&gt;
+      &lt;Справочно&gt;
+        &lt;БазПрибылАкц Пояснения="603" СумОтч="604" СумПред="605" /&gt;
+        &lt;РазводПрибылАкц Пояснения="606" СумОтч="607" СумПред="608" /&gt;
+      &lt;/Справочно&gt;
+    &lt;/ПрибУб&gt;&lt;Пояснения ОКУД="0710005" НаимФайлПЗ="" /&gt;&lt;АудитЗакл НаимФайлАЗ="" /&gt;&lt;/Документ&gt;&lt;/Файл&gt;
+
+Warning - fuf:
+&lt;?xml version="1.0" encoding="windows-1251"?&gt;
+&lt;Файл ИдФайл="NO_ENVD_6623_6600_6699000000669901001_20160628_ca175963-6f18-4708-9980-35fe706e1a55" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1152016" Период="21" ОтчетГод="2016" КодНО="6600" НомКорр="0" ПоМесту="214" ДатаДок="28.06.2016"&gt;
+    &lt;СвНП ОКВЭД="01" Тлф="1234567890"&gt;
+      &lt;НПЮЛ НаимОрг="МБОУ Г АСТРАХАНИ СОШ № 32" ИННЮЛ="6699000000" КПП="669977001" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="2"&gt;
+      &lt;ФИО Фамилия="КАЦ" Имя="ОЛЕГ" Отчество="ЕВГЕНЬЕВИЧ" /&gt;
+      &lt;СвПред НаимДок="27" НаимОрг="МБОУ Г АСТРАХАНИ СОШ № 32" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЕНВД&gt;
+      &lt;СумНалПУВД&gt;
+        &lt;СумПУВД ОКТМО="10000000" НалПУ="0"&gt;
+          &lt;РасчНалВД КодВД="01"&gt;
+            &lt;АдрПредДеят Индекс="111111" КодРегион="05" /&gt;
+            &lt;РасчНалВДАдр БазДоход="7500" К1="1.798" К2="1" НалБазаМес1="0" НалБазаМес2="0" НалБазаМес3="0" НалБаза="0" Ставка="0" СумНалИсчисл="0" /&gt;
+          &lt;/РасчНалВД&gt;
+        &lt;/СумПУВД&gt;
+      &lt;/СумНалПУВД&gt;
+      &lt;СумНалПУ ПризнакНП="1" СумНалИсчислОбщ="0" НалПУРасч="0" /&gt;
+    &lt;/ЕНВД&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - fuf:
+&lt;?xml version="1.0" encoding="windows-1251"?&gt;
+&lt;Файл ИдФайл="NO_ENVD_6623_6600_6699000000669901001_20160628_ca175963-6f18-4708-9980-35fe706e1a55" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1152016" Период="21" ОтчетГод="2016" КодНО="6600" НомКорр="0" ПоМесту="214" ДатаДок="28.06.2016"&gt;
+    &lt;СвНП ОКВЭД="01" Тлф="1234567890"&gt;
+      &lt;НПЮЛ НаимОрг="МБОУ Г АСТРАХАНИ СОШ № 32" ИННЮЛ="6699000000" КПП="669977001" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="2"&gt;
+      &lt;ФИО Фамилия="КАЦ" Имя="ОЛЕГ" Отчество="ЕВГЕНЬЕВИЧ" /&gt;
+      &lt;СвПред НаимДок="27" НаимОрг="МБОУ Г АСТРАХАНИ СОШ № 32" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЕНВД&gt;
+      &lt;СумНалПУВД&gt;
+        &lt;СумПУВД ОКТМО="10000000" НалПУ="0"&gt;
+          &lt;РасчНалВД КодВД="01"&gt;
+            &lt;АдрПредДеят Индекс="111111" КодРегион="05" /&gt;
+            &lt;РасчНалВДАдр БазДоход="7500" К1="1.798" К2="1" НалБазаМес1="0" НалБазаМес2="0" НалБазаМес3="0" НалБаза="0" Ставка="0" СумНалИсчисл="0" /&gt;
+          &lt;/РасчНалВД&gt;
+        &lt;/СумПУВД&gt;
+      &lt;/СумНалПУВД&gt;
+      &lt;СумНалПУ ПризнакНП="1" СумНалИсчислОбщ="0" НалПУРасч="0" /&gt;
+    &lt;/ЕНВД&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - fuf:
+&lt;?xml version="1.0" encoding="windows-1251"?&gt;
+&lt;Файл ИдФайл="NO_ENVD_6623_6600_6699000000669901001_20160628_ca175963-6f18-4708-9980-35fe706e1a55" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1152016" Период="21" ОтчетГод="2016" КодНО="6600" НомКорр="0" ПоМесту="214" ДатаДок="28.06.2016"&gt;
+    &lt;СвНП ОКВЭД="01" Тлф="1234567890"&gt;
+      &lt;НПЮЛ НаимОрг="МБОУ Г АСТРАХАНИ СОШ № 32" ИННЮЛ="6699000000" КПП="669977001" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="2"&gt;
+      &lt;ФИО Фамилия="КАЦ" Имя="ОЛЕГ" Отчество="ЕВГЕНЬЕВИЧ" /&gt;
+      &lt;СвПред НаимДок="27" НаимОрг="МБОУ Г АСТРАХАНИ СОШ № 32" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЕНВД&gt;
+      &lt;СумНалПУВД&gt;
+        &lt;СумПУВД ОКТМО="10000000" НалПУ="0"&gt;
+          &lt;РасчНалВД КодВД="01"&gt;
+            &lt;АдрПредДеят Индекс="111111" КодРегион="05" /&gt;
+            &lt;РасчНалВДАдр БазДоход="7500" К1="1.798" К2="1" НалБазаМес1="0" НалБазаМес2="0" НалБазаМес3="0" НалБаза="0" Ставка="0" СумНалИсчисл="0" /&gt;
+          &lt;/РасчНалВД&gt;
+        &lt;/СумПУВД&gt;
+      &lt;/СумНалПУВД&gt;
+      &lt;СумНалПУ ПризнакНП="1" СумНалИсчислОбщ="0" НалПУРасч="0" /&gt;
+    &lt;/ЕНВД&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+fuf:
+&lt;?xml version="1.0" encoding="windows-1251"?&gt;&lt;Файл ИдФайл="NO_ENVD_6600_6600__20241102_b34aeab7-5ae3-47f0-b0eb-30752b92d6f7" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 16.0" ВерсФорм="5.06"&gt;&lt;Документ КНД="1152016" Период="21" ОтчетГод="2016" КодНО="6600" НомКорр="0" ПоМесту="214" ДатаДок="02.11.2024"&gt;&lt;СвНП ОКВЭД="01" Тлф=""&gt;&lt;НПЮЛ НаимОрг="" ИННЮЛ="" КПП="669977001" /&gt;&lt;/СвНП&gt;&lt;Подписант ПрПодп="2"&gt;&lt;ФИО Фамилия="" Имя="" /&gt;&lt;СвПред НаимДок="" /&gt;&lt;/Подписант&gt;&lt;ЕНВД&gt;&lt;СумНалПУВД&gt;&lt;СумПУВД ОКТМО="10000000" НалПУ="0"&gt;&lt;РасчНалВД КодВД="01"&gt;&lt;АдрПредДеят Индекс="111111" КодРегион="05" /&gt;&lt;РасчНалВДАдр БазДоход="7500" К1="1.798" К2="1" НалБазаМес1="0" НалБазаМес2="0" НалБазаМес3="0" НалБаза="0" Ставка="0" СумНалИсчисл="0" /&gt;&lt;/РасчНалВД&gt;&lt;/СумПУВД&gt;&lt;/СумНалПУВД&gt;&lt;СумНалПУ ПризнакНП="1" СумНалИсчислОбщ="0" НалПУРасч="0" /&gt;&lt;/ЕНВД&gt;&lt;/Документ&gt;&lt;/Файл&gt;
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/clarificationDemand.pdf; isFixed=False
+{"Id":"7a747e25-bd69-4195-aab1-52d9be51de41","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/bad119a0-e754-4c6d-9ad1-4d1cf96f37e1","Meta":{"fileSize":"135964"},"AdditionalMeta":{}}
+(filePath: clarificationDemand.pdf, mimeType: application/pdf) =&gt; {"IsFixed":false,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/SampleTorg12.pdf; isFixed=False
+{"Id":"1068c5e5-fd17-4c62-af8e-0813205c2a20","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/8aaeef9f-1870-46b1-a196-2054f0b7ad7a","Meta":{"fileSize":"104808"},"AdditionalMeta":{}}
+(filePath: SampleTorg12.pdf, mimeType: application/pdf) =&gt; {"IsFixed":false,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/long1.pdf; isFixed=False
+{"Id":"50982f5d-a55d-4960-9c86-21030ef48bcf","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/9a50f54b-e029-4b78-9d77-2c98bf808a04","Meta":{"fileSize":"2500330"},"AdditionalMeta":{}}
+(filePath: long1.pdf, mimeType: application/pdf) =&gt; {"IsFixed":false,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/torg12_1.jpg; isFixed=True
+{"Id":"428524d5-878c-443b-b54a-71020b2e94d0","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/0798f5cf-4829-4a15-99af-f560ef109a7b","Meta":{"fileSize":"973548"},"AdditionalMeta":{}}
+(filePath: torg12_1.jpg, mimeType: image/jpeg) =&gt; {"IsFixed":true,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/tif_file.tif; isFixed=True
+{"Id":"59b08e3a-fb57-4d20-98f5-79759c45ba30","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/e3d7ba8a-6814-4453-b9a5-261e17a00827","Meta":{"fileSize":"1440424"},"AdditionalMeta":{}}
+(filePath: tif_file.tif, mimeType: image/tiff) =&gt; {"IsFixed":true,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/torg12_1.jpg; isFixed=True
+{"Id":"d4e166f5-bccd-4678-91fe-0b411ab55a92","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/7376f057-8b4a-41a8-b053-d5c84ed0794c","Meta":{"fileSize":"973548"},"AdditionalMeta":{}}
+(filePath: torg12_1.jpg, mimeType: image/jpeg) =&gt; {"IsFixed":true,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/tif_file.tif; isFixed=True
+{"Id":"84e86db7-a95b-48df-8bdf-28658115b306","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/f441e0ee-a4aa-42f5-9afe-e97fbd9cee86","Meta":{"fileSize":"1440424"},"AdditionalMeta":{}}
+(filePath: tif_file.tif, mimeType: image/tiff) =&gt; {"IsFixed":true,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/PNG_file.png; isFixed=True
+{"Id":"c63d877b-f462-425d-937a-55108d42bd5e","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/d77cadf8-2312-40b5-ad28-d64f41d01c40","Meta":{"fileSize":"122521"},"AdditionalMeta":{}}
+(filePath: PNG_file.png, mimeType: image/png) =&gt; {"IsFixed":true,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/JPG_as_PDF.pdf; isFixed=True
+{"Id":"38bf47f1-66ef-4447-846d-1cdb3920d9df","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/c6e747ee-d3da-44df-8776-4096e92579a6","Meta":{"fileSize":"973548"},"AdditionalMeta":{}}
+(filePath: JPG_as_PDF.pdf, mimeType: application/pdf) =&gt; {"IsFixed":true,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/PNG_as_PDF.pdf; isFixed=True
+{"Id":"9e0a419e-e7cd-4c0d-b5c2-6f0b521fff3d","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/4ac8f80b-4172-4b82-b44c-641e7d5ae740","Meta":{"fileSize":"122521"},"AdditionalMeta":{}}
+(filePath: PNG_as_PDF.pdf, mimeType: application/pdf) =&gt; {"IsFixed":true,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/clarificationDemand.pdf; isFixed=False
+{"Id":"43877903-f1b3-4138-bf4b-8852a63ff3f9","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/7538004e-37c8-4ff8-b87c-b7c4488c68b7","Meta":{"fileSize":"135964"},"AdditionalMeta":{}}
+(filePath: clarificationDemand.pdf, mimeType: application/pdf) =&gt; {"IsFixed":false,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/TIF_as_PDF.pdf; isFixed=True
+{"Id":"375a1e6b-0933-4e63-b609-00652f8551b7","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/a768fe9b-0fa0-4805-993d-398bf2edab64","Meta":{"fileSize":"1440424"},"AdditionalMeta":{}}
+(filePath: TIF_as_PDF.pdf, mimeType: application/pdf) =&gt; {"IsFixed":true,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/SampleTorg12.pdf; isFixed=False
+{"Id":"1cb736f6-d2d1-4a4b-90db-bf5163d193d6","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/65d9a7e1-967d-49b1-bb07-bc10457a1163","Meta":{"fileSize":"104808"},"AdditionalMeta":{}}
+(filePath: SampleTorg12.pdf, mimeType: application/pdf) =&gt; {"IsFixed":false,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/long1.pdf; isFixed=False
+{"Id":"733e2406-c8e4-4272-9784-0373e7efb76e","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/f88ae712-b73e-4ae2-88a5-4819c2d8b33d","Meta":{"fileSize":"2500330"},"AdditionalMeta":{}}
+(filePath: long1.pdf, mimeType: application/pdf) =&gt; {"IsFixed":false,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/torg12_1.jpg; isFixed=True
+{"Id":"0351bdf6-ce5b-4705-8613-49f4075e7270","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/26d33e8b-8406-4d50-95de-6095dd728771","Meta":{"fileSize":"973548"},"AdditionalMeta":{}}
+(filePath: torg12_1.jpg, mimeType: image/jpeg) =&gt; {"IsFixed":true,"ResultMimeType":"image/png","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/tif_file.tif; isFixed=True
+{"Id":"bcaa1e3b-af77-46b5-9e85-a170e66dbfd5","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/ada2767a-6d9a-4fd5-ac05-27111780661c","Meta":{"fileSize":"1440424"},"AdditionalMeta":{}}
+(filePath: tif_file.tif, mimeType: image/tiff) =&gt; {"IsFixed":true,"ResultMimeType":"image/png","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/PNG_file.png; isFixed=True
+{"Id":"7c010609-b33a-4d74-bf34-3dae79768345","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/e73e37f6-800a-4dc6-a06b-8778be1d4185","Meta":{"fileSize":"122521"},"AdditionalMeta":{}}
+(filePath: PNG_file.png, mimeType: image/png) =&gt; {"IsFixed":true,"ResultMimeType":"image/png","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/JPG_as_PNG.png; isFixed=True
+{"Id":"82f032b8-f9f2-4205-a984-37ccb2a34891","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/18c687ec-53a6-4796-bff6-4b65d18c1ebc","Meta":{"fileSize":"973548"},"AdditionalMeta":{}}
+(filePath: JPG_as_PNG.png, mimeType: image/png) =&gt; {"IsFixed":true,"ResultMimeType":"image/png","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/TIF_as_PNG.png; isFixed=True
+{"Id":"d7bab391-2816-4827-b925-0f83f545675e","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/78b56dc0-44a5-4ab9-bf8c-7ed705b8dad2","Meta":{"fileSize":"1440424"},"AdditionalMeta":{}}
+(filePath: TIF_as_PNG.png, mimeType: image/png) =&gt; {"IsFixed":true,"ResultMimeType":"image/png","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/PDF_as_PNG.png; isFixed=False
+{"Id":"a96f32b3-e35c-4fc0-80b8-bd58652f1faa","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/7f031201-09db-4795-875f-738952d678eb","Meta":{"fileSize":"104808"},"AdditionalMeta":{}}
+(filePath: PDF_as_PNG.png, mimeType: image/png) =&gt; {"IsFixed":false,"ResultMimeType":"image/png","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/torg12_1.jpg; isFixed=True
+{"Id":"661649d3-d32f-4d93-bc6a-6ea1aba25163","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/f1aba75c-3ca1-4710-b58f-cb281245f9bc","Meta":{"fileSize":"973548"},"AdditionalMeta":{}}
+(filePath: torg12_1.jpg, mimeType: image/jpeg) =&gt; {"IsFixed":true,"ResultMimeType":"image/jpeg","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/tif_file.tif; isFixed=True
+{"Id":"ba9dae9e-ef8c-4112-939c-eb4b2567863f","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/84be12a3-5d29-4188-8bb8-42563a9202a6","Meta":{"fileSize":"1440424"},"AdditionalMeta":{}}
+(filePath: tif_file.tif, mimeType: image/tiff) =&gt; {"IsFixed":true,"ResultMimeType":"image/jpeg","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/PNG_file.png; isFixed=True
+{"Id":"b7441d2c-5819-4a27-82e9-3cc627f05315","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/235318a9-25bd-4b90-ac56-82a70ff7a471","Meta":{"fileSize":"122521"},"AdditionalMeta":{}}
+(filePath: PNG_file.png, mimeType: image/png) =&gt; {"IsFixed":true,"ResultMimeType":"image/jpeg","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/PDF_as_JPG.jpg; isFixed=False
+{"Id":"46ccbed4-9f91-4f0e-9169-3157ef4f6a30","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/de0d12a0-e96e-49e7-b531-c9dd531c1c5c","Meta":{"fileSize":"104808"},"AdditionalMeta":{}}
+(filePath: PDF_as_JPG.jpg, mimeType: image/jpeg) =&gt; {"IsFixed":false,"ResultMimeType":"image/jpeg","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/PNG_as_JPG.jpg; isFixed=True
+{"Id":"d9416581-2b7f-4503-8708-949302826950","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/a58888d3-638d-4109-a400-9ffb7226aabb","Meta":{"fileSize":"16593"},"AdditionalMeta":{}}
+(filePath: PNG_as_JPG.jpg, mimeType: image/jpeg) =&gt; {"IsFixed":true,"ResultMimeType":"image/jpeg","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/clarificationDemand.pdf; isFixed=False
+{"Id":"b00fea6b-1d63-424c-8ca0-21aeff2b6079","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/33d6be82-9d2d-40f9-a125-7b278243182c","Meta":{"fileSize":"135964"},"AdditionalMeta":{}}
+(filePath: clarificationDemand.pdf, mimeType: application/pdf) =&gt; {"IsFixed":false,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/TIF_as_JPG.jpg; isFixed=True
+{"Id":"9b8b003a-4648-40e7-8fec-bd204a31f4e9","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/2dc9769b-e57d-4172-a36e-ea31932abf2a","Meta":{"fileSize":"1440424"},"AdditionalMeta":{}}
+(filePath: TIF_as_JPG.jpg, mimeType: image/jpeg) =&gt; {"IsFixed":true,"ResultMimeType":"image/jpeg","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/SampleTorg12.pdf; isFixed=False
+{"Id":"1bef631a-a0e2-4b00-8882-07aee4cfd181","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/8f7fe2c7-a4b8-4fc4-a843-a59fd70b1dc1","Meta":{"fileSize":"104808"},"AdditionalMeta":{}}
+(filePath: SampleTorg12.pdf, mimeType: application/pdf) =&gt; {"IsFixed":false,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/long1.pdf; isFixed=False
+{"Id":"a713be3f-20c4-46dc-a78e-7398962ab1d7","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/f11f66fd-1a39-45e8-975b-5337944b8bad","Meta":{"fileSize":"2500330"},"AdditionalMeta":{}}
+(filePath: long1.pdf, mimeType: application/pdf) =&gt; {"IsFixed":false,"ResultMimeType":"application/pdf","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/torg12_1.jpg; isFixed=True
+{"Id":"b3b397e9-1f4d-444b-99b2-3ca81dc0e40b","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/a9e0fa59-4a17-44eb-ade8-d870a5b031de","Meta":{"fileSize":"973548"},"AdditionalMeta":{}}
+(filePath: torg12_1.jpg, mimeType: image/jpeg) =&gt; {"IsFixed":true,"ResultMimeType":"image/tiff","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/tif_file.tif; isFixed=True
+{"Id":"97d8fea4-8ca4-4de5-bebf-e1e15c7c2b6d","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/52805125-cfeb-45c9-9089-458e93e1808d","Meta":{"fileSize":"1440424"},"AdditionalMeta":{}}
+(filePath: tif_file.tif, mimeType: image/tiff) =&gt; {"IsFixed":true,"ResultMimeType":"image/tiff","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/JPG_as_TIF.tif; isFixed=True
+{"Id":"c80ea512-5362-43c0-86ba-0b818227e5e8","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/823b0ee0-fff6-4dac-b069-27da834288e2","Meta":{"fileSize":"973548"},"AdditionalMeta":{}}
+(filePath: JPG_as_TIF.tif, mimeType: image/tiff) =&gt; {"IsFixed":true,"ResultMimeType":"image/tiff","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/PNG_file.png; isFixed=True
+{"Id":"29ecc21c-fee3-4cf5-b256-add23a0372d0","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/da4b4204-6c25-449a-976b-e452b1326b20","Meta":{"fileSize":"122521"},"AdditionalMeta":{}}
+(filePath: PNG_file.png, mimeType: image/png) =&gt; {"IsFixed":true,"ResultMimeType":"image/tiff","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/PDF_as_TIF.tif; isFixed=False
+{"Id":"41b8593f-4453-45d4-871c-36fd37277a3b","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/e3c0df02-6290-4740-87fc-b331f780c55a/attachments/e07bb1c2-2653-47d5-a876-d14f46a07e89/ec2bebca-468d-4082-8ef7-d5af7ce9eef7/5c0012de-9834-40b0-bf3e-1320d2ea79f4","Meta":{"fileSize":"104808"},"AdditionalMeta":{}}
+(filePath: PDF_as_TIF.tif, mimeType: image/tiff) =&gt; {"IsFixed":false,"ResultMimeType":"image/tiff","IgnoreMessage":null}
+
+Warning - srcFilePath=/builds/forms/forms/candy/Candy.Api.IntegrationTests/bin/TestData/RecognitionServiceWrapperTests/PNG_as_TIF.tif; isFixed=True
+{"Id":"3645f887-7c09-4aa4-b14c-cfdc3fede092","DraftId":"ec2bebca-468d-4082-8ef7-d5af7ce9eef7","NsId":"e07bb1c2-2653-47d5-a876-d14f46a07e89","ContentUri":"https://api.testkontur.ru/drive/v1/contents/srv/keforms/nsid/1ef7e23e-07bf-418f-8c0b-b7914ba6726a/uid/ade331ac-bb63-47f2-b332-19397896ffb3/attachments/4a51a76d-5284-4255-bc8a-6e60ee2f730c","Meta":{"fileSize":"122521"},"AdditionalMeta":{}}
+(filePath: PNG_as_TIF.tif, mimeType: image/tiff) =&gt; {"IsFixed":true,"ResultMimeType":"image/tiff","IgnoreMessage":null}
+
+</system-err>
+  </testsuite>
+</testsuites>

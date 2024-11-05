@@ -1,0 +1,27 @@
+<testsuites>
+  <testsuite name="Forms.Progress.FunctionalTests.dll" tests="14" skipped="0" failures="0" errors="0" time="17.027580999999998" timestamp="2024-11-02T08:39:57" hostname="runner-xwgvg2526-project-17358-concurrent-9-fvrbtobs" id="0" package="Forms.Progress.FunctionalTests.dll">
+    <properties />
+    <testcase classname="Kontur.Forms.Progress.FunctionalTests.ProgressServiceV1Tests" name="ProgressServiceV1Tests.PutNull_NotThrows" time="1.0844350" />
+    <testcase classname="Kontur.Forms.Progress.FunctionalTests.ProgressServiceV1Tests" name="ProgressServiceV1Tests.PutAggregatedNegativeWeight_NotThrows" time="1.0880100" />
+    <testcase classname="Kontur.Forms.Progress.FunctionalTests.ProgressServiceV1Tests" name="ProgressServiceV1Tests.PutBigTaskId_NotThrows" time="1.2001550" />
+    <testcase classname="Kontur.Forms.Progress.FunctionalTests.ProgressServiceV1Tests" name="ProgressServiceV1Tests.PutAggregatedNegativeProgress_NotThrows" time="1.2842820" />
+    <testcase classname="Kontur.Forms.Progress.FunctionalTests.ProgressServiceV1Tests" name="ProgressServiceV1Tests.PutSimpleNegativeProgress_NotThrows" time="0.1973040" />
+    <testcase classname="Kontur.Forms.Progress.FunctionalTests.ProgressServiceV1Tests" name="ProgressServiceV1Tests.PutSimpleNegativeWeight_NotThrows" time="0.1989430" />
+    <testcase classname="Kontur.Forms.Progress.FunctionalTests.ProgressServiceV1Tests" name="ProgressServiceV1Tests.PutCyclicReference_GetProgress_NotThrows" time="1.2903730" />
+    <testcase classname="Kontur.Forms.Progress.FunctionalTests.ProgressServiceV1Tests" name="ProgressServiceV1Tests.PutSlash_NotThrows" time="0.0954610" />
+    <testcase classname="Kontur.Forms.Progress.FunctionalTests.ProgressServiceV1Tests" name="ProgressServiceV1Tests.GetWithoutPut_ReturnsDefaultTask" time="1.2968440" />
+    <testcase classname="Kontur.Forms.Progress.FunctionalTests.ProgressServiceV1Tests" name="ProgressServiceV1Tests.PutTaskNegativeWeight_NotThrows" time="0.0138680" />
+    <testcase classname="Kontur.Forms.Progress.FunctionalTests.ProgressServiceV1Tests" name="ProgressServiceV1Tests.GetAfterPut_ReturnsProgress" time="1.3004880" />
+    <testcase classname="Kontur.Forms.Progress.FunctionalTests.ProgressServiceV1Tests" name="ProgressServiceV1Tests.GetAfterPut_ReturnsSameTask" time="1.3057120" />
+    <testcase classname="Kontur.Forms.Progress.FunctionalTests.ProgressServiceV1Tests" name="ProgressServiceV1Tests.GetAfterDelete_ReturnsDefaultTask" time="1.3247600" />
+    <testcase classname="Kontur.Forms.Progress.FunctionalTests.ProgressServiceV1Tests" name="ProgressServiceV1Tests.BatchPutTest" time="5.3469460" />
+    <system-out>
+Test Framework Informational Messages:
+NUnit Adapter 4.5.0.0: Test execution started
+Running all tests in /builds/forms/forms/forms.progress/Progress.FunctionalTests/bin/Forms.Progress.FunctionalTests.dll
+   NUnit3TestExecutor discovered 14 of 14 NUnit test cases using Current Discovery mode, Non-Explicit run
+NUnit Adapter 4.5.0.0: Test execution complete
+</system-out>
+    <system-err></system-err>
+  </testsuite>
+</testsuites>
