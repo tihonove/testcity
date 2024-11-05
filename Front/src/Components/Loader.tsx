@@ -8,7 +8,7 @@ export const Loader = () => (
     </LoaderContainer>
 );
 
-const LoaderContainer = styled.p`
+const LoaderContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;

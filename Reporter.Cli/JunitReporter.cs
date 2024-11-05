@@ -18,6 +18,19 @@ public  class JunitReporter
 
     public async Task DoAsync()
     {
+        var (counter, runs) = CollectTestsFromReports();
+
+        log.Debug(counter.ToString());
+        await UploadTestRuns(runs);
+        
+        ВзорватьсяЕслиНетТестов(counter);
+
+        var jobInfo = GetFullJobInfo(counter);
+        await UploadJobInfo(jobInfo);
+    }
+
+    public (TestCount counter, List<TestRun> runs) CollectTestsFromReports()
+    {
         var testCountForWholeJob = new TestCount();
         var testRunsForWholeJob = new List<TestRun>();
         foreach (var reportPath in ReportPathResolver.GetReportPaths(options.ReportsPaths))
@@ -30,14 +43,8 @@ public  class JunitReporter
             
             log.Debug(testRunsFromReport.counter.ToString());
         }
-        
-        log.Debug(testCountForWholeJob.ToString());
-        await UploadTestRuns(testRunsForWholeJob);
-        
-        ВзорватьсяЕслиНетТестов(testCountForWholeJob);
 
-        var jobInfo = GetFullJobInfo(testCountForWholeJob);
-        await UploadJobInfo(jobInfo);
+        return (testCountForWholeJob, testRunsForWholeJob);
     }
 
     private void ВзорватьсяЕслиНетТестов(TestCount testCountForWholeJob)
@@ -66,10 +73,10 @@ public  class JunitReporter
         var startDateTime = GetStartDateTime();
         foreach (var testCase in root.XPathSelectElements("./testsuite/testcase"))
         {
-            var testSuite = testCase.Parent!;
-            var testId = $"{testSuite.Attribute("name")!.Value.Replace(".dll", "")}: " +
-                         $"{string.Join(".", testCase.Attribute("classname")!.Value.Split(".").SkipLast(1))}." +
-                         $"{testCase.Attribute("name")!.Value}";
+            var testAssembleName = testCase.Parent!.Attribute("name")!.Value.Replace(".dll", "");
+            var className = testCase.Attribute("classname")!.Value;
+            var testCaseName = testCase.Attribute("name")!.Value;
+            var testId = $"{testAssembleName}: {JUnitReportHelper.RemoveDuplicatePartInClassName(className, testCaseName)}{testCaseName}";
 
             var failure = testCase.Element("failure");
             var skipped = testCase.Element("skipped");
@@ -116,7 +123,7 @@ public  class JunitReporter
             State = GetJobStatus(),
             StartDateTime = startDateTime,
             EndDateTime = endDateTime,
-            Duration = (long)(endDateTime - startDateTime).TotalMilliseconds,
+            Duration = (long)(endDateTime - startDateTime).TotalSeconds,
             Triggered = Environment.GetEnvironmentVariable("GITLAB_USER_EMAIL") ?? throw new InvalidOperationException("GITLAB_USER_EMAIL environment variable is not set."),
             PipelineSource = Environment.GetEnvironmentVariable("CI_PIPELINE_SOURCE") ?? throw new InvalidOperationException("CI_PIPELINE_SOURCE environment variable is not set."),
             CommitSha = Environment.GetEnvironmentVariable("CI_COMMIT_SHA") ?? throw new InvalidOperationException("CI_COMMIT_SHA environment variable is not set."),
@@ -193,8 +200,8 @@ public  class JunitReporter
             log.Info("Job Info uploaded to Test History Analytics");
         }
     }
-    
-    private static JobRunInfo GetJobRunInfo() =>
+
+    public static JobRunInfo GetJobRunInfo() =>
         new()
         {
             JobUrl = Environment.GetEnvironmentVariable("CI_JOB_URL") ?? string.Empty,

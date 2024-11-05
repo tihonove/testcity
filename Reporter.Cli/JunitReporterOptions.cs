@@ -10,7 +10,7 @@ public class JunitReporterOptions
     public required IEnumerable<string> ReportsPaths { get; set; }
     
     [Option("noJunit")]
-    public required bool NoJunit { get; set; }
+    public bool NoJunit { get; set; }
     
     [Option('d', "dry-run")]
     public bool DryRun { get; set; }
