@@ -5,12 +5,6 @@ import { DropdownMenu, Input, MenuItem, Spinner } from "@skbkontur/react-ui";
 import styled from "styled-components";
 import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
 import {
-    ShapeCircleMIcon16Regular,
-    ShapeCircleMIcon24Regular,
-    ShapeCircleMIcon32Regular,
-    ShapeSquareIcon16Regular,
-    ShapeSquareIcon24Regular,
-    ShapeSquareIcon32Regular,
     ShareNetworkIcon,
     UiFilterSortADefaultIcon16Regular,
     UiFilterSortAHighToLowIcon16Regular,
@@ -22,34 +16,7 @@ import { RouterLinkAdapter } from "../Components/RouterLinkAdapter";
 import { formatDuration } from "../RunStatisticsChart/DurationUtils";
 import { useSearchParamAsState, useSearchParamDebouncedAsState } from "../Utils";
 import { RunStatus } from "../TestHistory/TestHistory";
-
-function JonIcon(props: { size: 16 | 24 | 32; status?: RunStatus }) {
-    switch (props.size) {
-        case 16:
-            return <ShapeSquareIcon16Regular />;
-            break;
-        case 24:
-            return <ShapeSquareIcon24Regular />;
-            break;
-        case 32:
-            return <ShapeSquareIcon32Regular />;
-            break;
-    }
-}
-
-function JonRunIcon(props: { size: 16 | 24 | 32; status?: RunStatus }) {
-    switch (props.size) {
-        case 16:
-            return <ShapeCircleMIcon16Regular />;
-            break;
-        case 24:
-            return <ShapeCircleMIcon24Regular />;
-            break;
-        case 32:
-            return <ShapeCircleMIcon32Regular />;
-            break;
-    }
-}
+import {ArrowARightIcon, HomeIcon, JonIcon, JonRunIcon} from "../Components/Icons";
 
 interface TestNameProps {
     value: string;
@@ -170,8 +137,12 @@ export function JobRunPage(): React.JSX.Element {
             <ColumnStack gap={2} block stretch>
                 <Fit>
                     <JobHeader>
+                        <Link to={`/test-analytics/jobs`}>
+                            <HomeIcon size={16} /> All jobs  
+                        </Link>
+                        <ArrowARightIcon size={16} />
                         <Link to={`/test-analytics/jobs/${jobId}`}>
-                            <JonIcon size={16} /> {jobId}
+                            <JonIcon size={16} />  {jobId}
                         </Link>
                     </JobHeader>
                 </Fit>

@@ -69,9 +69,9 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
                 <Container>
                     {reverse(props.value)
                         .map((x, index) => (
-                            <Tooltip trigger={"hover"} render={() => x[2]}>
+                            <Tooltip trigger={"hover"} render={() => x[2]} key={index}>
                                 <ChartBar
-                                    success={x[0] == "Success"}
+                                    success={(x[0] == "Success").toString()}
                                     scale={scale}
                                     key={index}
                                     style={{ height: 100 * (x[1] / maxVisibleDuration) }}>
@@ -141,7 +141,7 @@ const Container = styled.div({
     position: "relative",
 });
 
-const ChartBar = styled.div<{ scale: number; success: boolean }>(
+const ChartBar = styled.div<{ scale: number; success: string }>(
     props => ({
         flexGrow: 0,
         flexShrink: 0,
@@ -153,7 +153,7 @@ const ChartBar = styled.div<{ scale: number; success: boolean }>(
         position: "relative",
     }),
     props =>
-        props.success
+        props.success === "true"
             ? {
                   backgroundColor: "rgba(0, 0, 0, 0.1)",
                   "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.2)" },

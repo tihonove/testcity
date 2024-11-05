@@ -1,0 +1,207 @@
+<testsuites>
+  <testsuite name="Forms.DomEx.Tests.dll" tests="100" skipped="7" failures="0" errors="0" time="168.05636459999994" timestamp="2024-11-02T09:21:49" hostname="runner-xwgvg2526-project-17358-concurrent-9-fvrbtobs" id="0" package="Forms.DomEx.Tests.dll">
+    <properties />
+    <testcase classname="Kontur.Forms.DomEx.Tests.Fns.FnsTests" name="FnsTests.FnsDocumentFactory_IncomeTaxesOfTheForeignOrganization_CorrectPeriod" time="11.4826530" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.IdFileGeneratorShould" name="IdFileGeneratorShould.Generate" time="9.3384710" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.Pfr.PfrTests" name="PfrTests.Adv8" time="9.9086310" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.Pfr.PfrTests" name="PfrTests.Rsv1" time="9.6273850" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.Pfr.PfrTests" name="PfrTests.Rsv1_2012" time="9.0693030" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.Pfr.PfrTests" name="PfrTests.Rsv1_2014" time="9.4088800" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.Pfr.PfrTests" name="PfrTests.Rsv1_2015" time="9.8482749" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.Pfr.PfrTests" name="PfrTests.Rsv1_6" time="9.5071470" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.Pfr.PfrTests" name="PfrTests.Rsv1_BunchesFilenames" time="9.7876400" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.Pfr.PfrTests" name="PfrTests.Rsv2" time="9.9476669" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.Pfr.PfrTests" name="PfrTests.Spv2" time="9.7574450" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.Pfr.PfrTests" name="PfrTests.TestAllPfr" time="0.0011320">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.CertificateTests" name="CertificateTests.Serizalize" time="0.0478290" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.FirstFoundAttributeValueReplacerTest" name="FirstFoundAttributeValueReplacerTest.Test" time="0.0023470" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.FssSchemaLocationPatcherTests" name="FssSchemaLocationPatcherTests.AddOrReplaceAttributeWhenAttributeNotExists_Success" time="9.6459320" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.FufFixerTests" name="FufFixerTests.FixIdFileForJournalColFileIsOne" time="0.0257620" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.FufFixerTests" name="FufFixerTests.FixIdFileForJournalColFileIsZero" time="0.0009350" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.FufFixerTests" name="FufFixerTests.FixIdFileForJournalColFileIsZeroAndNomFileIsZero" time="0.0005750" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.FufFixerTests" name="FufFixerTests.FixNewIdFile" time="9.9958320" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.FufFixerTests" name="FufFixerTests.FixOldIdFile" time="9.6544470" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.FufFixerTests" name="FufFixerTests.ReplaceNewIdFile" time="9.8249370" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.IdFileTests" name="IdFileTests.Constructor" time="0.0004060" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.IdFileTests" name="IdFileTests.ConstructorExceptions" time="0.0069250" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.IdFileTests" name="IdFileTests.KppWithLiterals" time="0.0004440" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.IdFileTests" name="IdFileTests.Parse" time="0.0009380" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.IdFileTests" name="IdFileTests.ParseNotValidIdFiles" time="0.0002620" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.IdFileTests" name="IdFileTests.ToStringExceptions" time="0.0007400" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.IdFileTests" name="IdFileTests.TryParseFails" time="0.0003460" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.MiscTests" name="MiscTests.GetReqValueTest" time="0.0006390" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.MiscTests" name="MiscTests.RoundingStrategies" time="0.0000749">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.NdsXmlPatcherTests" name="NdsXmlPatcherTests.WhenAnyEnclosureExistsInPackage_ThenSetAnyEnclosurePresenceAttributeSuccess" time="0.0091770" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.NdsXmlPatcherTests" name="NdsXmlPatcherTests.WhenEnclosureNotExistsInNonemptyPackage_ThenSetAttributesForEnclosureInDeclarationSuccess" time="0.0012060" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.NdsXmlPatcherTests" name="NdsXmlPatcherTests.WhenHasAllEnclosureInPackage_AndDeclarationHasLastEnclosureElement_ThenCreatedElementsAreInCorrectOrder" time="0.0017010" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.NdsXmlPatcherTests" name="NdsXmlPatcherTests.WhenHasAllEnclosureInPackage_AndDeclarationHasNoEnclosureElements_ThenCreatedElementsAreInCorrectOrder" time="0.0013920" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.NdsXmlPatcherTests" name="NdsXmlPatcherTests.WhenHasEnclosureInPackage_ThenSetAttributesForEnclosureInDeclarationSuccess" time="0.0007630" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.NdsXmlPatcherTests" name="NdsXmlPatcherTests.WhenNoEnclosuresInPackage_ThenSetAnyEnclosurePresenceAttributeSuccess" time="0.0009010" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.ReorganizedInspectionsTests" name="ReorganizedInspectionsTests.KppMappingTest" time="0.0137340" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.ReorganizedInspectionsTests" name="ReorganizedInspectionsTests.ManyToOneMappingTest" time="0.0005220" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.ReorganizedInspectionsTests" name="ReorganizedInspectionsTests.MappingWithKppFlagTest" time="0.0013400" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.ReorganizedInspectionsTests" name="ReorganizedInspectionsTests.NoMappingTest" time="0.0004170" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.ReorganizedInspectionsTests" name="ReorganizedInspectionsTests.OneToManyMappingTest" time="0.0004650" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.ReorganizedInspectionsTests" name="ReorganizedInspectionsTests.OneToOneMappingTest" time="0.0003660" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.StreamDataReplacerTest" name="StreamDataReplacerTest.DontReplaceIfOldIdFileNotFound" time="0.0046220" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.StreamDataReplacerTest" name="StreamDataReplacerTest.ReturnNullIfNewIdFileEmpty" time="0.0003070" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.StreamDataReplacerTest" name="StreamDataReplacerTest.ReturnNullIfNewIdFileNull" time="0.0002500" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.StreamDataReplacerTest" name="StreamDataReplacerTest.ReturnNullIfOldIdFileEmpty" time="0.0001850" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.StreamDataReplacerTest" name="StreamDataReplacerTest.ReturnNullIfOldIdFileNull" time="0.0001990" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.StreamDataReplacerTest" name="StreamDataReplacerTest.TestReplaceBlahBlahBlah" time="0.0010580" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.StreamDataReplacerTest" name="StreamDataReplacerTest.TestReplaceIdFileInFileEndingWithNewLine" time="0.0002720" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.StreamDataReplacerTest" name="StreamDataReplacerTest.TestReplaceIdFileWithoutTrailineNewLine" time="0.0002160" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.StreamDataReplacerTest" name="StreamDataReplacerTest.TestReplaceXmlAttributeUsingFirstFoundAttributeReplacer" time="0.0007360" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.StreamDataReplacerTest" name="StreamDataReplacerTest.ThrowExceptionIfContentIsNull" time="0.0006340" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.StreamDataReplacerTest" name="StreamDataReplacerTest.ThrowExceptionIfEncodingIsNull" time="0.0003880" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.WarrantConverterTests" name="WarrantConverterTests.Ctor_NotFail" time="0.0500900" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlContextTest" name="XmlContextTest.WhenAbsolutePathAndValueMatches_ThenSuccessMatchAttributeByPathAndValue" time="0.0006530" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlContextTest" name="XmlContextTest.WhenAbsolutePathDoesntMatch_ThenFailsMatchAttributeByPath" time="0.0004950" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlContextTest" name="XmlContextTest.WhenAbsolutePathDoesntMatch_ThenFailsMatchAttributeByPathAndValue" time="0.0002010" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlContextTest" name="XmlContextTest.WhenAbsolutePathMatches_ThenSuccessMatchAttributeByPath" time="0.0002270" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlContextTest" name="XmlContextTest.WhenContextOnAttributeAndTryAddAttribute_ThenThrows" time="0.0004300" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlContextTest" name="XmlContextTest.WhenContextOnAttributeAndTryExitElement_ThenThrows" time="0.0003120" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlContextTest" name="XmlContextTest.WhenCurrentContextIsNotAttribute_ThenFailsMatchAttributeByPath" time="0.0001880" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlContextTest" name="XmlContextTest.WhenEnterAttribute_PathIsCorrect" time="0.0002340" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlContextTest" name="XmlContextTest.WhenEnterElement_PathIsCorrect" time="0.0001800" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlContextTest" name="XmlContextTest.WhenExitAttribute_PathIsCorrect" time="0.0002250" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlContextTest" name="XmlContextTest.WhenExitElement_PathIsCorrect" time="0.0001930" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlContextTest" name="XmlContextTest.WhenRelativePathAndValueMatches_ThenSuccessMatchAttributeByPathAndValue" time="0.0002110" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlContextTest" name="XmlContextTest.WhenRelativePathContainsOnlyAttributeAndMatches_ThenSuccessMatchAttributeByPath" time="0.0001710" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlContextTest" name="XmlContextTest.WhenRelativePathContainsOnlyAttributeAndMatches_ThenSuccessMatchAttributeByPathAndValue" time="0.0001820" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlContextTest" name="XmlContextTest.WhenRelativePathDoesntMatch_ThenFailMatchAttributeByPath" time="0.0002030" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlContextTest" name="XmlContextTest.WhenRelativePathDoesntMatch_ThenFailMatchAttributeByPathAndValue" time="0.0001930" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlContextTest" name="XmlContextTest.WhenRelativePathMatches_ThenSuccessMatchAttributeByPath" time="0.0002580" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlContextTest" name="XmlContextTest.WhenRelativePathMatchesAndValueDoesntMatch_ThenFailMatchAttributeByPathAndValue" time="0.0002410" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlPathTests" name="XmlPathTests.WhenAbsolutePathContainsElements_GetElementNameSuccess" time="0.0002030" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlPathTests" name="XmlPathTests.WhenAbsolutePathContainsElementsAndAttribute_GetParentPathSuccess" time="0.0002360" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlPathTests" name="XmlPathTests.WhenAbsolutePathContainsOnlyAttribute_ThenGetParentPath_Throws" time="0.0003420" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlPathTests" name="XmlPathTests.WhenAttributeAbsolutePathIsMinimalPossibleLength_ThenGetParentPath_Success" time="0.0001520" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlPathTests" name="XmlPathTests.WhenRelativePathContainsElementsAndAttribute_GetParentPathSuccess" time="0.0002570" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlPathTests" name="XmlPathTests.WhenRelativePathContainsOnlyAttribute_ThenGetParentPath_Throws" time="0.0003110" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlStreamPatcherTests" name="XmlStreamPatcherTests.AddAttributeWhenNotExists" time="0.0010889" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlStreamPatcherTests" name="XmlStreamPatcherTests.AddOrReplaceAttributeWhenAttributeExists_Success" time="0.0022540" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlStreamPatcherTests" name="XmlStreamPatcherTests.AddOrReplaceAttributeWhenAttributeNotExists_Success" time="0.0012640" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlStreamPatcherTests" name="XmlStreamPatcherTests.DontReplaceGoodOkato" time="0.0017790" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlStreamPatcherTests" name="XmlStreamPatcherTests.RemoveAttributePathWhenExists" time="0.0010250" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlStreamPatcherTests" name="XmlStreamPatcherTests.ReplaceAllAttributes" time="0.0021820" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlStreamPatcherTests" name="XmlStreamPatcherTests.ReplaceFirstAttribute" time="0.0016290" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlStreamPatcherTests" name="XmlStreamPatcherTests.ReplaceOktmoToOkato" time="0.0009380" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.UtilTests.XmlStreamPatcherTests" name="XmlStreamPatcherTests.WriteToFileStream" time="0.0015780" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.WarrantTests.StandardSerializationTests" name="StandardSerializationTests.ArraySerializationTest" time="0.6440870" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.WarrantTests.StandardSerializationTests" name="StandardSerializationTests.CheckForWeirdCulture" time="0.0008070" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.WarrantTests.WarrantTests" name="WarrantTests.CrossTestCheckForFormat3" time="0.0000760">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.DomEx.Tests.WarrantTests.WarrantTests" name="WarrantTests.CrossTestCheckForFormat4" time="0.0000460">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.DomEx.Tests.WarrantTests.WarrantTests" name="WarrantTests.CrossTestCheckForFormat5" time="0.0000030">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.DomEx.Tests.WarrantTests.WarrantTests" name="WarrantTests.GetWarrantInfoTestFns" time="0.0000020">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.DomEx.Tests.WarrantTests.WarrantTests" name="WarrantTests.GetWarrantInfoTestIon" time="0.0000020">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.DomEx.Tests.WarrantTests.WarrantTests" name="WarrantTests.PatchWarrantTests(&quot;warrantGood.xml&quot;,True,&quot;6699001001&quot;,&quot;669900000&quot;,&quot;6670&quot;,&quot;6699&quot;,&quot;NO_DOVER_6699_6670_6699001001669900000_&quot;,&quot;6670&quot;)" time="0.2834230" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.WarrantTests.WarrantTests" name="WarrantTests.PatchWarrantTests(&quot;warrantBad.xml&quot;,True,&quot;6699001001&quot;,&quot;669900000&quot;,&quot;6670&quot;,&quot;6699&quot;,&quot;ON_DOV_6699_6670_6699001001669900000_&quot;,&quot;6670&quot;)" time="10.0380520" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.WarrantTests.WarrantTests" name="WarrantTests.PatchWarrantTests(&quot;warrantBad.xml&quot;,False,&quot;6699001001&quot;,&quot;669900000&quot;,&quot;6670&quot;,&quot;6699&quot;,&quot;ON_DOV___9909541941774791001_20200925_87669569-6019-4524-bf4b-b43dbf723ba2&quot;,&quot;&quot;)" time="0.0007660" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.WarrantTests.WarrantTests" name="WarrantTests.WarrantFixMriTest" time="10.0824450" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.WarrantTests.XmlTests" name="XmlTests.FormGuidParsingTest" time="0.0005160" />
+    <testcase classname="Kontur.Forms.DomEx.Tests.WarrantTests.XmlTests" name="XmlTests.UserSettingsRequisitesTest" time="0.0011630" />
+    <system-out>NO_NDS.8_0000_0000_1234567890123456789_20241102_8797c8bd-a81f-4491-8d4a-49e979ee016a
+
+
+
+/elementA/BBBBBBB/@attribute1
+
+/elementA/BBBBBBB/@attribute1
+
+/elementA/BBBBBBB/@attribute1
+
+/elementA/BBBBBBB/@attribute1
+
+/elementA/BBBBBBB
+
+/elementA/BBBBBBB/asdasqwe/@attribute1
+
+/elementA/BBBBBBB/asdasqwe
+
+/elementA/BBBBBBB/asdasqwe
+
+/elementA/BBBBBBB
+
+/elementA/BBBBBBB/@attribute1
+
+/elementA/BBBBBBB/@attribute1
+
+/elementA/BBBBBBB/@attribute1
+
+/elementA/BBBBBBB/@attribute1
+
+/elementA/BBBBBBB/@attribute1
+
+/elementA/BBBBBBB/@attribute1
+
+/elementA/BBBBBBB/@attribute1
+
+Run only on windows: На тимсити этот тест замьючен, на линуксе пока так отключен
+Run only on windows: На тимсити этот тест замьючен, на линуксе пока так отключен
+Run only on windows: На тимсити этот тест замьючен, на линуксе пока так отключен
+Run only on windows: На тимсити этот тест замьючен, на линуксе пока так отключен
+Run only on windows: На тимсити этот тест замьючен, на линуксе пока так отключен
+
+Test Framework Informational Messages:
+NUnit Adapter 4.5.0.0: Test execution started
+Running all tests in /builds/forms/forms/formats/DomEx.Tests/bin/Forms.DomEx.Tests.dll
+   NUnit3TestExecutor discovered 98 of 100 NUnit test cases using Current Discovery mode, Non-Explicit run
+CrossTestCheckForFormat3: Run only on windows: На тимсити этот тест замьючен, на линуксе пока так отключен
+CrossTestCheckForFormat4: Run only on windows: На тимсити этот тест замьючен, на линуксе пока так отключен
+CrossTestCheckForFormat5: Run only on windows: На тимсити этот тест замьючен, на линуксе пока так отключен
+GetWarrantInfoTestFns: Run only on windows: На тимсити этот тест замьючен, на линуксе пока так отключен
+GetWarrantInfoTestIon: Run only on windows: На тимсити этот тест замьючен, на линуксе пока так отключен
+NUnit Adapter 4.5.0.0: Test execution complete
+</system-out>
+    <system-err>Warning - NO_NDS.8_0000_0000_1234567890123456789_20241102_8797c8bd-a81f-4491-8d4a-49e979ee016a
+
+Warning - /elementA/BBBBBBB/@attribute1
+
+Warning - /elementA/BBBBBBB/@attribute1
+
+Warning - /elementA/BBBBBBB/@attribute1
+
+Warning - /elementA/BBBBBBB/@attribute1
+
+Warning - /elementA/BBBBBBB
+
+Warning - /elementA/BBBBBBB/asdasqwe/@attribute1
+
+Warning - /elementA/BBBBBBB/asdasqwe
+
+Warning - /elementA/BBBBBBB/asdasqwe
+
+Warning - /elementA/BBBBBBB
+
+Warning - /elementA/BBBBBBB/@attribute1
+
+Warning - /elementA/BBBBBBB/@attribute1
+
+Warning - /elementA/BBBBBBB/@attribute1
+
+Warning - /elementA/BBBBBBB/@attribute1
+
+Warning - /elementA/BBBBBBB/@attribute1
+
+Warning - /elementA/BBBBBBB/@attribute1
+
+Warning - /elementA/BBBBBBB/@attribute1
+
+</system-err>
+  </testsuite>
+</testsuites>

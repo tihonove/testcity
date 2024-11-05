@@ -1,11 +1,10 @@
 import * as React from "react";
 import styled from "styled-components";
 import { ColumnStack, Fit, RowStack } from "@skbkontur/react-stack-layout";
-import { ComboBox, MenuSeparator, Paging } from "@skbkontur/react-ui";
+import { Paging } from "@skbkontur/react-ui";
 import {
-    ArrowUiCornerOutUpRightIcon, BuildingHomeIcon16Regular, BuildingHomeIcon24Regular, BuildingHomeIcon32Regular,
+    ArrowUiCornerOutUpRightIcon,
     LogoMicrosoftIcon,
-    MediaUiAPlayIcon,
     QuestionCircleIcon, ShapeCircleMIcon16Regular,
     ShapeSquareIcon16Regular,
     ShareNetworkIcon
@@ -16,6 +15,7 @@ import { Link } from "react-router-dom";
 import { BranchSelect } from "./BranchSelect";
 import {getOffsetTitle, toLocalTimeFromUtc} from "../Utils";
 import {JobComboBox} from "../Components/JobComboBox";
+import {ArrowARightIcon, HomeIcon, JonIcon} from "../Components/Icons";
 
 export type RunStatus = 'Failed' | 'Skipped' | 'Success';
 
@@ -65,7 +65,11 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
             <Fit>
                 <HomeHeader>
                     <Link to={`/test-analytics/jobs`}>
-                        <HomeIcon size={16} /> All jobs
+                        <HomeIcon size={16} /> All jobs  
+                    </Link>
+                    <ArrowARightIcon size={16} />
+                    <Link to={`/test-analytics/jobs/${props.jobIds[0]}`}>
+                        <JonIcon size={16} />  {props.jobIds[0]}  
                     </Link>
                 </HomeHeader>
             </Fit>
@@ -145,20 +149,6 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
 }
 
 const HomeHeader = styled.h2``;
-
-function HomeIcon(props: { size: 16 | 24 | 32; }) {
-    switch (props.size) {
-        case 16:
-            return <BuildingHomeIcon16Regular />;
-            break;
-        case 24:
-            return <BuildingHomeIcon24Regular />;
-            break;
-        case 32:
-            return <BuildingHomeIcon32Regular />;
-            break;
-    }
-}
 
 const StatusCell = styled.td<{ status: RunStatus }>`
     width: 100px;

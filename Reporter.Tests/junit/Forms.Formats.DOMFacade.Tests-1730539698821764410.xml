@@ -1,0 +1,153 @@
+<testsuites>
+  <testsuite name="Forms.Formats.DOMFacade.Tests.dll" tests="140" skipped="0" failures="0" errors="0" time="155.33891400000002" timestamp="2024-11-02T09:28:20" hostname="runner-xwgvg2526-project-17358-concurrent-9-fvrbtobs" id="0" package="Forms.Formats.DOMFacade.Tests.dll">
+    <properties />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.DocumentEqualHelperTests" name="DocumentEqualHelperTests.FuzzyEqual_AddPropsFuzzyEqual_ReturnTrue" time="0.0383250" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.DocumentEqualHelperTests" name="DocumentEqualHelperTests.FuzzyEqual_AddPropsFuzzyNotEqual_ReturnFalse" time="0.0010270" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.DocumentEqualHelperTests" name="DocumentEqualHelperTests.FuzzyEqual_EmptyIon_ReturnTrue" time="0.0109240" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.DocumentEqualHelperTests" name="DocumentEqualHelperTests.FuzzyEqual_EmptyStat_RTrue" time="0.0002030" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.DocumentEqualHelperTests" name="DocumentEqualHelperTests.FuzzyEqual_EqualIon_ReturnTrue" time="0.1779990" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.DocumentEqualHelperTests" name="DocumentEqualHelperTests.FuzzyEqual_EqualStat_ReturnTrue" time="0.0004030" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.DocumentEqualHelperTests" name="DocumentEqualHelperTests.FuzzyEqual_IonDifferentTaxPayers_ReturnFalse" time="0.0031970" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.DocumentEqualHelperTests" name="DocumentEqualHelperTests.FuzzyEqual_NotEqualDocs3_ReturnFalse" time="0.0003840" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.DocumentEqualHelperTests" name="DocumentEqualHelperTests.FuzzyEqual_NotEqualDocs4_ReturnFalse" time="0.0002900" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.DocumentEqualHelperTests" name="DocumentEqualHelperTests.FuzzyEqual_StatDifferentDocumentType_ReturnFalse" time="0.0002850" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.DocumentEqualHelperTests" name="DocumentEqualHelperTests.FuzzyEqual_StatDifferentPeriod_ReturnFalse" time="0.0003460" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.DocumentEqualHelperTests" name="DocumentEqualHelperTests.FuzzyEqual_StatDiffernetFormName_ReturnFalse" time="0.0002880" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.DocumentEqualHelperTests" name="DocumentEqualHelperTests.FuzzyEqual_StatFlashWithoutFileNameInAdditional_ReturnFalse" time="0.0003800" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.DocumentEqualHelperTests" name="DocumentEqualHelperTests.FuzzyEqual_WithDifferentFileName_ReturnTrue" time="0.0003550" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.DocumentProviderTests" name="DocumentProviderTests.SfrTest" time="11.4731150" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentBuilderTests" name="FnsDocumentBuilderTests.Test_DocumentBuilder" time="8.0624490" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.NewFileNameFormat" time="9.7364450" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.Test100402" time="0.0264700" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.Test101601" time="0.0170360" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.Test104907" time="0.0177770" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.Test107001" time="0.0084150" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.Test202205" time="0.0080290" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.Test202305" time="0.0079130" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.Test203001" time="0.0082860" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.Test203101" time="0.0090240" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.TestBuhOtchFormat5" time="0.0282840" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.TestBuhOtchFormat5_1" time="0.0100680" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.TestFormat2CorporatePerson" time="0.0128210" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.TestFormat2Form" time="0.0094299" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.TestFormat2KnownFormatErrors" time="0.0086540" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.TestFormat2NaturalPerson" time="0.0083909" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.TestFormat2ReportingPeriod" time="0.0087160" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.TestFormat3CorporatePerson" time="0.0078890" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.TestFormat3Form" time="0.0090969" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.TestFormat3NaturalPerson" time="0.0121020" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.TestFormat3ReportingPeriod" time="0.0085290" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.TestMriFormat2" time="0.0161800" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.TestMriFormat3" time="0.0154880" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.TestMriFormat4" time="0.0141120" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.TestMriFormat5" time="0.0149930" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.TestNds2015Attachments" time="0.0448350" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.TestPaymentsGroupedByKBK" time="2.3520420" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.TestResponseToDemand" time="0.0188149" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.TestSrchisFormat4" time="0.0088870" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.TestTipInf" time="0.0004810" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.Алко_1152014_201" time="0.0137120" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.БухотчётностьКредитныхОрганизаций" time="0.0186969" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.ЕДУПР_ФЛ" time="0.0093030" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.ЕДУПР_ЮЛ" time="0.0094730" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.ЗЕМНАЛД_ФЛ" time="0.0118460" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.ЗЕМНАЛД_ЮЛ" time="0.0081090" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.КосвенныеНалоги" time="0.0065830" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.КредитныеБухгалтерские" time="0.0075060" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.СтраховыеБухгалтерские" time="0.0266220" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.Трана" time="0.0117360" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsDocumentsFactoryTest" name="FnsDocumentsFactoryTest.Транд" time="0.0080120" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsRequisiteReaderTest" name="FnsRequisiteReaderTest.T" time="0.0053359" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsRequisiteReaderTest" name="FnsRequisiteReaderTest.XmlReqReader_ReadWithGfvNull_ShouldReadName" time="0.0011090" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsRequisiteReaderTest" name="FnsRequisiteReaderTest.XmlReqReaderV2_ReadWithoutStoppedPaths_ShouldReadName" time="0.0004070" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsRequisiteReaderTest" name="FnsRequisiteReaderTest.XmlReqReaderV2_ReadWithStoppedPaths_ShouldNotReadName" time="0.0004360" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.FnsRequisiteReaderTest" name="FnsRequisiteReaderTest.XmlRequisiteReaderCache" time="0.0003570" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.PropertiesGetter2NdflTest" name="PropertiesGetter2NdflTest.GetterDontThrowWhenCreatingFnsDocument" time="9.5382110" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.PropertiesGetterF5Nds504Test" name="PropertiesGetterF5Nds504Test.AdditionalPropertiesDoesNotContainIrrelevantEntry" time="9.6489910" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.PropertiesGetterF5Nds504Test" name="PropertiesGetterF5Nds504Test.GetterExtractsAttachmentFilenames" time="0.0007230" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.PropertiesGetterF5Nds504Test" name="PropertiesGetterF5Nds504Test.GetterExtractsEmptyAttachmentFilename" time="0.0015430" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.PropertiesGetterF5Test" name="PropertiesGetterF5Test.номкор=000 первичный" time="0.0007390" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.PropertiesGetterF5Test" name="PropertiesGetterF5Test.номкор=00 первичный" time="0.0003060" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.PropertiesGetterF5Test" name="PropertiesGetterF5Test.номкор=0 первичный" time="0.0000400" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.PropertiesGetterF5Test" name="PropertiesGetterF5Test.номкор=null первичный" time="0.0000400" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.PropertiesGetterF5Test" name="PropertiesGetterF5Test.номкор=1 корректирующий" time="0.0000190" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.PropertiesGetterF5Test" name="PropertiesGetterF5Test.номкор=100 корректирующий" time="0.0000240" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.PropertiesGetterF5Test" name="PropertiesGetterF5Test.номкор=0100 корректирующий" time="0.0000170" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.PropertiesGetterF5Test" name="PropertiesGetterF5Test.GetterDontThrowWhenGettingPayer" time="10.2329070" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.PropertiesGetterF5Test" name="PropertiesGetterF5Test.GetterDontThrowWhenGettingPayer2" time="0.0010900" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.PropertiesGetterF5Test" name="PropertiesGetterF5Test.NoXmlDeclaration_OK" time="0.0003690" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.ReportingPeriodReaderF4Test" name="ReportingPeriodReaderF4Test.gfv100501_getPeriod_Month" time="6.8794380" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.ReportingPeriodReaderF4Test" name="ReportingPeriodReaderF4Test.gfv100501_getPeriod_Year" time="6.8131440" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.RequisiteParserTest" name="RequisiteParserTest.EmptyBothCodeAndValue" time="0.0003390" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.RequisiteParserTest" name="RequisiteParserTest.EmptyCode" time="0.0001370" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.RequisiteParserTest" name="RequisiteParserTest.EmptyValue" time="0.0000930" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.RequisiteParserTest" name="RequisiteParserTest.NonRequisite" time="0.0000830" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.RequisiteParserTest" name="RequisiteParserTest.OneRequisite" time="0.0000730" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.RequisiteParserTest" name="RequisiteParserTest.ReadingAfterEnd" time="0.0001060" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.RequisiteParserTest" name="RequisiteParserTest.RequisiteAfterNonRequisite" time="0.0000910" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.RequisiteParserTest" name="RequisiteParserTest.TwoRequisites" time="0.0001310" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.RequisiteReaderTest" name="RequisiteReaderTest.CarriageReturn" time="0.0001900" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.RequisiteReaderTest" name="RequisiteReaderTest.Multiline" time="0.0001290" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.RequisiteReaderTest" name="RequisiteReaderTest.ReadExistingRequisite" time="0.0000840" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.RequisiteReaderTest" name="RequisiteReaderTest.ReadNotExistingRequisite" time="0.0000960" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.TestPropertiesGetter" name="TestPropertiesGetter.Test_PropertiesGetterF2_TaxPayerFL" time="0.0004810" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.TestPropertiesGetter" name="TestPropertiesGetter.Test_PropertiesGetterF2_TaxPayerUL" time="0.0002050" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.TestPropertiesGetter" name="TestPropertiesGetter.Test_PropertiesGetterF4_Fl" time="0.0002999" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fns.TestPropertiesGetter" name="TestPropertiesGetter.Test_PropertiesGetterF4_UL" time="0.0002999" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Compare(&quot;1&quot;,&quot;1&quot;,0)" time="0.0012669" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Compare(&quot;1&quot;,&quot;2&quot;,-1)" time="0.0002670" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Compare(&quot;2&quot;,&quot;1&quot;,1)" time="0.0000180" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Compare(&quot;1&quot;,&quot;10&quot;,-1)" time="0.0000130" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Compare(&quot;10&quot;,&quot;1&quot;,1)" time="0.0000110" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Compare(&quot;1&quot;,&quot;1.1&quot;,-1)" time="0.0000120" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Compare(&quot;1.1&quot;,&quot;1.1&quot;,0)" time="0.0000100" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Compare(&quot;1.1&quot;,&quot;1&quot;,1)" time="0.0000100" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Compare(&quot;1.1&quot;,&quot;1.10&quot;,-1)" time="0.0000150" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Compare(&quot;1.1&quot;,&quot;1.9&quot;,-1)" time="0.0000140" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Compare(&quot;1.10&quot;,&quot;1.1&quot;,1)" time="0.0000130" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Compare(&quot;1.9&quot;,&quot;1.1&quot;,1)" time="0.0000090" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Compare(&quot;0.6&quot;,&quot;0.10&quot;,-1)" time="0.0044680" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Compare(&quot;0.6&quot;,&quot;0.6.0&quot;,0)" time="0.0000200" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Compare(&quot;0.6.0&quot;,&quot;0.6&quot;,0)" time="0.0000130" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Compare(&quot;0.10&quot;,&quot;0.6&quot;,1)" time="0.0000110" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Parse(&quot;1.1&quot;,1,1)" time="0.0104050" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Parse(&quot;0.6&quot;,0,6)" time="0.0002370" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Parse(&quot;1.0.1&quot;,1,0,1)" time="0.0000380" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Parse(&quot;10.110.298&quot;,10,110,298)" time="0.0000430" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Parse(&quot;10.110.298&quot;,10,110,298)" time="0.0000180" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Parse(&quot;10.invalid.298&quot;,10,0,298)" time="0.0000190" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Parse_EmptyInput_ReturnsValidResult" time="0.0026240" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.F4VersionTest" name="F4VersionTest.Parse_SingleInput_ReturnsValidResult" time="0.0001620" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Fss.FssDocumentsFactoryTest" name="FssDocumentsFactoryTest.FssDocumentFactory" time="9.7419300" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Ion.IonDocumentsFactoryTest" name="IonDocumentsFactoryTest.FnsDocumentRefusal_Test" time="0.0027630" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Ion.IonDocumentsFactoryTest" name="IonDocumentsFactoryTest.Ion5_03_Ul_IonDocumentFactory" time="9.6394369" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Ion.IonDocumentsFactoryTest" name="IonDocumentsFactoryTest.Ion534_Fl_FnsDocumentFactory" time="0.0116540" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Ion.IonDocumentsFactoryTest" name="IonDocumentsFactoryTest.Ion534_Fl_IonDocumentFactory" time="0.0078750" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Ion.IonDocumentsFactoryTest" name="IonDocumentsFactoryTest.Ion534_Ul_FnsDocumentFactory" time="0.0078840" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Ion.IonDocumentsFactoryTest" name="IonDocumentsFactoryTest.Ion534_Ul_IonDocumentFactory" time="0.0082740" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.LocalPropertiesProviderTests" name="LocalPropertiesProviderTests.EfsTest" time="17.9754130" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.LocalPropertiesProviderTests" name="LocalPropertiesProviderTests.Test" time="10.9888110" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Pfr.PfrDocumentsFactoryTest" name="PfrDocumentsFactoryTest.Test_5" time="6.9575040" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Pfr.PfrDocumentsFactoryTest" name="PfrDocumentsFactoryTest.TestUnknownForm" time="0.0162470" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Stat.StatDocumentsFactoryTest" name="StatDocumentsFactoryTest.Test1AutotranceApril" time="9.8796330" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Stat.StatDocumentsFactoryTest" name="StatDocumentsFactoryTest.Test1AutotranceAprilDraft" time="0.0084110" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Stat.StatDocumentsFactoryTest" name="StatDocumentsFactoryTest.Test1T" time="0.0077260" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Stat.StatDocumentsFactoryTest" name="StatDocumentsFactoryTest.Test2Fermer" time="0.0071350" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Stat.StatDocumentsFactoryTest" name="StatDocumentsFactoryTest.TestBuhStat" time="0.0133360" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Stat.StatDocumentsFactoryTest" name="StatDocumentsFactoryTest.TestBunch" time="0.0393460" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Stat.StatDocumentsFactoryTest" name="StatDocumentsFactoryTest.TestNotImplementedBunch" time="0.0205520" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Stat.StatDocumentsFactoryTest" name="StatDocumentsFactoryTest.TestNotImplementedDraft" time="0.0116650" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Stat.StatDocumentsFactoryTest" name="StatDocumentsFactoryTest.TestNotImplementedForm" time="0.0231060" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Stat.StatDocumentsFactoryTest" name="StatDocumentsFactoryTest.TestUnknownForm" time="0.0106080" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Stat.StatPropertiesGetterTest" name="StatPropertiesGetterTest.Okpo_FCP" time="7.1195300" />
+    <testcase classname="Kontur.Forms.Formats.DOMFacade.Tests.Stat.StatPropertiesGetterTest" name="StatPropertiesGetterTest.Okpo_Fermer2" time="7.3414960" />
+    <system-out>
+Test Framework Informational Messages:
+NUnit Adapter 4.5.0.0: Test execution started
+Running all tests in /builds/forms/forms/formats/Formats.DOMFacade.Tests/bin/Forms.Formats.DOMFacade.Tests.dll
+   NUnit3TestExecutor discovered 140 of 140 NUnit test cases using Current Discovery mode, Non-Explicit run
+NUnit Adapter 4.5.0.0: Test execution complete
+</system-out>
+    <system-err></system-err>
+  </testsuite>
+</testsuites>

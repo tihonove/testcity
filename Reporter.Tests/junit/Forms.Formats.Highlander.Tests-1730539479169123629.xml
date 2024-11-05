@@ -1,0 +1,94 @@
+<testsuites>
+  <testsuite name="Forms.Formats.Highlander.Tests.dll" tests="9" skipped="0" failures="0" errors="0" time="62.704173899999994" timestamp="2024-11-02T09:24:41" hostname="runner-xwgvg2526-project-17358-concurrent-9-fvrbtobs" id="0" package="Forms.Formats.Highlander.Tests.dll">
+    <properties />
+    <testcase classname="Kontur.Forms.Formats.Highlander.Tests.ComparePeriodCheckTests" name="ComparePeriodCheckTests.CompareCheckTest(104812_2016_23_07.02.16_07.02.16_False;)" time="7.8847830" />
+    <testcase classname="Kontur.Forms.Formats.Highlander.Tests.ComparePeriodCheckTests" name="ComparePeriodCheckTests.CompareCheckTest(104812_2016_23_07.02.16_01.09.16_False;)" time="6.7162960" />
+    <testcase classname="Kontur.Forms.Formats.Highlander.Tests.ComparePeriodCheckTests" name="ComparePeriodCheckTests.CompareCheckTest(104812_2016_23_07.02.16_31.08.16_False;)" time="7.0666670" />
+    <testcase classname="Kontur.Forms.Formats.Highlander.Tests.ComparePeriodCheckTests" name="ComparePeriodCheckTests.CompareCheckTest(104812_2016_23_30.09.16_01.01.16_False;)" time="7.0811770" />
+    <testcase classname="Kontur.Forms.Formats.Highlander.Tests.ComparePeriodCheckTests" name="ComparePeriodCheckTests.CompareCheckTest(104812_2016_0_30.09.16_01.01.16_False;)" time="6.5351169" />
+    <testcase classname="Kontur.Forms.Formats.Highlander.Tests.ComparePeriodCheckTests" name="ComparePeriodCheckTests.CompareCheckTest(105601_2016_23_30.09.16_01.01.16_False;)" time="6.9951550" />
+    <testcase classname="Kontur.Forms.Formats.Highlander.Tests.ComparePeriodCheckTests" name="ComparePeriodCheckTests.CompareCheckTest(105601_2016_23_30.09.16_01.10.16_False;)" time="6.8975880" />
+    <testcase classname="Kontur.Forms.Formats.Highlander.Tests.ComparePeriodCheckTests" name="ComparePeriodCheckTests.CompareCheckTest(101415_2016_50_30.09.16_01.10.16_True;)" time="6.5030260" />
+    <testcase classname="Kontur.Forms.Formats.Highlander.Tests.ComparePeriodCheckTests" name="ComparePeriodCheckTests.CompareCheckTestNegative(1412301_2016_03_07.02.16_05.02.16_False;)" time="7.0243650" />
+    <system-out>104812_2016_23_07.02.16_07.02.16_False;
+new=True
+old=True
+
+104812_2016_23_07.02.16_01.09.16_False;
+new=True
+old=True
+
+104812_2016_23_07.02.16_31.08.16_False;
+new=True
+old=True
+
+104812_2016_23_30.09.16_01.01.16_False;
+new=True
+old=True
+
+104812_2016_0_30.09.16_01.01.16_False;
+new=False
+old=False
+
+105601_2016_23_30.09.16_01.01.16_False;
+new=True
+old=True
+
+105601_2016_23_30.09.16_01.10.16_False;
+new=False
+old=False
+
+101415_2016_50_30.09.16_01.10.16_True;
+new=False
+old=False
+
+1412301_2016_03_07.02.16_05.02.16_False;
+new=True
+old=False
+
+
+Test Framework Informational Messages:
+NUnit Adapter 4.5.0.0: Test execution started
+Running all tests in /builds/forms/forms/formats/Formats.Highlander.Tests/bin/Forms.Formats.Highlander.Tests.dll
+   NUnit3TestExecutor discovered 9 of 9 NUnit test cases using Current Discovery mode, Non-Explicit run
+NUnit Adapter 4.5.0.0: Test execution complete
+</system-out>
+    <system-err>Warning - 104812_2016_23_07.02.16_07.02.16_False;
+new=True
+old=True
+
+Warning - 104812_2016_23_07.02.16_01.09.16_False;
+new=True
+old=True
+
+Warning - 104812_2016_23_07.02.16_31.08.16_False;
+new=True
+old=True
+
+Warning - 104812_2016_23_30.09.16_01.01.16_False;
+new=True
+old=True
+
+Warning - 104812_2016_0_30.09.16_01.01.16_False;
+new=False
+old=False
+
+Warning - 105601_2016_23_30.09.16_01.01.16_False;
+new=True
+old=True
+
+Warning - 105601_2016_23_30.09.16_01.10.16_False;
+new=False
+old=False
+
+Warning - 101415_2016_50_30.09.16_01.10.16_True;
+new=False
+old=False
+
+Warning - 1412301_2016_03_07.02.16_05.02.16_False;
+new=True
+old=False
+
+</system-err>
+  </testsuite>
+</testsuites>

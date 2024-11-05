@@ -2,7 +2,6 @@ import {ColumnStack, Fit, RowStack} from "@skbkontur/react-stack-layout";
 import * as React from "react";
 import styled from "styled-components";
 import {
-    MediaUiAPlayIcon,
     ShapeSquareIcon16Regular,
     ShareNetworkIcon,
 } from "@skbkontur/icons";
@@ -10,7 +9,6 @@ import {useClickhouseClient} from "../ClickhouseClientHooksWrapper";
 import {BranchSelect} from "../TestHistory/BranchSelect";
 import {formatTestCounts, formatTestDuration, getLinkToJob, toLocalTimeFromUtc, useSearchParamAsState} from "../Utils";
 import {Link} from "react-router-dom";
-import {ComboBox, MenuSeparator} from "@skbkontur/react-ui";
 import {JobComboBox} from "../Components/JobComboBox";
 
 export function JobsPage(): React.JSX.Element {
@@ -21,53 +19,33 @@ export function JobsPage(): React.JSX.Element {
     const allGroup = ["Wolfs", "Forms mastering", "Utilities"]
     const allJobs = client
         .useData2<[string]>(`SELECT DISTINCT JobId
-                             FROM TestRuns
+                             FROM JobInfo
                              WHERE StartDateTime >= DATE_ADD(MONTH, -1, NOW());`)
         .filter(x => x[0] != null && x[0].trim() !== "");
-
+    
     const allJobRuns = client.useData2<[string, string, string, string, string, string, string, string, string, string, string]>(
         `
-            SELECT bb.JobId,
-                   aa.JobRunId,
-                   bb.BranchName,
-                   aa.AgentName,
-                   bb.MaxStartDateTime,
-                   aa.TestCount,
-                   aa.AgentOSName,
-                   aa.Duration,
-                   aa.SuccessCount,
-                   aa.SkippedCount,
-                   aa.FailedCount
-            FROM (SELECT a.JobId,
-                         a.BranchName,
-                         max(a.StartDateTime) MaxStartDateTime
-                  FROM (SELECT JobId,
-                               JobRunId,
-                               first_value(b.BranchName) AS BranchName,
-                               min(b.StartDateTime)      AS StartDateTime
-                        FROM TestRunsByRun b
-                        where b.StartDateTime >= DATE_ADD(DAY, -3, NOW()) ${currentBranchName ? ` AND b.BranchName = '${currentBranchName}'` : ""}
-                        GROUP BY JobId,
-                            JobRunId) AS a
-                  WHERE a.StartDateTime >= DATE_ADD(DAY, -3, now())
-                  GROUP BY a.JobId, a.BranchName) bb
-                     INNER JOIN (SELECT JobId,
-                                        JobRunId,
-                                        count(z.TestId)            as TestCount,
-                                        countIf(z.State = 'Success') AS SuccessCount,
-                                        countIf(z.State = 'Skipped') AS SkippedCount,
-                                        countIf(z.State = 'Failed') AS FailedCount,
-                                        first_value(z.BranchName)  AS BranchName,
-                                        first_value(z.AgentName)   AS AgentName,
-                                        first_value(z.AgentOSName) AS AgentOSName,
-                                        min(z.StartDateTime) AS StartDateTime,
-                                        max(z.StartDateTime) - min(z.StartDateTime) AS Duration
-                                 FROM TestRunsByRun z
-                                 where z.StartDateTime >= DATE_ADD(DAY, -3, NOW()) ${currentBranchName ? ` AND z.BranchName = '${currentBranchName}'` : ""}
-                                 GROUP BY JobId,
-                                     JobRunId) AS aa
-                                ON aa.JobId == bb.JobId and aa.BranchName == bb.BranchName and
-                       aa.StartDateTime == bb.MaxStartDateTime`,
+            SELECT
+                JobId,
+                JobRunId,
+                BranchName,
+                AgentName,
+                StartDateTime,
+                TotalTestsCount,
+                AgentOSName,
+                Duration,
+                SuccessTestsCount,
+                SkippedTestsCount,
+                FailedTestsCount
+            FROM (
+                     SELECT
+                         *,
+                         ROW_NUMBER() OVER (PARTITION BY JobId, BranchName ORDER BY StartDateTime DESC) AS rn
+                     FROM JobInfo
+                     WHERE StartDateTime >= now() - INTERVAL 3 DAY ${currentBranchName ? `AND BranchName = '${currentBranchName}'` : ""}
+                     ) AS filtered
+            WHERE rn = 1
+            ORDER BY JobId, StartDateTime DESC;`,
         ["1", currentBranchName, currentGroup]
     );
 
@@ -87,8 +65,9 @@ export function JobsPage(): React.JSX.Element {
                                 branch={currentBranchName}
                                 onChangeBranch={setCurrentBranchName}
                                 branchQuery={`SELECT DISTINCT BranchName
-                                              FROM TestRuns
-                                              WHERE StartDateTime >= DATE_ADD(MONTH, -1, NOW());`}
+                                              FROM JobInfo
+                                              WHERE StartDateTime >= DATE_ADD(MONTH, -1, NOW()) AND BranchName != ''
+                                              ORDER BY StartDateTime DESC;`}
                             />
                         </Fit>
                     </RowStack>
@@ -225,7 +204,7 @@ const StartedCell = styled.td`
 
 const JobLinkWithResults = styled(Link)<{ failedCount: string }>`
     color: ${props =>
-    props.failedCount === "0"
+    props.failedCount == "0"
         ? props.theme.successTextColor
         : props.theme.failedTextColor};
     text-decoration: none;

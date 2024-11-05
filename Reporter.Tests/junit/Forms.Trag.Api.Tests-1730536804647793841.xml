@@ -1,0 +1,36 @@
+<testsuites>
+  <testsuite name="Forms.Trag.Api.Tests.dll" tests="11" skipped="1" failures="0" errors="0" time="20.124767000000002" timestamp="2024-11-02T08:40:05" hostname="runner-xwgvg2526-project-17358-concurrent-9-fvrbtobs" id="0" package="Forms.Trag.Api.Tests.dll">
+    <properties />
+    <testcase classname="Kontur.Forms.Trag.Api.Tests.ExhaustedMasterTokenTests" name="ExhaustedMasterTokenTests.ChooseNextMasterTokenTest" time="0.2609600" />
+    <testcase classname="Kontur.Forms.Trag.Api.Tests.ExhaustedMasterTokenTests" name="ExhaustedMasterTokenTests.NoCorrectMasterTokenTest" time="0.0122320" />
+    <testcase classname="Kontur.Forms.Trag.Api.Tests.ExplicitTests" name="ExplicitTests.RequestCounterTests" time="0.0104300">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.Trag.Api.Tests.RnptServiceTests" name="RnptServiceTests.SmokeCacheTest" time="5.0718550" />
+    <testcase classname="Kontur.Forms.Trag.Api.Tests.RnptServiceTests" name="RnptServiceTests.SmokeMultipleConsigmentsFromCacheTest" time="3.3502650" />
+    <testcase classname="Kontur.Forms.Trag.Api.Tests.RnptServiceTests" name="RnptServiceTests.SmokeMultipleConsigmentsTest" time="3.2907980" />
+    <testcase classname="Kontur.Forms.Trag.Api.Tests.RnptServiceTests" name="RnptServiceTests.SmokeOnlyCacheTest" time="2.6838040" />
+    <testcase classname="Kontur.Forms.Trag.Api.Tests.RnptServiceTests" name="RnptServiceTests.SwitchMasterTokenAfter10FailruesTest" time="2.7387270" />
+    <testcase classname="Kontur.Forms.Trag.Api.Tests.RnptZebraCacheTests" name="RnptZebraCacheTests.GetConsignmentInfo_RnptNotExists_Return404" time="0.8881950" />
+    <testcase classname="Kontur.Forms.Trag.Api.Tests.RnptZebraCacheTests" name="RnptZebraCacheTests.GetConsignmentInfo_RnptExists_Success" time="0.9087000" />
+    <testcase classname="Kontur.Forms.Trag.Api.Tests.RnptZebraCacheTests" name="RnptZebraCacheTests.GetConsignmentInfos_FirstExists_SecondNotExists_ThirdStoredNotExists_Success" time="0.9088010" />
+    <system-out>OneTimeSetUp: 
+{"CodeTnved":"8528599009","NameGoods":"МОНИТОРЫ , ЦВЕТНОГО ИЗОБРАЖЕНИЯ. НЕ ВОЕННОГО НАЗНАЧЕНИЯ. ДЛЯ МЕДИЦИНСКОГО ОБОРУДОВАНИЯ","CodeCoProd":null,"NameCoProd":null,"DateProd":"2021-07-20T00:00:00","UnitCode":"796","NameUnitCode":"Штука","QuantInputGoods":1.0,"QuantOutputGoods":null,"QuantCirculGoods":null,"CachingDate":"2021-09-21T10:55:24"}
+
+{"Infos":{"10005030/200721/0354210/014":{"Info":{"CodeTnved":"8528599009","NameGoods":"МОНИТОРЫ , ЦВЕТНОГО ИЗОБРАЖЕНИЯ. НЕ ВОЕННОГО НАЗНАЧЕНИЯ. ДЛЯ МЕДИЦИНСКОГО ОБОРУДОВАНИЯ","CodeCoProd":null,"NameCoProd":null,"DateProd":"2021-07-20T00:00:00","UnitCode":"796","NameUnitCode":"Штука","QuantInputGoods":1.0,"QuantOutputGoods":null,"QuantCirculGoods":null,"CachingDate":"2021-09-21T10:55:24"},"ErrorCode":null},"10005030/200721/0354210/01":{"Info":null,"ErrorCode":"RnptNotFound"},"invalidStored":{"Info":null,"ErrorCode":"RnptNotFound"}}}
+
+
+Test Framework Informational Messages:
+NUnit Adapter 4.5.0.0: Test execution started
+Running all tests in /builds/forms/forms/forms.trag/Trag.Api.Tests/bin/Forms.Trag.Api.Tests.dll
+   NUnit3TestExecutor discovered 10 of 11 NUnit test cases using Current Discovery mode, Non-Explicit run
+RequestCounterTests: OneTimeSetUp: 
+NUnit Adapter 4.5.0.0: Test execution complete
+</system-out>
+    <system-err>Warning - {"CodeTnved":"8528599009","NameGoods":"МОНИТОРЫ , ЦВЕТНОГО ИЗОБРАЖЕНИЯ. НЕ ВОЕННОГО НАЗНАЧЕНИЯ. ДЛЯ МЕДИЦИНСКОГО ОБОРУДОВАНИЯ","CodeCoProd":null,"NameCoProd":null,"DateProd":"2021-07-20T00:00:00","UnitCode":"796","NameUnitCode":"Штука","QuantInputGoods":1.0,"QuantOutputGoods":null,"QuantCirculGoods":null,"CachingDate":"2021-09-21T10:55:24"}
+
+Warning - {"Infos":{"10005030/200721/0354210/014":{"Info":{"CodeTnved":"8528599009","NameGoods":"МОНИТОРЫ , ЦВЕТНОГО ИЗОБРАЖЕНИЯ. НЕ ВОЕННОГО НАЗНАЧЕНИЯ. ДЛЯ МЕДИЦИНСКОГО ОБОРУДОВАНИЯ","CodeCoProd":null,"NameCoProd":null,"DateProd":"2021-07-20T00:00:00","UnitCode":"796","NameUnitCode":"Штука","QuantInputGoods":1.0,"QuantOutputGoods":null,"QuantCirculGoods":null,"CachingDate":"2021-09-21T10:55:24"},"ErrorCode":null},"10005030/200721/0354210/01":{"Info":null,"ErrorCode":"RnptNotFound"},"invalidStored":{"Info":null,"ErrorCode":"RnptNotFound"}}}
+
+</system-err>
+  </testsuite>
+</testsuites>

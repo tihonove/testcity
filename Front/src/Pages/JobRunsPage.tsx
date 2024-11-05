@@ -10,8 +10,6 @@ import {
 } from "../Utils";
 import { BranchSelect } from "../TestHistory/BranchSelect";
 import {
-    BuildingHomeIcon16Regular,
-    BuildingHomeIcon24Regular, BuildingHomeIcon32Regular,
     LogoMicrosoftIcon,
     QuestionCircleIcon,
     ShapeSquareIcon32Regular,
@@ -20,6 +18,7 @@ import {
 import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
 import { ColumnStack, Fit } from "@skbkontur/react-stack-layout";
 import styled from "styled-components";
+import {HomeIcon} from "../Components/Icons";
 
 export function JobRunsPage(): React.JSX.Element {
     const { jobId } = useParams();
@@ -31,18 +30,17 @@ export function JobRunsPage(): React.JSX.Element {
         SELECT
             JobId,
             JobRunId,
-            first_value(b.BranchName) AS BranchName,
-            first_value(b.AgentName)  AS AgentName,
-            min(b.StartDateTime) AS StartDateTime,
-            count(b.TestId)           AS TotalTestCount,
-            countIf(b.State = 'Success') AS SuccessCount,
-            countIf(b.State = 'Skipped') AS SkippedCount,
-            countIf(b.State = 'Failed') AS FailedCount,
-            first_value(b.AgentOSName)  AS AgentOSName,
-            max(b.StartDateTime) - min(b.StartDateTime) AS Duration
-        FROM TestRunsByRun b
-        WHERE b.JobId = '${jobId}' ${currentBranchName ? ` AND b.BranchName = '${currentBranchName}'` : ""}
-        GROUP BY JobId, JobRunId
+            BranchName,
+            AgentName,
+            StartDateTime,
+            TotalTestsCount,
+            SuccessTestsCount,
+            SkippedTestsCount,
+            FailedTestsCount,
+            AgentOSName,
+            Duration
+        FROM JobInfo
+        WHERE JobId = '${jobId}' ${currentBranchName ? `AND BranchName = '${currentBranchName}'` : ""}
         ORDER BY StartDateTime DESC
         LIMIT 100
         `,
@@ -67,7 +65,10 @@ export function JobRunsPage(): React.JSX.Element {
                 <BranchSelect
                     branch={currentBranchName}
                     onChangeBranch={setCurrentBranchName}
-                    branchQuery={`SELECT DISTINCT BranchName FROM TestRuns WHERE StartDateTime >= DATE_ADD(MONTH, -1, NOW());`}
+                    branchQuery={`SELECT DISTINCT BranchName
+                                  FROM JobInfo
+                                  WHERE StartDateTime >= DATE_ADD(MONTH, -1, NOW()) AND BranchName != ''
+                                  ORDER BY StartDateTime DESC;`}
                 />
             </Fit>
             <Fit>
@@ -112,20 +113,6 @@ export function JobRunsPage(): React.JSX.Element {
 
 const HomeHeader = styled.h2``;
 
-function HomeIcon(props: { size: 16 | 24 | 32; }) {
-    switch (props.size) {
-        case 16:
-            return <BuildingHomeIcon16Regular />;
-            break;
-        case 24:
-            return <BuildingHomeIcon24Regular />;
-            break;
-        case 32:
-            return <BuildingHomeIcon32Regular />;
-            break;
-    }
-}
-
 const Header1 = styled.h1`
     font-size: 32px;
     line-height: 40px;
@@ -162,7 +149,7 @@ const CountCell = styled.td``;
 
 const JobLinkWithResults = styled(Link)<{ failedCount: string }>`
     color: ${props =>
-            props.failedCount === "0"
+            props.failedCount == "0"
                     ? props.theme.successTextColor
                     : props.theme.failedTextColor};
     text-decoration: none;

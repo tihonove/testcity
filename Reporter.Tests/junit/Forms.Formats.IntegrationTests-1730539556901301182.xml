@@ -1,0 +1,3190 @@
+<testsuites>
+  <testsuite name="Forms.Formats.IntegrationTests.dll" tests="387" skipped="7" failures="0" errors="0" time="1354.3830284000005" timestamp="2024-11-02T09:25:58" hostname="runner-xwgvg2526-project-17358-concurrent-9-fvrbtobs" id="0" package="Forms.Formats.IntegrationTests.dll">
+    <properties />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.Fixup" name="Fixup.AddAdditionalPropsFromResult" time="0.0112240">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.Fixup" name="Fixup.RemoveEmptyAdditionalProps" time="0.0134920">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.Fixup" name="Fixup.ReplaceOneLineWithAnother" time="0.0135710">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(not implemented форма с ошибками=&gt;DocumentFormatException)" time="1.7938150" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(draft с ошибками)" time="16.2137760" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(report с ошибками)" time="14.2682270" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(not implemented форма без ошибок)" time="16.2135740" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(draft без ошибок)" time="16.2138959" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(draft с плохими именем)" time="16.2138020" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(report без ошибок и предупреждений)" time="16.0621620" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(otchets с ошибками)" time="16.0622820" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(_4ФСС без проблем и ошибок)" time="16.2147780" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС корректировка)" time="16.0630200" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС не смогли собрать корректное имя файла)" time="16.2125780" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(неизвестная форма без ошибок)" time="0.2874730" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(неизвестная форма с ошибками)" time="0.3280680" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(странный атрибут окпо - ferm_vb_r)" time="0.5670900" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС ИНН 00 + 10 ОГРН 13)" time="0.7392980" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(ошибка про код периода)" time="1.3238710" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(странный атрибут окпо - stroyka)" time="1.3867340" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(странный атрибут окпо - ferm_vb_j)" time="1.6657430" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(странный атрибут окпо - mal_vb_j)" time="1.6744010" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС ИНН 10 ОГРН 00 + 13)" time="0.4556770" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(странный атрибут окпо - okpo1t)" time="2.1249380" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС за 2011 (0.3))" time="0.1940420" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(форма 410301 - окпо берется из атрибута okato)" time="1.0612200" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС ИНН 12 ОГРН 15)" time="0.7991200" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС за 2012 (0.4))" time="0.2774030" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(форма 410201 - окпо берется из атрибута okato)" time="1.9239000" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(кривая xml - корневой тэг не закрыт)" time="0.7982540" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(кривая xml - дочерний тэг не закрыт)" time="0.6095330" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(форма 410401 - окпо берется из атрибута okato)" time="1.6520050" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(период в формате s_time 5612 (недельная форма 424201))" time="1.4770200" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(лишняя закрывающая кавычка в атрибуте после основной части)" time="0.2144730" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС за 2013 (0.5))" time="0.3089370" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(не форма вовсе)" time="0.2305720" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(период в формате s_time 0403 (форма 422602))" time="1.3027860" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(у атрибута не закрыли кавычку после основной части)" time="0.4062880" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС за 2014 (0.6))" time="0.4722230" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(у атрибута не закрыли кавычку в начале)" time="0.2631270" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС за 2015 (0.7))" time="0.4904190" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС за 2016 (0.9))" time="0.4082160" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(xml без декларации)" time="0.4727180" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС за 2016 (0.8))" time="0.5656660" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(недопустимый символ в атрибуте)" time="0.4729040" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(форма ИЖС - для периода 25 в имени файла 001)" time="4.0231400" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(форма ИЖС - для периодов 1-12 в имени файла 012)" time="4.0706330" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(неизвестный нам shifr)" time="0.3060960" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(в декларации win-1251 а на деле utf-8)" time="0.6824470" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(не статформа (форма фнс)=&gt;DocumentFormatException)" time="0.1670800" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(неизвестный нам корневой элемент)" time="0.2728050" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС за 2016 (0.9) кривая SchemaLocation (привет 1С) [patchFssSchemaLocation =&gt; False]  )" time="0.5651710" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС за 2016 (0.9) кривая SchemaLocation (привет 1С) [patchFssSchemaLocation =&gt; True]  )" time="0.6754880" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС (за несуществующий  период 2016))" time="0.6050450" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС есть элементы, которых не должно быть в этой версии)" time="0.4579460" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС без namespace)" time="0.5735610" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС за 12345 год)" time="0.6579100" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(плохой окпо - 8 цифр, но плохая чексумма)" time="0.4144140" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС плохая кодировка в файле и в декларации)" time="0.4531780" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(плохой окпо - 10 цифр, но плохая чексумма)" time="0.6164309" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(плохой окпо - больше 14 цифр)" time="0.4002390" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(плохой окпо - меньше 2 цифр)" time="0.4007600" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(плохой окпо - null)" time="0.6358380" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС плохая кодировка в файле, но хорошая в декларации)" time="0.7340410" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС хорошая кодировка в файле и в декларации)" time="0.4613000" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС хорошая кодировка в файле, но плохая в декларации)" time="0.6302700" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(плохой окпо - от 2 до 14 нулей)" time="0.6764570" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(Мусор=&gt;DocumentFormatException)" time="0.4263570" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(Форма ФНС=&gt;DocumentFormatException)" time="0.1232500" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС с ошибками по КС)" time="0.6642110" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС есть корневой элемент не из схемы=&gt;DocumentFormatException)" time="0.1660080" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС с незакрытым тегом=&gt;DocumentFormatException)" time="0.1969740" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС несуществующего формата=&gt;DocumentFormatException)" time="0.6348310" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС за 2030 год)" time="0.8438350" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_CompareWithExpected(4ФСС устаревшего формата)" time="0.8723710" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport_ResultHasValidSchema" time="0.9237300" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_ResultInnerXmlsAreAllValidXmls" time="0.5301520" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FssWorkerTests" name="FssWorkerTests.CheckReport_ResultIsValidAgainstXsdSchema" time="0.6899930" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(бухстат с ошибками и предупреждениями без приложений)" time="6.7944020" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.StatWorkerTests" name="StatWorkerTests.CheckReport(бухстат с ошибками и предупреждениями с приложениями)" time="6.7965610" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckGuidPatchingLogicOnly_ForInvoiceLogsAsync(guidPatching_Журнал СФ КолФайл=1 НомФайл=1)" time="11.8150890" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckGuidPatchingLogicOnly(guidPatching_Запрос ИОН (ИОН проверяется отдельным методом)_все гуиды изменились)" time="11.9865440" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_остальные отчеты_Trash становится UserDecides становится Yes [NeedWarrant =&gt; Yes]  )" time="11.7921150" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckGuidPatchingLogicOnly(guidPatching_5 формат (патчим одиночные гуиды)_все гуиды изменились)" time="12.0843490" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_Заявление ТС_ПрПодп не 3, payerInn из ФУФ равен SenderInn [NeedWarrant =&gt; No]  )" time="11.4434670" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_Опись_ПрОтпр не 1, но ПрПодп 3 [NeedWarrant =&gt; Yes]  )" time="11.2076650" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_Заявление ТС_senderInn не равен payerInn из ФУФ [NeedWarrant =&gt; Yes]  )" time="11.7486690" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_Заявление ТС_ПрПодп 3 [NeedWarrant =&gt; Yes]  )" time="11.6540130" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_Опись_ПрОтпр 1 И ПрПодп 3 [NeedWarrant =&gt; No]  )" time="11.2127300" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckGuidPatchingLogicOnly(guidPatching_5 формат (не патчим гуиды)_гуиды изменились только в СоП)" time="11.9934470" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_Опись_ПрОтпр 1, но ПрПодп не 3 [NeedWarrant =&gt; Yes]  )" time="1.1272230" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_allowUserDecides true_ИОН_ФИОРук не равно серту [NeedWarrant =&gt; Yes]  )" time="1.1299030" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_allowUserDecides true_ИОН_ФИОРук равно серту [NeedWarrant =&gt; No]  )" time="1.1782610" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_allowUserDecides false_formHasNoRepresentativeByFormat_ФИОРук равно серту [NeedWarrant =&gt; No]  )" time="2.1222690" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_allowUserDecides false_formHasNoRepresentativeByFormat_ФИОРук не равно серту [NeedWarrant =&gt; Yes]  )" time="2.1619190" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_allowUserDecides true_3 формат_ФИОРук не равно серту [NeedWarrant =&gt; UserDecides]  )" time="3.4245810" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_allowUserDecides true_3 формат_ФИОРук равно серту [NeedWarrant =&gt; No]  )" time="3.4267100" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_остальные отчеты_senderInn не равен payerInn из ФУФ [NeedWarrant =&gt; Yes]  )" time="4.0640070" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_allowUserDecides true_form with representative [NeedWarrant =&gt; Yes]  )" time="4.1936430" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_allowUserDecides false_formWithRepresentative true [NeedWarrant =&gt; Yes]  )" time="0.8948570" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_allowUserDecides false_formWithRepresentative false [NeedWarrant =&gt; No]  )" time="0.9326090" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_остальные отчеты_UserDecides становится UserDecides [NeedWarrant =&gt; UserDecides]  )" time="4.2564750" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_allowUserDecides true_4 формат_ФИОРук не равно серту [NeedWarrant =&gt; UserDecides]  )" time="3.4898940" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_allowUserDecides true_4 формат_ФИОРук равно серту ФИОУППред пустой [NeedWarrant =&gt; No]  )" time="4.6106610" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_allowUserDecides true_4 формат_ФИОРук равно серту [NeedWarrant =&gt; Yes]  )" time="4.6403860" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Журнал СФ (не проверяем гуиды))" time="2.1241439" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_Налоговая Тайна_ЮЛ_ПрПодп 1_без доверенности [NeedWarrant =&gt; No]  )" time="3.6115360" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_Налоговая Тайна_ИП_ПрПодп 2_без доверенности [NeedWarrant =&gt; No]  )" time="2.9805850" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_Налоговая Тайна_ЮЛ_ПрПодп 4_c доверенностью [NeedWarrant =&gt; Yes]  )" time="3.6215370" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_Налоговая Тайна_ИП_ПрПодп 2_разные ИНН плательщика и отправителя_c доверенностью [NeedWarrant =&gt; Yes]  )" time="2.8239820" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_Налоговая Тайна_ИП_ПрПодп 4_с доверенностью [NeedWarrant =&gt; Yes]  )" time="2.8676290" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CheckWarrantDecisionMakingLogic(warrantDecisions_Налоговая Тайна_ИП_ПрПодп 3_без доверенности [NeedWarrant =&gt; No]  )" time="2.8738440" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(_Просто тест с доверенностью без ошибок)" time="2.8949800" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 5 формат needWarrantNO)" time="1.1275550" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 5 формат кросспроверка CheckSignerBlockRquirements)" time="1.4914160" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 5 формат кросспроверка CheckSignerRequisites)" time="1.4785010" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 5 формат с доверенностью без ошибок и предупреждений)" time="1.7189760" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 5 формат кросспроверка CheckSignerRequisites для случая orgNameUpPredInReport != null, v1)" time="1.7310470" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 5 формат кросспроверка CheckSignerRequisites для случая orgNameUpPredInReport != null, v2)" time="1.6556700" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 5 формат без доверенности)" time="1.0269740" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 5 формат кросспроверка CheckTaxPayerInnKppEquality)" time="2.5608960" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 4 формат кросспроверка CheckWarrantPermissions)" time="1.4235600" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 4 формат кросспроверка CheckSignerRequisites)" time="1.4701519" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 4 формат с доверенностью ошибка СППФД)" time="1.4335230" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 5 формат без доверенности с ошибками кросспроверок в блоке Report Errorlog)" time="1.8969770" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 4 формат кросспроверка CheckSignerBlockRquirements)" time="1.8983860" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 4 формат с доверенностью с ошибками в разных блоках Документ)" time="1.6610370" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 4 формат с доверенностью с ошибкой СППФД в первом блоке Документ)" time="1.2822890" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 3 формат неизвестная форма_1)" time="1.1400860" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 3 формат неизвестная форма_2)" time="1.2999790" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 3 формат обычный)" time="1.2908890" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 3 формат кросспроверка CheckSignerRequisites)" time="1.6521150" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 3 формат с доверенностью на ХЛ без ошибок)" time="1.6863030" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 3 формат кросспроверка CheckSignerBlockRquirements)" time="1.3277070" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 3 формат с доверенностью на ХЛ с ошибкой)" time="1.6002590" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 3 формат с доверенностью на кевебе без ошибок)" time="1.5705170" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Представление обычное без ошибок и предупреждений с доверкой без разрешений)" time="1.5420660" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Представление обычное без ошибок и предупреждений)" time="1.6178090" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(БО с упоминанием приложений)" time="8.6966030" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(БО без приложений)" time="8.7625130" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(БО кросспроверка CheckSignerBlockRquirements)" time="6.7030839" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Представление обычное кросспроверка CheckSignerBlockRquirements)" time="1.4281839" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Представление Crazy без ошибок и предупреждений)" time="1.6665920" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Представление Crazy кросспроверка CheckSignerBlockRquirements)" time="1.6221710" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(2НДФЛ 5.04_без доверенности)" time="0.6807000" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(2НДФЛ 5.03)" time="1.0437460" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(2НДФЛ 5.04)" time="1.2991500" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Представление Crazy кросспроверка CheckSignerBlockRquirements для ИП)" time="2.6056380" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(2НДФЛ 5.02)" time="1.7491360" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Сообщение ИИС gfv 111101 кросспроверка CheckSignerRequisites)" time="2.3747170" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Представление обычное кросспроверка CheckSignerBlockRquirements для ИП)" time="3.8746230" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(2НДФЛ 5.01)" time="1.8972060" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(2НДФЛ 5.04 патчинг warrant=yes, patch=all)" time="2.0234060" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(2НДФЛ 5.04 патчинг warrant=yes, patch=none)" time="1.6743590" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Представление 113601 кросспроверка CheckSignerBlockRquirements)" time="3.6010960" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Представление 113601 кросспроверка CheckSignerRequisites)" time="3.5529710" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Доверенность в качестве репорта)" time="1.5435690" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Патчинг КодНО доверенности кодом НО из отчета и кода МРИ из параметров CheckReportExtended_3 формат)" time="1.4912990" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Патчинг КодНО доверенности кодом НО из отчета _3 формат_Код МРИ в CheckReportExtended null)" time="1.4955170" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Патчинг КодНО доверенности кодом НО из отчета и кода МРИ в Идфайле)" time="1.7738570" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(2НДФЛ 5.05 патчинг warrant=no, patch=none)" time="2.8096130" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(2НДФЛ 5.05 патчинг warrant=yes, patch=AllAndGuids)" time="3.7649480" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(2НДФЛ 5.05 патчинг warrant=yes, patch=AllButWarrant)" time="2.9053980" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Патчинг ИНН-КПП в ИдФайле доверенности)" time="1.8202500" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Патчинг КПП в налогоплательщике)" time="1.8429460" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Опись)" time="1.0207440" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Патчинг ИНН-КПП в ИдФайле отчета)" time="1.6713910" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Патчинг ИНН-КПП в ИдФайле отчета_3 формат)" time="1.3839850" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Опись кросспроверка CheckSignerBlockRquirements для ИП)" time="1.4341270" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Заявление кросспроверка CheckWarrantPermissions)" time="1.5854140" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Заявление кросспроверка CheckWarrantReqsInRequest)" time="1.7005280" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Заявление кросспроверки CheckSignerBlockRquirements, CheckTaxPayerInnKppEquality, CheckSignerRequisites)" time="1.7409380" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Водный налог 5.01 - первая форма, для которой откроем - без доверенности)" time="1.2746100" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Водный налог 5.01 - первая форма, для которой откроем - с доверенностью)" time="2.2880170" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 5 формат кросспроверка ФИОПред из СоП не совпадает с сертом)" time="2.4400640" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 5 формат кросспроверка CheckTaxPayerInnKppEquality для ИП)" time="2.8307650" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Налоговая тайна_ИП_ПрПодп 2_сбор свойств и кросспроверка на ФИО в отчете и сертификате_с ошибками)" time="1.3691620" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Ошибка в ФУФ доверенности)" time="2.3304090" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Налоговая тайна_ИП_ПрПодп 3_сбор свойств и кросспроверка на ФИО в отчете и сертификате_без ошибок)" time="1.4276610" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Налоговая тайна_ЮЛ_ПрПодп 4_сбор свойств и кросспроверка на ПрПодп при отправке с СоП_без ошибок)" time="1.6287840" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_Статформа в FnsWorker=&gt;DocumentFormatException)" time="0.1945350" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_Непонятный файл=&gt;DocumentFormatException)" time="0.2877970" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_Не удалось определить форму по содержимому отчета=&gt;DocumentFormatException)" time="0.1715030" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Налоговая тайна_ЮЛ_ПрПодп 1_сбор свойств и кросспроверка на ПрПодп при отправке с СоП_с ошибками)" time="2.2097710" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_Отчет 3 формат неизвестная форма=&gt;DocumentFormatException)" time="0.2316260" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(5 формат не падаем на кривом ИдФайл)" time="0.8547060" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(FnsDocument_для плохого ИдФайл)" time="1.2479780" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Налоговая тайна_ИП_ПрПодп 4_сбор свойств и кросспроверка на ФИО в отчете и сертификате_с ошибками)" time="1.2674360" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Почти пустая доверенность)" time="1.4715500" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Атрибута ИдФайл нет в ФУФ)" time="1.3591460" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(БО некомм 5_01 гфв 203301 кросспроверки)" time="4.5455890" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_Отчет 3 формат_отправляет ИП_хотя форма только для ЮЛ)" time="1.1762370" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_Пустые ФИО подписанта_ожидаем ошибку кросспроверок в логе)" time="0.8809820" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_во время CheckReport_ожидаем ошибку в логе Не удалось выполнить проверку отчета)" time="1.1116330" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_ИНН-КПП в серте не соответствуют отправителю и ФУФ_ожидаем ошибку в еррорлоге)" time="1.0667240" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_IonAdditionalChecks_Для отправителей ЮЛ не делаем проверок кроме проверки на кодНО_ожидаем только ошибку про КодНО в логе)" time="0.9256960" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_IonAdditionalChecks_КодНО из ИдФайл не совпал с кодом из файла_ожидаем ошибку кросс-проверок в логе)" time="0.9616340" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_IonAdditionalChecks_ИННКПП из середины отчета не совпадают с сертом_ожидаем ошибку в логе_падает из-за бага FS-1237)" time="0.7511100" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_IonAdditionalChecks_отправитель ИП_ФИО отправителя не совпадает с ФИО в сертификате_не ожидаем ошибку кросс-проверок в логе)" time="0.7241130" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_Пустая доверенность=&gt;DocumentFormatException)" time="0.0703250" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_Непонятная форма вместо СоП_ожидаем исключение в GetFnsDocument=&gt;DocumentFormatException)" time="0.3619190" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_IonAdditionalChecks_отправитель ИП_ИНН отправителя не совпадает с ИНН в сертификате_ожидаем ошибку кросс-проверок в логе)" time="1.1501040" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_атрибута ИдФайл нет в ФУФ_3формат=&gt;DocumentFormatException)" time="0.5375550" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_AdditionalReportChecks_Для 2НДФЛ никаких кросс-проверок без доверенности не делаем_не ожидаем ошибок кросспроверок в логе)" time="0.8106780" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_Пустой report=&gt;DocumentFormatException)" time="0.0030240" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_ФИОПодписанта не совпадают с ФИО в серте_ожидаем ошибку кросспроверок в логе)" time="1.1304320" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_RequestCUAdditionalChecks_Для актуального заявления ТС эти проверки не делаем_ожидаем ничего в логе)" time="1.2093989" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_3формат_ФИОПодписанта не совпадают с ФИО в серте_ожидаем ошибку кросспроверок в логе)" time="1.2911649" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_Плохая xml в report=&gt;DocumentFormatException)" time="0.4187560" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_Кодировка utf-8, а в декларации win-1251=&gt;DocumentFormatException)" time="0.9208090" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_RequestCUAdditionalChecks106201_ФИО отправителя не совпадет с ФИО покупателя_ожидаем ошибку в логе)" time="2.6155240" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_RequestCUAdditionalChecks106202_ФИО отправителя не совпадет с ФИО покупателя_ожидаем ошибку в логе)" time="2.6945210" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_Странный ИНН налогоплательщика_ожидаем ошибку кросспроверки в логе доверенности)" time="1.8247900" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_КПП отправителя с кодом реорганизованной ИФНС_ожидаем ошибку в логе)" time="2.0842410" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(запрос ИОН)" time="1.6874960" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Доверенность в качестве репорта ФЛ)" time="10.3158999" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_Пустые данные отправителя и налогоплательщика)" time="1.9843710" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(запрос ИОН в целом по организации)" time="2.5033330" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(запрос ИОН код 2 кросспроверка IonAdditionalChecks)" time="1.3479140" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(запрос ИОН код 1 кросспроверка CheckWarrantPermissions)" time="2.5956410" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(exceptions_СоП никогда не заполняли_ожидаем ошибку СоП не заполнен в логе)" time="4.2523479" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(highlanderCheckScenarios_ExcludeForScenario)" time="1.6822110" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(запрос ИОН код 4 кросспроверка CheckSignerRequisites)" time="1.7098500" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(highlanderCheckScenarios_acidNds не для approvedNdsOrg_ожидаем ошибку 205071)" time="1.6531440" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(highlanderCheckScenarios_acidNds для approvedNdsOrg_ошибки 20571 нет)" time="1.7527850" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(highlanderCheckScenarios_UnknownScenario)" time="1.5016970" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(запрос ИОН код 3 кросспроверка CheckTaxPayerInnKppEquality)" time="2.2137670" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(highlanderCheckScenarios_WithoutScenario)" time="1.6888960" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected((РСВ 117201) Отчет 5 формат с доверенностью без ошибок и предупреждений)" time="8.4167200" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected((РСВ 117201) Отчет 5 формат кросспроверка CheckSignerRequisites для случая orgNameUpPredInReport != null, v1)" time="8.4183710" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 5 формат (форма РСВ) без доверенности (исправить результат!))" time="8.9669120" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected((РСВ 117201) Отчет 5 формат кросспроверка CheckTaxPayerInnKppEquality)" time="8.8690290" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected((РСВ 117201) Отчет 5 формат кросспроверка CheckSignerRequisites)" time="8.8821410" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected((РСВ 117201) Отчет 5 формат без доверенности_НПФЛ)" time="9.6036730" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected((РСВ 117201) Отчет 5 формат без доверенности_НПИП)" time="9.1217729" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected((РСВ 117201) Отчет 5 формат кросспроверка CheckSignerBlockRquirements)" time="9.0424080" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected((РСВ 117201) Отчет 5 формат кросспроверка CheckSignerRequisites для случая orgNameUpPredInReport != null, v2)" time="8.1758420" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(Отчет 5 формат (форма РСВ) с доверенностью (исправить результат!))" time="9.4251900" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(periodCheck_Период прошел_ошибок нет)" time="1.6902430" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(periodCheck_Период не наступил_ожидаем ошибку(ликв))" time="1.7472260" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(periodCheck_Период не наступил_ожидаем ошибку(начало_конец))" time="1.9025820" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(periodCheck_Период не наступил_ожидаем ошибку)" time="1.9970630" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected((РСВ 117201) Отчет 5 формат кросспроверка CheckTaxPayerInnKppEquality для ИП)" time="2.2605690" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected((РСВ 117201) Отчет 5 формат без доверенности)" time="3.0322370" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected((РСВ 117201) Отчет 5 формат без доверенности с ошибками кросспроверок в блоке Report Errorlog)" time="3.5026640" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(periodCheck_Период не наступил_ожидаем ошибку(124301_ДатаОконч_из_будущего))" time="2.9119259" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(periodCheck_Период не наступил_ошибок нет(124301_ДатаНач_из_будущего))" time="3.1013560" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(periodCheck_Период не наступил_ожидаем ошибку(124301_ЕстьДатаНач_НетДатаОконч))" time="1.6623600" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(periodCheck_Период не наступил_ожидаем ошибку(124301_НетДатаНач_НетДатаОконч))" time="1.3889020" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(periodCheck_Период не наступил_ожидаем ошибку(124301_НетДатаНач_ЕстьДатаОконч))" time="1.6174480" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(fnsProperties_ССЧ месячная)" time="1.2898330" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(fnsProperties_ССЧ годовая)" time="1.5907960" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(fnsProperties_ССЧ некорректная_не за 1 число месяца)" time="1.2196750" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected((РСВ 117201) Отчет 5 формат кросспроверка ФИОПред из СоП не совпадает с сертом)" time="3.9817680" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(RequestCU_корректировка_ПВДок5)" time="0.9984780" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(RequestCU_корректировка_ПВДок6)" time="0.9946560" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(RequestCU_первичный_ПВДок1)" time="1.0057600" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(RequestCU_корректировка_ПВДок4)" time="1.0050619" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(RequestCU_корректировка_некорректный ПВДок)" time="1.0085540" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(fnsProperties_ССЧ некорректная_не за 1 число года)" time="1.3019520" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_ResultIsValidAgainstXsdSchema(inner_Результат соответствует XSD схеме_СоП для организации никогда не заполняли_в xml появится ErrorMessage от WarrantRetriever)" time="0.8471040" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_CompareWithExpected(fnsProperties_ССЧ некорректная_мусорная дата)" time="1.4821400" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_ResultInnerXmlsAreAllValidXmls" time="1.5731800" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.CheckReportExtended_ResultIsValidAgainstXsdSchema(inner_Результат сооветствует XSD схеме)" time="1.4668480" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.Pfr.PfrTests" name="PfrTests.SerializeCheckLetterTestSettings" time="0.0009540">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsWorkerTests" name="FnsWorkerTests.GetCheckReportTask_NoNeedWarrantWithMchd(&quot;116704 с МЧД (доверенность не требуется)&quot;)" time="6.4122870" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.Pfr.PfrTests" name="PfrTests.noFileNameForKopf-OurOwnErrors_1101700[1 files]" time="10.9883469" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.Pfr.PfrTests" name="PfrTests.noFileNameForKopf-OurOwnErrors_1103400[1 files]" time="10.5530360" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsLetter.FnsLetterWorkerTests" name="FnsLetterWorkerTests.lost_warrant[3 files]" time="6.8753890" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsLetter.FnsLetterWorkerTests" name="FnsLetterWorkerTests.with_warrant_correct[2 files]" time="2.8413050" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.Pfr.PfrTests" name="PfrTests.test_case_1103800[1 files]" time="15.1781150" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.Pfr.PfrTests" name="PfrTests.test_case_1103500[1 files]" time="14.9168310" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.Pfr.PfrTests" name="PfrTests.test_case_1103700[1 files]" time="14.8904020" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.Pfr.PfrTests" name="PfrTests.inventory_basic_test[4 files]" time="15.5961210" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsLetter.FnsLetterWorkerTests" name="FnsLetterWorkerTests.double_report[4 files]" time="0.1777290" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.Pfr.PfrTests" name="PfrTests.differentRegNumsInFile_1103400[1 files]" time="16.3115730" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.Pfr.PfrTests" name="PfrTests.test_case_1103400[1 files]" time="16.2715440" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsLetter.FnsLetterWorkerTests" name="FnsLetterWorkerTests.bad_IdFile[2 files]" time="2.6838040" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsLetter.FnsLetterWorkerTests" name="FnsLetterWorkerTests.no_warrant_mixed_attachments[5 files]" time="15.8417160" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsLetter.FnsLetterWorkerTests" name="FnsLetterWorkerTests.report_with_lost_attachments[1 files]" time="0.6415689" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsLetter.FnsLetterWorkerTests" name="FnsLetterWorkerTests.attachment_name_and_НаимПрил_mismatch[2 files]" time="0.5829910" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsLetter.FnsLetterWorkerTests" name="FnsLetterWorkerTests.no_warrant_non_fns_attachment[6 files]" time="1.9349960" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsLetter.FnsLetterWorkerTests" name="FnsLetterWorkerTests.with_warrant_crosscheckErrors[2 files]" time="1.0598430" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Кросс-проверки для отчета и сертификата[1 files]" time="10.2572730" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Отчет без доверенности и приложений[1 files]" time="9.5105679" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг приложения. В декларации кривой ИдФайл[2 files]" time="11.6908880" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsLetter.FnsLetterWorkerTests" name="FnsLetterWorkerTests.attachments_with_same_names[3 files]" time="1.3197930" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsLetter.FnsLetterWorkerTests" name="FnsLetterWorkerTests.SerializeCheckLetterTestSettings" time="0.0000160">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг. С ошибками в приложении_не патчим в афро, но должны патчить в формс.апи[2 files]" time="9.8968790" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Сбор свойств_Раздел10. Полностью заполненный ФУФ[2 files]" time="11.6930990" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг доверенности. ИдФайл не соответствует формату_не патчим[2 files]" time="9.4778480" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг ИНН-КПП и guid'а в ИдФайле декларации. Голова ЮЛ[1 files]" time="2.4474060" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг кода МРИ в доверенности. В декларации кривой ИдФайл[2 files]" time="15.1482090" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг КодНо в доверенности. КодНо в ИдФайле не совпадает со значением атрибута КодНо_патчим[2 files]" time="19.8120310" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Консистентность. Перепутаны приложения[8 files]" time="6.2465290" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг имен приложений в декларации_имена не по формату[8 files]" time="7.2201650" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг приложения. ИдФайл не по формату_не патчим[8 files]" time="8.5497230" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Консистентность. Приложения не описаны в декларации[8 files]" time="21.4514730" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Сценарий патчинга DontPatch[8 files]" time="24.2951450" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Полная пачка без ошибок и предупреждений[8 files]" time="10.7246720" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Отчет без доверенности и приложений с ошибкой создания[1 files]" time="2.3605459" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг. С ошибками в декларации_не патчим в афро, но должны патчить в формс.апи[2 files]" time="2.5695009" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.no_warrant_mixed_attachments[5 files]" time="13.1401590" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_1175005[3 files]" time="9.7404569" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_1175013[3 files]" time="2.5106310" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_excess_attachments[7 files]" time="3.9487920" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Сбор свойств_Книга покупок и Доп.книга покупок. Полностью заполненные ФУФы[3 files]" time="3.4411730" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Контроль на состав пачки_Книга продаж_Доп.книга продаж и Книга покупок_Доп.книга покупок[4 files]" time="4.3281390" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_1115106[3 files]" time="12.5905480" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Разные версии формата у декларации и приложений[8 files]" time="15.7509990" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_1115104-5_03[3 files]" time="1.3484270" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Сбор свойств_Раздел12. Полностью заполненный ФУФ[2 files]" time="1.9136440" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.signature_with_lost_attachment[2 files]" time="0.8935200" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг декларации. Пустые ИНН-КПП в clientinfo_не патчим[1 files]" time="1.3271390" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг приложения. ИдФайл пустой_не патчим[2 files]" time="3.0735280" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг имен приложений в декларации - в одном из приложений КодНо в Идфайле не совпадает с КодНо в декларации[8 files]" time="5.1381620" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Сбор свойств_Книга продаж и Доп.книга продаж. Полностью заполненные ФУФы[3 files]" time="3.7519030" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг. С ошибками в доверенности_не патчим в афро, но должны патчить в формс.апи[2 files]" time="2.9562900" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Консистентность. Нет приложений из декларации[1 files]" time="1.8101420" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Отчет с доверенностью без приложений[1 files]" time="2.0522410" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_1115127[3 files]" time="3.5899530" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг. С предупреждениями_патчим[3 files]" time="4.0981759" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Отчет с приложениями без доверенности[8 files]" time="5.1762480" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг декларации. ИдФайл пустой_не патчим[1 files]" time="1.4574689" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Контроль на состав пачки_Раздел 4 и Книга продаж[1 files]" time="1.5765350" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг кода МРИ в доверенности и приложении[2 files]" time="2.5240109" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.lost_warrant[3 files]" time="1.4768640" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.attachments_with_correct_signatures[7 files]" time="2.3389129" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_1115125[3 files]" time="1.5105760" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг ИНН-КПП в ИдФайле доверенности для ИП[2 files]" time="3.5821090" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг ИНН-КПП и guid'а в ИдФайле декларации. Голова ЮЛ_Дочка ИП[1 files]" time="2.0549270" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.with_warrant_correct[3 files]" time="1.6634990" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг ИНН-КПП в ИдФайле доверенности для ЮЛ[2 files]" time="3.4613740" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.attachment_with_lost_signature[2 files]" time="1.5011130" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.В пачке приложение в формате xls[1 files]" time="2.4866500" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг приложений. КодМРИ и КодНО в ИдФайле начали патчить[2 files]" time="3.1616840" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг декларации. ИНН-КПП в ИдФайле не по формату_не патчим[1 files]" time="2.0088600" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Отчет с довереностью и приложениями[8 files]" time="4.7156600" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_1175011[3 files]" time="1.2934930" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг КодНо в доверенности[2 files]" time="2.8634280" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.В пачке лишний xml файл[3 files]" time="0.5003060" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.bad_IdFile[3 files]" time="1.4099650" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Консистентность. Ошибки на признаки наличия разделов[8 files]" time="5.0152409" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Консистентность. Два набора приложений[15 files]" time="0.7339059" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_1175007[3 files]" time="1.6508259" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг ИНН-КПП и guid'а в ИдФайле декларации. Голова ИП_Дочка ИП[1 files]" time="2.6741210" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг. С ошибками в кросс-проверках_не патчим в афро, но должны патчить в формс.апи[2 files]" time="3.3386220" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Номера корректировок в отчете и приложениях не совпадают[3 files]" time="2.8079930" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_1115128[3 files]" time="1.2767300" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.double_report[4 files]" time="0.2487430" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Отчет без доверенности и приложений с ошибкой не найдено[1 files]" time="1.9290030" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг декларации. ИдФайл не соответствует формату_не патчим[1 files]" time="1.2401540" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Сбор свойств_Раздел11. Полностью заполненный ФУФ[2 files]" time="2.2634260" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_1115101[3 files]" time="1.4167930" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Пачка в формате 5.04[8 files]" time="5.9462620" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг имен приложений в декларации_имена приложений перепутаны[8 files]" time="6.0185980" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Консистентность. Две декларации[2 files]" time="1.8774100" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_brokenSignature[3 files]" time="1.4190390" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Кросс-проверки для отчета, доверенности и сертификата[1 files]" time="1.5122790" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_1115104-5_05[3 files]" time="1.3348650" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_1115104[3 files]" time="1.0220250" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_lost_attachments[1 files]" time="0.5371300" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Сбор свойств_Декларация. Полностью заполненный ФУФ[1 files]" time="1.4274110" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.SerializeCheckNdsTestSettings" time="0.0000110">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Невалидный XML_декларация[2 files]" time="0.6741330" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг доверенности. ИдФайл пустой_не патчим[2 files]" time="2.3349520" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.schema_errors_in_attachments[29 files]" time="16.6389950" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_1175010[3 files]" time="1.3651950" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_1175004[3 files]" time="1.2372070" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.attachment_name_and_IdFile_mismatch[3 files]" time="1.2256400" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг ИНН-КПП и guid'а в ИдФайле декларации. Голова ИП_Дочка ЮЛ[1 files]" time="2.6451970" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Сценарий патчинга DontPatchWarrant - падает в афро[8 files]" time="6.0185940" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_1175012[3 files]" time="1.2669080" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Корректный пакет документов без доверенности[8 files]" time="5.8627730" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Сценарий патчинга PatchAll[8 files]" time="6.2749490" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.no_warrant_unformal_attachments[3 files]" time="1.4442600" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_1115102[3 files]" time="1.1021920" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.SerializeCheckInventoryTestSettings" time="0.0000120">
+      <skipped />
+    </testcase>
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_1115105[3 files]" time="1.3288240" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_1115126[3 files]" time="0.9971530" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.with_warrant_crosscheckErrors[3 files]" time="1.6590670" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_1115103[3 files]" time="0.9902760" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_1115108[3 files]" time="1.0619120" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Патчинг имен приложений в декларации, патчинг ИНН-КПП  и guid-ов в ИдФайлах приложений[8 files]" time="5.7441000" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.report_with_1175006[3 files]" time="1.0777660" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsInventory.FnsInventoryWorkerTests" name="FnsInventoryWorkerTests.attachments_with_same_names[5 files]" time="1.6834400" />
+    <testcase classname="Kontur.Forms.Formats.IntegrationTests.FnsNds.FnsNdsWorkerTests" name="FnsNdsWorkerTests.Сценарий патчинга PatchAllAndGuids[8 files]" time="6.0345290" />
+    <system-out>OneTimeSetUp: 
+OneTimeSetUp: 
+OneTimeSetUp: 
+
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/e964bda4-8238-4421-b9d5-2d903957510f
+
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/c197874a-d567-4cc3-bc57-dda0e5667594
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/9f1ff9f3-705a-4d33-8a16-dea64d3745ae
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/0c8c2a54-7704-4a5e-92df-176aec8db965
+
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/521fcd13-af7e-417c-801f-8db1579e984a
+
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/21e4d535-ec0c-4425-9af5-44888144641a
+
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/eb55f281-9c36-40ff-838b-2e6421a94bb2
+
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/6e6e0574-d70d-430e-a4aa-be0cada42de7
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/23786690-c5fd-4bf5-921c-6a6296cadac6
+
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/b1e4bf14-9193-4ed6-ae96-a679498fd465
+
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/b3525cd7-b981-4491-9eaf-5e85f8776f02
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/270cce1e-eba0-4b5c-b076-5ad978c25220
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/8dea8cf0-e13b-4bd7-ba44-31d8e7de32da
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/86c4959d-3018-489b-8fad-a01ddb65b2a9
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/d9b23052-c8e0-4735-95b6-a22bd37b31e7
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/96a9b570-dd1b-48e0-96bd-86580c849546
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/de1c8de9-9db7-4f38-88bf-15797fede6ba
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/09a3d1d2-0d3d-4c1b-a2f5-69b5cae73c6b
+
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/580071bb-a2c9-4328-9afa-385a5c2c26d2
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/3396f8f0-6a75-44f5-81e7-c89da654d94c
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/fc24384d-b4c4-4faa-bab3-b008aba22092
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/25f3c353-9a16-457f-b0f8-b02ef40fc07f
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/35f36c06-da5f-4c22-a933-c02093eeecb8
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/7e407ec1-4bb0-4f41-bb94-9c22ea4d76c9
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/fd434113-6100-4d77-9a48-5bee73e6572a
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/571a188a-9fb9-443d-873b-c0364ef469e3
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/6a947fc6-a436-47d7-beab-42501bd1cb70
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/9ab61552-be41-42c9-9dd1-d780ca16e90e
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/4d1ea489-6b53-4963-a623-21518d19e33c
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/173d1e14-fe2f-4eda-bbc9-a35a65183437
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/8eb79d60-9043-45bf-973f-6f5a3a2dd281
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/46861a1d-ebab-442f-8c89-3741569d3bcd
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/6f9c4732-a8c1-4374-8f81-bdd6939c5496
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/02bb53eb-b976-40ce-9a11-ec63db3fd604
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/44f5c45b-bc53-4c71-8a8b-f66f3e17854e
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/636c0c01-cbd6-4f6c-9ed9-a282733a7d3e
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "11111111-1111-1111-1111-111111111111",
+  "SenderOrgId": "11111111-1111-1111-1111-111111111111",
+  "PayerOrgId": "11111111-1111-1111-1111-111111111111",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/59c4e81f-87b0-4d92-ae07-fe61045d778a
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/c3a9c921-fddf-4f3f-aac6-a2b9025fe459
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/6192ca34-7a8d-48a6-ab82-e5813ecabfca
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/33f5b4d7-5d6b-4243-a499-5981b3995750
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/44d48587-e1e4-4273-a2b0-0da7ee6c962c
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/822014fa-cb05-459c-8e05-774499576843
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/a040b891-3e53-4606-a932-39d4a04fa267
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/a94bb264-4119-4ee3-b823-31bae6b56fa0
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/0660ef18-ec4d-459a-9b4a-b21b51214192
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatchWarrant",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/bbccf517-0028-4c6b-8e0b-ffaecbec3d15
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAll",
+  "NeedWarrant": "True"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/8875fd64-945c-445c-a904-399512965c05
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/e6c1cf43-e459-4403-9f7d-b10132341281
+
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/1be8dc47-4a76-4970-a8e7-8f2e6eb78e42
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/320ea0cc-e87a-4a18-9bcf-e4baa86e7aff
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/4ccb6288-b976-42f3-9d37-0817563d891d
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/5619db1b-d106-49ca-9863-9866694986cd
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/ae4545c9-7982-47d2-9c75-cdedb628a70d
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/0a32c22e-191b-4b9e-9e5a-a7b0b45437e3
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/aa07067d-2b98-466e-acea-ddbe265a30e2
+
+Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+
+Test Framework Informational Messages:
+NUnit Adapter 4.5.0.0: Test execution started
+Running all tests in /builds/forms/forms/formats/Formats.IntegrationTests/bin/Forms.Formats.IntegrationTests.dll
+   NUnit3TestExecutor discovered 380 of 387 NUnit test cases using Current Discovery mode, Non-Explicit run
+AddAdditionalPropsFromResult: OneTimeSetUp: 
+RemoveEmptyAdditionalProps: OneTimeSetUp: 
+ReplaceOneLineWithAnother: OneTimeSetUp: 
+NUnit Adapter 4.5.0.0: Test execution complete
+</system-out>
+    <system-err>Warning - Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/e964bda4-8238-4421-b9d5-2d903957510f
+
+Warning - Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/c197874a-d567-4cc3-bc57-dda0e5667594
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/9f1ff9f3-705a-4d33-8a16-dea64d3745ae
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/0c8c2a54-7704-4a5e-92df-176aec8db965
+
+Warning - Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/521fcd13-af7e-417c-801f-8db1579e984a
+
+Warning - Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/21e4d535-ec0c-4425-9af5-44888144641a
+
+Warning - Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/eb55f281-9c36-40ff-838b-2e6421a94bb2
+
+Warning - Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/6e6e0574-d70d-430e-a4aa-be0cada42de7
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/23786690-c5fd-4bf5-921c-6a6296cadac6
+
+Warning - Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/b1e4bf14-9193-4ed6-ae96-a679498fd465
+
+Warning - Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/b3525cd7-b981-4491-9eaf-5e85f8776f02
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/270cce1e-eba0-4b5c-b076-5ad978c25220
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/8dea8cf0-e13b-4bd7-ba44-31d8e7de32da
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/86c4959d-3018-489b-8fad-a01ddb65b2a9
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/d9b23052-c8e0-4735-95b6-a22bd37b31e7
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/96a9b570-dd1b-48e0-96bd-86580c849546
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/de1c8de9-9db7-4f38-88bf-15797fede6ba
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/09a3d1d2-0d3d-4c1b-a2f5-69b5cae73c6b
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/580071bb-a2c9-4328-9afa-385a5c2c26d2
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/3396f8f0-6a75-44f5-81e7-c89da654d94c
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/fc24384d-b4c4-4faa-bab3-b008aba22092
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/25f3c353-9a16-457f-b0f8-b02ef40fc07f
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/35f36c06-da5f-4c22-a933-c02093eeecb8
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/7e407ec1-4bb0-4f41-bb94-9c22ea4d76c9
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/fd434113-6100-4d77-9a48-5bee73e6572a
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/571a188a-9fb9-443d-873b-c0364ef469e3
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/6a947fc6-a436-47d7-beab-42501bd1cb70
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/9ab61552-be41-42c9-9dd1-d780ca16e90e
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/4d1ea489-6b53-4963-a623-21518d19e33c
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/173d1e14-fe2f-4eda-bbc9-a35a65183437
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/8eb79d60-9043-45bf-973f-6f5a3a2dd281
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/46861a1d-ebab-442f-8c89-3741569d3bcd
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/6f9c4732-a8c1-4374-8f81-bdd6939c5496
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/02bb53eb-b976-40ce-9a11-ec63db3fd604
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/44f5c45b-bc53-4c71-8a8b-f66f3e17854e
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/636c0c01-cbd6-4f6c-9ed9-a282733a7d3e
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "11111111-1111-1111-1111-111111111111",
+  "SenderOrgId": "11111111-1111-1111-1111-111111111111",
+  "PayerOrgId": "11111111-1111-1111-1111-111111111111",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/59c4e81f-87b0-4d92-ae07-fe61045d778a
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/c3a9c921-fddf-4f3f-aac6-a2b9025fe459
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/6192ca34-7a8d-48a6-ab82-e5813ecabfca
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/33f5b4d7-5d6b-4243-a499-5981b3995750
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/44d48587-e1e4-4273-a2b0-0da7ee6c962c
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/822014fa-cb05-459c-8e05-774499576843
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/a040b891-3e53-4606-a932-39d4a04fa267
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/a94bb264-4119-4ee3-b823-31bae6b56fa0
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/0660ef18-ec4d-459a-9b4a-b21b51214192
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatchWarrant",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/bbccf517-0028-4c6b-8e0b-ffaecbec3d15
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAll",
+  "NeedWarrant": "True"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/8875fd64-945c-445c-a904-399512965c05
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/e6c1cf43-e459-4403-9f7d-b10132341281
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/1be8dc47-4a76-4970-a8e7-8f2e6eb78e42
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/320ea0cc-e87a-4a18-9bcf-e4baa86e7aff
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "True"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/4ccb6288-b976-42f3-9d37-0817563d891d
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/5619db1b-d106-49ca-9863-9866694986cd
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/ae4545c9-7982-47d2-9c75-cdedb628a70d
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "False"
+}
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/0a32c22e-191b-4b9e-9e5a-a7b0b45437e3
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "DontPatch",
+  "NeedWarrant": "False"
+}
+Draft = home/e3c0df02-6290-4740-87fc-b331f780c55a/forms.api/drafts2/aa07067d-2b98-466e-acea-ddbe265a30e2
+
+Warning - Test settings:
+{
+  "Server": "extern.regusers",
+  "Catalog": "ke-dc1\\sql",
+  "AbontentId": "00000000-0000-0000-0000-000000000000",
+  "UserId": "00000000-0000-0000-0000-000000000000",
+  "SenderOrgId": "00000000-0000-0000-0000-000000000000",
+  "PayerOrgId": "00000000-0000-0000-0000-000000000000",
+  "PatchOption": "PatchAllAndGuids",
+  "NeedWarrant": "True"
+}
+
+</system-err>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,29 @@
+<testsuites>
+  <testsuite name="Forms.Flash.Playgrounds.Tests.dll" tests="16" skipped="0" failures="0" errors="0" time="3.8095329000000007" timestamp="2024-11-02T08:40:27" hostname="runner-xwgvg2526-project-17358-concurrent-9-fvrbtobs" id="0" package="Forms.Flash.Playgrounds.Tests.dll">
+    <properties />
+    <testcase classname="Kontur.Forms.Flash.Playgrounds.Tests.PlaygroundControlsTests" name="PlaygroundControlsTests.CheckTest" time="0.4678970" />
+    <testcase classname="Kontur.Forms.Flash.Playgrounds.Tests.PlaygroundControlsTests" name="PlaygroundControlsTests.CheckTestOnlyFufSchema" time="0.8270280" />
+    <testcase classname="Kontur.Forms.Flash.Playgrounds.Tests.PlaygroundControlsTests" name="PlaygroundControlsTests.CheckTestOnlyXsdSchema" time="0.0084610" />
+    <testcase classname="Kontur.Forms.Flash.Playgrounds.Tests.PlaygroundControlsTests" name="PlaygroundControlsTests.CheckTestWithoutSchemas" time="0.2179200" />
+    <testcase classname="Kontur.Forms.Flash.Playgrounds.Tests.PlaygroundControlsTests" name="PlaygroundControlsTests.ConvertLanguageTest" time="0.0878870" />
+    <testcase classname="Kontur.Forms.Flash.Playgrounds.Tests.PlaygroundControlsTests" name="PlaygroundControlsTests.DeleteTrashTest" time="0.0869820" />
+    <testcase classname="Kontur.Forms.Flash.Playgrounds.Tests.PlaygroundControlsTests" name="PlaygroundControlsTests.ExamplesTest" time="0.0948539" />
+    <testcase classname="Kontur.Forms.Flash.Playgrounds.Tests.PlaygroundControlsTests" name="PlaygroundControlsTests.GenerateFufTest" time="0.0709940" />
+    <testcase classname="Kontur.Forms.Flash.Playgrounds.Tests.PlaygroundControlsTests" name="PlaygroundControlsTests.LoadSaveTest" time="0.2795860" />
+    <testcase classname="Kontur.Forms.Flash.Playgrounds.Tests.PlaygroundControlsTests" name="PlaygroundControlsTests.PrettifyTest" time="0.0286520" />
+    <testcase classname="Kontur.Forms.Flash.Playgrounds.Tests.PlaygroundPathMappingTests" name="PlaygroundPathMappingTests.GenerateFufTest" time="0.0183840" />
+    <testcase classname="Kontur.Forms.Flash.Playgrounds.Tests.PlaygroundPathMappingTests" name="PlaygroundPathMappingTests.LoadSaveTest" time="0.0823260" />
+    <testcase classname="Kontur.Forms.Flash.Playgrounds.Tests.PlaygroundPathMappingTests" name="PlaygroundPathMappingTests.MapTest" time="0.0397440" />
+    <testcase classname="Kontur.Forms.Flash.Playgrounds.Tests.PlaygroundPropsTests" name="PlaygroundPropsTests.CollectTest" time="1.0697700" />
+    <testcase classname="Kontur.Forms.Flash.Playgrounds.Tests.PlaygroundPropsTests" name="PlaygroundPropsTests.ExamplesTest" time="0.1267600" />
+    <testcase classname="Kontur.Forms.Flash.Playgrounds.Tests.PlaygroundPropsTests" name="PlaygroundPropsTests.LoadSaveTest" time="0.3022880" />
+    <system-out>
+Test Framework Informational Messages:
+NUnit Adapter 4.5.0.0: Test execution started
+Running all tests in /builds/forms/forms/flash.playgrounds/Flash.Playgrounds.Tests/bin/Forms.Flash.Playgrounds.Tests.dll
+   NUnit3TestExecutor discovered 16 of 16 NUnit test cases using Current Discovery mode, Non-Explicit run
+NUnit Adapter 4.5.0.0: Test execution complete
+</system-out>
+    <system-err></system-err>
+  </testsuite>
+</testsuites>

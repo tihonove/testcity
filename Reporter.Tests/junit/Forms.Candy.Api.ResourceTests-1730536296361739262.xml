@@ -1,0 +1,14 @@
+<testsuites>
+  <testsuite name="Forms.Candy.Api.ResourceTests.dll" tests="1" skipped="0" failures="0" errors="0" time="40.4614199" timestamp="2024-11-02T08:31:37" hostname="runner-xwgvg2526-project-17358-concurrent-9-fvrbtobs" id="0" package="Forms.Candy.Api.ResourceTests.dll">
+    <properties />
+    <testcase classname="Kontur.Forms.Candy.Api.ResourceTests.InitResourceTests" name="InitResourceTests.InitAllResources_ShouldWorkCorrectly" time="40.4614199" />
+    <system-out>
+Test Framework Informational Messages:
+NUnit Adapter 4.5.0.0: Test execution started
+Running all tests in /builds/forms/forms/candy/Candy.Api.ResourceTests/bin/Forms.Candy.Api.ResourceTests.dll
+   NUnit3TestExecutor discovered 1 of 1 NUnit test cases using Current Discovery mode, Non-Explicit run
+NUnit Adapter 4.5.0.0: Test execution complete
+</system-out>
+    <system-err></system-err>
+  </testsuite>
+</testsuites>

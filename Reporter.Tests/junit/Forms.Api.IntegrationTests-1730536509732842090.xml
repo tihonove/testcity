@@ -1,0 +1,2832 @@
+<testsuites>
+  <testsuite name="Forms.Api.IntegrationTests.dll" tests="83" skipped="0" failures="0" errors="0" time="242.20885090000007" timestamp="2024-11-02T08:35:11" hostname="runner-xwgvg2526-project-17358-concurrent-9-fvrbtobs" id="0" package="Forms.Api.IntegrationTests.dll">
+    <properties />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportTests" name="BuildReportTests.UsnV3_ischislNotExist" time="9.4265070" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportTests" name="BuildReportTests.Inventory_UnknownIfnsCode" time="3.4904700" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportTests" name="BuildReportTests.UsnV2_ischislNeg" time="1.2075310" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportTests" name="BuildReportTests.Ion_Vid1_mri" time="2.4653720" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportTests" name="BuildReportTests.UsnV2_ischislNotExist" time="2.0357030" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportTests" name="BuildReportTests.UsnV2_BadContract" time="0.4304120" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportTests" name="BuildReportTests.Ion_Vid1" time="0.6454900" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportTests" name="BuildReportTests.Inventory" time="1.6340480" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportTests" name="BuildReportTests.Ion_Vid2" time="0.5149680" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportTests" name="BuildReportTests.UsnV2_without_RaschTorgSbor" time="0.8404450" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportTests" name="BuildReportTests.Inventory_MRI_12INN" time="0.4224800" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportTests" name="BuildReportTests.UsnV1" time="0.6487920" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportTests" name="BuildReportTests.Inventory_MRI" time="0.4276980" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportTests" name="BuildReportTests.UsnV3_BadContract" time="0.4146070" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportTests" name="BuildReportTests.UsnV2_without_phone" time="0.7979650" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportTests" name="BuildReportTests.UsnV3_ischislNeg" time="0.8500210" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportTests" name="BuildReportTests.UsnV3_without_RaschTorgSbor" time="1.2027620" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportTests" name="BuildReportTests.UsnV2" time="0.4627650" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportTests" name="BuildReportTests.UsnV3" time="0.6846460" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportTests" name="BuildReportTests.Ion_Vid3_mri" time="0.3930090" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportTests" name="BuildReportTests.Ion_Vid3" time="0.6529470" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportV2Tests" name="BuildReportV2Tests.Ion5" time="3.7114900" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportV2Tests" name="BuildReportV2Tests.Ion4_simple" time="2.9503940" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportV2Tests" name="BuildReportV2Tests.Ion7" time="1.5003899" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportV2Tests" name="BuildReportV2Tests.Ion4_1nalog" time="1.6360820" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportV2Tests" name="BuildReportV2Tests.Ion3_V1" time="1.3798310" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportV2Tests" name="BuildReportV2Tests.Ion6" time="1.6355290" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.BuildReportV2Tests" name="BuildReportV2Tests.Ion4_many_nalogs" time="1.5768320" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_07_5_OGRN_1" time="7.4391300" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_07_5_OGRN_2" time="0.8249720" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_07_5_OGRN_3" time="0.6427570" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_06_5_OGRN_4" time="3.5313570" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_06_5_OGRN_5" time="0.4423090" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_06_5_OGRN_6" time="0.5892880" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_06_5_OGRN_8" time="0.4292950" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_07_5_OGRN_7" time="0.6254180" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_06_1_DOP_NUM_1" time="0.5143010" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_06_1_DOP_NUM_2" time="0.4448740" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_06_1_DOP_NUM_3" time="0.4254880" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_06_2_REG_NUM_1" time="0.6601220" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_06_2_REG_NUM_2" time="0.5737790" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_06_2_REG_NUM_3" time="0.3942320" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_06_2_REG_NUM_4" time="0.5672530" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests.4Fss" name="4Fss.SomeChecksDontPass3" time="0.8840790" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_07_3_Upoln_1" time="0.7489640" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_07_3_Upoln_2" time="0.4829150" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_07_3_Upoln_3" time="0.6947420" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_07_3_Upoln_4" time="0.4446710" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_07_3_Upoln_5" time="0.8565420" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_07_3_Upoln_6" time="0.4592120" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_07_4_INN_1" time="0.6472840" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_07_4_INN_2" time="0.4716630" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_06_4_INN_3" time="0.4934130" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_06_4_INN_4" time="0.6003600" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests" name="FssApprovalsTests.4Fss_09_4_INN_1" time="3.4356360" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests.4Fss" name="4Fss.SomeChecksDontPass2" time="0.6225050" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests.4Fss" name="4Fss.SomeChecksDontPass" time="0.4094470" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests.4Fss_UnfinishedControlPeriod_4fss_QN3" name="4Fss_UnfinishedControlPeriod_4fss_QN3.xml_04/01/2016" time="3.3028890" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests.4Fss_UnfinishedControlPeriod_4fss_QN6" name="4Fss_UnfinishedControlPeriod_4fss_QN6.xml_08/02/2016" time="0.9129150" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests.4Fss_UnfinishedControlPeriod_4fss_QN9" name="4Fss_UnfinishedControlPeriod_4fss_QN9.xml_11/01/2016" time="0.6685820" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests.4Fss_UnfinishedControlPeriod_4fss_QN12" name="4Fss_UnfinishedControlPeriod_4fss_QN12.xml_11/02/2017" time="0.3916780" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests.4Fss_UnfinishedControlPeriod_4fss_format7_QN6" name="4Fss_UnfinishedControlPeriod_4fss_format7_QN6.xml_08/02/2017" time="0.4961700" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.FssApprovalsTests.4Fss_UnfinishedControlPeriod_4fss_format6_QN9" name="4Fss_UnfinishedControlPeriod_4fss_format6_QN9.xml_11/01/2018" time="0.6248950" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.ImproveFufTests" name="ImproveFufTests.mustPatched/house_korpus_litera.xml" time="1.4529250" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.ImproveFufTests" name="ImproveFufTests.mustPatched/region_as_code.xml" time="0.2581790" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.ImproveFufTests" name="ImproveFufTests.mustPatched/district_settlement.xml" time="0.2355610" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.ImproveFufTests" name="ImproveFufTests.mustPatched/wo_street.xml" time="0.2216250" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.ImproveFufTests" name="ImproveFufTests.mustPatched/err_in_address3.xml" time="0.2273430" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.ImproveFufTests" name="ImproveFufTests.mustPatched/district_city.xml" time="0.2195130" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.ImproveFufTests" name="ImproveFufTests.notPatched/not_exists_in_gar.xml" time="0.1412820" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.ImproveFufTests" name="ImproveFufTests.notPatched/empty.xml" time="0.0926290" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.ImproveFufTests" name="ImproveFufTests.notPatched/err_in_address2.xml" time="0.1498930" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.ImproveFufTests" name="ImproveFufTests.notPatched/err_in_address1.xml" time="0.1476430" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.ImproveFufTests" name="ImproveFufTests.notPatched/wo_house_number.xml" time="0.2325520" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.ImproveFufTests" name="ImproveFufTests.notPatched/err_in_address.xml" time="0.2656680" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.ImproveFufTests" name="ImproveFufTests.notPatched/err_in_address4.xml" time="0.1232660" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.ReportFormatTests" name="ReportFormatTests.icb1_filled" time="1.4069730" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.ReportFormatTests" name="ReportFormatTests.nm" time="0.4536450" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.ReportPropsTests" name="ReportPropsTests.icb1_filled" time="3.8851470" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.ReportPropsTests" name="ReportPropsTests.nm" time="0.6021270" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.SplitApprovalsTests" name="SplitApprovalsTests.SimpleTest" time="4.4031800" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.TestClassificationClientMemoryConsumption" name="TestClassificationClientMemoryConsumption.TestMeasureTwice" time="146.3709240" />
+    <testcase classname="Kontur.Forms.Api.IntegrationTests.V2.FnsTests" name="FnsTests.CreateFromHL_OK" time="1.5264530" />
+    <system-out>&lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 15.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2020" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП Тлф="123"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН&gt;
+      &lt;СумНалПУ_СмНП ОКТМО="50701000" АвПУКв="0" ОКТМО_Пг="50701000" АвПУУменПг="0" ОКТМО_9м="50701000" АвПУУмен9м="0" ОКТМО_Пер="50701000"&gt;
+        &lt;НалПУУменПер&gt;0&lt;/НалПУУменПер&gt;
+        &lt;РасчНал2 ИсчислМин="0" УбытПред="0"&gt;
+          &lt;Доход СумЗаНалПер="0" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;Расход СумЗаНалПер="3598" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;НалБазаУбыт СумЗаНалПер="-3598" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;Ставка СтавкаНалПер="15" СтавкаКв="15" СтавкаПг="15" Ставка9м="15" /&gt;
+        &lt;/РасчНал2&gt;
+      &lt;/СумНалПУ_СмНП&gt;
+    &lt;/УСН&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="ON_DOCNPNO_3999_3999_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.01"&gt;
+  &lt;Документ КНД="1184002" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвОтпрДок&gt;
+      &lt;ОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпрДок&gt;
+    &lt;СвПолДок&gt;
+      &lt;ОтпрНО КодНО="3999" НаимНО="" /&gt;
+    &lt;/СвПолДок&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="3" Должн="Руководитель" Тлф="8800" E-mail="ruk@skbkontur.ru" ИННФЛ="227632864503"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ДокПредстНО КолФайл="6"&gt;
+      &lt;ИдФайлОсн&gt;1165013_0087_6676701665667628584_8d9ae4b3-3b33-4cd2-bf9b-2a676196fd71_20170807_1a88e62e-4a30-4320-9f04-16f1e1cd97f2&lt;/ИдФайлОсн&gt;
+      &lt;ДокФорм ПорНомДок="1.01" ИдФайл="DP_OTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_246c16b3-6c58-4ae5-8014-2811d6eff3bc"&gt;
+        &lt;ИдФайлЭП&gt;DP_OTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_246c16b3-6c58-4ae5-8014-2811d6eff3bc_SGN_001.sgn&lt;/ИдФайлЭП&gt;
+        &lt;КНД_Док&gt;1175004&lt;/КНД_Док&gt;
+      &lt;/ДокФорм&gt;
+      &lt;ДокФорм ПорНомДок="1.01" ИдФайл="DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-a37f-896bde6bef28"&gt;
+        &lt;ИдФайлЭП&gt;DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-a37f-896bde6bef28_SGN_001.sgn&lt;/ИдФайлЭП&gt;
+        &lt;КНД_Док&gt;1175005&lt;/КНД_Док&gt;
+      &lt;/ДокФорм&gt;
+      &lt;ДокСкан ПорНомДок="1.01" КодДок="0510041" НаимДок="Фото с выпускного" ИдФайлЭП="DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-1234-896bde6bef28_SGN_001.sgn"&gt;
+        &lt;ИмяФайл&gt;trash.jpg&lt;/ИмяФайл&gt;
+      &lt;/ДокСкан&gt;
+    &lt;/ДокПредстНО&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.05"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2017" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП ОКВЭД="01.1" Тлф="123"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН&gt;
+      &lt;СумНалПУ_СмНП ОКТМО="50701000" АвПУКв="0" ОКТМО_Пг="50701000" АвПУУменПг="0" ОКТМО_9м="50701000" АвПУУмен9м="0" ОКТМО_Пер="50701000"&gt;
+        &lt;НалПУМин&gt;0&lt;/НалПУМин&gt;
+        &lt;РасчНал2 ИсчислМин="0" УбытПред="0"&gt;
+          &lt;Доход СумЗаНалПер="0" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;Расход СумЗаНалПер="3598" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;НалБазаУбыт СумЗаНалПер="-3598" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;Ставка СтавкаНалПер="15" СтавкаКв="15" СтавкаПг="15" Ставка9м="15" /&gt;
+          &lt;Исчисл СумЗаНалПер="-540" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+        &lt;/РасчНал2&gt;
+      &lt;/СумНалПУ_СмНП&gt;
+    &lt;/УСН&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="IU_ZAPR_6677_0000_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.04"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" /&gt;
+      &lt;АдрРФ Индекс="ИндРег" КодРегион="КодРегионРег" Район="ИмяРайонРег" Город="ИмяГородРег" НаселПункт="ИмяПосРег" Улица="ИмяУлРег" Дом="ДомРег" Корпус="КорпусРег" Кварт="КвРег" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1" Должн="Руководитель"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл КодЗапр="1" ФормОтв="1" ИФНС="0000"&gt;
+      &lt;СпрРасБюд НаДату="01.11.2018" /&gt;
+    &lt;/ЗапрИнфУсл&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.05"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2017" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП ОКВЭД="01.1" Тлф="123"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН&gt;
+      &lt;СумНалПУ_СмНП ОКТМО="50701000" АвПУКв="0" ОКТМО_Пг="50701000" АвПУУменПг="0" ОКТМО_9м="50701000" АвПУУмен9м="0" ОКТМО_Пер="50701000"&gt;
+        &lt;НалПУУменПер&gt;0&lt;/НалПУУменПер&gt;
+        &lt;РасчНал2 ИсчислМин="0" УбытПред="0"&gt;
+          &lt;Доход СумЗаНалПер="0" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;Расход СумЗаНалПер="3598" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;НалБазаУбыт СумЗаНалПер="-3598" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;Ставка СтавкаНалПер="15" СтавкаКв="15" СтавкаПг="15" Ставка9м="15" /&gt;
+        &lt;/РасчНал2&gt;
+      &lt;/СумНалПУ_СмНП&gt;
+    &lt;/УСН&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.05"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2017" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП ОКВЭД="01.1" Тлф="123"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН /&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="IU_ZAPR_6623_0000_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.04"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" /&gt;
+      &lt;АдрРФ Индекс="ИндРег" КодРегион="КодРегионРег" Район="ИмяРайонРег" Город="ИмяГородРег" НаселПункт="ИмяПосРег" Улица="ИмяУлРег" Дом="ДомРег" Корпус="КорпусРег" Кварт="КвРег" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1" Должн="Руководитель"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл КодЗапр="1" ФормОтв="1" ИФНС="0000"&gt;
+      &lt;СпрРасБюд НаДату="01.11.2018" /&gt;
+    &lt;/ЗапрИнфУсл&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="ON_DOCNPNO_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.01"&gt;
+  &lt;Документ КНД="1184002" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвОтпрДок&gt;
+      &lt;ОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпрДок&gt;
+    &lt;СвПолДок&gt;
+      &lt;ОтпрНО КодНО="6623" НаимНО="Инспекция МНС России по г.Нижнему Тагилу" /&gt;
+    &lt;/СвПолДок&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="3" Должн="Руководитель" Тлф="8800" E-mail="ruk@skbkontur.ru" ИННФЛ="227632864503"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ДокПредстНО КолФайл="6"&gt;
+      &lt;ИдФайлОсн&gt;1165013_0087_6676701665667628584_8d9ae4b3-3b33-4cd2-bf9b-2a676196fd71_20170807_1a88e62e-4a30-4320-9f04-16f1e1cd97f2&lt;/ИдФайлОсн&gt;
+      &lt;ДокФорм ПорНомДок="1.01" ИдФайл="DP_OTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_246c16b3-6c58-4ae5-8014-2811d6eff3bc"&gt;
+        &lt;ИдФайлЭП&gt;DP_OTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_246c16b3-6c58-4ae5-8014-2811d6eff3bc_SGN_001.sgn&lt;/ИдФайлЭП&gt;
+        &lt;КНД_Док&gt;1175004&lt;/КНД_Док&gt;
+      &lt;/ДокФорм&gt;
+      &lt;ДокФорм ПорНомДок="1.01" ИдФайл="DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-a37f-896bde6bef28"&gt;
+        &lt;ИдФайлЭП&gt;DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-a37f-896bde6bef28_SGN_001.sgn&lt;/ИдФайлЭП&gt;
+        &lt;КНД_Док&gt;1175005&lt;/КНД_Док&gt;
+      &lt;/ДокФорм&gt;
+      &lt;ДокСкан ПорНомДок="1.01" КодДок="0510041" НаимДок="Фото с выпускного" ИдФайлЭП="DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-1234-896bde6bef28_SGN_001.sgn"&gt;
+        &lt;ИмяФайл&gt;trash.jpg&lt;/ИмяФайл&gt;
+      &lt;/ДокСкан&gt;
+    &lt;/ДокПредстНО&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="IU_ZAPR_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.04"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" /&gt;
+      &lt;АдрРФ Индекс="ИндРег" КодРегион="КодРегионРег" Район="ИмяРайонРег" Город="ИмяГородРег" НаселПункт="ИмяПосРег" Улица="ИмяУлРег" Дом="ДомРег" Корпус="КорпусРег" Кварт="КвРег" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1" Должн="Руководитель"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл КодЗапр="1" ФормОтв="1" ИФНС="6623"&gt;
+      &lt;СпрРасБюд НаДату="01.11.2018" /&gt;
+    &lt;/ЗапрИнфУсл&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.05"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2017" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП ОКВЭД="01.1"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН&gt;
+      &lt;СумНалПУ_НП ОКТМО="08701000" АвПУКв="33604" ОКТМО_Пг="08701000" АвПУУменПг="31931" ОКТМО_9м="08701000" АвПУУмен9м="32688" ОКТМО_Пер="08701000" НалПУУменПер="0"&gt;
+        &lt;РасчНал1 ПризНП="1"&gt;
+          &lt;Доход СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+          &lt;Ставка СтавкаНалПер="6.0" СтавкаКв="6.0" СтавкаПг="6.0" Ставка9м="6.0" /&gt;
+          &lt;Исчисл СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+          &lt;УменНал СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+        &lt;/РасчНал1&gt;
+      &lt;/СумНалПУ_НП&gt;
+    &lt;/УСН&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="ON_DOCNPNO_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.01"&gt;
+  &lt;Документ КНД="1184002" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвОтпрДок&gt;
+      &lt;ОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпрДок&gt;
+    &lt;СвПолДок&gt;
+      &lt;ОтпрНО КодНО="6623" НаимНО="Инспекция МНС России по г.Нижнему Тагилу" /&gt;
+    &lt;/СвПолДок&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="111133311412" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="3" Должн="Руководитель" Тлф="8800" E-mail="ruk@skbkontur.ru" ИННФЛ="227632864503"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ДокПредстНО КолФайл="6"&gt;
+      &lt;ИдФайлОсн&gt;1165013_0087_6676701665667628584_8d9ae4b3-3b33-4cd2-bf9b-2a676196fd71_20170807_1a88e62e-4a30-4320-9f04-16f1e1cd97f2&lt;/ИдФайлОсн&gt;
+      &lt;ДокФорм ПорНомДок="1.01" ИдФайл="DP_OTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_246c16b3-6c58-4ae5-8014-2811d6eff3bc"&gt;
+        &lt;ИдФайлЭП&gt;DP_OTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_246c16b3-6c58-4ae5-8014-2811d6eff3bc_SGN_001.sgn&lt;/ИдФайлЭП&gt;
+        &lt;КНД_Док&gt;1175004&lt;/КНД_Док&gt;
+      &lt;/ДокФорм&gt;
+      &lt;ДокФорм ПорНомДок="1.01" ИдФайл="DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-a37f-896bde6bef28"&gt;
+        &lt;ИдФайлЭП&gt;DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-a37f-896bde6bef28_SGN_001.sgn&lt;/ИдФайлЭП&gt;
+        &lt;КНД_Док&gt;1175005&lt;/КНД_Док&gt;
+      &lt;/ДокФорм&gt;
+      &lt;ДокФорм ПорНомДок="1.01" ИдФайл="ON_SFAKT_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160902_146f0414-a0da-4766-a626-0984e511ed0e"&gt;
+        &lt;ИдФайлЭП&gt;ON_SFAKT_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160902_146f0414-a0da-4766-a626-0984e511ed0e_SGN_001.sgn&lt;/ИдФайлЭП&gt;
+        &lt;КНД_Док&gt;1115101&lt;/КНД_Док&gt;
+      &lt;/ДокФорм&gt;
+    &lt;/ДокПредстНО&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.05"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2017" КодНО="6623" НомКорр="0" ПоМесту="213"&gt;
+    &lt;СвНП ОКВЭД="01.1" Тлф="123"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН&gt;
+      &lt;СумНалПУ_СмНП ОКТМО="50701000"&gt;
+        &lt;НалПУУменПер&gt;4050&lt;/НалПУУменПер&gt;
+        &lt;РасчНал2 ИсчислМин="3681"&gt;
+          &lt;Доход СумЗаНалПер="368136" /&gt;
+          &lt;Расход СумЗаНалПер="341136" /&gt;
+          &lt;НалБазаУбыт СумЗаНалПер="27000" /&gt;
+          &lt;Ставка СтавкаКв="15" СтавкаПг="15" Ставка9м="15" СтавкаНалПер="15" /&gt;
+          &lt;Исчисл СумЗаНалПер="4050" /&gt;
+        &lt;/РасчНал2&gt;
+      &lt;/СумНалПУ_СмНП&gt;
+    &lt;/УСН&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="ON_DOCNPNO_3266_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.01"&gt;
+  &lt;Документ КНД="1184002" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвОтпрДок&gt;
+      &lt;ОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпрДок&gt;
+    &lt;СвПолДок&gt;
+      &lt;ОтпрНО КодНО="6623" НаимНО="Инспекция МНС России по г.Нижнему Тагилу" /&gt;
+    &lt;/СвПолДок&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="3" Должн="Руководитель" Тлф="8800" E-mail="ruk@skbkontur.ru" ИННФЛ="227632864503"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ДокПредстНО КолФайл="6"&gt;
+      &lt;ИдФайлОсн&gt;1165013_0087_6676701665667628584_8d9ae4b3-3b33-4cd2-bf9b-2a676196fd71_20170807_1a88e62e-4a30-4320-9f04-16f1e1cd97f2&lt;/ИдФайлОсн&gt;
+      &lt;ДокФорм ПорНомДок="1.01" ИдФайл="DP_OTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_246c16b3-6c58-4ae5-8014-2811d6eff3bc"&gt;
+        &lt;ИдФайлЭП&gt;DP_OTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_246c16b3-6c58-4ae5-8014-2811d6eff3bc_SGN_001.sgn&lt;/ИдФайлЭП&gt;
+        &lt;КНД_Док&gt;1175004&lt;/КНД_Док&gt;
+      &lt;/ДокФорм&gt;
+      &lt;ДокФорм ПорНомДок="1.01" ИдФайл="DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-a37f-896bde6bef28"&gt;
+        &lt;ИдФайлЭП&gt;DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-a37f-896bde6bef28_SGN_001.sgn&lt;/ИдФайлЭП&gt;
+        &lt;КНД_Док&gt;1175005&lt;/КНД_Док&gt;
+      &lt;/ДокФорм&gt;
+      &lt;ДокСкан ПорНомДок="1.01" КодДок="0510041" НаимДок="Фото с выпускного" ИдФайлЭП="DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-1234-896bde6bef28_SGN_001.sgn"&gt;
+        &lt;ИмяФайл&gt;trash.jpg&lt;/ИмяФайл&gt;
+      &lt;/ДокСкан&gt;
+    &lt;/ДокПредстНО&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 15.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2020" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП Тлф="123"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН /&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.05"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2017" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП ОКВЭД="01.1"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН&gt;
+      &lt;СумНалПУ_НП ОКТМО="08701000" АвПУКв="33604" ОКТМО_Пг="08701000" АвПУУменПг="31931" ОКТМО_9м="08701000" АвПУУмен9м="32688" ОКТМО_Пер="08701000" НалПУУменПер="0"&gt;
+        &lt;РасчНал1 ПризНП="1"&gt;
+          &lt;Доход СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+          &lt;Ставка СтавкаНалПер="6.0" СтавкаКв="6.0" СтавкаПг="6.0" Ставка9м="6.0" /&gt;
+          &lt;Исчисл СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+          &lt;УменНал СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+          &lt;РасчТоргСбор&gt;
+            &lt;Доход СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+            &lt;Исчисл СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+            &lt;УменНал СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+            &lt;ТоргСборФакт СумТечНалПер="1637046" СумТечКв="560073" СумТечПг="1092253" СумТеч9м="1637046" /&gt;
+            &lt;ТоргСборУмен СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+          &lt;/РасчТоргСбор&gt;
+        &lt;/РасчНал1&gt;
+      &lt;/СумНалПУ_НП&gt;
+    &lt;/УСН&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 15.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2020" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП Тлф="123"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН&gt;
+      &lt;СумНалПУ_СмНП ОКТМО="50701000" АвПУКв="0" ОКТМО_Пг="50701000" АвПУУменПг="0" ОКТМО_9м="50701000" АвПУУмен9м="0" ОКТМО_Пер="50701000"&gt;
+        &lt;НалПУМин&gt;0&lt;/НалПУМин&gt;
+        &lt;РасчНал2 ИсчислМин="0" УбытПред="0"&gt;
+          &lt;Доход СумЗаНалПер="0" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;Расход СумЗаНалПер="3598" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;НалБазаУбыт СумЗаНалПер="-3598" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;Ставка СтавкаНалПер="15" СтавкаКв="15" СтавкаПг="15" Ставка9м="15" /&gt;
+          &lt;Исчисл СумЗаНалПер="-540" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+        &lt;/РасчНал2&gt;
+      &lt;/СумНалПУ_СмНП&gt;
+    &lt;/УСН&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 15.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2020" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН&gt;
+      &lt;СумНалПУ_НП ОКТМО="08701000" АвПУКв="33604" ОКТМО_Пг="08701000" АвПУУменПг="31931" ОКТМО_9м="08701000" АвПУУмен9м="32688" ОКТМО_Пер="08701000" НалПУУменПер="0" СумНалПат="5"&gt;
+        &lt;РасчНал1 ПризНП="1" ПризСтав="2"&gt;
+          &lt;Доход СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+          &lt;Ставка СтавкаНалПер="8.0" СтавкаКв="6.0" СтавкаПг="6.0" Ставка9м="6.0" КодЛьгот="3462030/000100010001" /&gt;
+          &lt;Исчисл СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+          &lt;УменНал СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+        &lt;/РасчНал1&gt;
+      &lt;/СумНалПУ_НП&gt;
+    &lt;/УСН&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.05"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2017" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП ОКВЭД="01.1" Тлф="123"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН&gt;
+      &lt;СумНалПУ_НП ОКТМО="08701000" АвПУКв="33604" ОКТМО_Пг="08701000" АвПУУменПг="31931" ОКТМО_9м="08701000" АвПУУмен9м="32688" ОКТМО_Пер="08701000" НалПУУменПер="0"&gt;
+        &lt;РасчНал1 ПризНП="1"&gt;
+          &lt;Доход СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+          &lt;Ставка СтавкаНалПер="6.0" СтавкаКв="6.0" СтавкаПг="6.0" Ставка9м="6.0" /&gt;
+          &lt;Исчисл СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+          &lt;УменНал СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+          &lt;РасчТоргСбор&gt;
+            &lt;Доход СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+            &lt;Исчисл СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+            &lt;УменНал СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+            &lt;ТоргСборФакт СумТечНалПер="1637046" СумТечКв="560073" СумТечПг="1092253" СумТеч9м="1637046" /&gt;
+            &lt;ТоргСборУмен СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+          &lt;/РасчТоргСбор&gt;
+        &lt;/РасчНал1&gt;
+      &lt;/СумНалПУ_НП&gt;
+    &lt;/УСН&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 15.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2020" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП Тлф="123"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН&gt;
+      &lt;СумНалПУ_НП ОКТМО="08701000" АвПУКв="33604" ОКТМО_Пг="08701000" АвПУУменПг="31931" ОКТМО_9м="08701000" АвПУУмен9м="32688" ОКТМО_Пер="08701000" НалПУУменПер="0" СумНалПат="5"&gt;
+        &lt;РасчНал1 ПризНП="1" ПризСтав="1"&gt;
+          &lt;Доход СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+          &lt;Ставка СтавкаНалПер="6.0" СтавкаКв="6.0" СтавкаПг="6.0" Ставка9м="6.0" КодЛьгот="3462030/000100010001" /&gt;
+          &lt;Исчисл СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+          &lt;УменНал СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+          &lt;РасчТоргСбор&gt;
+            &lt;Доход СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+            &lt;Исчисл СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+            &lt;УменНал СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+            &lt;ТоргСборФакт СумТечНалПер="1637046" СумТечКв="560073" СумТечПг="1092253" СумТеч9м="1637046" /&gt;
+            &lt;ТоргСборУмен СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+          &lt;/РасчТоргСбор&gt;
+        &lt;/РасчНал1&gt;
+      &lt;/СумНалПУ_НП&gt;
+    &lt;/УСН&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="IU_ZAPR_6677_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.04"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+      &lt;АдрРФ Индекс="ИндРег" КодРегион="КодРегионРег" Район="ИмяРайонРег" Город="ИмяГородРег" НаселПункт="ИмяПосРег" Улица="ИмяУлРег" Дом="ДомРег" Корпус="КорпусРег" Кварт="КвРег" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1" Должн="Руководитель"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл КодЗапр="1" ФормОтв="1" ИФНС="6623"&gt;
+      &lt;СпрРасБюд НаДату="01.11.2018" /&gt;
+    &lt;/ЗапрИнфУсл&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="IU_ZAPR_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.04"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+      &lt;АдрРФ Индекс="ИндРег" КодРегион="КодРегионРег" Район="ИмяРайонРег" Город="ИмяГородРег" НаселПункт="ИмяПосРег" Улица="ИмяУлРег" Дом="ДомРег" Корпус="КорпусРег" Кварт="КвРег" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1" Должн="Руководитель"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл КодЗапр="1" ФормОтв="1" ИФНС="6623"&gt;
+      &lt;СпрРасБюд НаДату="01.11.2018" /&gt;
+    &lt;/ЗапрИнфУсл&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="IU_ZAPR_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл ИФНС="6623" КодЗапр="5" ФормОтв="2" /&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="IU_ZAPR_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл ИФНС="6623" КодЗапр="4" ФормОтв="4"&gt;
+      &lt;Период ДатаНач="01.01.2018" ДатаКон="01.12.2018" /&gt;
+      &lt;ЗапрКБК ПрКБК="1" /&gt;
+    &lt;/ЗапрИнфУсл&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="IU_ZAPR_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл ИФНС="6623" КодЗапр="7" ФормОтв="2" /&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="IU_ZAPR_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл ИФНС="6623" КодЗапр="4" ФормОтв="4"&gt;
+      &lt;Период ДатаНач="01.01.2018" ДатаКон="01.12.2018" /&gt;
+      &lt;ЗапрКБК ПрКБК="2"&gt;
+        &lt;ПеречКБК&gt;
+          &lt;КБК&gt;18210102010012100110&lt;/КБК&gt;
+        &lt;/ПеречКБК&gt;
+      &lt;/ЗапрКБК&gt;
+    &lt;/ЗапрИнфУсл&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="IU_ZAPR_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл ИФНС="6623" КодЗапр="3" ФормОтв="2"&gt;
+      &lt;Период ДатаНач="01.01.2018" ДатаКон="01.12.2018" /&gt;
+    &lt;/ЗапрИнфУсл&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="IU_ZAPR_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл ИФНС="6623" КодЗапр="6" ФормОтв="2"&gt;
+      &lt;Период ДатаНач="01.01.2018" ДатаКон="01.12.2018" /&gt;
+    &lt;/ЗапрИнфУсл&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+&lt;Файл ИдФайл="IU_ZAPR_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл ИФНС="6623" КодЗапр="4" ФормОтв="4"&gt;
+      &lt;Период ДатаНач="01.01.2018" ДатаКон="01.12.2018" /&gt;
+      &lt;ЗапрКБК ПрКБК="2"&gt;
+        &lt;ПеречКБК&gt;
+          &lt;КБК&gt;18210102010012100110&lt;/КБК&gt;
+          &lt;КБК&gt;18210102010012100110&lt;/КБК&gt;
+        &lt;/ПеречКБК&gt;
+      &lt;/ЗапрКБК&gt;
+    &lt;/ЗапрИнфУсл&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+[{"Source":{"Description":"Отчет"},"Description":"ОГРН в отчете (1234567891234) и ОГРН в сертификате (OGRN____) не совпадают. Возможно, нужно выбрать сертификат, соответствующий организации FGHH ПОЛНОЕ НАЗВАНИЕ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+[]
+
+[]
+
+[{"Source":{"Description":"Отчет"},"Description":"ОГРН в отчете (1234567891234) и ОГРН в сертификате (OGRN____) не совпадают. Возможно, нужно выбрать сертификат, соответствующий организации ГАРРИ ПОТТЕР","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+[]
+
+[]
+
+[]
+
+[]
+
+[]
+
+[{"Source":{"Description":"Отчет"},"Description":"Дополнительный код страхователя в отчёте (0000000012) не совпадает с регистрационным номером в выбранном сертификате (RNS_FSS___). Отчёт не будет принят в Фонд социального страхования. Пожалуйста, измените личный сертификат или выберите другой отчёт.","Justification":"","Level":{"Value":0},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+[{"Source":{"Description":"Отчет"},"Description":"Дополнительный код страхователя в отчёте (0000000012) не совпадает с регистрационным номером в выбранном сертификате (1). Отчёт не будет принят в Фонд социального страхования. Пожалуйста, измените личный сертификат или выберите другой отчёт.","Justification":"","Level":{"Value":0},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+[]
+
+[{"Source":{"Description":"Отчет"},"Description":"Регистрационный номер страхователя в отчёте (0000000012) не совпадает с регистрационным номером в выбранном сертификате (RNS_FSS___). Отчёт не будет принят в Фонд социального страхования. Пожалуйста, измените личный сертификат или выберите другой отчёт.","Justification":"","Level":{"Value":0},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+[]
+
+[{"Source":{"Description":"Отчет"},"Description":"Регистрационный номер страхователя в отчёте (0000000012) не совпадает с регистрационным номером в выбранном сертификате (RNS_FSS___). Отчёт не будет принят в Фонд социального страхования. Пожалуйста, измените личный сертификат или выберите другой отчёт.","Justification":"","Level":{"Value":0},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+[{"Source":{"Description":"Отчет"},"Description":"Регистрационный номер страхователя в отчёте (0000000012) не совпадает с регистрационным номером в выбранном сертификате (RNS_FSS___). Отчёт не будет принят в Фонд социального страхования. Пожалуйста, измените личный сертификат или выберите другой отчёт.","Justification":"","Level":{"Value":0},"Type":{"Value":3},"Id":"","Tags":"","Success":false},{"Source":{"Description":"Отчет"},"Description":"ИНН организации в отчете (6699000000) и ИНН организации в сертификате (9090000909) не совпадают. Выберите сертификат, соответствующий организации КОНТУР.ТЕСТ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false},{"Source":{"Description":"Отчет"},"Description":"ОГРН в отчете (1127746763924) и ОГРН в сертификате (OGRN____) не совпадают. Возможно, нужно выбрать сертификат, соответствующий организации КОНТУР.ТЕСТ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+[]
+
+[{"Source":{"Description":"Отчет"},"Description":"Регистрационный номер страхователя в отчёте (0000000012) не совпадает с регистрационным номером в выбранном сертификате (RNS_FSS___). Отчёт не будет принят в Фонд социального страхования. Пожалуйста, измените личный сертификат или выберите другой отчёт.","Justification":"","Level":{"Value":0},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+[]
+
+[]
+
+[]
+
+[]
+
+[]
+
+[]
+
+[]
+
+[]
+
+[]
+
+[{"Source":{"Description":"Отчет"},"Description":"Дополнительный код страхователя в отчёте (0000000011) не совпадает с регистрационным номером в выбранном сертификате (RNS_FSS___). Отчёт не будет принят в Фонд социального страхования. Пожалуйста, измените личный сертификат или выберите другой отчёт.","Justification":"","Level":{"Value":0},"Type":{"Value":3},"Id":"","Tags":"","Success":false},{"Source":{"Description":"Отчет"},"Description":"ИНН организации в отчете (6699000000) и ИНН организации в сертификате (9090000909) не совпадают. Выберите сертификат, соответствующий организации КОНТУР.ТЕСТ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false},{"Source":{"Description":"Отчет"},"Description":"ОГРН в отчете (1127746763924) и ОГРН в сертификате (OGRN____) не совпадают. Возможно, нужно выбрать сертификат, соответствующий организации КОНТУР.ТЕСТ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+[{"Source":{"Description":"Отчет"},"Description":"Регистрационный номер страхователя в отчёте (0000000012) не совпадает с регистрационным номером в выбранном сертификате (RNS_FSS___). Отчёт не будет принят в Фонд социального страхования. Пожалуйста, измените личный сертификат или выберите другой отчёт.","Justification":"","Level":{"Value":0},"Type":{"Value":3},"Id":"","Tags":"","Success":false},{"Source":{"Description":"Отчет"},"Description":"ИНН организации в отчете (6699000000) и ИНН организации в сертификате (9090000909) не совпадают. Выберите сертификат, соответствующий организации КОНТУР.ТЕСТ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false},{"Source":{"Description":"Отчет"},"Description":"ОГРН в отчете (1234567890123) и ОГРН в сертификате (OGRN____) не совпадают. Возможно, нужно выбрать сертификат, соответствующий организации КОНТУР.ТЕСТ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+[]
+
+[]
+
+[]
+
+[]
+
+[{"Source":{"Description":"Отчет"},"Description":"Регистрационный номер страхователя в отчёте (0000000012) не совпадает с регистрационным номером в выбранном сертификате (RNS_FSS___). Отчёт не будет принят в Фонд социального страхования. Пожалуйста, измените личный сертификат или выберите другой отчёт.","Justification":"","Level":{"Value":0},"Type":{"Value":3},"Id":"","Tags":"","Success":false},{"Source":{"Description":"Отчет"},"Description":"ИНН организации в отчете (6699000000) и ИНН организации в сертификате (6605050505) не совпадают. Выберите сертификат, соответствующий организации ПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕ ПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false},{"Source":{"Description":"Отчет"},"Description":"ОГРН в отчете (4111222333444) и ОГРН в сертификате (1234567891234) не совпадают. Возможно, нужно выбрать сертификат, соответствующий организации ПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕ ПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+[{"Source":{"Description":"Отчет"},"Description":"Регистрационный номер страхователя в отчёте (0000000012) не совпадает с регистрационным номером в выбранном сертификате (RNS_FSS___). Отчёт не будет принят в Фонд социального страхования. Пожалуйста, измените личный сертификат или выберите другой отчёт.","Justification":"","Level":{"Value":0},"Type":{"Value":3},"Id":"","Tags":"","Success":false},{"Source":{"Description":"Отчет"},"Description":"ИНН организации в отчете (6699000000) и ИНН организации в сертификате (6605050505) не совпадают. Выберите сертификат, соответствующий организации ПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕ ПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false},{"Source":{"Description":"Отчет"},"Description":"ОГРН в отчете (4111222333444) и ОГРН в сертификате (1234567891234) не совпадают. Возможно, нужно выбрать сертификат, соответствующий организации ПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕ ПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+﻿&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+  &lt;fullName&gt;
+    &lt;p:firstName&gt;Иван&lt;/p:firstName&gt;
+    &lt;p:lastName&gt;Железкин&lt;/p:lastName&gt;
+    &lt;p:middleName&gt;Антонович&lt;/p:middleName&gt;
+  &lt;/fullName&gt;
+  &lt;birthDate&gt;1990-02-14&lt;/birthDate&gt;
+  &lt;gender&gt;MALE&lt;/gender&gt;
+  &lt;snils&gt;76427030902&lt;/snils&gt;
+  &lt;inn&gt;321313213132&lt;/inn&gt;
+  &lt;identityDocument&gt;
+    &lt;tempIdentDocType&gt;
+      &lt;number&gt;2342&lt;/number&gt;
+      &lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+      &lt;expirationDate&gt;2022-03-14&lt;/expirationDate&gt;
+    &lt;/tempIdentDocType&gt;
+  &lt;/identityDocument&gt;
+  &lt;residenceDocumentType&gt;
+    &lt;residentCard&gt;
+      &lt;series /&gt;
+      &lt;number /&gt;
+      &lt;passportIssueDate /&gt;
+    &lt;/residentCard&gt;
+  &lt;/residenceDocumentType&gt;
+  &lt;otherInfo&gt;
+    &lt;livingPlace /&gt;
+  &lt;/otherInfo&gt;
+  &lt;regAddress&gt;
+		&lt;fiasAddress&gt;&lt;c:houseGuid&gt;1ca573c4-03eb-456a-88ff-0720255ae58f&lt;/c:houseGuid&gt;
+			
+			
+			
+			
+			
+			
+			
+			&lt;c:flat&gt;&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;194295&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+  &lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ "УБРИР"&lt;/c:bankName&gt;
+			&lt;c:bik&gt;046577795&lt;/c:bik&gt;
+			&lt;c:accountNum /&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+﻿&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+  &lt;fullName&gt;
+    &lt;p:firstName&gt;Иванов&lt;/p:firstName&gt;
+    &lt;p:lastName&gt;Иван&lt;/p:lastName&gt;
+    &lt;p:middleName&gt;Иванович&lt;/p:middleName&gt;
+  &lt;/fullName&gt;
+  &lt;birthDate&gt;1987-05-24&lt;/birthDate&gt;
+  &lt;gender&gt;MALE&lt;/gender&gt;
+  &lt;snils&gt;11223344595&lt;/snils&gt;
+  &lt;inn&gt;321313213132&lt;/inn&gt;
+  &lt;identityDocument&gt;
+    &lt;tempIdentDocType&gt;
+      &lt;number&gt;2342&lt;/number&gt;
+      &lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+      &lt;expirationDate&gt;2020-01-17&lt;/expirationDate&gt;
+    &lt;/tempIdentDocType&gt;
+  &lt;/identityDocument&gt;
+  &lt;residenceDocumentType&gt;
+    &lt;residentCard&gt;
+      &lt;series /&gt;
+      &lt;number /&gt;
+      &lt;passportIssueDate /&gt;
+    &lt;/residentCard&gt;
+  &lt;/residenceDocumentType&gt;
+  &lt;otherInfo&gt;
+    &lt;livingPlace /&gt;
+  &lt;/otherInfo&gt;
+  &lt;regAddress&gt;
+		&lt;fiasAddress&gt;&lt;c:houseGuid&gt;0a7bf636-f423-47b1-a6df-85eea85c6bc3&lt;/c:houseGuid&gt;
+			
+			
+			
+			
+			
+			
+			
+			&lt;c:flat&gt;30&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;450081&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+  &lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ "УБРИР"&lt;/c:bankName&gt;
+			&lt;c:bik&gt;046577795&lt;/c:bik&gt;
+			&lt;c:accountNum /&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+﻿&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+  &lt;fullName&gt;
+    &lt;p:firstName&gt;Иван&lt;/p:firstName&gt;
+    &lt;p:lastName&gt;Железкин&lt;/p:lastName&gt;
+    &lt;p:middleName&gt;Антонович&lt;/p:middleName&gt;
+  &lt;/fullName&gt;
+  &lt;birthDate&gt;1990-02-14&lt;/birthDate&gt;
+  &lt;gender&gt;MALE&lt;/gender&gt;
+  &lt;snils&gt;76427030902&lt;/snils&gt;
+  &lt;inn&gt;321313213132&lt;/inn&gt;
+  &lt;identityDocument&gt;
+    &lt;tempIdentDocType&gt;
+      &lt;number&gt;2342&lt;/number&gt;
+      &lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+      &lt;expirationDate&gt;2022-03-14&lt;/expirationDate&gt;
+    &lt;/tempIdentDocType&gt;
+  &lt;/identityDocument&gt;
+  &lt;residenceDocumentType&gt;
+    &lt;residentCard&gt;
+      &lt;series /&gt;
+      &lt;number /&gt;
+      &lt;passportIssueDate /&gt;
+    &lt;/residentCard&gt;
+  &lt;/residenceDocumentType&gt;
+  &lt;otherInfo&gt;
+    &lt;livingPlace /&gt;
+  &lt;/otherInfo&gt;
+  &lt;regAddress&gt;
+		&lt;fiasAddress&gt;&lt;c:houseGuid&gt;53c75ffe-7d23-407f-b566-729facc5bfe0&lt;/c:houseGuid&gt;
+			
+			
+			
+			
+			
+			
+			
+			&lt;c:flat&gt;&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;607600&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+  &lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ "УБРИР"&lt;/c:bankName&gt;
+			&lt;c:bik&gt;046577795&lt;/c:bik&gt;
+			&lt;c:accountNum /&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+﻿&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+  &lt;fullName&gt;
+    &lt;p:firstName&gt;Иван&lt;/p:firstName&gt;
+    &lt;p:lastName&gt;Железкин&lt;/p:lastName&gt;
+    &lt;p:middleName&gt;Антонович&lt;/p:middleName&gt;
+  &lt;/fullName&gt;
+  &lt;birthDate&gt;1990-02-14&lt;/birthDate&gt;
+  &lt;gender&gt;MALE&lt;/gender&gt;
+  &lt;snils&gt;76427030902&lt;/snils&gt;
+  &lt;inn&gt;321313213132&lt;/inn&gt;
+  &lt;identityDocument&gt;
+    &lt;tempIdentDocType&gt;
+      &lt;number&gt;2342&lt;/number&gt;
+      &lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+      &lt;expirationDate&gt;2022-03-14&lt;/expirationDate&gt;
+    &lt;/tempIdentDocType&gt;
+  &lt;/identityDocument&gt;
+  &lt;residenceDocumentType&gt;
+    &lt;residentCard&gt;
+      &lt;series /&gt;
+      &lt;number /&gt;
+      &lt;passportIssueDate /&gt;
+    &lt;/residentCard&gt;
+  &lt;/residenceDocumentType&gt;
+  &lt;otherInfo&gt;
+    &lt;livingPlace /&gt;
+  &lt;/otherInfo&gt;
+  &lt;regAddress&gt;
+		&lt;fiasAddress&gt;&lt;c:houseGuid&gt;3e8b80ed-fbce-451f-887c-a9765114ef77&lt;/c:houseGuid&gt;
+			
+			
+			
+			
+			
+			
+			
+			&lt;c:flat&gt;&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+  &lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ "УБРИР"&lt;/c:bankName&gt;
+			&lt;c:bik&gt;046577795&lt;/c:bik&gt;
+			&lt;c:accountNum /&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+﻿&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+  &lt;fullName&gt;
+    &lt;p:firstName&gt;Иванов&lt;/p:firstName&gt;
+    &lt;p:lastName&gt;Иван&lt;/p:lastName&gt;
+    &lt;p:middleName&gt;Иванович&lt;/p:middleName&gt;
+  &lt;/fullName&gt;
+  &lt;birthDate&gt;1987-05-24&lt;/birthDate&gt;
+  &lt;gender&gt;MALE&lt;/gender&gt;
+  &lt;snils&gt;11223344595&lt;/snils&gt;
+  &lt;inn&gt;321313213132&lt;/inn&gt;
+  &lt;identityDocument&gt;
+    &lt;tempIdentDocType&gt;
+      &lt;number&gt;2342&lt;/number&gt;
+      &lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+      &lt;expirationDate&gt;2020-01-17&lt;/expirationDate&gt;
+    &lt;/tempIdentDocType&gt;
+  &lt;/identityDocument&gt;
+  &lt;residenceDocumentType&gt;
+    &lt;residentCard&gt;
+      &lt;series /&gt;
+      &lt;number /&gt;
+      &lt;passportIssueDate /&gt;
+    &lt;/residentCard&gt;
+  &lt;/residenceDocumentType&gt;
+  &lt;otherInfo&gt;
+    &lt;livingPlace /&gt;
+  &lt;/otherInfo&gt;
+  &lt;regAddress&gt;
+		&lt;fiasAddress&gt;&lt;c:houseGuid&gt;a760c910-12c7-42f9-ba7a-525f5d5b5bbe&lt;/c:houseGuid&gt;
+			
+			
+			
+			
+			
+			
+			
+			&lt;c:flat&gt;&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;681000&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+  &lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ "УБРИР"&lt;/c:bankName&gt;
+			&lt;c:accountNum /&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+﻿&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+  &lt;fullName&gt;
+    &lt;p:firstName&gt;Иван&lt;/p:firstName&gt;
+    &lt;p:lastName&gt;Железкин&lt;/p:lastName&gt;
+    &lt;p:middleName&gt;Антонович&lt;/p:middleName&gt;
+  &lt;/fullName&gt;
+  &lt;birthDate&gt;1990-02-14&lt;/birthDate&gt;
+  &lt;gender&gt;MALE&lt;/gender&gt;
+  &lt;snils&gt;76427030902&lt;/snils&gt;
+  &lt;inn&gt;321313213132&lt;/inn&gt;
+  &lt;identityDocument&gt;
+    &lt;tempIdentDocType&gt;
+      &lt;number&gt;2342&lt;/number&gt;
+      &lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+      &lt;expirationDate&gt;2022-03-14&lt;/expirationDate&gt;
+    &lt;/tempIdentDocType&gt;
+  &lt;/identityDocument&gt;
+  &lt;residenceDocumentType&gt;
+    &lt;residentCard&gt;
+      &lt;series /&gt;
+      &lt;number /&gt;
+      &lt;passportIssueDate /&gt;
+    &lt;/residentCard&gt;
+  &lt;/residenceDocumentType&gt;
+  &lt;otherInfo&gt;
+    &lt;livingPlace /&gt;
+  &lt;/otherInfo&gt;
+  &lt;regAddress&gt;
+		&lt;fiasAddress&gt;&lt;c:houseGuid&gt;39baae7a-8d91-49cb-82b4-27e5f2f5de0d&lt;/c:houseGuid&gt;
+			
+			
+			
+			
+			
+			
+			
+			&lt;c:flat&gt;кв 288&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;420087&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+  &lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ "УБРИР"&lt;/c:bankName&gt;
+			&lt;c:bik&gt;046577795&lt;/c:bik&gt;
+			&lt;c:accountNum /&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+	&lt;fullName&gt;
+		&lt;p:firstName&gt;Иванов&lt;/p:firstName&gt;
+		&lt;p:lastName&gt;Иван&lt;/p:lastName&gt;
+		&lt;p:middleName&gt;Иванович&lt;/p:middleName&gt;
+	&lt;/fullName&gt;
+	&lt;birthDate&gt;1987-05-24&lt;/birthDate&gt;
+	&lt;gender&gt;MALE&lt;/gender&gt;
+	&lt;snils&gt;11223344595&lt;/snils&gt;
+	&lt;inn&gt;321313213132&lt;/inn&gt;
+	&lt;identityDocument&gt;
+		&lt;tempIdentDocType&gt;
+			&lt;number&gt;2342&lt;/number&gt;
+			&lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+			&lt;expirationDate&gt;2020-01-17&lt;/expirationDate&gt;
+		&lt;/tempIdentDocType&gt;
+	&lt;/identityDocument&gt;
+	&lt;residenceDocumentType&gt;
+		&lt;residentCard&gt;
+			&lt;series/&gt;
+			&lt;number/&gt;
+			&lt;passportIssueDate/&gt;
+		&lt;/residentCard&gt;
+	&lt;/residenceDocumentType&gt;
+	&lt;otherInfo&gt;
+		&lt;livingPlace/&gt;
+	&lt;/otherInfo&gt;
+	&lt;regAddress&gt;
+		&lt;fiasAddress&gt;
+			&lt;c:region&gt;Иркутская обл&lt;/c:region&gt;
+			&lt;c:district&gt;р-н Иркутский&lt;/c:district&gt;
+			&lt;c:settlement&gt;&lt;/c:settlement&gt;
+			&lt;c:street&gt;ул Смородиновая&lt;/c:street&gt;
+			&lt;c:house&gt;д. 17&lt;/c:house&gt;
+			&lt;c:building&gt;&lt;/c:building&gt;
+			&lt;c:structureNumber&gt;&lt;/c:structureNumber&gt;
+			&lt;c:flat&gt;&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+	&lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ &amp;quot;УБРИР&amp;quot;&lt;/c:bankName&gt;
+			&lt;c:accountNum/&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+	&lt;fullName&gt;
+		&lt;p:firstName&gt;Иванов&lt;/p:firstName&gt;
+		&lt;p:lastName&gt;Иван&lt;/p:lastName&gt;
+		&lt;p:middleName&gt;Иванович&lt;/p:middleName&gt;
+	&lt;/fullName&gt;
+	&lt;birthDate&gt;1987-05-24&lt;/birthDate&gt;
+	&lt;gender&gt;MALE&lt;/gender&gt;
+	&lt;snils&gt;11223344595&lt;/snils&gt;
+	&lt;inn&gt;321313213132&lt;/inn&gt;
+	&lt;identityDocument&gt;
+		&lt;tempIdentDocType&gt;
+			&lt;number&gt;2342&lt;/number&gt;
+			&lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+			&lt;expirationDate&gt;2020-01-17&lt;/expirationDate&gt;
+		&lt;/tempIdentDocType&gt;
+	&lt;/identityDocument&gt;
+	&lt;residenceDocumentType&gt;
+		&lt;residentCard&gt;
+			&lt;series/&gt;
+			&lt;number/&gt;
+			&lt;passportIssueDate/&gt;
+		&lt;/residentCard&gt;
+	&lt;/residenceDocumentType&gt;
+	&lt;otherInfo&gt;
+		&lt;livingPlace/&gt;
+	&lt;/otherInfo&gt;
+	&lt;regAddress&gt;
+		&lt;fiasAddress&gt;
+			&lt;c:region&gt;&lt;/c:region&gt;
+			&lt;c:district&gt;&lt;/c:district&gt;
+			&lt;c:settlement&gt;&lt;/c:settlement&gt;
+			&lt;c:street&gt;&lt;/c:street&gt;
+			&lt;c:house&gt;&lt;/c:house&gt;
+			&lt;c:building&gt;&lt;/c:building&gt;
+			&lt;c:structureNumber&gt;&lt;/c:structureNumber&gt;
+			&lt;c:flat&gt;&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+	&lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ &amp;quot;УБРИР&amp;quot;&lt;/c:bankName&gt;
+			&lt;c:accountNum/&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+	&lt;fullName&gt;
+		&lt;p:firstName&gt;Иванов&lt;/p:firstName&gt;
+		&lt;p:lastName&gt;Иван&lt;/p:lastName&gt;
+		&lt;p:middleName&gt;Иванович&lt;/p:middleName&gt;
+	&lt;/fullName&gt;
+	&lt;birthDate&gt;1987-05-24&lt;/birthDate&gt;
+	&lt;gender&gt;MALE&lt;/gender&gt;
+	&lt;snils&gt;11223344595&lt;/snils&gt;
+	&lt;inn&gt;321313213132&lt;/inn&gt;
+	&lt;identityDocument&gt;
+		&lt;tempIdentDocType&gt;
+			&lt;number&gt;2342&lt;/number&gt;
+			&lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+			&lt;expirationDate&gt;2020-01-17&lt;/expirationDate&gt;
+		&lt;/tempIdentDocType&gt;
+	&lt;/identityDocument&gt;
+	&lt;residenceDocumentType&gt;
+		&lt;residentCard&gt;
+			&lt;series/&gt;
+			&lt;number/&gt;
+			&lt;passportIssueDate/&gt;
+		&lt;/residentCard&gt;
+	&lt;/residenceDocumentType&gt;
+	&lt;otherInfo&gt;
+		&lt;livingPlace/&gt;
+	&lt;/otherInfo&gt;
+	&lt;regAddress&gt;
+		&lt;fiasAddress&gt;
+			&lt;c:region&gt;&lt;/c:region&gt;
+			&lt;c:district&gt;&lt;/c:district&gt;
+			&lt;c:settlement&gt;г Комсомольск-на-Амуре&lt;/c:settlement&gt;
+			&lt;c:street&gt;Лазурная&lt;/c:street&gt;
+			&lt;c:house&gt;участок 13&lt;/c:house&gt;
+			&lt;c:building&gt;&lt;/c:building&gt;
+			&lt;c:structureNumber&gt;&lt;/c:structureNumber&gt;
+			&lt;c:flat&gt;&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+	&lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ &amp;quot;УБРИР&amp;quot;&lt;/c:bankName&gt;
+			&lt;c:accountNum/&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+	&lt;fullName&gt;
+		&lt;p:firstName&gt;Иванов&lt;/p:firstName&gt;
+		&lt;p:lastName&gt;Иван&lt;/p:lastName&gt;
+		&lt;p:middleName&gt;Иванович&lt;/p:middleName&gt;
+	&lt;/fullName&gt;
+	&lt;birthDate&gt;1987-05-24&lt;/birthDate&gt;
+	&lt;gender&gt;MALE&lt;/gender&gt;
+	&lt;snils&gt;11223344595&lt;/snils&gt;
+	&lt;inn&gt;321313213132&lt;/inn&gt;
+	&lt;identityDocument&gt;
+		&lt;tempIdentDocType&gt;
+			&lt;number&gt;2342&lt;/number&gt;
+			&lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+			&lt;expirationDate&gt;2020-01-17&lt;/expirationDate&gt;
+		&lt;/tempIdentDocType&gt;
+	&lt;/identityDocument&gt;
+	&lt;residenceDocumentType&gt;
+		&lt;residentCard&gt;
+			&lt;series/&gt;
+			&lt;number/&gt;
+			&lt;passportIssueDate/&gt;
+		&lt;/residentCard&gt;
+	&lt;/residenceDocumentType&gt;
+	&lt;otherInfo&gt;
+		&lt;livingPlace/&gt;
+	&lt;/otherInfo&gt;
+	&lt;regAddress&gt;
+		&lt;fiasAddress&gt;
+			&lt;c:region&gt;Республика Башкортостан&lt;/c:region&gt;
+			&lt;c:district&gt;&lt;/c:district&gt;
+			&lt;c:settlement&gt;Уфа&lt;/c:settlement&gt;
+			&lt;c:street&gt;Ро кая&lt;/c:street&gt;
+			&lt;c:house&gt;17/3&lt;/c:house&gt;
+			&lt;c:building&gt;&lt;/c:building&gt;
+			&lt;c:structureNumber&gt;&lt;/c:structureNumber&gt;
+			&lt;c:flat&gt;30&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+	&lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ &amp;quot;УБРИР&amp;quot;&lt;/c:bankName&gt;
+			&lt;c:accountNum/&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+	&lt;fullName&gt;
+		&lt;p:firstName&gt;Иван&lt;/p:firstName&gt;
+		&lt;p:lastName&gt;Железкин&lt;/p:lastName&gt;
+		&lt;p:middleName&gt;Антонович&lt;/p:middleName&gt;
+	&lt;/fullName&gt;
+	&lt;birthDate&gt;1990-02-14&lt;/birthDate&gt;
+	&lt;gender&gt;MALE&lt;/gender&gt;
+	&lt;snils&gt;76427030902&lt;/snils&gt;
+	&lt;inn&gt;321313213132&lt;/inn&gt;
+	&lt;identityDocument&gt;
+		&lt;tempIdentDocType&gt;
+			&lt;number&gt;2342&lt;/number&gt;
+			&lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+			&lt;expirationDate&gt;2022-03-14&lt;/expirationDate&gt;
+		&lt;/tempIdentDocType&gt;
+	&lt;/identityDocument&gt;
+	&lt;residenceDocumentType&gt;
+		&lt;residentCard&gt;
+			&lt;series/&gt;
+			&lt;number/&gt;
+			&lt;passportIssueDate/&gt;
+		&lt;/residentCard&gt;
+	&lt;/residenceDocumentType&gt;
+	&lt;otherInfo&gt;
+		&lt;livingPlace/&gt;
+	&lt;/otherInfo&gt;
+	&lt;regAddress&gt;
+		&lt;fiasAddress&gt;
+			&lt;c:region&gt;Ленинградская обл&lt;/c:region&gt;
+			&lt;c:district&gt;м.р-н Всеволожский&lt;/c:district&gt;
+			&lt;c:settlement&gt;массив Екатериновка&lt;/c:settlement&gt;
+			&lt;c:street&gt;&lt;/c:street&gt;
+			&lt;c:house&gt;&lt;/c:house&gt;
+			&lt;c:building&gt;&lt;/c:building&gt;
+			&lt;c:structureNumber&gt;&lt;/c:structureNumber&gt;
+			&lt;c:flat&gt;&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;123456&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+	&lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ &amp;quot;УБРИР&amp;quot;&lt;/c:bankName&gt;
+			&lt;c:accountNum/&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+	&lt;fullName&gt;
+		&lt;p:firstName&gt;Иванов&lt;/p:firstName&gt;
+		&lt;p:lastName&gt;Иван&lt;/p:lastName&gt;
+		&lt;p:middleName&gt;Иванович&lt;/p:middleName&gt;
+	&lt;/fullName&gt;
+	&lt;birthDate&gt;1987-05-24&lt;/birthDate&gt;
+	&lt;gender&gt;MALE&lt;/gender&gt;
+	&lt;snils&gt;11223344595&lt;/snils&gt;
+	&lt;inn&gt;321313213132&lt;/inn&gt;
+	&lt;identityDocument&gt;
+		&lt;tempIdentDocType&gt;
+			&lt;number&gt;2342&lt;/number&gt;
+			&lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+			&lt;expirationDate&gt;2020-01-17&lt;/expirationDate&gt;
+		&lt;/tempIdentDocType&gt;
+	&lt;/identityDocument&gt;
+	&lt;residenceDocumentType&gt;
+		&lt;residentCard&gt;
+			&lt;series/&gt;
+			&lt;number/&gt;
+			&lt;passportIssueDate/&gt;
+		&lt;/residentCard&gt;
+	&lt;/residenceDocumentType&gt;
+	&lt;otherInfo&gt;
+		&lt;livingPlace/&gt;
+	&lt;/otherInfo&gt;
+	&lt;regAddress&gt;
+		&lt;fiasAddress&gt;
+			&lt;c:region&gt;Республика Башкортостан&lt;/c:region&gt;
+			&lt;c:district&gt;&lt;/c:district&gt;
+			&lt;c:settlement&gt;Уфа&lt;/c:settlement&gt;
+			&lt;c:street&gt;Российскfя&lt;/c:street&gt;
+			&lt;c:house&gt;17/3&lt;/c:house&gt;
+			&lt;c:building&gt;&lt;/c:building&gt;
+			&lt;c:structureNumber&gt;&lt;/c:structureNumber&gt;
+			&lt;c:flat&gt;30&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+	&lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ &amp;quot;УБРИР&amp;quot;&lt;/c:bankName&gt;
+			&lt;c:accountNum/&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+	&lt;fullName&gt;
+		&lt;p:firstName&gt;Иванов&lt;/p:firstName&gt;
+		&lt;p:lastName&gt;Иван&lt;/p:lastName&gt;
+		&lt;p:middleName&gt;Иванович&lt;/p:middleName&gt;
+	&lt;/fullName&gt;
+	&lt;birthDate&gt;1987-05-24&lt;/birthDate&gt;
+	&lt;gender&gt;MALE&lt;/gender&gt;
+	&lt;snils&gt;11223344595&lt;/snils&gt;
+	&lt;inn&gt;321313213132&lt;/inn&gt;
+	&lt;identityDocument&gt;
+		&lt;tempIdentDocType&gt;
+			&lt;number&gt;2342&lt;/number&gt;
+			&lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+			&lt;expirationDate&gt;2020-01-17&lt;/expirationDate&gt;
+		&lt;/tempIdentDocType&gt;
+	&lt;/identityDocument&gt;
+	&lt;residenceDocumentType&gt;
+		&lt;residentCard&gt;
+			&lt;series/&gt;
+			&lt;number/&gt;
+			&lt;passportIssueDate/&gt;
+		&lt;/residentCard&gt;
+	&lt;/residenceDocumentType&gt;
+	&lt;otherInfo&gt;
+		&lt;livingPlace/&gt;
+	&lt;/otherInfo&gt;
+	&lt;regAddress&gt;
+		&lt;fiasAddress&gt;
+			&lt;c:region&gt;&lt;/c:region&gt;
+			&lt;c:district&gt;&lt;/c:district&gt;
+			&lt;c:settlement&gt;Сергиевское&lt;/c:settlement&gt;
+			&lt;c:street&gt;улица Художников&lt;/c:street&gt;
+			&lt;c:house&gt;д 22 к 2 &lt;/c:house&gt;
+			&lt;c:building&gt;литера А&lt;/c:building&gt;
+			&lt;c:structureNumber&gt;&lt;/c:structureNumber&gt;
+			&lt;c:flat&gt;&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+	&lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ &amp;quot;УБРИР&amp;quot;&lt;/c:bankName&gt;
+			&lt;c:accountNum/&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+2100201
+
+131202
+
+[{"Key":"gfv","Value":"2100201","Description":null},{"Key":"inn","Value":"6663003127","Description":null},{"Key":"ogrn","Value":"1026605606620","Description":null},{"Key":"respondentName","Value":"ООО Названиие респондента","Description":null},{"Key":"periodStart","Value":"01.10.2019","Description":null},{"Key":"periodEnd","Value":"31.12.2019","Description":null},{"Key":"periodQuarter","Value":"4","Description":null},{"Key":"periodYear","Value":"2019","Description":null}]
+
+[{"Key":"gfv","Value":"131202","Description":null},{"Key":"inn","Value":"","Description":null},{"Key":"ogrn","Value":"","Description":null},{"Key":"respondentName","Value":"","Description":null},{"Key":"periodStart","Value":"","Description":null},{"Key":"periodEnd","Value":"","Description":null},{"Key":"periodQuarter","Value":"","Description":null},{"Key":"periodYear","Value":"","Description":null},{"Key":"PdfEmbeddedXml_FileId","Value":"someFileId","Description":null},{"Key":"PdfEmbeddedXml_DriveUrl","Value":"someDriveLink","Description":null}]
+
+&lt;Файл ИдФайл="NO_PRIB_5249_5249_5249140566524901001_20180427_5a2419e0-d513-43a2-aafc-c48d67d986f5" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 13.0" ВерсФорм="5.07"&gt;
+  &lt;Документ КНД="1151006" Период="21" ОтчетГод="2018" НомКорр="0" ПоМесту="220"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ООО &amp;quot;ПК и БЗ&amp;quot; Нижегородское административное управление" ИННЮЛ="5249140566" КПП="526245001" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="УКОЛКИН" Имя="ИЛЬЯ" Отчество="ВИКТОРОВИЧ" /&gt;
+    &lt;/Подписант&gt;
+    &lt;Прибыль&gt;
+      &lt;НалПУ&gt;
+        &lt;НалПУАв&gt;
+          &lt;СубБдж КБК="18210101012021000110" /&gt;
+        &lt;/НалПУАв&gt;
+        &lt;НалПУМес&gt;
+          &lt;СубБдж КБК="18210101012021000110" /&gt;
+        &lt;/НалПУМес&gt;
+      &lt;/НалПУ&gt;
+      &lt;РаспрНалСубРФ ТипНП="1" ОбРасч="2" КППОП="526245001" ОбязУплНалОП="0" НаимОП="ООО &amp;quot;ПК и БЗ&amp;quot; Нижегородское административное управление" НалБазаОрг="15397" ДоляНалБаз="9.677420000000000" НалБазаДоля="1490" СтавНалСубРФ="17.000" СумНал="253" НалНачислСубРФ="3066" СумНалП="-2813" МесАвПлат="253" /&gt;
+    &lt;/Прибыль&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+&lt;Файл ИдФайл="NO_PRIB_5249_5249_5249140566524901001_20180427_5a2419e0-d513-43a2-aafc-c48d67d986f5" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 13.0" ВерсФорм="5.07"&gt;
+  &lt;Документ КНД="1151006" Период="21" ОтчетГод="2018" НомКорр="0" ПоМесту="220"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ООО &amp;quot;ПК и БЗ&amp;quot; Пермский геологический отдел" ИННЮЛ="5249140566" КПП="590345001" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="УКОЛКИН" Имя="ИЛЬЯ" Отчество="ВИКТОРОВИЧ" /&gt;
+    &lt;/Подписант&gt;
+    &lt;Прибыль&gt;
+      &lt;НалПУ&gt;
+        &lt;НалПУАв&gt;
+          &lt;СубБдж КБК="18210101012021000110" /&gt;
+        &lt;/НалПУАв&gt;
+        &lt;НалПУМес&gt;
+          &lt;СубБдж КБК="18210101012021000110" /&gt;
+        &lt;/НалПУМес&gt;
+      &lt;/НалПУ&gt;
+      &lt;РаспрНалСубРФ ТипНП="1" ОбРасч="2" КППОП="590345001" ОбязУплНалОП="0" НаимОП="ООО &amp;quot;ПК и БЗ&amp;quot; Пермский геологический отдел" НалБазаОрг="15397" ДоляНалБаз="6.989250000000000" НалБазаДоля="1076" СтавНалСубРФ="17.000" СумНал="183" НалНачислСубРФ="2203" СумНалП="-2020" МесАвПлат="183" /&gt;
+    &lt;/Прибыль&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+
+Test Framework Informational Messages:
+NUnit Adapter 4.5.0.0: Test execution started
+Running all tests in /builds/forms/forms/forms.tests/Api.IntegrationTests/bin/Forms.Api.IntegrationTests.dll
+   NUnit3TestExecutor discovered 83 of 83 NUnit test cases using Current Discovery mode, Non-Explicit run
+NUnit Adapter 4.5.0.0: Test execution complete
+</system-out>
+    <system-err>Warning - &lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 15.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2020" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП Тлф="123"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН&gt;
+      &lt;СумНалПУ_СмНП ОКТМО="50701000" АвПУКв="0" ОКТМО_Пг="50701000" АвПУУменПг="0" ОКТМО_9м="50701000" АвПУУмен9м="0" ОКТМО_Пер="50701000"&gt;
+        &lt;НалПУУменПер&gt;0&lt;/НалПУУменПер&gt;
+        &lt;РасчНал2 ИсчислМин="0" УбытПред="0"&gt;
+          &lt;Доход СумЗаНалПер="0" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;Расход СумЗаНалПер="3598" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;НалБазаУбыт СумЗаНалПер="-3598" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;Ставка СтавкаНалПер="15" СтавкаКв="15" СтавкаПг="15" Ставка9м="15" /&gt;
+        &lt;/РасчНал2&gt;
+      &lt;/СумНалПУ_СмНП&gt;
+    &lt;/УСН&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="ON_DOCNPNO_3999_3999_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.01"&gt;
+  &lt;Документ КНД="1184002" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвОтпрДок&gt;
+      &lt;ОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпрДок&gt;
+    &lt;СвПолДок&gt;
+      &lt;ОтпрНО КодНО="3999" НаимНО="" /&gt;
+    &lt;/СвПолДок&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="3" Должн="Руководитель" Тлф="8800" E-mail="ruk@skbkontur.ru" ИННФЛ="227632864503"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ДокПредстНО КолФайл="6"&gt;
+      &lt;ИдФайлОсн&gt;1165013_0087_6676701665667628584_8d9ae4b3-3b33-4cd2-bf9b-2a676196fd71_20170807_1a88e62e-4a30-4320-9f04-16f1e1cd97f2&lt;/ИдФайлОсн&gt;
+      &lt;ДокФорм ПорНомДок="1.01" ИдФайл="DP_OTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_246c16b3-6c58-4ae5-8014-2811d6eff3bc"&gt;
+        &lt;ИдФайлЭП&gt;DP_OTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_246c16b3-6c58-4ae5-8014-2811d6eff3bc_SGN_001.sgn&lt;/ИдФайлЭП&gt;
+        &lt;КНД_Док&gt;1175004&lt;/КНД_Док&gt;
+      &lt;/ДокФорм&gt;
+      &lt;ДокФорм ПорНомДок="1.01" ИдФайл="DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-a37f-896bde6bef28"&gt;
+        &lt;ИдФайлЭП&gt;DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-a37f-896bde6bef28_SGN_001.sgn&lt;/ИдФайлЭП&gt;
+        &lt;КНД_Док&gt;1175005&lt;/КНД_Док&gt;
+      &lt;/ДокФорм&gt;
+      &lt;ДокСкан ПорНомДок="1.01" КодДок="0510041" НаимДок="Фото с выпускного" ИдФайлЭП="DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-1234-896bde6bef28_SGN_001.sgn"&gt;
+        &lt;ИмяФайл&gt;trash.jpg&lt;/ИмяФайл&gt;
+      &lt;/ДокСкан&gt;
+    &lt;/ДокПредстНО&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.05"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2017" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП ОКВЭД="01.1" Тлф="123"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН&gt;
+      &lt;СумНалПУ_СмНП ОКТМО="50701000" АвПУКв="0" ОКТМО_Пг="50701000" АвПУУменПг="0" ОКТМО_9м="50701000" АвПУУмен9м="0" ОКТМО_Пер="50701000"&gt;
+        &lt;НалПУМин&gt;0&lt;/НалПУМин&gt;
+        &lt;РасчНал2 ИсчислМин="0" УбытПред="0"&gt;
+          &lt;Доход СумЗаНалПер="0" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;Расход СумЗаНалПер="3598" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;НалБазаУбыт СумЗаНалПер="-3598" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;Ставка СтавкаНалПер="15" СтавкаКв="15" СтавкаПг="15" Ставка9м="15" /&gt;
+          &lt;Исчисл СумЗаНалПер="-540" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+        &lt;/РасчНал2&gt;
+      &lt;/СумНалПУ_СмНП&gt;
+    &lt;/УСН&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="IU_ZAPR_6677_0000_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.04"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" /&gt;
+      &lt;АдрРФ Индекс="ИндРег" КодРегион="КодРегионРег" Район="ИмяРайонРег" Город="ИмяГородРег" НаселПункт="ИмяПосРег" Улица="ИмяУлРег" Дом="ДомРег" Корпус="КорпусРег" Кварт="КвРег" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1" Должн="Руководитель"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл КодЗапр="1" ФормОтв="1" ИФНС="0000"&gt;
+      &lt;СпрРасБюд НаДату="01.11.2018" /&gt;
+    &lt;/ЗапрИнфУсл&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.05"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2017" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП ОКВЭД="01.1" Тлф="123"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН&gt;
+      &lt;СумНалПУ_СмНП ОКТМО="50701000" АвПУКв="0" ОКТМО_Пг="50701000" АвПУУменПг="0" ОКТМО_9м="50701000" АвПУУмен9м="0" ОКТМО_Пер="50701000"&gt;
+        &lt;НалПУУменПер&gt;0&lt;/НалПУУменПер&gt;
+        &lt;РасчНал2 ИсчислМин="0" УбытПред="0"&gt;
+          &lt;Доход СумЗаНалПер="0" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;Расход СумЗаНалПер="3598" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;НалБазаУбыт СумЗаНалПер="-3598" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;Ставка СтавкаНалПер="15" СтавкаКв="15" СтавкаПг="15" Ставка9м="15" /&gt;
+        &lt;/РасчНал2&gt;
+      &lt;/СумНалПУ_СмНП&gt;
+    &lt;/УСН&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.05"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2017" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП ОКВЭД="01.1" Тлф="123"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН /&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="IU_ZAPR_6623_0000_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.04"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" /&gt;
+      &lt;АдрРФ Индекс="ИндРег" КодРегион="КодРегионРег" Район="ИмяРайонРег" Город="ИмяГородРег" НаселПункт="ИмяПосРег" Улица="ИмяУлРег" Дом="ДомРег" Корпус="КорпусРег" Кварт="КвРег" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1" Должн="Руководитель"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл КодЗапр="1" ФормОтв="1" ИФНС="0000"&gt;
+      &lt;СпрРасБюд НаДату="01.11.2018" /&gt;
+    &lt;/ЗапрИнфУсл&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="ON_DOCNPNO_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.01"&gt;
+  &lt;Документ КНД="1184002" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвОтпрДок&gt;
+      &lt;ОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпрДок&gt;
+    &lt;СвПолДок&gt;
+      &lt;ОтпрНО КодНО="6623" НаимНО="Инспекция МНС России по г.Нижнему Тагилу" /&gt;
+    &lt;/СвПолДок&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="3" Должн="Руководитель" Тлф="8800" E-mail="ruk@skbkontur.ru" ИННФЛ="227632864503"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ДокПредстНО КолФайл="6"&gt;
+      &lt;ИдФайлОсн&gt;1165013_0087_6676701665667628584_8d9ae4b3-3b33-4cd2-bf9b-2a676196fd71_20170807_1a88e62e-4a30-4320-9f04-16f1e1cd97f2&lt;/ИдФайлОсн&gt;
+      &lt;ДокФорм ПорНомДок="1.01" ИдФайл="DP_OTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_246c16b3-6c58-4ae5-8014-2811d6eff3bc"&gt;
+        &lt;ИдФайлЭП&gt;DP_OTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_246c16b3-6c58-4ae5-8014-2811d6eff3bc_SGN_001.sgn&lt;/ИдФайлЭП&gt;
+        &lt;КНД_Док&gt;1175004&lt;/КНД_Док&gt;
+      &lt;/ДокФорм&gt;
+      &lt;ДокФорм ПорНомДок="1.01" ИдФайл="DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-a37f-896bde6bef28"&gt;
+        &lt;ИдФайлЭП&gt;DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-a37f-896bde6bef28_SGN_001.sgn&lt;/ИдФайлЭП&gt;
+        &lt;КНД_Док&gt;1175005&lt;/КНД_Док&gt;
+      &lt;/ДокФорм&gt;
+      &lt;ДокСкан ПорНомДок="1.01" КодДок="0510041" НаимДок="Фото с выпускного" ИдФайлЭП="DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-1234-896bde6bef28_SGN_001.sgn"&gt;
+        &lt;ИмяФайл&gt;trash.jpg&lt;/ИмяФайл&gt;
+      &lt;/ДокСкан&gt;
+    &lt;/ДокПредстНО&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="IU_ZAPR_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.04"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" /&gt;
+      &lt;АдрРФ Индекс="ИндРег" КодРегион="КодРегионРег" Район="ИмяРайонРег" Город="ИмяГородРег" НаселПункт="ИмяПосРег" Улица="ИмяУлРег" Дом="ДомРег" Корпус="КорпусРег" Кварт="КвРег" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1" Должн="Руководитель"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл КодЗапр="1" ФормОтв="1" ИФНС="6623"&gt;
+      &lt;СпрРасБюд НаДату="01.11.2018" /&gt;
+    &lt;/ЗапрИнфУсл&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.05"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2017" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП ОКВЭД="01.1"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН&gt;
+      &lt;СумНалПУ_НП ОКТМО="08701000" АвПУКв="33604" ОКТМО_Пг="08701000" АвПУУменПг="31931" ОКТМО_9м="08701000" АвПУУмен9м="32688" ОКТМО_Пер="08701000" НалПУУменПер="0"&gt;
+        &lt;РасчНал1 ПризНП="1"&gt;
+          &lt;Доход СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+          &lt;Ставка СтавкаНалПер="6.0" СтавкаКв="6.0" СтавкаПг="6.0" Ставка9м="6.0" /&gt;
+          &lt;Исчисл СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+          &lt;УменНал СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+        &lt;/РасчНал1&gt;
+      &lt;/СумНалПУ_НП&gt;
+    &lt;/УСН&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="ON_DOCNPNO_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.01"&gt;
+  &lt;Документ КНД="1184002" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвОтпрДок&gt;
+      &lt;ОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпрДок&gt;
+    &lt;СвПолДок&gt;
+      &lt;ОтпрНО КодНО="6623" НаимНО="Инспекция МНС России по г.Нижнему Тагилу" /&gt;
+    &lt;/СвПолДок&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="111133311412" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="3" Должн="Руководитель" Тлф="8800" E-mail="ruk@skbkontur.ru" ИННФЛ="227632864503"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ДокПредстНО КолФайл="6"&gt;
+      &lt;ИдФайлОсн&gt;1165013_0087_6676701665667628584_8d9ae4b3-3b33-4cd2-bf9b-2a676196fd71_20170807_1a88e62e-4a30-4320-9f04-16f1e1cd97f2&lt;/ИдФайлОсн&gt;
+      &lt;ДокФорм ПорНомДок="1.01" ИдФайл="DP_OTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_246c16b3-6c58-4ae5-8014-2811d6eff3bc"&gt;
+        &lt;ИдФайлЭП&gt;DP_OTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_246c16b3-6c58-4ae5-8014-2811d6eff3bc_SGN_001.sgn&lt;/ИдФайлЭП&gt;
+        &lt;КНД_Док&gt;1175004&lt;/КНД_Док&gt;
+      &lt;/ДокФорм&gt;
+      &lt;ДокФорм ПорНомДок="1.01" ИдФайл="DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-a37f-896bde6bef28"&gt;
+        &lt;ИдФайлЭП&gt;DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-a37f-896bde6bef28_SGN_001.sgn&lt;/ИдФайлЭП&gt;
+        &lt;КНД_Док&gt;1175005&lt;/КНД_Док&gt;
+      &lt;/ДокФорм&gt;
+      &lt;ДокФорм ПорНомДок="1.01" ИдФайл="ON_SFAKT_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160902_146f0414-a0da-4766-a626-0984e511ed0e"&gt;
+        &lt;ИдФайлЭП&gt;ON_SFAKT_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160902_146f0414-a0da-4766-a626-0984e511ed0e_SGN_001.sgn&lt;/ИдФайлЭП&gt;
+        &lt;КНД_Док&gt;1115101&lt;/КНД_Док&gt;
+      &lt;/ДокФорм&gt;
+    &lt;/ДокПредстНО&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.05"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2017" КодНО="6623" НомКорр="0" ПоМесту="213"&gt;
+    &lt;СвНП ОКВЭД="01.1" Тлф="123"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН&gt;
+      &lt;СумНалПУ_СмНП ОКТМО="50701000"&gt;
+        &lt;НалПУУменПер&gt;4050&lt;/НалПУУменПер&gt;
+        &lt;РасчНал2 ИсчислМин="3681"&gt;
+          &lt;Доход СумЗаНалПер="368136" /&gt;
+          &lt;Расход СумЗаНалПер="341136" /&gt;
+          &lt;НалБазаУбыт СумЗаНалПер="27000" /&gt;
+          &lt;Ставка СтавкаКв="15" СтавкаПг="15" Ставка9м="15" СтавкаНалПер="15" /&gt;
+          &lt;Исчисл СумЗаНалПер="4050" /&gt;
+        &lt;/РасчНал2&gt;
+      &lt;/СумНалПУ_СмНП&gt;
+    &lt;/УСН&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="ON_DOCNPNO_3266_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.01"&gt;
+  &lt;Документ КНД="1184002" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвОтпрДок&gt;
+      &lt;ОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпрДок&gt;
+    &lt;СвПолДок&gt;
+      &lt;ОтпрНО КодНО="6623" НаимНО="Инспекция МНС России по г.Нижнему Тагилу" /&gt;
+    &lt;/СвПолДок&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="3" Должн="Руководитель" Тлф="8800" E-mail="ruk@skbkontur.ru" ИННФЛ="227632864503"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ДокПредстНО КолФайл="6"&gt;
+      &lt;ИдФайлОсн&gt;1165013_0087_6676701665667628584_8d9ae4b3-3b33-4cd2-bf9b-2a676196fd71_20170807_1a88e62e-4a30-4320-9f04-16f1e1cd97f2&lt;/ИдФайлОсн&gt;
+      &lt;ДокФорм ПорНомДок="1.01" ИдФайл="DP_OTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_246c16b3-6c58-4ae5-8014-2811d6eff3bc"&gt;
+        &lt;ИдФайлЭП&gt;DP_OTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_246c16b3-6c58-4ae5-8014-2811d6eff3bc_SGN_001.sgn&lt;/ИдФайлЭП&gt;
+        &lt;КНД_Док&gt;1175004&lt;/КНД_Док&gt;
+      &lt;/ДокФорм&gt;
+      &lt;ДокФорм ПорНомДок="1.01" ИдФайл="DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-a37f-896bde6bef28"&gt;
+        &lt;ИдФайлЭП&gt;DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-a37f-896bde6bef28_SGN_001.sgn&lt;/ИдФайлЭП&gt;
+        &lt;КНД_Док&gt;1175005&lt;/КНД_Док&gt;
+      &lt;/ДокФорм&gt;
+      &lt;ДокСкан ПорНомДок="1.01" КодДок="0510041" НаимДок="Фото с выпускного" ИдФайлЭП="DP_PTORG12_2BM-3811125221-2012052808235209542630000000000_2BM-3849008446-384901001-201505310310119447830_20160916_df659b9d-9375-46cd-1234-896bde6bef28_SGN_001.sgn"&gt;
+        &lt;ИмяФайл&gt;trash.jpg&lt;/ИмяФайл&gt;
+      &lt;/ДокСкан&gt;
+    &lt;/ДокПредстНО&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 15.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2020" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП Тлф="123"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН /&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.05"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2017" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП ОКВЭД="01.1"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН&gt;
+      &lt;СумНалПУ_НП ОКТМО="08701000" АвПУКв="33604" ОКТМО_Пг="08701000" АвПУУменПг="31931" ОКТМО_9м="08701000" АвПУУмен9м="32688" ОКТМО_Пер="08701000" НалПУУменПер="0"&gt;
+        &lt;РасчНал1 ПризНП="1"&gt;
+          &lt;Доход СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+          &lt;Ставка СтавкаНалПер="6.0" СтавкаКв="6.0" СтавкаПг="6.0" Ставка9м="6.0" /&gt;
+          &lt;Исчисл СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+          &lt;УменНал СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+          &lt;РасчТоргСбор&gt;
+            &lt;Доход СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+            &lt;Исчисл СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+            &lt;УменНал СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+            &lt;ТоргСборФакт СумТечНалПер="1637046" СумТечКв="560073" СумТечПг="1092253" СумТеч9м="1637046" /&gt;
+            &lt;ТоргСборУмен СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+          &lt;/РасчТоргСбор&gt;
+        &lt;/РасчНал1&gt;
+      &lt;/СумНалПУ_НП&gt;
+    &lt;/УСН&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 15.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2020" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП Тлф="123"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН&gt;
+      &lt;СумНалПУ_СмНП ОКТМО="50701000" АвПУКв="0" ОКТМО_Пг="50701000" АвПУУменПг="0" ОКТМО_9м="50701000" АвПУУмен9м="0" ОКТМО_Пер="50701000"&gt;
+        &lt;НалПУМин&gt;0&lt;/НалПУМин&gt;
+        &lt;РасчНал2 ИсчислМин="0" УбытПред="0"&gt;
+          &lt;Доход СумЗаНалПер="0" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;Расход СумЗаНалПер="3598" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;НалБазаУбыт СумЗаНалПер="-3598" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+          &lt;Ставка СтавкаНалПер="15" СтавкаКв="15" СтавкаПг="15" Ставка9м="15" /&gt;
+          &lt;Исчисл СумЗаНалПер="-540" СумЗаКв="0" СумЗаПг="0" СумЗа9м="0" /&gt;
+        &lt;/РасчНал2&gt;
+      &lt;/СумНалПУ_СмНП&gt;
+    &lt;/УСН&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 15.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2020" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН&gt;
+      &lt;СумНалПУ_НП ОКТМО="08701000" АвПУКв="33604" ОКТМО_Пг="08701000" АвПУУменПг="31931" ОКТМО_9м="08701000" АвПУУмен9м="32688" ОКТМО_Пер="08701000" НалПУУменПер="0" СумНалПат="5"&gt;
+        &lt;РасчНал1 ПризНП="1" ПризСтав="2"&gt;
+          &lt;Доход СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+          &lt;Ставка СтавкаНалПер="8.0" СтавкаКв="6.0" СтавкаПг="6.0" Ставка9м="6.0" КодЛьгот="3462030/000100010001" /&gt;
+          &lt;Исчисл СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+          &lt;УменНал СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+        &lt;/РасчНал1&gt;
+      &lt;/СумНалПУ_НП&gt;
+    &lt;/УСН&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 12.0" ВерсФорм="5.05"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2017" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП ОКВЭД="01.1" Тлф="123"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН&gt;
+      &lt;СумНалПУ_НП ОКТМО="08701000" АвПУКв="33604" ОКТМО_Пг="08701000" АвПУУменПг="31931" ОКТМО_9м="08701000" АвПУУмен9м="32688" ОКТМО_Пер="08701000" НалПУУменПер="0"&gt;
+        &lt;РасчНал1 ПризНП="1"&gt;
+          &lt;Доход СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+          &lt;Ставка СтавкаНалПер="6.0" СтавкаКв="6.0" СтавкаПг="6.0" Ставка9м="6.0" /&gt;
+          &lt;Исчисл СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+          &lt;УменНал СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+          &lt;РасчТоргСбор&gt;
+            &lt;Доход СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+            &lt;Исчисл СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+            &lt;УменНал СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+            &lt;ТоргСборФакт СумТечНалПер="1637046" СумТечКв="560073" СумТечПг="1092253" СумТеч9м="1637046" /&gt;
+            &lt;ТоргСборУмен СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+          &lt;/РасчТоргСбор&gt;
+        &lt;/РасчНал1&gt;
+      &lt;/СумНалПУ_НП&gt;
+    &lt;/УСН&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="NO_USN_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 15.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1152017" ДатаДок="DELETEGUIDANDDATE" Период="96" ОтчетГод="2020" КодНО="6623" НомКорр="0" ПоМесту="120"&gt;
+    &lt;СвНП Тлф="123"&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;УСН&gt;
+      &lt;СумНалПУ_НП ОКТМО="08701000" АвПУКв="33604" ОКТМО_Пг="08701000" АвПУУменПг="31931" ОКТМО_9м="08701000" АвПУУмен9м="32688" ОКТМО_Пер="08701000" НалПУУменПер="0" СумНалПат="5"&gt;
+        &lt;РасчНал1 ПризНП="1" ПризСтав="1"&gt;
+          &lt;Доход СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+          &lt;Ставка СтавкаНалПер="6.0" СтавкаКв="6.0" СтавкаПг="6.0" Ставка9м="6.0" КодЛьгот="3462030/000100010001" /&gt;
+          &lt;Исчисл СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+          &lt;УменНал СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+          &lt;РасчТоргСбор&gt;
+            &lt;Доход СумЗаНалПер="1637046" СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" /&gt;
+            &lt;Исчисл СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+            &lt;УменНал СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+            &lt;ТоргСборФакт СумТечНалПер="1637046" СумТечКв="560073" СумТечПг="1092253" СумТеч9м="1637046" /&gt;
+            &lt;ТоргСборУмен СумЗаКв="560073" СумЗаПг="1092253" СумЗа9м="1637046" СумЗаНалПер="1637046" /&gt;
+          &lt;/РасчТоргСбор&gt;
+        &lt;/РасчНал1&gt;
+      &lt;/СумНалПУ_НП&gt;
+    &lt;/УСН&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="IU_ZAPR_6677_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.04"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+      &lt;АдрРФ Индекс="ИндРег" КодРегион="КодРегионРег" Район="ИмяРайонРег" Город="ИмяГородРег" НаселПункт="ИмяПосРег" Улица="ИмяУлРег" Дом="ДомРег" Корпус="КорпусРег" Кварт="КвРег" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1" Должн="Руководитель"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл КодЗапр="1" ФормОтв="1" ИФНС="6623"&gt;
+      &lt;СпрРасБюд НаДату="01.11.2018" /&gt;
+    &lt;/ЗапрИнфУсл&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="IU_ZAPR_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.04"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+      &lt;АдрРФ Индекс="ИндРег" КодРегион="КодРегионРег" Район="ИмяРайонРег" Город="ИмяГородРег" НаселПункт="ИмяПосРег" Улица="ИмяУлРег" Дом="ДомРег" Корпус="КорпусРег" Кварт="КвРег" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1" Должн="Руководитель"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл КодЗапр="1" ФормОтв="1" ИФНС="6623"&gt;
+      &lt;СпрРасБюд НаДату="01.11.2018" /&gt;
+    &lt;/ЗапрИнфУсл&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="IU_ZAPR_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл ИФНС="6623" КодЗапр="5" ФормОтв="2" /&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="IU_ZAPR_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл ИФНС="6623" КодЗапр="4" ФормОтв="4"&gt;
+      &lt;Период ДатаНач="01.01.2018" ДатаКон="01.12.2018" /&gt;
+      &lt;ЗапрКБК ПрКБК="1" /&gt;
+    &lt;/ЗапрИнфУсл&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="IU_ZAPR_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл ИФНС="6623" КодЗапр="7" ФормОтв="2" /&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="IU_ZAPR_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл ИФНС="6623" КодЗапр="4" ФормОтв="4"&gt;
+      &lt;Период ДатаНач="01.01.2018" ДатаКон="01.12.2018" /&gt;
+      &lt;ЗапрКБК ПрКБК="2"&gt;
+        &lt;ПеречКБК&gt;
+          &lt;КБК&gt;18210102010012100110&lt;/КБК&gt;
+        &lt;/ПеречКБК&gt;
+      &lt;/ЗапрКБК&gt;
+    &lt;/ЗапрИнфУсл&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="IU_ZAPR_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл ИФНС="6623" КодЗапр="3" ФормОтв="2"&gt;
+      &lt;Период ДатаНач="01.01.2018" ДатаКон="01.12.2018" /&gt;
+    &lt;/ЗапрИнфУсл&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="IU_ZAPR_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл ИФНС="6623" КодЗапр="6" ФормОтв="2"&gt;
+      &lt;Период ДатаНач="01.01.2018" ДатаКон="01.12.2018" /&gt;
+    &lt;/ЗапрИнфУсл&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - &lt;Файл ИдФайл="IU_ZAPR_6623_6623_9750599060123456789DELETEGUIDANDDATE" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 14.0" ВерсФорм="5.06"&gt;
+  &lt;Документ КНД="1166101" ДатаДок="DELETEGUIDANDDATE"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ОтправительПолное" ИННЮЛ="1111333114" КПП="123456789" /&gt;
+    &lt;/СвНП&gt;
+    &lt;СвОтпр&gt;
+      &lt;СвОтпрЮЛ НаимОрг="Отправитель" ИННЮЛ="9750599060" КПП="123456789" /&gt;
+    &lt;/СвОтпр&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="Фам" Имя="Имя" Отчество="Отч" /&gt;
+    &lt;/Подписант&gt;
+    &lt;ЗапрИнфУсл ИФНС="6623" КодЗапр="4" ФормОтв="4"&gt;
+      &lt;Период ДатаНач="01.01.2018" ДатаКон="01.12.2018" /&gt;
+      &lt;ЗапрКБК ПрКБК="2"&gt;
+        &lt;ПеречКБК&gt;
+          &lt;КБК&gt;18210102010012100110&lt;/КБК&gt;
+          &lt;КБК&gt;18210102010012100110&lt;/КБК&gt;
+        &lt;/ПеречКБК&gt;
+      &lt;/ЗапрКБК&gt;
+    &lt;/ЗапрИнфУсл&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+Warning - [{"Source":{"Description":"Отчет"},"Description":"ОГРН в отчете (1234567891234) и ОГРН в сертификате (OGRN____) не совпадают. Возможно, нужно выбрать сертификат, соответствующий организации FGHH ПОЛНОЕ НАЗВАНИЕ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+Warning - []
+
+Warning - []
+
+Warning - [{"Source":{"Description":"Отчет"},"Description":"ОГРН в отчете (1234567891234) и ОГРН в сертификате (OGRN____) не совпадают. Возможно, нужно выбрать сертификат, соответствующий организации ГАРРИ ПОТТЕР","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+Warning - []
+
+Warning - []
+
+Warning - []
+
+Warning - []
+
+Warning - []
+
+Warning - [{"Source":{"Description":"Отчет"},"Description":"Дополнительный код страхователя в отчёте (0000000012) не совпадает с регистрационным номером в выбранном сертификате (RNS_FSS___). Отчёт не будет принят в Фонд социального страхования. Пожалуйста, измените личный сертификат или выберите другой отчёт.","Justification":"","Level":{"Value":0},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+Warning - [{"Source":{"Description":"Отчет"},"Description":"Дополнительный код страхователя в отчёте (0000000012) не совпадает с регистрационным номером в выбранном сертификате (1). Отчёт не будет принят в Фонд социального страхования. Пожалуйста, измените личный сертификат или выберите другой отчёт.","Justification":"","Level":{"Value":0},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+Warning - []
+
+Warning - [{"Source":{"Description":"Отчет"},"Description":"Регистрационный номер страхователя в отчёте (0000000012) не совпадает с регистрационным номером в выбранном сертификате (RNS_FSS___). Отчёт не будет принят в Фонд социального страхования. Пожалуйста, измените личный сертификат или выберите другой отчёт.","Justification":"","Level":{"Value":0},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+Warning - []
+
+Warning - [{"Source":{"Description":"Отчет"},"Description":"Регистрационный номер страхователя в отчёте (0000000012) не совпадает с регистрационным номером в выбранном сертификате (RNS_FSS___). Отчёт не будет принят в Фонд социального страхования. Пожалуйста, измените личный сертификат или выберите другой отчёт.","Justification":"","Level":{"Value":0},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+Warning - [{"Source":{"Description":"Отчет"},"Description":"Регистрационный номер страхователя в отчёте (0000000012) не совпадает с регистрационным номером в выбранном сертификате (RNS_FSS___). Отчёт не будет принят в Фонд социального страхования. Пожалуйста, измените личный сертификат или выберите другой отчёт.","Justification":"","Level":{"Value":0},"Type":{"Value":3},"Id":"","Tags":"","Success":false},{"Source":{"Description":"Отчет"},"Description":"ИНН организации в отчете (6699000000) и ИНН организации в сертификате (9090000909) не совпадают. Выберите сертификат, соответствующий организации КОНТУР.ТЕСТ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false},{"Source":{"Description":"Отчет"},"Description":"ОГРН в отчете (1127746763924) и ОГРН в сертификате (OGRN____) не совпадают. Возможно, нужно выбрать сертификат, соответствующий организации КОНТУР.ТЕСТ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+Warning - []
+
+Warning - [{"Source":{"Description":"Отчет"},"Description":"Регистрационный номер страхователя в отчёте (0000000012) не совпадает с регистрационным номером в выбранном сертификате (RNS_FSS___). Отчёт не будет принят в Фонд социального страхования. Пожалуйста, измените личный сертификат или выберите другой отчёт.","Justification":"","Level":{"Value":0},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+Warning - []
+
+Warning - []
+
+Warning - []
+
+Warning - []
+
+Warning - []
+
+Warning - []
+
+Warning - []
+
+Warning - []
+
+Warning - []
+
+Warning - [{"Source":{"Description":"Отчет"},"Description":"Дополнительный код страхователя в отчёте (0000000011) не совпадает с регистрационным номером в выбранном сертификате (RNS_FSS___). Отчёт не будет принят в Фонд социального страхования. Пожалуйста, измените личный сертификат или выберите другой отчёт.","Justification":"","Level":{"Value":0},"Type":{"Value":3},"Id":"","Tags":"","Success":false},{"Source":{"Description":"Отчет"},"Description":"ИНН организации в отчете (6699000000) и ИНН организации в сертификате (9090000909) не совпадают. Выберите сертификат, соответствующий организации КОНТУР.ТЕСТ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false},{"Source":{"Description":"Отчет"},"Description":"ОГРН в отчете (1127746763924) и ОГРН в сертификате (OGRN____) не совпадают. Возможно, нужно выбрать сертификат, соответствующий организации КОНТУР.ТЕСТ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+Warning - [{"Source":{"Description":"Отчет"},"Description":"Регистрационный номер страхователя в отчёте (0000000012) не совпадает с регистрационным номером в выбранном сертификате (RNS_FSS___). Отчёт не будет принят в Фонд социального страхования. Пожалуйста, измените личный сертификат или выберите другой отчёт.","Justification":"","Level":{"Value":0},"Type":{"Value":3},"Id":"","Tags":"","Success":false},{"Source":{"Description":"Отчет"},"Description":"ИНН организации в отчете (6699000000) и ИНН организации в сертификате (9090000909) не совпадают. Выберите сертификат, соответствующий организации КОНТУР.ТЕСТ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false},{"Source":{"Description":"Отчет"},"Description":"ОГРН в отчете (1234567890123) и ОГРН в сертификате (OGRN____) не совпадают. Возможно, нужно выбрать сертификат, соответствующий организации КОНТУР.ТЕСТ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+Warning - []
+
+Warning - []
+
+Warning - []
+
+Warning - []
+
+Warning - [{"Source":{"Description":"Отчет"},"Description":"Регистрационный номер страхователя в отчёте (0000000012) не совпадает с регистрационным номером в выбранном сертификате (RNS_FSS___). Отчёт не будет принят в Фонд социального страхования. Пожалуйста, измените личный сертификат или выберите другой отчёт.","Justification":"","Level":{"Value":0},"Type":{"Value":3},"Id":"","Tags":"","Success":false},{"Source":{"Description":"Отчет"},"Description":"ИНН организации в отчете (6699000000) и ИНН организации в сертификате (6605050505) не совпадают. Выберите сертификат, соответствующий организации ПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕ ПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false},{"Source":{"Description":"Отчет"},"Description":"ОГРН в отчете (4111222333444) и ОГРН в сертификате (1234567891234) не совпадают. Возможно, нужно выбрать сертификат, соответствующий организации ПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕ ПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+Warning - [{"Source":{"Description":"Отчет"},"Description":"Регистрационный номер страхователя в отчёте (0000000012) не совпадает с регистрационным номером в выбранном сертификате (RNS_FSS___). Отчёт не будет принят в Фонд социального страхования. Пожалуйста, измените личный сертификат или выберите другой отчёт.","Justification":"","Level":{"Value":0},"Type":{"Value":3},"Id":"","Tags":"","Success":false},{"Source":{"Description":"Отчет"},"Description":"ИНН организации в отчете (6699000000) и ИНН организации в сертификате (6605050505) не совпадают. Выберите сертификат, соответствующий организации ПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕ ПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false},{"Source":{"Description":"Отчет"},"Description":"ОГРН в отчете (4111222333444) и ОГРН в сертификате (1234567891234) не совпадают. Возможно, нужно выбрать сертификат, соответствующий организации ПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕ ПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕПОЛНОЕ НАИМЕНОВАНИЕ ОБОСОБЛЕННОЕ","Justification":"","Level":{"Value":1},"Type":{"Value":3},"Id":"","Tags":"","Success":false}]
+
+Warning - ﻿&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+  &lt;fullName&gt;
+    &lt;p:firstName&gt;Иван&lt;/p:firstName&gt;
+    &lt;p:lastName&gt;Железкин&lt;/p:lastName&gt;
+    &lt;p:middleName&gt;Антонович&lt;/p:middleName&gt;
+  &lt;/fullName&gt;
+  &lt;birthDate&gt;1990-02-14&lt;/birthDate&gt;
+  &lt;gender&gt;MALE&lt;/gender&gt;
+  &lt;snils&gt;76427030902&lt;/snils&gt;
+  &lt;inn&gt;321313213132&lt;/inn&gt;
+  &lt;identityDocument&gt;
+    &lt;tempIdentDocType&gt;
+      &lt;number&gt;2342&lt;/number&gt;
+      &lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+      &lt;expirationDate&gt;2022-03-14&lt;/expirationDate&gt;
+    &lt;/tempIdentDocType&gt;
+  &lt;/identityDocument&gt;
+  &lt;residenceDocumentType&gt;
+    &lt;residentCard&gt;
+      &lt;series /&gt;
+      &lt;number /&gt;
+      &lt;passportIssueDate /&gt;
+    &lt;/residentCard&gt;
+  &lt;/residenceDocumentType&gt;
+  &lt;otherInfo&gt;
+    &lt;livingPlace /&gt;
+  &lt;/otherInfo&gt;
+  &lt;regAddress&gt;
+		&lt;fiasAddress&gt;&lt;c:houseGuid&gt;1ca573c4-03eb-456a-88ff-0720255ae58f&lt;/c:houseGuid&gt;
+			
+			
+			
+			
+			
+			
+			
+			&lt;c:flat&gt;&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;194295&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+  &lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ "УБРИР"&lt;/c:bankName&gt;
+			&lt;c:bik&gt;046577795&lt;/c:bik&gt;
+			&lt;c:accountNum /&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+Warning - ﻿&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+  &lt;fullName&gt;
+    &lt;p:firstName&gt;Иванов&lt;/p:firstName&gt;
+    &lt;p:lastName&gt;Иван&lt;/p:lastName&gt;
+    &lt;p:middleName&gt;Иванович&lt;/p:middleName&gt;
+  &lt;/fullName&gt;
+  &lt;birthDate&gt;1987-05-24&lt;/birthDate&gt;
+  &lt;gender&gt;MALE&lt;/gender&gt;
+  &lt;snils&gt;11223344595&lt;/snils&gt;
+  &lt;inn&gt;321313213132&lt;/inn&gt;
+  &lt;identityDocument&gt;
+    &lt;tempIdentDocType&gt;
+      &lt;number&gt;2342&lt;/number&gt;
+      &lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+      &lt;expirationDate&gt;2020-01-17&lt;/expirationDate&gt;
+    &lt;/tempIdentDocType&gt;
+  &lt;/identityDocument&gt;
+  &lt;residenceDocumentType&gt;
+    &lt;residentCard&gt;
+      &lt;series /&gt;
+      &lt;number /&gt;
+      &lt;passportIssueDate /&gt;
+    &lt;/residentCard&gt;
+  &lt;/residenceDocumentType&gt;
+  &lt;otherInfo&gt;
+    &lt;livingPlace /&gt;
+  &lt;/otherInfo&gt;
+  &lt;regAddress&gt;
+		&lt;fiasAddress&gt;&lt;c:houseGuid&gt;0a7bf636-f423-47b1-a6df-85eea85c6bc3&lt;/c:houseGuid&gt;
+			
+			
+			
+			
+			
+			
+			
+			&lt;c:flat&gt;30&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;450081&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+  &lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ "УБРИР"&lt;/c:bankName&gt;
+			&lt;c:bik&gt;046577795&lt;/c:bik&gt;
+			&lt;c:accountNum /&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+Warning - ﻿&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+  &lt;fullName&gt;
+    &lt;p:firstName&gt;Иван&lt;/p:firstName&gt;
+    &lt;p:lastName&gt;Железкин&lt;/p:lastName&gt;
+    &lt;p:middleName&gt;Антонович&lt;/p:middleName&gt;
+  &lt;/fullName&gt;
+  &lt;birthDate&gt;1990-02-14&lt;/birthDate&gt;
+  &lt;gender&gt;MALE&lt;/gender&gt;
+  &lt;snils&gt;76427030902&lt;/snils&gt;
+  &lt;inn&gt;321313213132&lt;/inn&gt;
+  &lt;identityDocument&gt;
+    &lt;tempIdentDocType&gt;
+      &lt;number&gt;2342&lt;/number&gt;
+      &lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+      &lt;expirationDate&gt;2022-03-14&lt;/expirationDate&gt;
+    &lt;/tempIdentDocType&gt;
+  &lt;/identityDocument&gt;
+  &lt;residenceDocumentType&gt;
+    &lt;residentCard&gt;
+      &lt;series /&gt;
+      &lt;number /&gt;
+      &lt;passportIssueDate /&gt;
+    &lt;/residentCard&gt;
+  &lt;/residenceDocumentType&gt;
+  &lt;otherInfo&gt;
+    &lt;livingPlace /&gt;
+  &lt;/otherInfo&gt;
+  &lt;regAddress&gt;
+		&lt;fiasAddress&gt;&lt;c:houseGuid&gt;53c75ffe-7d23-407f-b566-729facc5bfe0&lt;/c:houseGuid&gt;
+			
+			
+			
+			
+			
+			
+			
+			&lt;c:flat&gt;&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;607600&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+  &lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ "УБРИР"&lt;/c:bankName&gt;
+			&lt;c:bik&gt;046577795&lt;/c:bik&gt;
+			&lt;c:accountNum /&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+Warning - ﻿&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+  &lt;fullName&gt;
+    &lt;p:firstName&gt;Иван&lt;/p:firstName&gt;
+    &lt;p:lastName&gt;Железкин&lt;/p:lastName&gt;
+    &lt;p:middleName&gt;Антонович&lt;/p:middleName&gt;
+  &lt;/fullName&gt;
+  &lt;birthDate&gt;1990-02-14&lt;/birthDate&gt;
+  &lt;gender&gt;MALE&lt;/gender&gt;
+  &lt;snils&gt;76427030902&lt;/snils&gt;
+  &lt;inn&gt;321313213132&lt;/inn&gt;
+  &lt;identityDocument&gt;
+    &lt;tempIdentDocType&gt;
+      &lt;number&gt;2342&lt;/number&gt;
+      &lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+      &lt;expirationDate&gt;2022-03-14&lt;/expirationDate&gt;
+    &lt;/tempIdentDocType&gt;
+  &lt;/identityDocument&gt;
+  &lt;residenceDocumentType&gt;
+    &lt;residentCard&gt;
+      &lt;series /&gt;
+      &lt;number /&gt;
+      &lt;passportIssueDate /&gt;
+    &lt;/residentCard&gt;
+  &lt;/residenceDocumentType&gt;
+  &lt;otherInfo&gt;
+    &lt;livingPlace /&gt;
+  &lt;/otherInfo&gt;
+  &lt;regAddress&gt;
+		&lt;fiasAddress&gt;&lt;c:houseGuid&gt;3e8b80ed-fbce-451f-887c-a9765114ef77&lt;/c:houseGuid&gt;
+			
+			
+			
+			
+			
+			
+			
+			&lt;c:flat&gt;&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+  &lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ "УБРИР"&lt;/c:bankName&gt;
+			&lt;c:bik&gt;046577795&lt;/c:bik&gt;
+			&lt;c:accountNum /&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+Warning - ﻿&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+  &lt;fullName&gt;
+    &lt;p:firstName&gt;Иванов&lt;/p:firstName&gt;
+    &lt;p:lastName&gt;Иван&lt;/p:lastName&gt;
+    &lt;p:middleName&gt;Иванович&lt;/p:middleName&gt;
+  &lt;/fullName&gt;
+  &lt;birthDate&gt;1987-05-24&lt;/birthDate&gt;
+  &lt;gender&gt;MALE&lt;/gender&gt;
+  &lt;snils&gt;11223344595&lt;/snils&gt;
+  &lt;inn&gt;321313213132&lt;/inn&gt;
+  &lt;identityDocument&gt;
+    &lt;tempIdentDocType&gt;
+      &lt;number&gt;2342&lt;/number&gt;
+      &lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+      &lt;expirationDate&gt;2020-01-17&lt;/expirationDate&gt;
+    &lt;/tempIdentDocType&gt;
+  &lt;/identityDocument&gt;
+  &lt;residenceDocumentType&gt;
+    &lt;residentCard&gt;
+      &lt;series /&gt;
+      &lt;number /&gt;
+      &lt;passportIssueDate /&gt;
+    &lt;/residentCard&gt;
+  &lt;/residenceDocumentType&gt;
+  &lt;otherInfo&gt;
+    &lt;livingPlace /&gt;
+  &lt;/otherInfo&gt;
+  &lt;regAddress&gt;
+		&lt;fiasAddress&gt;&lt;c:houseGuid&gt;a760c910-12c7-42f9-ba7a-525f5d5b5bbe&lt;/c:houseGuid&gt;
+			
+			
+			
+			
+			
+			
+			
+			&lt;c:flat&gt;&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;681000&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+  &lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ "УБРИР"&lt;/c:bankName&gt;
+			&lt;c:accountNum /&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+Warning - ﻿&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+  &lt;fullName&gt;
+    &lt;p:firstName&gt;Иван&lt;/p:firstName&gt;
+    &lt;p:lastName&gt;Железкин&lt;/p:lastName&gt;
+    &lt;p:middleName&gt;Антонович&lt;/p:middleName&gt;
+  &lt;/fullName&gt;
+  &lt;birthDate&gt;1990-02-14&lt;/birthDate&gt;
+  &lt;gender&gt;MALE&lt;/gender&gt;
+  &lt;snils&gt;76427030902&lt;/snils&gt;
+  &lt;inn&gt;321313213132&lt;/inn&gt;
+  &lt;identityDocument&gt;
+    &lt;tempIdentDocType&gt;
+      &lt;number&gt;2342&lt;/number&gt;
+      &lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+      &lt;expirationDate&gt;2022-03-14&lt;/expirationDate&gt;
+    &lt;/tempIdentDocType&gt;
+  &lt;/identityDocument&gt;
+  &lt;residenceDocumentType&gt;
+    &lt;residentCard&gt;
+      &lt;series /&gt;
+      &lt;number /&gt;
+      &lt;passportIssueDate /&gt;
+    &lt;/residentCard&gt;
+  &lt;/residenceDocumentType&gt;
+  &lt;otherInfo&gt;
+    &lt;livingPlace /&gt;
+  &lt;/otherInfo&gt;
+  &lt;regAddress&gt;
+		&lt;fiasAddress&gt;&lt;c:houseGuid&gt;39baae7a-8d91-49cb-82b4-27e5f2f5de0d&lt;/c:houseGuid&gt;
+			
+			
+			
+			
+			
+			
+			
+			&lt;c:flat&gt;кв 288&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;420087&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+  &lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ "УБРИР"&lt;/c:bankName&gt;
+			&lt;c:bik&gt;046577795&lt;/c:bik&gt;
+			&lt;c:accountNum /&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+Warning - &lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+	&lt;fullName&gt;
+		&lt;p:firstName&gt;Иванов&lt;/p:firstName&gt;
+		&lt;p:lastName&gt;Иван&lt;/p:lastName&gt;
+		&lt;p:middleName&gt;Иванович&lt;/p:middleName&gt;
+	&lt;/fullName&gt;
+	&lt;birthDate&gt;1987-05-24&lt;/birthDate&gt;
+	&lt;gender&gt;MALE&lt;/gender&gt;
+	&lt;snils&gt;11223344595&lt;/snils&gt;
+	&lt;inn&gt;321313213132&lt;/inn&gt;
+	&lt;identityDocument&gt;
+		&lt;tempIdentDocType&gt;
+			&lt;number&gt;2342&lt;/number&gt;
+			&lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+			&lt;expirationDate&gt;2020-01-17&lt;/expirationDate&gt;
+		&lt;/tempIdentDocType&gt;
+	&lt;/identityDocument&gt;
+	&lt;residenceDocumentType&gt;
+		&lt;residentCard&gt;
+			&lt;series/&gt;
+			&lt;number/&gt;
+			&lt;passportIssueDate/&gt;
+		&lt;/residentCard&gt;
+	&lt;/residenceDocumentType&gt;
+	&lt;otherInfo&gt;
+		&lt;livingPlace/&gt;
+	&lt;/otherInfo&gt;
+	&lt;regAddress&gt;
+		&lt;fiasAddress&gt;
+			&lt;c:region&gt;Иркутская обл&lt;/c:region&gt;
+			&lt;c:district&gt;р-н Иркутский&lt;/c:district&gt;
+			&lt;c:settlement&gt;&lt;/c:settlement&gt;
+			&lt;c:street&gt;ул Смородиновая&lt;/c:street&gt;
+			&lt;c:house&gt;д. 17&lt;/c:house&gt;
+			&lt;c:building&gt;&lt;/c:building&gt;
+			&lt;c:structureNumber&gt;&lt;/c:structureNumber&gt;
+			&lt;c:flat&gt;&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+	&lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ &amp;quot;УБРИР&amp;quot;&lt;/c:bankName&gt;
+			&lt;c:accountNum/&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+Warning - &lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+	&lt;fullName&gt;
+		&lt;p:firstName&gt;Иванов&lt;/p:firstName&gt;
+		&lt;p:lastName&gt;Иван&lt;/p:lastName&gt;
+		&lt;p:middleName&gt;Иванович&lt;/p:middleName&gt;
+	&lt;/fullName&gt;
+	&lt;birthDate&gt;1987-05-24&lt;/birthDate&gt;
+	&lt;gender&gt;MALE&lt;/gender&gt;
+	&lt;snils&gt;11223344595&lt;/snils&gt;
+	&lt;inn&gt;321313213132&lt;/inn&gt;
+	&lt;identityDocument&gt;
+		&lt;tempIdentDocType&gt;
+			&lt;number&gt;2342&lt;/number&gt;
+			&lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+			&lt;expirationDate&gt;2020-01-17&lt;/expirationDate&gt;
+		&lt;/tempIdentDocType&gt;
+	&lt;/identityDocument&gt;
+	&lt;residenceDocumentType&gt;
+		&lt;residentCard&gt;
+			&lt;series/&gt;
+			&lt;number/&gt;
+			&lt;passportIssueDate/&gt;
+		&lt;/residentCard&gt;
+	&lt;/residenceDocumentType&gt;
+	&lt;otherInfo&gt;
+		&lt;livingPlace/&gt;
+	&lt;/otherInfo&gt;
+	&lt;regAddress&gt;
+		&lt;fiasAddress&gt;
+			&lt;c:region&gt;&lt;/c:region&gt;
+			&lt;c:district&gt;&lt;/c:district&gt;
+			&lt;c:settlement&gt;&lt;/c:settlement&gt;
+			&lt;c:street&gt;&lt;/c:street&gt;
+			&lt;c:house&gt;&lt;/c:house&gt;
+			&lt;c:building&gt;&lt;/c:building&gt;
+			&lt;c:structureNumber&gt;&lt;/c:structureNumber&gt;
+			&lt;c:flat&gt;&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+	&lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ &amp;quot;УБРИР&amp;quot;&lt;/c:bankName&gt;
+			&lt;c:accountNum/&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+Warning - &lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+	&lt;fullName&gt;
+		&lt;p:firstName&gt;Иванов&lt;/p:firstName&gt;
+		&lt;p:lastName&gt;Иван&lt;/p:lastName&gt;
+		&lt;p:middleName&gt;Иванович&lt;/p:middleName&gt;
+	&lt;/fullName&gt;
+	&lt;birthDate&gt;1987-05-24&lt;/birthDate&gt;
+	&lt;gender&gt;MALE&lt;/gender&gt;
+	&lt;snils&gt;11223344595&lt;/snils&gt;
+	&lt;inn&gt;321313213132&lt;/inn&gt;
+	&lt;identityDocument&gt;
+		&lt;tempIdentDocType&gt;
+			&lt;number&gt;2342&lt;/number&gt;
+			&lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+			&lt;expirationDate&gt;2020-01-17&lt;/expirationDate&gt;
+		&lt;/tempIdentDocType&gt;
+	&lt;/identityDocument&gt;
+	&lt;residenceDocumentType&gt;
+		&lt;residentCard&gt;
+			&lt;series/&gt;
+			&lt;number/&gt;
+			&lt;passportIssueDate/&gt;
+		&lt;/residentCard&gt;
+	&lt;/residenceDocumentType&gt;
+	&lt;otherInfo&gt;
+		&lt;livingPlace/&gt;
+	&lt;/otherInfo&gt;
+	&lt;regAddress&gt;
+		&lt;fiasAddress&gt;
+			&lt;c:region&gt;&lt;/c:region&gt;
+			&lt;c:district&gt;&lt;/c:district&gt;
+			&lt;c:settlement&gt;г Комсомольск-на-Амуре&lt;/c:settlement&gt;
+			&lt;c:street&gt;Лазурная&lt;/c:street&gt;
+			&lt;c:house&gt;участок 13&lt;/c:house&gt;
+			&lt;c:building&gt;&lt;/c:building&gt;
+			&lt;c:structureNumber&gt;&lt;/c:structureNumber&gt;
+			&lt;c:flat&gt;&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+	&lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ &amp;quot;УБРИР&amp;quot;&lt;/c:bankName&gt;
+			&lt;c:accountNum/&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+Warning - &lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+	&lt;fullName&gt;
+		&lt;p:firstName&gt;Иванов&lt;/p:firstName&gt;
+		&lt;p:lastName&gt;Иван&lt;/p:lastName&gt;
+		&lt;p:middleName&gt;Иванович&lt;/p:middleName&gt;
+	&lt;/fullName&gt;
+	&lt;birthDate&gt;1987-05-24&lt;/birthDate&gt;
+	&lt;gender&gt;MALE&lt;/gender&gt;
+	&lt;snils&gt;11223344595&lt;/snils&gt;
+	&lt;inn&gt;321313213132&lt;/inn&gt;
+	&lt;identityDocument&gt;
+		&lt;tempIdentDocType&gt;
+			&lt;number&gt;2342&lt;/number&gt;
+			&lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+			&lt;expirationDate&gt;2020-01-17&lt;/expirationDate&gt;
+		&lt;/tempIdentDocType&gt;
+	&lt;/identityDocument&gt;
+	&lt;residenceDocumentType&gt;
+		&lt;residentCard&gt;
+			&lt;series/&gt;
+			&lt;number/&gt;
+			&lt;passportIssueDate/&gt;
+		&lt;/residentCard&gt;
+	&lt;/residenceDocumentType&gt;
+	&lt;otherInfo&gt;
+		&lt;livingPlace/&gt;
+	&lt;/otherInfo&gt;
+	&lt;regAddress&gt;
+		&lt;fiasAddress&gt;
+			&lt;c:region&gt;Республика Башкортостан&lt;/c:region&gt;
+			&lt;c:district&gt;&lt;/c:district&gt;
+			&lt;c:settlement&gt;Уфа&lt;/c:settlement&gt;
+			&lt;c:street&gt;Ро кая&lt;/c:street&gt;
+			&lt;c:house&gt;17/3&lt;/c:house&gt;
+			&lt;c:building&gt;&lt;/c:building&gt;
+			&lt;c:structureNumber&gt;&lt;/c:structureNumber&gt;
+			&lt;c:flat&gt;30&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+	&lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ &amp;quot;УБРИР&amp;quot;&lt;/c:bankName&gt;
+			&lt;c:accountNum/&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+Warning - &lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+	&lt;fullName&gt;
+		&lt;p:firstName&gt;Иван&lt;/p:firstName&gt;
+		&lt;p:lastName&gt;Железкин&lt;/p:lastName&gt;
+		&lt;p:middleName&gt;Антонович&lt;/p:middleName&gt;
+	&lt;/fullName&gt;
+	&lt;birthDate&gt;1990-02-14&lt;/birthDate&gt;
+	&lt;gender&gt;MALE&lt;/gender&gt;
+	&lt;snils&gt;76427030902&lt;/snils&gt;
+	&lt;inn&gt;321313213132&lt;/inn&gt;
+	&lt;identityDocument&gt;
+		&lt;tempIdentDocType&gt;
+			&lt;number&gt;2342&lt;/number&gt;
+			&lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+			&lt;expirationDate&gt;2022-03-14&lt;/expirationDate&gt;
+		&lt;/tempIdentDocType&gt;
+	&lt;/identityDocument&gt;
+	&lt;residenceDocumentType&gt;
+		&lt;residentCard&gt;
+			&lt;series/&gt;
+			&lt;number/&gt;
+			&lt;passportIssueDate/&gt;
+		&lt;/residentCard&gt;
+	&lt;/residenceDocumentType&gt;
+	&lt;otherInfo&gt;
+		&lt;livingPlace/&gt;
+	&lt;/otherInfo&gt;
+	&lt;regAddress&gt;
+		&lt;fiasAddress&gt;
+			&lt;c:region&gt;Ленинградская обл&lt;/c:region&gt;
+			&lt;c:district&gt;м.р-н Всеволожский&lt;/c:district&gt;
+			&lt;c:settlement&gt;массив Екатериновка&lt;/c:settlement&gt;
+			&lt;c:street&gt;&lt;/c:street&gt;
+			&lt;c:house&gt;&lt;/c:house&gt;
+			&lt;c:building&gt;&lt;/c:building&gt;
+			&lt;c:structureNumber&gt;&lt;/c:structureNumber&gt;
+			&lt;c:flat&gt;&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;123456&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+	&lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ &amp;quot;УБРИР&amp;quot;&lt;/c:bankName&gt;
+			&lt;c:accountNum/&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+Warning - &lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+	&lt;fullName&gt;
+		&lt;p:firstName&gt;Иванов&lt;/p:firstName&gt;
+		&lt;p:lastName&gt;Иван&lt;/p:lastName&gt;
+		&lt;p:middleName&gt;Иванович&lt;/p:middleName&gt;
+	&lt;/fullName&gt;
+	&lt;birthDate&gt;1987-05-24&lt;/birthDate&gt;
+	&lt;gender&gt;MALE&lt;/gender&gt;
+	&lt;snils&gt;11223344595&lt;/snils&gt;
+	&lt;inn&gt;321313213132&lt;/inn&gt;
+	&lt;identityDocument&gt;
+		&lt;tempIdentDocType&gt;
+			&lt;number&gt;2342&lt;/number&gt;
+			&lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+			&lt;expirationDate&gt;2020-01-17&lt;/expirationDate&gt;
+		&lt;/tempIdentDocType&gt;
+	&lt;/identityDocument&gt;
+	&lt;residenceDocumentType&gt;
+		&lt;residentCard&gt;
+			&lt;series/&gt;
+			&lt;number/&gt;
+			&lt;passportIssueDate/&gt;
+		&lt;/residentCard&gt;
+	&lt;/residenceDocumentType&gt;
+	&lt;otherInfo&gt;
+		&lt;livingPlace/&gt;
+	&lt;/otherInfo&gt;
+	&lt;regAddress&gt;
+		&lt;fiasAddress&gt;
+			&lt;c:region&gt;Республика Башкортостан&lt;/c:region&gt;
+			&lt;c:district&gt;&lt;/c:district&gt;
+			&lt;c:settlement&gt;Уфа&lt;/c:settlement&gt;
+			&lt;c:street&gt;Российскfя&lt;/c:street&gt;
+			&lt;c:house&gt;17/3&lt;/c:house&gt;
+			&lt;c:building&gt;&lt;/c:building&gt;
+			&lt;c:structureNumber&gt;&lt;/c:structureNumber&gt;
+			&lt;c:flat&gt;30&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+	&lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ &amp;quot;УБРИР&amp;quot;&lt;/c:bankName&gt;
+			&lt;c:accountNum/&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+Warning - &lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;insuredPerson xmlns="urn:ru:fss:integration:types:rpu:InsuredPerson:v01" xmlns:p="http://www.fss.ru/integration/types/person/v02" xmlns:c="http://www.fss.ru/integration/types/common/v01" xmlns:r="http://www.fss.ru/integration/types/dic/CauseRadiationExposure/v01" xmlns:id="http://www.fss.ru/integration/types/dic/identtityDoc/v01" xmlns:dsz="urn:ru:fss:integration:types:dic:SpecialZone:v01" xmlns:e="http://www.fss.ru/integration/types/dic/errors/v01" xmlns:org="http://www.fss.ru/integration/types/organization/v01"&gt;
+	&lt;fullName&gt;
+		&lt;p:firstName&gt;Иванов&lt;/p:firstName&gt;
+		&lt;p:lastName&gt;Иван&lt;/p:lastName&gt;
+		&lt;p:middleName&gt;Иванович&lt;/p:middleName&gt;
+	&lt;/fullName&gt;
+	&lt;birthDate&gt;1987-05-24&lt;/birthDate&gt;
+	&lt;gender&gt;MALE&lt;/gender&gt;
+	&lt;snils&gt;11223344595&lt;/snils&gt;
+	&lt;inn&gt;321313213132&lt;/inn&gt;
+	&lt;identityDocument&gt;
+		&lt;tempIdentDocType&gt;
+			&lt;number&gt;2342&lt;/number&gt;
+			&lt;whoIssued&gt;23424&lt;/whoIssued&gt;
+			&lt;expirationDate&gt;2020-01-17&lt;/expirationDate&gt;
+		&lt;/tempIdentDocType&gt;
+	&lt;/identityDocument&gt;
+	&lt;residenceDocumentType&gt;
+		&lt;residentCard&gt;
+			&lt;series/&gt;
+			&lt;number/&gt;
+			&lt;passportIssueDate/&gt;
+		&lt;/residentCard&gt;
+	&lt;/residenceDocumentType&gt;
+	&lt;otherInfo&gt;
+		&lt;livingPlace/&gt;
+	&lt;/otherInfo&gt;
+	&lt;regAddress&gt;
+		&lt;fiasAddress&gt;
+			&lt;c:region&gt;&lt;/c:region&gt;
+			&lt;c:district&gt;&lt;/c:district&gt;
+			&lt;c:settlement&gt;Сергиевское&lt;/c:settlement&gt;
+			&lt;c:street&gt;улица Художников&lt;/c:street&gt;
+			&lt;c:house&gt;д 22 к 2 &lt;/c:house&gt;
+			&lt;c:building&gt;литера А&lt;/c:building&gt;
+			&lt;c:structureNumber&gt;&lt;/c:structureNumber&gt;
+			&lt;c:flat&gt;&lt;/c:flat&gt;
+		&lt;/fiasAddress&gt;
+		&lt;postalCode&gt;&lt;/postalCode&gt;
+	&lt;/regAddress&gt;
+	&lt;methodReceivePayment&gt;
+		&lt;c:bankInfo&gt;
+			&lt;c:bankName&gt;ПАО КБ &amp;quot;УБРИР&amp;quot;&lt;/c:bankName&gt;
+			&lt;c:accountNum/&gt;
+		&lt;/c:bankInfo&gt;
+	&lt;/methodReceivePayment&gt;
+&lt;/insuredPerson&gt;
+
+Warning - 2100201
+
+Warning - 131202
+
+Warning - [{"Key":"gfv","Value":"2100201","Description":null},{"Key":"inn","Value":"6663003127","Description":null},{"Key":"ogrn","Value":"1026605606620","Description":null},{"Key":"respondentName","Value":"ООО Названиие респондента","Description":null},{"Key":"periodStart","Value":"01.10.2019","Description":null},{"Key":"periodEnd","Value":"31.12.2019","Description":null},{"Key":"periodQuarter","Value":"4","Description":null},{"Key":"periodYear","Value":"2019","Description":null}]
+
+Warning - [{"Key":"gfv","Value":"131202","Description":null},{"Key":"inn","Value":"","Description":null},{"Key":"ogrn","Value":"","Description":null},{"Key":"respondentName","Value":"","Description":null},{"Key":"periodStart","Value":"","Description":null},{"Key":"periodEnd","Value":"","Description":null},{"Key":"periodQuarter","Value":"","Description":null},{"Key":"periodYear","Value":"","Description":null},{"Key":"PdfEmbeddedXml_FileId","Value":"someFileId","Description":null},{"Key":"PdfEmbeddedXml_DriveUrl","Value":"someDriveLink","Description":null}]
+
+Warning - &lt;Файл ИдФайл="NO_PRIB_5249_5249_5249140566524901001_20180427_5a2419e0-d513-43a2-aafc-c48d67d986f5" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 13.0" ВерсФорм="5.07"&gt;
+  &lt;Документ КНД="1151006" Период="21" ОтчетГод="2018" НомКорр="0" ПоМесту="220"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ООО &amp;quot;ПК и БЗ&amp;quot; Нижегородское административное управление" ИННЮЛ="5249140566" КПП="526245001" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="УКОЛКИН" Имя="ИЛЬЯ" Отчество="ВИКТОРОВИЧ" /&gt;
+    &lt;/Подписант&gt;
+    &lt;Прибыль&gt;
+      &lt;НалПУ&gt;
+        &lt;НалПУАв&gt;
+          &lt;СубБдж КБК="18210101012021000110" /&gt;
+        &lt;/НалПУАв&gt;
+        &lt;НалПУМес&gt;
+          &lt;СубБдж КБК="18210101012021000110" /&gt;
+        &lt;/НалПУМес&gt;
+      &lt;/НалПУ&gt;
+      &lt;РаспрНалСубРФ ТипНП="1" ОбРасч="2" КППОП="526245001" ОбязУплНалОП="0" НаимОП="ООО &amp;quot;ПК и БЗ&amp;quot; Нижегородское административное управление" НалБазаОрг="15397" ДоляНалБаз="9.677420000000000" НалБазаДоля="1490" СтавНалСубРФ="17.000" СумНал="253" НалНачислСубРФ="3066" СумНалП="-2813" МесАвПлат="253" /&gt;
+    &lt;/Прибыль&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+&lt;Файл ИдФайл="NO_PRIB_5249_5249_5249140566524901001_20180427_5a2419e0-d513-43a2-aafc-c48d67d986f5" ВерсПрог="КОНТУР-ЭКСТЕРН, ВЕРСИЯ 13.0" ВерсФорм="5.07"&gt;
+  &lt;Документ КНД="1151006" Период="21" ОтчетГод="2018" НомКорр="0" ПоМесту="220"&gt;
+    &lt;СвНП&gt;
+      &lt;НПЮЛ НаимОрг="ООО &amp;quot;ПК и БЗ&amp;quot; Пермский геологический отдел" ИННЮЛ="5249140566" КПП="590345001" /&gt;
+    &lt;/СвНП&gt;
+    &lt;Подписант ПрПодп="1"&gt;
+      &lt;ФИО Фамилия="УКОЛКИН" Имя="ИЛЬЯ" Отчество="ВИКТОРОВИЧ" /&gt;
+    &lt;/Подписант&gt;
+    &lt;Прибыль&gt;
+      &lt;НалПУ&gt;
+        &lt;НалПУАв&gt;
+          &lt;СубБдж КБК="18210101012021000110" /&gt;
+        &lt;/НалПУАв&gt;
+        &lt;НалПУМес&gt;
+          &lt;СубБдж КБК="18210101012021000110" /&gt;
+        &lt;/НалПУМес&gt;
+      &lt;/НалПУ&gt;
+      &lt;РаспрНалСубРФ ТипНП="1" ОбРасч="2" КППОП="590345001" ОбязУплНалОП="0" НаимОП="ООО &amp;quot;ПК и БЗ&amp;quot; Пермский геологический отдел" НалБазаОрг="15397" ДоляНалБаз="6.989250000000000" НалБазаДоля="1076" СтавНалСубРФ="17.000" СумНал="183" НалНачислСубРФ="2203" СумНалП="-2020" МесАвПлат="183" /&gt;
+    &lt;/Прибыль&gt;
+  &lt;/Документ&gt;
+&lt;/Файл&gt;
+
+</system-err>
+  </testsuite>
+</testsuites>

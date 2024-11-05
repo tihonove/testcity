@@ -43,9 +43,9 @@ export function formatTestDuration(seconds: string): string {
 
 export function formatTestCounts(total: string, passed: string, ignored: string, failed: string): string {
     let out = "Tests "
-    if (failed !== '0') out += `failed: ${failed} `
-    if (passed !== '0') out += `passed: ${passed} `
-    if (ignored !== '0') out += `ignored: ${ignored} `
+    if (failed != '0') out += `failed: ${failed} `
+    if (passed != '0') out += `passed: ${passed} `
+    if (ignored != '0') out += `ignored: ${ignored} `
     // out += `total: ${total}`
     return out.trim();
 }
