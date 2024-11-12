@@ -4,7 +4,7 @@ import {
     formatTestCounts,
     formatTestDuration,
     getLinkToJob,
-    getOffsetTitle,
+    getOffsetTitle, getText,
     toLocalTimeFromUtc,
     useSearchParamAsState
 } from "../Utils";
@@ -19,6 +19,7 @@ import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
 import { ColumnStack, Fit } from "@skbkontur/react-stack-layout";
 import styled from "styled-components";
 import {HomeIcon} from "../Components/Icons";
+import {BranchCell, JobLinkWithResults} from "../Components/BranchCell";
 
 export function JobRunsPage(): React.JSX.Element {
     const { jobId } = useParams();
@@ -38,7 +39,9 @@ export function JobRunsPage(): React.JSX.Element {
             SkippedTestsCount,
             FailedTestsCount,
             AgentOSName,
-            Duration
+            Duration,
+            State,
+            CustomStatusMessage
         FROM JobInfo
         WHERE JobId = '${jobId}' ${currentBranchName ? `AND BranchName = '${currentBranchName}'` : ""}
         ORDER BY StartDateTime DESC
@@ -78,7 +81,6 @@ export function JobRunsPage(): React.JSX.Element {
                             <th>#</th>
                             <th>branch</th>
                             <th></th>
-                            <th>agent</th>
                             <th>started {getOffsetTitle()}</th>
                             <th>duration</th>
                         </tr>
@@ -89,17 +91,14 @@ export function JobRunsPage(): React.JSX.Element {
                                 <NumberCell>
                                     <Link to={getLinkToJob(x[1], x[3])}>#{x[1]}</Link>
                                 </NumberCell>
-                                <BranchCell>
+                                <BranchCell branch={x[2]}>
                                     <ShareNetworkIcon/> {x[2]}
                                 </BranchCell>
                                 <CountCell>
-                                    <JobLinkWithResults failedCount={x[8]} to={`/test-analytics/jobs/${jobId}/runs/${x[1]}`}>
-                                        {formatTestCounts(x[5], x[6], x[7], x[8])}
+                                    <JobLinkWithResults state={x[11]} to={`/test-analytics/jobs/${jobId}/runs/${x[1]}`}>
+                                        {getText(x[5], x[6], x[7], x[8], x[11], x[12])}
                                     </JobLinkWithResults>
                                 </CountCell>
-                                <AgentCell>
-                                    {/windows/.test(x[9]) ? <LogoMicrosoftIcon /> : <QuestionCircleIcon />} {x[3]}
-                                </AgentCell>
                                 <StartedCell>{toLocalTimeFromUtc(x[4])}</StartedCell>
                                 <DurationCell>{formatTestDuration(x[10])}</DurationCell>
                             </tr>
@@ -143,22 +142,7 @@ const NumberCell = styled.td`
     width: 80px;
 `;
 
-const BranchCell = styled.td``;
-
 const CountCell = styled.td``;
-
-const JobLinkWithResults = styled(Link)<{ failedCount: string }>`
-    color: ${props =>
-            props.failedCount == "0"
-                    ? props.theme.successTextColor
-                    : props.theme.failedTextColor};
-    text-decoration: none;
-    &:hover {
-        text-decoration: underline;
-    }
-`;
-
-const AgentCell = styled.td``;
 
 const StartedCell = styled.td``;
 

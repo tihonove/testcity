@@ -41,7 +41,19 @@ export function formatTestDuration(seconds: string): string {
         .replace("00h ", "");
 }
 
+export function getText(total: string, passed: string, ignored: string, failed: string, state: string, info: string): string {
+    let out = formatTestCounts(total, passed, ignored, failed);
+    if (state == "Canceled") out = state;
+    else if (state == "Timeouted") out = state;
+    else if (state == "Failed" && out == "") out = state;
+    
+    console.log(`info: ${info}`)
+    return info ? `${info}. ${out}` : out;
+}
+
 export function formatTestCounts(total: string, passed: string, ignored: string, failed: string): string {
+    if (total == '0') return '';
+    
     let out = "Tests "
     if (failed != '0') out += `failed: ${failed} `
     if (passed != '0') out += `passed: ${passed} `

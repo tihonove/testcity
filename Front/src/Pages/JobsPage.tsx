@@ -7,9 +7,10 @@ import {
 } from "@skbkontur/icons";
 import {useClickhouseClient} from "../ClickhouseClientHooksWrapper";
 import {BranchSelect} from "../TestHistory/BranchSelect";
-import {formatTestCounts, formatTestDuration, getLinkToJob, toLocalTimeFromUtc, useSearchParamAsState} from "../Utils";
+import {formatTestCounts, formatTestDuration, getLinkToJob, getText, toLocalTimeFromUtc, useSearchParamAsState} from "../Utils";
 import {Link} from "react-router-dom";
 import {JobComboBox} from "../Components/JobComboBox";
+import {BranchCell, JobLinkWithResults} from "../Components/BranchCell";
 
 export function JobsPage(): React.JSX.Element {
     const client = useClickhouseClient();
@@ -23,7 +24,7 @@ export function JobsPage(): React.JSX.Element {
                              WHERE StartDateTime >= DATE_ADD(MONTH, -1, NOW());`)
         .filter(x => x[0] != null && x[0].trim() !== "");
     
-    const allJobRuns = client.useData2<[string, string, string, string, string, string, string, string, string, string, string]>(
+    const allJobRuns = client.useData2<[string, string, string, string, string, string, string, string, string, string, string, string, string]>(
         `
             SELECT
                 JobId,
@@ -36,7 +37,9 @@ export function JobsPage(): React.JSX.Element {
                 Duration,
                 SuccessTestsCount,
                 SkippedTestsCount,
-                FailedTestsCount
+                FailedTestsCount,
+                State,
+                CustomStatusMessage
             FROM (
                      SELECT
                          *,
@@ -114,8 +117,8 @@ export function JobsPage(): React.JSX.Element {
                                                     <ShareNetworkIcon/> {x[2]}
                                                 </BranchCell>
                                                 <CountCell>
-                                                    <JobLinkWithResults failedCount={x[10]} to={`/test-analytics/jobs/${jobId}/runs/${x[1]}`}>
-                                                        {formatTestCounts(x[5], x[8], x[9], x[10])}
+                                                    <JobLinkWithResults state={x[11]} to={`/test-analytics/jobs/${jobId}/runs/${x[1]}`}>
+                                                        {getText(x[5], x[8], x[9], x[10], x[11], x[12])}
                                                     </JobLinkWithResults>
                                                 </CountCell>
                                                 <StartedCell>{toLocalTimeFromUtc(x[4])}</StartedCell>
@@ -185,39 +188,16 @@ const PaddingCell = styled.td`
     width: 12px;
 `;
 
-const BranchCell = styled.td<{ branch: string }>`
-    max-width: 200px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    
-    ${props => props.branch == "master" && css`
-        border-radius: 20px;
-        background: #8ccbff;
-        display: inline;
-        padding: 2px 13px 2px 8px !important;
-  `}
-`;
-
 const CountCell = styled.td`
     max-width: 300px;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 const StartedCell = styled.td`
     max-width: 150px;
     white-space: nowrap;
-`;
-
-const JobLinkWithResults = styled(Link)<{ failedCount: string }>`
-    color: ${props =>
-    props.failedCount == "0"
-        ? props.theme.successTextColor
-        : props.theme.failedTextColor};
-    text-decoration: none;
-    &:hover {
-        text-decoration: underline;
-    }
 `;
 
 const DurationCell = styled.td`

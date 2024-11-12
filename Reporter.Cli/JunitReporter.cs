@@ -19,11 +19,12 @@ public  class JunitReporter
     public async Task DoAsync()
     {
         var (counter, runs) = CollectTestsFromReports();
-
+        
+        if (counter.Total == 0 && !options.NoJunit) 
+            log.Error($"Не нашли ни одного junit отчёта или теста в них по маске {string.Join(',', options.ReportsPaths)}");
+        
         log.Debug(counter.ToString());
         await UploadTestRuns(runs);
-        
-        ВзорватьсяЕслиНетТестов(counter);
 
         var jobInfo = GetFullJobInfo(counter);
         await UploadJobInfo(jobInfo);
