@@ -13,14 +13,13 @@ export function TestHistoryPage(): React.JSX.Element {
     if (testId == null) return <div>Test id not specified</div>;
 
     const client = useClickhouseClient();
-    const jobIds = client.useData2<[string]>(
-        `SELECT DISTINCT JobId FROM TestRuns WHERE TestId = '${testId}'`,
-        [testId]
-    );
-    const branches = client.useData2<[string]>(
-        `SELECT DISTINCT BranchName FROM TestRuns WHERE TestId = '${testId}'`,
-        [testId, currentJobId]
-    );
+    const jobIds = client.useData2<[string]>(`SELECT DISTINCT JobId FROM TestRuns WHERE TestId = '${testId}'`, [
+        testId,
+    ]);
+    const branches = client.useData2<[string]>(`SELECT DISTINCT BranchName FROM TestRuns WHERE TestId = '${testId}'`, [
+        testId,
+        currentJobId,
+    ]);
 
     const condition = React.useMemo(() => {
         let result = `TestId = '${testId}'`;
@@ -36,14 +35,11 @@ export function TestHistoryPage(): React.JSX.Element {
 
     const [testRunsPage, setTestRunsPage] = useState(1);
     const testRuns = client.useData2<[string, string, string, RunStatus, number, string, string, string, string]>(
-        `SELECT JobId, JobRunId, BranchName, State, Duration, StartDateTime, AgentName, AgentOSName, JobUrl FROM TestRuns WHERE ${condition} ORDER BY StartDateTime DESC LIMIT ${50 * (testRunsPage - 1)}, 50`,
+        `SELECT JobId, JobRunId, BranchName, State, Duration, StartDateTime, AgentName, AgentOSName, JobUrl FROM TestRuns WHERE ${condition} ORDER BY StartDateTime DESC LIMIT ${(50 * (testRunsPage - 1)).toString()}, 50`,
         [testId, testRunsPage, condition]
     );
 
-    const totalRunCount = client.useData2<[string]>(
-        `SELECT COUNT(*) FROM TestRuns WHERE ${condition}`,
-        [condition]
-    );
+    const totalRunCount = client.useData2<[string]>(`SELECT COUNT(*) FROM TestRuns WHERE ${condition}`, [condition]);
 
     return (
         <div>

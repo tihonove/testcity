@@ -11,7 +11,7 @@ interface TestTreeItem {
 }
 
 export function TestsTreeMapChart(): React.JSX.Element {
-    const { jobId, jobRunId } = useParams();
+    const { jobId = "", jobRunId = "" } = useParams();
     const client = useClickhouseClient();
 
     const allTests1 = client.useData2<[string, number]>(
@@ -38,7 +38,7 @@ export function TestsTreeMapChart(): React.JSX.Element {
                     items.set(nameToken, { name: nameToken, duration: 0, children: new Map() }).get(nameToken);
                 if (treeNode) treeNodeStack.push(treeNode);
             }
-            if (treeNode) treeNode.name += " " + test[1] + "ms";
+            if (treeNode) treeNode.name += " " + test[1].toString() + "ms";
             let parentNode: TestTreeItem | undefined;
             while ((parentNode = treeNodeStack.pop())) parentNode.duration += test[1];
         }
@@ -62,9 +62,10 @@ function nodeToGroup(node: TestTreeItem): FoamTreeGroup {
 
 function splitTestName(testId: string): string[] {
     const regex =
+        // eslint-disable-next-line no-useless-backreference
         /(?:(["'])(\\.|(?!\1)[^\\])*\1|\[(?:(["'])(\\.|(?!\2)[^\\])*\2|[^\]])*\]|\((?:(["'])(\\.|(?!\3)[^\\])*\3|[^)])*\)|[^.:])+/g;
     const parts = testId.match(regex);
-    return [...parts.map(x => x.trim())];
+    return [...(parts ?? []).map(x => x.trim())];
 }
 
 interface FoamTreeGroup {
@@ -77,35 +78,42 @@ interface FoamTreeProps {
     groups: FoamTreeGroup[];
 }
 
-class FoamTree extends React.Component<FoamTreeProps> {
-    componentDidMount() {
-        this.foamtree = new CarrotSearchFoamTree({
-            element: this.element,
-            dataObject: {
-                groups: this.props.groups,
-            },
-            layout: "squarified",
-            stacking: "flattened",
-            groupMinDiameter: 0,
-            maxGroupLevelsDrawn: 20,
-            maxGroupLabelLevelsDrawn: 20,
-            maxGroupLevelsAttached: 20,
-        });
-    }
+import { useEffect, useRef } from "react";
 
-    componentDidUpdate() {
-        if (this.props.groups !== this.foamtree.get("dataObject").groups) {
-            this.foamtree.set("dataObject", {
-                groups: this.props.groups,
+function FoamTree({ groups }: FoamTreeProps) {
+    const elementRef = useRef<HTMLDivElement | null>(null);
+    const foamtreeRef = useRef<CarrotSearchFoamTree>();
+
+    useEffect(() => {
+        if (elementRef.current) {
+            foamtreeRef.current = new CarrotSearchFoamTree({
+                element: elementRef.current,
+                dataObject: {
+                    groups: groups,
+                },
+                layout: "squarified",
+                stacking: "flattened",
+                groupMinDiameter: 0,
+                maxGroupLevelsDrawn: 20,
+                maxGroupLabelLevelsDrawn: 20,
+                maxGroupLevelsAttached: 20,
             });
         }
-    }
 
-    componentWillUnmount() {
-        this.foamtree.dispose();
-    }
+        return () => {
+            if (foamtreeRef.current) {
+                foamtreeRef.current.dispose();
+            }
+        };
+    }, []);
 
-    render() {
-        return <div style={{ height: "95vh", width: "95vw" }} ref={e => (this.element = e)}></div>;
-    }
+    useEffect(() => {
+        if (foamtreeRef.current) {
+            foamtreeRef.current.set("dataObject", {
+                groups: groups,
+            });
+        }
+    }, [groups]);
+
+    return <div style={{ height: "95vh", width: "95vw" }} ref={elementRef}></div>;
 }

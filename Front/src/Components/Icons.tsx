@@ -1,5 +1,5 @@
 import * as React from "react";
-import {RunStatus} from "../TestHistory/TestHistory";
+import { RunStatus } from "../TestHistory/TestHistory";
 import {
     ArrowARightIcon16Regular,
     ArrowARightIcon24Regular,
@@ -11,8 +11,8 @@ import {
     ShapeSquareIcon24Regular,
     ShapeSquareIcon32Regular,
     BuildingHomeIcon16Regular,
-    BuildingHomeIcon24Regular, 
-    BuildingHomeIcon32Regular
+    BuildingHomeIcon24Regular,
+    BuildingHomeIcon32Regular,
 } from "@skbkontur/icons";
 
 export function JonIcon(props: { size: 16 | 24 | 32; status?: RunStatus }) {
@@ -37,7 +37,7 @@ export function JonRunIcon(props: { size: 16 | 24 | 32; status?: RunStatus }) {
     }
 }
 
-export function HomeIcon(props: { size: 16 | 24 | 32; }) {
+export function HomeIcon(props: { size: 16 | 24 | 32 }) {
     switch (props.size) {
         case 16:
             return <BuildingHomeIcon16Regular />;
@@ -48,10 +48,10 @@ export function HomeIcon(props: { size: 16 | 24 | 32; }) {
     }
 }
 
-export function ArrowARightIcon(props: { size: 16 | 24 | 32; }) {
+export function ArrowARightIcon(props: { size: 16 | 24 | 32 }) {
     switch (props.size) {
         case 16:
-            return <ArrowARightIcon16Regular style={{ margin: "auto 5px" }}/>;
+            return <ArrowARightIcon16Regular style={{ margin: "auto 5px" }} />;
         case 24:
             return <ArrowARightIcon24Regular />;
         case 32:

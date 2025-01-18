@@ -1,32 +1,29 @@
+import { ShapeSquareIcon32Regular, ShareNetworkIcon } from "@skbkontur/icons";
+import { ColumnStack, Fit } from "@skbkontur/react-stack-layout";
 import * as React from "react";
 import { Link, useParams } from "react-router-dom";
-import {
-    formatTestCounts,
-    formatTestDuration,
-    getLinkToJob,
-    getOffsetTitle, getText,
-    toLocalTimeFromUtc,
-    useSearchParamAsState
-} from "../Utils";
+import styled from "styled-components";
+import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
+import { BranchCell, JobLinkWithResults } from "../Components/BranchCell";
+import { HomeIcon } from "../Components/Icons";
 import { BranchSelect } from "../TestHistory/BranchSelect";
 import {
-    LogoMicrosoftIcon,
-    QuestionCircleIcon,
-    ShapeSquareIcon32Regular,
-    ShareNetworkIcon
-} from "@skbkontur/icons";
-import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
-import { ColumnStack, Fit } from "@skbkontur/react-stack-layout";
-import styled from "styled-components";
-import {HomeIcon} from "../Components/Icons";
-import {BranchCell, JobLinkWithResults} from "../Components/BranchCell";
+    formatTestDuration,
+    getLinkToJob,
+    getOffsetTitle,
+    getText,
+    toLocalTimeFromUtc,
+    useSearchParamAsState,
+} from "../Utils";
 
 export function JobRunsPage(): React.JSX.Element {
-    const { jobId } = useParams();
+    const { jobId = "" } = useParams();
     const [currentBranchName, setCurrentBranchName] = useSearchParamAsState("branch");
     const client = useClickhouseClient();
 
-    const jobRuns = client.useData2<[string, string, string, string, string, string, string, string, string, string, string, string, string]>(
+    const jobRuns = client.useData2<
+        [string, string, string, string, string, string, string, string, string, string, string, string, string]
+    >(
         `
         SELECT
             JobId,
@@ -49,7 +46,7 @@ export function JobRunsPage(): React.JSX.Element {
         `,
         [currentBranchName, jobId]
     );
-    
+
     return (
         <ColumnStack block stretch gap={2}>
             <Fit>
@@ -92,7 +89,7 @@ export function JobRunsPage(): React.JSX.Element {
                                     <Link to={getLinkToJob(x[1], x[3])}>#{x[1]}</Link>
                                 </NumberCell>
                                 <BranchCell branch={x[2]}>
-                                    <ShareNetworkIcon/> {x[2]}
+                                    <ShareNetworkIcon /> {x[2]}
                                 </BranchCell>
                                 <CountCell>
                                     <JobLinkWithResults state={x[11]} to={`/test-analytics/jobs/${jobId}/runs/${x[1]}`}>

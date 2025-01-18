@@ -6,22 +6,24 @@ export const BranchCell = styled.td<{ branch: string }>`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    
-    ${props => props.branch == "master" && css`
-        border-radius: 20px;
-        background: #8ccbff;
-        display: inline;
-        padding: 2px 13px 2px 8px !important;
-  `}
+
+    ${props =>
+        props.branch == "master" &&
+        css`
+            border-radius: 20px;
+            background: #8ccbff;
+            display: inline;
+            padding: 2px 13px 2px 8px !important;
+        `}
 `;
 
 export const JobLinkWithResults = styled(Link)<{ state: string }>`
     color: ${props =>
-    props.state == "Success"
-        ? props.theme.successTextColor
-        : props.state == "Canceled"
-            ? props.theme.mutedTextColor
-            : props.theme.failedTextColor};
+        props.state == "Success"
+            ? props.theme.successTextColor
+            : props.state == "Canceled"
+              ? props.theme.mutedTextColor
+              : props.theme.failedTextColor};
     text-decoration: none;
     &:hover {
         text-decoration: underline;

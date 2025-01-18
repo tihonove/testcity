@@ -16,7 +16,7 @@ import { RouterLinkAdapter } from "../Components/RouterLinkAdapter";
 import { formatDuration } from "../RunStatisticsChart/DurationUtils";
 import { useSearchParamAsState, useSearchParamDebouncedAsState } from "../Utils";
 import { RunStatus } from "../TestHistory/TestHistory";
-import {ArrowARightIcon, HomeIcon, JonIcon, JonRunIcon} from "../Components/Icons";
+import { ArrowARightIcon, HomeIcon, JonIcon, JonRunIcon } from "../Components/Icons";
 
 interface TestNameProps {
     value: string;
@@ -33,7 +33,7 @@ function TestName(props: TestNameProps): React.JSX.Element {
             const testcaseName = dotParts.slice(-2).join(".");
             return [prefix, `${testcaseName}(${lastPart.join("(")}`];
         }
-        
+
         const dotParts = props.value.split(/[.]/);
         const prefix = dotParts.slice(0, -2).join(".");
         const testcaseName = dotParts.slice(-2).join(".");
@@ -42,7 +42,10 @@ function TestName(props: TestNameProps): React.JSX.Element {
     return (
         <>
             {splitValue[1]}
-            <TestNamePrefix onClick={() => props.onSetSearchValue(splitValue[0])}>
+            <TestNamePrefix
+                onClick={() => {
+                    props.onSetSearchValue(splitValue[0]);
+                }}>
                 {splitValue[0]}
             </TestNamePrefix>
         </>
@@ -88,14 +91,11 @@ function SortHeaderLink(props: SortHeaderLinkProps): React.JSX.Element {
 }
 
 export function JobRunPage(): React.JSX.Element {
-    const { jobId, jobRunId } = useParams();
+    const { jobId = "", jobRunId = "" } = useParams();
     const [sortField, setSortField] = useSearchParamAsState("sort", "State");
     const [sortDirection, setSortDirection] = useSearchParamAsState("direction", "desc");
-    const [searchText, setSearchText, debouncedSearchValue, setSearchTextImmediate] = useSearchParamDebouncedAsState(
-        "filter",
-        500,
-        ""
-    );
+    const [searchText, setSearchText, debouncedSearchValue = "", setSearchTextImmediate] =
+        useSearchParamDebouncedAsState("filter", 500, "");
 
     const client = useClickhouseClient();
 
@@ -108,7 +108,7 @@ export function JobRunPage(): React.JSX.Element {
 
     const condition = React.useMemo(() => {
         let result = `JobId = '${jobId}' AND JobRunId = '${jobRunId}'`;
-        if (searchValue?.trim() != "") result += ` AND TestId LIKE '%${searchValue}%'`;
+        if (searchValue.trim() != "") result += ` AND TestId LIKE '%${searchValue}%'`;
         return result;
     }, [jobId, jobRunId, searchValue]);
 
@@ -120,17 +120,16 @@ export function JobRunPage(): React.JSX.Element {
             ),
         [condition, sortField, sortDirection]
     );
-    
+
     const sortStatus = (a: RunStatus, b: RunStatus): number => {
         const order: Record<RunStatus, number> = {
-            'Failed': 1,
-            'Skipped': 2,
-            'Success': 3
+            Failed: 1,
+            Skipped: 2,
+            Success: 3,
         };
-        
+
         return order[a] - order[b];
     };
-
 
     return (
         <Root>
@@ -190,7 +189,11 @@ export function JobRunPage(): React.JSX.Element {
                                                 </SortHeaderLink>
                                             </th>
                                             <th>Name</th>
-                                            <th style={{ width: 80 }} onClick={() => setSortField("Duration")}>
+                                            <th
+                                                style={{ width: 80 }}
+                                                onClick={() => {
+                                                    setSortField("Duration");
+                                                }}>
                                                 <SortHeaderLink
                                                     onChangeSortKey={setSortField}
                                                     onChangeSortDirection={setSortDirection}
@@ -204,15 +207,17 @@ export function JobRunPage(): React.JSX.Element {
                                         </TestRunsTableHeadRow>
                                     </thead>
                                     <tbody>
-                                        {(sortField === 'State' && sortDirection === 'desc' 
-                                            ? testList.sort((a, b) => sortStatus(a[0], b[0])) 
-                                            : testList)
-                                            .map(x => (
+                                        {(sortField === "State" && sortDirection === "desc"
+                                            ? testList.sort((a, b) => sortStatus(a[0], b[0]))
+                                            : testList
+                                        ).map(x => (
                                             <TestRunsTableRow>
                                                 <StatusCell status={x[0]}>{x[0]}</StatusCell>
                                                 <TestNameCell>
                                                     <TestName
-                                                        onSetSearchValue={x => setSearchTextImmediate(x)}
+                                                        onSetSearchValue={x => {
+                                                            setSearchTextImmediate(x);
+                                                        }}
                                                         value={x[1]}
                                                     />
                                                 </TestNameCell>

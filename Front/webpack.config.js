@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
@@ -25,18 +26,17 @@ module.exports = {
             },
         ],
     },
-    plugins: [
-        new HtmlWebpackPlugin({ inject: "body", template: "./src/index.html", filename: "index.html" }),
-    ],
+    plugins: [new HtmlWebpackPlugin({ inject: "body", template: "./src/index.html", filename: "index.html" })],
     devServer: {
         historyApiFallback: {
             index: "/test-analytics/",
         },
-        proxy: {
-            "/test-analytics/clickhouse/": {
+        proxy: [
+            {
+                context: ["/test-analytics/clickhouse/"],
                 target: "http://vm-ch2-stg.dev.kontur.ru:8123",
                 pathRewrite: { "^/test-analytics/clickhouse": "" },
             },
-        },
+        ],
     },
 };

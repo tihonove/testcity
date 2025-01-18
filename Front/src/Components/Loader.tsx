@@ -1,10 +1,12 @@
 import * as React from "react";
-import {NetCloudIcon32Regular} from "@skbkontur/icons";
+import { NetCloudIcon32Regular } from "@skbkontur/icons";
 import styled from "styled-components";
 
 export const Loader = () => (
     <LoaderContainer>
-        <LoaderMessage><NetCloudIcon32Regular/> Loading ...</LoaderMessage>
+        <LoaderMessage>
+            <NetCloudIcon32Regular /> Loading ...
+        </LoaderMessage>
     </LoaderContainer>
 );
 

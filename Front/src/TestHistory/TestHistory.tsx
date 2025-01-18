@@ -5,19 +5,20 @@ import { Paging } from "@skbkontur/react-ui";
 import {
     ArrowUiCornerOutUpRightIcon,
     LogoMicrosoftIcon,
-    QuestionCircleIcon, ShapeCircleMIcon16Regular,
+    QuestionCircleIcon,
+    ShapeCircleMIcon16Regular,
     ShapeSquareIcon16Regular,
-    ShareNetworkIcon
+    ShareNetworkIcon,
 } from "@skbkontur/icons";
 import { RunStatisticsChart } from "../RunStatisticsChart/RunStatisticsChart";
 import { formatDuration } from "../RunStatisticsChart/DurationUtils";
 import { Link } from "react-router-dom";
 import { BranchSelect } from "./BranchSelect";
-import {getOffsetTitle, toLocalTimeFromUtc} from "../Utils";
-import {JobComboBox} from "../Components/JobComboBox";
-import {ArrowARightIcon, HomeIcon, JonIcon} from "../Components/Icons";
+import { getOffsetTitle, toLocalTimeFromUtc } from "../Utils";
+import { JobComboBox } from "../Components/JobComboBox";
+import { ArrowARightIcon, HomeIcon, JonIcon } from "../Components/Icons";
 
-export type RunStatus = 'Failed' | 'Skipped' | 'Success';
+export type RunStatus = "Failed" | "Skipped" | "Success";
 
 interface TestHistoryProps {
     testId: string;
@@ -72,13 +73,14 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
                     <Link to={`/test-analytics/jobs/${props.jobIds[0]}`}>
                         <JonIcon size={16} /> {props.jobIds[0]}
                     </Link>
-                    {props.runIdBreadcrumb && <>
-                        <ArrowARightIcon size={16}/>
-                        <Link to={`/test-analytics/jobs/${props.jobIds[0]}/runs/${props.runIdBreadcrumb}`}>
-                            <JonIcon size={16}/> {props.runIdBreadcrumb}
-                        </Link>
-                    </>
-                    }
+                    {props.runIdBreadcrumb && (
+                        <>
+                            <ArrowARightIcon size={16} />
+                            <Link to={`/test-analytics/jobs/${props.jobIds[0]}/runs/${props.runIdBreadcrumb}`}>
+                                <JonIcon size={16} /> {props.runIdBreadcrumb}
+                            </Link>
+                        </>
+                    )}
                 </HomeHeader>
             </Fit>
             <Fit>
@@ -93,7 +95,7 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
             <Fit>
                 <RowStack gap={2}>
                     <Fit>
-                        <JobComboBox value={props.jobId} items={props.jobIds} handler={props.onChangeJobId}/>
+                        <JobComboBox value={props.jobId} items={props.jobIds} handler={props.onChangeJobId} />
                     </Fit>
                     <Fit>
                         <BranchSelect
@@ -141,7 +143,13 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
                                     {x[7] == "Windows" ? <LogoMicrosoftIcon /> : <QuestionCircleIcon />} {x[6]}
                                 </td>
                                 <StartDateCell>{toLocalTimeFromUtc(x[5])}</StartDateCell>
-                                {x[8] && <GitLabLinkCell><Link to={x[8]} target="_blank" ><ArrowUiCornerOutUpRightIcon/></Link></GitLabLinkCell>}
+                                {x[8] && (
+                                    <GitLabLinkCell>
+                                        <Link to={x[8]} target="_blank">
+                                            <ArrowUiCornerOutUpRightIcon />
+                                        </Link>
+                                    </GitLabLinkCell>
+                                )}
                             </TestRunsTableRow>
                         ))}
                     </tbody>

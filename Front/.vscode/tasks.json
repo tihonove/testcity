@@ -1,0 +1,29 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "npm",
+            "script": "lint",
+            "problemMatcher": [
+                "$eslint-stylish"
+            ],
+            "label": "npm: lint",
+            "detail": "eslint",
+            "presentation": {
+                "clear": true
+            }
+        },
+        {
+            "type": "npm",
+            "script": "typecheck",
+            "problemMatcher": [
+                "$tsc"
+            ],
+            "label": "npm: typecheck",
+            "detail": "tsc",
+            "presentation": {
+                "clear": true
+            }
+        }
+    ]
+}

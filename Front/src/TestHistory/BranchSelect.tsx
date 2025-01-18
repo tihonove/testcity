@@ -14,18 +14,18 @@ export function BranchSelect(props: BranchSelectProps): React.JSX.Element {
     const client = useClickhouseClient();
     const [queriedBranches] = client.useData<[string]>(props.branchQuery ?? `SELECT 1 WHERE false`, []);
 
-    const getItems = async (query: string) => {
-        const branchesToFilter: string[] = [...(queriedBranches ?? []).map(x => x[0]), ...(props.branchNames ?? [])];
+    const getItems = (query: string) => {
+        const branchesToFilter: string[] = [...queriedBranches.map(x => x[0]), ...(props.branchNames ?? [])];
         const filteredBranches = branchesToFilter.filter(x => !query || x.includes(query));
-        return [undefined, <MenuSeparator />, ...filteredBranches];
+        return Promise.resolve([undefined, <MenuSeparator />, ...filteredBranches]);
     };
 
     return (
-        <ComboBox
+        <ComboBox<undefined | string>
             value={props.branch}
             getItems={getItems}
             onValueChange={x => {
-                if (typeof x === "string" || x == undefined) props.onChangeBranch(x);
+                props.onChangeBranch(x);
             }}
             itemToValue={x => (typeof x === "string" ? x : "")}
             valueToString={x => (typeof x === "string" ? x : "")}

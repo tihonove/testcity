@@ -8,7 +8,11 @@ function getHoursOffsetFromUtc(): number {
 
 export function getOffsetTitle(): string {
     const offsetHrs = getHoursOffsetFromUtc();
-    return offsetHrs === 0 ? '(UTC)' : offsetHrs > 0 ? `(GMT+${offsetHrs})` : `(GMT-${offsetHrs})`;
+    return offsetHrs === 0
+        ? "(UTC)"
+        : offsetHrs > 0
+          ? `(GMT+${offsetHrs.toString()})`
+          : `(GMT-${offsetHrs.toString()})`;
 }
 
 export function toLocalTimeFromUtc(dateTime: string): string {
@@ -17,73 +21,80 @@ export function toLocalTimeFromUtc(dateTime: string): string {
 
 function addHoursToDate(dateString: string, hoursToAdd: number): string {
     // Parse the dateString to create a Date object
-    let date = new Date(dateString.replace(' ', 'T'));
+    const date = new Date(dateString.replace(" ", "T"));
 
     // Add the specified number of hours
     date.setHours(date.getHours() + hoursToAdd);
 
     // Format the result to match "YYYY-MM-DD HH:mm:ss"
-    let year = date.getFullYear();
-    let month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-indexed
-    let day = String(date.getDate()).padStart(2, '0');
-    let hours = String(date.getHours()).padStart(2, '0');
-    let minutes = String(date.getMinutes()).padStart(2, '0');
-    let seconds = String(date.getSeconds()).padStart(2, '0');
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Month is zero-indexed
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
 
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    return `${year.toString()}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
 export function formatTestDuration(seconds: string): string {
-    let sec = Number(seconds);
-    return new Date(sec * 1000).toISOString().slice(11, 19)
+    const sec = Number(seconds);
+    return new Date(sec * 1000)
+        .toISOString()
+        .slice(11, 19)
         .replace(/(\d{2}):(\d{2}):(\d{2})/, "$1h $2m $3s")
         .replace("00h 00m ", "")
         .replace("00h ", "");
 }
 
-export function getText(total: string, passed: string, ignored: string, failed: string, state: string, info: string): string {
+export function getText(
+    total: string,
+    passed: string,
+    ignored: string,
+    failed: string,
+    state: string,
+    info: string
+): string {
     let out = formatTestCounts(total, passed, ignored, failed);
     if (state == "Canceled") out = state;
     else if (state == "Timeouted") out = state;
     else if (state == "Failed" && out == "") out = state;
-    
-    console.log(`info: ${info}`)
+
+    console.log(`info: ${info}`);
     return info ? `${info}. ${out}` : out;
 }
 
 export function formatTestCounts(total: string, passed: string, ignored: string, failed: string): string {
-    if (total == '0') return '';
-    
-    let out = "Tests "
-    if (failed != '0') out += `failed: ${failed} `
-    if (passed != '0') out += `passed: ${passed} `
-    if (ignored != '0') out += `ignored: ${ignored} `
+    if (total == "0") return "";
+
+    let out = "Tests ";
+    if (failed != "0") out += `failed: ${failed} `;
+    if (passed != "0") out += `passed: ${passed} `;
+    if (ignored != "0") out += `ignored: ${ignored} `;
     // out += `total: ${total}`
     return out.trim();
 }
 
 export function getLinkToJob(jobRunId: string, agentName: string) {
-    let project = /17358/.test(agentName)
-        ? "forms"
-        : /19371/.test(agentName)
-            ? "extern.forms"
-            : undefined;
+    const project = /17358/.test(agentName) ? "forms" : /19371/.test(agentName) ? "extern.forms" : undefined;
     return project ? `https://git.skbkontur.ru/forms/${project}/-/jobs/${jobRunId}` : "https://git.skbkontur.ru/";
 }
 
 export function useSearchParamAsState(
-    paramName: string, defaultValue?: string
+    paramName: string,
+    defaultValue?: string
 ): [string | undefined, (nextValue: undefined | string) => void] {
     const [searchParams, setSearchParams] = useSearchParams();
     return [
         searchParams.get(paramName) ?? defaultValue ?? undefined,
-        (value: undefined | string) =>
+        (value: undefined | string) => {
             setSearchParams(x => {
                 console.log(paramName, value);
                 if (value == undefined) x.delete(paramName);
                 else x.set(paramName, value);
                 return x;
-            }),
+            });
+        },
     ];
 }
 
@@ -105,15 +116,13 @@ export function useSearchParamDebouncedAsState(
         setValue(searchValue);
     }, [searchValue]);
 
-    const updateSearchValue = useDebouncedCallback(
-        (value: string | undefined) =>
-            setSearchParams(x => {
-                if (value == undefined) x.delete(paramName);
-                else x.set(paramName, value);
-                return x;
-            }),
-        timeout
-    );
+    const updateSearchValue = useDebouncedCallback((value: string | undefined) => {
+        setSearchParams(x => {
+            if (value == undefined) x.delete(paramName);
+            else x.set(paramName, value);
+            return x;
+        });
+    }, timeout);
 
     return [
         value ?? undefined,

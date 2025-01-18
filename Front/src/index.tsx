@@ -1,16 +1,17 @@
 import * as React from "react";
 import { createRoot } from "react-dom/client";
-import { App } from "./App";
 import { BrowserRouter } from "react-router-dom";
+import { App } from "./App";
 import { TestAnalyticsThemeProvider } from "./Theme/TestAnalyticsThemeProvider";
 
+import { Suspense } from "react";
 import "./CommonStyles/Fonts.css";
-import "./CommonStyles/Reset.css";
 import { GlobalStyle } from "./CommonStyles/GlobalStyle";
-import {Suspense} from "react";
-import {Loader} from "./Components/Loader";
+import "./CommonStyles/Reset.css";
+import { Loader } from "./Components/Loader";
+import { reject } from "./TypeHelpers";
 
-const root = createRoot(document.getElementById("root")!);
+const root = createRoot(document.getElementById("root") ?? reject("Not found #root element"));
 
 root.render(
     <React.StrictMode>

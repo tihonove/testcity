@@ -41,8 +41,18 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
     return (
         <ChartContainer>
             <ScaleButtons>
-                <Button onClick={() => setScale(scale / 2)}>-</Button>
-                <Button onClick={() => setScale(scale * 2)}>+</Button>
+                <Button
+                    onClick={() => {
+                        setScale(scale / 2);
+                    }}>
+                    -
+                </Button>
+                <Button
+                    onClick={() => {
+                        setScale(scale * 2);
+                    }}>
+                    +
+                </Button>
             </ScaleButtons>
             <GaugeLabels>
                 <GaugeLabel index={0}>
@@ -67,18 +77,17 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
             <GridLine index={3} />
             <ScrollContainer ref={scrollContainer}>
                 <Container>
-                    {reverse(props.value)
-                        .map((x, index) => (
-                            <Tooltip trigger={"hover"} render={() => x[2]} key={index}>
-                                <ChartBar
-                                    success={(x[0] == "Success").toString()}
-                                    scale={scale}
-                                    key={index}
-                                    style={{ height: 100 * (x[1] / maxVisibleDuration) }}>
-                                    {index % (8 / scale) === 0 && <DateLabel>{x[2]}</DateLabel>}
-                                </ChartBar>
-                            </Tooltip>
-                        ))}
+                    {reverse(props.value).map((x, index) => (
+                        <Tooltip trigger={"hover"} render={() => x[2]} key={index}>
+                            <ChartBar
+                                success={(x[0] == "Success").toString()}
+                                scale={scale}
+                                key={index}
+                                style={{ height: 100 * (x[1] / maxVisibleDuration) }}>
+                                {index % (8 / scale) === 0 && <DateLabel>{x[2]}</DateLabel>}
+                            </ChartBar>
+                        </Tooltip>
+                    ))}
                 </Container>
                 <DatesContainer></DatesContainer>
             </ScrollContainer>

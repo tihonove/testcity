@@ -1,12 +1,12 @@
 import * as React from "react";
 import { WebClickHouseClient } from "@clickhouse/client-web/dist/client";
-const { createClient } = require("@clickhouse/client-web");
+import { createClient } from "@clickhouse/client-web";
 import fetchIntercept from "fetch-intercept";
 import usePromise from "react-promise-suspense";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const unregister = fetchIntercept.register({
     request: function (url, config) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return [url.replace("http://zzz", "/test-analytics/clickhouse"), config];
     },
 });
@@ -17,7 +17,7 @@ const client = createClient({
     username: "tihonove",
     password: "12487562",
     clickhouse_settings: {
-        add_http_cors_header: "true",
+        add_http_cors_header: 1,
     },
 });
 
@@ -56,10 +56,13 @@ class ClickhouseClientHooksWrapper {
         const [loading, setLoading] = React.useState(true);
         React.useEffect(() => {
             setLoading(true);
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
             (async () => {
                 const response = await client.query({ query: query, format: "JSONCompact", query_id: getQueryId() });
                 const result = await response.json();
                 if (typeof result === "object") {
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
                     setData(result["data"]);
                     setLoading(false);
                 } else {
@@ -73,6 +76,7 @@ class ClickhouseClientHooksWrapper {
 
     public useData2<T>(query: string, deps?: React.DependencyList): T[] {
         const inputs = [...(deps ?? [])];
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return usePromise(async () => {
             const response = await client.query({ query: query, format: "JSONCompact", query_id: getQueryId() });
             const result = await response.json();
