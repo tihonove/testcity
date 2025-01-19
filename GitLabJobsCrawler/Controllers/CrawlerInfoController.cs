@@ -1,5 +1,6 @@
 ﻿using Kontur.TestAnalytics.Api;
 using Microsoft.AspNetCore.Mvc;
+using Vostok.Logging.Abstractions;
 
 namespace Kontur.TestAnalytics.GitLabJobsCrawler.Controllers;
 
@@ -17,6 +18,17 @@ public class CrawlerInfoController : ControllerBase
     {
         return Content("Hello!");
     }
+
+    [Route("gitlab")]
+    [AcceptVerbs("POST")]
+    public IActionResult AcceptWebHook([FromBody] string content)
+    {
+        log.Info("GitLab webhook");
+        log.Info(content);
+        return Ok();
+    }
+
+    private ILog log = LogProvider.Get();
 
     private readonly GitLabCrawlerService crawlerService;
 }
