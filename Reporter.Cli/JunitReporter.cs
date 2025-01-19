@@ -10,7 +10,7 @@ namespace Kontur.TestAnalytics.Reporter.Cli;
 
 public  class JunitReporter
 {
-    public JunitReporter(JunitReporterOptions options, ILog log)
+    public JunitReporter(JunitReporterOptions options)
     {
         this.options = options;
         this.log = log;
@@ -228,5 +228,5 @@ public  class JunitReporter
     }
 
     private readonly JunitReporterOptions options;
-    private readonly ILog log;
+    private readonly ILog log = LogProvider.Get().ForContext<JunitReporter>();
 }

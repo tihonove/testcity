@@ -14,7 +14,7 @@ public class UploaderTests
     public async Task TestRunsUploadTest()
     {
         var path = Path.GetFullPath("../../junit");
-        var report = new JunitReporter(new JunitReporterOptions { ReportsPaths = new[] { path+"/**" } }, new ConsoleLog());
+        var report = new JunitReporter(new JunitReporterOptions { ReportsPaths = new[] { path+"/**" } });
         
         Environment.SetEnvironmentVariable("CI_JOB_STARTED_AT", DateTime.Now.ToString("O"), EnvironmentVariableTarget.Process);
         
