@@ -28,6 +28,12 @@ public class TestAnalyticsGitLabCrawlerApplication : VostokAspNetCoreApplication
 		containerBuilder.RegisterType<CrawlerInfoController>().As<ControllerBase>().AsSelf().InstancePerLifetimeScope();
 		containerBuilder.RegisterType<GitLabCrawlerService>().AsSelf().SingleInstance();
 	}
+
+    public override Task WarmupServicesAsync(IVostokHostingEnvironment environment, IServiceProvider serviceProvider)
+    {
+		serviceProvider.GetRequiredService<GitLabCrawlerService>().Start();
+        return base.WarmupServicesAsync(environment, serviceProvider);
+    }
 }
 
 public class TestAnalyticsGitLabCrawlerApplicationStartup
