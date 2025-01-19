@@ -2,7 +2,6 @@ variables:
   DEFAULT_SOLUTION_FILE: "TestAnalytics.sln"
   BASE_IMAGE: "registry.kontur.host/ke-forms/gitlab-ci:11938"
   HOUSTON2_TEAM_ID: "07f09d0f-0ee5-4ad4-b585-bc7599374579"
-  HOUSTON2_APP_ID: "41b44950-db60-49b8-a2d5-7db5b078fe95"
 
 Deploy TestAnalytics:
   stage: deploy

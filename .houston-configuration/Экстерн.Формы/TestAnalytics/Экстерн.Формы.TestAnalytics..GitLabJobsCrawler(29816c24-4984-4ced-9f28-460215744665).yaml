@@ -1,0 +1,16 @@
+tpsa: Application/29816c2449844ced9f28460215744665
+configurations:
+  - configuration:
+      binaryDefaults:
+        binaryPackageName: Kontur.TestAnalytics.GitLabJobsCrawler
+        entryPointName: TestAnalyticsGitLabCrawlerApplication
+  - environment: Environment/85769deb7fbf4625a81817c6ce0d688d # Cloud
+    configuration:
+      resources:
+        cpu:
+          request: 0.02
+          limit: 1
+        memory:
+          request: 110 MB
+          limit: 512 MB
+
