@@ -87,15 +87,19 @@ export function JobsPage(): React.JSX.Element {
                     .map(section => (
                         <React.Fragment key={section}>
                             <Fit>
-                                <Header3>
-                                    {section === "17358"
-                                        ? "Wolfs"
-                                        : section === "19371"
-                                          ? "Forms mastering"
-                                          : section === "182"
-                                            ? "Diadoc"
-                                            : section}
-                                </Header3>
+                                <Link
+                                    className="no-underline"
+                                    to={`/test-analytics/projects/${encodeURIComponent(section)}`}>
+                                    <Header3>
+                                        {section === "17358"
+                                            ? "Wolfs"
+                                            : section === "19371"
+                                              ? "Forms mastering"
+                                              : section === "182"
+                                                ? "Diadoc"
+                                                : section}
+                                    </Header3>
+                                </Link>
                             </Fit>
                             <JobList>
                                 {allJobs

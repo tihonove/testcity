@@ -19,6 +19,12 @@ public class StaticFilesController : ControllerBase
     [HttpGet]
     public Stream Home() => TestAnalyticsFrontContent.GetFile("index.html");
     
+    [Route("")]
+    [Route("history")]
+    [Route("projects/{*pathInfo}")]
+    [HttpGet]
+    public Stream Projects() => TestAnalyticsFrontContent.GetFile("index.html");
+    
     [Route("static/{*pathInfo}")]
     [HttpGet]
     public Stream StaticFiles(string pathInfo) => TestAnalyticsFrontContent.GetFile("static/" + pathInfo);
