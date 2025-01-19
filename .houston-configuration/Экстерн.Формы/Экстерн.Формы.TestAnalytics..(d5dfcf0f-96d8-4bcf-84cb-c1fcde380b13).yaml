@@ -1,1 +1,4 @@
 tpsa: Project/d5dfcf0f96d84bcf84cbc1fcde380b13
+configurations:
+  - configuration:
+      elkIndex: forms-infra
