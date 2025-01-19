@@ -51,8 +51,11 @@ public class TestsLoadFromGitlab
                             Console.WriteLine($"Test Run: {run.TestId}");
                         }
                         var jobInfo = GitLabHelpers.GetFullJobInfo(job, r.Counters);
-                        // await TestRunsUploader.UploadAsync(jobInfo, r.Runs);
-                        // await TestRunsUploader.JobInfoUploadAsync(jobInfo);
+                        if (await TestRunsUploader.IsJobRunIdExists(jobInfo.JobRunId)) 
+                        {
+                            // await TestRunsUploader.UploadAsync(jobInfo, r.Runs);
+                            // await TestRunsUploader.JobInfoUploadAsync(jobInfo);
+                        }
                     }
                 }
             }

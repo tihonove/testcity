@@ -1,4 +1,5 @@
 using ClickHouse.Client.ADO;
+using ClickHouse.Client.Utility;
 using Kontur.TestAnalytics.Reporter.Client.Impl;
 
 namespace Kontur.TestAnalytics.Reporter.Client;
@@ -15,6 +16,13 @@ public static class TestRunsUploader
     public static Task UploadAsync(JobRunInfo jobRunInfo, IEnumerable<TestRun> lines)
     {
         return UploadAsync(jobRunInfo, lines.ToAsyncEnumerable());
+    }
+    
+    public static async Task<bool> IsJobRunIdExists(string jobId)
+    {
+        await using var connection = CreateConnection();
+        var result = await connection.ExecuteScalarAsync($"Select count(JobRunId) > 0 from JobInfo where JobInfo.JobRunId == '{jobId}'");   
+        return result.Equals(1) || result.Equals(true);
     }
     
     public static async Task JobInfoUploadAsync(FullJobInfo jobInfo)

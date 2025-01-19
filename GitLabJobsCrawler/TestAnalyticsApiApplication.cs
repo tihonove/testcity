@@ -9,9 +9,11 @@ using Vostok.Applications.AspNetCore;
 using Vostok.Applications.AspNetCore.Builders;
 using Vostok.Applications.AspNetCore.Middlewares;
 using Vostok.Hosting.Abstractions;
+using Vostok.Hosting.Abstractions.Requirements;
 
 namespace Kontur.TestAnalytics.Api;
 
+[RequiresSecretConfiguration(typeof(GitLabSettings))]
 public class TestAnalyticsGitLabCrawlerApplication : VostokAspNetCoreApplication<TestAnalyticsGitLabCrawlerApplicationStartup>
 {
 	public override void Setup(IVostokAspNetCoreApplicationBuilder builder, IVostokHostingEnvironment environment)
@@ -22,6 +24,7 @@ public class TestAnalyticsGitLabCrawlerApplication : VostokAspNetCoreApplication
 
 	private void BuildContainer(ContainerBuilder containerBuilder, IVostokHostingEnvironment environment)
 	{
+		containerBuilder.RegisterInstance(environment.SecretConfigurationProvider.Get<GitLabSettings>()).As<GitLabSettings>();
 		containerBuilder.RegisterType<CrawlerInfoController>().As<ControllerBase>().AsSelf().InstancePerLifetimeScope();
 		containerBuilder.RegisterType<GitLabCrawlerService>().AsSelf().SingleInstance();
 	}
