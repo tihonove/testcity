@@ -22,7 +22,7 @@ export function JobRunsPage(): React.JSX.Element {
     const client = useClickhouseClient();
 
     const jobRuns = client.useData2<
-        [string, string, string, string, string, string, string, string, string, string, string, string, string]
+        [string, string, string, string, string, string, string, string, string, string, string, string, string, string]
     >(
         `
         SELECT
@@ -38,7 +38,8 @@ export function JobRunsPage(): React.JSX.Element {
             AgentOSName,
             Duration,
             State,
-            CustomStatusMessage
+            CustomStatusMessage,
+            JobUrl
         FROM JobInfo
         WHERE JobId = '${jobId}' ${currentBranchName ? `AND BranchName = '${currentBranchName}'` : ""}
         ORDER BY StartDateTime DESC
@@ -86,13 +87,15 @@ export function JobRunsPage(): React.JSX.Element {
                         {jobRuns.map(x => (
                             <tr>
                                 <NumberCell>
-                                    <Link to={getLinkToJob(x[1], x[3])}>#{x[1]}</Link>
+                                    <Link to={x[13] || getLinkToJob(x[1], x[3])}>#{x[1]}</Link>
                                 </NumberCell>
                                 <BranchCell branch={x[2]}>
                                     <ShareNetworkIcon /> {x[2]}
                                 </BranchCell>
                                 <CountCell>
-                                    <JobLinkWithResults state={x[11]} to={`/test-analytics/jobs/${jobId}/runs/${x[1]}`}>
+                                    <JobLinkWithResults
+                                        state={x[11]}
+                                        to={`/test-analytics/jobs/${encodeURIComponent(jobId)}/runs/${encodeURIComponent(x[1])}`}>
                                         {getText(x[5], x[6], x[7], x[8], x[11], x[12])}
                                     </JobLinkWithResults>
                                 </CountCell>

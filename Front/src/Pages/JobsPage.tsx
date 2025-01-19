@@ -30,7 +30,7 @@ export function JobsPage(): React.JSX.Element {
         .filter(x => x[0].trim() !== "");
 
     const allJobRuns = client.useData2<
-        [string, string, string, string, string, string, string, string, string, string, string, string, string]
+        [string, string, string, string, string, string, string, string, string, string, string, string, string, string]
     >(
         `
             SELECT
@@ -46,7 +46,8 @@ export function JobsPage(): React.JSX.Element {
                 SkippedTestsCount,
                 FailedTestsCount,
                 State,
-                CustomStatusMessage
+                CustomStatusMessage,
+                JobUrl
             FROM (
                      SELECT
                          *,
@@ -135,7 +136,9 @@ export function JobsPage(): React.JSX.Element {
                                                         <tr key={x[1]}>
                                                             <PaddingCell />
                                                             <NumberCell>
-                                                                <Link to={getLinkToJob(x[1], x[3])}>#{x[1]}</Link>
+                                                                <Link to={x[13] || getLinkToJob(x[1], x[3])}>
+                                                                    #{x[1]}
+                                                                </Link>
                                                             </NumberCell>
                                                             <BranchCell branch={x[2]}>
                                                                 <ShareNetworkIcon /> {x[2]}
