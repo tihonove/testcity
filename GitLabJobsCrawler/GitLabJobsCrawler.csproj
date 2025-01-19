@@ -13,9 +13,17 @@
     <ItemGroup>
         <PackageReference Include="Autofac" Version="8.0.0" />
         <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="9.0.0" />
+        <PackageReference Include="System.Reactive" Version="6.0.1" />
+        <PackageReference Include="System.Reactive.Linq" Version="6.0.1" />
         <PackageReference Include="Vostok.Applications.AspNetCore" Version="0.3.21" />
         <PackageReference Include="Vostok.Hosting.Houston" Version="1.0.497" />
         <PackageReference Include="Vostok.Logging.Abstractions" Version="1.0.32" />
+        <PackageReference Include="NGitLab" Version="7.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Reporter.Cli\Reporter.Cli.csproj" />
+        <ProjectReference Include="..\Reporter.Client\Reporter.Client.csproj" />
     </ItemGroup>
 
 </Project>

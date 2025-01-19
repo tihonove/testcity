@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Nodes;
-using Kontur.TestAnalytics.Api;
 using Microsoft.AspNetCore.Mvc;
 using Vostok.Logging.Abstractions;
 

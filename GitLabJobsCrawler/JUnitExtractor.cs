@@ -5,7 +5,7 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using System.Globalization;
 
-namespace Kontur.TestAnalytics.Reporter.Tests;
+namespace Kontur.TestAnalytics.GitLabJobsCrawler;
 
 public class JUnitExtractor
 {

@@ -1,6 +1,6 @@
 using System.IO.Compression;
 
-namespace Kontur.TestAnalytics.Reporter.Tests;
+namespace Kontur.TestAnalytics.GitLabJobsCrawler;
 
 public static class JUnitExtractorGitlabExtensions
 {

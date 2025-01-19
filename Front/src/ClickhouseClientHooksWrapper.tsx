@@ -75,10 +75,11 @@ class ClickhouseClientHooksWrapper {
     }
 
     public useData2<T>(query: string, deps?: React.DependencyList): T[] {
-        const inputs = [...(deps ?? [])];
+        const inputs = [query, ...(deps ?? [])];
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return usePromise(async () => {
-            const response = await client.query({ query: query, format: "JSONCompact", query_id: getQueryId() });
+            const id = getQueryId();
+            const response = await client.query({ query: query, format: "JSONCompact", query_id: id });
             const result = await response.json();
             if (typeof result === "object") {
                 return result["data"];

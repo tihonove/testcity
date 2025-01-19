@@ -1,5 +1,6 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Kontur.TestAnalytics.GitLabJobsCrawler;
 using Kontur.TestAnalytics.GitLabJobsCrawler.Controllers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

@@ -14,6 +14,7 @@ export function App(): React.JSX.Element {
                 <Route path="/test-analytics">
                     <Route index element={<JobsPage />} />
                     <Route path="jobs" element={<JobsPage />} />
+                    <Route path=":projectId/jobs" element={<JobsPage />} />
                     <Route path="jobs/:jobId" element={<JobRunsPage />} />
                     <Route path="jobs/:jobId/runs/:jobRunId" element={<JobRunPage />} />
                     <Route path="jobs/:jobId/runs/:jobRunId/treemap" element={<TestsTreeMapChart />} />

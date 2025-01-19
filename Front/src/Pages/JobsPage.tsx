@@ -1,7 +1,7 @@
 import { ShapeSquareIcon16Regular, ShareNetworkIcon } from "@skbkontur/icons";
 import { ColumnStack, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
 import { BranchCell, JobLinkWithResults } from "../Components/BranchCell";
@@ -10,17 +10,23 @@ import { BranchSelect } from "../TestHistory/BranchSelect";
 import { formatTestDuration, getLinkToJob, getText, toLocalTimeFromUtc, useSearchParamAsState } from "../Utils";
 
 export function JobsPage(): React.JSX.Element {
+    const { projectId = "" } = useParams();
     const client = useClickhouseClient();
     const [currentBranchName, setCurrentBranchName] = useSearchParamAsState("branch");
     const [currentGroup, setCurrentGroup] = useSearchParamAsState("group");
 
-    const allGroup = ["Wolfs", "Forms mastering", "Utilities"];
+    const serverProjects = client
+        .useData2<
+            [string]
+        >(`SELECT DISTINCT ProjectId FROM JobInfo WHERE StartDateTime >= DATE_ADD(MONTH, -1, NOW());`, ["1"])
+        .filter(x => x[0].trim() !== "");
+
+    const allGroup = projectId != "" ? [projectId] : [...serverProjects.map(x => x[0]), "Utilities"];
+    console.log(allGroup);
     const allJobs = client
-        .useData2<[string]>(
-            `SELECT DISTINCT JobId
-                             FROM JobInfo
-                             WHERE StartDateTime >= DATE_ADD(MONTH, -1, NOW());`
-        )
+        .useData2<
+            [string, string]
+        >(`SELECT DISTINCT JobId, ProjectId FROM JobInfo WHERE StartDateTime >= DATE_ADD(MONTH, -1, NOW());`, ["2"])
         .filter(x => x[0].trim() !== "");
 
     const allJobRuns = client.useData2<
@@ -79,28 +85,39 @@ export function JobsPage(): React.JSX.Element {
                 {allGroup
                     .filter(s => !currentGroup || s === currentGroup)
                     .map(section => (
-                        <>
+                        <React.Fragment key={section}>
                             <Fit>
-                                <Header3>{section}</Header3>
+                                <Header3>
+                                    {section === "17358"
+                                        ? "Wolfs"
+                                        : section === "19371"
+                                          ? "Forms mastering"
+                                          : section === "182"
+                                            ? "Diadoc"
+                                            : section}
+                                </Header3>
                             </Fit>
                             <JobList>
                                 {allJobs
                                     .filter(x => {
-                                        if (section === "Wolfs")
+                                        if (x[1]) {
+                                            return x[1] === section;
+                                        }
+                                        if (section === "17358")
                                             return !x[0].includes("FM · ") && !x[0].includes("Run ");
-                                        else if (section === "Forms mastering") return x[0].includes("FM · ");
+                                        else if (section === "19371") return x[0].includes("FM · ");
                                         else if (section === "Utilities") return x[0].includes("Run ");
                                         return true;
                                     })
                                     .map(jobId => (
-                                        <>
+                                        <React.Fragment key={jobId[0] + jobId[1]}>
                                             <thead>
                                                 <tr>
                                                     <JobHeader colSpan={6}>
                                                         <ShapeSquareIcon16Regular />{" "}
                                                         <Link
                                                             className="no-underline"
-                                                            to={`/test-analytics/jobs/${jobId[0]}`}>
+                                                            to={`/test-analytics/jobs/${encodeURIComponent(jobId[0])}`}>
                                                             {jobId[0]}
                                                         </Link>
                                                     </JobHeader>
@@ -111,7 +128,7 @@ export function JobsPage(): React.JSX.Element {
                                                     .filter(x => x[0] === jobId[0])
                                                     .sort((a, b) => Number(b[1]) - Number(a[1]))
                                                     .map(x => (
-                                                        <tr>
+                                                        <tr key={x[1]}>
                                                             <PaddingCell />
                                                             <NumberCell>
                                                                 <Link to={getLinkToJob(x[1], x[3])}>#{x[1]}</Link>
@@ -122,7 +139,7 @@ export function JobsPage(): React.JSX.Element {
                                                             <CountCell>
                                                                 <JobLinkWithResults
                                                                     state={x[11]}
-                                                                    to={`/test-analytics/jobs/${jobId[0]}/runs/${x[1]}`}>
+                                                                    to={`/test-analytics/jobs/${encodeURIComponent(jobId[0])}/runs/${encodeURIComponent(x[1])}`}>
                                                                     {getText(x[5], x[8], x[9], x[10], x[11], x[12])}
                                                                 </JobLinkWithResults>
                                                             </CountCell>
@@ -131,10 +148,10 @@ export function JobsPage(): React.JSX.Element {
                                                         </tr>
                                                     ))}
                                             </tbody>
-                                        </>
+                                        </React.Fragment>
                                     ))}
                             </JobList>
-                        </>
+                        </React.Fragment>
                     ))}
             </ColumnStack>
         </Root>
