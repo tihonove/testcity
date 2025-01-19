@@ -22,7 +22,7 @@ public class TestAnalyticsGitLabCrawlerApplication : VostokAspNetCoreApplication
 
 	private void BuildContainer(ContainerBuilder containerBuilder, IVostokHostingEnvironment environment)
 	{
-		containerBuilder.RegisterType<CrawlerInfoController>().As<ControllerBase>().AsSelf().InstancePerDependency();
+		containerBuilder.RegisterType<CrawlerInfoController>().As<ControllerBase>().AsSelf().InstancePerLifetimeScope();
 		containerBuilder.RegisterType<GitLabCrawlerService>().AsSelf().SingleInstance();
 	}
 }

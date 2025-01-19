@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Kontur.TestAnalytics.GitLabJobsCrawler.Controllers;
 
 [ApiController]
-internal class CrawlerInfoController : ControllerBase
+public class CrawlerInfoController : ControllerBase
 {
     public CrawlerInfoController(GitLabCrawlerService crawlerService)
     {
