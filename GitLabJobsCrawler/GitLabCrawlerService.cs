@@ -12,6 +12,7 @@ public class GitLabCrawlerService : IDisposable
     public void CrawlingProc()
     {
         log.Info("Test log message");
+        log.Error("Test error message");
     }
 
     public void Dispose()
