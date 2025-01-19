@@ -1,4 +1,5 @@
-﻿using Kontur.TestAnalytics.Api;
+﻿using System.Text.Json.Nodes;
+using Kontur.TestAnalytics.Api;
 using Microsoft.AspNetCore.Mvc;
 using Vostok.Logging.Abstractions;
 
@@ -21,10 +22,10 @@ public class CrawlerInfoController : ControllerBase
 
     [Route("gitlab")]
     [AcceptVerbs("POST")]
-    public IActionResult AcceptWebHook([FromBody] string content)
+    public IActionResult AcceptWebHook([FromBody] JsonObject content)
     {
         log.Info("GitLab webhook");
-        log.Info(content);
+        log.Info(content.ToString());
         return Ok();
     }
 
