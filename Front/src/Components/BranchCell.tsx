@@ -11,7 +11,8 @@ export const BranchCell = styled.td<{ branch: string }>`
         props.branch == "master" &&
         css`
             border-radius: 20px;
-            background: #8ccbff;
+            background: ${props => props.theme.accentBgColor};
+            color: ${props => props.theme.accentTextColor};
             display: inline;
             padding: 2px 13px 2px 8px !important;
         `}

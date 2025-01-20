@@ -19,5 +19,5 @@ const LoaderContainer = styled.div`
 
 const LoaderMessage = styled.h2`
     font-size: 32px;
-    color: #333;
+    color: ${props => props.theme.primaryTextColor};
 `;

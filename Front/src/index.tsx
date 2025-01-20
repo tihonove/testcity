@@ -15,13 +15,13 @@ const root = createRoot(document.getElementById("root") ?? reject("Not found #ro
 
 root.render(
     <React.StrictMode>
-        <BrowserRouter>
-            <TestAnalyticsThemeProvider>
+        <TestAnalyticsThemeProvider>
+            <BrowserRouter>
+                <GlobalStyle />
                 <Suspense fallback={<Loader />}>
-                    <GlobalStyle />
                     <App />
                 </Suspense>
-            </TestAnalyticsThemeProvider>
-        </BrowserRouter>
+            </BrowserRouter>
+        </TestAnalyticsThemeProvider>
     </React.StrictMode>
 );

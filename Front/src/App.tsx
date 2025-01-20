@@ -6,10 +6,20 @@ import { JobsPage } from "./Pages/JobsPage";
 import { JobRunsPage } from "./Pages/JobRunsPage";
 import { JobRunPage } from "./Pages/JobRunPage";
 import { TestsTreeMapChart } from "./Pages/TestsTreeMapChart";
+import { Button } from "@skbkontur/react-ui";
+import { WeatherMoonIcon20Regular, WeatherSunIcon20Regular } from "@skbkontur/icons";
+import { useDarkMode } from "usehooks-ts";
 
 export function App(): React.JSX.Element {
+    const { isDarkMode, toggle, enable, disable } = useDarkMode();
+
     return (
         <AppContainer>
+            <ThemeSwitchContainer>
+                <Button use="link" onClick={toggle}>
+                    {isDarkMode ? <WeatherMoonIcon20Regular /> : <WeatherSunIcon20Regular />}
+                </Button>
+            </ThemeSwitchContainer>
             <Routes>
                 <Route path="/test-analytics">
                     <Route index element={<JobsPage />} />
@@ -25,6 +35,12 @@ export function App(): React.JSX.Element {
         </AppContainer>
     );
 }
+
+const ThemeSwitchContainer = styled.div({
+    position: "absolute",
+    top: 20,
+    right: 20,
+});
 
 const AppContainer = styled.div({
     padding: 20,
