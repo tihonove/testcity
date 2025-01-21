@@ -64,8 +64,9 @@ public class GitLabCrawlerService : IDisposable
 
             foreach (var job in jobs)
             {
-                if (processedJobSet.Contains(job.Id)) {
-                    log.Info($"Skip job with id: {job.Id}");    
+                if (processedJobSet.Contains(job.Id))
+                {
+                    log.Info($"Skip job with id: {job.Id}");
                     continue;
                 }
                 log.Info($"Start processing job with id: {job.Id}");
@@ -80,8 +81,13 @@ public class GitLabCrawlerService : IDisposable
                         var jobInfo = GitLabHelpers.GetFullJobInfo(job, extractResult.Counters);
                         if (!await TestRunsUploader.IsJobRunIdExists(jobInfo.JobRunId))
                         {
-                            await TestRunsUploader.UploadAsync(jobInfo, extractResult.Runs);
+                            log.Info($"JobRunId '{jobInfo.JobRunId}' does not exist. Uploading test runs");
                             await TestRunsUploader.JobInfoUploadAsync(jobInfo);
+                            await TestRunsUploader.UploadAsync(jobInfo, extractResult.Runs);
+                        }
+                        else
+                        {
+                            log.Info($"JobRunId '{jobInfo.JobRunId}' exists. Skip uploading test runs");
                         }
                         processedJobSet.Add(job.Id);
                     }
