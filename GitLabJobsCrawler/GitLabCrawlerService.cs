@@ -38,9 +38,9 @@ public class GitLabCrawlerService : IDisposable
         });
     }
 
+
     private async Task PullGitLabJobArtifactsAndPushIntoTestAnalytics(CancellationToken token)
     {
-        var processedJobSet = new HashSet<long>();
         var gitLabProjectIds = new[] { 182 };
 
         foreach (var projectId in gitLabProjectIds)
@@ -102,6 +102,7 @@ public class GitLabCrawlerService : IDisposable
         stopTokenSource.Cancel();
     }
 
+    private readonly HashSet<long> processedJobSet = new HashSet<long>();
     private readonly ILog log = LogProvider.Get().ForContext<GitLabCrawlerService>();
     private readonly GitLabSettings gitLabSettings;
     private readonly CancellationTokenSource stopTokenSource;

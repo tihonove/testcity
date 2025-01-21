@@ -22,7 +22,7 @@ public static class TestRunsUploader
     {
         await using var connection = CreateConnection();
         var result = await connection.ExecuteScalarAsync($"Select count(JobRunId) > 0 from JobInfo where JobInfo.JobRunId == '{jobId}'");   
-        return result.Equals(1) || result.Equals(true);
+        return (byte)result == 1;
     }
     
     public static async Task JobInfoUploadAsync(FullJobInfo jobInfo)
