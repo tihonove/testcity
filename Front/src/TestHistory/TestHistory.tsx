@@ -15,7 +15,7 @@ import { formatDuration } from "../RunStatisticsChart/DurationUtils";
 import { Link } from "react-router-dom";
 import { BranchSelect } from "./BranchSelect";
 import { getOffsetTitle, toLocalTimeFromUtc } from "../Utils";
-import { JobComboBox } from "../Components/JobComboBox";
+import { ProjectComboBox } from "../Components/ProjectComboBox";
 import { ArrowARightIcon, HomeIcon, JonIcon } from "../Components/Icons";
 
 export type RunStatus = "Failed" | "Skipped" | "Success";
@@ -95,7 +95,7 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
             <Fit>
                 <RowStack gap={2}>
                     <Fit>
-                        <JobComboBox value={props.jobId} items={props.jobIds} handler={props.onChangeJobId} />
+                        <ProjectComboBox value={props.jobId} items={props.jobIds} handler={props.onChangeJobId} />
                     </Fit>
                     <Fit>
                         <BranchSelect

@@ -140,7 +140,7 @@ export function JobRunPage(): React.JSX.Element {
                             <HomeIcon size={16} /> All jobs
                         </Link>
                         <ArrowARightIcon size={16} />
-                        <Link to={`/test-analytics/jobs/${jobId}`}>
+                        <Link to={`/test-analytics/jobs/${encodeURIComponent(jobId)}`}>
                             <JonIcon size={16} /> {jobId}
                         </Link>
                     </JobHeader>
@@ -158,7 +158,10 @@ export function JobRunPage(): React.JSX.Element {
                 <Fit></Fit>
                 <Fit>
                     <Header3>Tests</Header3>
-                    <Link to={`/test-analytics/jobs/${jobId}/runs/${jobRunId}/treemap`}>Open tree map</Link>
+                    <Link
+                        to={`/test-analytics/jobs/${encodeURIComponent(jobId)}/runs/${encodeURIComponent(jobRunId)}/treemap`}>
+                        Open tree map
+                    </Link>
                 </Fit>
                 <Fit>
                     <Input

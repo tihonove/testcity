@@ -9,6 +9,7 @@ import { TestsTreeMapChart } from "./Pages/TestsTreeMapChart";
 import { Button } from "@skbkontur/react-ui";
 import { WeatherMoonIcon20Regular, WeatherSunIcon20Regular } from "@skbkontur/icons";
 import { useDarkMode } from "usehooks-ts";
+import { MergeRequestJobsPage } from "./Pages/MergeRequestJobsPage";
 
 export function App(): React.JSX.Element {
     const { isDarkMode, toggle, enable, disable } = useDarkMode();
@@ -25,6 +26,12 @@ export function App(): React.JSX.Element {
                     <Route index element={<JobsPage />} />
                     <Route path="projects" element={<JobsPage />} />
                     <Route path="projects/:projectId" element={<JobsPage />} />
+
+                    <Route
+                        path="projects/:projectId/merge-requests/:gitLabMergeRequestId/jobs"
+                        element={<MergeRequestJobsPage />}
+                    />
+
                     <Route path="jobs" element={<JobsPage />} />
                     <Route path="jobs/:jobId" element={<JobRunsPage />} />
                     <Route path="jobs/:jobId/runs/:jobRunId" element={<JobRunPage />} />
