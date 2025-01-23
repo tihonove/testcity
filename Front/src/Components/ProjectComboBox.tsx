@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ComboBox, MenuSeparator } from "@skbkontur/react-ui";
 import { MediaUiAPlayIcon } from "@skbkontur/icons";
+import { getProjectNameById } from "../Utils";
 
 interface ProjectComboBoxProps {
     value: string | undefined;
@@ -27,7 +28,7 @@ export const ProjectComboBox = ({ value, items, handler }: ProjectComboBoxProps)
             ) : (
                 <span>
                     {" "}
-                    <MediaUiAPlayIcon /> {x}
+                    <MediaUiAPlayIcon /> {getProjectNameById(x)}
                 </span>
             )
         }
@@ -40,7 +41,7 @@ export const ProjectComboBox = ({ value, items, handler }: ProjectComboBoxProps)
             ) : (
                 <span>
                     {" "}
-                    <MediaUiAPlayIcon /> {x}
+                    <MediaUiAPlayIcon /> {getProjectNameById(x)}
                 </span>
             )
         }

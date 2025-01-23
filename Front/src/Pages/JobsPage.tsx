@@ -6,7 +6,7 @@ import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
 import { JobsQueryRow, JobsView } from "../Components/JobsView";
 import { ProjectComboBox } from "../Components/ProjectComboBox";
 import { BranchSelect } from "../TestHistory/BranchSelect";
-import { useSearchParamAsState } from "../Utils";
+import { getProjectNameById, useSearchParamAsState } from "../Utils";
 
 export function JobsPage(): React.JSX.Element {
     const { projectId = "" } = useParams();
@@ -90,15 +90,7 @@ export function JobsPage(): React.JSX.Element {
                                 <Link
                                     className="no-underline"
                                     to={`/test-analytics/projects/${encodeURIComponent(section)}`}>
-                                    <Header3>
-                                        {section === "17358"
-                                            ? "Wolfs"
-                                            : section === "19371"
-                                              ? "Forms mastering"
-                                              : section === "182"
-                                                ? "Diadoc"
-                                                : section}
-                                    </Header3>
+                                    <Header3>{getProjectNameById(section)}</Header3>
                                 </Link>
                             </Fit>
                             <JobsView allJobs={allJobs} projectId={section} allJobRuns={allJobRuns} />

@@ -1,20 +1,29 @@
 import { Link, useParams } from "react-router-dom";
 import * as React from "react";
-import { Suspense, useDeferredValue, useMemo } from "react";
-import { DropdownMenu, Input, MenuItem, Spinner } from "@skbkontur/react-ui";
+import { Suspense, useDeferredValue, useMemo, useState } from "react";
+import { Button, DropdownMenu, Input, MenuItem, Paging, Spinner, Switcher } from "@skbkontur/react-ui";
 import styled from "styled-components";
 import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
 import {
+    CheckAIcon24Regular,
+    NetDownloadIcon24Regular,
+    ShapeCircleIcon24Solid,
     ShareNetworkIcon,
     UiFilterSortADefaultIcon16Regular,
     UiFilterSortAHighToLowIcon16Regular,
     UiFilterSortALowToHighIcon16Regular,
     UiMenuDots3VIcon16Regular,
+    XIcon24Regular,
 } from "@skbkontur/icons";
 import { ColumnStack, Fit } from "@skbkontur/react-stack-layout";
 import { RouterLinkAdapter } from "../Components/RouterLinkAdapter";
 import { formatDuration } from "../RunStatisticsChart/DurationUtils";
-import { useSearchParamAsState, useSearchParamDebouncedAsState } from "../Utils";
+import {
+    formatTestDuration,
+    toLocalTimeFromUtc,
+    useSearchParamAsState,
+    useSearchParamDebouncedAsState,
+} from "../Utils";
 import { RunStatus } from "../TestHistory/TestHistory";
 import { ArrowARightIcon, HomeIcon, JonIcon, JonRunIcon } from "../Components/Icons";
 
@@ -67,18 +76,23 @@ function SortHeaderLink(props: SortHeaderLinkProps): React.JSX.Element {
             href="#"
             onClick={() => {
                 if (props.sortKey == props.currentSortKey) {
-                    console.log(111);
-                    if (props.currentSortDirection == undefined || props.currentSortDirection == "asc")
-                        props.onChangeSortDirection("desc");
-                    else props.onChangeSortDirection("asc");
+                    if (props.currentSortDirection == undefined) props.onChangeSortDirection("desc");
+                    else if (props.currentSortDirection == "desc") props.onChangeSortDirection("asc");
+                    else {
+                        props.onChangeSortKey(undefined);
+                        props.onChangeSortDirection(undefined);
+                    }
                 } else {
                     props.onChangeSortKey(props.sortKey);
+                    props.onChangeSortDirection(props.currentSortDirection);
                 }
                 return false;
             }}>
             {props.children}{" "}
             {props.sortKey == props.currentSortKey ? (
-                props.currentSortDirection == undefined || props.currentSortDirection == "asc" ? (
+                props.currentSortDirection == undefined ? (
+                    <UiFilterSortADefaultIcon16Regular />
+                ) : props.currentSortDirection == "asc" ? (
                     <UiFilterSortALowToHighIcon16Regular />
                 ) : (
                     <UiFilterSortAHighToLowIcon16Regular />
@@ -92,15 +106,36 @@ function SortHeaderLink(props: SortHeaderLinkProps): React.JSX.Element {
 
 export function JobRunPage(): React.JSX.Element {
     const { jobId = "", jobRunId = "" } = useParams();
-    const [sortField, setSortField] = useSearchParamAsState("sort", "State");
+    const [testCasesType, setTestCasesType] = useState<"All" | "Success" | "Failed" | "Skipped">("All");
+    const [sortField, setSortField] = useSearchParamAsState("sort");
     const [sortDirection, setSortDirection] = useSearchParamAsState("direction", "desc");
     const [searchText, setSearchText, debouncedSearchValue = "", setSearchTextImmediate] =
         useSearchParamDebouncedAsState("filter", 500, "");
+    const [page, setPage] = useState(1);
+    const itemsPerPage = 100;
 
     const client = useClickhouseClient();
 
-    const [[testMinDate, branchName]] = client.useData2<[string, string]>(
-        `select StartDateTime, BranchName from JobInfo where JobId = '${jobId}' and JobRunId = '${jobRunId}'`,
+    const [
+        [
+            startDateTime,
+            endDateTime,
+            duration,
+            branchName,
+            totalTestsCount,
+            successTestsCount,
+            failedTestsCount,
+            skippedTestsCount,
+            triggered,
+            pipelineSource,
+            jobUrl,
+        ],
+    ] = client.useData2<[string, string, number, string, string, string, string, string, string, string, string]>(
+        `
+        SELECT StartDateTime, EndDateTime, Duration, BranchName, TotalTestsCount, SuccessTestsCount, FailedTestsCount, SkippedTestsCount, Triggered, PipelineSource, JobUrl
+        FROM JobInfo 
+        WHERE JobId = '${jobId}' and JobRunId = '${jobRunId}'
+        `,
         [jobId, jobRunId]
     );
 
@@ -109,27 +144,74 @@ export function JobRunPage(): React.JSX.Element {
     const condition = React.useMemo(() => {
         let result = `JobId = '${jobId}' AND JobRunId = '${jobRunId}'`;
         if (searchValue.trim() != "") result += ` AND TestId LIKE '%${searchValue}%'`;
+        if (testCasesType !== "All") result += ` AND State = '${testCasesType}'`;
         return result;
-    }, [jobId, jobRunId, searchValue]);
+    }, [jobId, jobRunId, searchValue, testCasesType]);
 
     const getTestList = React.useCallback(
         () =>
             client.useData2<[RunStatus, string, number, string]>(
-                `SELECT TOP 100 State, TestId, Duration, StartDateTime FROM TestRunsByRun WHERE ${condition} ORDER BY ${sortField ?? "StartDateTime"} ${sortDirection ?? "ASC"}`,
-                [condition, sortField, sortDirection]
+                `
+                SELECT State, TestId, Duration, StartDateTime 
+                FROM TestRunsByRun 
+                WHERE ${condition} 
+                ORDER BY 
+                    ${
+                        sortField ??
+                        `CASE 
+                        WHEN State = 'Failed' THEN 1
+                        WHEN State = 'Success' THEN 2
+                        WHEN State = 'Skipped' THEN 3
+                        ELSE 4
+                    END`
+                    } 
+                ${sortField ? (sortDirection ?? "ASC") : ""}
+                LIMIT ${(itemsPerPage * (page - 1)).toString()}, ${itemsPerPage}
+                `,
+                [condition, sortField, sortDirection, page]
             ),
-        [condition, sortField, sortDirection]
+        [condition, sortField, sortDirection, page]
     );
 
-    const sortStatus = (a: RunStatus, b: RunStatus): number => {
-        const order: Record<RunStatus, number> = {
-            Failed: 1,
-            Skipped: 2,
-            Success: 3,
-        };
+    const getTotalTestsCount = React.useCallback(
+        () => client.useData2<[string]>(`SELECT COUNT(*) FROM TestRunsByRun WHERE ${condition}`, [condition]),
+        [condition]
+    );
 
-        return order[a] - order[b];
-    };
+    function convertToCSV(data: any[][]): string {
+        return data
+            .map(row =>
+                row
+                    .map(cell => {
+                        if (typeof cell === "string" && (cell.includes(",") || cell.includes('"'))) {
+                            return `"${cell.replace(/"/g, '""')}"`;
+                        }
+                        return cell;
+                    })
+                    .join(",")
+            )
+            .join("\n");
+    }
+
+    function downloadCSV(filename: string, csvData: string): void {
+        const blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
+
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        link.click();
+
+        URL.revokeObjectURL(link.href);
+    }
+
+    async function createAndDownloadCSV(): Promise<void> {
+        const data = await client.query<[string, string, string, string]>(
+            `SELECT rowNumberInAllBlocks() + 1, TestId, State, Duration FROM TestRunsByRun WHERE JobId = '${jobId}' AND JobRunId = '${jobRunId}'`
+        );
+        data.unshift(["Order#", "Test Name", "Status", "Duration(ms)"]);
+        const csvString = convertToCSV(data);
+        downloadCSV(`${jobId.replace(" · ", "_").replace(" ", "_")}-${jobRunId}.csv`, csvString);
+    }
 
     return (
         <Root>
@@ -147,7 +229,8 @@ export function JobRunPage(): React.JSX.Element {
                 </Fit>
                 <Fit>
                     <JobRunHeader>
-                        <JonRunIcon size={32} /> #{jobRunId} at {testMinDate}
+                        <JonRunIcon size={32} />
+                        <StyledLink to={jobUrl}>#{jobRunId}</StyledLink>&nbsp;at {startDateTime}
                     </JobRunHeader>
                 </Fit>
                 <Fit>
@@ -155,9 +238,29 @@ export function JobRunPage(): React.JSX.Element {
                         <ShareNetworkIcon /> {branchName}
                     </Branch>
                 </Fit>
-                <Fit></Fit>
                 <Fit>
-                    <Header3>Tests</Header3>
+                    <table>
+                        <tbody>
+                            <tr style={{ height: "20px" }}>
+                                <td style={{ width: "150px", fontWeight: "bold" }}>Time</td>
+                                <td>
+                                    {toLocalTimeFromUtc(startDateTime, "short")} —{" "}
+                                    {toLocalTimeFromUtc(endDateTime, "short")} (
+                                    {formatTestDuration(duration.toString())})
+                                </td>
+                            </tr>
+                            <tr style={{ height: "20px" }}>
+                                <td style={{ width: "150px", fontWeight: "bold" }}>Triggered</td>
+                                <td>{triggered.replace("@skbkontur.ru", "")}</td>
+                            </tr>
+                            <tr style={{ height: "20px" }}>
+                                <td style={{ width: "150px", fontWeight: "bold" }}>Pipeline created by</td>
+                                <td>{pipelineSource}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </Fit>
+                <Fit>
                     <Link
                         to={`/test-analytics/jobs/${encodeURIComponent(jobId)}/runs/${encodeURIComponent(jobRunId)}/treemap`}>
                         Open tree map
@@ -173,6 +276,40 @@ export function JobRunPage(): React.JSX.Element {
                             debouncedSearchValue != searchValue ? <Spinner type={"mini"} caption={""} /> : undefined
                         }
                     />
+                    &nbsp;&nbsp;
+                    <Button
+                        title={`All tests ${totalTestsCount}`}
+                        use={testCasesType === "All" ? "primary" : "backless"}
+                        onClick={() => setTestCasesType("All")}>
+                        All {totalTestsCount}
+                    </Button>
+                    {successTestsCount != "0" && <>&nbsp;&nbsp;<Button
+                        title={`${successTestsCount} success`}
+                        use={testCasesType === "Success" ? "primary" : "backless"}
+                        icon={<CheckAIcon24Regular />}
+                        onClick={() => setTestCasesType("Success")}>
+                        {successTestsCount}
+                    </Button></>}
+                    {failedTestsCount != "0" && <>&nbsp;&nbsp;<Button
+                        title={`${failedTestsCount} failed`}
+                        use={testCasesType === "Failed" ? "primary" : "backless"}
+                        icon={<XIcon24Regular />}
+                        onClick={() => setTestCasesType("Failed")}>
+                        {failedTestsCount}
+                    </Button></>}
+                    {skippedTestsCount != "0" && <>&nbsp;&nbsp;<Button
+                        title={`${skippedTestsCount} skipped`}
+                        use={testCasesType === "Skipped" ? "primary" : "backless"}
+                        icon={<ShapeCircleIcon24Solid />}
+                        onClick={() => setTestCasesType("Skipped")}>
+                        {skippedTestsCount}
+                    </Button></>}
+                    <Button
+                        style={{ float: "right" }}
+                        icon={<NetDownloadIcon24Regular />}
+                        onClick={() => createAndDownloadCSV()}>
+                        Download tests in CSV
+                    </Button>
                 </Fit>
                 <Fit>
                     <Suspense fallback={"Loading test list...."}>
@@ -181,22 +318,9 @@ export function JobRunPage(): React.JSX.Element {
                                 <TestList>
                                     <thead>
                                         <TestRunsTableHeadRow>
-                                            <th style={{ width: 100 }}>
-                                                <SortHeaderLink
-                                                    onChangeSortKey={setSortField}
-                                                    onChangeSortDirection={setSortDirection}
-                                                    sortKey={"State"}
-                                                    currentSortDirection={sortDirection}
-                                                    currentSortKey={sortField}>
-                                                    Status
-                                                </SortHeaderLink>
-                                            </th>
+                                            <th style={{ width: 100 }}>Status</th>
                                             <th>Name</th>
-                                            <th
-                                                style={{ width: 80 }}
-                                                onClick={() => {
-                                                    setSortField("Duration");
-                                                }}>
+                                            <th style={{ width: 80 }}>
                                                 <SortHeaderLink
                                                     onChangeSortKey={setSortField}
                                                     onChangeSortDirection={setSortDirection}
@@ -210,11 +334,8 @@ export function JobRunPage(): React.JSX.Element {
                                         </TestRunsTableHeadRow>
                                     </thead>
                                     <tbody>
-                                        {(sortField === "State" && sortDirection === "desc"
-                                            ? testList.sort((a, b) => sortStatus(a[0], b[0]))
-                                            : testList
-                                        ).map(x => (
-                                            <TestRunsTableRow>
+                                        {testList.map(x => (
+                                            <TestRunsTableRow key={x[1]}>
                                                 <StatusCell status={x[0]}>{x[0]}</StatusCell>
                                                 <TestNameCell>
                                                     <TestName
@@ -241,6 +362,11 @@ export function JobRunPage(): React.JSX.Element {
                             )}
                         </Fetcher>
                     </Suspense>
+                    <Paging
+                        activePage={page}
+                        onPageChange={setPage}
+                        pagesCount={Math.ceil(Number(getTotalTestsCount()[0][0]) / itemsPerPage)}
+                    />
                 </Fit>
             </ColumnStack>
         </Root>
@@ -275,6 +401,13 @@ function Fetcher<T>(props: FetcherProps<T>): React.JSX.Element {
     const value = props.value();
     return <>{props.children(value)}</>;
 }
+
+const StyledLink = styled(Link)`
+    color: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    display: inherit;
+`;
 
 const JobHeader = styled.h2``;
 

@@ -30,3 +30,7 @@ export const JobLinkWithResults = styled(Link)<{ state: string }>`
         text-decoration: underline;
     }
 `;
+
+export const NumberCell = styled.td`
+    width: 80px;
+`;

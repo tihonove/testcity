@@ -88,4 +88,14 @@ class ClickhouseClientHooksWrapper {
             }
         }, inputs);
     }
+
+    public async query<T>(query: string): Promise<T[]> {
+            const response = await client.query({ query: query, format: "JSONCompact", query_id: getQueryId() });
+            const result = await response.json();
+            if (typeof result === "object") {
+                return result["data"];
+            } else {
+                throw new Error("Invalid output");
+            }
+    }
 }

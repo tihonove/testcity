@@ -3,7 +3,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { formatTestDuration, getLinkToJob, getText, toLocalTimeFromUtc } from "../Utils";
-import { BranchCell, JobLinkWithResults } from "./BranchCell";
+import { BranchCell, JobLinkWithResults } from "./Cells";
 
 export type JobsQueryRow = [
     string,

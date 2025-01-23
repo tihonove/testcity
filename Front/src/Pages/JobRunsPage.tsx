@@ -4,7 +4,7 @@ import * as React from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
-import { BranchCell, JobLinkWithResults } from "../Components/BranchCell";
+import { BranchCell, JobLinkWithResults, NumberCell } from "../Components/Cells";
 import { HomeIcon } from "../Components/Icons";
 import { BranchSelect } from "../TestHistory/BranchSelect";
 import {
@@ -15,11 +15,21 @@ import {
     toLocalTimeFromUtc,
     useSearchParamAsState,
 } from "../Utils";
+import { Paging } from "@skbkontur/react-ui";
+import { useState } from "react";
 
 export function JobRunsPage(): React.JSX.Element {
     const { jobId = "" } = useParams();
     const [currentBranchName, setCurrentBranchName] = useSearchParamAsState("branch");
+    const [page, setPage] = useState(1);
+    const itemsPerPage = 100;
     const client = useClickhouseClient();
+
+    const condition = React.useMemo(() => {
+        let result = `JobId = '${jobId}'`;
+        if (currentBranchName != undefined) result += ` AND BranchName = '${currentBranchName}'`;
+        return result;
+    }, [jobId, currentBranchName]);
 
     const jobRuns = client.useData2<
         [string, string, string, string, string, string, string, string, string, string, string, string, string, string]
@@ -41,11 +51,16 @@ export function JobRunsPage(): React.JSX.Element {
             CustomStatusMessage,
             JobUrl
         FROM JobInfo
-        WHERE JobId = '${jobId}' ${currentBranchName ? `AND BranchName = '${currentBranchName}'` : ""}
+        WHERE ${condition}
         ORDER BY StartDateTime DESC
-        LIMIT 100
+        LIMIT ${(itemsPerPage * (page - 1)).toString()}, ${itemsPerPage}
         `,
-        [currentBranchName, jobId]
+        [condition, page]
+    );
+    
+    const getTotalTestsCount = React.useCallback(
+        () => client.useData2<[string]>(`SELECT COUNT(*) FROM JobInfo WHERE ${condition}`, [condition]),
+        [condition]
     );
 
     return (
@@ -87,7 +102,7 @@ export function JobRunsPage(): React.JSX.Element {
                         {jobRuns.map(x => (
                             <tr>
                                 <NumberCell>
-                                    <Link to={x[13] || getLinkToJob(x[1], x[3])}>#{x[1]}</Link>
+                                    <Link to={x[13]}>#{x[1]}</Link>
                                 </NumberCell>
                                 <BranchCell branch={x[2]}>
                                     <ShareNetworkIcon /> {x[2]}
@@ -105,6 +120,11 @@ export function JobRunsPage(): React.JSX.Element {
                         ))}
                     </tbody>
                 </RunList>
+                <Paging
+                    activePage={page}
+                    onPageChange={setPage}
+                    pagesCount={Math.ceil(Number(getTotalTestsCount()[0][0]) / itemsPerPage)}
+                />
             </Fit>
         </ColumnStack>
     );
@@ -138,12 +158,12 @@ const RunList = styled.table`
     }
 `;
 
-const NumberCell = styled.td`
-    width: 80px;
-`;
-
 const CountCell = styled.td``;
 
-const StartedCell = styled.td``;
+const StartedCell = styled.td`
+    width: 160px;
+`;
 
-const DurationCell = styled.td``;
+const DurationCell = styled.td`
+    width: 100px;
+`;

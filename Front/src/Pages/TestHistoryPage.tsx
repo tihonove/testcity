@@ -34,12 +34,32 @@ export function TestHistoryPage(): React.JSX.Element {
     );
 
     const [testRunsPage, setTestRunsPage] = useState(1);
-    const testRuns = client.useData2<[string, string, string, RunStatus, number, string, string, string, string]>(
-        `SELECT JobId, JobRunId, BranchName, State, Duration, StartDateTime, AgentName, AgentOSName, JobUrl FROM TestRuns WHERE ${condition} ORDER BY StartDateTime DESC LIMIT ${(50 * (testRunsPage - 1)).toString()}, 50`,
+
+    const getTestRuns = React.useCallback(
+        () =>
+            client.useData2<[string, string, string, RunStatus, number, string, string, string, string]>(
+                `SELECT JobId, JobRunId, BranchName, State, Duration, StartDateTime, JobUrl
+                FROM TestRuns 
+                WHERE ${condition} 
+                ORDER BY StartDateTime 
+                DESC 
+                LIMIT ${(50 * (testRunsPage - 1)).toString()}, 50`,
+                [testId, testRunsPage, condition]
+            ),
         [testId, testRunsPage, condition]
     );
 
-    const totalRunCount = client.useData2<[string]>(`SELECT COUNT(*) FROM TestRuns WHERE ${condition}`, [condition]);
+    const getTotalRunCount = React.useCallback(
+        () => client.useData2<[string]>(`SELECT COUNT(*) FROM TestRuns WHERE ${condition}`, [condition]),
+        [condition]
+    );
+
+    const statusMessages = client.useData2<[string, string]>(
+        `SELECT JobRunId, CustomStatusMessage 
+        FROM JobInfo 
+        WHERE ${getTestRuns().map(t => `JobRunId = '${t[1]}'`).join(' OR ')};`,
+        [testId, testRunsPage, condition]
+    );
 
     return (
         <div>
@@ -52,8 +72,9 @@ export function TestHistoryPage(): React.JSX.Element {
                 branch={currentBranchName}
                 onChangeBranch={setCurrentBranchName}
                 stats={stats}
-                runs={testRuns}
-                totalRunCount={Number(totalRunCount[0][0])}
+                runsFetcher={getTestRuns}
+                statusMessages={statusMessages}
+                totalRunCount={Number(getTotalRunCount()[0][0])}
                 runsPage={testRunsPage}
                 onRunsPageChange={setTestRunsPage}
                 runIdBreadcrumb={runId}

@@ -17,6 +17,8 @@ import { BranchSelect } from "./BranchSelect";
 import { getOffsetTitle, toLocalTimeFromUtc } from "../Utils";
 import { ProjectComboBox } from "../Components/ProjectComboBox";
 import { ArrowARightIcon, HomeIcon, JonIcon } from "../Components/Icons";
+import { Suspense } from "react";
+import { BranchCell, NumberCell } from "../Components/Cells";
 
 export type RunStatus = "Failed" | "Skipped" | "Success";
 
@@ -35,7 +37,7 @@ interface TestHistoryProps {
     totalRunCount: number;
     runsPage: number;
     onRunsPageChange: (nextPage: number) => void;
-    runs: Array<
+    runsFetcher: () => Array<
         [
             jobId: string,
             jobRunId: string,
@@ -48,6 +50,7 @@ interface TestHistoryProps {
             jobUrl: string,
         ]
     >;
+    statusMessages: Array<[jobRunId: string, customStatusMessage: string]>;
     runIdBreadcrumb: string | undefined;
 }
 
@@ -61,6 +64,15 @@ function splitTestId(testId: string): [string, string] {
 
 export function TestHistory(props: TestHistoryProps): React.JSX.Element {
     const [suiteId, testId] = splitTestId(props.testId);
+
+    const getStatusMessage = (jobRunId: string): string => {
+        return props.statusMessages.find(m => m[0] === jobRunId)?.[1] ?? ""
+    }
+
+    const buildStatus = (status: string, message?: string): string => {
+        if (!message) return status;
+        return `${message}. ${status}`;
+    }
 
     return (
         <ColumnStack gap={4} block stretch>
@@ -110,50 +122,42 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
                 <RunStatisticsChart value={props.stats} />
             </Fit>
             <Fit>
-                <TestRunsTable>
-                    <thead>
-                        <TestRunsTableHeadRow>
-                            <th>Status</th>
-                            <th>Duration</th>
-                            <th>Branch</th>
-                            <th>Build</th>
-                            <th>Agent</th>
-                            <th>Started {getOffsetTitle()}</th>
-                            <th>Job Url</th>
-                        </TestRunsTableHeadRow>
-                    </thead>
-                    <tbody>
-                        {props.runs.map(x => (
-                            <TestRunsTableRow key={x[0] + "-" + x[1]}>
-                                <StatusCell status={x[3]}>{x[3]}</StatusCell>
-                                <DurationCell>{formatDuration(x[4], x[4])}</DurationCell>
-                                <BranchCell>
-                                    <ShareNetworkIcon /> {x[2]}
-                                </BranchCell>
-                                <td>
-                                    <Link to={`/test-analytics/jobs/${x[0]}`}>
-                                        <ShapeSquareIcon16Regular /> {x[0]}
-                                    </Link>
-                                    {" / "}
-                                    <Link to={`/test-analytics/jobs/${x[0]}/runs/${x[1]}`}>
-                                        <ShapeCircleMIcon16Regular /> #{x[1]}
-                                    </Link>
-                                </td>
-                                <td>
-                                    {x[7] == "Windows" ? <LogoMicrosoftIcon /> : <QuestionCircleIcon />} {x[6]}
-                                </td>
-                                <StartDateCell>{toLocalTimeFromUtc(x[5])}</StartDateCell>
-                                {x[8] && (
-                                    <GitLabLinkCell>
-                                        <Link to={x[8]} target="_blank">
-                                            <ArrowUiCornerOutUpRightIcon />
+                <Suspense fallback={"Loading test list...."}>
+                    <TestRunsTable>
+                        <thead>
+                            <TestRunsTableHeadRow>
+                                <th>#</th>
+                                <th>Status</th>
+                                <th>Duration</th>
+                                <th>Branch</th>
+                                <th>Job</th>
+                                <th>Started {getOffsetTitle()}</th>
+                            </TestRunsTableHeadRow>
+                        </thead>
+                        <tbody>
+                            {props.runsFetcher().map(x => (
+                                <TestRunsTableRow key={x[0] + "-" + x[1]}>
+                                    <NumberCell>
+                                        <Link to={x[6]} target="_blank">
+                                            #{x[1]}
                                         </Link>
-                                    </GitLabLinkCell>
-                                )}
-                            </TestRunsTableRow>
-                        ))}
-                    </tbody>
-                </TestRunsTable>
+                                    </NumberCell>
+                                    <StatusCell status={x[3]}>{buildStatus(x[3], getStatusMessage(x[1]))}</StatusCell>
+                                    <DurationCell>{formatDuration(x[4], x[4])}</DurationCell>
+                                    <BranchCell branch={x[2]}>
+                                        <ShareNetworkIcon /> {x[2]}
+                                    </BranchCell>
+                                    <JobIdCell>
+                                        <Link to={`/test-analytics/jobs/${x[0]}`}>
+                                            <ShapeSquareIcon16Regular /> {x[0]}
+                                        </Link>
+                                    </JobIdCell>
+                                    <StartDateCell>{toLocalTimeFromUtc(x[5])}</StartDateCell>
+                                </TestRunsTableRow>
+                            ))}
+                        </tbody>
+                    </TestRunsTable>
+                </Suspense>
                 <Paging
                     activePage={props.runsPage}
                     onPageChange={props.onRunsPageChange}
@@ -166,8 +170,8 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
 
 const HomeHeader = styled.h2``;
 
-const StatusCell = styled.td<{ status: RunStatus }>`
-    width: 100px;
+const StatusCell = styled.td<{ status: RunStatus, width?: string }>`
+    max-width: 100px;
     color: ${props =>
         props.status == "Success"
             ? props.theme.successTextColor
@@ -180,11 +184,12 @@ const DurationCell = styled.td`
     width: 100px;
 `;
 
-const GitLabLinkCell = styled.td`
-    text-align: center !important;
+const JobIdCell = styled.td`
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
-
-const BranchCell = styled.td``;
 
 const StartDateCell = styled.td`
     width: 200px;
