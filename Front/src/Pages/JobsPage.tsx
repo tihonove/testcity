@@ -1,4 +1,3 @@
-import { ColumnStack, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import * as React from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -8,7 +7,7 @@ import { ProjectComboBox } from "../Components/ProjectComboBox";
 import { BranchSelect } from "../TestHistory/BranchSelect";
 import { getProjectNameById, useSearchParamAsState } from "../Utils";
 import { Gapped, Sticky } from "@skbkontur/react-ui";
-import { ShapeSquareIcon16Regular } from "@skbkontur/icons";
+import { ShapeSquareIcon16Regular, ShapeSquareIcon16Solid } from "@skbkontur/icons";
 
 export function JobsPage(): React.JSX.Element {
     const { projectId = "" } = useParams();
@@ -64,46 +63,44 @@ export function JobsPage(): React.JSX.Element {
     );
 
     return (
-        <Gapped style={{ border: "0px", borderColor: "white", borderStyle: "solid" }} verticalAlign="top">
-            <Sticky side="top" getStop={() => null} offset={25}>
+        <Root verticalAlign="top">
+            <JobsMap side="top" offset={45}>
                 {allGroup.map(section => (
-                    <>
+                    <React.Fragment key={section}>
                         <Link className="no-underline" to={`/test-analytics/projects/${encodeURIComponent(section)}`}>
-                            <Header3>{getProjectNameById(section)}</Header3>
+                            <JobMapLevel1>{getProjectNameById(section)}</JobMapLevel1>
                         </Link>
                         {allJobs
                             .filter(x => (x[1] ? x[1] === section : true))
                             .map(j => (
-                                <JobTreeLeaf title={j[0]}>
-                                    <ShapeSquareIcon16Regular />{" "}
+                                <JobMapLevel2 title={j[0]} key={section + j[0]}>
+                                    {allJobRuns.filter(x => x[0] === j[0] && x[2] === "master")?.[0]?.[11] === "Failed" 
+                                        ? <ShapeSquareIcon16Solid style={{ color: "red" }}/> 
+                                        : <ShapeSquareIcon16Regular />}
                                     <Link
                                         className="no-underline"
                                         to={`/test-analytics/jobs/${encodeURIComponent(j[0])}`}>
                                         {j[0]}
                                     </Link>
-                                </JobTreeLeaf>
+                                </JobMapLevel2>
                             ))}
-                    </>
+                    </React.Fragment>
                 ))}
-            </Sticky>
-            <TestListRoot vertical style={{ border: "0px", borderColor: "white", borderStyle: "solid" }}>
+            </JobsMap>
+            <TestListRoot vertical>
                 <Header>Jobs</Header>
                 <Gapped>
                     {!projectId && (
-                        <Fit>
-                            <ProjectComboBox value={currentGroup} items={allGroup} handler={setCurrentGroup} />
-                        </Fit>
+                        <ProjectComboBox value={currentGroup} items={allGroup} handler={setCurrentGroup} />
                     )}
-                    <Fit>
-                        <BranchSelect
-                            branch={currentBranchName}
-                            onChangeBranch={setCurrentBranchName}
-                            branchQuery={`SELECT DISTINCT BranchName
-                                              FROM JobInfo
-                                              WHERE StartDateTime >= DATE_ADD(MONTH, -1, NOW()) AND BranchName != '' ${projectId ? " AND ProjectId == '" + projectId + "'" : ""}
-                                              ORDER BY StartDateTime DESC;`}
-                        />
-                    </Fit>
+                    <BranchSelect
+                        branch={currentBranchName}
+                        onChangeBranch={setCurrentBranchName}
+                        branchQuery={`SELECT DISTINCT BranchName
+                                            FROM JobInfo
+                                            WHERE StartDateTime >= DATE_ADD(MONTH, -1, NOW()) AND BranchName != '' ${projectId ? " AND ProjectId == '" + projectId + "'" : ""}
+                                            ORDER BY StartDateTime DESC;`}
+                    />
                 </Gapped>
                 {allGroup
                     .filter(s => !currentGroup || s === currentGroup)
@@ -118,7 +115,7 @@ export function JobsPage(): React.JSX.Element {
                         </React.Fragment>
                     ))}
             </TestListRoot>
-        </Gapped>
+        </Root>
     );
 }
 
@@ -141,10 +138,21 @@ const Header3 = styled.h3`
     margin-top: 16px;
 `;
 
-const JobTreeLeaf = styled.div`
-    margin-left: 16px;
-    max-width: 250px;
+const JobsMap = styled(Sticky)`
+    max-width: 300px;
+`;
+
+const JobMapLevel = styled.div`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+`;
+const JobMapLevel1 = styled(JobMapLevel)`
+    font-size: 18px;
+    line-height: 20px;
+    margin-top: 16px;
+`;
+
+const JobMapLevel2 = styled(JobMapLevel)`
+    margin-left: 16px;
 `;
