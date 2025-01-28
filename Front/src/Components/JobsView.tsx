@@ -3,7 +3,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { formatTestDuration, getLinkToJob, getText, toLocalTimeFromUtc } from "../Utils";
-import { BranchCell, JobLinkWithResults } from "./Cells";
+import { BranchCell, JobLinkWithResults, SelectedOnHoverTr } from "./Cells";
 
 export type JobsQueryRow = [
     string,
@@ -60,7 +60,7 @@ export function JobsView({ projectId: section, allJobs, allJobRuns }: JobsViewPr
                                 .filter(x => x[0] === jobId[0])
                                 .sort((a, b) => Number(b[1]) - Number(a[1]))
                                 .map(x => (
-                                    <tr key={x[1]}>
+                                    <SelectedOnHoverTr key={x[1]}>
                                         <PaddingCell />
                                         <NumberCell>
                                             <Link to={x[13] || getLinkToJob(x[1], x[3])}>#{x[1]}</Link>
@@ -77,7 +77,7 @@ export function JobsView({ projectId: section, allJobs, allJobRuns }: JobsViewPr
                                         </CountCell>
                                         <StartedCell>{toLocalTimeFromUtc(x[4])}</StartedCell>
                                         <DurationCell>{formatTestDuration(x[7])}</DurationCell>
-                                    </tr>
+                                    </SelectedOnHoverTr>
                                 ))}
                         </tbody>
                     </React.Fragment>

@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import * as React from "react";
 import { Suspense, useDeferredValue, useMemo, useState } from "react";
-import { Button, DropdownMenu, Input, MenuItem, Paging, Spinner, Switcher } from "@skbkontur/react-ui";
+import { Button, Center, DropdownMenu, Gapped, Group, Input, MenuItem, Paging, Spinner, Switcher } from "@skbkontur/react-ui";
 import styled from "styled-components";
 import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
 import {
@@ -26,6 +26,8 @@ import {
 } from "../Utils";
 import { RunStatus } from "../TestHistory/TestHistory";
 import { ArrowARightIcon, HomeIcon, JonIcon, JonRunIcon } from "../Components/Icons";
+import { ColorByState } from "../Components/Cells";
+import { AdditionalJobInfo } from "../Components/AdditionalJobInfo";
 
 interface TestNameProps {
     value: string;
@@ -59,6 +61,29 @@ function TestName(props: TestNameProps): React.JSX.Element {
             </TestNamePrefix>
         </>
     );
+}
+
+interface TestTypeFilterButtonProps {
+    count: string;
+    type: "All" | "Success" | "Failed" | "Skipped";
+    currentType: string;
+    onClick: (value: "All" | "Success" | "Failed" | "Skipped") => void;
+}
+
+function TestTypeFilterButton({ count, type, currentType, onClick, ...props }: TestTypeFilterButtonProps): React.JSX.Element {
+    if (count != "0") {
+        return (
+            <Button
+                title={`${count} ${type.toLowerCase()} tests`}
+                use={currentType === type ? "primary" : "backless"}
+                icon={type === "Success" ? <CheckAIcon24Regular /> : type === "Failed" ? <XIcon24Regular /> : type === "Skipped" ? <ShapeCircleIcon24Solid /> : <></>}
+                onClick={() => onClick(type)}
+                {...props}>
+                {type === "All" ? "All " : ""}{count}
+            </Button>
+        );
+    }
+    return <></>
 }
 
 type SortHeaderLinkProps = {
@@ -129,10 +154,12 @@ export function JobRunPage(): React.JSX.Element {
             triggered,
             pipelineSource,
             jobUrl,
+            customStatusMessage,
+            state,
         ],
-    ] = client.useData2<[string, string, number, string, string, string, string, string, string, string, string]>(
+    ] = client.useData2<[string, string, number, string, string, string, string, string, string, string, string, string, string]>(
         `
-        SELECT StartDateTime, EndDateTime, Duration, BranchName, TotalTestsCount, SuccessTestsCount, FailedTestsCount, SkippedTestsCount, Triggered, PipelineSource, JobUrl
+        SELECT StartDateTime, EndDateTime, Duration, BranchName, TotalTestsCount, SuccessTestsCount, FailedTestsCount, SkippedTestsCount, Triggered, PipelineSource, JobUrl, CustomStatusMessage, State
         FROM JobInfo 
         WHERE JobId = '${jobId}' and JobRunId = '${jobRunId}'
         `,
@@ -156,15 +183,14 @@ export function JobRunPage(): React.JSX.Element {
                 FROM TestRunsByRun 
                 WHERE ${condition} 
                 ORDER BY 
-                    ${
-                        sortField ??
-                        `CASE 
+                    ${sortField ??
+                `CASE 
                         WHEN State = 'Failed' THEN 1
                         WHEN State = 'Success' THEN 2
                         WHEN State = 'Skipped' THEN 3
                         ELSE 4
                     END`
-                    } 
+                } 
                 ${sortField ? (sortDirection ?? "ASC") : ""}
                 LIMIT ${(itemsPerPage * (page - 1)).toString()}, ${itemsPerPage}
                 `,
@@ -216,57 +242,35 @@ export function JobRunPage(): React.JSX.Element {
     return (
         <Root>
             <ColumnStack gap={2} block stretch>
-                <Fit>
-                    <JobHeader>
-                        <Link to={`/test-analytics/jobs`}>
-                            <HomeIcon size={16} /> All jobs
-                        </Link>
-                        <ArrowARightIcon size={16} />
-                        <Link to={`/test-analytics/jobs/${encodeURIComponent(jobId)}`}>
-                            <JonIcon size={16} /> {jobId}
-                        </Link>
-                    </JobHeader>
-                </Fit>
-                <Fit>
+                <JobBreadcrumbs>
+                    <Link to={`/test-analytics/jobs`}>
+                        <HomeIcon size={16} /> All jobs
+                    </Link>
+                    <ArrowARightIcon size={16} />
+                    <Link to={`/test-analytics/jobs/${encodeURIComponent(jobId)}`}>
+                        <JonIcon size={16} /> {jobId}
+                    </Link>
+                </JobBreadcrumbs>
+                <ColorByState state={state}>
                     <JobRunHeader>
                         <JonRunIcon size={32} />
                         <StyledLink to={jobUrl}>#{jobRunId}</StyledLink>&nbsp;at {startDateTime}
                     </JobRunHeader>
-                </Fit>
+                    <StatusMessage>
+                        {customStatusMessage}
+                    </StatusMessage>
+                </ColorByState>
                 <Fit>
                     <Branch>
                         <ShareNetworkIcon /> {branchName}
                     </Branch>
                 </Fit>
-                <Fit>
-                    <table>
-                        <tbody>
-                            <tr style={{ height: "20px" }}>
-                                <td style={{ width: "150px", fontWeight: "bold" }}>Time</td>
-                                <td>
-                                    {toLocalTimeFromUtc(startDateTime, "short")} —{" "}
-                                    {toLocalTimeFromUtc(endDateTime, "short")} (
-                                    {formatTestDuration(duration.toString())})
-                                </td>
-                            </tr>
-                            <tr style={{ height: "20px" }}>
-                                <td style={{ width: "150px", fontWeight: "bold" }}>Triggered</td>
-                                <td>{triggered.replace("@skbkontur.ru", "")}</td>
-                            </tr>
-                            <tr style={{ height: "20px" }}>
-                                <td style={{ width: "150px", fontWeight: "bold" }}>Pipeline created by</td>
-                                <td>{pipelineSource}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </Fit>
-                <Fit>
-                    <Link
-                        to={`/test-analytics/jobs/${encodeURIComponent(jobId)}/runs/${encodeURIComponent(jobRunId)}/treemap`}>
-                        Open tree map
-                    </Link>
-                </Fit>
-                <Fit>
+                <AdditionalJobInfo startDateTime={startDateTime} endDateTime={endDateTime} duration={duration} triggered={triggered} pipelineSource={pipelineSource} />
+                <Link
+                    to={`/test-analytics/jobs/${encodeURIComponent(jobId)}/runs/${encodeURIComponent(jobRunId)}/treemap`}>
+                    Open tree map
+                </Link>
+                <Gapped>
                     <Input
                         placeholder={"Search in tests"}
                         width={500}
@@ -276,41 +280,19 @@ export function JobRunPage(): React.JSX.Element {
                             debouncedSearchValue != searchValue ? <Spinner type={"mini"} caption={""} /> : undefined
                         }
                     />
-                    &nbsp;&nbsp;
+                    <TestTypeFilterButton type="All" currentType={testCasesType} count={totalTestsCount} onClick={setTestCasesType} />
+                    <TestTypeFilterButton type="Success" currentType={testCasesType} count={successTestsCount} onClick={setTestCasesType} />
+                    <TestTypeFilterButton type="Failed" currentType={testCasesType} count={failedTestsCount} onClick={setTestCasesType} />
+                    <TestTypeFilterButton type="Skipped" currentType={testCasesType} count={skippedTestsCount} onClick={setTestCasesType} />
+                </Gapped>
+                <Gapped>
                     <Button
-                        title={`All tests ${totalTestsCount}`}
-                        use={testCasesType === "All" ? "primary" : "backless"}
-                        onClick={() => setTestCasesType("All")}>
-                        All {totalTestsCount}
-                    </Button>
-                    {successTestsCount != "0" && <>&nbsp;&nbsp;<Button
-                        title={`${successTestsCount} success`}
-                        use={testCasesType === "Success" ? "primary" : "backless"}
-                        icon={<CheckAIcon24Regular />}
-                        onClick={() => setTestCasesType("Success")}>
-                        {successTestsCount}
-                    </Button></>}
-                    {failedTestsCount != "0" && <>&nbsp;&nbsp;<Button
-                        title={`${failedTestsCount} failed`}
-                        use={testCasesType === "Failed" ? "primary" : "backless"}
-                        icon={<XIcon24Regular />}
-                        onClick={() => setTestCasesType("Failed")}>
-                        {failedTestsCount}
-                    </Button></>}
-                    {skippedTestsCount != "0" && <>&nbsp;&nbsp;<Button
-                        title={`${skippedTestsCount} skipped`}
-                        use={testCasesType === "Skipped" ? "primary" : "backless"}
-                        icon={<ShapeCircleIcon24Solid />}
-                        onClick={() => setTestCasesType("Skipped")}>
-                        {skippedTestsCount}
-                    </Button></>}
-                    <Button
-                        style={{ float: "right" }}
+                        title="Download tests list in CSV"
                         icon={<NetDownloadIcon24Regular />}
                         onClick={() => createAndDownloadCSV()}>
-                        Download tests in CSV
+                        Download
                     </Button>
-                </Fit>
+                </Gapped>
                 <Fit>
                     <Suspense fallback={"Loading test list...."}>
                         <Fetcher value={getTestList}>
@@ -409,11 +391,16 @@ const StyledLink = styled(Link)`
     display: inherit;
 `;
 
-const JobHeader = styled.h2``;
+const JobBreadcrumbs = styled.h2``;
 
 const JobRunHeader = styled.h1`
     display: flex;
     font-size: 32px;
+    line-height: 32px;
+`;
+
+const StatusMessage = styled.h3`
+    display: flex;
     line-height: 32px;
 `;
 
@@ -423,7 +410,7 @@ const Branch = styled.span`
     display: inline-block;
     background-color: ${props => props.theme.backgroundColor1};
     border-radius: 2px;
-    padding: 4px 8px;
+    padding: 0 8px;
 `;
 
 const Header3 = styled.h3`
@@ -482,8 +469,8 @@ const StatusCell = styled.td<{ status: RunStatus }>`
         props.status == "Success"
             ? props.theme.successTextColor
             : props.status == "Failed"
-              ? props.theme.failedTextColor
-              : undefined};
+                ? props.theme.failedTextColor
+                : undefined};
 `;
 
 const SortHeaderLinkRoot = styled.a`

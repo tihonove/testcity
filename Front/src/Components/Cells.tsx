@@ -18,6 +18,15 @@ export const BranchCell = styled.td<{ branch: string }>`
         `}
 `;
 
+export const ColorByState = styled.span<{ state: string }>`
+    color: ${props =>
+        props.state == "Success"
+            ? props.theme.successTextColor
+            : props.state == "Canceled"
+              ? props.theme.mutedTextColor
+              : props.theme.failedTextColor};
+`;
+
 export const JobLinkWithResults = styled(Link)<{ state: string }>`
     color: ${props =>
         props.state == "Success"
@@ -34,3 +43,9 @@ export const JobLinkWithResults = styled(Link)<{ state: string }>`
 export const NumberCell = styled.td`
     width: 80px;
 `;
+
+export const SelectedOnHoverTr = styled.tr`
+    &:hover {
+        background-color: ${props => props.theme.backgroundColor1};
+    }
+`

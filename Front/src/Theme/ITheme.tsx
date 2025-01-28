@@ -34,7 +34,7 @@ const a = DARK_THEME;
 
 export const darkTheme: ITheme = {
     primaryBackground: DARK_THEME.bgDefault,
-    backgroundColor1: "rgba(0,0,0,0.05)",
+    backgroundColor1: "rgba(0,0,0,0.25)",
     primaryTextColor: DARK_THEME.textColorDefault,
     activeLinkColor: DARK_THEME.linkActiveColor,
     failedTextColor: DARK_THEME.linkDangerColor,

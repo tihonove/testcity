@@ -3,10 +3,6 @@ import styled from "styled-components";
 import { ColumnStack, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import { Paging } from "@skbkontur/react-ui";
 import {
-    ArrowUiCornerOutUpRightIcon,
-    LogoMicrosoftIcon,
-    QuestionCircleIcon,
-    ShapeCircleMIcon16Regular,
     ShapeSquareIcon16Regular,
     ShareNetworkIcon,
 } from "@skbkontur/icons";
@@ -18,7 +14,7 @@ import { getOffsetTitle, toLocalTimeFromUtc } from "../Utils";
 import { ProjectComboBox } from "../Components/ProjectComboBox";
 import { ArrowARightIcon, HomeIcon, JonIcon } from "../Components/Icons";
 import { Suspense } from "react";
-import { BranchCell, NumberCell } from "../Components/Cells";
+import { BranchCell, NumberCell, SelectedOnHoverTr } from "../Components/Cells";
 
 export type RunStatus = "Failed" | "Skipped" | "Success";
 
@@ -215,7 +211,7 @@ const TestRunsTableHeadRow = styled.tr({
     borderBottom: "1px solid #eee",
 });
 
-const TestRunsTableRow = styled.tr({
+const TestRunsTableRow = styled(SelectedOnHoverTr)({
     td: {
         textAlign: "left",
         padding: "6px 8px",

@@ -4,7 +4,7 @@ import * as React from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
-import { BranchCell, JobLinkWithResults, NumberCell } from "../Components/Cells";
+import { BranchCell, JobLinkWithResults, NumberCell, SelectedOnHoverTr } from "../Components/Cells";
 import { HomeIcon } from "../Components/Icons";
 import { BranchSelect } from "../TestHistory/BranchSelect";
 import {
@@ -100,7 +100,7 @@ export function JobRunsPage(): React.JSX.Element {
                     </thead>
                     <tbody>
                         {jobRuns.map(x => (
-                            <tr>
+                            <SelectedOnHoverTr>
                                 <NumberCell>
                                     <Link to={x[13]}>#{x[1]}</Link>
                                 </NumberCell>
@@ -116,7 +116,7 @@ export function JobRunsPage(): React.JSX.Element {
                                 </CountCell>
                                 <StartedCell>{toLocalTimeFromUtc(x[4])}</StartedCell>
                                 <DurationCell>{formatTestDuration(x[10])}</DurationCell>
-                            </tr>
+                            </SelectedOnHoverTr>
                         ))}
                     </tbody>
                 </RunList>
