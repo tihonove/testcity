@@ -94,7 +94,7 @@ export function JobsPage(): React.JSX.Element {
                                     <Header3>{getProjectNameById(section)}</Header3>
                                 </Link>
                                 <Button component="a"
-                                    href={`${allJobRuns.find(j => j[14] === section)?.[13].split("/-/")[0]}/-/pipelines/new`}
+                                    href={`${allJobRuns.find(j => j[14] === section)?.[13].split("/-/")[0]}/-/pipelines/new${currentBranchName ? `?ref=${currentBranchName}` : ""}`}
                                     target="_blank">
                                     New pipeline
                                 </Button>
