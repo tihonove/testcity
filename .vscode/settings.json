@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "server": "http://vm-ch2-stg.dev.kontur.ru",
+            "port": 8123,
+            "database": "test_analytics",
+            "useJWT": false,
+            "requestTimeout": 30000,
+            "enableTls": false,
+            "previewLimit": 50,
+            "password": "12487562",
+            "username": "tihonove",
+            "driver": "ClickHouse",
+            "name": "vm-ch2-stg.dev.kontur.ru"
+        }
+    ]
+}
