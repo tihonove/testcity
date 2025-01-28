@@ -20,6 +20,7 @@ export type JobsQueryRow = [
     string,
     string,
     string,
+    string
 ];
 
 interface JobsViewProps {

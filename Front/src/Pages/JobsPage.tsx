@@ -49,7 +49,8 @@ export function JobsPage(): React.JSX.Element {
                 FailedTestsCount,
                 State,
                 CustomStatusMessage,
-                JobUrl
+                JobUrl,
+                ProjectId
             FROM (
                      SELECT
                          *,
@@ -86,11 +87,18 @@ export function JobsPage(): React.JSX.Element {
                     .filter(s => !currentGroup || s === currentGroup)
                     .map(section => (
                         <React.Fragment key={section}>
-                            <Link
-                                className="no-underline"
-                                to={`/test-analytics/projects/${encodeURIComponent(section)}`}>
-                                <Header3>{getProjectNameById(section)}</Header3>
-                            </Link>
+                            <SectionTitle gap={24} verticalAlign="middle">
+                                <Link
+                                    className="no-underline"
+                                    to={`/test-analytics/projects/${encodeURIComponent(section)}`}>
+                                    <Header3>{getProjectNameById(section)}</Header3>
+                                </Link>
+                                <Button component="a"
+                                    href={`${allJobRuns.find(j => j[14] === section)?.[13].split("/-/")[0]}/-/pipelines/new`}
+                                    target="_blank">
+                                    New pipeline
+                                </Button>
+                            </SectionTitle>
                             <JobsView allJobs={allJobs} projectId={section} allJobRuns={allJobRuns} />
                         </React.Fragment>
                     ))}
@@ -101,6 +109,10 @@ export function JobsPage(): React.JSX.Element {
 
 const TestListRoot = styled(Gapped)`
     max-width: 1000px;
+`;
+
+const SectionTitle = styled(Gapped)`
+    margin-top: 16px;
 `;
 
 const Root = styled(Gapped)`
@@ -114,6 +126,5 @@ const Header = styled.h1`
 
 const Header3 = styled.h3`
     font-size: 22px;
-    line-height: 20px;
-    margin-top: 16px;
+    line-height: 24px;
 `;
