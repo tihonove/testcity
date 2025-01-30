@@ -82,14 +82,14 @@ public class GitLabCrawlerService : IDisposable
                     var extractResult = extractor.TryExtractTestRunsFromGitlabArtifact(artifactContents);
                     if (extractResult != null)
                     {
-                        var jobInfo = GitLabHelpers.GetFullJobInfo(job, extractResult.Counters);
+                        var refId = await BranchOrRef(client, projectId, job.Ref);
+                        var jobInfo = GitLabHelpers.GetFullJobInfo(job, refId, extractResult.Counters);
                         if (!await TestRunsUploader.IsJobRunIdExists(jobInfo.JobRunId))
                         {
                             log.Info($"JobRunId '{jobInfo.JobRunId}' does not exist. Uploading test runs");
                             await TestRunsUploader.JobInfoUploadAsync(jobInfo);
                             await TestRunsUploader.UploadAsync(jobInfo, extractResult.Runs);
 
-                            var refId = await BranchOrRef(client, projectId, job.Ref);
                             metricsSender.Send(projectInfo, refId, job, extractResult);
                         }
                         else

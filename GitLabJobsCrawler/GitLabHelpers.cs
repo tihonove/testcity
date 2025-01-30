@@ -5,7 +5,7 @@ namespace Kontur.TestAnalytics.GitLabJobsCrawler;
 
 public static class GitLabHelpers
 {
-    public static FullJobInfo GetFullJobInfo(NGitLab.Models.Job job, TestCount testCount)
+    public static FullJobInfo GetFullJobInfo(NGitLab.Models.Job job, string refId, TestCount testCount)
     {
         var endDateTime = DateTime.Now;
 
@@ -14,7 +14,7 @@ public static class GitLabHelpers
             JobUrl = job.WebUrl,
             JobId = job.Name,
             JobRunId = job.Id.ToString(),
-            BranchName = job.Ref,
+            BranchName = refId,
             // TODO Надо добавить в модельки NGitLab поля
             AgentName = job.Runner.Description ?? $"agent_${job.Runner.Id}",
             AgentOSName = "Unknown",
