@@ -26,8 +26,10 @@ public class TestAnalyticsGitLabCrawlerApplication : VostokAspNetCoreApplication
 	private void BuildContainer(ContainerBuilder containerBuilder, IVostokHostingEnvironment environment)
 	{
 		containerBuilder.RegisterInstance(environment.SecretConfigurationProvider.Get<GitLabSettings>()).As<GitLabSettings>();
+		containerBuilder.RegisterInstance(environment.Metrics).As<IVostokApplicationMetrics>();
 		containerBuilder.RegisterType<CrawlerInfoController>().As<ControllerBase>().AsSelf().InstancePerLifetimeScope();
 		containerBuilder.RegisterType<GitLabCrawlerService>().AsSelf().SingleInstance();
+		containerBuilder.RegisterType<TestMetricsSender>().AsSelf().SingleInstance();
 	}
 
     public override Task WarmupServicesAsync(IVostokHostingEnvironment environment, IServiceProvider serviceProvider)

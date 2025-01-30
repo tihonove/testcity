@@ -1,15 +1,18 @@
+using System.Text.RegularExpressions;
 using Kontur.TestAnalytics.Api;
 using Kontur.TestAnalytics.Reporter.Client;
 using NGitLab;
+using NGitLab.Models;
 using Vostok.Logging.Abstractions;
 
 namespace Kontur.TestAnalytics.GitLabJobsCrawler;
 
 public class GitLabCrawlerService : IDisposable
 {
-    public GitLabCrawlerService(GitLabSettings gitLabSettings)
+    public GitLabCrawlerService(GitLabSettings gitLabSettings, TestMetricsSender metricsSender)
     {
         this.gitLabSettings = gitLabSettings;
+        this.metricsSender = metricsSender;
         stopTokenSource = new CancellationTokenSource();
     }
 
@@ -48,6 +51,7 @@ public class GitLabCrawlerService : IDisposable
             log.Info($"Pulling jobs for project {projectId}");
             var client = new GitLabClient("https://git.skbkontur.ru", gitLabSettings.GitLabToken);
             var jobsClient = client.GetJobs(projectId);
+            var projectInfo = await client.Projects.GetByIdAsync(projectId, new SingleProjectQuery(), token);
             var jobsQuery = new NGitLab.Models.JobQuery
             {
                 PerPage = 300,
@@ -84,11 +88,15 @@ public class GitLabCrawlerService : IDisposable
                             log.Info($"JobRunId '{jobInfo.JobRunId}' does not exist. Uploading test runs");
                             await TestRunsUploader.JobInfoUploadAsync(jobInfo);
                             await TestRunsUploader.UploadAsync(jobInfo, extractResult.Runs);
+
+                            var refId = await BranchOrRef(client, projectId, job.Ref);
+                            metricsSender.Send(projectInfo, refId, job, extractResult);
                         }
                         else
                         {
                             log.Info($"JobRunId '{jobInfo.JobRunId}' exists. Skip uploading test runs");
                         }
+
                         processedJobSet.Add(job.Id);
                     }
                 }
@@ -102,8 +110,31 @@ public class GitLabCrawlerService : IDisposable
         stopTokenSource.Cancel();
     }
 
+    private async Task<string> BranchOrRef(GitLabClient client, int projectId, string refId)
+    {
+        if (refToBranch.TryGetValue(refId, out var branch))
+        {
+            return branch;
+        }
+
+        var match = mergeRequestRef.Match(refId);
+        if (!match.Success)
+        {
+            return refId;
+        }
+
+        var mrId = long.Parse(match.Groups[1].Value);
+        var mr = await client.GetMergeRequest(projectId).GetByIidAsync(mrId, new SingleMergeRequestQuery());
+
+        refToBranch[refId] = mr.SourceBranch;
+        return mr.SourceBranch;
+    }
+
+    private readonly Regex mergeRequestRef = new Regex("^refs/merge-requests/(\\d+)/head$");
     private readonly HashSet<long> processedJobSet = new HashSet<long>();
+    private readonly Dictionary<string, string> refToBranch = new Dictionary<string, string>();
     private readonly ILog log = LogProvider.Get().ForContext<GitLabCrawlerService>();
     private readonly GitLabSettings gitLabSettings;
+    private readonly TestMetricsSender metricsSender;
     private readonly CancellationTokenSource stopTokenSource;
 }
