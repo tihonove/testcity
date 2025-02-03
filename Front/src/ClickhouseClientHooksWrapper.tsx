@@ -3,6 +3,8 @@ import { WebClickHouseClient } from "@clickhouse/client-web/dist/client";
 import { createClient } from "@clickhouse/client-web";
 import fetchIntercept from "fetch-intercept";
 import usePromise from "react-promise-suspense";
+import { TestAnalyticsStorage } from "./Domain/Storage";
+import { uuidv4 } from "./Domain/Guids";
 
 const unregister = fetchIntercept.register({
     request: function (url, config) {
@@ -21,27 +23,26 @@ const client = createClient({
     },
 });
 
+export function useStorageQuery<T>(
+    fn: (storage: TestAnalyticsStorage) => T | Promise<T>,
+    deps?: React.DependencyList
+): T {
+    const storage = React.useRef(new TestAnalyticsStorage(client));
+    /* eslint-disable @typescript-eslint/no-unsafe-return */
+    return usePromise(async () => {
+        return await fn(storage.current);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+    }, deps);
+    /* eslint-enable @typescript-eslint/no-unsafe-return */
+}
+
 export function useClickhouseClient(): ClickhouseClientHooksWrapper {
     return new ClickhouseClientHooksWrapper(client);
 }
 
 function getQueryId() {
     return uuidv4();
-}
-
-function uuidv4() {
-    if (typeof crypto != "undefined") {
-        return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
-            (+c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (+c / 4)))).toString(16)
-        );
-    } else {
-        const w = () => {
-            return Math.floor((1 + Math.random()) * 0x10000)
-                .toString(16)
-                .substring(1);
-        };
-        return `${w()}${w()}-${w()}-${w()}-${w()}-${w()}${w()}${w()}`;
-    }
 }
 
 class ClickhouseClientHooksWrapper {
@@ -90,12 +91,14 @@ class ClickhouseClientHooksWrapper {
     }
 
     public async query<T>(query: string): Promise<T[]> {
-            const response = await client.query({ query: query, format: "JSONCompact", query_id: getQueryId() });
-            const result = await response.json();
-            if (typeof result === "object") {
-                return result["data"];
-            } else {
-                throw new Error("Invalid output");
-            }
+        const response = await client.query({ query: query, format: "JSONCompact", query_id: getQueryId() });
+        const result = await response.json();
+        if (typeof result === "object") {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            return result["data"];
+        } else {
+            throw new Error("Invalid output");
+        }
     }
 }

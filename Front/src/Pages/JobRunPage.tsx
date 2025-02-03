@@ -1,33 +1,28 @@
-import { Link, useParams } from "react-router-dom";
-import * as React from "react";
-import { Suspense, useDeferredValue, useMemo, useState } from "react";
-import { Button, Center, DropdownMenu, Gapped, Group, Input, MenuItem, Paging, Spinner, Switcher } from "@skbkontur/react-ui";
-import styled from "styled-components";
-import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
 import {
     CheckAIcon24Regular,
     NetDownloadIcon24Regular,
     ShapeCircleIcon24Solid,
     ShareNetworkIcon,
-    UiFilterSortADefaultIcon16Regular,
-    UiFilterSortAHighToLowIcon16Regular,
-    UiFilterSortALowToHighIcon16Regular,
     UiMenuDots3VIcon16Regular,
     XIcon24Regular,
 } from "@skbkontur/icons";
 import { ColumnStack, Fit } from "@skbkontur/react-stack-layout";
+import { Button, DropdownMenu, Gapped, Input, MenuItem, Paging, Spinner } from "@skbkontur/react-ui";
+import * as React from "react";
+
+import { Suspense, useDeferredValue, useMemo, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import styled from "styled-components";
+import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
+import { AdditionalJobInfo } from "../Components/AdditionalJobInfo";
+import { ColorByState } from "../Components/Cells";
+import { ArrowARightIcon, HomeIcon, JonIcon, JonRunIcon } from "../Components/Icons";
 import { RouterLinkAdapter } from "../Components/RouterLinkAdapter";
 import { formatDuration } from "../RunStatisticsChart/DurationUtils";
-import {
-    formatTestDuration,
-    toLocalTimeFromUtc,
-    useSearchParamAsState,
-    useSearchParamDebouncedAsState,
-} from "../Utils";
 import { RunStatus } from "../TestHistory/TestHistory";
-import { ArrowARightIcon, HomeIcon, JonIcon, JonRunIcon } from "../Components/Icons";
-import { ColorByState } from "../Components/Cells";
-import { AdditionalJobInfo } from "../Components/AdditionalJobInfo";
+import { useSearchParamAsState, useSearchParamDebouncedAsState } from "../Utils";
+import { SortHeaderLink } from "./SortHeaderLink";
+import { urlPrefix } from "./Navigation";
 
 interface TestNameProps {
     value: string;
@@ -70,63 +65,39 @@ interface TestTypeFilterButtonProps {
     onClick: (value: "All" | "Success" | "Failed" | "Skipped") => void;
 }
 
-function TestTypeFilterButton({ count, type, currentType, onClick, ...props }: TestTypeFilterButtonProps): React.JSX.Element {
+function TestTypeFilterButton({
+    count,
+    type,
+    currentType,
+    onClick,
+    ...props
+}: TestTypeFilterButtonProps): React.JSX.Element {
     if (count != "0") {
         return (
             <Button
                 title={`${count} ${type.toLowerCase()} tests`}
                 use={currentType === type ? "primary" : "backless"}
-                icon={type === "Success" ? <CheckAIcon24Regular /> : type === "Failed" ? <XIcon24Regular /> : type === "Skipped" ? <ShapeCircleIcon24Solid /> : <></>}
-                onClick={() => onClick(type)}
+                icon={
+                    type === "Success" ? (
+                        <CheckAIcon24Regular />
+                    ) : type === "Failed" ? (
+                        <XIcon24Regular />
+                    ) : type === "Skipped" ? (
+                        <ShapeCircleIcon24Solid />
+                    ) : (
+                        <></>
+                    )
+                }
+                onClick={() => {
+                    onClick(type);
+                }}
                 {...props}>
-                {type === "All" ? "All " : ""}{count}
+                {type === "All" ? "All " : ""}
+                {count}
             </Button>
         );
     }
-    return <></>
-}
-
-type SortHeaderLinkProps = {
-    sortKey: string;
-    onChangeSortKey: (nextValue: string | undefined) => void;
-    currentSortKey: string | undefined;
-    currentSortDirection: string | undefined;
-    onChangeSortDirection: (nextValue: string | undefined) => void;
-    children: React.ReactNode;
-};
-
-function SortHeaderLink(props: SortHeaderLinkProps): React.JSX.Element {
-    return (
-        <SortHeaderLinkRoot
-            href="#"
-            onClick={() => {
-                if (props.sortKey == props.currentSortKey) {
-                    if (props.currentSortDirection == undefined) props.onChangeSortDirection("desc");
-                    else if (props.currentSortDirection == "desc") props.onChangeSortDirection("asc");
-                    else {
-                        props.onChangeSortKey(undefined);
-                        props.onChangeSortDirection(undefined);
-                    }
-                } else {
-                    props.onChangeSortKey(props.sortKey);
-                    props.onChangeSortDirection(props.currentSortDirection);
-                }
-                return false;
-            }}>
-            {props.children}{" "}
-            {props.sortKey == props.currentSortKey ? (
-                props.currentSortDirection == undefined ? (
-                    <UiFilterSortADefaultIcon16Regular />
-                ) : props.currentSortDirection == "asc" ? (
-                    <UiFilterSortALowToHighIcon16Regular />
-                ) : (
-                    <UiFilterSortAHighToLowIcon16Regular />
-                )
-            ) : (
-                <UiFilterSortADefaultIcon16Regular />
-            )}
-        </SortHeaderLinkRoot>
-    );
+    return <></>;
 }
 
 export function JobRunPage(): React.JSX.Element {
@@ -157,7 +128,9 @@ export function JobRunPage(): React.JSX.Element {
             customStatusMessage,
             state,
         ],
-    ] = client.useData2<[string, string, number, string, string, string, string, string, string, string, string, string, string]>(
+    ] = client.useData2<
+        [string, string, number, string, string, string, string, string, string, string, string, string, string]
+    >(
         `
         SELECT StartDateTime, EndDateTime, Duration, BranchName, TotalTestsCount, SuccessTestsCount, FailedTestsCount, SkippedTestsCount, Triggered, PipelineSource, JobUrl, CustomStatusMessage, State
         FROM JobInfo 
@@ -183,14 +156,15 @@ export function JobRunPage(): React.JSX.Element {
                 FROM TestRunsByRun 
                 WHERE ${condition} 
                 ORDER BY 
-                    ${sortField ??
-                `CASE 
+                    ${
+                        sortField ??
+                        `CASE 
                         WHEN State = 'Failed' THEN 1
                         WHEN State = 'Success' THEN 2
                         WHEN State = 'Skipped' THEN 3
                         ELSE 4
                     END`
-                } 
+                    } 
                 ${sortField ? (sortDirection ?? "ASC") : ""}
                 LIMIT ${(itemsPerPage * (page - 1)).toString()}, ${itemsPerPage}
                 `,
@@ -243,29 +217,33 @@ export function JobRunPage(): React.JSX.Element {
         <Root>
             <ColumnStack gap={2} block stretch>
                 <JobBreadcrumbs>
-                    <Link to={`/test-analytics/jobs`}>
+                    <Link to={urlPrefix}>
                         <HomeIcon size={16} /> All jobs
                     </Link>
-                    <ArrowARightIcon size={16} />
+                    {/* <ArrowARightIcon size={16} />
                     <Link to={`/test-analytics/jobs/${encodeURIComponent(jobId)}`}>
                         <JonIcon size={16} /> {jobId}
-                    </Link>
+                    </Link> */}
                 </JobBreadcrumbs>
                 <ColorByState state={state}>
                     <JobRunHeader>
                         <JonRunIcon size={32} />
                         <StyledLink to={jobUrl}>#{jobRunId}</StyledLink>&nbsp;at {startDateTime}
                     </JobRunHeader>
-                    <StatusMessage>
-                        {customStatusMessage}
-                    </StatusMessage>
+                    <StatusMessage>{customStatusMessage}</StatusMessage>
                 </ColorByState>
                 <Fit>
                     <Branch>
                         <ShareNetworkIcon /> {branchName}
                     </Branch>
                 </Fit>
-                <AdditionalJobInfo startDateTime={startDateTime} endDateTime={endDateTime} duration={duration} triggered={triggered} pipelineSource={pipelineSource} />
+                <AdditionalJobInfo
+                    startDateTime={startDateTime}
+                    endDateTime={endDateTime}
+                    duration={duration}
+                    triggered={triggered}
+                    pipelineSource={pipelineSource}
+                />
                 <Link
                     to={`/test-analytics/jobs/${encodeURIComponent(jobId)}/runs/${encodeURIComponent(jobRunId)}/treemap`}>
                     Open tree map
@@ -280,10 +258,30 @@ export function JobRunPage(): React.JSX.Element {
                             debouncedSearchValue != searchValue ? <Spinner type={"mini"} caption={""} /> : undefined
                         }
                     />
-                    <TestTypeFilterButton type="All" currentType={testCasesType} count={totalTestsCount} onClick={setTestCasesType} />
-                    <TestTypeFilterButton type="Success" currentType={testCasesType} count={successTestsCount} onClick={setTestCasesType} />
-                    <TestTypeFilterButton type="Failed" currentType={testCasesType} count={failedTestsCount} onClick={setTestCasesType} />
-                    <TestTypeFilterButton type="Skipped" currentType={testCasesType} count={skippedTestsCount} onClick={setTestCasesType} />
+                    <TestTypeFilterButton
+                        type="All"
+                        currentType={testCasesType}
+                        count={totalTestsCount}
+                        onClick={setTestCasesType}
+                    />
+                    <TestTypeFilterButton
+                        type="Success"
+                        currentType={testCasesType}
+                        count={successTestsCount}
+                        onClick={setTestCasesType}
+                    />
+                    <TestTypeFilterButton
+                        type="Failed"
+                        currentType={testCasesType}
+                        count={failedTestsCount}
+                        onClick={setTestCasesType}
+                    />
+                    <TestTypeFilterButton
+                        type="Skipped"
+                        currentType={testCasesType}
+                        count={skippedTestsCount}
+                        onClick={setTestCasesType}
+                    />
                 </Gapped>
                 <Gapped>
                     <Button
@@ -469,17 +467,6 @@ const StatusCell = styled.td<{ status: RunStatus }>`
         props.status == "Success"
             ? props.theme.successTextColor
             : props.status == "Failed"
-                ? props.theme.failedTextColor
-                : undefined};
-`;
-
-const SortHeaderLinkRoot = styled.a`
-    font-size: 12px;
-    color: ${props => props.theme.mutedTextColor};
-    white-space: nowrap;
-    text-decoration: none;
-
-    &:hover {
-        text-decoration: underline;
-    }
+              ? props.theme.failedTextColor
+              : undefined};
 `;

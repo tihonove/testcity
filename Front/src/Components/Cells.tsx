@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-export const BranchCell = styled.td<{ branch: string }>`
+export const BranchCell = styled.td<{ $defaultBranch: boolean }>`
     max-width: 200px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 
     ${props =>
-        props.branch == "master" &&
+        props.$defaultBranch &&
         css`
             border-radius: 20px;
             background: ${props => props.theme.accentBgColor};

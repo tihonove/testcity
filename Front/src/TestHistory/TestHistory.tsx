@@ -2,10 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import { ColumnStack, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import { Paging } from "@skbkontur/react-ui";
-import {
-    ShapeSquareIcon16Regular,
-    ShareNetworkIcon,
-} from "@skbkontur/icons";
+import { ShapeSquareIcon16Regular, ShareNetworkIcon } from "@skbkontur/icons";
 import { RunStatisticsChart } from "../RunStatisticsChart/RunStatisticsChart";
 import { formatDuration } from "../RunStatisticsChart/DurationUtils";
 import { Link } from "react-router-dom";
@@ -15,6 +12,7 @@ import { ProjectComboBox } from "../Components/ProjectComboBox";
 import { ArrowARightIcon, HomeIcon, JonIcon } from "../Components/Icons";
 import { Suspense } from "react";
 import { BranchCell, NumberCell, SelectedOnHoverTr } from "../Components/Cells";
+import { JobRunNames } from "../Components/JobsQueryRow";
 
 export type RunStatus = "Failed" | "Skipped" | "Success";
 
@@ -62,13 +60,13 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
     const [suiteId, testId] = splitTestId(props.testId);
 
     const getStatusMessage = (jobRunId: string): string => {
-        return props.statusMessages.find(m => m[0] === jobRunId)?.[1] ?? ""
-    }
+        return props.statusMessages.find(m => m[0] === jobRunId)?.[1] ?? "";
+    };
 
     const buildStatus = (status: string, message?: string): string => {
         if (!message) return status;
         return `${message}. ${status}`;
-    }
+    };
 
     return (
         <ColumnStack gap={4} block stretch>
@@ -140,8 +138,8 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
                                     </NumberCell>
                                     <StatusCell status={x[3]}>{buildStatus(x[3], getStatusMessage(x[1]))}</StatusCell>
                                     <DurationCell>{formatDuration(x[4], x[4])}</DurationCell>
-                                    <BranchCell branch={x[2]}>
-                                        <ShareNetworkIcon /> {x[2]}
+                                    <BranchCell $defaultBranch={x[JobRunNames.BranchName] == "master"}>
+                                        <ShareNetworkIcon /> {x[JobRunNames.BranchName]}
                                     </BranchCell>
                                     <JobIdCell>
                                         <Link to={`/test-analytics/jobs/${x[0]}`}>
@@ -166,7 +164,7 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
 
 const HomeHeader = styled.h2``;
 
-const StatusCell = styled.td<{ status: RunStatus, width?: string }>`
+const StatusCell = styled.td<{ status: RunStatus; width?: string }>`
     max-width: 100px;
     color: ${props =>
         props.status == "Success"

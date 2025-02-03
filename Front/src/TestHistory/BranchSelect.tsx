@@ -1,18 +1,30 @@
-import * as React from "react";
 import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
 import { ComboBox, MenuSeparator } from "@skbkontur/react-ui";
 import { ShareNetworkIcon } from "@skbkontur/icons";
+import * as React from "react";
 
 interface BranchSelectProps {
     branch: undefined | string;
     onChangeBranch: (nextValue: undefined | string) => void;
-    branchQuery?: string;
+    projectIds?: string[];
+    jobId?: string;
     branchNames?: string[];
 }
 
 export function BranchSelect(props: BranchSelectProps): React.JSX.Element {
     const client = useClickhouseClient();
-    const [queriedBranches] = client.useData<[string]>(props.branchQuery ?? `SELECT 1 WHERE false`, []);
+    const [queriedBranches] = client.useData<[string]>(
+        `
+        SELECT DISTINCT 
+            BranchName
+        FROM JobInfo
+        WHERE 
+            StartDateTime >= DATE_ADD(MONTH, -1, NOW()) AND BranchName != '' 
+            ${props.projectIds ? `AND ProjectId IN [${props.projectIds.map(x => "'" + x + "'").join(", ")}]` : ""}
+            ${props.jobId ? `AND JobId = '${props.jobId}'` : ""}
+        ORDER BY StartDateTime DESC;`,
+        [props.projectIds, props.jobId]
+    );
 
     const getItems = (query: string) => {
         const branchesToFilter: string[] = [...queriedBranches.map(x => x[0]), ...(props.branchNames ?? [])];

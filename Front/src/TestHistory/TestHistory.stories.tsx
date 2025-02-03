@@ -17,9 +17,10 @@ export const Simple: StoryFn = () => (
         onChangeBranch={() => {}}
         branchNames={["main", "develop"]}
         totalRunCount={10}
-        runs={[]}
+        runsFetcher={() => []}
         onRunsPageChange={() => {}}
         runsPage={1}
+        statusMessages={[]}
         runIdBreadcrumb={undefined}
         stats={[
             ["Success", 12, "2010-01-01T12:00:00Z"],
