@@ -32,8 +32,86 @@
                 "title": "dbo",
                 "projects": [
                     {
+                        "id": "20289",
+                        "title": "remote-banking"
+                    },
+                    {
                         "id": "20290",
                         "title": "remote-banking-front"
+                    }
+                ]
+            },
+            {
+                "id": "33580",
+                "title": "platform",
+                "projects": [
+                    {
+                        "id": "20479",
+                        "title": "banking"
+                    },
+                    {
+                        "id": "28459",
+                        "title": "event"
+                    },
+                    {
+                        "id": "27109",
+                        "title": "tarifficator"
+                    },
+                    {
+                        "id": "27462",
+                        "title": "customer"
+                    },
+                    {
+                        "id": "26030",
+                        "title": "core"
+                    },
+                    {
+                        "id": "20399",
+                        "title": "dw-dynamics"
+                    },
+                    {
+                        "id": "20588",
+                        "title": "bank-gateway"
+                    },
+                    {
+                        "id": "29681",
+                        "title": "card"
+                    },
+                    {
+                        "id": "25483",
+                        "title": "crypto"
+                    },
+                    {
+                        "id": "20464",
+                        "title": "session"
+                    },
+                    {
+                        "id": "27518",
+                        "title": "abs-gateway"
+                    },
+                    {
+                        "id": "27487",
+                        "title": "scoring"
+                    },
+                    {
+                        "id": "25963",
+                        "title": "audit"
+                    },
+                    {
+                        "id": "25705",
+                        "title": "printer"
+                    },
+                    {
+                        "id": "28688",
+                        "title": "monitoring"
+                    },
+                    {
+                        "id": "26432",
+                        "title": "nominal"
+                    },
+                    {
+                        "id": "25946",
+                        "title": "perfomance-tests"
                     }
                 ]
             }

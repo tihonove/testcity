@@ -34,14 +34,14 @@ public class JUnitExtractor
         var root = report.Root!;
 
         var testRuns = new List<TestRun>();
-        if (root.Name.LocalName != "testsuites")
+        if (root.Name.LocalName != "testsuites" && root.Name.LocalName != "testsuite")
         {
             log.Error($"File is not junit report: {reportPath}");
             return (new TestCount(), testRuns);
         }
 
         var testCount = new TestCount();
-        foreach (var testCase in root.XPathSelectElements("./testsuite/testcase"))
+        foreach (var testCase in root.XPathSelectElements("//testsuite//testcase"))
         {
             var startDateTime = DateTimeOffset.Parse(testCase.Parent!.Attribute("timestamp")!.Value);
             var testAssembleName = testCase.Parent!.Attribute("name")!.Value.Replace(".dll", "");

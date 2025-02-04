@@ -29,6 +29,7 @@ export function JobRunsPage(): React.JSX.Element {
     const pathToGroup = [groupIdLevel1, groupIdLevel2, groupIdLevel3].filter(x => x != null);
     const rootProjectStructure = useStorageQuery(x => x.getRootProjectStructure(groupIdLevel1), [groupIdLevel1]);
     const project = useStorageQuery(x => x.getProject(pathToGroup), [pathToGroup]) ?? reject("Project not found");
+    console.log(project)
 
     const [currentBranchName, setCurrentBranchName] = useSearchParamAsState("branch");
     const [page, setPage] = useState(1);

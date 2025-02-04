@@ -18,7 +18,7 @@ public static class JUnitExtractorGitlabExtensions
             }
 
             var xmlFiles = Directory.EnumerateFiles(tempPath, "*.xml", SearchOption.AllDirectories)
-                                    .Where(file => File.ReadAllText(file).Contains("<testsuites"))
+                                    .Where(file => File.ReadAllText(file).Contains("<testsuite"))
                                     .ToList();
 
             if (xmlFiles.Count == 0)

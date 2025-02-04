@@ -28,6 +28,13 @@ export function useRootGroups(): Group[] {
 }
 
 export function findPathToProjectById(groupNode: GroupNode, projectId: string): [GroupNode[], Project] {
+    return findPathToProjectByIdOrNull(groupNode, projectId) ?? reject(`Project with id ${projectId} not found`);
+}
+
+export function findPathToProjectByIdOrNull(
+    groupNode: GroupNode,
+    projectId: string
+): [GroupNode[], Project] | undefined {
     if (groupNode.projects) {
         const project = groupNode.projects.find(p => p.id === projectId);
         if (project) {
@@ -37,12 +44,12 @@ export function findPathToProjectById(groupNode: GroupNode, projectId: string): 
 
     if (groupNode.groups) {
         for (const group of groupNode.groups) {
-            const result = findPathToProjectById(group, projectId);
-            return [[groupNode, ...result[0]], result[1]];
+            const result = findPathToProjectByIdOrNull(group, projectId);
+            if (result) return [[groupNode, ...result[0]], result[1]];
         }
     }
 
-    throw new Error(`Project with id ${projectId} not found`);
+    return undefined;
 }
 
 function getQueryId() {
@@ -91,7 +98,7 @@ export class TestAnalyticsStorage {
                     ROW_NUMBER() OVER (PARTITION BY JobId, BranchName ORDER BY StartDateTime DESC) AS rn
                 FROM JobInfo 
                 WHERE 
-                    StartDateTime >= now() - INTERVAL 3 DAY 
+                    StartDateTime >= now() - INTERVAL 30 DAY 
                     AND ProjectId IN [${projectIds.map(x => "'" + x + "'").join(", ")}]
                     ${currentBranchName ? `AND BranchName = '${currentBranchName}'` : ""}
             ) AS filtered

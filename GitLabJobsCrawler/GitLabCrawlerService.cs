@@ -76,28 +76,33 @@ public class GitLabCrawlerService : IDisposable
                 log.Info($"Start processing job with id: {job.Id}");
                 if (job.Artifacts != null)
                 {
-                    var artifactContents = client.GetJobs(projectId).GetJobArtifacts(job.Id);
-                    log.Info($"Artifact size for job with id: {job.Id}. Size: {artifactContents.Length} bytes");
-                    var extractor = new JUnitExtractor();
-                    var extractResult = extractor.TryExtractTestRunsFromGitlabArtifact(artifactContents);
-                    if (extractResult != null)
-                    {
-                        var refId = await client.BranchOrRef(projectId, job.Ref);
-                        var jobInfo = GitLabHelpers.GetFullJobInfo(job, refId, extractResult.Counters, projectId.ToString());
-                        if (!await TestRunsUploader.IsJobRunIdExists(jobInfo.JobRunId))
+                    try {
+                        var artifactContents = client.GetJobs(projectId).GetJobArtifacts(job.Id);
+                        log.Info($"Artifact size for job with id: {job.Id}. Size: {artifactContents.Length} bytes");
+                        var extractor = new JUnitExtractor();
+                        var extractResult = extractor.TryExtractTestRunsFromGitlabArtifact(artifactContents);
+                        if (extractResult != null)
                         {
-                            log.Info($"JobRunId '{jobInfo.JobRunId}' does not exist. Uploading test runs");
-                            await TestRunsUploader.JobInfoUploadAsync(jobInfo);
-                            await TestRunsUploader.UploadAsync(jobInfo, extractResult.Runs);
+                            var refId = await client.BranchOrRef(projectId, job.Ref);
+                            var jobInfo = GitLabHelpers.GetFullJobInfo(job, refId, extractResult.Counters, projectId.ToString());
+                            if (!await TestRunsUploader.IsJobRunIdExists(jobInfo.JobRunId))
+                            {
+                                log.Info($"JobRunId '{jobInfo.JobRunId}' does not exist. Uploading test runs");
+                                await TestRunsUploader.JobInfoUploadAsync(jobInfo);
+                                await TestRunsUploader.UploadAsync(jobInfo, extractResult.Runs);
 
-                            metricsSender.Send(projectInfo, refId, job, extractResult);
-                        }
-                        else
-                        {
-                            log.Info($"JobRunId '{jobInfo.JobRunId}' exists. Skip uploading test runs");
-                        }
+                                metricsSender.Send(projectInfo, refId, job, extractResult);
+                            }
+                            else
+                            {
+                                log.Info($"JobRunId '{jobInfo.JobRunId}' exists. Skip uploading test runs");
+                            }
 
-                        processedJobSet.Add(job.Id);
+                            processedJobSet.Add(job.Id);
+                        }                        
+                    }
+                    catch (Exception exception) {
+                        log.Warn(exception, $"Failed to read artifact for {job.Id}");
                     }
                 }
             }

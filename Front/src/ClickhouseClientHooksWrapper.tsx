@@ -33,7 +33,7 @@ export function useStorageQuery<T>(
         return await fn(storage.current);
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-    }, deps);
+    }, [fn.toString(), ...deps]);
     /* eslint-enable @typescript-eslint/no-unsafe-return */
 }
 

@@ -46,6 +46,13 @@ export function App(): React.JSX.Element {
                         <Route path="jobs/:jobId/runs/:jobRunId/treemap" element={<TestsTreeMapChart />} />
                     </Route>
 
+                    <Route path=":groupIdLevel1/:groupIdLevel2/:groupIdLevel3">
+                        <Route index element={<JobsPage />} />
+                        <Route path="jobs/:jobId" element={<JobRunsPage />} />
+                        <Route path="jobs/:jobId/runs/:jobRunId" element={<JobRunPage />} />
+                        <Route path="jobs/:jobId/runs/:jobRunId/treemap" element={<TestsTreeMapChart />} />
+                    </Route>
+
                     <Route path="jobs/:jobId/runs/:jobRunId" element={<JobRunPage />} />
                     <Route path="jobs/:jobId/runs/:jobRunId/treemap" element={<TestsTreeMapChart />} />
                 </Route>
