@@ -5,6 +5,9 @@ import { JobsQueryRow } from "../Components/JobsQueryRow";
 import { delay } from "@skbkontur/react-ui/cjs/lib/utils";
 import { reject } from "../TypeHelpers";
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports
+const hardCodedGroups: GroupNode[] = require("../../gitlab-projects.json");
+
 export interface Group {
     id: string;
     title: string;
@@ -41,33 +44,6 @@ export function findPathToProjectById(groupNode: GroupNode, projectId: string): 
 
     throw new Error(`Project with id ${projectId} not found`);
 }
-
-const hardCodedGroups: GroupNode[] = [
-    {
-        id: "7523",
-        title: "forms",
-        projects: [
-            {
-                id: "17358",
-                title: "forms",
-            },
-            {
-                id: "19371",
-                title: "extern.forms",
-            },
-        ],
-    },
-    {
-        id: "53",
-        title: "diadoc",
-        projects: [
-            {
-                id: "182",
-                title: "diadoc",
-            },
-        ],
-    },
-];
 
 function getQueryId() {
     return uuidv4();

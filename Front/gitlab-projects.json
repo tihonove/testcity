@@ -1,0 +1,42 @@
+[
+    {
+        "id": "7523",
+        "title": "forms",
+        "projects": [
+            {
+                "id": "17358",
+                "title": "forms"
+            },
+            {
+                "id": "19371",
+                "title": "extern.forms"
+            }
+        ]
+    },
+    {
+        "id": "53",
+        "title": "diadoc",
+        "projects": [
+            {
+                "id": "182",
+                "title": "diadoc"
+            }
+        ]
+    },
+    {
+        "id": "23830",
+        "title": "fintech",
+        "groups": [
+            {
+                "id": "33657",
+                "title": "dbo",
+                "projects": [
+                    {
+                        "id": "20290",
+                        "title": "remote-banking-front"
+                    }
+                ]
+            }
+        ]
+    }
+]
