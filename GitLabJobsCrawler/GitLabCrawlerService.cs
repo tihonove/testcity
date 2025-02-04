@@ -82,8 +82,8 @@ public class GitLabCrawlerService : IDisposable
                     var extractResult = extractor.TryExtractTestRunsFromGitlabArtifact(artifactContents);
                     if (extractResult != null)
                     {
-                        var refId = await BranchOrRef(client, projectId, job.Ref);
-                        var jobInfo = GitLabHelpers.GetFullJobInfo(job, refId, extractResult.Counters);
+                        var refId = await client.BranchOrRef(projectId, job.Ref);
+                        var jobInfo = GitLabHelpers.GetFullJobInfo(job, refId, extractResult.Counters, projectId.ToString());
                         if (!await TestRunsUploader.IsJobRunIdExists(jobInfo.JobRunId))
                         {
                             log.Info($"JobRunId '{jobInfo.JobRunId}' does not exist. Uploading test runs");
@@ -108,26 +108,6 @@ public class GitLabCrawlerService : IDisposable
     {
         log.Info("Greaceful shutdown");
         stopTokenSource.Cancel();
-    }
-
-    private async Task<string> BranchOrRef(GitLabClient client, int projectId, string refId)
-    {
-        if (refToBranch.TryGetValue(refId, out var branch))
-        {
-            return branch;
-        }
-
-        var match = mergeRequestRef.Match(refId);
-        if (!match.Success)
-        {
-            return refId;
-        }
-
-        var mrId = long.Parse(match.Groups[1].Value);
-        var mr = await client.GetMergeRequest(projectId).GetByIidAsync(mrId, new SingleMergeRequestQuery());
-
-        refToBranch[refId] = mr.SourceBranch;
-        return mr.SourceBranch;
     }
 
     private readonly Regex mergeRequestRef = new Regex("^refs/merge-requests/(\\d+)/head$");

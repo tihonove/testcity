@@ -5,7 +5,7 @@ namespace Kontur.TestAnalytics.GitLabJobsCrawler;
 
 public static class GitLabHelpers
 {
-    public static FullJobInfo GetFullJobInfo(NGitLab.Models.Job job, string refId, TestCount testCount)
+    public static FullJobInfo GetFullJobInfo(NGitLab.Models.Job job, string refId, TestCount testCount, string projectId)
     {
         var endDateTime = DateTime.Now;
 
@@ -37,7 +37,7 @@ public static class GitLabHelpers
             CommitSha = job.Commit.Id.ToString(),
             CommitMessage = job.Commit.Message,
             CommitAuthor = job.Commit.AuthorName,
-            ProjectId = "182",
+            ProjectId = projectId,
             CustomStatusMessage = "",
             TotalTestsCount = testCount.Total,
             SuccessTestsCount = testCount.Success,

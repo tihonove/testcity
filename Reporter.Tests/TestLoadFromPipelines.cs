@@ -65,7 +65,8 @@ public class TestsLoadFromGitlab
                         var extractResult = extractor.TryExtractTestRunsFromGitlabArtifact(artifactContents);
                         if (extractResult != null)
                         {
-                            var jobInfo = GitLabHelpers.GetFullJobInfo(job, extractResult.Counters, projectId.ToString());
+                            var refId = await client.BranchOrRef(projectId, job.Ref);
+                            var jobInfo = GitLabHelpers.GetFullJobInfo(job, "", extractResult.Counters, projectId.ToString());
                             if (!await TestRunsUploader.IsJobRunIdExists(jobInfo.JobRunId))
                             {
                                 log.Info($"JobRunId '{jobInfo.JobRunId}' does not exist. Uploading test runs");
