@@ -25,5 +25,9 @@
         <ProjectReference Include="..\Reporter.Cli\Reporter.Cli.csproj" />
         <ProjectReference Include="..\Reporter.Client\Reporter.Client.csproj" />
     </ItemGroup>
- 
+
+    <ItemGroup>
+        <EmbeddedResource Include="..\Front\gitlab-projects.json" />
+    </ItemGroup>
+
 </Project>

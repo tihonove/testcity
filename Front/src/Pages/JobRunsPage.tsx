@@ -18,7 +18,7 @@ import {
 import { Paging } from "@skbkontur/react-ui";
 import { useState } from "react";
 import { createLinkToJobRun, urlPrefix } from "./Navigation";
-import { JobRunNames } from "../Components/JobsQueryRow";
+import { JobRunNames, JobsQueryRow } from "../Domain/JobsQueryRow";
 import { reject } from "../TypeHelpers";
 
 export function JobRunsPage(): React.JSX.Element {
@@ -29,7 +29,6 @@ export function JobRunsPage(): React.JSX.Element {
     const pathToGroup = [groupIdLevel1, groupIdLevel2, groupIdLevel3].filter(x => x != null);
     const rootProjectStructure = useStorageQuery(x => x.getRootProjectStructure(groupIdLevel1), [groupIdLevel1]);
     const project = useStorageQuery(x => x.getProject(pathToGroup), [pathToGroup]) ?? reject("Project not found");
-    console.log(project)
 
     const [currentBranchName, setCurrentBranchName] = useSearchParamAsState("branch");
     const [page, setPage] = useState(1);
@@ -37,14 +36,12 @@ export function JobRunsPage(): React.JSX.Element {
     const client = useClickhouseClient();
 
     const condition = React.useMemo(() => {
-        let result = `JobId = '${jobId}'`;
+        let result = `JobId = '${jobId}' AND ProjectId = '${project.id}'`;
         if (currentBranchName != undefined) result += ` AND BranchName = '${currentBranchName}'`;
         return result;
     }, [jobId, currentBranchName]);
 
-    const jobRuns = client.useData2<
-        [string, string, string, string, string, string, string, string, string, string, string, string, string, string]
-    >(
+    const jobRuns = client.useData2<JobsQueryRow>(
         `
         SELECT
             JobId,
@@ -60,7 +57,8 @@ export function JobRunsPage(): React.JSX.Element {
             Duration,
             State,
             CustomStatusMessage,
-            JobUrl
+            JobUrl,
+            ProjectId
         FROM JobInfo
         WHERE ${condition}
         ORDER BY StartDateTime DESC

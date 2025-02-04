@@ -1,7 +1,7 @@
 import { ClickHouseClient } from "@clickhouse/client-web";
 import { JobIdWithParentProject } from "./JobIdWithParentProject";
 import { uuidv4 } from "./Guids";
-import { JobsQueryRow } from "../Components/JobsQueryRow";
+import { JobsQueryRow } from "./JobsQueryRow";
 import { delay } from "@skbkontur/react-ui/cjs/lib/utils";
 import { reject } from "../TypeHelpers";
 
@@ -98,7 +98,7 @@ export class TestAnalyticsStorage {
                     ROW_NUMBER() OVER (PARTITION BY JobId, BranchName ORDER BY StartDateTime DESC) AS rn
                 FROM JobInfo 
                 WHERE 
-                    StartDateTime >= now() - INTERVAL 30 DAY 
+                    StartDateTime >= now() - INTERVAL 3 DAY 
                     AND ProjectId IN [${projectIds.map(x => "'" + x + "'").join(", ")}]
                     ${currentBranchName ? `AND BranchName = '${currentBranchName}'` : ""}
             ) AS filtered

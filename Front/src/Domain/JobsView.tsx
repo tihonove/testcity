@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { formatTestDuration, getLinkToJob, getText, toLocalTimeFromUtc } from "../Utils";
 import { BranchCell, JobLinkWithResults, SelectedOnHoverTr } from "../Components/Cells";
 import { JobIdWithParentProject, JobIdWithParentProjectNames } from "./JobIdWithParentProject";
-import { JobsQueryRow, JobRunNames } from "../Components/JobsQueryRow";
+import { JobsQueryRow, JobRunNames } from "./JobsQueryRow";
 import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { createLinkToJob, createLinkToJobRun } from "../Pages/Navigation";
 import { GroupNode } from "./Storage";
@@ -49,7 +49,7 @@ export function JobsView({ rootProjectStructure, allJobs, allJobRuns, currentBra
                         </thead>
                         <tbody>
                             {allJobRuns
-                                .filter(x => x[JobRunNames.JobId] === jobId)
+                                .filter(x => x[JobRunNames.JobId] === jobId && x[JobRunNames.ProjectId] === projectId)
                                 .sort((a, b) => Number(b[1]) - Number(a[1]))
                                 .map(x => (
                                     <SelectedOnHoverTr key={x[1]}>

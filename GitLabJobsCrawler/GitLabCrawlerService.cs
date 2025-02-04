@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using Kontur.TestAnalytics.Api;
+using Kontur.TestAnalytics.GitLabJobsCrawler.Services;
 using Kontur.TestAnalytics.Reporter.Client;
 using NGitLab;
 using NGitLab.Models;
@@ -44,7 +45,7 @@ public class GitLabCrawlerService : IDisposable
 
     private async Task PullGitLabJobArtifactsAndPushIntoTestAnalytics(CancellationToken token)
     {
-        var gitLabProjectIds = new[] { 182 };
+        var gitLabProjectIds = GitLabProjectsService.GetAllProjects().Select(x => x.Id).Except(new[] { "17358", "19371", "182" }).Select(x => int.Parse(x)).ToList();
 
         foreach (var projectId in gitLabProjectIds)
         {
@@ -76,7 +77,8 @@ public class GitLabCrawlerService : IDisposable
                 log.Info($"Start processing job with id: {job.Id}");
                 if (job.Artifacts != null)
                 {
-                    try {
+                    try
+                    {
                         var artifactContents = client.GetJobs(projectId).GetJobArtifacts(job.Id);
                         log.Info($"Artifact size for job with id: {job.Id}. Size: {artifactContents.Length} bytes");
                         var extractor = new JUnitExtractor();
@@ -99,9 +101,10 @@ public class GitLabCrawlerService : IDisposable
                             }
 
                             processedJobSet.Add(job.Id);
-                        }                        
+                        }
                     }
-                    catch (Exception exception) {
+                    catch (Exception exception)
+                    {
                         log.Warn(exception, $"Failed to read artifact for {job.Id}");
                     }
                 }

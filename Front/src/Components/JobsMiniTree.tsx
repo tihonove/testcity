@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { getProjectNameById } from "../Utils";
-import { JobsQueryRow } from "./JobsQueryRow";
+import { JobsQueryRow } from "../Domain/JobsQueryRow";
 import { ShapeSquareIcon16Solid, ShapeSquareIcon16Regular } from "@skbkontur/icons";
 
 interface JobsMiniTreeProps {

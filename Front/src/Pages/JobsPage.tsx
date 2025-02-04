@@ -83,6 +83,7 @@ export function JobsPage(): React.JSX.Element {
 
 const TestListRoot = styled(ColumnStack)`
     max-width: ${theme.layout.centered.width};
+    width: ${theme.layout.centered.width};
     margin: 24px auto;
 `;
 

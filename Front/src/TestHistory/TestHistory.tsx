@@ -12,7 +12,7 @@ import { ProjectComboBox } from "../Components/ProjectComboBox";
 import { ArrowARightIcon, HomeIcon, JonIcon } from "../Components/Icons";
 import { Suspense } from "react";
 import { BranchCell, NumberCell, SelectedOnHoverTr } from "../Components/Cells";
-import { JobRunNames } from "../Components/JobsQueryRow";
+import { JobRunNames } from "../Domain/JobsQueryRow";
 
 export type RunStatus = "Failed" | "Skipped" | "Success";
 
