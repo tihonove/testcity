@@ -45,7 +45,7 @@ public class GitLabCrawlerService : IDisposable
 
     private async Task PullGitLabJobArtifactsAndPushIntoTestAnalytics(CancellationToken token)
     {
-        var gitLabProjectIds = GitLabProjectsService.GetAllProjects().Select(x => x.Id).Except(new[] { "17358", "19371", "182" }).Select(x => int.Parse(x)).ToList();
+        var gitLabProjectIds = GitLabProjectsService.GetAllProjects().Select(x => x.Id).Except(new[] { "17358", "19371" }).Select(x => int.Parse(x)).ToList();
 
         foreach (var projectId in gitLabProjectIds)
         {
