@@ -62,7 +62,7 @@ export function App(): React.JSX.Element {
 }
 
 const ThemeSwitchContainer = styled.div({
-    position: "absolute",
+    position: "fixed",
     top: 20,
     right: 20,
 });

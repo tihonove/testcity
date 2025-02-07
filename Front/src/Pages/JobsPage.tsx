@@ -1,4 +1,4 @@
-import { Button, Gapped, Sticky } from "@skbkontur/react-ui";
+import { Button, Gapped, Sticky, Toggle } from "@skbkontur/react-ui";
 import * as React from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -11,6 +11,8 @@ import { useSearchParamAsState } from "../Utils";
 import { createLinkToCreateNewPipeline, createLinkToProject } from "./Navigation";
 import { JobIdWithParentProjectNames } from "../Domain/JobIdWithParentProject";
 import { ColumnStack, Fit, RowStack } from "@skbkontur/react-stack-layout";
+import { EyeClosedIcon16Regular, EyeOpenIcon16Light, EyeOpenIcon16Regular, TextBulletIcon24Regular } from "@skbkontur/icons";
+import { SubIcon } from "../Components/SubIcon";
 
 export function JobsPage(): React.JSX.Element {
     const { groupIdLevel1, groupIdLevel2, groupIdLevel3 } = useParams();
@@ -19,6 +21,7 @@ export function JobsPage(): React.JSX.Element {
     }
 
     const [currentBranchName, setCurrentBranchName] = useSearchParamAsState("branch");
+    const [noRuns, setNoRuns] = useSearchParamAsState("noruns");
 
     const pathToGroup = [groupIdLevel1, groupIdLevel2, groupIdLevel3].filter(x => x != null);
     const rootProjectStructure = useStorageQuery(x => x.getRootProjectStructure(groupIdLevel1), [groupIdLevel1]);
@@ -34,7 +37,9 @@ export function JobsPage(): React.JSX.Element {
         <Root>
             <TestListRoot block gap={1}>
                 <Fit>
-                    <Header>Jobs</Header>
+                    <RowStack block gap={1} baseline>
+                        <Header>Jobs</Header>
+                    </RowStack>
                 </Fit>
                 <Fit>
                     <BranchSelect
@@ -68,6 +73,7 @@ export function JobsPage(): React.JSX.Element {
                                 </Fit>
                             </SectionTitle>
                             <JobsView
+                                hideRuns={noRuns === "1"}
                                 currentBranchName={currentBranchName}
                                 rootProjectStructure={rootProjectStructure}
                                 allJobs={allJobs.filter(j => j[JobIdWithParentProjectNames.ProjectId] === project.id)}
@@ -77,6 +83,17 @@ export function JobsPage(): React.JSX.Element {
                     ))}
                 </Fit>
             </TestListRoot>
+            <ShowRunsSwitchContainer>
+                <Button
+                    use="link"
+                    onClick={() => {
+                        setNoRuns(noRuns === "1" ? undefined : "1");
+                    }}>
+                    <SubIcon sub={noRuns ? <EyeClosedIcon16Regular /> : <EyeOpenIcon16Regular />}>
+                        <TextBulletIcon24Regular />
+                    </SubIcon>
+                </Button>
+            </ShowRunsSwitchContainer>
         </Root>
     );
 }
@@ -98,6 +115,12 @@ const Root = styled.main`
 const Header = styled.h1`
     font-size: 32px;
     line-height: 40px;
+`;
+
+const ShowRunsSwitchContainer = styled.div`
+    position: fixed;
+    right: 50px;
+    top: 20px;
 `;
 
 const Header3 = styled.h3`

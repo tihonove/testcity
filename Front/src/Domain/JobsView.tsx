@@ -1,7 +1,7 @@
-import { ShapeSquareIcon16Regular, ShareNetworkIcon } from "@skbkontur/icons";
+import { ShapeSquareIcon16Regular, ShapeSquareIcon16Solid, ShareNetworkIcon } from "@skbkontur/icons";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 import { formatTestDuration, getLinkToJob, getText, toLocalTimeFromUtc } from "../Utils";
 import { BranchCell, JobLinkWithResults, SelectedOnHoverTr } from "../Components/Cells";
 import { JobIdWithParentProject, JobIdWithParentProjectNames } from "./JobIdWithParentProject";
@@ -11,6 +11,7 @@ import { createLinkToJob, createLinkToJobRun } from "../Pages/Navigation";
 import { GroupNode } from "./Storage";
 
 interface JobsViewProps {
+    hideRuns?: boolean;
     currentBranchName?: string;
     rootProjectStructure: GroupNode;
     allJobs: JobIdWithParentProject[];
@@ -27,18 +28,29 @@ interface JobsViewProps {
 //     return true;
 // })
 
-export function JobsView({ rootProjectStructure, allJobs, allJobRuns, currentBranchName }: JobsViewProps) {
+export function JobsView({ rootProjectStructure, hideRuns, allJobs, allJobRuns, currentBranchName }: JobsViewProps) {
+    const theme = useTheme();
     return (
         <JobList>
             {allJobs.map(job => {
                 const jobId = job[JobIdWithParentProjectNames.JobId];
                 const projectId = job[JobIdWithParentProjectNames.ProjectId];
+                const jonRuns = allJobRuns.filter(
+                    x => x[JobRunNames.JobId] === jobId && x[JobRunNames.ProjectId] === projectId
+                );
+                const hasFailedRuns = jonRuns.some(
+                    x => x[JobRunNames.State] != "Success" && x[JobRunNames.State] != "Canceled"
+                );
                 return (
                     <React.Fragment key={jobId + projectId}>
                         <thead>
                             <tr>
                                 <JobHeader colSpan={6}>
-                                    <ShapeSquareIcon16Regular />{" "}
+                                    {hasFailedRuns ? (
+                                        <ShapeSquareIcon16Solid color={theme.failedTextColor} />
+                                    ) : (
+                                        <ShapeSquareIcon16Regular color={theme.successTextColor} />
+                                    )}{" "}
                                     <Link
                                         className="no-underline"
                                         to={createLinkToJob(rootProjectStructure, projectId, jobId, currentBranchName)}>
@@ -47,37 +59,38 @@ export function JobsView({ rootProjectStructure, allJobs, allJobRuns, currentBra
                                 </JobHeader>
                             </tr>
                         </thead>
-                        <tbody>
-                            {allJobRuns
-                                .filter(x => x[JobRunNames.JobId] === jobId && x[JobRunNames.ProjectId] === projectId)
-                                .sort((a, b) => Number(b[1]) - Number(a[1]))
-                                .map(x => (
-                                    <SelectedOnHoverTr key={x[1]}>
-                                        <PaddingCell />
-                                        <NumberCell>
-                                            <Link to={x[13] || getLinkToJob(x[1], x[3])}>#{x[1]}</Link>
-                                        </NumberCell>
-                                        <BranchCell $defaultBranch={x[JobRunNames.BranchName] == "master"}>
-                                            <ShareNetworkIcon /> {x[JobRunNames.BranchName]}
-                                        </BranchCell>
-                                        <CountCell>
-                                            <JobLinkWithResults
-                                                state={x[11]}
-                                                to={createLinkToJobRun(
-                                                    rootProjectStructure,
-                                                    projectId,
-                                                    jobId,
-                                                    x[JobRunNames.JobRunId],
-                                                    currentBranchName
-                                                )}>
-                                                {getText(x[5], x[8], x[9], x[10], x[11], x[12])}
-                                            </JobLinkWithResults>
-                                        </CountCell>
-                                        <StartedCell>{toLocalTimeFromUtc(x[4])}</StartedCell>
-                                        <DurationCell>{formatTestDuration(x[7])}</DurationCell>
-                                    </SelectedOnHoverTr>
-                                ))}
-                        </tbody>
+                        {!hideRuns && (
+                            <tbody>
+                                {jonRuns
+                                    .sort((a, b) => Number(b[1]) - Number(a[1]))
+                                    .map(x => (
+                                        <SelectedOnHoverTr key={x[1]}>
+                                            <PaddingCell />
+                                            <NumberCell>
+                                                <Link to={x[13] || getLinkToJob(x[1], x[3])}>#{x[1]}</Link>
+                                            </NumberCell>
+                                            <BranchCell $defaultBranch={x[JobRunNames.BranchName] == "master"}>
+                                                <ShareNetworkIcon /> {x[JobRunNames.BranchName]}
+                                            </BranchCell>
+                                            <CountCell>
+                                                <JobLinkWithResults
+                                                    state={x[JobRunNames.State]}
+                                                    to={createLinkToJobRun(
+                                                        rootProjectStructure,
+                                                        projectId,
+                                                        jobId,
+                                                        x[JobRunNames.JobRunId],
+                                                        currentBranchName
+                                                    )}>
+                                                    {getText(x[5], x[8], x[9], x[10], x[11], x[12])}
+                                                </JobLinkWithResults>
+                                            </CountCell>
+                                            <StartedCell>{toLocalTimeFromUtc(x[4])}</StartedCell>
+                                            <DurationCell>{formatTestDuration(x[7])}</DurationCell>
+                                        </SelectedOnHoverTr>
+                                    ))}
+                            </tbody>
+                        )}
                     </React.Fragment>
                 );
             })}
