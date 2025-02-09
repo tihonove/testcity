@@ -11,6 +11,7 @@ import { WeatherMoonIcon20Regular, WeatherSunIcon20Regular } from "@skbkontur/ic
 import { useDarkMode } from "usehooks-ts";
 import { MergeRequestJobsPage } from "./Pages/MergeRequestJobsPage";
 import { ProjectsPage } from "./Components/ProjectsPage";
+import { TestsTreeView } from "./Pages/TestsTreeView";
 
 export function App(): React.JSX.Element {
     const { isDarkMode, toggle, enable, disable } = useDarkMode();
@@ -55,6 +56,7 @@ export function App(): React.JSX.Element {
 
                     <Route path="jobs/:jobId/runs/:jobRunId" element={<JobRunPage />} />
                     <Route path="jobs/:jobId/runs/:jobRunId/treemap" element={<TestsTreeMapChart />} />
+                    <Route path="jobs/:jobId/runs/:jobRunId/treeview" element={<TestsTreeView />} />
                 </Route>
             </Routes>
         </AppContainer>
