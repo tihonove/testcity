@@ -14,7 +14,7 @@ public class StaticFilesController : ControllerBase
     }
 
     [Route("")]
-    [Route("{*pathInfo:regex(^(?!static|clickhouse).*$)}")]
+    [Route("{*pathInfo:regex(^(?!static|clickhouse|gitlab).*$)}")]
     [HttpGet]
     public Stream Home() => TestAnalyticsFrontContent.GetFile("index.html");
 

@@ -20,6 +20,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Front\Front.csproj" />
+        <ProjectReference Include="..\GitLabJobsCrawler\GitLabJobsCrawler.csproj" />
     </ItemGroup>
 
 </Project>

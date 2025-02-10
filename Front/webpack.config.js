@@ -37,6 +37,10 @@ module.exports = {
                 target: "http://vm-ch2-stg.dev.kontur.ru:8123",
                 pathRewrite: { "^/test-analytics/clickhouse": "" },
             },
+            {
+                context: ["/test-analytics/gitlab/"],
+                target: "http://localhost:8124",
+            },
         ],
     },
 };
