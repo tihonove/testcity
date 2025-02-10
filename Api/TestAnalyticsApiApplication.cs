@@ -9,9 +9,11 @@ using Vostok.Applications.AspNetCore;
 using Vostok.Applications.AspNetCore.Builders;
 using Vostok.Applications.AspNetCore.Middlewares;
 using Vostok.Hosting.Abstractions;
+using Vostok.Hosting.Abstractions.Requirements;
 
 namespace Kontur.TestAnalytics.Api;
 
+[RequiresSecretConfiguration(typeof(GitLabSettings))]
 public class TestAnalyticsApiApplication : VostokAspNetCoreApplication<TestAnalyticsApiApplicationStartup>
 {
 	public override void Setup(IVostokAspNetCoreApplicationBuilder builder, IVostokHostingEnvironment environment)
@@ -22,7 +24,9 @@ public class TestAnalyticsApiApplication : VostokAspNetCoreApplication<TestAnaly
 
 	private void BuildContainer(ContainerBuilder containerBuilder, IVostokHostingEnvironment environment)
 	{
+		containerBuilder.RegisterInstance(environment.SecretConfigurationProvider.Get<GitLabSettings>()).As<GitLabSettings>();
 		containerBuilder.RegisterType<StaticFilesController>().As<ControllerBase>().AsSelf().InstancePerDependency();
+		containerBuilder.RegisterType<GitlabController>().As<ControllerBase>().AsSelf().InstancePerDependency();
 		containerBuilder.RegisterType<ClickhouseProxyController>().As<ControllerBase>().AsSelf().InstancePerDependency();
 	}
 }
