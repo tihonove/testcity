@@ -37,6 +37,7 @@ public class TestAnalyticsApiApplicationStartup
 	{
 		services.AddControllers();
 		services.AddCors();
+		services.AddResponseCompression();
 	}
 
 	public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -52,6 +53,7 @@ public class TestAnalyticsApiApplicationStartup
 		app.UseRouting();
 		app.UseCors();
 		app.UseAuthorization();
+		app.UseResponseCompression();
 
 		app.UseEndpoints(
 			endpoints => { endpoints.MapControllers(); });
