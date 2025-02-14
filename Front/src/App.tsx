@@ -8,14 +8,14 @@ import { JobRunPage } from "./Pages/JobRunPage";
 import { TestsTreeMapChart } from "./Pages/TestsTreeMapChart";
 import { Button } from "@skbkontur/react-ui";
 import { WeatherMoonIcon20Regular, WeatherSunIcon20Regular } from "@skbkontur/icons";
-import { useDarkMode } from "usehooks-ts";
 import { MergeRequestJobsPage } from "./Pages/MergeRequestJobsPage";
 import { ProjectsPage } from "./Components/ProjectsPage";
 import { TestsTreeView } from "./Pages/TestsTreeView";
 import { CodeQualityPage } from "./Pages/CodeQualityPage";
+import { useTestAnalyticsDarkMode } from "./Theme/UseTestAnalyticsDarkMode";
 
 export function App(): React.JSX.Element {
-    const { isDarkMode, toggle, enable, disable } = useDarkMode();
+    const { isDarkMode, toggle } = useTestAnalyticsDarkMode();
 
     return (
         <AppContainer>
@@ -39,6 +39,7 @@ export function App(): React.JSX.Element {
                         <Route path="jobs/:jobId" element={<JobRunsPage />} />
                         <Route path="jobs/:jobId/runs/:jobRunId" element={<JobRunPage />} />
                         <Route path="jobs/:jobId/runs/:jobRunId/treemap" element={<TestsTreeMapChart />} />
+                        <Route path="jobs/:jobId/runs/:jobRunId/treeview" element={<TestsTreeView />} />
                     </Route>
 
                     <Route path=":groupIdLevel1/:groupIdLevel2">
@@ -46,6 +47,7 @@ export function App(): React.JSX.Element {
                         <Route path="jobs/:jobId" element={<JobRunsPage />} />
                         <Route path="jobs/:jobId/runs/:jobRunId" element={<JobRunPage />} />
                         <Route path="jobs/:jobId/runs/:jobRunId/treemap" element={<TestsTreeMapChart />} />
+                        <Route path="jobs/:jobId/runs/:jobRunId/treeview" element={<TestsTreeView />} />
                     </Route>
 
                     <Route path=":groupIdLevel1/:groupIdLevel2/:groupIdLevel3">
@@ -53,6 +55,7 @@ export function App(): React.JSX.Element {
                         <Route path="jobs/:jobId" element={<JobRunsPage />} />
                         <Route path="jobs/:jobId/runs/:jobRunId" element={<JobRunPage />} />
                         <Route path="jobs/:jobId/runs/:jobRunId/treemap" element={<TestsTreeMapChart />} />
+                        <Route path="jobs/:jobId/runs/:jobRunId/treeview" element={<TestsTreeView />} />
                     </Route>
 
                     <Route path="jobs/:jobId/runs/:jobRunId" element={<JobRunPage />} />

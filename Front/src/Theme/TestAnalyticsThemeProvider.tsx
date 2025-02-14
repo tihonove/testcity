@@ -2,14 +2,14 @@ import * as React from "react";
 import { ThemeProvider } from "styled-components";
 import { darkTheme, normalTheme } from "./ITheme";
 import { DARK_THEME, LIGHT_THEME, ThemeContext } from "@skbkontur/react-ui";
-import { useDarkMode } from "usehooks-ts";
+import { useTestAnalyticsDarkMode } from "./UseTestAnalyticsDarkMode";
 
 interface TestAnalyticsThemeProviderProps {
     children?: React.JSX.Element | React.JSX.Element[];
 }
 
 export function TestAnalyticsThemeProvider(props: TestAnalyticsThemeProviderProps): React.JSX.Element {
-    const { isDarkMode } = useDarkMode();
+    const { isDarkMode } = useTestAnalyticsDarkMode();
 
     return (
         <ThemeProvider theme={isDarkMode ? darkTheme : normalTheme}>
@@ -19,3 +19,4 @@ export function TestAnalyticsThemeProvider(props: TestAnalyticsThemeProviderProp
         </ThemeProvider>
     );
 }
+
