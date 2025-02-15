@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Front", "Front\Front.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitLabJobsCrawler", "GitLabJobsCrawler\GitLabJobsCrawler.csproj", "{2C4098ED-AA58-4F30-879B-BD262034B463}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{856A0607-7D85-4E27-AA6B-1CD0D71BB7DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,5 +45,9 @@ Global
 		{2C4098ED-AA58-4F30-879B-BD262034B463}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C4098ED-AA58-4F30-879B-BD262034B463}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C4098ED-AA58-4F30-879B-BD262034B463}.Release|Any CPU.Build.0 = Release|Any CPU
+		{856A0607-7D85-4E27-AA6B-1CD0D71BB7DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{856A0607-7D85-4E27-AA6B-1CD0D71BB7DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{856A0607-7D85-4E27-AA6B-1CD0D71BB7DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{856A0607-7D85-4E27-AA6B-1CD0D71BB7DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

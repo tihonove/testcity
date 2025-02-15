@@ -3,6 +3,8 @@
     <PropertyGroup>
         <AssemblyName>Kontur.TestAnalytics.Reporter.Client</AssemblyName>
         <RootNamespace>Kontur.TestAnalytics.Reporter.Client</RootNamespace>
+        <OutputPath>bin</OutputPath>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     </PropertyGroup>
 
     <ItemGroup>

@@ -12,11 +12,12 @@
         <PackageReference Include="Vostok.Applications.AspNetCore" />
         <PackageReference Include="Vostok.Hosting.Houston" />
         <PackageReference Include="Vostok.Logging.Abstractions" />
+        <PackageReference Include="NGitLab" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Front\Front.csproj" />
-        <ProjectReference Include="..\GitLabJobsCrawler\GitLabJobsCrawler.csproj" />
+        <ProjectReference Include="..\Core\Core.csproj" />
     </ItemGroup>
 
 </Project>

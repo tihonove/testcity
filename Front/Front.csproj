@@ -3,6 +3,7 @@
     <PropertyGroup>
         <AssemblyName>Kontur.TestAnalytics.Front</AssemblyName>
         <RootNamespace>Kontur.TestAnalytics.Front</RootNamespace>
+        <TargetFramework>netstandard2.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
