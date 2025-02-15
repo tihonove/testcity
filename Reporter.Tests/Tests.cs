@@ -1,4 +1,4 @@
-﻿using ClickHouse.Client.ADO;
+using ClickHouse.Client.ADO;
 using ClickHouse.Client.Copy;
 using ClickHouse.Client.Utility;
 using Kontur.TestAnalytics.Reporter.Cli;
@@ -14,7 +14,7 @@ public class Tests
     {
         await using var connection = CreateConnection();
         await using var command = connection.CreateCommand();
-        command.CommandText = @"INSERT INTO tihonovetest.TestRuns (TestId) VALUES ('123');";
+        command.CommandText = "INSERT INTO tihonovetest.TestRuns (TestId) VALUES ('123');";
         await command.ExecuteNonQueryAsync();
     }
 
@@ -27,53 +27,45 @@ public class Tests
         var dateTime = DateTime.Now;
         foreach (var file in files)
         {
-            var buildId = file.Substring(file.IndexOf("Wolfs_Unit_tests_")).Replace("Wolfs_Unit_tests_", "")
-                .Replace("-tests.csv", "");
+            var buildId = file.Substring(file.IndexOf("Wolfs_Unit_tests_")).Replace("Wolfs_Unit_tests_", string.Empty)
+                .Replace("-tests.csv", string.Empty);
             Console.WriteLine(buildId);
             var lines = TestRunsReader.ReadFromTeamcityTestReport(file);
             dateTime = dateTime.AddDays(-1);
-            await TestRunsUploader.UploadAsync(new JobRunInfo
-            {
-                JobId = "Forms_UnitTests",
-                JobRunId = buildId + "1",
-                BranchName = "master",
-                AgentName = "KE-FRM-AGENT-01",
-                AgentOSName = "Windows",
-                JobUrl = "https://kontur.ru"
-            }, lines);
-            await TestRunsUploader.UploadAsync(new JobRunInfo
-            {
-                JobId = "Forms_UnitTests",
-                JobRunId = buildId + "2",
-                BranchName = "tihonove/branch-1",
-                AgentName = "KE-FRM-AGENT-01",
-                AgentOSName = "Windows",
-                JobUrl = "https://kontur.ru"
-            }, lines);
-            await TestRunsUploader.UploadAsync(new JobRunInfo
-            {
-                JobId = "Forms_UnitTests",
-                JobRunId = buildId + "3",
-                BranchName = "tihonove/branch-2",
-                AgentName = "KE-FRM-AGENT-01",
-                AgentOSName = "Linux",
-                JobUrl = "https://kontur.ru"
-            }, lines);
+            await TestRunsUploader.UploadAsync(
+                new JobRunInfo
+                {
+                    JobId = "Forms_UnitTests",
+                    JobRunId = buildId + "1",
+                    BranchName = "master",
+                    AgentName = "KE-FRM-AGENT-01",
+                    AgentOSName = "Windows",
+                    JobUrl = "https://kontur.ru",
+                }, lines);
+            await TestRunsUploader.UploadAsync(
+                new JobRunInfo
+                {
+                    JobId = "Forms_UnitTests",
+                    JobRunId = buildId + "2",
+                    BranchName = "tihonove/branch-1",
+                    AgentName = "KE-FRM-AGENT-01",
+                    AgentOSName = "Windows",
+                    JobUrl = "https://kontur.ru",
+                }, lines);
+            await TestRunsUploader.UploadAsync(
+                new JobRunInfo
+                {
+                    JobId = "Forms_UnitTests",
+                    JobRunId = buildId + "3",
+                    BranchName = "tihonove/branch-2",
+                    AgentName = "KE-FRM-AGENT-01",
+                    AgentOSName = "Linux",
+                    JobUrl = "https://kontur.ru",
+                }, lines);
         }
     }
 
-    [Test]
-    public async Task Test012()
-    {
-        await using var connection = CreateConnection();
-
-        using var bulkCopyInterface = new ClickHouseBulkCopy(connection)
-        {
-            DestinationTableName = "tihonovetest.TestRuns",
-            BatchSize = 100
-        };
-        var values = new[] { new object[] { "1", "1", "1", "1", 1, 1, DateTime.Now.ToUniversalTime(), "1" } };
-        await bulkCopyInterface.WriteToServerAsync(values, new []
+    private static readonly string[] Columns = new[]
         {
             "JobId",
             "JobRunId",
@@ -83,8 +75,21 @@ public class Tests
             "Duration",
             "StartDateTime",
             "AgentName",
-            "AgentOSName"
-        });
+            "AgentOSName",
+        };
+
+    [Test]
+    public async Task Test012()
+    {
+        await using var connection = CreateConnection();
+
+        using var bulkCopyInterface = new ClickHouseBulkCopy(connection)
+        {
+            DestinationTableName = "tihonovetest.TestRuns",
+            BatchSize = 100,
+        };
+        var values = new[] { new object[] { "1", "1", "1", "1", 1, 1, DateTime.Now.ToUniversalTime(), "1" } };
+        await bulkCopyInterface.WriteToServerAsync(values, Columns);
         Console.WriteLine(bulkCopyInterface.RowsWritten);
     }
 
@@ -107,7 +112,7 @@ public class Tests
             BranchName = "master",
             AgentName = "AGENT-1",
             AgentOSName = "Windows",
-            JobUrl = "https://kontur.ru"
+            JobUrl = "https://kontur.ru",
         };
         await TestRunsUploader.UploadAsync(runInfo, lines);
     }
@@ -117,9 +122,9 @@ public class Tests
     public async Task RecreateTable()
     {
         await using var connection = CreateConnection();
-        var dropTableScript = @"DROP TABLE IF EXISTS tihonovetest.TestRuns";
+        const string dropTableScript = "DROP TABLE IF EXISTS tihonovetest.TestRuns";
 
-        var createTableScript = @"
+        const string createTableScript = @"
             create table tihonovetest.TestRuns
             (
                 JobId String,
@@ -145,5 +150,4 @@ public class Tests
         return new ClickHouseConnection(
             "Host=vm-ch2-stg.dev.kontur.ru;Port=8123;Username=tihonove;password=12487562;Database=test_analytics");
     }
-
 }

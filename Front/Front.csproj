@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
-        <LangVersion>11</LangVersion>
         <AssemblyName>Kontur.TestAnalytics.Front</AssemblyName>
         <RootNamespace>Kontur.TestAnalytics.Front</RootNamespace>
     </PropertyGroup>
@@ -21,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Vostok.Logging.Abstractions" Version="1.0.32" />
+        <PackageReference Include="Vostok.Logging.Abstractions" />
     </ItemGroup>
 
     <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

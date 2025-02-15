@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 
 namespace Kontur.TestAnalytics.Api.Controllers;
 
-internal class ProxyToUriActionResult : IActionResult
+internal sealed class ProxyToUriActionResult : IActionResult
 {
     public ProxyToUriActionResult(HttpRequest sourceRequest, string targetUri, IReadOnlyDictionary<string, string>? additionalHeaders = null)
     {
@@ -22,10 +22,18 @@ internal class ProxyToUriActionResult : IActionResult
         using var httpClient = new HttpClient(handler);
         var request = new HttpRequestMessage(new HttpMethod(sourceRequest.Method), targetUri + sourceRequest.QueryString);
         foreach (var sourceRequestHeader in sourceRequest.Headers)
+        {
             if (sourceRequestHeader.Key.StartsWith("X-") || sourceRequestHeader.Key == "Authorization")
+            {
                 request.Headers.Add(sourceRequestHeader.Key, sourceRequestHeader.Value.AsEnumerable<string>());
+            }
+        }
+
         foreach (var additionalHeader in additionalHeaders)
+        {
             request.Headers.Add(additionalHeader.Key, additionalHeader.Value);
+        }
+
         if (sourceRequest.Method != "GET")
         {
             request.Content = new StreamContent(sourceRequest.Body);
@@ -35,8 +43,12 @@ internal class ProxyToUriActionResult : IActionResult
         var clientResponse = context.HttpContext.Response;
 
         foreach (var responseHeader in responseFromTarget.Headers)
+        {
             if (responseHeader.Key.StartsWith("X-"))
+            {
                 clientResponse.Headers.TryAdd(responseHeader.Key, new StringValues(responseHeader.Value.ToArray()));
+            }
+        }
 
         clientResponse.StatusCode = (int)responseFromTarget.StatusCode;
 

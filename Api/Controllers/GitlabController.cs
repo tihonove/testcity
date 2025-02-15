@@ -1,5 +1,4 @@
-﻿using System.IO.Compression;
-using Kontur.TestAnalytics.GitLabJobsCrawler;
+using System.IO.Compression;
 using Microsoft.AspNetCore.Mvc;
 using NGitLab;
 
@@ -9,8 +8,6 @@ namespace Kontur.TestAnalytics.Api.Controllers;
 [Route("gitlab")]
 public class GitlabController : ControllerBase
 {
-    private readonly IGitLabClient gitLabClient;
-
     public GitlabController(GitLabSettings gitLabSettings)
     {
         gitLabClient = new GitLabClient("https://git.skbkontur.ru", gitLabSettings.GitLabToken);
@@ -58,4 +55,6 @@ public class GitlabController : ControllerBase
             Directory.Delete(tempPath, true);
         }
     }
+
+    private readonly IGitLabClient gitLabClient;
 }

@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using Kontur.TestAnalytics.Api;
 using Vostok.Hosting;
 using Vostok.Hosting.Houston;
@@ -12,14 +12,9 @@ Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 var host = new HoustonHost(
     config =>
     {
-        
         config.OutOfHouston.SetupEnvironment(
-            builder =>
-            {
-                builder.SetPort(8125);
-            }
-        );
-        
+            builder => builder.SetPort(8125));
+
         config.Everywhere.SetupEnvironment(
             builder =>
             {
@@ -28,11 +23,8 @@ var host = new HoustonHost(
                 builder.SetupApplicationIdentity(
                     idBuilder => idBuilder
                         .SetProject("TestAnalytics")
-                        .SetApplication("GitLabCrawler")
-                );
-            }
-        );
-    }
-);
+                        .SetApplication("GitLabCrawler"));
+            });
+    });
 
 await host.WithConsoleCancellation().RunAsync();

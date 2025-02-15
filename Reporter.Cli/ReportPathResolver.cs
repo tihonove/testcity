@@ -7,8 +7,10 @@ public static class ReportPathResolver
         foreach (var path in pathTemplates.SelectMany(ResolveDirectoriesByPattern))
         {
             var root = Path.GetPathRoot(path);
-            foreach (var filePath in Directory.GetFiles(root ?? ".", path[(root?.Length ?? 0)..]))
+            foreach (var filePath in Directory.GetFiles(root ?? ".", path[(root?.Length ?? 0) ..]))
+            {
                 yield return filePath;
+            }
         }
     }
 
@@ -16,7 +18,9 @@ public static class ReportPathResolver
     {
         var splitResult = template.Split("**/", 2);
         if (splitResult.Length == 1 || !Directory.Exists(splitResult[0]))
+        {
             return Directory.Exists(Path.GetDirectoryName(template)) ? new[] { template } : Array.Empty<string>();
+        }
 
         var dirs = Directory.GetDirectories(splitResult[0], "*", SearchOption.TopDirectoryOnly);
         var combinedDirs = dirs.Select(d => Path.Combine(d, splitResult[1])).ToList();

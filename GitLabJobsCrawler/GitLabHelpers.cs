@@ -1,5 +1,5 @@
-using Kontur.TestAnalytics.Reporter.Client;
 using Kontur.TestAnalytics.Reporter.Cli;
+using Kontur.TestAnalytics.Reporter.Client;
 
 namespace Kontur.TestAnalytics.GitLabJobsCrawler;
 
@@ -15,6 +15,7 @@ public static class GitLabHelpers
             JobId = job.Name,
             JobRunId = job.Id.ToString(),
             BranchName = refId,
+
             // TODO Надо добавить в модельки NGitLab поля
             AgentName = job.Runner.Description ?? $"agent_${job.Runner.Id}",
             AgentOSName = "Unknown",
@@ -32,17 +33,18 @@ public static class GitLabHelpers
             EndDateTime = endDateTime,
             Duration = (int)Math.Ceiling(job.Duration ?? 0),
             Triggered = job.User.Email,
+
             // TODO job.Pipeline.Source -- это поляна есть в api но в модель её не протащили , надо сгонять к чувакам и сделать им PR
             PipelineSource = "push",
             CommitSha = job.Commit.Id.ToString(),
             CommitMessage = job.Commit.Message,
             CommitAuthor = job.Commit.AuthorName,
             ProjectId = projectId,
-            CustomStatusMessage = "",
+            CustomStatusMessage = string.Empty,
             TotalTestsCount = testCount.Total,
             SuccessTestsCount = testCount.Success,
             FailedTestsCount = testCount.Failed,
-            SkippedTestsCount = testCount.Skipped
+            SkippedTestsCount = testCount.Skipped,
         };
     }
 
@@ -60,6 +62,7 @@ public static class GitLabHelpers
         {
             return JobStatus.Failed;
         }
+
         return JobStatus.Failed;
     }
 }

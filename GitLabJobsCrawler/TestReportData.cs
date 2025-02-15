@@ -5,5 +5,4 @@ namespace Kontur.TestAnalytics.GitLabJobsCrawler;
 
 public record TestReportData(
     TestCount Counters,
-    List<TestRun> Runs
-);
+    List<TestRun> Runs);

@@ -17,7 +17,7 @@ internal class TestRunsUploaderInternal
         using var bulkCopyInterface = new ClickHouseBulkCopy(connection)
         {
             DestinationTableName = "TestRuns",
-            BatchSize = 1000
+            BatchSize = 1000,
         };
         await foreach (var testRuns in lines.Batches(1000))
         {
@@ -25,14 +25,14 @@ internal class TestRunsUploaderInternal
                 new object[]
                 {
                     info.JobId, info.JobRunId, info.BranchName, x.TestId, (int)x.TestResult, x.Duration,
-                    x.StartDateTime.ToUniversalTime(), info.AgentName, info.AgentOSName, info.JobUrl
-                }
-            );
+                    x.StartDateTime.ToUniversalTime(), info.AgentName, info.AgentOSName, info.JobUrl,
+                });
             await bulkCopyInterface.WriteToServerAsync(values, Fields);
         }
     }
 
-    private static readonly string[] Fields = {
+    private static readonly string[] Fields =
+    {
         "JobId",
         "JobRunId",
         "BranchName",
@@ -42,6 +42,6 @@ internal class TestRunsUploaderInternal
         "StartDateTime",
         "AgentName",
         "AgentOSName",
-        "JobUrl"
+        "JobUrl",
     };
 }

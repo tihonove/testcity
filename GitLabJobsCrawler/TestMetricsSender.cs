@@ -1,4 +1,4 @@
-﻿using NGitLab.Models;
+using NGitLab.Models;
 using Vostok.Hosting.Abstractions;
 using Vostok.Metrics;
 using Vostok.Metrics.Models;
@@ -33,15 +33,23 @@ public class TestMetricsSender
         rootMetricContext.Send(new MetricDataPoint(data.Runs.Sum(x => x.Duration), "TestSumDuration", tags));
 
         if (job.Duration.HasValue)
+        {
             rootMetricContext.Send(new MetricDataPoint(job.Duration.Value, "JobDuration", tags));
+        }
 
         if (job.Coverage.HasValue)
+        {
             rootMetricContext.Send(new MetricDataPoint(job.Coverage.Value, "Coverage", tags));
+        }
 
         if (job.Artifacts != null)
+        {
             rootMetricContext.Send(new MetricDataPoint(job.Artifacts.Size, "ArtifactSize", tags));
+        }
 
         if (job.QueuedDuration.HasValue)
+        {
             rootMetricContext.Send(new MetricDataPoint(job.QueuedDuration.Value, "QueuedDuration", tags));
+        }
     }
 }

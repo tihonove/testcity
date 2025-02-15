@@ -1,4 +1,4 @@
-﻿using Kontur.TestAnalytics.Front;
+using Kontur.TestAnalytics.Front;
 using Microsoft.AspNetCore.Mvc;
 using Vostok.Logging.Abstractions;
 
@@ -8,18 +8,24 @@ namespace Kontur.TestAnalytics.Api.Controllers;
 [Route("")]
 public class StaticFilesController : ControllerBase
 {
-    public StaticFilesController(ILog log)
+    public StaticFilesController()
     {
-        this.log = log;
+        log = LogProvider.Get().ForContext<StaticFilesController>();
     }
 
     [Route("")]
     [Route("{*pathInfo:regex(^(?!static|clickhouse|gitlab).*$)}")]
     [HttpGet]
-    public Stream Home() => TestAnalyticsFrontContent.GetFile("index.html");
+    public Stream Home(string? pathInfo)
+    {
+        log.Info($"Access to {pathInfo}");
+        return TestAnalyticsFrontContent.GetFile("index.html");
+    }
 
     [Route("static/{*pathInfo}")]
     [HttpGet]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Allow in controllers")]
     public Stream StaticFiles(string pathInfo) => TestAnalyticsFrontContent.GetFile("static/" + pathInfo);
+
     private readonly ILog log;
 }

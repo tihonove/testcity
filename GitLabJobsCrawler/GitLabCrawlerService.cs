@@ -8,7 +8,7 @@ using Vostok.Logging.Abstractions;
 
 namespace Kontur.TestAnalytics.GitLabJobsCrawler;
 
-public class GitLabCrawlerService : IDisposable
+public sealed class GitLabCrawlerService : IDisposable
 {
     public GitLabCrawlerService(GitLabSettings gitLabSettings, TestMetricsSender metricsSender)
     {
@@ -19,33 +19,34 @@ public class GitLabCrawlerService : IDisposable
 
     public void Start()
     {
-        log.Info($"Perioding gitlab jobs update runned");
+        log.Info("Perioding gitlab jobs update runned");
         Task.Run(async () =>
         {
             if (stopTokenSource.IsCancellationRequested)
             {
                 return;
             }
+
             while (!stopTokenSource.IsCancellationRequested)
             {
                 try
                 {
-                    log.Info($"Start pulling gitlab job artifacts");
+                    log.Info("Start pulling gitlab job artifacts");
                     await PullGitLabJobArtifactsAndPushIntoTestAnalytics(stopTokenSource.Token);
                 }
                 catch (Exception e)
                 {
-                    log.Error(e, $"Failed to update gitlab artifacts");
+                    log.Error(e, "Failed to update gitlab artifacts");
                 }
+
                 await Task.Delay(TimeSpan.FromMinutes(1), stopTokenSource.Token);
             }
         });
     }
 
-
     private async Task PullGitLabJobArtifactsAndPushIntoTestAnalytics(CancellationToken token)
     {
-        var gitLabProjectIds = GitLabProjectsService.GetAllProjects().Select(x => x.Id).Except(new[] { "17358", "19371" }).Select(x => int.Parse(x)).ToList();
+        var gitLabProjectIds = GitLabProjectsService.GetAllProjects().Select(x => x.Id).Except(Second).Select(x => int.Parse(x)).ToList();
 
         foreach (var projectId in gitLabProjectIds)
         {
@@ -56,13 +57,12 @@ public class GitLabCrawlerService : IDisposable
             var jobsQuery = new NGitLab.Models.JobQuery
             {
                 PerPage = 300,
-                Scope = NGitLab.Models.JobScopeMask.All &
-                    ~NGitLab.Models.JobScopeMask.Canceled &
-                    ~NGitLab.Models.JobScopeMask.Skipped &
-                    ~NGitLab.Models.JobScopeMask.Pending &
-                    ~NGitLab.Models.JobScopeMask.Running &
-                    ~NGitLab.Models.JobScopeMask.Created
-
+                Scope = JobScopeMask.All &
+                    ~JobScopeMask.Canceled &
+                    ~JobScopeMask.Skipped &
+                    ~JobScopeMask.Pending &
+                    ~JobScopeMask.Running &
+                    ~JobScopeMask.Created,
             };
             var jobs = jobsClient.GetJobsAsync(jobsQuery).Take(300).ToArray();
             log.Info($"Take last {jobs.Length} jobs");
@@ -74,6 +74,7 @@ public class GitLabCrawlerService : IDisposable
                     log.Info($"Skip job with id: {job.Id}");
                     continue;
                 }
+
                 log.Info($"Start processing job with id: {job.Id}");
                 if (job.Artifacts != null)
                 {
@@ -118,11 +119,10 @@ public class GitLabCrawlerService : IDisposable
         stopTokenSource.Cancel();
     }
 
-    private readonly Regex mergeRequestRef = new Regex("^refs/merge-requests/(\\d+)/head$");
     private readonly HashSet<long> processedJobSet = new HashSet<long>();
-    private readonly Dictionary<string, string> refToBranch = new Dictionary<string, string>();
     private readonly ILog log = LogProvider.Get().ForContext<GitLabCrawlerService>();
     private readonly GitLabSettings gitLabSettings;
     private readonly TestMetricsSender metricsSender;
     private readonly CancellationTokenSource stopTokenSource;
+    private static readonly string[] Second = new[] { "17358", "19371" };
 }

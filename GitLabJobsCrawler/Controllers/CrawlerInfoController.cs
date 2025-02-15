@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Nodes;
+using System.Text.Json.Nodes;
 using Microsoft.AspNetCore.Mvc;
 using Vostok.Logging.Abstractions;
 
@@ -28,7 +28,7 @@ public class CrawlerInfoController : ControllerBase
         return Ok();
     }
 
-    private ILog log = LogProvider.Get();
+    private readonly ILog log = LogProvider.Get();
 
     private readonly GitLabCrawlerService crawlerService;
 }

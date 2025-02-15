@@ -1,4 +1,4 @@
-﻿using CommandLine;
+using CommandLine;
 using dotenv.net;
 using Kontur.TestAnalytics.Reporter.Cli;
 using Vostok.Logging.Abstractions;

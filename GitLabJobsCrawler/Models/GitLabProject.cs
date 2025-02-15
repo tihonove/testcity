@@ -1,16 +1,19 @@
-namespace Kontur.TestAnalytics.GitLabJobsCrawler.Models
-{
-    public class GitLabGroup
-    {
-        public string Id { get; set; }
-        public string Title { get; set; }
-        public List<GitLabProject> Projects { get; set; }
-        public List<GitLabGroup> Groups { get; set; }
-    }
+namespace Kontur.TestAnalytics.GitLabJobsCrawler.Models;
 
-    public class GitLabProject
-    {
-        public string Id { get; set; }
-        public string Title { get; set; }
-    }
+public class GitLabGroup
+{
+    public required string Id { get; set; }
+
+    public required string Title { get; set; }
+
+    public List<GitLabProject> Projects { get; set; } = new List<GitLabProject>();
+
+    public List<GitLabGroup> Groups { get; set; } = new List<GitLabGroup>();
+}
+
+public class GitLabProject
+{
+    public required string Id { get; set; }
+
+    public required string Title { get; set; }
 }

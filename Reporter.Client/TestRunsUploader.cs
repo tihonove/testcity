@@ -17,14 +17,14 @@ public static class TestRunsUploader
     {
         return UploadAsync(jobRunInfo, lines.ToAsyncEnumerable());
     }
-    
+
     public static async Task<bool> IsJobRunIdExists(string jobId)
     {
         await using var connection = CreateConnection();
-        var result = await connection.ExecuteScalarAsync($"Select count(JobRunId) > 0 from JobInfo where JobInfo.JobRunId == '{jobId}'");   
+        var result = await connection.ExecuteScalarAsync($"Select count(JobRunId) > 0 from JobInfo where JobInfo.JobRunId == '{jobId}'");
         return (byte)result == 1;
     }
-    
+
     public static async Task JobInfoUploadAsync(FullJobInfo jobInfo)
     {
         await using var connection = CreateConnection();

@@ -1,21 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
-        <TargetFramework>net7.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
         <AssemblyName>Kontur.TestAnalytics.Api</AssemblyName>
         <RootNamespace>Kontur.TestAnalytics.Api</RootNamespace>
-        <LangVersion>11</LangVersion>
+        <OutputType>Exe</OutputType>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac" Version="8.0.0" />
-        <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="9.0.0" />
-        <PackageReference Include="Vostok.Applications.AspNetCore" Version="0.3.21" />
-        <PackageReference Include="Vostok.Hosting.Houston" Version="1.0.497" />
-        <PackageReference Include="Vostok.Logging.Abstractions" Version="1.0.32" />
+        <PackageReference Include="Autofac" />
+        <PackageReference Include="Autofac.Extensions.DependencyInjection" />
+        <PackageReference Include="Vostok.Applications.AspNetCore" />
+        <PackageReference Include="Vostok.Hosting.Houston" />
+        <PackageReference Include="Vostok.Logging.Abstractions" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Kontur.TestAnalytics.Api.Controllers;
 
@@ -8,11 +8,10 @@ public class ClickhouseProxyController : ControllerBase
 {
     [Route("{*query}")]
     [AcceptVerbs("GET", "POST", "PUT", "DELETE")]
-    public async Task<IActionResult> Proxy(string? query)
+    public IActionResult Proxy(string? query)
     {
         return new ProxyToUriActionResult(
             Request,
-            $"http://vm-ch2-stg.dev.kontur.ru:8123/{query}"
-        );
+            $"http://vm-ch2-stg.dev.kontur.ru:8123/{query}");
     }
 }

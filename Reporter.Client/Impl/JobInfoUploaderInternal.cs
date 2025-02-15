@@ -17,12 +17,13 @@ internal class JobInfoUploaderInternal
         using var bulkCopyInterface = new ClickHouseBulkCopy(connection)
         {
             DestinationTableName = "JobInfo",
-            BatchSize = 1
+            BatchSize = 1,
         };
 
-        await bulkCopyInterface.WriteToServerAsync(new List<object[]>
+        await bulkCopyInterface.WriteToServerAsync(
+            new List<object?[]>
         {
-            new object[]
+            new object?[]
             {
                 info.JobId,
                 info.JobRunId,
@@ -44,12 +45,13 @@ internal class JobInfoUploaderInternal
                 info.FailedTestsCount,
                 info.SkippedTestsCount,
                 info.ProjectId,
-                info.CustomStatusMessage
-            }
+                info.CustomStatusMessage,
+            },
         }, Fields);
     }
 
-    private static readonly string[] Fields = {
+    private static readonly string[] Fields =
+    {
         "JobId",
         "JobRunId",
         "BranchName",
@@ -70,6 +72,6 @@ internal class JobInfoUploaderInternal
         "FailedTestsCount",
         "SkippedTestsCount",
         "ProjectId",
-        "CustomStatusMessage"
+        "CustomStatusMessage",
     };
 }

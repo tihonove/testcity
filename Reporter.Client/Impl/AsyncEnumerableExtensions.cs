@@ -6,7 +6,9 @@ internal static class AsyncEnumerableExtensions
     public static async IAsyncEnumerable<T> ToAsyncEnumerable<T>(this IEnumerable<T> enumerable)
     {
         foreach (var item in enumerable)
+        {
             yield return item;
+        }
     }
 #pragma warning restore CS1998
 
@@ -24,6 +26,8 @@ internal static class AsyncEnumerableExtensions
         }
 
         if (currentBatch.Count > 0)
+        {
             yield return currentBatch;
+        }
     }
 }
