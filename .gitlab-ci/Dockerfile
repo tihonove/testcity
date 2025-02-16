@@ -1,4 +1,4 @@
-FROM mcr-proxy.kontur.host/dotnet/sdk:8.0
+FROM mcr-proxy.kontur.host/dotnet/sdk:9.0
 
 RUN apt-get -y update \
     && apt-get install -y curl \

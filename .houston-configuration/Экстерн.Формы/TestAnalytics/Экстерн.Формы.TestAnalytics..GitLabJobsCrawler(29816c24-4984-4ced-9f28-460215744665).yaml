@@ -2,7 +2,7 @@ tpsa: Application/29816c2449844ced9f28460215744665
 configurations:
   - configuration:
       platform:
-        baseImageTag: 0.8.10
+        baseImageTag: 1.9.0
       binaryDefaults:
         binaryPackageName: Kontur.TestAnalytics.GitLabJobsCrawler
         entryPointName: TestAnalyticsGitLabCrawlerApplication

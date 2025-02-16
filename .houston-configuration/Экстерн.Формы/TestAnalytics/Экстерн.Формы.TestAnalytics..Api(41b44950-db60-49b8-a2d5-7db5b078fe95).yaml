@@ -2,7 +2,7 @@ tpsa: Application/41b44950db6049b8a2d57db5b078fe95
 configurations:
   - configuration:
       platform:
-        baseImageTag: 0.8.10
+        baseImageTag: 1.9.0
       binaryDefaults:
         binaryPackageName: Kontur.TestAnalytics.Api
         entryPointName: TestAnalyticsApiApplication
