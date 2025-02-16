@@ -9,7 +9,7 @@ RUN apt-get -y update \
     && echo 'node verions:' $(node -v) \
     && echo 'npm version:' $(npm -v) 
 
-# Загружаем и устанавливаем .NET SDK 8
+# Пока houston cli не умеет работать с .net 9 доставим 8 версию
 RUN wget https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh -O dotnet-install.sh && \
     chmod +x dotnet-install.sh && \
     ./dotnet-install.sh --version 8.0.100 && \
