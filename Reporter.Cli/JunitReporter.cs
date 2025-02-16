@@ -8,7 +8,7 @@ using Vostok.Logging.Abstractions;
 
 namespace Kontur.TestAnalytics.Reporter.Cli;
 
-public partial class JunitReporter
+public class JunitReporter
 {
     public JunitReporter(JunitReporterOptions options)
     {
@@ -246,7 +246,7 @@ public partial class JunitReporter
             return null;
         }
 
-        var match = MyRegex().Match(jobName);
+        var match = myRegex.Match(jobName);
 
         // ReSharper disable once ConvertIfStatementToReturnStatement
         if (match.Success)
@@ -259,7 +259,5 @@ public partial class JunitReporter
 
     private readonly JunitReporterOptions options;
     private readonly ILog log = LogProvider.Get().ForContext<JunitReporter>();
-
-    [GeneratedRegex(@"(.*?)([\b\s:]+((\[.*\])|(\d+[\s:\/\\]+\d+))){1,3}\s*\z")]
-    private static partial Regex MyRegex();
+    private static Regex myRegex = new Regex(@"(.*?)([\b\s:]+((\[.*\])|(\d+[\s:\/\\]+\d+))){1,3}\s*\z", RegexOptions.Compiled);
 }

@@ -15,9 +15,11 @@ internal sealed class ProxyToUriActionResult : IActionResult
 
     public async Task ExecuteResultAsync(ActionContext context)
     {
-        var handler = new HttpClientHandler();
-        handler.ClientCertificateOptions = ClientCertificateOption.Manual;
-        handler.ServerCertificateCustomValidationCallback = (_, _, _, _) => true;
+        var handler = new HttpClientHandler
+        {
+            ClientCertificateOptions = ClientCertificateOption.Manual,
+            ServerCertificateCustomValidationCallback = (_, _, _, _) => true,
+        };
 
         using var httpClient = new HttpClient(handler);
         var request = new HttpRequestMessage(new HttpMethod(sourceRequest.Method), targetUri + sourceRequest.QueryString);

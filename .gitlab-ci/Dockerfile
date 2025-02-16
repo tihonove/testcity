@@ -12,7 +12,7 @@ RUN apt-get -y update \
 # Пока houston cli не умеет работать с .net 9 доставим 8 версию
 RUN wget https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh -O dotnet-install.sh && \
     chmod +x dotnet-install.sh && \
-    ./dotnet-install.sh --version 8.0.100 && \
+    ./dotnet-install.sh --version 8.0.100 --install-dir /usr/share/dotnet && \
     rm dotnet-install.sh
 
 RUN dotnet tool install -g Houston.CommandLine --add-source https://nexus.kontur.host/repository/nuget/index.json

@@ -100,6 +100,7 @@ dotnet_diagnostic.SA1009.severity = none
 
 dotnet_diagnostic.CS8618.severity = none
 dotnet_diagnostic.SA0001.severity = none
+dotnet_diagnostic.SA1516.severity = none
 
 # IDE0022: Use block body for method
 csharp_style_expression_bodied_methods = false

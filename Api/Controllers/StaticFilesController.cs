@@ -8,11 +8,6 @@ namespace Kontur.TestAnalytics.Api.Controllers;
 [Route("")]
 public class StaticFilesController : ControllerBase
 {
-    public StaticFilesController()
-    {
-        log = LogProvider.Get().ForContext<StaticFilesController>();
-    }
-
     [Route("")]
     [Route("{*pathInfo:regex(^(?!static|clickhouse|gitlab).*$)}")]
     [HttpGet]
@@ -27,5 +22,5 @@ public class StaticFilesController : ControllerBase
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Allow in controllers")]
     public Stream StaticFiles(string pathInfo) => TestAnalyticsFrontContent.GetFile("static/" + pathInfo);
 
-    private readonly ILog log;
+    private readonly ILog log = LogProvider.Get().ForContext<StaticFilesController>();
 }

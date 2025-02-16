@@ -18,5 +18,4 @@ InspectCodeCache/**
 **/.idea/dictionaries
 **/.idea/dataSources*
 *.DotSettings.user
-
 .env

@@ -1,8 +1,7 @@
-using System.Text.RegularExpressions;
 using Kontur.TestAnalytics.Api;
+using Kontur.TestAnalytics.Core;
 using Kontur.TestAnalytics.GitLabJobsCrawler.Services;
 using Kontur.TestAnalytics.Reporter.Client;
-using NGitLab;
 using NGitLab.Models;
 using Vostok.Logging.Abstractions;
 
@@ -46,12 +45,13 @@ public sealed class GitLabCrawlerService : IDisposable
 
     private async Task PullGitLabJobArtifactsAndPushIntoTestAnalytics(CancellationToken token)
     {
+        var gitLabClientProvider = new SkbKonturGitLabClientProvider(gitLabSettings);
         var gitLabProjectIds = GitLabProjectsService.GetAllProjects().Select(x => x.Id).Except(Second).Select(x => int.Parse(x)).ToList();
 
         foreach (var projectId in gitLabProjectIds)
         {
             log.Info($"Pulling jobs for project {projectId}");
-            var client = new GitLabClient("https://git.skbkontur.ru", gitLabSettings.GitLabToken);
+            var client = gitLabClientProvider.GetClient();
             var jobsClient = client.GetJobs(projectId);
             var projectInfo = await client.Projects.GetByIdAsync(projectId, new SingleProjectQuery(), token);
             var jobsQuery = new NGitLab.Models.JobQuery

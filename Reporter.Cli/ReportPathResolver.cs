@@ -7,7 +7,7 @@ public static class ReportPathResolver
         foreach (var path in pathTemplates.SelectMany(ResolveDirectoriesByPattern))
         {
             var root = Path.GetPathRoot(path);
-            foreach (var filePath in Directory.GetFiles(root ?? ".", path[(root?.Length ?? 0) ..]))
+            foreach (var filePath in Directory.GetFiles(root ?? ".", path[(root?.Length ?? 0)..]))
             {
                 yield return filePath;
             }

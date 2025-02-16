@@ -1,5 +1,6 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Kontur.TestAnalytics.Core;
 using Kontur.TestAnalytics.GitLabJobsCrawler;
 using Kontur.TestAnalytics.GitLabJobsCrawler.Controllers;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +31,7 @@ public class TestAnalyticsGitLabCrawlerApplication : VostokAspNetCoreApplication
         containerBuilder.RegisterType<CrawlerInfoController>().As<ControllerBase>().AsSelf().InstancePerLifetimeScope();
         containerBuilder.RegisterType<GitLabCrawlerService>().AsSelf().SingleInstance();
         containerBuilder.RegisterType<TestMetricsSender>().AsSelf().SingleInstance();
+        containerBuilder.RegisterType<SkbKonturGitLabClientProvider>().As<SkbKonturGitLabClientProvider>().AsSelf().SingleInstance();
     }
 
     public override Task WarmupServicesAsync(IVostokHostingEnvironment environment, IServiceProvider serviceProvider)

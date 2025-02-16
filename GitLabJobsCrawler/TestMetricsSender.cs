@@ -2,7 +2,6 @@ using NGitLab.Models;
 using Vostok.Hosting.Abstractions;
 using Vostok.Metrics;
 using Vostok.Metrics.Models;
-using Vostok.Metrics.Primitives.Timer;
 
 namespace Kontur.TestAnalytics.GitLabJobsCrawler;
 

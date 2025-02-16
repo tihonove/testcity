@@ -2,11 +2,11 @@ using System.Text.RegularExpressions;
 using NGitLab;
 using NGitLab.Models;
 
-namespace Kontur.TestAnalytics.GitLabJobsCrawler;
+namespace Kontur.TestAnalytics.Core;
 
-public static partial class GitLabClientExtensions
+public static class GitLabClientExtensions
 {
-    public static async Task<string> BranchOrRef(this GitLabClient client, int projectId, string refId)
+    public static async Task<string> BranchOrRef(this IGitLabClient client, int projectId, string refId)
     {
         if (RefToBranch.TryGetValue(refId, out var branch))
         {
@@ -26,9 +26,6 @@ public static partial class GitLabClientExtensions
         return mr.SourceBranch;
     }
 
-    private static readonly Regex MergeRequestRef = MyRegex();
+    private static readonly Regex MergeRequestRef = new ("^refs/merge-requests/(\\d+)/head$", RegexOptions.Compiled);
     private static readonly Dictionary<string, string> RefToBranch = new Dictionary<string, string>();
-
-    [GeneratedRegex("^refs/merge-requests/(\\d+)/head$")]
-    private static partial Regex MyRegex();
 }

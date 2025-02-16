@@ -30,9 +30,7 @@ public class TestAnalyticsApiApplicationStartup
         app.UseCors();
         app.UseAuthorization();
         app.UseResponseCompression();
-
-        app.UseEndpoints(
-            endpoints => endpoints.MapControllers());
+        app.UseEndpoints(endpoints => endpoints.MapControllers());
     }
 }
 #pragma warning restore RCS1102 // Make class static

@@ -14,6 +14,7 @@
         <PackageReference Include="Vostok.Applications.AspNetCore" />
         <PackageReference Include="Vostok.Hosting.Houston" />
         <PackageReference Include="Vostok.Logging.Abstractions" />
+        <PackageReference Include="dotenv.net" />
     </ItemGroup>
 
     <ItemGroup>

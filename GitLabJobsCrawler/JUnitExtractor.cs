@@ -43,10 +43,10 @@ public class JUnitExtractor
         var testCount = new TestCount();
         foreach (var testCase in root.XPathSelectElements("//testsuite//testcase"))
         {
-            var startDateTime = DateTimeOffset.Parse(testCase.Parent!.Attribute("timestamp") !.Value);
-            var testAssembleName = testCase.Parent!.Attribute("name") !.Value.Replace(".dll", string.Empty);
-            var className = testCase.Attribute("classname") !.Value;
-            var testCaseName = testCase.Attribute("name") !.Value;
+            var startDateTime = DateTimeOffset.Parse(testCase.Parent!.Attribute("timestamp")!.Value);
+            var testAssembleName = testCase.Parent!.Attribute("name")!.Value.Replace(".dll", string.Empty);
+            var className = testCase.Attribute("classname")!.Value;
+            var testCaseName = testCase.Attribute("name")!.Value;
             var testId = $"{testAssembleName}: {JUnitReportHelper.RemoveDuplicatePartInClassName(className, testCaseName)}{testCaseName}";
 
             var failure = testCase.Element("failure");
@@ -64,7 +64,7 @@ public class JUnitExtractor
             {
                 TestId = testId,
                 TestResult = testStatus,
-                Duration = double.TryParse(testCase.Attribute("time") !.Value, CultureInfo.InvariantCulture, out var time)
+                Duration = double.TryParse(testCase.Attribute("time")!.Value, CultureInfo.InvariantCulture, out var time)
                     ? (long)TimeSpan.FromSeconds(time).TotalMilliseconds
                     : 0,
                 StartDateTime = startDateTime.DateTime,

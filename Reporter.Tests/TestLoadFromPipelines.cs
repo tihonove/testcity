@@ -1,7 +1,7 @@
+using Kontur.TestAnalytics.Core;
 using Kontur.TestAnalytics.GitLabJobsCrawler;
 using Kontur.TestAnalytics.GitLabJobsCrawler.Services;
 using Kontur.TestAnalytics.Reporter.Client;
-using NGitLab;
 using NGitLab.Models;
 using NUnit.Framework;
 using Vostok.Logging.Abstractions;
@@ -43,11 +43,13 @@ public class TestsLoadFromGitlab
     [Explicit]
     public async Task Test01()
     {
+        var gitlabClientProvider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
+
         // var gitLabProjectIds = GitLabProjectsService.GetAllProjects().Select(x => x.Id).Except(new[] { "17358", "19371", "182" }).Select(x => int.Parse(x)).ToList();
         foreach (var projectId in new[] { 2189 })
         {
             Log.Info($"Pulling jobs for project {projectId}");
-            var client = new GitLabClient("https://git.skbkontur.ru", "----------------");
+            var client = gitlabClientProvider.GetClient();
             var jobsClient = client.GetJobs(projectId);
             var projectInfo = await client.Projects.GetByIdAsync(projectId, new SingleProjectQuery());
             var jobsQuery = new NGitLab.Models.JobQuery
@@ -83,8 +85,9 @@ public class TestsLoadFromGitlab
                             if (!await TestRunsUploader.IsJobRunIdExists(jobInfo.JobRunId))
                             {
                                 Log.Info($"JobRunId '{jobInfo.JobRunId}' does not exist. Uploading test runs");
-                                await TestRunsUploader.JobInfoUploadAsync(jobInfo);
-                                await TestRunsUploader.UploadAsync(jobInfo, extractResult.Runs);
+
+                                // await TestRunsUploader.JobInfoUploadAsync(jobInfo);
+                                // await TestRunsUploader.UploadAsync(jobInfo, extractResult.Runs);
                             }
                             else
                             {

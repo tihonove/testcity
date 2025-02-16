@@ -1,7 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+    <PropertyGroup>
+        <AssemblyName>Kontur.TestAnalytics.Core</AssemblyName>
+        <RootNamespace>Kontur.TestAnalytics.Core</RootNamespace>
+    </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="NGitLab" />
+        <PackageReference Include="Vostok.Configuration" />
+        <PackageReference Include="Vostok.Configuration.Abstractions" />
+        <PackageReference Include="Vostok.Configuration.Sources" />
     </ItemGroup>
     
 </Project>

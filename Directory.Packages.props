@@ -26,6 +26,9 @@
     <PackageVersion Include="System.Reactive.Linq" Version="6.0.1" />
     <PackageVersion Include="System.Reactive" Version="6.0.1" />
     <PackageVersion Include="Vostok.Applications.AspNetCore" Version="0.3.21" />
+    <PackageVersion Include="Vostok.Configuration" Version="0.1.44" />
+    <PackageVersion Include="Vostok.Configuration.Abstractions" Version="0.1.17" />
+    <PackageVersion Include="Vostok.Configuration.Sources" Version="0.1.20" />
     <PackageVersion Include="Vostok.Hosting.Houston" Version="1.0.497" />
     <PackageVersion Include="Vostok.Logging.Abstractions" Version="1.0.32" />
     <PackageVersion Include="Vostok.Logging.Console" Version="1.0.10" />

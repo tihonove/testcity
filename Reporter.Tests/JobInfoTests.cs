@@ -1,4 +1,3 @@
-using System.Globalization;
 using Kontur.TestAnalytics.Reporter.Cli;
 using NUnit.Framework;
 

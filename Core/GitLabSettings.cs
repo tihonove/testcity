@@ -1,6 +1,21 @@
-namespace Kontur.TestAnalytics.Api;
+using Vostok.Configuration;
+using Vostok.Configuration.Abstractions.Attributes;
+using Vostok.Configuration.Sources.Environment;
+
+namespace Kontur.TestAnalytics.Core;
 
 public class GitLabSettings
 {
-    public string GitLabToken { get; set; } = "glpat-JpY7zGgBbJqpD5Vff9qd";
+    [Alias("GITLAB_TOKEN")]
+    public string GitLabToken { get; set; }
+
+    public static GitLabSettings Default => DefaultInstance.Value;
+
+    private static readonly Lazy<GitLabSettings> DefaultInstance = new (() =>
+    {
+        var source = new EnvironmentVariablesSource();
+        var provider = new ConfigurationProvider();
+        provider.SetupSourceFor<GitLabSettings>(source);
+        return provider.Get<GitLabSettings>();
+    });
 }

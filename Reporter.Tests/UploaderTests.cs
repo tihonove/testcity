@@ -1,7 +1,6 @@
 using Kontur.TestAnalytics.Reporter.Cli;
 using Kontur.TestAnalytics.Reporter.Client;
 using NUnit.Framework;
-using Vostok.Logging.Console;
 
 namespace Kontur.TestAnalytics.Reporter.Tests;
 

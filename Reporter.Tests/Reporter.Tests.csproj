@@ -13,6 +13,7 @@
         <PackageReference Include="NUnit3TestAdapter" />
         <PackageReference Include="JunitXml.TestLogger" />
         <PackageReference Include="System.Linq.Async" />
+        <PackageReference Include="dotenv.net" />
     </ItemGroup>
 
     <ItemGroup>

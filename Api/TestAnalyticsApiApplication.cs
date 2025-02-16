@@ -1,6 +1,7 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Kontur.TestAnalytics.Api.Controllers;
+using Kontur.TestAnalytics.Core;
 using Microsoft.AspNetCore.Mvc;
 using Vostok.Applications.AspNetCore;
 using Vostok.Applications.AspNetCore.Builders;
@@ -24,6 +25,7 @@ public class TestAnalyticsApiApplication : VostokAspNetCoreApplication<TestAnaly
         containerBuilder.RegisterType<StaticFilesController>().As<ControllerBase>().AsSelf().InstancePerDependency();
         containerBuilder.RegisterType<GitlabController>().As<ControllerBase>().AsSelf().InstancePerDependency();
         containerBuilder.RegisterType<ClickhouseProxyController>().As<ControllerBase>().AsSelf().InstancePerDependency();
+        containerBuilder.RegisterType<SkbKonturGitLabClientProvider>().As<SkbKonturGitLabClientProvider>().AsSelf().SingleInstance();
     }
 }
 #pragma warning restore RCS1102 // Make class static

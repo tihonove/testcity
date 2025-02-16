@@ -13,6 +13,7 @@
         <PackageReference Include="Vostok.Hosting.Houston" />
         <PackageReference Include="Vostok.Logging.Abstractions" />
         <PackageReference Include="NGitLab" />
+        <PackageReference Include="dotenv.net" />
     </ItemGroup>
 
     <ItemGroup>
