@@ -1,5 +1,5 @@
 variables:
-  BASE_IMAGE: "registry.kontur.host/ke-forms/test-analytics-gitlab-ci:v3"
+  BASE_IMAGE: "registry.kontur.host/ke-forms/test-analytics-gitlab-ci:v4"
   HOUSTON2_TEAM_ID: "07f09d0f-0ee5-4ad4-b585-bc7599374579"
 
 Deploy TestAnalytics:
