@@ -2,6 +2,20 @@ variables:
   BASE_IMAGE: "registry.kontur.host/ke-forms/test-analytics-gitlab-ci:v5"
   HOUSTON2_TEAM_ID: "07f09d0f-0ee5-4ad4-b585-bc7599374579"
 
+Front Typecheck and lint:
+  stage: test
+  image:
+    name: $BASE_IMAGE
+  script:
+    - cd Front
+    - npm install
+    - npm run lint . --format json --output-file eslint-report.json
+    - npm run typecheck
+  artifacts:
+    reports:
+      codequality: Front/eslint-report.json
+    expire_in: 1 week
+    
 Front tests:
   stage: test
   image:
@@ -9,8 +23,6 @@ Front tests:
   script:
     - cd Front
     - npm install
-    - npm run lint
-    - npm run typecheck
     - npm test
   artifacts:
     reports:
