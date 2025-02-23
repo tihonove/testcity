@@ -13,7 +13,7 @@ import { theme } from "../Theme/ITheme";
 import { useSearchParamAsState } from "../Utils";
 import { createLinkToCreateNewPipeline, createLinkToProject } from "./Navigation";
 
-export function JobsPage(): React.JSX.Element {
+export function ProjectsDashboardPage(): React.JSX.Element {
     const { groupIdLevel1, groupIdLevel2, groupIdLevel3 } = useParams();
     if (groupIdLevel1 == null || groupIdLevel1 === "") {
         throw new Error(`Group is not defined`);

@@ -3,14 +3,9 @@ using ClickHouse.Client.Copy;
 
 namespace Kontur.TestAnalytics.Reporter.Client.Impl;
 
-internal class TestRunsUploaderInternal
+internal class TestRunsUploaderInternal(ClickHouseConnection connection)
 {
-    private readonly ClickHouseConnection connection;
-
-    public TestRunsUploaderInternal(ClickHouseConnection connection)
-    {
-        this.connection = connection;
-    }
+    private readonly ClickHouseConnection connection = connection;
 
     public async Task UploadAsync(JobRunInfo info, IAsyncEnumerable<TestRun> lines)
     {

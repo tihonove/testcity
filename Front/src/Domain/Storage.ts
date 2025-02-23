@@ -11,6 +11,7 @@ const hardCodedGroups: GroupNode[] = require("../../gitlab-projects.json");
 export interface Group {
     id: string;
     title: string;
+    mergeRunsFromJobs?: boolean;
 }
 
 export interface GroupNode extends Group {

@@ -112,6 +112,7 @@ public class JunitReporter
         {
             JobUrl = shortJobInfo.JobUrl,
             JobId = shortJobInfo.JobId,
+            PipelineId = shortJobInfo.PipelineId,
             JobRunId = shortJobInfo.JobRunId,
             BranchName = shortJobInfo.BranchName,
             AgentName = shortJobInfo.AgentName,
@@ -233,6 +234,7 @@ public class JunitReporter
             JobUrl = Environment.GetEnvironmentVariable("CI_JOB_URL") ?? string.Empty,
             JobId = Environment.GetEnvironmentVariable("TEAMCITY_BUILDTYPE_ID") ?? GetNormalizedJobName() ?? string.Empty,
             JobRunId = Environment.GetEnvironmentVariable("BUILD_ID") ?? Environment.GetEnvironmentVariable("CI_JOB_ID") ?? string.Empty,
+            PipelineId = Environment.GetEnvironmentVariable("CI_PIPELINE_ID") ?? string.Empty,
             BranchName = Environment.GetEnvironmentVariable("TEAMCITY_BRANCH") ?? Environment.GetEnvironmentVariable("CI_COMMIT_BRANCH") ?? string.Empty,
             AgentName = Environment.GetEnvironmentVariable("COMPUTERNAME") ?? Environment.GetEnvironmentVariable("HOSTNAME") ?? string.Empty,
             AgentOSName = Environment.GetEnvironmentVariable("WRAPPER_OS") ?? RuntimeInformation.OSDescription,

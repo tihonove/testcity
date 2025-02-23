@@ -22,6 +22,7 @@ public class UploaderTests
         {
             JobUrl = "fakeurl",
             JobId = "Integration tests",
+            PipelineId = "001",
             JobRunId = "001",
             BranchName = "milkov/additional-info-for-tha-local",
             AgentName = "runner-xwgvg2526-project-milkov-concurrent-16-57l4n2q9",
@@ -49,6 +50,7 @@ public class UploaderTests
         {
             JobId = "LOCAL_RUN_FOR_TEST_JOB",
             JobRunId = "1",
+            PipelineId = "1",
             BranchName = "milkov-test-local-run",
             AgentName = "KE-FRM-AGENT-01",
             AgentOSName = "Windows",

@@ -13,6 +13,7 @@ export const normalTheme = {
     mutedTextColor: "rgba(0, 0, 0, 0.48)",
     accentBgColor: LIGHT_THEME.blueLight,
     accentTextColor: LIGHT_THEME.btnSuccessTextColor,
+    borderLineColor2: "rgba(0, 0, 0, 0.1)",
 
     layout: {
         centered: {
@@ -36,6 +37,7 @@ export const darkTheme: ITheme = {
     mutedTextColor: DARK_THEME.textColorDisabled,
     accentBgColor: DARK_THEME.blueLight,
     accentTextColor: DARK_THEME.btnSuccessTextColor,
+    borderLineColor2: "rgba(255, 255, 255, 0.1)",
 };
 
 type ThemePropsPeeker<T> = <P>(props: P) => T;

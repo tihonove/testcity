@@ -13,6 +13,7 @@ public static class GitLabHelpers
         {
             JobUrl = job.WebUrl,
             JobId = job.Name,
+            PipelineId = job.Pipeline.Id.ToString(),
             JobRunId = job.Id.ToString(),
             BranchName = refId,
 
@@ -24,6 +25,7 @@ public static class GitLabHelpers
         {
             JobUrl = shortJobInfo.JobUrl,
             JobId = shortJobInfo.JobId,
+            PipelineId = shortJobInfo.PipelineId,
             JobRunId = shortJobInfo.JobRunId,
             BranchName = shortJobInfo.BranchName,
             AgentName = shortJobInfo.AgentName,

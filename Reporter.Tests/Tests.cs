@@ -36,6 +36,7 @@ public class Tests
                 new JobRunInfo
                 {
                     JobId = "Forms_UnitTests",
+                    PipelineId = buildId + "123",
                     JobRunId = buildId + "1",
                     BranchName = "master",
                     AgentName = "KE-FRM-AGENT-01",
@@ -46,6 +47,7 @@ public class Tests
                 new JobRunInfo
                 {
                     JobId = "Forms_UnitTests",
+                    PipelineId = buildId + "123",
                     JobRunId = buildId + "2",
                     BranchName = "tihonove/branch-1",
                     AgentName = "KE-FRM-AGENT-01",
@@ -56,6 +58,7 @@ public class Tests
                 new JobRunInfo
                 {
                     JobId = "Forms_UnitTests",
+                    PipelineId = buildId + "123",
                     JobRunId = buildId + "3",
                     BranchName = "tihonove/branch-2",
                     AgentName = "KE-FRM-AGENT-01",
@@ -109,6 +112,7 @@ public class Tests
         {
             JobId = "Forms_UnitTests",
             JobRunId = "32028281",
+            PipelineId = "123",
             BranchName = "master",
             AgentName = "AGENT-1",
             AgentOSName = "Windows",

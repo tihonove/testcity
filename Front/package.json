@@ -50,6 +50,7 @@
     "@storybook/addon-essentials": "^8.5.1",
     "@storybook/addon-interactions": "^8.5.1",
     "@storybook/addon-onboarding": "^8.5.1",
+    "@storybook/addon-toolbars": "^8.5.8",
     "@storybook/addon-webpack5-compiler-swc": "^2.0.0",
     "@storybook/blocks": "^8.5.1",
     "@storybook/react": "^8.5.1",

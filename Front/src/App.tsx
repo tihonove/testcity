@@ -2,14 +2,14 @@ import * as React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { TestHistoryPage } from "./Pages/TestHistoryPage";
 import styled from "styled-components";
-import { JobsPage } from "./Pages/JobsPage";
+import { ProjectsDashboardPage } from "./Pages/JobsPage";
 import { JobRunsPage } from "./Pages/JobRunsPage";
 import { JobRunPage } from "./Pages/JobRunPage";
 import { TestsTreeMapChart } from "./Pages/TestsTreeMapChart";
 import { Button } from "@skbkontur/react-ui";
 import { WeatherMoonIcon20Regular, WeatherSunIcon20Regular } from "@skbkontur/icons";
 import { MergeRequestJobsPage } from "./Pages/MergeRequestJobsPage";
-import { ProjectsPage } from "./Components/ProjectsPage";
+import { GroupsPage } from "./Components/GroupsPage";
 import { TestsTreeView } from "./Pages/TestsTreeView";
 import { CodeQualityPage } from "./Pages/CodeQualityPage";
 import { useTestAnalyticsDarkMode } from "./Theme/UseTestAnalyticsDarkMode";
@@ -26,7 +26,7 @@ export function App(): React.JSX.Element {
             </ThemeSwitchContainer>
             <Routes>
                 <Route path="/test-analytics">
-                    <Route index element={<ProjectsPage />} />
+                    <Route index element={<GroupsPage />} />
                     <Route path="history" element={<TestHistoryPage />} />
                     <Route
                         path="projects/:projectId/merge-requests/:gitLabMergeRequestId/jobs"
@@ -35,7 +35,7 @@ export function App(): React.JSX.Element {
                     <Route path="jobs" element={<Navigate to="/test-analytics" />} />
 
                     <Route path=":groupIdLevel1">
-                        <Route index element={<JobsPage />} />
+                        <Route index element={<ProjectsDashboardPage />} />
                         <Route path="jobs/:jobId" element={<JobRunsPage />} />
                         <Route path="jobs/:jobId/runs/:jobRunId" element={<JobRunPage />} />
                         <Route path="jobs/:jobId/runs/:jobRunId/treemap" element={<TestsTreeMapChart />} />
@@ -43,7 +43,7 @@ export function App(): React.JSX.Element {
                     </Route>
 
                     <Route path=":groupIdLevel1/:groupIdLevel2">
-                        <Route index element={<JobsPage />} />
+                        <Route index element={<ProjectsDashboardPage />} />
                         <Route path="jobs/:jobId" element={<JobRunsPage />} />
                         <Route path="jobs/:jobId/runs/:jobRunId" element={<JobRunPage />} />
                         <Route path="jobs/:jobId/runs/:jobRunId/treemap" element={<TestsTreeMapChart />} />
@@ -51,7 +51,7 @@ export function App(): React.JSX.Element {
                     </Route>
 
                     <Route path=":groupIdLevel1/:groupIdLevel2/:groupIdLevel3">
-                        <Route index element={<JobsPage />} />
+                        <Route index element={<ProjectsDashboardPage />} />
                         <Route path="jobs/:jobId" element={<JobRunsPage />} />
                         <Route path="jobs/:jobId/runs/:jobRunId" element={<JobRunPage />} />
                         <Route path="jobs/:jobId/runs/:jobRunId/treemap" element={<TestsTreeMapChart />} />
