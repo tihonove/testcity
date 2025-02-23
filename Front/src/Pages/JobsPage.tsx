@@ -1,18 +1,17 @@
-import { Button, Gapped, Sticky, Toggle } from "@skbkontur/react-ui";
+import { EyeClosedIcon16Regular, EyeOpenIcon16Regular, TextBulletIcon24Regular } from "@skbkontur/icons";
+import { ColumnStack, Fit, RowStack } from "@skbkontur/react-stack-layout";
+import { Button } from "@skbkontur/react-ui";
 import * as React from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
-import { JobsMiniTree } from "../Components/JobsMiniTree";
+import { SubIcon } from "../Components/SubIcon";
+import { JobIdWithParentProjectNames } from "../Domain/JobIdWithParentProject";
 import { JobsView } from "../Domain/JobsView";
 import { BranchSelect } from "../TestHistory/BranchSelect";
 import { theme } from "../Theme/ITheme";
 import { useSearchParamAsState } from "../Utils";
 import { createLinkToCreateNewPipeline, createLinkToProject } from "./Navigation";
-import { JobIdWithParentProjectNames } from "../Domain/JobIdWithParentProject";
-import { ColumnStack, Fit, RowStack } from "@skbkontur/react-stack-layout";
-import { EyeClosedIcon16Regular, EyeOpenIcon16Light, EyeOpenIcon16Regular, TextBulletIcon24Regular } from "@skbkontur/icons";
-import { SubIcon } from "../Components/SubIcon";
 
 export function JobsPage(): React.JSX.Element {
     const { groupIdLevel1, groupIdLevel2, groupIdLevel3 } = useParams();

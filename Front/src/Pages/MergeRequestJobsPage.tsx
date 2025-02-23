@@ -2,7 +2,7 @@ import { ColumnStack, Fit } from "@skbkontur/react-stack-layout";
 import * as React from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
+import { useClickhouseClient, useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { JobsView } from "../Domain/JobsView";
 import { JobsQueryRow } from "../Domain/JobsQueryRow";
 
@@ -10,6 +10,7 @@ export function MergeRequestJobsPage(): React.JSX.Element {
     const { projectId = "", gitLabMergeRequestId = "" } = useParams();
     const client = useClickhouseClient();
     const branchName = `refs/merge-requests/${gitLabMergeRequestId}/head`;
+    const rootProjectStructure = useStorageQuery(x => x.getRootProjectStructure(projectId), [projectId]);
 
     const allJobs = client
         .useData2<
@@ -53,7 +54,12 @@ export function MergeRequestJobsPage(): React.JSX.Element {
                     <Header>Merge request #{gitLabMergeRequestId} runs</Header>
                 </Fit>
                 <Fit>
-                    <JobsView allJobs={allJobs} projectId={projectId} allJobRuns={allJobRuns} />
+                    <JobsView
+                        rootProjectStructure={rootProjectStructure}
+                        allJobs={allJobs}
+                        allJobRuns={allJobRuns}
+                        currentBranchName={branchName}
+                    />
                 </Fit>
             </ColumnStack>
         </Root>

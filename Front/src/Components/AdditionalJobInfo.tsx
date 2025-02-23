@@ -32,7 +32,7 @@ export function AdditionalJobInfo(props: AdditionalJobInfoProps) {
                 </InfoRow>
             </tbody>
         </table>
-    )
+    );
 }
 
 const InfoRow = styled.tr`

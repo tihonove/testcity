@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
     CheckAIcon24Regular,
     NetDownloadIcon24Regular,
@@ -23,6 +24,7 @@ import { RunStatus } from "../TestHistory/TestHistory";
 import { useSearchParamAsState, useSearchParamDebouncedAsState } from "../Utils";
 import { SortHeaderLink } from "./SortHeaderLink";
 import { urlPrefix } from "./Navigation";
+import { reject } from "../TypeHelpers";
 
 interface TestNameProps {
     value: string;
@@ -34,7 +36,7 @@ function TestName(props: TestNameProps): React.JSX.Element {
         const parts = props.value.split("(");
         if (parts.length > 1) {
             const lastPart = parts.slice(1);
-            const dotParts = parts[0].split(/[.]/);
+            const dotParts = (parts[0] ?? "").split(/[.]/);
             const prefix = dotParts.slice(0, -2).join(".");
             const testcaseName = dotParts.slice(-2).join(".");
             return [prefix, `${testcaseName}(${lastPart.join("(")}`];
@@ -50,7 +52,7 @@ function TestName(props: TestNameProps): React.JSX.Element {
             {splitValue[1]}
             <TestNamePrefix
                 onClick={() => {
-                    props.onSetSearchValue(splitValue[0]);
+                    props.onSetSearchValue(splitValue[0] ?? "");
                 }}>
                 {splitValue[0]}
             </TestNamePrefix>
@@ -112,23 +114,7 @@ export function JobRunPage(): React.JSX.Element {
 
     const client = useClickhouseClient();
 
-    const [
-        [
-            startDateTime,
-            endDateTime,
-            duration,
-            branchName,
-            totalTestsCount,
-            successTestsCount,
-            failedTestsCount,
-            skippedTestsCount,
-            triggered,
-            pipelineSource,
-            jobUrl,
-            customStatusMessage,
-            state,
-        ],
-    ] = client.useData2<
+    const data = client.useData2<
         [string, string, number, string, string, string, string, string, string, string, string, string, string]
     >(
         `
@@ -138,6 +124,22 @@ export function JobRunPage(): React.JSX.Element {
         `,
         [jobId, jobRunId]
     );
+
+    const [
+        startDateTime,
+        endDateTime,
+        duration,
+        branchName,
+        totalTestsCount,
+        successTestsCount,
+        failedTestsCount,
+        skippedTestsCount,
+        triggered,
+        pipelineSource,
+        jobUrl,
+        customStatusMessage,
+        state,
+    ] = data[0] ?? reject("JobRun not found");
 
     const searchValue = useDeferredValue(debouncedSearchValue);
 
@@ -166,17 +168,17 @@ export function JobRunPage(): React.JSX.Element {
                     END`
                     } 
                 ${sortField ? (sortDirection ?? "ASC") : ""}
-                LIMIT ${(itemsPerPage * (page - 1)).toString()}, ${itemsPerPage}
+                LIMIT ${(itemsPerPage * (page - 1)).toString()}, ${itemsPerPage.toString()}
                 `,
                 [condition, sortField, sortDirection, page]
             ),
         [condition, sortField, sortDirection, page]
     );
 
-    const getTotalTestsCount = React.useCallback(
-        () => client.useData2<[string]>(`SELECT COUNT(*) FROM TestRunsByRun WHERE ${condition}`, [condition]),
-        [condition]
-    );
+    const totalRowCountRow = client.useData2<[string]>(`SELECT COUNT(*) FROM TestRunsByRun WHERE ${condition}`, [
+        condition,
+    ]);
+    const totalRowCount = totalRowCountRow[0] ?? reject("Total row count not found");
 
     function convertToCSV(data: any[][]): string {
         return data
@@ -186,6 +188,7 @@ export function JobRunPage(): React.JSX.Element {
                         if (typeof cell === "string" && (cell.includes(",") || cell.includes('"'))) {
                             return `"${cell.replace(/"/g, '""')}"`;
                         }
+                        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
                         return cell;
                     })
                     .join(",")
@@ -287,7 +290,10 @@ export function JobRunPage(): React.JSX.Element {
                     <Button
                         title="Download tests list in CSV"
                         icon={<NetDownloadIcon24Regular />}
-                        onClick={() => createAndDownloadCSV()}>
+                        onClick={() => {
+                            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+                            createAndDownloadCSV();
+                        }}>
                         Download
                     </Button>
                 </Gapped>
@@ -345,7 +351,7 @@ export function JobRunPage(): React.JSX.Element {
                     <Paging
                         activePage={page}
                         onPageChange={setPage}
-                        pagesCount={Math.ceil(Number(getTotalTestsCount()[0][0]) / itemsPerPage)}
+                        pagesCount={Math.ceil(Number(totalRowCount) / itemsPerPage)}
                     />
                 </Fit>
             </ColumnStack>

@@ -2,12 +2,11 @@ import { ShapeSquareIcon16Regular, ShapeSquareIcon16Solid, ShareNetworkIcon } fr
 import * as React from "react";
 import { Link } from "react-router-dom";
 import styled, { useTheme } from "styled-components";
-import { formatTestDuration, getLinkToJob, getText, toLocalTimeFromUtc } from "../Utils";
 import { BranchCell, JobLinkWithResults, SelectedOnHoverTr } from "../Components/Cells";
-import { JobIdWithParentProject, JobIdWithParentProjectNames } from "./JobIdWithParentProject";
-import { JobsQueryRow, JobRunNames } from "./JobsQueryRow";
-import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { createLinkToJob, createLinkToJobRun } from "../Pages/Navigation";
+import { formatTestDuration, getLinkToJob, getText, toLocalTimeFromUtc } from "../Utils";
+import { JobIdWithParentProject, JobIdWithParentProjectNames } from "./JobIdWithParentProject";
+import { JobRunNames, JobsQueryRow } from "./JobsQueryRow";
 import { GroupNode } from "./Storage";
 
 interface JobsViewProps {

@@ -2,7 +2,6 @@ import { GroupNode, findPathToProjectById } from "../Domain/Storage";
 
 export const urlPrefix = "/test-analytics";
 
-
 export function createLinkToProject(groupNode: GroupNode, projectId: string, currentBranchName?: string): string {
     const [groups, project] = findPathToProjectById(groupNode, projectId);
     return (

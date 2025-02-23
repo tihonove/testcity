@@ -10,7 +10,7 @@ export function getProjectNameById(id: string): string {
             "182": "Diadoc",
         }[id] ?? id
     );
-};
+}
 
 function getHoursOffsetFromUtc(): number {
     return -(new Date().getTimezoneOffset() / 60);
@@ -21,15 +21,15 @@ export function getOffsetTitle(): string {
     return offsetHrs === 0
         ? "(UTC)"
         : offsetHrs > 0
-            ? `(GMT+${offsetHrs.toString()})`
-            : `(GMT-${offsetHrs.toString()})`;
+          ? `(GMT+${offsetHrs.toString()})`
+          : `(GMT-${offsetHrs.toString()})`;
 }
 
-export function toLocalTimeFromUtc(dateTime: string, format: 'default' | 'short' = 'default'): string {
+export function toLocalTimeFromUtc(dateTime: string, format: "default" | "short" = "default"): string {
     return addHoursToDate(dateTime, getHoursOffsetFromUtc(), format);
 }
 
-function addHoursToDate(dateString: string, hoursToAdd: number, format: 'default' | 'short'): string {
+function addHoursToDate(dateString: string, hoursToAdd: number, format: "default" | "short"): string {
     // Parse the dateString to create a Date object
     const date = new Date(dateString.replace(" ", "T"));
 
@@ -44,7 +44,7 @@ function addHoursToDate(dateString: string, hoursToAdd: number, format: 'default
     const minutes = String(date.getMinutes()).padStart(2, "0");
     const seconds = String(date.getSeconds()).padStart(2, "0");
 
-    if (format === 'short') return `${day}.${month} ${hours}:${minutes}`;
+    if (format === "short") return `${day}.${month} ${hours}:${minutes}`;
     else return `${year.toString()}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
@@ -114,11 +114,11 @@ export function useSearchParamDebouncedAsState(
     timeout: number,
     defaultValue?: string
 ): [
-        string | undefined,
-        (nextValue: undefined | string) => void,
-        string | undefined,
-        (nextValue: undefined | string) => void,
-    ] {
+    string | undefined,
+    (nextValue: undefined | string) => void,
+    string | undefined,
+    (nextValue: undefined | string) => void,
+] {
     const [searchParams, setSearchParams] = useSearchParams();
     const searchValue = searchParams.get(paramName) ?? defaultValue;
     const [value, setValue] = useState<string | undefined>(searchValue ?? defaultValue);

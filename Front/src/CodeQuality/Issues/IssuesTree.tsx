@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React from "react";
 import { SeverityIcon } from "../SeverityIcon";
 import { Issue } from "../types/Issue";

@@ -7,7 +7,4 @@ export default {
     title: "ProjectsPage",
 };
 
-export const Simple: StoryFn = () => (
-    <ProjectsPage
-    />
-);
+export const Simple: StoryFn = () => <ProjectsPage />;

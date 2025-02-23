@@ -25,10 +25,9 @@ export default [
         {
             files: ["*.js", "*.mjs"],
             extends: [tseslint.configs.disableTypeChecked],
-
         }
     ),
     {
-        ignores: ["nginx-clickhouse-proxy/*"],
+        ignores: ["nginx-clickhouse-proxy/*", "dist/*"],
     },
 ];

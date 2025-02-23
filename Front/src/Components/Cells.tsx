@@ -48,4 +48,4 @@ export const SelectedOnHoverTr = styled.tr`
     &:hover {
         background-color: ${props => props.theme.backgroundColor1};
     }
-`
+`;

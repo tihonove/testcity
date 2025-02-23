@@ -1,3 +1,3 @@
 export type Content = {
-  body: string;
+    body: string;
 };

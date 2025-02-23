@@ -31,4 +31,4 @@ export const JobRunNames = {
     CustomStatusMessage: 12,
     JobUrl: 13,
     ProjectId: 14,
-};
+} as const;

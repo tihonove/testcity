@@ -57,7 +57,9 @@ export function TestHistoryPage(): React.JSX.Element {
     const statusMessages = client.useData2<[string, string]>(
         `SELECT JobRunId, CustomStatusMessage 
         FROM JobInfo 
-        WHERE ${getTestRuns().map(t => `JobRunId = '${t[1]}'`).join(' OR ')};`,
+        WHERE ${getTestRuns()
+            .map(t => `JobRunId = '${t[1]}'`)
+            .join(" OR ")};`,
         [testId, testRunsPage, condition]
     );
 

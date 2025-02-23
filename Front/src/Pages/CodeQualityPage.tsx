@@ -1,9 +1,9 @@
-import { Gapped, Loader, Tabs } from '@skbkontur/react-ui';
-import React, { useEffect, useState } from 'react';
-import { OverviewTab } from '../CodeQuality/Overview/OverviewTab';
-import { IssuesTab } from '../CodeQuality/Issues/IssuesTab';
-import { Issue } from '../CodeQuality/types/Issue';
-import { useParams } from 'react-router-dom';
+import { Gapped, Loader, Tabs } from "@skbkontur/react-ui";
+import React, { useEffect, useState } from "react";
+import { OverviewTab } from "../CodeQuality/Overview/OverviewTab";
+import { IssuesTab } from "../CodeQuality/Issues/IssuesTab";
+import { Issue } from "../CodeQuality/types/Issue";
+import { useParams } from "react-router-dom";
 
 export function CodeQualityPage() {
     const { projectId = "", jobId = "" } = useParams();
@@ -14,25 +14,29 @@ export function CodeQualityPage() {
         setLoading(true);
         try {
             const res = await fetch(`/test-analytics/gitlab/${projectId}/jobs/${jobId}/codequality`);
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             setReport(await res.json());
         } finally {
             setLoading(false);
         }
     };
 
-    useEffect(() => { fetcher() }, [projectId, jobId]);
+    useEffect(() => {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        fetcher();
+    }, [projectId, jobId]);
 
-    const [tab, setTab] = useState<'overview' | 'issues'>('overview');
+    const [tab, setTab] = useState<"overview" | "issues">("overview");
     return (
-      <Loader type="big" active={loading}>
-        <Gapped vertical gap={20}>
-            <Tabs value={tab} onValueChange={setTab}>
-            <Tabs.Tab id="overview">Overview</Tabs.Tab>
-            <Tabs.Tab id="issues">Issues</Tabs.Tab>
-            </Tabs>
-            {tab === 'overview' && <OverviewTab current={report} />}
-            {tab === 'issues' && <IssuesTab report={report ?? []} />}
-        </Gapped>
-      </Loader>
+        <Loader type="big" active={loading}>
+            <Gapped vertical gap={20}>
+                <Tabs value={tab} onValueChange={setTab}>
+                    <Tabs.Tab id="overview">Overview</Tabs.Tab>
+                    <Tabs.Tab id="issues">Issues</Tabs.Tab>
+                </Tabs>
+                {tab === "overview" && <OverviewTab current={report} />}
+                {tab === "issues" && <IssuesTab report={report ?? []} />}
+            </Gapped>
+        </Loader>
     );
 }
