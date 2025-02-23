@@ -9,7 +9,7 @@ Front Typecheck and lint:
   script:
     - cd Front
     - npm install
-    - npm run lint . --format json --output-file eslint-report.json
+    - npm run lint -- . --format json --output-file eslint-report.json
     - npm run typecheck
   artifacts:
     reports:
