@@ -4,6 +4,8 @@ variables:
 
 Front tests:
   stage: test
+  image:
+    name: $BASE_IMAGE
   script:
     - cd Front
     - npm install
