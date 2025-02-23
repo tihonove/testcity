@@ -101,5 +101,7 @@
     ".storybook/**/*.tsx",
     "src/**/*.ts",
     "src/**/*.tsx",
+    "test/**/*.ts",
+    "test/**/*.tsx",
   ]
 }
