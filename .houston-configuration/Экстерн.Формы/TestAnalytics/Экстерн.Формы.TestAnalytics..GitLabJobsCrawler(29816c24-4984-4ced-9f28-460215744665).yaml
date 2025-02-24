@@ -13,6 +13,6 @@ configurations:
           request: 0.02
           limit: 1
         memory:
-          request: 110 MB
-          limit: 512 MB
+          request: 512 MB
+          limit: 2 GB
 
