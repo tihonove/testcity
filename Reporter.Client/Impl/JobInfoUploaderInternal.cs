@@ -46,6 +46,7 @@ internal class JobInfoUploaderInternal
                 info.SkippedTestsCount,
                 info.ProjectId,
                 info.CustomStatusMessage,
+                info.PipelineId,
             },
         }, Fields);
     }
@@ -73,5 +74,6 @@ internal class JobInfoUploaderInternal
         "SkippedTestsCount",
         "ProjectId",
         "CustomStatusMessage",
+        "PipelineId",
     };
 }
