@@ -12,6 +12,7 @@ import { BranchSelect } from "../TestHistory/BranchSelect";
 import { theme } from "../Theme/ITheme";
 import { useSearchParamAsState } from "../Utils";
 import { createLinkToCreateNewPipeline, createLinkToProject } from "./Navigation";
+import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
 
 export function ProjectsDashboardPage(): React.JSX.Element {
     const { groupIdLevel1, groupIdLevel2, groupIdLevel3 } = useParams();
@@ -20,6 +21,7 @@ export function ProjectsDashboardPage(): React.JSX.Element {
     }
 
     const [currentBranchName, setCurrentBranchName] = useSearchParamAsState("branch");
+    usePopularBranchStoring(currentBranchName);
     const [noRuns, setNoRuns] = useSearchParamAsState("noruns");
 
     const pathToGroup = [groupIdLevel1, groupIdLevel2, groupIdLevel3].filter(x => x != null);

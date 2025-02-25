@@ -3,12 +3,14 @@ import { useState } from "react";
 import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
 import { RunStatus, TestHistory } from "../TestHistory/TestHistory";
 import { useSearchParamAsState } from "../Utils";
+import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
 
 export function TestHistoryPage(): React.JSX.Element {
     const [testId] = useSearchParamAsState("id");
     const [currentJobId, setCurrentJobId] = useSearchParamAsState("job");
     const [runId, _] = useSearchParamAsState("runId");
     const [currentBranchName, setCurrentBranchName] = useSearchParamAsState("branch");
+    usePopularBranchStoring(currentBranchName);
 
     if (testId == null) return <div>Test id not specified</div>;
 

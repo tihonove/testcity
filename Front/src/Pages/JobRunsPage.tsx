@@ -20,6 +20,7 @@ import { useState } from "react";
 import { createLinkToJobRun, urlPrefix } from "./Navigation";
 import { JobRunNames, JobsQueryRow } from "../Domain/JobsQueryRow";
 import { reject } from "../TypeHelpers";
+import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
 
 export function JobRunsPage(): React.JSX.Element {
     const { groupIdLevel1, groupIdLevel2, groupIdLevel3, jobId = "" } = useParams();
@@ -31,6 +32,7 @@ export function JobRunsPage(): React.JSX.Element {
     const project = useStorageQuery(x => x.getProject(pathToGroup), [pathToGroup]) ?? reject("Project not found");
 
     const [currentBranchName, setCurrentBranchName] = useSearchParamAsState("branch");
+    usePopularBranchStoring(currentBranchName);
     const [page, setPage] = useState(1);
     const itemsPerPage = 100;
     const client = useClickhouseClient();

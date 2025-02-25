@@ -2,7 +2,7 @@ import * as React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { TestHistoryPage } from "./Pages/TestHistoryPage";
 import styled from "styled-components";
-import { ProjectsDashboardPage } from "./Pages/JobsPage";
+import { ProjectsDashboardPage } from "./Pages/ProjectsDashboardPage";
 import { JobRunsPage } from "./Pages/JobRunsPage";
 import { JobRunPage } from "./Pages/JobRunPage";
 import { TestsTreeMapChart } from "./Pages/TestsTreeMapChart";
