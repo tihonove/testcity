@@ -1,4 +1,4 @@
-import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
+import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { ComboBox, MenuSeparator } from "@skbkontur/react-ui";
 import { ShareNetworkIcon } from "@skbkontur/icons";
 import * as React from "react";
@@ -11,24 +11,30 @@ interface BranchSelectProps {
     branchNames?: string[];
 }
 
+const TOP_BRANCHES = ["main", "master", "release"];
+
+function createMoveToTopSorter<T>(topItems: T[]) {
+    return (a: T, b: T) => {
+        const aIsSpecial = topItems.includes(a);
+        const bIsSpecial = topItems.includes(b);
+        if (aIsSpecial && !bIsSpecial) return -1;
+        if (!aIsSpecial && bIsSpecial) return 1;
+        return 0;
+    };
+}
+
 export function BranchSelect(props: BranchSelectProps): React.JSX.Element {
-    const client = useClickhouseClient();
-    const [queriedBranches] = client.useData<[string]>(
-        `
-        SELECT DISTINCT 
-            BranchName
-        FROM JobInfo
-        WHERE 
-            StartDateTime >= DATE_ADD(MONTH, -1, NOW()) AND BranchName != '' 
-            ${props.projectIds ? `AND ProjectId IN [${props.projectIds.map(x => "'" + x + "'").join(", ")}]` : ""}
-            ${props.jobId ? `AND JobId = '${props.jobId}'` : ""}
-        ORDER BY StartDateTime DESC;`,
+    const queriedBranches = useStorageQuery(
+        storage => storage.findBranches(props.projectIds, props.jobId),
         [props.projectIds, props.jobId]
     );
 
+    const sortedBranches = React.useMemo(() => {
+        return [...queriedBranches, ...(props.branchNames ?? [])].sort(createMoveToTopSorter(TOP_BRANCHES));
+    }, [queriedBranches, props.branchNames]);
+
     const getItems = (query: string) => {
-        const branchesToFilter: string[] = [...queriedBranches.map(x => x[0]), ...(props.branchNames ?? [])];
-        const filteredBranches = branchesToFilter.filter(x => !query || x.includes(query));
+        const filteredBranches = sortedBranches.filter(x => !query || x.includes(query));
         return Promise.resolve([undefined, <MenuSeparator />, ...filteredBranches]);
     };
 

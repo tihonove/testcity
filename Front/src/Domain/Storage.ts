@@ -110,6 +110,21 @@ export class TestAnalyticsStorage {
         return this.executeClickHouseQuery<JobsQueryRow[]>(query);
     }
 
+    public async findBranches(projectIds?: string[], jobId?: string): Promise<string[]> {
+        const query = `
+            SELECT DISTINCT 
+                BranchName
+            FROM JobInfo
+            WHERE 
+                StartDateTime >= DATE_ADD(MONTH, -1, NOW()) AND BranchName != '' 
+                ${projectIds ? `AND ProjectId IN [${projectIds.map(x => "'" + x + "'").join(", ")}]` : ""}
+                ${jobId ? `AND JobId = '${jobId}'` : ""}
+            ORDER BY StartDateTime DESC;
+        `;
+        const result = await this.executeClickHouseQuery<[string][]>(query);
+        return result.map(row => row[0]);
+    }
+
     public async executeClickHouseQuery<T>(query: string): Promise<T> {
         const id = getQueryId();
         const response = await this.client.query({ query: query, format: "JSONCompact", query_id: id });
