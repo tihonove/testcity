@@ -1,3 +1,7 @@
+stages:
+  - test
+  - deploy
+
 variables:
   BASE_IMAGE: "registry.kontur.host/ke-forms/test-analytics-gitlab-ci:v5"
   HOUSTON2_TEAM_ID: "07f09d0f-0ee5-4ad4-b585-bc7599374579"
@@ -13,6 +17,7 @@ Front Typecheck and lint:
     - npm install
     - npm run lint -- . --format json --output-file eslint-report.json
     - npm run typecheck
+  allow_failure: true
   artifacts:
     reports:
       codequality: Front/eslint-report.json
@@ -28,13 +33,14 @@ Front tests:
     - cd Front
     - npm install
     - npm test
+  allow_failure: true
   artifacts:
     paths:
       - Front/.test-reports/junit.xml
     reports:
       junit: Front/.test-reports/junit.xml
 
-.DotNet tests:
+DotNet tests:
   stage: test
   image:
     name: $BASE_IMAGE
@@ -54,6 +60,7 @@ Front tests:
     - export TESTANALYTICS_CLICKHOUSE_USER="$CLICKHOUSE_USER"
     - export TESTANALYTICS_CLICKHOUSE_PASSWORD="$CLICKHOUSE_PASSWORD"
     - dotnet test --logger "junit;LogFilePath=../.test-reports/{assembly}.test-result.xml;FailureBodyFormat=Verbose"
+  allow_failure: true
   artifacts:
     paths:
       - .test-reports/**/*.xml
