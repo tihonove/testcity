@@ -42,13 +42,17 @@ DotNet tests:
     CLICKHOUSE_USER: testanalytics-user
     CLICKHOUSE_PASSWORD: 123123    
   script:
-    - export CLICKHOUSE_CONNECTION_STRING="Host=clickhouse;Port=8123;Username=$CLICKHOUSE_USER;password=$CLICKHOUSE_PASSWORD;Database=$CLICKHOUSE_DB"
+    - export TESTANALYTICS_CLICKHOUSE_HOST="clickhouse"
+    - export TESTANALYTICS_CLICKHOUSE_PORT="8123"
+    - export TESTANALYTICS_CLICKHOUSE_DB="$CLICKHOUSE_DB"
+    - export TESTANALYTICS_CLICKHOUSE_USER="$CLICKHOUSE_USER"
+    - export TESTANALYTICS_CLICKHOUSE_PASSWORD="$CLICKHOUSE_PASSWORD"
     - dotnet test --logger "junit;LogFilePath=../.test-reports/{assembly}.test-result.xml;FailureBodyFormat=Verbose"
   artifacts:
     paths:
-      - .test-reports/dotnet.junit.xml
+      - .test-reports/**/*.xml
     reports:
-      junit: .test-reports/dotnet.junit.xml
+      junit: .test-reports/**/*.xml
 
 Deploy TestAnalytics:
   stage: deploy
