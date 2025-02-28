@@ -1,6 +1,7 @@
 using ClickHouse.Client.ADO;
 using ClickHouse.Client.Copy;
 using ClickHouse.Client.Utility;
+using Kontur.TestAnalytics.Core.Clickhouse;
 using Kontur.TestAnalytics.Reporter.Cli;
 using Kontur.TestAnalytics.Reporter.Client;
 using NUnit.Framework;
@@ -13,8 +14,9 @@ public class Tests
     public async Task Test01()
     {
         await using var connection = CreateConnection();
+        await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);
         await using var command = connection.CreateCommand();
-        command.CommandText = "INSERT INTO tihonovetest.TestRuns (TestId) VALUES ('123');";
+        command.CommandText = "INSERT INTO TestRuns (TestId) VALUES ('123');";
         await command.ExecuteNonQueryAsync();
     }
 
@@ -88,7 +90,7 @@ public class Tests
 
         using var bulkCopyInterface = new ClickHouseBulkCopy(connection)
         {
-            DestinationTableName = "tihonovetest.TestRuns",
+            DestinationTableName = "TestRuns",
             BatchSize = 100,
         };
         var values = new[] { new object[] { "1", "1", "1", "1", 1, 1, DateTime.Now.ToUniversalTime(), "1" } };
@@ -126,10 +128,10 @@ public class Tests
     public async Task RecreateTable()
     {
         await using var connection = CreateConnection();
-        const string dropTableScript = "DROP TABLE IF EXISTS tihonovetest.TestRuns";
+        const string dropTableScript = "DROP TABLE IF EXISTS TestRuns";
 
         const string createTableScript = @"
-            create table tihonovetest.TestRuns
+            create table TestRuns
             (
                 JobId String,
                 JobRunId String,
@@ -151,7 +153,6 @@ public class Tests
 
     private static ClickHouseConnection CreateConnection()
     {
-        return new ClickHouseConnection(
-            "Host=vm-ch2-stg.dev.kontur.ru;Port=8123;Username=tihonove;password=12487562;Database=test_analytics");
+        return ConnectionFactory.CreateConnection();
     }
 }

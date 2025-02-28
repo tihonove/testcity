@@ -1,4 +1,5 @@
 using Kontur.TestAnalytics.Core;
+using Kontur.TestAnalytics.Core.Clickhouse;
 using Kontur.TestAnalytics.GitLabJobsCrawler;
 using Kontur.TestAnalytics.GitLabJobsCrawler.Services;
 using Kontur.TestAnalytics.Reporter.Client;
@@ -17,8 +18,10 @@ public class TestsLoadFromGitlab
     [Explicit]
     public async Task TestIsJobRunExists()
     {
+        await using var connection = ConnectionFactory.CreateConnection();
+        await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);
         var result = await TestRunsUploader.IsJobRunIdExists("31666195");
-        Assert.IsTrue(result);
+        Assert.IsFalse(result);
     }
 
     [Test]

@@ -25,8 +25,34 @@ Front tests:
     - npm install
     - npm test
   artifacts:
+    paths:
+      - Front/.test-reports/junit.xml
     reports:
       junit: Front/.test-reports/junit.xml
+
+DotNet tests:
+  stage: test
+  image:
+    name: $BASE_IMAGE
+  services:
+    - name: clickhouse/clickhouse-server
+      alias: clickhouse
+  variables:
+    CLICKHOUSE_DB: default
+    CLICKHOUSE_USER: testanalytics-user
+    CLICKHOUSE_PASSWORD: 123123    
+  script:
+    - export TESTANALYTICS_CLICKHOUSE_HOST="clickhouse"
+    - export TESTANALYTICS_CLICKHOUSE_PORT="8123"
+    - export TESTANALYTICS_CLICKHOUSE_DB="$CLICKHOUSE_DB"
+    - export TESTANALYTICS_CLICKHOUSE_USER="$CLICKHOUSE_USER"
+    - export TESTANALYTICS_CLICKHOUSE_PASSWORD="$CLICKHOUSE_PASSWORD"
+    - dotnet test --logger "junit;LogFilePath=../.test-reports/{assembly}.test-result.xml;FailureBodyFormat=Verbose"
+  artifacts:
+    paths:
+      - .test-reports/**/*.xml
+    reports:
+      junit: .test-reports/**/*.xml
 
 Deploy TestAnalytics:
   stage: deploy

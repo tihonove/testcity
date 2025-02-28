@@ -8,7 +8,7 @@
     <PackageVersion Include="ClickHouse.Client" Version="6.7.4" />
     <PackageVersion Include="CommandLineParser" Version="2.9.1" />
     <PackageVersion Include="dotenv.net" Version="3.2.0" />
-    <PackageVersion Include="JunitXml.TestLogger" Version="3.0.110" />
+    <PackageVersion Include="JunitXml.TestLogger" Version="6.0.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
     <PackageVersion Include="NGitLab" Version="7.2.0" />

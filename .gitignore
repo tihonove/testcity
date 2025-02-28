@@ -2,6 +2,7 @@
 **/obj/*
 public
 Front/dist/*
+.test-reports
 
 # Idea files
 **/.idea/workspace.xml

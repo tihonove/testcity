@@ -10,6 +10,10 @@
         <PackageReference Include="Vostok.Configuration" />
         <PackageReference Include="Vostok.Configuration.Abstractions" />
         <PackageReference Include="Vostok.Configuration.Sources" />
+        <PackageReference Include="ClickHouse.Client" />
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="Clickhouse\SchemaMigrations\Schema1.sql" />
     </ItemGroup>
     
 </Project>
