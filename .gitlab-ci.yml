@@ -75,4 +75,5 @@ Deploy TestAnalytics:
     - forms-k8s
   when: manual
   allow_failure: true
+  needs: []
   script: .gitlab-ci/deploy.sh
