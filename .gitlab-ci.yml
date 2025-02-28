@@ -6,6 +6,8 @@ Front Typecheck and lint:
   stage: test
   image:
     name: $BASE_IMAGE
+  tags:
+    - forms-k8s
   script:
     - cd Front
     - npm install
@@ -20,6 +22,8 @@ Front tests:
   stage: test
   image:
     name: $BASE_IMAGE
+  tags:
+    - forms-k8s
   script:
     - cd Front
     - npm install
@@ -34,6 +38,8 @@ DotNet tests:
   stage: test
   image:
     name: $BASE_IMAGE
+  tags:
+    - forms-k8s
   services:
     - name: clickhouse/clickhouse-server
       alias: clickhouse
@@ -58,6 +64,8 @@ Deploy TestAnalytics:
   stage: deploy
   image:
     name: $BASE_IMAGE
+  tags:
+    - forms-k8s
   when: manual
   allow_failure: true
   script: .gitlab-ci/deploy.sh
