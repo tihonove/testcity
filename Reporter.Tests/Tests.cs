@@ -24,15 +24,15 @@ public class Tests
     public async Task Test013()
     {
         await using var connection = CreateConnection();
-        var files = Directory.GetFileSystemEntries(
-            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "TestData"), "*.csv");
         var dateTime = DateTime.Now;
-        foreach (var file in files)
+        foreach (var fileReference in TestFilesAccessor.EnumerateTestFiles("TestData", "*.csv"))
         {
-            var buildId = file.Substring(file.IndexOf("Wolfs_Unit_tests_")).Replace("Wolfs_Unit_tests_", string.Empty)
+            using var file = fileReference.AcquireFile();
+            var filePath = file.Path;
+            var buildId = filePath.Substring(filePath.IndexOf("Wolfs_Unit_tests_")).Replace("Wolfs_Unit_tests_", string.Empty)
                 .Replace("-tests.csv", string.Empty);
             Console.WriteLine(buildId);
-            var lines = TestRunsReader.ReadFromTeamcityTestReport(file);
+            var lines = TestRunsReader.ReadFromTeamcityTestReport(filePath);
             dateTime = dateTime.AddDays(-1);
             await TestRunsUploader.UploadAsync(
                 new JobRunInfo
@@ -93,23 +93,16 @@ public class Tests
             DestinationTableName = "TestRuns",
             BatchSize = 100,
         };
-        var values = new[] { new object[] { "1", "1", "1", "1", 1, 1, DateTime.Now.ToUniversalTime(), "1" } };
+        var values = new[] { new object[] { "1", "1", "1", "1", 1, 1L, DateTime.Now.ToUniversalTime(), "1", "1" } };
         await bulkCopyInterface.WriteToServerAsync(values, Columns);
         Console.WriteLine(bulkCopyInterface.RowsWritten);
     }
 
     [Test]
-    public async Task Test03()
-    {
-        var lines = await TestRunsReader.ReadFromTeamcityTestReport(
-            "/home/tihonove/Downloads/Wolfs_Unit_tests_11509-tests.csv").ToArrayAsync();
-    }
-
-    [Test]
     public async Task Test04()
     {
-        var lines = TestRunsReader.ReadFromTeamcityTestReport(
-            "/home/tihonove/Downloads/Wolfs_Unit_tests_11509-tests.csv");
+        using var testFile = TestFilesAccessor.GetTestFile(Path.Combine("TestData", "Wolfs_Unit_tests_11582-tests.csv"));
+        var lines = TestRunsReader.ReadFromTeamcityTestReport(testFile.Path);
         var runInfo = new JobRunInfo
         {
             JobId = "Forms_UnitTests",
