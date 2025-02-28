@@ -59,6 +59,7 @@ Deploy TestAnalytics:
   image:
     name: $BASE_IMAGE
   when: manual
-  manual_confirmation: "Подумой..."
   allow_failure: true
   script: .gitlab-ci/deploy.sh
+  rules:
+    - if: '$CI_COMMIT_BRANCH'
