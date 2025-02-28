@@ -34,7 +34,7 @@ Front tests:
     reports:
       junit: Front/.test-reports/junit.xml
 
-DotNet tests:
+.DotNet tests:
   stage: test
   image:
     name: $BASE_IMAGE
@@ -69,5 +69,3 @@ Deploy TestAnalytics:
   when: manual
   allow_failure: true
   script: .gitlab-ci/deploy.sh
-  rules:
-    - if: '$CI_COMMIT_BRANCH'
