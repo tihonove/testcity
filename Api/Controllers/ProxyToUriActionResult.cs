@@ -1,3 +1,4 @@
+using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
@@ -22,12 +23,25 @@ internal sealed class ProxyToUriActionResult : IActionResult
         };
 
         using var httpClient = new HttpClient(handler);
-        var request = new HttpRequestMessage(new HttpMethod(sourceRequest.Method), targetUri + sourceRequest.QueryString);
+        var queryString = sourceRequest.QueryString.ToString();
+        if (!string.IsNullOrEmpty(queryString))
+        {
+            var database = Environment.GetEnvironmentVariable("TESTANALYTICS_CLICKHOUSE_DB") ?? throw new Exception("TESTANALYTICS_CLICKHOUSE_DB is not set");
+            queryString = queryString.Replace("database=test_analytics", $"database={database}");
+        }
+        var request = new HttpRequestMessage(new HttpMethod(sourceRequest.Method), targetUri + queryString);
         foreach (var sourceRequestHeader in sourceRequest.Headers)
         {
-            if (sourceRequestHeader.Key.StartsWith("X-") || sourceRequestHeader.Key == "Authorization")
+            if (sourceRequestHeader.Key.StartsWith("X-"))
             {
                 request.Headers.Add(sourceRequestHeader.Key, sourceRequestHeader.Value.AsEnumerable<string>());
+            }
+            if (sourceRequestHeader.Key == "Authorization")
+            {
+                var user = Environment.GetEnvironmentVariable("TESTANALYTICS_CLICKHOUSE_USER");
+                var password = Environment.GetEnvironmentVariable("TESTANALYTICS_CLICKHOUSE_PASSWORD");
+                var base64authorization = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{user}:{password}"));
+                request.Headers.Add("Authorization", $"Basic {base64authorization}");
             }
         }
 

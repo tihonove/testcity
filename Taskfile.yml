@@ -1,0 +1,32 @@
+version: '3'
+
+tasks:
+  db:
+    cmds:
+      - docker compose up -d
+    silent: false
+
+  api:
+    cmds:
+      - dotnet watch run --project Api/Api.csproj
+    silent: false
+
+  crawler:
+    cmds:
+      - dotnet watch run --project GitLabJobsCrawler/GitLabJobsCrawler.csproj
+    silent: false
+
+  front:
+    dir: Front
+    cmds:
+      - npm install
+      - npm start
+    silent: false
+
+  dev:
+    deps: [db, api, crawler]
+    silent: false
+
+  dev.front:
+    deps: [db, api, crawler, front]
+    silent: false
