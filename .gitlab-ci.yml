@@ -17,7 +17,6 @@ Front Typecheck and lint:
     - npm install
     - npm run lint -- . --format json --output-file eslint-report.json
     - npm run typecheck
-  allow_failure: true
   artifacts:
     reports:
       codequality: Front/eslint-report.json
@@ -33,7 +32,6 @@ Front tests:
     - cd Front
     - npm install
     - npm test
-  allow_failure: true
   artifacts:
     paths:
       - Front/.test-reports/junit.xml
@@ -60,7 +58,6 @@ DotNet tests:
     - export TESTANALYTICS_CLICKHOUSE_USER="$CLICKHOUSE_USER"
     - export TESTANALYTICS_CLICKHOUSE_PASSWORD="$CLICKHOUSE_PASSWORD"
     - dotnet test --logger "junit;LogFilePath=../.test-reports/{assembly}.test-result.xml;FailureBodyFormat=Verbose"
-  allow_failure: true
   artifacts:
     paths:
       - .test-reports/**/*.xml
