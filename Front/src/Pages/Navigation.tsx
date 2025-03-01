@@ -1,6 +1,7 @@
 import { GroupNode, findPathToProjectById } from "../Domain/Storage";
+import { basePrefix } from "./BasePrefix";
 
-export const urlPrefix = "/test-analytics";
+export const urlPrefix = "/" + basePrefix;
 
 export function createLinkToProject(groupNode: GroupNode, projectId: string, currentBranchName?: string): string {
     const [groups, project] = findPathToProjectById(groupNode, projectId);
@@ -54,4 +55,8 @@ export function createLinkToCreateNewPipeline(groupNode: GroupNode, projectId: s
             .join("/") +
         (branchName ? `?ref=${encodeURIComponent(branchName)}` : "")
     );
+}
+
+export function useBasePrefix(): string {
+    return basePrefix;
 }

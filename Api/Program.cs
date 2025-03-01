@@ -24,8 +24,9 @@ var host = new HoustonHost(
         config.Everywhere.SetupEnvironment(
             builder =>
             {
-                builder.SetBaseUrlPath("test-analytics");
-                builder.SetBeaconApplication("test-analytics");
+                var apiPrefix = Environment.GetEnvironmentVariable("TESTANALYTICS_API_PREFIX") ?? throw new Exception("TESTANALYTICS_API_PREFIX is not set");
+                builder.SetBaseUrlPath(apiPrefix);
+                builder.SetBeaconApplication(apiPrefix);
                 builder.SetupApplicationIdentity(
                     idBuilder => idBuilder
                         .SetProject("TestAnalytics")

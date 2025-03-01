@@ -58,6 +58,7 @@ function splitTestId(testId: string): [string, string] {
 
 export function TestHistory(props: TestHistoryProps): React.JSX.Element {
     const [suiteId, testId] = splitTestId(props.testId);
+    const basePrefix = useBasePrefix();
 
     const getStatusMessage = (jobRunId: string): string => {
         return props.statusMessages.find(m => m[0] === jobRunId)?.[1] ?? "";
@@ -72,17 +73,17 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
         <ColumnStack gap={4} block stretch>
             <Fit>
                 <HomeHeader>
-                    <Link to={`/test-analytics/jobs`}>
+                    <Link to={`/${basePrefix}/jobs`}>
                         <HomeIcon size={16} /> All jobs
                     </Link>
                     <ArrowARightIcon size={16} />
-                    <Link to={`/test-analytics/jobs/${props.jobIds[0]}`}>
+                    <Link to={`/${basePrefix}/jobs/${props.jobIds[0]}`}>
                         <JonIcon size={16} /> {props.jobIds[0]}
                     </Link>
                     {props.runIdBreadcrumb && (
                         <>
                             <ArrowARightIcon size={16} />
-                            <Link to={`/test-analytics/jobs/${props.jobIds[0]}/runs/${props.runIdBreadcrumb}`}>
+                            <Link to={`/${basePrefix}/jobs/${props.jobIds[0]}/runs/${props.runIdBreadcrumb}`}>
                                 <JonIcon size={16} /> {props.runIdBreadcrumb}
                             </Link>
                         </>
@@ -142,7 +143,7 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
                                         <ShareNetworkIcon /> {x[JobRunNames.BranchName]}
                                     </BranchCell>
                                     <JobIdCell>
-                                        <Link to={`/test-analytics/jobs/${x[0]}`}>
+                                        <Link to={`/${basePrefix}/jobs/${x[0]}`}>
                                             <ShapeSquareIcon16Regular /> {x[0]}
                                         </Link>
                                     </JobIdCell>

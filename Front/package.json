@@ -6,6 +6,7 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack serve",
+    "start-prod-api": "webpack serve --config webpack.config.prod-api.js",
     "storybook": "storybook dev -p 6006",
     "lint": "eslint",
     "test": "jest",

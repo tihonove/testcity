@@ -13,8 +13,10 @@ import { GroupsPage } from "./Components/GroupsPage";
 import { TestsTreeView } from "./Pages/TestsTreeView";
 import { CodeQualityPage } from "./Pages/CodeQualityPage";
 import { useTestAnalyticsDarkMode } from "./Theme/UseTestAnalyticsDarkMode";
+import { useBasePrefix } from "./Pages/Navigation";
 
 export function App(): React.JSX.Element {
+    const basePrefix = useBasePrefix();
     const { isDarkMode, toggle } = useTestAnalyticsDarkMode();
 
     return (
@@ -25,14 +27,14 @@ export function App(): React.JSX.Element {
                 </Button>
             </ThemeSwitchContainer>
             <Routes>
-                <Route path="/test-analytics">
+                <Route path={`/${basePrefix}`}>}>
                     <Route index element={<GroupsPage />} />
                     <Route path="history" element={<TestHistoryPage />} />
                     <Route
                         path="projects/:projectId/merge-requests/:gitLabMergeRequestId/jobs"
                         element={<MergeRequestJobsPage />}
                     />
-                    <Route path="jobs" element={<Navigate to="/test-analytics" />} />
+                    <Route path="jobs" element={<Navigate to={`/${basePrefix}`} />} />
 
                     <Route path=":groupIdLevel1">
                         <Route index element={<ProjectsDashboardPage />} />

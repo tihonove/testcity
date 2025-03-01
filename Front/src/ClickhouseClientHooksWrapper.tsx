@@ -5,11 +5,12 @@ import fetchIntercept from "fetch-intercept";
 import usePromise from "react-promise-suspense";
 import { TestAnalyticsStorage } from "./Domain/Storage";
 import { uuidv4 } from "./Domain/Guids";
+import { basePrefix } from "./Pages/BasePrefix";
 
 const unregister = fetchIntercept.register({
     request: function (url, config) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return [url.replace("http://zzz", "/test-analytics/clickhouse"), config];
+        return [url.replace("http://zzz", `/${basePrefix}/clickhouse`), config];
     },
 });
 

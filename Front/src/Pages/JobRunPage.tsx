@@ -103,6 +103,7 @@ function TestTypeFilterButton({
 }
 
 export function JobRunPage(): React.JSX.Element {
+    const basePrefix = useBasePrefix();
     const { jobId = "", jobRunId = "" } = useParams();
     const [testCasesType, setTestCasesType] = useState<"All" | "Success" | "Failed" | "Skipped">("All");
     const [sortField, setSortField] = useSearchParamAsState("sort");
@@ -158,15 +159,14 @@ export function JobRunPage(): React.JSX.Element {
                 FROM TestRunsByRun 
                 WHERE ${condition} 
                 ORDER BY 
-                    ${
-                        sortField ??
-                        `CASE 
+                    ${sortField ??
+                `CASE 
                         WHEN State = 'Failed' THEN 1
                         WHEN State = 'Success' THEN 2
                         WHEN State = 'Skipped' THEN 3
                         ELSE 4
                     END`
-                    } 
+                } 
                 ${sortField ? (sortDirection ?? "ASC") : ""}
                 LIMIT ${(itemsPerPage * (page - 1)).toString()}, ${itemsPerPage.toString()}
                 `,
@@ -224,7 +224,7 @@ export function JobRunPage(): React.JSX.Element {
                         <HomeIcon size={16} /> All jobs
                     </Link>
                     {/* <ArrowARightIcon size={16} />
-                    <Link to={`/test-analytics/jobs/${encodeURIComponent(jobId)}`}>
+                    <Link to={`/${basePrefix}/jobs/${encodeURIComponent(jobId)}`}>
                         <JonIcon size={16} /> {jobId}
                     </Link> */}
                 </JobBreadcrumbs>
@@ -248,7 +248,7 @@ export function JobRunPage(): React.JSX.Element {
                     pipelineSource={pipelineSource}
                 />
                 <Link
-                    to={`/test-analytics/jobs/${encodeURIComponent(jobId)}/runs/${encodeURIComponent(jobRunId)}/treemap`}>
+                    to={`/${basePrefix}/jobs/${encodeURIComponent(jobId)}/runs/${encodeURIComponent(jobRunId)}/treemap`}>
                     Open tree map
                 </Link>
                 <Gapped>
@@ -336,7 +336,7 @@ export function JobRunPage(): React.JSX.Element {
                                                     <DropdownMenu caption={<KebabButton />}>
                                                         <MenuItem
                                                             component={RouterLinkAdapter}
-                                                            href={`/test-analytics/history?id=${encodeURIComponent(x[1])}&runId=${jobRunId}`}>
+                                                            href={`/${basePrefix}/history?id=${encodeURIComponent(x[1])}&runId=${jobRunId}`}>
                                                             Show test history
                                                         </MenuItem>
                                                     </DropdownMenu>
@@ -473,6 +473,6 @@ const StatusCell = styled.td<{ status: RunStatus }>`
         props.status == "Success"
             ? props.theme.successTextColor
             : props.status == "Failed"
-              ? props.theme.failedTextColor
-              : undefined};
+                ? props.theme.failedTextColor
+                : undefined};
 `;

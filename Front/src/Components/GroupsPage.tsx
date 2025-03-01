@@ -1,14 +1,15 @@
-import * as React from "react";
-import styled from "styled-components";
-import { theme } from "../Theme/ITheme";
+import { FoldersIcon20Light } from "@skbkontur/icons";
 import { ColumnStack, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import { Input } from "@skbkontur/react-ui";
-import { Group, useRootGroups } from "../Domain/Storage";
+import * as React from "react";
 import { Link } from "react-router-dom";
-import { FoldersIcon16Regular, FoldersIcon20Light, FoldersIcon24Regular } from "@skbkontur/icons";
+import styled from "styled-components";
+import { Group, useRootGroups } from "../Domain/Storage";
+import { useBasePrefix } from "../Pages/Navigation";
+import { theme } from "../Theme/ITheme";
 
-function groupLink(groupIdOrTitleList: string[]): string {
-    return `/test-analytics/${groupIdOrTitleList.map(x => encodeURIComponent(x)).join("/")}`;
+function groupLink(basePrefix: string, groupIdOrTitleList: string[]): string {
+    return `/${basePrefix}/${groupIdOrTitleList.map(x => encodeURIComponent(x)).join("/")}`;
 }
 
 export function GroupsPage() {
@@ -18,6 +19,7 @@ export function GroupsPage() {
         () => projects.filter(p => !searchText.trim() || p.title.toLowerCase().includes(searchText.toLowerCase())),
         [searchText, projects]
     );
+    const basePrefix = useBasePrefix();
 
     return (
         <Root>
@@ -45,7 +47,7 @@ export function GroupsPage() {
                                     <GroupAvatar group={p}></GroupAvatar>
                                 </Fit>
                                 <Fit>
-                                    <RootGroupTitle to={groupLink([p.title])}>{p.title}</RootGroupTitle>
+                                    <RootGroupTitle to={groupLink(basePrefix, [p.title])}>{p.title}</RootGroupTitle>
                                 </Fit>
                             </RowStack>
                         </Fit>

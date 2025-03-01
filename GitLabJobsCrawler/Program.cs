@@ -24,8 +24,9 @@ var host = new HoustonHost(
         config.Everywhere.SetupEnvironment(
             builder =>
             {
-                builder.SetBaseUrlPath("test-analytics-gitlab-crawler");
-                builder.SetBeaconApplication("test-analytics-gitlab-crawler");
+                var apiPrefix = Environment.GetEnvironmentVariable("TESTANALYTICS_API_PREFIX") ?? throw new Exception("TESTANALYTICS_API_PREFIX is not set");
+                builder.SetBaseUrlPath(apiPrefix + "-gitlab-crawler");
+                builder.SetBeaconApplication(apiPrefix + "-gitlab-crawler");
                 builder.SetupApplicationIdentity(
                     idBuilder => idBuilder
                         .SetProject("TestAnalytics")

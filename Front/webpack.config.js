@@ -34,8 +34,7 @@ module.exports = {
         proxy: [
             {
                 context: ["/test-analytics/clickhouse/"],
-                target: "http://vm-ch2-stg.dev.kontur.ru:8123",
-                pathRewrite: { "^/test-analytics/clickhouse": "" },
+                target: "http://localhost:8124",
             },
             {
                 context: ["/test-analytics/gitlab/"],
