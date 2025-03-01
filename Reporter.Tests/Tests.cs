@@ -92,9 +92,11 @@ public class Tests
         {
             DestinationTableName = "TestRuns",
             BatchSize = 100,
+            ColumnNames = Columns,
         };
+        await bulkCopyInterface.InitAsync();
         var values = new[] { new object[] { "1", "1", "1", "1", 1, 1L, DateTime.Now.ToUniversalTime(), "1", "1" } };
-        await bulkCopyInterface.WriteToServerAsync(values, Columns);
+        await bulkCopyInterface.WriteToServerAsync(values);
         Console.WriteLine(bulkCopyInterface.RowsWritten);
     }
 

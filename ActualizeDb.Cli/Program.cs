@@ -1,8 +1,11 @@
-﻿using dotenv.net;
-using Kontur.TestAnalytics.Core.Clickhouse;
+﻿using Kontur.TestAnalytics.ActualizeDb.Cli;
+using Vostok.Hosting.Houston;
+using Vostok.Hosting.Houston.Abstractions;
+using Vostok.Hosting.Setup;
 
-DotEnv.Fluent().WithProbeForEnv(10).Load();
-var connection = ConnectionFactory.CreateConnection();
-await connection.EnsureDbIsAccessibleAsync(TimeSpan.FromMinutes(20));
-// await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);
-Console.WriteLine("Database schema actualized successfully.");
+[assembly: HoustonEntryPoint(typeof(ActualizeDatabaseApplication))]
+
+var houstonHost = new HoustonHost(
+    new ActualizeDatabaseApplication(),
+    config => config.Everywhere.SetupEnvironment(builder => builder.DisableServiceBeacon()));
+await houstonHost.RunAsync();

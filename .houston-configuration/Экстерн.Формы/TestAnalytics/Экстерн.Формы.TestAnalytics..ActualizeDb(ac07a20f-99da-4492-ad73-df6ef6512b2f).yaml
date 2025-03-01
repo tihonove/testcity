@@ -5,3 +5,4 @@ configurations:
         baseImageTag: 1.9.0
       binaryDefaults:
         binaryPackageName: Kontur.TestAnalytics.ActualizeDb.Cli
+        entryPointName: ActualizeDatabaseApplication

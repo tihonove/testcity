@@ -27,7 +27,7 @@ public class JobInfoTests
         foreach (var (className, testcaseName, expected) in data)
         {
             var classNameActual = JUnitReportHelper.RemoveDuplicatePartInClassName(className, testcaseName);
-            Assert.AreEqual(expected, classNameActual);
+            Assert.That(expected, Is.EqualTo(classNameActual));
         }
     }
 }

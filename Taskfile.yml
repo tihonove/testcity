@@ -4,12 +4,11 @@ tasks:
   db:
     run: once
     cmds:
-      - docker compose up -d
+      - docker compose up
     silent: false
 
   actualize-db:
     run: once
-    deps: [db]
     cmds:
       - dotnet run --project ActualizeDb.Cli/ActualizeDb.Cli.csproj
     silent: false
@@ -34,9 +33,9 @@ tasks:
     silent: false
 
   dev:
-    deps: [api, crawler]
+    deps: [db, api, crawler]
     silent: false
 
   dev.front:
-    deps: [api, crawler, front]
+    deps: [db, api, crawler, front]
     silent: false

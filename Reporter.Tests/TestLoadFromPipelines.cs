@@ -21,7 +21,7 @@ public class TestsLoadFromGitlab
         await using var connection = ConnectionFactory.CreateConnection();
         await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);
         var result = await TestRunsUploader.IsJobRunIdExists("31666195");
-        Assert.IsFalse(result);
+        Assert.That(result, Is.False);
     }
 
     [Test]

@@ -13,7 +13,9 @@ internal class TestRunsUploaderInternal(ClickHouseConnection connection)
         {
             DestinationTableName = "TestRuns",
             BatchSize = 1000,
+            ColumnNames = Fields,
         };
+        await bulkCopyInterface.InitAsync();
         await foreach (var testRuns in lines.Batches(1000))
         {
             var values = testRuns.Select(x =>
@@ -22,7 +24,7 @@ internal class TestRunsUploaderInternal(ClickHouseConnection connection)
                     info.JobId, info.JobRunId, info.BranchName, x.TestId, (int)x.TestResult, x.Duration,
                     x.StartDateTime.ToUniversalTime(), info.AgentName, info.AgentOSName, info.JobUrl,
                 });
-            await bulkCopyInterface.WriteToServerAsync(values, Fields);
+            await bulkCopyInterface.WriteToServerAsync(values);
         }
     }
 

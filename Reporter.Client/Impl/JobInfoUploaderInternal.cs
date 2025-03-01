@@ -18,37 +18,37 @@ internal class JobInfoUploaderInternal
         {
             DestinationTableName = "JobInfo",
             BatchSize = 1,
+            ColumnNames = Fields,
         };
+        await bulkCopyInterface.InitAsync();
 
         await bulkCopyInterface.WriteToServerAsync(
-            new List<object?[]>
-        {
-            new object?[]
-            {
-                info.JobId,
-                info.JobRunId,
-                info.BranchName,
-                info.AgentName,
-                info.AgentOSName,
-                info.JobUrl,
-                info.State,
-                info.Duration,
-                info.StartDateTime.ToUniversalTime(),
-                info.EndDateTime.ToUniversalTime(),
-                info.Triggered,
-                info.PipelineSource,
-                info.CommitSha,
-                info.CommitMessage,
-                info.CommitAuthor,
-                info.TotalTestsCount,
-                info.SuccessTestsCount,
-                info.FailedTestsCount,
-                info.SkippedTestsCount,
-                info.ProjectId,
-                info.CustomStatusMessage,
-                info.PipelineId,
-            },
-        }, Fields);
+            [
+                [
+                    info.JobId,
+                    info.JobRunId,
+                    info.BranchName,
+                    info.AgentName,
+                    info.AgentOSName,
+                    info.JobUrl,
+                    info.State,
+                    info.Duration,
+                    info.StartDateTime.ToUniversalTime(),
+                    info.EndDateTime.ToUniversalTime(),
+                    info.Triggered,
+                    info.PipelineSource,
+                    info.CommitSha,
+                    info.CommitMessage,
+                    info.CommitAuthor,
+                    info.TotalTestsCount,
+                    info.SuccessTestsCount,
+                    info.FailedTestsCount,
+                    info.SkippedTestsCount,
+                    info.ProjectId,
+                    info.CustomStatusMessage,
+                    info.PipelineId,
+                ],
+            ]);
     }
 
     private static readonly string[] Fields =
