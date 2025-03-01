@@ -1,0 +1,7 @@
+tpsa: Application/ac07a20f99da4492ad73df6ef6512b2f
+configurations:
+  - configuration:
+      platform:
+        baseImageTag: 1.9.0
+      binaryDefaults:
+        binaryPackageName: Kontur.TestAnalytics.ActualizeDb.Cli

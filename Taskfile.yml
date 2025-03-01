@@ -2,16 +2,26 @@ version: '3'
 
 tasks:
   db:
+    run: once
     cmds:
       - docker compose up -d
     silent: false
 
+  actualize-db:
+    run: once
+    deps: [db]
+    cmds:
+      - dotnet run --project ActualizeDb.Cli/ActualizeDb.Cli.csproj
+    silent: false
+
   api:
+    deps: [actualize-db]
     cmds:
       - dotnet watch run --project Api/Api.csproj
     silent: false
 
   crawler:
+    deps: [actualize-db]
     cmds:
       - dotnet watch run --project GitLabJobsCrawler/GitLabJobsCrawler.csproj
     silent: false
@@ -24,9 +34,9 @@ tasks:
     silent: false
 
   dev:
-    deps: [db, api, crawler]
+    deps: [api, crawler]
     silent: false
 
   dev.front:
-    deps: [db, api, crawler, front]
+    deps: [api, crawler, front]
     silent: false

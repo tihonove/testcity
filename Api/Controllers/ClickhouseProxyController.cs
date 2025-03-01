@@ -10,10 +10,10 @@ public class ClickhouseProxyController : ControllerBase
     [AcceptVerbs("GET", "POST", "PUT", "DELETE")]
     public IActionResult Proxy(string? query)
     {
-        var Host = Environment.GetEnvironmentVariable("TESTANALYTICS_CLICKHOUSE_HOST") ?? throw new Exception("TESTANALYTICS_CLICKHOUSE_HOST is not set");
-        var Port = ushort.Parse(Environment.GetEnvironmentVariable("TESTANALYTICS_CLICKHOUSE_PORT") ?? throw new Exception("TESTANALYTICS_CLICKHOUSE_PORT is not set"));
+        var host = Environment.GetEnvironmentVariable("TESTANALYTICS_CLICKHOUSE_HOST") ?? throw new Exception("TESTANALYTICS_CLICKHOUSE_HOST is not set");
+        var port = ushort.Parse(Environment.GetEnvironmentVariable("TESTANALYTICS_CLICKHOUSE_PORT") ?? throw new Exception("TESTANALYTICS_CLICKHOUSE_PORT is not set"));
         return new ProxyToUriActionResult(
             Request,
-            $"http://{Host}:{Port}/{query}");
+            $"http://{host}:{port}/{query}");
     }
 }

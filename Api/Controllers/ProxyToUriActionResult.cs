@@ -29,6 +29,7 @@ internal sealed class ProxyToUriActionResult : IActionResult
             var database = Environment.GetEnvironmentVariable("TESTANALYTICS_CLICKHOUSE_DB") ?? throw new Exception("TESTANALYTICS_CLICKHOUSE_DB is not set");
             queryString = queryString.Replace("database=test_analytics", $"database={database}");
         }
+
         var request = new HttpRequestMessage(new HttpMethod(sourceRequest.Method), targetUri + queryString);
         foreach (var sourceRequestHeader in sourceRequest.Headers)
         {
@@ -36,6 +37,7 @@ internal sealed class ProxyToUriActionResult : IActionResult
             {
                 request.Headers.Add(sourceRequestHeader.Key, sourceRequestHeader.Value.AsEnumerable<string>());
             }
+
             if (sourceRequestHeader.Key == "Authorization")
             {
                 var user = Environment.GetEnvironmentVariable("TESTANALYTICS_CLICKHOUSE_USER");
