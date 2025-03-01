@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <AssemblyName>Kontur.TestAnalytics.ActualizeDb.Cli</AssemblyName>
+        <RootNamespace>Kontur.TestAnalytics.ActualizeDb.Cli</RootNamespace>
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="../Core/Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="dotenv.net" />
+    </ItemGroup>
+
+</Project>

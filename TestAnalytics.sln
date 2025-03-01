@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitLabJobsCrawler", "GitLab
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{856A0607-7D85-4E27-AA6B-1CD0D71BB7DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActualizeDb.Cli", "ActualizeDb.Cli\ActualizeDb.Cli.csproj", "{B48E8565-3930-48D3-9819-6447D542FD06}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,5 +51,12 @@ Global
 		{856A0607-7D85-4E27-AA6B-1CD0D71BB7DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{856A0607-7D85-4E27-AA6B-1CD0D71BB7DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{856A0607-7D85-4E27-AA6B-1CD0D71BB7DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B48E8565-3930-48D3-9819-6447D542FD06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B48E8565-3930-48D3-9819-6447D542FD06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B48E8565-3930-48D3-9819-6447D542FD06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B48E8565-3930-48D3-9819-6447D542FD06}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
