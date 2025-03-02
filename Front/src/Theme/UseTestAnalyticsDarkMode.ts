@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useDarkMode } from "./UseDarkModeFixed";
-import { useBasePrefix } from "../Pages/Navigation";
+import { useBasePrefix } from "../Domain/Navigation";
 
 export const ForcedDarkModeContext = React.createContext<boolean | undefined>(undefined);
 

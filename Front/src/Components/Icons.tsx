@@ -1,5 +1,5 @@
 import * as React from "react";
-import { RunStatus } from "../TestHistory/TestHistory";
+import { RunStatus } from "./TestHistory";
 import {
     ArrowARightIcon16Regular,
     ArrowARightIcon24Regular,

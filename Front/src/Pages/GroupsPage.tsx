@@ -1,16 +1,13 @@
-import { FoldersIcon20Light } from "@skbkontur/icons";
+import { FoldersIcon20Light, UiMenuShapeCircle4Icon20Light } from "@skbkontur/icons";
 import { ColumnStack, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import { Input } from "@skbkontur/react-ui";
 import * as React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Group, useRootGroups } from "../Domain/Storage";
-import { useBasePrefix } from "../Pages/Navigation";
+import { useRootGroups } from "../Domain/Storage";
+import { groupLink, useBasePrefix } from "../Domain/Navigation";
 import { theme } from "../Theme/ITheme";
-
-function groupLink(basePrefix: string, groupIdOrTitleList: string[]): string {
-    return `/${basePrefix}/${groupIdOrTitleList.map(x => encodeURIComponent(x)).join("/")}`;
-}
+import { GroupAvatar } from "../Components/GroupAvatar";
 
 export function GroupsPage() {
     const [searchText, setSearchText] = React.useState("");
@@ -41,10 +38,10 @@ export function GroupsPage() {
                         <Fit key={p.id}>
                             <RowStack gap={2} block verticalAlign="center">
                                 <Fit>
-                                    <FoldersIcon20Light />
+                                    <UiMenuShapeCircle4Icon20Light />
                                 </Fit>
                                 <Fit>
-                                    <GroupAvatar group={p}></GroupAvatar>
+                                    <GroupAvatar size="20px" group={p}></GroupAvatar>
                                 </Fit>
                                 <Fit>
                                     <RootGroupTitle to={groupLink(basePrefix, [p.title])}>{p.title}</RootGroupTitle>
@@ -57,39 +54,6 @@ export function GroupsPage() {
         </Root>
     );
 }
-
-interface GroupAvatarProps {
-    group: Group;
-}
-
-export function GroupAvatar(props: GroupAvatarProps) {
-    return (
-        <GroupAvatarRoot style={{ backgroundColor: deterministicColor(props.group.title) }}>
-            {props.group.title[0]}
-        </GroupAvatarRoot>
-    );
-}
-
-function deterministicColor(input: string) {
-    let hash = 0;
-    for (let i = 0; i < input.length; i++) {
-        hash = input.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    const color = (hash & 0x00ffffff).toString(16).toUpperCase();
-    return `#${"000000".substring(0, 6 - color.length) + color}20`;
-}
-
-const GroupAvatarRoot = styled.div`
-    font-size: 20px;
-    line-height: 32px;
-    text-align: center;
-    text-transform: uppercase;
-    width: 32px;
-    height: 32px;
-    border-radius: 4px;
-    outline: 1px solid ${theme.borderLineColor2};
-    outline-offset: -1px;
-`;
 
 const Root = styled.main`
     padding-top: 100px;

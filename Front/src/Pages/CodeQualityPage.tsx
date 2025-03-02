@@ -4,7 +4,7 @@ import { OverviewTab } from "../CodeQuality/Overview/OverviewTab";
 import { IssuesTab } from "../CodeQuality/Issues/IssuesTab";
 import { Issue } from "../CodeQuality/types/Issue";
 import { useParams } from "react-router-dom";
-import { useBasePrefix } from "./Navigation";
+import { useBasePrefix } from "../Domain/Navigation";
 
 export function CodeQualityPage() {
     const basePrefix = useBasePrefix();

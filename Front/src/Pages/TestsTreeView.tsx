@@ -6,7 +6,7 @@ import { TimeClockIcon16Regular } from "@skbkontur/icons/TimeClockIcon16Regular"
 import { XCircleIcon16Regular } from "@skbkontur/icons/XCircleIcon16Regular";
 import { ShapeCircleMOffIcon16Regular } from "@skbkontur/icons/ShapeCircleMOffIcon16Regular";
 import { CheckCircleIcon16Regular } from "@skbkontur/icons/CheckCircleIcon16Regular";
-import { RunStatus } from "../TestHistory/TestHistory";
+import { RunStatus } from "../Components/TestHistory";
 import { TreeNode, TreeView } from "../Components/TreeView";
 import { ApproximateUnits, ITEMS_UNITS, TIME_UNITS } from "../Components/ApproximateUnits";
 import styled from "styled-components";

@@ -4,6 +4,8 @@ import { uuidv4 } from "./Guids";
 import { JobsQueryRow } from "./JobsQueryRow";
 import { delay } from "@skbkontur/react-ui/cjs/lib/utils";
 import { reject } from "../TypeHelpers";
+import { PipelineRunsQueryRow } from "./PipelineRunsQueryRow";
+import { TestRunQueryRow } from "./TestRunQueryRow";
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports
 const hardCodedGroups: GroupNode[] = require("../../gitlab-projects.json");
@@ -24,6 +26,14 @@ export interface Project {
     title: string;
 }
 
+export function isGroup(node: GroupNode | Project): node is GroupNode {
+    return "projects" in node || "groups" in node;
+}
+
+export function isProject(node: GroupNode | Project): node is Project {
+    return !isGroup(node);
+}
+
 export function useRootGroups(): Group[] {
     return hardCodedGroups.map(x => ({ id: x.id, title: x.title }));
 }
@@ -36,14 +46,14 @@ export function findPathToProjectByIdOrNull(
     groupNode: GroupNode,
     projectId: string
 ): [GroupNode[], Project] | undefined {
-    if (groupNode.projects) {
+    if ("projects" in groupNode) {
         const project = groupNode.projects.find(p => p.id === projectId);
         if (project) {
             return [[groupNode], project];
         }
     }
 
-    if (groupNode.groups) {
+    if ("groups" in groupNode) {
         for (const group of groupNode.groups) {
             const result = findPathToProjectByIdOrNull(group, projectId);
             if (result) return [[groupNode, ...result[0]], result[1]];
@@ -60,6 +70,32 @@ function getQueryId() {
 export class TestAnalyticsStorage {
     public constructor(client: ClickHouseClient) {
         this.client = client;
+    }
+
+    public getPathToProjectById(id: string): (GroupNode | Project)[] | undefined {
+        const nodesPath: (GroupNode | Project)[] = [];
+        const traverse = (groupNode: GroupNode): boolean => {
+            nodesPath.push(groupNode);
+            const project = (groupNode.projects ?? []).find(x => x.id === id);
+            if (project != undefined) {
+                nodesPath.push(project);
+                return true;
+            }
+            for (const childGroup of groupNode.groups ?? []) {
+                if (traverse(childGroup)) {
+                    return true;
+                }
+            }
+            nodesPath.pop();
+            return false;
+        };
+
+        for (const rootGroup of hardCodedGroups) {
+            if (traverse(rootGroup)) {
+                return nodesPath;
+            }
+        }
+        return undefined;
     }
 
     public async findAllJobs(projectIds: string[]): Promise<JobIdWithParentProject[]> {
@@ -99,15 +135,181 @@ export class TestAnalyticsStorage {
                     ROW_NUMBER() OVER (PARTITION BY JobId, BranchName ORDER BY StartDateTime DESC) AS rn
                 FROM JobInfo 
                 WHERE 
-                    StartDateTime >= now() - INTERVAL 3 DAY 
+                    StartDateTime >= now() - INTERVAL 30 DAY 
                     AND ProjectId IN [${projectIds.map(x => "'" + x + "'").join(", ")}]
                     ${currentBranchName ? `AND BranchName = '${currentBranchName}'` : ""}
             ) AS filtered
             WHERE rn = 1
-            ORDER BY JobId, StartDateTime DESC;
+            ORDER BY JobId, StartDateTime DESC
+            LIMIT 1000;
         `;
 
         return this.executeClickHouseQuery<JobsQueryRow[]>(query);
+    }
+
+    public async findAllPipelineRuns(
+        projectIds: string[],
+        currentBranchName?: string
+    ): Promise<PipelineRunsQueryRow[]> {
+        const query = `
+            SELECT 
+                ProjectId,
+                PipelineId,
+                BranchName,
+                StartDateTime,
+                TotalTestsCount,
+                Duration,
+                SuccessTestsCount,
+                SkippedTestsCount,
+                FailedTestsCount,
+                State,
+                JobRunCount,
+                CustomStatusMessage
+            FROM ( 
+                SELECT 
+                    ProjectId as ProjectId ,
+                    PipelineId as PipelineId,
+                    BranchName as BranchName,
+                    MIN(StartDateTime) as StartDateTime,
+                    SUM(TotalTestsCount) as TotalTestsCount,
+                    SUM(Duration) as Duration,
+                    SUM(SuccessTestsCount) as SuccessTestsCount,
+                    SUM(SkippedTestsCount) as SkippedTestsCount,
+                    SUM(FailedTestsCount) as FailedTestsCount,
+                    MAX(State) as State,
+                    COUNT(JobRunId) as JobRunCount,
+                    arrayStringConcat(groupArrayIf(JobInfo.CustomStatusMessage, JobInfo.CustomStatusMessage != ''), ', ') as CustomStatusMessage,
+                    ROW_NUMBER() OVER (PARTITION BY JobInfo.ProjectId, JobInfo.BranchName ORDER BY MAX(JobInfo.StartDateTime) DESC) AS rn
+                FROM JobInfo
+                WHERE 
+                    JobInfo.PipelineId <> ''
+                    AND JobInfo.ProjectId IN [${projectIds.map(x => "'" + x + "'").join(", ")}]
+                    ${currentBranchName ? `AND JobInfo.BranchName = '${currentBranchName}'` : ""}
+                GROUP BY 
+                    JobInfo.ProjectId, 
+                    JobInfo.PipelineId, 
+                    JobInfo.BranchName
+                ORDER BY
+                    MAX(JobInfo.StartDateTime) DESC
+            ) filtered
+            WHERE 
+            rn = 1
+            LIMIT 1000
+        `;
+        return this.executeClickHouseQuery<PipelineRunsQueryRow[]>(query);
+    }
+
+    public async getPipelineInfo(pipelineId: string): Promise<PipelineInfo> {
+        const query = `
+                SELECT 
+                    ProjectId,
+                    PipelineId as PipelineId,
+                    BranchName as BranchName,
+                    MIN(StartDateTime) as StartDateTime,
+                    MAX(EndDateTime) as EndDateTime,
+                    SUM(TotalTestsCount) as TotalTestsCount,
+                    SUM(Duration) as Duration,
+                    SUM(SuccessTestsCount) as SuccessTestsCount,
+                    SUM(SkippedTestsCount) as SkippedTestsCount,
+                    SUM(FailedTestsCount) as FailedTestsCount,
+                    MAX(State) as State,
+                    COUNT(JobRunId) as JobRunCount,
+                    arrayStringConcat(groupArrayIf(JobInfo.CustomStatusMessage, JobInfo.CustomStatusMessage != ''), ', ') as CustomStatusMessage,
+                    arrayStringConcat(groupArrayIf(JobInfo.JobRunId, JobInfo.JobRunId != ''), ';') as JobRunIds,
+                    arrayElement(topK(1)(CommitSha), 1) as CommitSha,
+                    arrayElement(topK(1)(CommitMessage), 1) as CommitMessage,
+                    arrayElement(topK(1)(CommitAuthor), 1) as CommitAuthor,
+                    arrayElement(topK(1)(Triggered), 1) as Triggered,
+                    arrayElement(topK(1)(PipelineSource), 1) as PipelineSource
+                FROM JobInfo
+                WHERE PipelineId = '${pipelineId}'
+                GROUP BY PipelineId, BranchName, ProjectId
+        `;
+        const data =
+            await this.executeClickHouseQuery<
+                [
+                    string,
+                    string,
+                    string,
+                    string,
+                    string,
+                    string,
+                    number,
+                    string,
+                    string,
+                    string,
+                    "Success" | "Failed" | "Canceled" | "Timeouted",
+                    string,
+                    string,
+                    string,
+                    string,
+                    string,
+                    string,
+                    string,
+                    string,
+                ][]
+            >(query);
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        if (data[0] == undefined) {
+            throw new Error("Pipeline not found");
+        }
+        return {
+            projectId: data[0][0],
+            pipelineId: data[0][1],
+            branchName: data[0][2],
+            startDateTime: data[0][3],
+            endDateTime: data[0][4],
+            totalTestsCount: Number(data[0][5]),
+            duration: data[0][6],
+            successTestsCount: Number(data[0][7]),
+            skippedTestsCount: Number(data[0][8]),
+            failedTestsCount: Number(data[0][9]),
+            state: data[0][10],
+            jobRunCount: Number(data[0][11]),
+            customStatusMessage: data[0][12],
+            jobRunIds: data[0][13].split(";"),
+            commitSha: data[0][14],
+            commitMessage: data[0][15],
+            commitAuthor: data[0][16],
+            triggered: data[0][17],
+            pipelineSource: data[0][18],
+        };
+    }
+
+    public async getTestList(
+        jobRunIds: string[],
+        sortField?: "State" | "TestId" | "Duration" | "StartDateTime",
+        sortDirection?: "ASC" | "DESC",
+        testIdQuery?: string,
+        testStateFilter?: "Failed" | "Success" | "Skipped",
+        itemsPerPage: number = 100,
+        page: number = 0
+    ): Promise<TestRunQueryRow[]> {
+        let condition = `JobRunId in [${jobRunIds.map(x => "'" + x + "'").join(",")}]`;
+        if (testIdQuery?.trim()) condition += ` AND TestId LIKE '%${testIdQuery}%'`;
+        if (testStateFilter != undefined) condition += ` AND State = '${testStateFilter}'`;
+
+        const query = `
+            SELECT 
+                State, 
+                TestId, 
+                Duration, 
+                StartDateTime 
+            FROM TestRunsByRun 
+            WHERE ${condition} 
+            ORDER BY 
+                    ${
+                        sortField ??
+                        `CASE 
+                        WHEN State = 'Failed' THEN 1
+                        WHEN State = 'Success' THEN 2
+                        WHEN State = 'Skipped' THEN 3
+                        ELSE 4
+                    END`
+                    } 
+            ${sortField ? (sortDirection ?? "ASC") : ""}
+            LIMIT ${(itemsPerPage * page).toString()}, ${itemsPerPage.toString()}`;
+        return await this.executeClickHouseQuery<TestRunQueryRow[]>(query);
     }
 
     public async findBranches(projectIds?: string[], jobId?: string): Promise<string[]> {
@@ -157,14 +359,50 @@ export class TestAnalyticsStorage {
                     g => g.id === idOrTitle || g.title.toLowerCase() === idOrTitle.toLowerCase()
                 );
             } else {
-                currentGroup = currentGroup.groups?.find(
+                currentGroup = (currentGroup.groups ?? []).find(
                     g => g.id === idOrTitle || g.title.toLowerCase() === idOrTitle.toLowerCase()
                 );
             }
         }
-        return currentGroup?.projects?.find(
+        return (currentGroup?.projects ?? []).find(
             p => p.id === projectIdOrTitleList || p.title.toLowerCase() === projectIdOrTitleList.toLowerCase()
         );
+    }
+
+    public resolvePathToNodes(groupIdOrTitleList: string[]): (GroupNode | Project)[] | undefined {
+        const result: (GroupNode | Project)[] = [];
+        for (const groupIdOrTitle of groupIdOrTitleList) {
+            const prevNode = result[result.length - 1];
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            if (prevNode != undefined) {
+                const nextGroupOrProject =
+                    ("groups" in prevNode
+                        ? prevNode.groups?.find(
+                              x => x.id === groupIdOrTitle || x.title === groupIdOrTitle.toLowerCase()
+                          )
+                        : undefined) ??
+                    ("projects" in prevNode
+                        ? prevNode.projects?.find(
+                              x => x.id === groupIdOrTitle || x.title === groupIdOrTitle.toLowerCase()
+                          )
+                        : undefined);
+                if (nextGroupOrProject != undefined) {
+                    result.push(nextGroupOrProject);
+                } else {
+                    return undefined;
+                }
+            } else {
+                const nextGroup = hardCodedGroups.find(
+                    x => x.id === groupIdOrTitle || x.title === groupIdOrTitle.toLowerCase()
+                );
+                if (nextGroup != undefined) {
+                    result.push(nextGroup);
+                } else {
+                    return undefined;
+                }
+            }
+        }
+        return result;
     }
 
     public getProjects(groupIdOrTitle: string[]): Project[] {
@@ -174,6 +412,7 @@ export class TestAnalyticsStorage {
             const group = groups.find(g => g.id === current || g.title.toLowerCase() === current.toLowerCase());
             if (!group) return undefined;
             if (rest.length === 0) return group;
+
             if (group.groups) return findGroup(group.groups, rest);
             return undefined;
         };
@@ -184,6 +423,7 @@ export class TestAnalyticsStorage {
 
         const collectProjects = (group: GroupNode): Project[] => {
             let projects = group.projects || [];
+
             if (group.groups) {
                 for (const subGroup of group.groups) {
                     projects = projects.concat(collectProjects(subGroup));
@@ -210,4 +450,26 @@ export class TestAnalyticsStorage {
     }
 
     private client: ClickHouseClient;
+}
+
+interface PipelineInfo {
+    projectId: string;
+    pipelineId: string;
+    branchName: string;
+    startDateTime: string;
+    endDateTime: string;
+    totalTestsCount: number;
+    duration: number;
+    successTestsCount: number;
+    skippedTestsCount: number;
+    failedTestsCount: number;
+    state: "Success" | "Failed" | "Canceled" | "Timeouted";
+    jobRunCount: number;
+    customStatusMessage: string;
+    jobRunIds: string[];
+    commitSha: string;
+    commitMessage: string;
+    commitAuthor: string;
+    triggered: string;
+    pipelineSource: string;
 }

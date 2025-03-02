@@ -1,7 +1,18 @@
-import { GroupNode, findPathToProjectById } from "../Domain/Storage";
+import { GroupNode, Project, findPathToProjectById } from "./Storage";
 import { basePrefix } from "./BasePrefix";
 
 export const urlPrefix = "/" + basePrefix;
+
+export function createLinkToTestHistory(
+    basePrefix: string,
+    testId: string,
+    pathToProject: string[],
+    jobRunId?: string
+): string {
+    let result = `/${basePrefix}/history?id=${encodeURIComponent(testId)}`;
+    if (jobRunId) result += `&runId=${jobRunId}`;
+    return result;
+}
 
 export function createLinkToProject(groupNode: GroupNode, projectId: string, currentBranchName?: string): string {
     const [groups, project] = findPathToProjectById(groupNode, projectId);
@@ -9,6 +20,15 @@ export function createLinkToProject(groupNode: GroupNode, projectId: string, cur
         urlPrefix +
         "/" +
         [...groups.map(x => x.title), project.title].map(x => encodeURIComponent(x)).join("/") +
+        (currentBranchName ? `?branch=${encodeURIComponent(currentBranchName)}` : "")
+    );
+}
+
+export function createLinkToGroupOrProject(nodesPath: (GroupNode | Project)[], currentBranchName?: string): string {
+    return (
+        urlPrefix +
+        "/" +
+        [...nodesPath.map(x => x.title)].map(x => encodeURIComponent(x)).join("/") +
         (currentBranchName ? `?branch=${encodeURIComponent(currentBranchName)}` : "")
     );
 }
@@ -46,6 +66,23 @@ export function createLinkToJobRun(
     );
 }
 
+export function createLinkToPipelineRun(
+    groupNode: GroupNode,
+    projectId: string,
+    pipelineId: string,
+    currentBranchName?: string
+): string {
+    const [groups, project] = findPathToProjectById(groupNode, projectId);
+    return (
+        urlPrefix +
+        "/" +
+        [...groups.map(x => x.title), project.title, "pipelines", pipelineId]
+            .map(x => encodeURIComponent(x))
+            .join("/") +
+        (currentBranchName ? `?branch=${encodeURIComponent(currentBranchName)}` : "")
+    );
+}
+
 export function createLinkToCreateNewPipeline(groupNode: GroupNode, projectId: string, branchName?: string): string {
     const [groups, project] = findPathToProjectById(groupNode, projectId);
     return (
@@ -59,4 +96,14 @@ export function createLinkToCreateNewPipeline(groupNode: GroupNode, projectId: s
 
 export function useBasePrefix(): string {
     return basePrefix;
+}
+export function groupLink(basePrefix: string, groupIdOrTitleList: string[]): string {
+    return `/${basePrefix}/${groupIdOrTitleList.map(x => encodeURIComponent(x)).join("/")}`;
+}
+
+export function getLinkToPipeline(pathToProject: string[], pipelineId: string): string {
+    return (
+        "https://git.skbkontur.ru/" +
+        [...pathToProject, "-", "pipelines", pipelineId].map(x => encodeURIComponent(x)).join("/")
+    );
 }

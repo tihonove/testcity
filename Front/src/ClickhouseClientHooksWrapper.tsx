@@ -5,7 +5,7 @@ import fetchIntercept from "fetch-intercept";
 import usePromise from "react-promise-suspense";
 import { TestAnalyticsStorage } from "./Domain/Storage";
 import { uuidv4 } from "./Domain/Guids";
-import { basePrefix } from "./Pages/BasePrefix";
+import { basePrefix } from "./Domain/BasePrefix";
 
 const unregister = fetchIntercept.register({
     request: function (url, config) {

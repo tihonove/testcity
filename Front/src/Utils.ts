@@ -93,16 +93,18 @@ export function getLinkToJob(jobRunId: string, agentName: string) {
 export function useSearchParamAsState(
     paramName: string,
     defaultValue?: string
-): [string | undefined, (nextValue: undefined | string) => void] {
+): [string | undefined, (nextValue: undefined | string | ((prev: undefined | string) => undefined | string)) => void] {
     const [searchParams, setSearchParams] = useSearchParams();
     return [
         searchParams.get(paramName) ?? defaultValue ?? undefined,
-        (value: undefined | string) => {
+        (value: undefined | string | ((prev: undefined | string) => undefined | string)) => {
             setSearchParams(_ => {
                 // https://github.com/remix-run/react-router/issues/9757
                 const params = new URLSearchParams(window.location.search);
-                if (value == undefined) params.delete(paramName);
-                else params.set(paramName, value);
+                const prevValue = searchParams.get(paramName) ?? defaultValue ?? undefined;
+                const nextValue = typeof value === "function" ? value(prevValue) : value;
+                if (nextValue == undefined) params.delete(paramName);
+                else params.set(paramName, nextValue);
                 return params;
             });
         },

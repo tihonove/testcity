@@ -15,7 +15,8 @@
                 "id": "24783",
                 "title": "test-analytics"
             }
-        ]
+        ],
+        "mergeRunsFromJobs": false
     },
     {
         "id": "53",

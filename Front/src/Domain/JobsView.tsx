@@ -3,7 +3,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import styled, { useTheme } from "styled-components";
 import { BranchCell, JobLinkWithResults, SelectedOnHoverTr } from "../Components/Cells";
-import { createLinkToJob, createLinkToJobRun } from "../Pages/Navigation";
+import { createLinkToJob, createLinkToJobRun } from "./Navigation";
 import { formatTestDuration, getLinkToJob, getText, toLocalTimeFromUtc } from "../Utils";
 import { JobIdWithParentProject, JobIdWithParentProjectNames } from "./JobIdWithParentProject";
 import { JobRunNames, JobsQueryRow } from "./JobsQueryRow";
@@ -15,22 +15,21 @@ interface JobsViewProps {
     rootProjectStructure: GroupNode;
     allJobs: JobIdWithParentProject[];
     allJobRuns: JobsQueryRow[];
+    indentLevel: number;
 }
 
-// .filter(x => {
-//     if (x[1]) {
-//         return x[1] === section;
-//     }
-//     if (section === "17358") return !x[0].includes("FM · ") && !x[0].includes("Run ");
-//     else if (section === "19371") return x[0].includes("FM · ");
-//     else if (section === "Utilities") return x[0].includes("Run ");
-//     return true;
-// })
-
-export function JobsView({ rootProjectStructure, hideRuns, allJobs, allJobRuns, currentBranchName }: JobsViewProps) {
+export function JobsView({
+    rootProjectStructure,
+    hideRuns,
+    allJobs,
+    allJobRuns,
+    currentBranchName,
+    indentLevel,
+}: JobsViewProps) {
     const theme = useTheme();
+
     return (
-        <JobList>
+        <>
             {allJobs.map(job => {
                 const jobId = job[JobIdWithParentProjectNames.JobId];
                 const projectId = job[JobIdWithParentProjectNames.ProjectId];
@@ -44,7 +43,7 @@ export function JobsView({ rootProjectStructure, hideRuns, allJobs, allJobRuns, 
                     <React.Fragment key={jobId + projectId}>
                         <thead>
                             <tr>
-                                <JobHeader colSpan={6}>
+                                <JobHeader colSpan={6} style={{ paddingLeft: indentLevel * 25, paddingRight: 0 }}>
                                     {hasFailedRuns ? (
                                         <ShapeSquareIcon16Solid color={theme.failedTextColor} />
                                     ) : (
@@ -64,7 +63,7 @@ export function JobsView({ rootProjectStructure, hideRuns, allJobs, allJobRuns, 
                                     .sort((a, b) => Number(b[1]) - Number(a[1]))
                                     .map(x => (
                                         <SelectedOnHoverTr key={x[1]}>
-                                            <PaddingCell />
+                                            <PaddingCell style={{ paddingLeft: indentLevel * 25, paddingRight: 0 }} />
                                             <NumberCell>
                                                 <Link to={x[13] || getLinkToJob(x[1], x[3])}>#{x[1]}</Link>
                                             </NumberCell>
@@ -93,23 +92,9 @@ export function JobsView({ rootProjectStructure, hideRuns, allJobs, allJobRuns, 
                     </React.Fragment>
                 );
             })}
-        </JobList>
+        </>
     );
 }
-
-const JobList = styled.table`
-    width: 100%;
-    font-size: 14px;
-
-    td {
-        text-align: left;
-        padding: 6px 8px;
-    }
-
-    thead > tr > th {
-        padding-top: 16px;
-    }
-`;
 
 const JobHeader = styled.th`
     margin-top: 8px;
@@ -144,4 +129,5 @@ const StartedCell = styled.td`
 const DurationCell = styled.td`
     max-width: 140px;
     white-space: nowrap;
+    text-align: right;
 `;

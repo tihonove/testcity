@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
-import { RunStatus, TestHistory } from "../TestHistory/TestHistory";
+import { RunStatus, TestHistory } from "../Components/TestHistory";
 import { useSearchParamAsState } from "../Utils";
 import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
 

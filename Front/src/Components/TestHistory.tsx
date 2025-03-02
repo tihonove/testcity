@@ -8,11 +8,12 @@ import { formatDuration } from "../RunStatisticsChart/DurationUtils";
 import { Link } from "react-router-dom";
 import { BranchSelect } from "./BranchSelect";
 import { getOffsetTitle, toLocalTimeFromUtc } from "../Utils";
-import { ProjectComboBox } from "../Components/ProjectComboBox";
-import { ArrowARightIcon, HomeIcon, JonIcon } from "../Components/Icons";
+import { ProjectComboBox } from "./ProjectComboBox";
+import { ArrowARightIcon, HomeIcon, JonIcon } from "./Icons";
 import { Suspense } from "react";
-import { BranchCell, NumberCell, SelectedOnHoverTr } from "../Components/Cells";
+import { BranchCell, NumberCell, SelectedOnHoverTr } from "./Cells";
 import { JobRunNames } from "../Domain/JobsQueryRow";
+import { useBasePrefix } from "../Domain/Navigation";
 
 export type RunStatus = "Failed" | "Skipped" | "Success";
 
@@ -57,8 +58,8 @@ function splitTestId(testId: string): [string, string] {
 }
 
 export function TestHistory(props: TestHistoryProps): React.JSX.Element {
-    const [suiteId, testId] = splitTestId(props.testId);
     const basePrefix = useBasePrefix();
+    const [suiteId, testId] = splitTestId(props.testId);
 
     const getStatusMessage = (jobRunId: string): string => {
         return props.statusMessages.find(m => m[0] === jobRunId)?.[1] ?? "";

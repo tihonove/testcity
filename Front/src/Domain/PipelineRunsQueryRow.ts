@@ -1,0 +1,30 @@
+export type PipelineRunsQueryRow = [
+    string, // ProjectId,
+    string, // PipelineId,
+    string, // BranchName,
+    string, // StartDateTime,
+    number, // TotalTestsCount,
+    number, // Duration,
+    number, // SuccessTestsCount,
+    number, // SkippedTestsCount,
+    number, // FailedTestsCount,
+    // FailedTestsCount,
+    "Success" | "Failed" | "Canceled" | "Timeouted", // State,
+    number, // JobRunCount,
+    string,
+];
+
+export const PipelineRunsNames = {
+    ProjectId: 0,
+    PipelineId: 1,
+    BranchName: 2,
+    StartDateTime: 3,
+    TotalTestsCount: 4,
+    Duration: 5,
+    SuccessTestsCount: 6,
+    SkippedTestsCount: 7,
+    FailedTestsCount: 8,
+    State: 9,
+    JobRunCount: 10,
+    CustomStatusMessage: 11,
+} as const;

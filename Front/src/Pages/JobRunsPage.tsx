@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { useClickhouseClient, useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { BranchCell, JobLinkWithResults, NumberCell, SelectedOnHoverTr } from "../Components/Cells";
 import { HomeIcon } from "../Components/Icons";
-import { BranchSelect } from "../TestHistory/BranchSelect";
+import { BranchSelect } from "../Components/BranchSelect";
 import {
     formatTestDuration,
     getLinkToJob,
@@ -17,7 +17,7 @@ import {
 } from "../Utils";
 import { Paging } from "@skbkontur/react-ui";
 import { useState } from "react";
-import { createLinkToJobRun, urlPrefix } from "./Navigation";
+import { createLinkToJobRun, urlPrefix } from "../Domain/Navigation";
 import { JobRunNames, JobsQueryRow } from "../Domain/JobsQueryRow";
 import { reject } from "../TypeHelpers";
 import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
