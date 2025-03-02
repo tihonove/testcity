@@ -147,7 +147,7 @@ export class TestAnalyticsStorage {
         return this.executeClickHouseQuery<JobsQueryRow[]>(query);
     }
 
-    public async findAllPipelineRuns(
+    public async getPipelineRunsOverview(
         projectIds: string[],
         currentBranchName?: string
     ): Promise<PipelineRunsQueryRow[]> {
@@ -195,6 +195,40 @@ export class TestAnalyticsStorage {
             WHERE 
             rn = 1
             LIMIT 1000
+        `;
+        return this.executeClickHouseQuery<PipelineRunsQueryRow[]>(query);
+    }
+
+    public async getPipelineRunsByProject(
+        projectId: string,
+        currentBranchName?: string
+    ): Promise<PipelineRunsQueryRow[]> {
+        const query = `
+            SELECT 
+                ProjectId as ProjectId ,
+                PipelineId as PipelineId,
+                BranchName as BranchName,
+                MIN(StartDateTime) as StartDateTime,
+                SUM(TotalTestsCount) as TotalTestsCount,
+                SUM(Duration) as Duration,
+                SUM(SuccessTestsCount) as SuccessTestsCount,
+                SUM(SkippedTestsCount) as SkippedTestsCount,
+                SUM(FailedTestsCount) as FailedTestsCount,
+                MAX(State) as State,
+                COUNT(JobRunId) as JobRunCount,
+                arrayStringConcat(groupArrayIf(JobInfo.CustomStatusMessage, JobInfo.CustomStatusMessage != ''), ', ') as CustomStatusMessage
+            FROM JobInfo
+            WHERE 
+                JobInfo.PipelineId <> ''
+                AND JobInfo.ProjectId = '${projectId}'
+                ${currentBranchName ? `AND JobInfo.BranchName = '${currentBranchName}'` : ""}
+            GROUP BY 
+                JobInfo.ProjectId,
+                JobInfo.PipelineId,
+                JobInfo.BranchName
+            ORDER BY
+                MIN(JobInfo.StartDateTime) DESC
+            LIMIT 200
         `;
         return this.executeClickHouseQuery<PipelineRunsQueryRow[]>(query);
     }

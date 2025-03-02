@@ -45,12 +45,18 @@ export function ProjectsDashboardPage(): React.JSX.Element {
     const projects = useStorageQuery(x => x.getProjects(pathToGroup), [pathToGroup]);
     const projectIds = React.useMemo(() => projects.map(p => p.id), [projects]);
     const allJobs = useStorageQuery(x => x.findAllJobs(projectIds), [projectIds]);
+
     const allJobRuns = useStorageQuery(
         x => (usePipelineGrouping ? [] : x.findAllJobsRuns(projectIds, currentBranchName)),
         [projectIds, currentBranchName, usePipelineGrouping]
     );
     const allPipelineRuns = useStorageQuery(
-        x => (usePipelineGrouping ? x.findAllPipelineRuns(projectIds, currentBranchName) : []),
+        x =>
+            usePipelineGrouping && isProject(currentGroupOrProject)
+                ? x.getPipelineRunsByProject(currentGroupOrProject.id, currentBranchName)
+                : usePipelineGrouping
+                  ? x.getPipelineRunsOverview(projectIds, currentBranchName)
+                  : [],
         [projectIds, currentBranchName, usePipelineGrouping]
     );
 
