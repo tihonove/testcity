@@ -97,8 +97,11 @@ export function createLinkToCreateNewPipeline(groupNode: GroupNode, projectId: s
 export function useBasePrefix(): string {
     return basePrefix;
 }
-export function groupLink(basePrefix: string, groupIdOrTitleList: string[]): string {
-    return `/${basePrefix}/${groupIdOrTitleList.map(x => encodeURIComponent(x)).join("/")}`;
+export function groupLink(basePrefix: string, groupIdOrTitleList: string[], branchName?: string): string {
+    return (
+        `/${basePrefix}/${groupIdOrTitleList.map(x => encodeURIComponent(x)).join("/")}` +
+        (branchName ? `?ref=${encodeURIComponent(branchName)}` : "")
+    );
 }
 
 export function getLinkToPipeline(pathToProject: string[], pipelineId: string): string {

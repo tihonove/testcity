@@ -9,6 +9,7 @@ import { theme } from "../Theme/ITheme";
 
 interface GroupBreadcrumpsProps {
     nodes: (GroupNode | Project)[];
+    branchName: undefined | string;
 }
 
 export function GroupBreadcrumps(props: GroupBreadcrumpsProps) {
@@ -34,7 +35,8 @@ export function GroupBreadcrumps(props: GroupBreadcrumpsProps) {
                                 <RootGroupTitleLink
                                     to={groupLink(
                                         basePrefix,
-                                        props.nodes.slice(0, index + 1).map(x => x.title)
+                                        props.nodes.slice(0, index + 1).map(x => x.title),
+                                        props.branchName
                                     )}>
                                     {p.title}
                                 </RootGroupTitleLink>

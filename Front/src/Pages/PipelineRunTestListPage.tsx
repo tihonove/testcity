@@ -1,49 +1,29 @@
-import { NetDownloadIcon24Regular, ShareNetworkIcon, UiMenuDots3VIcon16Regular } from "@skbkontur/icons";
+import { ShareNetworkIcon } from "@skbkontur/icons";
 import { ColumnStack, Fit } from "@skbkontur/react-stack-layout";
-import { Button, DropdownMenu, Gapped, Input, MenuItem, Paging, Spinner } from "@skbkontur/react-ui";
 import * as React from "react";
 
-import { Suspense, useDeferredValue, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useClickhouseClient, useStorageQuery } from "../ClickhouseClientHooksWrapper";
+import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { AdditionalJobInfo } from "../Components/AdditionalJobInfo";
 import { ColorByState } from "../Components/Cells";
-import { HomeIcon, JonRunIcon } from "../Components/Icons";
-import { RouterLinkAdapter } from "../Components/RouterLinkAdapter";
-import { SortHeaderLink } from "../Components/SortHeaderLink";
-import { urlPrefix, useBasePrefix } from "../Domain/Navigation";
-import { formatDuration } from "../RunStatisticsChart/DurationUtils";
-import { RunStatus } from "../Components/TestHistory";
-import { reject } from "../TypeHelpers";
-import { useSearchParamAsState, useSearchParamDebouncedAsState } from "../Utils";
-import { TestName } from "./TestName";
-import { TestTypeFilterButton } from "./TestTypeFilterButton";
-import { useDelayedTransition } from "./useDelayedTransition";
-import { useProjectContextFromUrlParams } from "./useProjectContextFromUrlParams";
+import { JonRunIcon } from "../Components/Icons";
+import { getLinkToPipeline, useBasePrefix } from "../Domain/Navigation";
 import { GroupBreadcrumps } from "./GroupBreadcrumps";
-import { getLinkToPipeline } from "../Domain/Navigation";
 import { TestListView } from "./TestListView";
+import { useProjectContextFromUrlParams } from "./useProjectContextFromUrlParams";
 
 export function PipelineRunTestListPage(): React.JSX.Element {
     const basePrefix = useBasePrefix();
     const { rootGroup: rootProjectStructure, groupNodes, pathToGroup } = useProjectContextFromUrlParams();
-
     const { pipelineId = "" } = useParams();
-    // const [testCasesType, setTestCasesType] = useState<"All" | "Success" | "Failed" | "Skipped">("All");
-    // const [sortField, setSortField] = useSearchParamAsState("sort");
-    // const [sortDirection, setSortDirection] = useSearchParamAsState("direction", "desc");
-    // const [searchText, setSearchText, debouncedSearchValue = "", setSearchTextImmediate] = useSearchParamDebouncedAsState("filter", 500, "");
-    // const [page, setPage] = useSearchParamAsState("page");
-    // const itemsPerPage = 100;
-
     const pipelineInfo = useStorageQuery(s => s.getPipelineInfo(pipelineId), [pipelineId]);
 
     return (
         <Root>
             <ColumnStack block stretch gap={2}>
                 <Fit>
-                    <GroupBreadcrumps nodes={groupNodes} />
+                    <GroupBreadcrumps branchName={pipelineInfo.branchName} nodes={groupNodes} />
                 </Fit>
                 <Fit>
                     <ColorByState state={pipelineInfo.state}>
@@ -81,11 +61,6 @@ export function PipelineRunTestListPage(): React.JSX.Element {
 }
 
 const Root = styled.main``;
-
-const SuspenseFadingWrapper = styled.div<{ fading: boolean }>`
-    transition: opacity 0.5s ease-in-out;
-    opacity: ${props => (props.fading ? "0.3" : "1")};
-`;
 
 const JobRunHeader = styled.h1`
     display: flex;

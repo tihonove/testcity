@@ -159,7 +159,7 @@ export function ProjectsDashboardPage(): React.JSX.Element {
                 <Fit>
                     <ColumnStack block gap={1}>
                         <Fit>
-                            <GroupBreadcrumps nodes={groupNodes.slice(0, -1)} />
+                            <GroupBreadcrumps branchName={currentBranchName} nodes={groupNodes.slice(0, -1)} />
                         </Fit>
                         <Fit>
                             <RowStack block gap={1} baseline>
