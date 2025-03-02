@@ -47,14 +47,14 @@ export function findPathToProjectByIdOrNull(
     projectId: string
 ): [GroupNode[], Project] | undefined {
     if ("projects" in groupNode) {
-        const project = groupNode.projects.find(p => p.id === projectId);
+        const project = groupNode.projects?.find(p => p.id === projectId);
         if (project) {
             return [[groupNode], project];
         }
     }
 
     if ("groups" in groupNode) {
-        for (const group of groupNode.groups) {
+        for (const group of groupNode.groups ?? []) {
             const result = findPathToProjectByIdOrNull(group, projectId);
             if (result) return [[groupNode, ...result[0]], result[1]];
         }
