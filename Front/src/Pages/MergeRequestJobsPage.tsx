@@ -55,6 +55,7 @@ export function MergeRequestJobsPage(): React.JSX.Element {
                 </Fit>
                 <Fit>
                     <JobsView
+                        indentLevel={0}
                         rootProjectStructure={rootProjectStructure}
                         allJobs={allJobs}
                         allJobRuns={allJobRuns}
