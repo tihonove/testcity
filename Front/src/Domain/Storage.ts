@@ -164,7 +164,10 @@ export class TestAnalyticsStorage {
                 FailedTestsCount,
                 State,
                 JobRunCount,
-                CustomStatusMessage
+                CustomStatusMessage,
+                CommitMessage,
+                CommitAuthor,
+                CommitSha
             FROM ( 
                 SELECT 
                     ProjectId as ProjectId ,
@@ -179,7 +182,10 @@ export class TestAnalyticsStorage {
                     MAX(State) as State,
                     COUNT(JobRunId) as JobRunCount,
                     arrayStringConcat(groupArrayIf(JobInfo.CustomStatusMessage, JobInfo.CustomStatusMessage != ''), ', ') as CustomStatusMessage,
-                    ROW_NUMBER() OVER (PARTITION BY JobInfo.ProjectId, JobInfo.BranchName ORDER BY MAX(JobInfo.StartDateTime) DESC) AS rn
+                    ROW_NUMBER() OVER (PARTITION BY JobInfo.ProjectId, JobInfo.BranchName ORDER BY MAX(JobInfo.StartDateTime) DESC) AS rn,
+                    arrayElement(topK(1)(CommitMessage), 1) as CommitMessage,
+                    arrayElement(topK(1)(CommitAuthor), 1) as CommitAuthor,
+                    arrayElement(topK(1)(CommitSha), 1) as CommitSha
                 FROM JobInfo
                 WHERE 
                     JobInfo.PipelineId <> ''
@@ -216,7 +222,10 @@ export class TestAnalyticsStorage {
                 SUM(FailedTestsCount) as FailedTestsCount,
                 MAX(State) as State,
                 COUNT(JobRunId) as JobRunCount,
-                arrayStringConcat(groupArrayIf(JobInfo.CustomStatusMessage, JobInfo.CustomStatusMessage != ''), ', ') as CustomStatusMessage
+                arrayStringConcat(groupArrayIf(JobInfo.CustomStatusMessage, JobInfo.CustomStatusMessage != ''), ', ') as CustomStatusMessage,
+                arrayElement(topK(1)(CommitMessage), 1) as CommitMessage,
+                arrayElement(topK(1)(CommitAuthor), 1) as CommitAuthor,
+                arrayElement(topK(1)(CommitSha), 1) as CommitSha
             FROM JobInfo
             WHERE 
                 JobInfo.PipelineId <> ''

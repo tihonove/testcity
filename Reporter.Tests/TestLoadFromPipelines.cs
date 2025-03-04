@@ -1,7 +1,6 @@
 using Kontur.TestAnalytics.Core;
 using Kontur.TestAnalytics.Core.Clickhouse;
 using Kontur.TestAnalytics.GitLabJobsCrawler;
-using Kontur.TestAnalytics.GitLabJobsCrawler.Services;
 using Kontur.TestAnalytics.Reporter.Client;
 using NGitLab.Models;
 using NUnit.Framework;

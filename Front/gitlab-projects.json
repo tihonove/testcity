@@ -10,10 +10,6 @@
             {
                 "id": "19371",
                 "title": "extern.forms"
-            },
-            {
-                "id": "24783",
-                "title": "test-analytics"
             }
         ],
         "mergeRunsFromJobs": false
@@ -93,6 +89,16 @@
             {
                 "id": "2189",
                 "title": "bingo"
+            }
+        ]
+    },
+    {
+        "id": "0",
+        "title": "test-analytics",
+        "projects": [
+            {
+                "id": "24783",
+                "title": "test-analytics"
             }
         ]
     }

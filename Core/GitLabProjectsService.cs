@@ -1,19 +1,19 @@
 using System.Reflection;
 using System.Text.Json;
-using Kontur.TestAnalytics.GitLabJobsCrawler.Models;
+using Kontur.TestAnalytics.Core.Models;
 
-namespace Kontur.TestAnalytics.GitLabJobsCrawler.Services;
+namespace Kontur.TestAnalytics.Core;
 
 public static class GitLabProjectsService
 {
-    private static readonly Lazy<List<GitLabGroup>> ProjectsValue = new (LoadProjects);
+    private static readonly Lazy<List<GitLabGroup>> ProjectsValue = new(LoadProjects);
 
     public static List<GitLabGroup> Projects => ProjectsValue.Value;
 
     private static List<GitLabGroup> LoadProjects()
     {
         var assembly = Assembly.GetExecutingAssembly();
-        const string resourceName = "Kontur.TestAnalytics.GitLabJobsCrawler.gitlab-projects.json";
+        var resourceName = typeof(GitLabProjectsService).Namespace + ".gitlab-projects.json";
 
         using var stream = assembly.GetManifestResourceStream(resourceName) ?? throw new InvalidOperationException($"Resource '{resourceName}' not found.");
         using var reader = new StreamReader(stream);

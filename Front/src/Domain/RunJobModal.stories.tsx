@@ -1,0 +1,146 @@
+import { StoryFn } from "@storybook/react";
+
+import { RunJobModal } from "./RunJobModal";
+import * as React from "react";
+
+export default {
+    title: "RunJobModal",
+};
+
+export const Simple: StoryFn = () => (
+    <RunJobModal
+        projectId="20289"
+        jobInfos={[
+            {
+                jobId: "generate deploy pipeline",
+                jobRunId: "35185319",
+                status: "Susccess",
+            },
+            {
+                jobId: "deploy test stands",
+                jobRunId: "35185325",
+                status: "Manual",
+            },
+            {
+                jobId: "deploy",
+                jobRunId: "35185324",
+                status: "Manual",
+            },
+        ]}
+        pipelines={[
+            [
+                "20289",
+                "3928004",
+                "KB-6622-sequential-processing-of-tax-events",
+                "2025-03-03 20:02:09",
+                "384",
+                2510,
+                "356",
+                "27",
+                "1",
+                "Failed",
+                "1",
+                "",
+            ],
+            [
+                "20289",
+                "3924400",
+                "KB-5575-change-counterparty-name-for-enp-tax",
+                "2025-03-03 10:10:51",
+                "380",
+                2393,
+                "353",
+                "27",
+                "0",
+                "Success",
+                "1",
+                "",
+            ],
+            [
+                "20289",
+                "3913406",
+                "turn-off-concurrent",
+                "2025-03-03 09:16:31",
+                "380",
+                2525,
+                "352",
+                "27",
+                "1",
+                "Failed",
+                "1",
+                "",
+            ],
+            [
+                "20289",
+                "3877219",
+                "master",
+                "2025-02-24 13:38:41",
+                "2660",
+                17519,
+                "2453",
+                "189",
+                "18",
+                "Failed",
+                "7",
+                "",
+            ],
+            [
+                "20289",
+                "3914042",
+                "KB-5208-update-phone-masking",
+                "2025-02-28 12:56:39",
+                "380",
+                2400,
+                "353",
+                "27",
+                "0",
+                "Success",
+                "1",
+                "",
+            ],
+            [
+                "20289",
+                "3887114",
+                "release-dbo-1.18.0",
+                "2025-02-24 21:20:49",
+                "1520",
+                9831,
+                "1399",
+                "108",
+                "13",
+                "Failed",
+                "4",
+                "",
+            ],
+            [
+                "20289",
+                "3909312",
+                "KB-6459-srochniy-deposit",
+                "2025-02-28 03:02:46",
+                "764",
+                4119,
+                "708",
+                "54",
+                "2",
+                "Failed",
+                "2",
+                "",
+            ],
+            [
+                "20289",
+                "3906610",
+                "KB-6174-customer-module",
+                "2025-02-27 13:39:45",
+                "367",
+                2266,
+                "340",
+                "27",
+                "0",
+                "Success",
+                "1",
+                "",
+            ],
+            ["20289", "3907233", "test-fix", "2025-02-27 13:02:53", "373", 2212, "344", "27", "2", "Failed", "1", ""],
+        ]}
+    />
+);

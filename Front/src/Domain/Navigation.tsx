@@ -100,7 +100,7 @@ export function useBasePrefix(): string {
 export function groupLink(basePrefix: string, groupIdOrTitleList: string[], branchName?: string): string {
     return (
         `/${basePrefix}/${groupIdOrTitleList.map(x => encodeURIComponent(x)).join("/")}` +
-        (branchName ? `?ref=${encodeURIComponent(branchName)}` : "")
+        (branchName ? `?branch=${encodeURIComponent(branchName)}` : "")
     );
 }
 

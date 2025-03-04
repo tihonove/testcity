@@ -1,4 +1,4 @@
-namespace Kontur.TestAnalytics.GitLabJobsCrawler.Models;
+namespace Kontur.TestAnalytics.Core.Models;
 
 public class GitLabGroup
 {

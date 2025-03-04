@@ -23,8 +23,4 @@
         <ProjectReference Include="..\Core\Core.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-        <EmbeddedResource Include="..\Front\gitlab-projects.json" />
-    </ItemGroup>
-
 </Project>

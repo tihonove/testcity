@@ -12,6 +12,9 @@ export type PipelineRunsQueryRow = [
     "Success" | "Failed" | "Canceled" | "Timeouted", // State,
     number, // JobRunCount,
     string,
+    string,
+    string,
+    string,
 ];
 
 export const PipelineRunsNames = {
@@ -27,4 +30,7 @@ export const PipelineRunsNames = {
     State: 9,
     JobRunCount: 10,
     CustomStatusMessage: 11,
+    CommitMessage: 12,
+    CommitAuthor: 13,
+    CommitSha: 14,
 } as const;

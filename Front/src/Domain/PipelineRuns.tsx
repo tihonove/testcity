@@ -9,6 +9,7 @@ import { JobIdWithParentProject, JobIdWithParentProjectNames } from "./JobIdWith
 import { GroupNode, Project } from "./Storage";
 import { PipelineRunsQueryRow, PipelineRunsNames } from "./PipelineRunsQueryRow";
 import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
+import { ManualJobsInfo } from "./ManualJobsInfo";
 
 interface PipelineRunsProps {
     indentLevel: number;

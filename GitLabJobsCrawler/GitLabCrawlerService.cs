@@ -1,6 +1,5 @@
 using Kontur.TestAnalytics.Api;
 using Kontur.TestAnalytics.Core;
-using Kontur.TestAnalytics.GitLabJobsCrawler.Services;
 using Kontur.TestAnalytics.Reporter.Client;
 using NGitLab.Models;
 using Vostok.Logging.Abstractions;
