@@ -93,6 +93,16 @@
         ]
     },
     {
+        "id": "1546",
+        "title": "cpp.studio",
+        "projects": [
+            {
+                "id": "2680",
+                "title": "plugin"
+            }
+        ]
+    },
+    {
         "id": "0",
         "title": "test-analytics",
         "projects": [
