@@ -53,7 +53,7 @@ export function RunJobModal(props: RunJobModalProps) {
                 {
                     method: "POST",
                     headers: {
-                        "PRIVATE-TOKEN": "Z" + gitlabAuthToken,
+                        "PRIVATE-TOKEN": gitlabAuthToken,
                         "Content-Type": "application/json",
                     },
                 }
