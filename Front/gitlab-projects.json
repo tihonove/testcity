@@ -100,7 +100,8 @@
                 "id": "2680",
                 "title": "plugin"
             }
-        ]
+        ],
+        "mergeRunsFromJobs": false
     },
     {
         "id": "0",
