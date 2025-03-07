@@ -58,7 +58,7 @@ export function ManualJobsInfo(props: ManualJobsInfoProps) {
                     pipelines={projectPipelines}
                 />
             )}
-            {jobInfos.length >= 1 ? (
+            {(jobInfos ?? []).length >= 1 ? (
                 <Button
                     size="small"
                     onClick={() => {

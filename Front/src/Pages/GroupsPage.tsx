@@ -1,14 +1,13 @@
-import { FoldersIcon20Light, UiMenuShapeCircle4Icon20Light } from "@skbkontur/icons";
+import { UiMenuShapeCircle4Icon20Light } from "@skbkontur/icons";
 import { ColumnStack, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import { Input } from "@skbkontur/react-ui";
 import * as React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { useRootGroups } from "../Domain/Storage";
-import { groupLink, useBasePrefix } from "../Domain/Navigation";
-import { theme } from "../Theme/ITheme";
 import { GroupAvatar } from "../Components/GroupAvatar";
-import { Logo } from "../Components/Logo";
+import { groupLink, useBasePrefix } from "../Domain/Navigation";
+import { useRootGroups } from "../Domain/Storage";
+import { theme } from "../Theme/ITheme";
 import { LogoPageBlock } from "./LogoPageBlock";
 
 export function GroupsPage() {
@@ -84,4 +83,3 @@ const RootGroupTitle = styled(Link)`
         background-color: ${theme.backgroundColor1};
     }
 `;
-

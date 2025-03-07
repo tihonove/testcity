@@ -8,7 +8,7 @@ import { Suspense } from "react";
 import "./CommonStyles/Fonts.css";
 import { GlobalStyle } from "./CommonStyles/GlobalStyle";
 import "./CommonStyles/Reset.css";
-import { Loader } from "./Components/Loader";
+import { PageLoader } from "./Components/PageLoader";
 import { reject } from "./TypeHelpers";
 
 const root = createRoot(document.getElementById("root") ?? reject("Not found #root element"));
@@ -18,7 +18,7 @@ root.render(
         <TestAnalyticsThemeProvider>
             <BrowserRouter>
                 <GlobalStyle />
-                <Suspense fallback={<Loader />}>
+                <Suspense fallback={<PageLoader />}>
                     <App />
                 </Suspense>
             </BrowserRouter>

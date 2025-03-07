@@ -1,5 +1,5 @@
-import { WeatherMoonIcon20Regular, WeatherSunIcon20Regular } from "@skbkontur/icons";
-import { Button } from "@skbkontur/react-ui";
+import { WeatherMoonIcon20Regular, WeatherSunIcon20Regular, WeatherSunMoonIcon20Regular } from "@skbkontur/icons";
+import { Button, Hint } from "@skbkontur/react-ui";
 import * as React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
@@ -18,14 +18,22 @@ import { useTestAnalyticsDarkMode } from "./Theme/UseTestAnalyticsDarkMode";
 
 export function App(): React.JSX.Element {
     const basePrefix = useBasePrefix();
-    const { isDarkMode, toggle } = useTestAnalyticsDarkMode();
+    const { ternaryDarkMode, toggle } = useTestAnalyticsDarkMode();
 
     return (
         <AppContainer>
             <ThemeSwitchContainer>
-                <Button use="link" onClick={toggle}>
-                    {isDarkMode ? <WeatherMoonIcon20Regular /> : <WeatherSunIcon20Regular />}
-                </Button>
+                <Hint text={`Toggle color mode. Current: ${ternaryDarkMode}`} pos="left middle" maxWidth={400}>
+                    <Button use="link" onClick={toggle}>
+                        {ternaryDarkMode === "dark" ? (
+                            <WeatherMoonIcon20Regular />
+                        ) : ternaryDarkMode === "light" ? (
+                            <WeatherSunIcon20Regular />
+                        ) : (
+                            <WeatherSunMoonIcon20Regular />
+                        )}
+                    </Button>
+                </Hint>
             </ThemeSwitchContainer>
             <Routes>
                 <Route path={`/${basePrefix}`}>
@@ -77,8 +85,8 @@ export function App(): React.JSX.Element {
 
 const ThemeSwitchContainer = styled.div({
     position: "fixed",
-    top: 20,
-    right: 20,
+    top: 10,
+    right: 10,
 });
 
 const AppContainer = styled.div({

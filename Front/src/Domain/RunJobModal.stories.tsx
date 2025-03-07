@@ -9,6 +9,7 @@ export default {
 
 export const Simple: StoryFn = () => (
     <RunJobModal
+        onClose={() => {}}
         projectId="20289"
         jobInfos={[
             {
@@ -41,6 +42,9 @@ export const Simple: StoryFn = () => (
                 "Failed",
                 "1",
                 "",
+                "Test message",
+                "tihonove",
+                "12131231",
             ],
             [
                 "20289",
@@ -55,6 +59,9 @@ export const Simple: StoryFn = () => (
                 "Success",
                 "1",
                 "",
+                "Test message",
+                "tihonove",
+                "12131231",
             ],
             [
                 "20289",
@@ -69,6 +76,9 @@ export const Simple: StoryFn = () => (
                 "Failed",
                 "1",
                 "",
+                "Test message",
+                "tihonove",
+                "12131231",
             ],
             [
                 "20289",
@@ -83,6 +93,9 @@ export const Simple: StoryFn = () => (
                 "Failed",
                 "7",
                 "",
+                "Test message",
+                "tihonove",
+                "12131231",
             ],
             [
                 "20289",
@@ -97,6 +110,9 @@ export const Simple: StoryFn = () => (
                 "Success",
                 "1",
                 "",
+                "Test message",
+                "tihonove",
+                "12131231",
             ],
             [
                 "20289",
@@ -111,6 +127,9 @@ export const Simple: StoryFn = () => (
                 "Failed",
                 "4",
                 "",
+                "Test message",
+                "tihonove",
+                "12131231",
             ],
             [
                 "20289",
@@ -125,6 +144,9 @@ export const Simple: StoryFn = () => (
                 "Failed",
                 "2",
                 "",
+                "Test message",
+                "tihonove",
+                "12131231",
             ],
             [
                 "20289",
@@ -139,8 +161,27 @@ export const Simple: StoryFn = () => (
                 "Success",
                 "1",
                 "",
+                "Test message",
+                "tihonove",
+                "12131231",
             ],
-            ["20289", "3907233", "test-fix", "2025-02-27 13:02:53", "373", 2212, "344", "27", "2", "Failed", "1", ""],
+            [
+                "20289",
+                "3907233",
+                "test-fix",
+                "2025-02-27 13:02:53",
+                "373",
+                2212,
+                "344",
+                "27",
+                "2",
+                "Failed",
+                "1",
+                "",
+                "Test message",
+                "tihonove",
+                "12131231",
+            ],
         ]}
     />
 );

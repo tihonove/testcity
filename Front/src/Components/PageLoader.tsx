@@ -1,11 +1,13 @@
 import * as React from "react";
 import { NetCloudIcon32Regular } from "@skbkontur/icons";
 import styled from "styled-components";
+import { theme } from "../Theme/ITheme";
+import { Loader, Spinner } from "@skbkontur/react-ui";
 
-export const Loader = () => (
+export const PageLoader = () => (
     <LoaderContainer>
         <LoaderMessage>
-            <NetCloudIcon32Regular /> Loading ...
+            <Spinner type="big" caption="Loading" />
         </LoaderMessage>
     </LoaderContainer>
 );
@@ -19,5 +21,6 @@ const LoaderContainer = styled.div`
 
 const LoaderMessage = styled.h2`
     font-size: 32px;
-    color: ${props => props.theme.primaryTextColor};
+    line-height: 40px;
+    color: ${theme.primaryTextColor};
 `;

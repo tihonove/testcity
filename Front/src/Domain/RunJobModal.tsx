@@ -1,20 +1,14 @@
-import * as React from "react";
-import { PipelineRunsNames, PipelineRunsQueryRow } from "./PipelineRunsQueryRow";
-import { Button, ComboBox, Input, Link, Modal, Select, Toast } from "@skbkontur/react-ui";
-import { ManualJobRunInfo } from "./ManualJobRunInfo";
-import {
-    MediaUiCirclePlayIcon16Light,
-    MediaUiCirclePlayIcon16Regular,
-    People1CheckIcon16Light,
-    ShapeCircleSIcon16Light,
-    ShareNetworkIcon,
-    ShareNetworkIcon16Light,
-} from "@skbkontur/icons";
+import { MediaUiCirclePlayIcon16Regular, People1CheckIcon16Light, ShareNetworkIcon16Light } from "@skbkontur/icons";
 import { ColumnStack, Fit, Fixed, RowStack } from "@skbkontur/react-stack-layout";
+import { Button, ComboBox, Input, Modal, Select, Toast } from "@skbkontur/react-ui";
+import * as React from "react";
 import styled from "styled-components";
 import { useLocalStorage } from "usehooks-ts";
 import { theme } from "../Theme/ITheme";
+import { ManualJobRunInfo } from "./ManualJobRunInfo";
 import { useBasePrefix } from "./Navigation";
+import { PipelineRunsNames, PipelineRunsQueryRow } from "./PipelineRunsQueryRow";
+import { GitCommitVertical, UserRound } from "lucide-react";
 
 interface RunJobModalProps {
     projectId: string;
@@ -33,46 +27,49 @@ export function RunJobModal(props: RunJobModalProps) {
 
     const [currentPipeline, setCurrentPipeline] = React.useState(props.pipelines[0]);
 
-    const getPipelines = async (query: string) => {
-        return props.pipelines;
+    const getPipelines = (query: string) => {
+        return Promise.resolve(props.pipelines);
     };
 
-    const handleRunJob = async () => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const manualJobsForSelectedPipeline: ManualJobRunInfo[] = await (
-            await fetch(
-                `/${basePrefix}/gitlab/${props.projectId}/pipelines/${currentPipeline[PipelineRunsNames.PipelineId]}/manual-jobs`
-            )
-        ).json();
-        const jobRunId = manualJobsForSelectedPipeline.find(x => x.jobId == jobToRun)?.jobRunId;
-        setRunning(true);
-        try {
-            console.log("Found job run id", jobRunId);
-            const response = await fetch(
-                `https://git.skbkontur.ru/api/v4/projects/${props.projectId}/jobs/${jobRunId}/play`,
-                {
-                    method: "POST",
-                    headers: {
-                        "PRIVATE-TOKEN": gitlabAuthToken,
-                        "Content-Type": "application/json",
-                    },
+    const handleRunJob = () => {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        (async () => {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            const manualJobsForSelectedPipeline: ManualJobRunInfo[] = await (
+                await fetch(
+                    `/${basePrefix}/gitlab/${props.projectId}/pipelines/${currentPipeline[PipelineRunsNames.PipelineId]}/manual-jobs`
+                )
+            ).json();
+            const jobRunId = manualJobsForSelectedPipeline.find(x => x.jobId == jobToRun)?.jobRunId;
+            if (jobRunId == undefined) return;
+            setRunning(true);
+            try {
+                const response = await fetch(
+                    `https://git.skbkontur.ru/api/v4/projects/${props.projectId}/jobs/${jobRunId}/play`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "PRIVATE-TOKEN": gitlabAuthToken,
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+                const data: any = await response.json();
+                if (!response.ok) {
+                    Toast.push(`Failed to run job. ${JSON.stringify(data)}`);
+                    return;
                 }
-            );
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
-            const data: any = await response.json();
-            if (!response.ok) {
-                Toast.push(`Failed to run job. ${JSON.stringify(data)}`);
-                return;
+                Toast.push("Job successfully started", {
+                    label: "Open at gitlab",
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+                    handler: () => window.open(data.web_url),
+                });
+            } finally {
+                setRunning(false);
+                props.onClose();
             }
-            Toast.push("Job successfully started", {
-                label: "Open at gitlab",
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-                handler: () => window.open(data.web_url),
-            });
-        } finally {
-            setRunning(false);
-            props.onClose();
-        }
+        })();
     };
 
     return (
@@ -113,11 +110,10 @@ export function RunJobModal(props: RunJobModalProps) {
                                             </span>
                                             <div>
                                                 <CommonInfo>
-                                                    <People1CheckIcon16Light /> {x[PipelineRunsNames.CommitAuthor]}
+                                                    <UserRound size={"1em"} /> {x[PipelineRunsNames.CommitAuthor]}
                                                     {" | "}
-                                                    sha: {x[PipelineRunsNames.CommitSha]
-                                                        ?.slice(0, 8)
-                                                        ?.toLowerCase()}{" "}
+                                                    <GitCommitVertical size={"1em"} />{" "}
+                                                    {x[PipelineRunsNames.CommitSha]?.slice(0, 8)?.toLowerCase()}{" "}
                                                 </CommonInfo>
                                                 <CommonMessage>{x[PipelineRunsNames.CommitMessage]}</CommonMessage>
                                             </div>
@@ -207,6 +203,7 @@ const CommonMessage = styled.div`
     line-height: 16px;
     color: ${theme.mutedTextColor};
     max-height: 32px;
+    max-width: 800px;
     overflow-y: hidden;
 `;
 

@@ -51,7 +51,7 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
         useSearchParamDebouncedAsState("filter", 500, "");
     const itemsPerPage = 100;
     const [pageRaw, setPage] = useSearchParamAsState("page");
-    const page = React.useMemo(() => (isNaN(Number(pageRaw ?? "0")) ? 0 : Number(pageRaw)), [pageRaw]);
+    const page = React.useMemo(() => (isNaN(Number(pageRaw ?? "0")) ? 0 : Number(pageRaw ?? "0")), [pageRaw]);
     const totalRowCount = props.successTestsCount + props.failedTestsCount + props.skippedTestsCount;
     const searchValue = useDeferredValue(debouncedSearchValue);
     const testList = useStorageQuery(

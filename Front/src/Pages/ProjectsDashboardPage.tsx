@@ -2,6 +2,7 @@ import {
     EyeClosedIcon16Regular,
     EyeOpenIcon16Regular,
     PlusCircleIcon16Solid,
+    TextBulletIcon20Regular,
     TextBulletIcon24Regular,
     TransportAirRocketIcon16Light,
     TransportAirRocketIcon20Light,
@@ -67,7 +68,6 @@ export function ProjectsDashboardPage(): React.JSX.Element {
 
     const renderProject = (project: Project, level: number) => (
         <React.Fragment key={project.id}>
-            <LogoPageBlock />
             {project !== currentGroupOrProject && (
                 <thead>
                     <tr>
@@ -88,10 +88,11 @@ export function ProjectsDashboardPage(): React.JSX.Element {
                                 </Fit>
                                 <Fill />
                                 <Fit style={{ minHeight: "35px" }}>
-                                    <ManualJobsInfo 
+                                    <ManualJobsInfo
                                         key={project.id + (currentBranchName ?? "all")}
-                                        projectId={project.id} 
-                                        allPipelineRuns={allPipelineRuns} />
+                                        projectId={project.id}
+                                        allPipelineRuns={allPipelineRuns}
+                                    />
                                 </Fit>
                                 <Fit>
                                     <Hint text="Create new pipeline">
@@ -174,6 +175,7 @@ export function ProjectsDashboardPage(): React.JSX.Element {
 
     return (
         <Root>
+            <LogoPageBlock />
             <TestListRoot block gap={1} stretch>
                 <Fit>
                     <ColumnStack block gap={1} stretch>
@@ -259,17 +261,19 @@ export function ProjectsDashboardPage(): React.JSX.Element {
                     </SuspenseFadingWrapper>
                 </Fit>
             </TestListRoot>
-            <ShowRunsSwitchContainer>
-                <Button
-                    use="link"
-                    onClick={() => {
-                        setNoRuns(noRuns === "1" ? undefined : "1");
-                    }}>
-                    <SubIcon sub={noRuns ? <EyeClosedIcon16Regular /> : <EyeOpenIcon16Regular />}>
-                        <TextBulletIcon24Regular />
-                    </SubIcon>
-                </Button>
-            </ShowRunsSwitchContainer>
+            {!usePipelineGrouping && (
+                <ShowRunsSwitchContainer>
+                    <Button
+                        use="link"
+                        onClick={() => {
+                            setNoRuns(noRuns === "1" ? undefined : "1");
+                        }}>
+                        <SubIcon sub={noRuns ? <EyeClosedIcon16Regular /> : <EyeOpenIcon16Regular />}>
+                            <TextBulletIcon20Regular />
+                        </SubIcon>
+                    </Button>
+                </ShowRunsSwitchContainer>
+            )}
         </Root>
     );
 }
@@ -308,8 +312,8 @@ const Header = styled.h1`
 
 const ShowRunsSwitchContainer = styled.div`
     position: fixed;
-    right: 50px;
-    top: 20px;
+    right: 40px;
+    top: 10px;
 `;
 
 const Header3 = styled.h3`

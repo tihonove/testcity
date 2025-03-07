@@ -21,4 +21,9 @@ export const GlobalStyle = createGlobalStyle`
         background-color: ${props => props.theme.primaryBackground};
         color: ${props => props.theme.primaryTextColor};
     }
+
+    .lucide {
+        display: inline-block;
+        vertical-align: middle;
+    }
 `;
