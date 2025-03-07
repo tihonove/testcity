@@ -8,6 +8,8 @@ import { useRootGroups } from "../Domain/Storage";
 import { groupLink, useBasePrefix } from "../Domain/Navigation";
 import { theme } from "../Theme/ITheme";
 import { GroupAvatar } from "../Components/GroupAvatar";
+import { Logo } from "../Components/Logo";
+import { LogoPageBlock } from "./LogoPageBlock";
 
 export function GroupsPage() {
     const [searchText, setSearchText] = React.useState("");
@@ -19,39 +21,42 @@ export function GroupsPage() {
     const basePrefix = useBasePrefix();
 
     return (
-        <Root>
-            <Content>
-                <ColumnStack gap={2} block horizontalAlign="stretch">
-                    <Fit>
-                        <Header>Groups</Header>
-                    </Fit>
-                    <Fit>
-                        <Input
-                            placeholder="Search"
-                            value={searchText}
-                            onValueChange={setSearchText}
-                            size="large"
-                            width="1000px"
-                        />
-                    </Fit>
-                    {filteredGroups.map(p => (
-                        <Fit key={p.id}>
-                            <RowStack gap={2} block verticalAlign="center">
-                                <Fit>
-                                    <UiMenuShapeCircle4Icon20Light />
-                                </Fit>
-                                <Fit>
-                                    <GroupAvatar size="20px" group={p}></GroupAvatar>
-                                </Fit>
-                                <Fit>
-                                    <RootGroupTitle to={groupLink(basePrefix, [p.title])}>{p.title}</RootGroupTitle>
-                                </Fit>
-                            </RowStack>
+        <>
+            <LogoPageBlock />
+            <Root>
+                <Content>
+                    <ColumnStack gap={2} block horizontalAlign="stretch">
+                        <Fit>
+                            <Header>Groups</Header>
                         </Fit>
-                    ))}
-                </ColumnStack>
-            </Content>
-        </Root>
+                        <Fit>
+                            <Input
+                                placeholder="Search"
+                                value={searchText}
+                                onValueChange={setSearchText}
+                                size="large"
+                                width="1000px"
+                            />
+                        </Fit>
+                        {filteredGroups.map(p => (
+                            <Fit key={p.id}>
+                                <RowStack gap={2} block verticalAlign="center">
+                                    <Fit>
+                                        <UiMenuShapeCircle4Icon20Light />
+                                    </Fit>
+                                    <Fit>
+                                        <GroupAvatar size="20px" group={p}></GroupAvatar>
+                                    </Fit>
+                                    <Fit>
+                                        <RootGroupTitle to={groupLink(basePrefix, [p.title])}>{p.title}</RootGroupTitle>
+                                    </Fit>
+                                </RowStack>
+                            </Fit>
+                        ))}
+                    </ColumnStack>
+                </Content>
+            </Root>
+        </>
     );
 }
 
@@ -79,3 +84,4 @@ const RootGroupTitle = styled(Link)`
         background-color: ${theme.backgroundColor1};
     }
 `;
+

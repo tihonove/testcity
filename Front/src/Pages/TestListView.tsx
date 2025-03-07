@@ -50,20 +50,12 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
     const [searchText, setSearchText, debouncedSearchValue = "", setSearchTextImmediate] =
         useSearchParamDebouncedAsState("filter", 500, "");
     const itemsPerPage = 100;
-    const [page, setPage] = useSearchParamAsState("page");
+    const [pageRaw, setPage] = useSearchParamAsState("page");
+    const page = React.useMemo(() => (isNaN(Number(pageRaw ?? "0")) ? 0 : Number(pageRaw)), [pageRaw]);
     const totalRowCount = props.successTestsCount + props.failedTestsCount + props.skippedTestsCount;
     const searchValue = useDeferredValue(debouncedSearchValue);
     const testList = useStorageQuery(
-        s =>
-            s.getTestList(
-                props.jobRunIds,
-                sortField,
-                sortDirection,
-                searchValue,
-                testCasesType,
-                100,
-                Number(page ?? "0")
-            ),
+        s => s.getTestList(props.jobRunIds, sortField, sortDirection, searchValue, testCasesType, 100, page),
         [props.jobRunIds, sortField, sortDirection, searchValue, testCasesType, page]
     );
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -205,10 +197,10 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
                     </tbody>
                 </TestList>
                 <Paging
-                    activePage={Number(page)}
+                    activePage={page + 1}
                     onPageChange={x => {
                         startTransition(() => {
-                            setPage(x.toString());
+                            setPage((x - 1).toString());
                         });
                     }}
                     pagesCount={Math.ceil(Number(totalRowCount) / itemsPerPage)}

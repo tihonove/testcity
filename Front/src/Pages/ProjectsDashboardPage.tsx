@@ -36,6 +36,7 @@ import { GroupBreadcrumps } from "./GroupBreadcrumps";
 import { useProjectContextFromUrlParams } from "./useProjectContextFromUrlParams";
 import { SuspenseFadingWrapper, useDelayedTransition } from "./useDelayedTransition";
 import { ManualJobsInfo } from "../Domain/ManualJobsInfo";
+import { LogoPageBlock } from "./LogoPageBlock";
 
 export function ProjectsDashboardPage(): React.JSX.Element {
     const { rootGroup: rootProjectStructure, groupNodes, pathToGroup } = useProjectContextFromUrlParams();
@@ -66,6 +67,7 @@ export function ProjectsDashboardPage(): React.JSX.Element {
 
     const renderProject = (project: Project, level: number) => (
         <React.Fragment key={project.id}>
+            <LogoPageBlock />
             {project !== currentGroupOrProject && (
                 <thead>
                     <tr>

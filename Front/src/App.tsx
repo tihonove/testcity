@@ -1,20 +1,20 @@
+import { WeatherMoonIcon20Regular, WeatherSunIcon20Regular } from "@skbkontur/icons";
+import { Button } from "@skbkontur/react-ui";
 import * as React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { TestHistoryPage } from "./Pages/TestHistoryPage";
 import styled from "styled-components";
-import { ProjectsDashboardPage } from "./Pages/ProjectsDashboardPage";
+import { useBasePrefix } from "./Domain/Navigation";
+import { CodeQualityPage } from "./Pages/CodeQualityPage";
+import { GroupsPage } from "./Pages/GroupsPage";
 import { JobRunsPage } from "./Pages/JobRunsPage";
 import { JobRunTestListPage } from "./Pages/JobRunTestListPage";
-import { TestsTreeMapChart } from "./Pages/TestsTreeMapChart";
-import { Button } from "@skbkontur/react-ui";
-import { WeatherMoonIcon20Regular, WeatherSunIcon20Regular } from "@skbkontur/icons";
 import { MergeRequestJobsPage } from "./Pages/MergeRequestJobsPage";
-import { GroupsPage } from "./Pages/GroupsPage";
-import { TestsTreeView } from "./Pages/TestsTreeView";
-import { CodeQualityPage } from "./Pages/CodeQualityPage";
-import { useTestAnalyticsDarkMode } from "./Theme/UseTestAnalyticsDarkMode";
-import { useBasePrefix } from "./Domain/Navigation";
 import { PipelineRunTestListPage } from "./Pages/PipelineRunTestListPage";
+import { ProjectsDashboardPage } from "./Pages/ProjectsDashboardPage";
+import { TestHistoryPage } from "./Pages/TestHistoryPage";
+import { TestsTreeMapChart } from "./Pages/TestsTreeMapChart";
+import { TestsTreeView } from "./Pages/TestsTreeView";
+import { useTestAnalyticsDarkMode } from "./Theme/UseTestAnalyticsDarkMode";
 
 export function App(): React.JSX.Element {
     const basePrefix = useBasePrefix();
