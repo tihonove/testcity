@@ -1,7 +1,14 @@
 import { GroupNode, Project, findPathToProjectById } from "./Storage";
-import { basePrefix } from "./BasePrefix";
 
-export const urlPrefix = "/" + basePrefix;
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+export const urlPrefix: string = window.__webpack_public_path__;
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+export const apiUrlPrefix: string = window.__webpack_public_path__;
 
 export function createLinkToTestHistory(
     basePrefix: string,
@@ -18,7 +25,6 @@ export function createLinkToProject(groupNode: GroupNode, projectId: string, cur
     const [groups, project] = findPathToProjectById(groupNode, projectId);
     return (
         urlPrefix +
-        "/" +
         [...groups.map(x => x.title), project.title].map(x => encodeURIComponent(x)).join("/") +
         (currentBranchName ? `?branch=${encodeURIComponent(currentBranchName)}` : "")
     );
@@ -27,7 +33,6 @@ export function createLinkToProject(groupNode: GroupNode, projectId: string, cur
 export function createLinkToGroupOrProject(nodesPath: (GroupNode | Project)[], currentBranchName?: string): string {
     return (
         urlPrefix +
-        "/" +
         [...nodesPath.map(x => x.title)].map(x => encodeURIComponent(x)).join("/") +
         (currentBranchName ? `?branch=${encodeURIComponent(currentBranchName)}` : "")
     );
@@ -42,7 +47,6 @@ export function createLinkToJob(
     const [groups, project] = findPathToProjectById(groupNode, projectId);
     return (
         urlPrefix +
-        "/" +
         [...groups.map(x => x.title), project.title, "jobs", jobId].map(x => encodeURIComponent(x)).join("/") +
         (currentBranchName ? `?branch=${encodeURIComponent(currentBranchName)}` : "")
     );
@@ -58,7 +62,6 @@ export function createLinkToJobRun(
     const [groups, project] = findPathToProjectById(groupNode, projectId);
     return (
         urlPrefix +
-        "/" +
         [...groups.map(x => x.title), project.title, "jobs", jobId, "runs", jobRunId]
             .map(x => encodeURIComponent(x))
             .join("/") +
@@ -75,7 +78,6 @@ export function createLinkToPipelineRun(
     const [groups, project] = findPathToProjectById(groupNode, projectId);
     return (
         urlPrefix +
-        "/" +
         [...groups.map(x => x.title), project.title, "pipelines", pipelineId]
             .map(x => encodeURIComponent(x))
             .join("/") +
@@ -95,11 +97,16 @@ export function createLinkToCreateNewPipeline(groupNode: GroupNode, projectId: s
 }
 
 export function useBasePrefix(): string {
-    return basePrefix;
+    return urlPrefix;
 }
+
+export function useApiUrl(): string {
+    return apiUrlPrefix;
+}
+
 export function groupLink(basePrefix: string, groupIdOrTitleList: string[], branchName?: string): string {
     return (
-        `/${basePrefix}/${groupIdOrTitleList.map(x => encodeURIComponent(x)).join("/")}` +
+        `${basePrefix}${groupIdOrTitleList.map(x => encodeURIComponent(x)).join("/")}` +
         (branchName ? `?branch=${encodeURIComponent(branchName)}` : "")
     );
 }

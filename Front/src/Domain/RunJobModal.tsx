@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { useLocalStorage } from "usehooks-ts";
 import { theme } from "../Theme/ITheme";
 import { ManualJobRunInfo } from "./ManualJobRunInfo";
-import { useBasePrefix } from "./Navigation";
+import { useApiUrl, useBasePrefix } from "./Navigation";
 import { PipelineRunsNames, PipelineRunsQueryRow } from "./PipelineRunsQueryRow";
 import { GitCommitVertical, UserRound } from "lucide-react";
 
@@ -18,7 +18,7 @@ interface RunJobModalProps {
 }
 
 export function RunJobModal(props: RunJobModalProps) {
-    const basePrefix = useBasePrefix();
+    const apiUrl = useApiUrl();
     const [running, setRunning] = React.useState(false);
     const [jobToRun, setJobToRun] = React.useState(
         props.jobInfos.find(x => x.status == "Manual")?.jobId ?? props.jobInfos[0].jobId
@@ -37,7 +37,7 @@ export function RunJobModal(props: RunJobModalProps) {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             const manualJobsForSelectedPipeline: ManualJobRunInfo[] = await (
                 await fetch(
-                    `/${basePrefix}/gitlab/${props.projectId}/pipelines/${currentPipeline[PipelineRunsNames.PipelineId]}/manual-jobs`
+                    `${apiUrl}gitlab/${props.projectId}/pipelines/${currentPipeline[PipelineRunsNames.PipelineId]}/manual-jobs`
                 )
             ).json();
             const jobRunId = manualJobsForSelectedPipeline.find(x => x.jobId == jobToRun)?.jobRunId;

@@ -22,7 +22,8 @@
                 "id": "182",
                 "title": "diadoc"
             }
-        ]
+        ],
+        "mergeRunsFromJobs": false
     },
     {
         "id": "23830",

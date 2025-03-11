@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 export function LogoPageBlock() {
     const basePrefix = useBasePrefix();
     return (
-        <FixedLogoRoot to={"/" + basePrefix}>
+        <FixedLogoRoot to={basePrefix}>
             <Logo />
             TestCity
         </FixedLogoRoot>

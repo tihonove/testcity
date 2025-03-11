@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useBasePrefix } from "./Navigation";
+import { useApiUrl, useBasePrefix } from "./Navigation";
 import { PipelineRunsNames, PipelineRunsQueryRow } from "./PipelineRunsQueryRow";
 import { Button } from "@skbkontur/react-ui";
 import { RunJobModal } from "./RunJobModal";
@@ -11,7 +11,7 @@ interface ManualJobsInfoProps {
 }
 
 export function ManualJobsInfo(props: ManualJobsInfoProps) {
-    const basePrefix = useBasePrefix();
+    const apiUrl = useApiUrl();
     const [showRunModal, setShowRunModal] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     const [jobInfos, setReport] = React.useState<undefined | ManualJobRunInfo[]>([]);
@@ -26,7 +26,7 @@ export function ManualJobsInfo(props: ManualJobsInfoProps) {
         setLoading(true);
         try {
             const res = await fetch(
-                `/${basePrefix}/gitlab/${props.projectId}/pipelines/${firstPipeline[PipelineRunsNames.PipelineId]}/manual-jobs`
+                `${apiUrl}gitlab/${props.projectId}/pipelines/${firstPipeline[PipelineRunsNames.PipelineId]}/manual-jobs`
             );
 
             // eslint-disable-next-line @typescript-eslint/no-unsafe-argument

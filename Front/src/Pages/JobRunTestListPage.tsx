@@ -92,7 +92,7 @@ export function JobRunTestListPage(): React.JSX.Element {
                     pipelineSource={pipelineSource}
                 />
                 <Link
-                    to={`/${basePrefix}/jobs/${encodeURIComponent(jobId)}/runs/${encodeURIComponent(jobRunId)}/treemap`}>
+                    to={`${basePrefix}jobs/${encodeURIComponent(jobId)}/runs/${encodeURIComponent(jobRunId)}/treemap`}>
                     Open tree map
                 </Link>
                 <Fit>

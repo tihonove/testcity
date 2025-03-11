@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Test history</title>
+    <script>
+      // NOTE Это нужно для корректной работы sub_filter в nginx и замены X-Forwarded-Prefix
+      __webpack_public_path__ = "/";
+    </script>
     <link rel="preload" href="https://s.kontur.ru/common-v2/fonts/LabGrotesque/LabGrotesque-Regular.woff2" as="font"
           type="font/woff2" crossorigin="anonymous"/>
     <link rel="preload" href="https://s.kontur.ru/common-v2/fonts/LabGrotesque/LabGrotesque-Medium.woff2" as="font"
@@ -11,12 +15,6 @@
           type="font/woff2" crossorigin="anonymous"/>
     <link rel="preload" href="https://s.kontur.ru/common-v2/fonts/LabGrotesque/LabGrotesque-Black.woff2" as="font"
           type="font/woff2" crossorigin="anonymous"/>
-    <link rel="preload"
-          href="https://s.kontur.ru/web-sites/libs/konturIconic/1.0.346/konturIconic20/Kontur-Iconic-eco-20px.woff2"
-          as="font" type="font/woff2" crossorigin="anonymous"/>
-    <link rel="preload"
-          href="https://s.kontur.ru/web-sites/libs/konturIconic/1.0.346/konturIconic/Kontur-Iconic-eco-webfont.woff2"
-          as="font" type="font/woff2" crossorigin="anonymous"/>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%220.85em%22 x=%22-0.185em%22 font-size=%22100%22>🦊</text></svg>">
 </head>
 <body>

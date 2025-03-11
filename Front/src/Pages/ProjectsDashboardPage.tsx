@@ -22,12 +22,7 @@ import { GroupAvatar } from "../Components/GroupAvatar";
 import { SubIcon } from "../Components/SubIcon";
 import { JobIdWithParentProjectNames } from "../Domain/JobIdWithParentProject";
 import { JobsView } from "../Domain/JobsView";
-import {
-    createLinkToCreateNewPipeline,
-    createLinkToGroupOrProject,
-    createLinkToProject,
-    useBasePrefix,
-} from "../Domain/Navigation";
+import { createLinkToCreateNewPipeline, createLinkToGroupOrProject, createLinkToProject } from "../Domain/Navigation";
 import { PipelineRuns } from "../Domain/PipelineRuns";
 import { GroupNode, isGroup, isProject, Project } from "../Domain/Storage";
 import { theme } from "../Theme/ITheme";

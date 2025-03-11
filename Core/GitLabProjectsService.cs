@@ -6,7 +6,7 @@ namespace Kontur.TestAnalytics.Core;
 
 public static class GitLabProjectsService
 {
-    private static readonly Lazy<List<GitLabGroup>> ProjectsValue = new(LoadProjects);
+    private static readonly Lazy<List<GitLabGroup>> ProjectsValue = new (LoadProjects);
 
     public static List<GitLabGroup> Projects => ProjectsValue.Value;
 

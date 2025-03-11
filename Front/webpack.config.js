@@ -8,7 +8,7 @@ module.exports = {
     output: {
         path: resolve(__dirname, "dist"),
         filename: "static/index.js",
-        publicPath: "/test-analytics/",
+        publicPath: "/",
     },
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".json"],
@@ -26,19 +26,19 @@ module.exports = {
             },
         ],
     },
-    plugins: [new HtmlWebpackPlugin({ inject: "body", template: "./src/index.html", filename: "index.html" })],
+    plugins: [new HtmlWebpackPlugin({ inject: "body", template: "./src/index.html", filename: "index.html", })],
     devServer: {
         historyApiFallback: {
-            index: "/test-analytics/",
+            index: "/",
         },
         proxy: [
             {
-                context: ["/test-analytics/clickhouse/"],
-                target: "http://localhost:8124",
+                context: ["/clickhouse/"],
+                target: "http://localhost:8124/test-analytics",
             },
             {
-                context: ["/test-analytics/gitlab/"],
-                target: "http://localhost:8124",
+                context: ["/gitlab/"],
+                target: "http://localhost:8124/test-analytics",
             },
         ],
     },

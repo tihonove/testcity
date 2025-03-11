@@ -74,17 +74,17 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
         <ColumnStack gap={4} block stretch>
             <Fit>
                 <HomeHeader>
-                    <Link to={`/${basePrefix}/jobs`}>
+                    <Link to={`${basePrefix}jobs`}>
                         <HomeIcon size={16} /> All jobs
                     </Link>
                     <ArrowARightIcon size={16} />
-                    <Link to={`/${basePrefix}/jobs/${props.jobIds[0]}`}>
+                    <Link to={`${basePrefix}jobs/${props.jobIds[0]}`}>
                         <JonIcon size={16} /> {props.jobIds[0]}
                     </Link>
                     {props.runIdBreadcrumb && (
                         <>
                             <ArrowARightIcon size={16} />
-                            <Link to={`/${basePrefix}/jobs/${props.jobIds[0]}/runs/${props.runIdBreadcrumb}`}>
+                            <Link to={`${basePrefix}jobs/${props.jobIds[0]}/runs/${props.runIdBreadcrumb}`}>
                                 <JonIcon size={16} /> {props.runIdBreadcrumb}
                             </Link>
                         </>
@@ -144,7 +144,7 @@ export function TestHistory(props: TestHistoryProps): React.JSX.Element {
                                         <ShareNetworkIcon /> {x[JobRunNames.BranchName]}
                                     </BranchCell>
                                     <JobIdCell>
-                                        <Link to={`/${basePrefix}/jobs/${x[0]}`}>
+                                        <Link to={`${basePrefix}jobs/${x[0]}`}>
                                             <ShapeSquareIcon16Regular /> {x[0]}
                                         </Link>
                                     </JobIdCell>

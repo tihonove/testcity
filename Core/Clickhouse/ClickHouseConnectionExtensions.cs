@@ -22,6 +22,7 @@ public static class ClickHouseConnectionExtensions
                 await Task.Delay(500);
             }
         }
+
         throw new TimeoutException("DB not accessible within the specified timeout.");
     }
 }

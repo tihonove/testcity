@@ -36,14 +36,14 @@ export function App(): React.JSX.Element {
                 </Hint>
             </ThemeSwitchContainer>
             <Routes>
-                <Route path={`/${basePrefix}`}>
+                <Route path={basePrefix}>
                     <Route index element={<GroupsPage />} />
                     <Route path="history" element={<TestHistoryPage />} />
                     <Route
                         path="projects/:projectId/merge-requests/:gitLabMergeRequestId/jobs"
                         element={<MergeRequestJobsPage />}
                     />
-                    <Route path="jobs" element={<Navigate to={`/${basePrefix}`} />} />
+                    <Route path="jobs" element={<Navigate to={basePrefix} />} />
 
                     <Route path=":groupIdLevel1">
                         <Route index element={<ProjectsDashboardPage />} />

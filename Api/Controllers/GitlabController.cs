@@ -53,17 +53,17 @@ public class GitlabController : ControllerBase
     }
 
     [HttpGet("{projectId}/pipelines/{pipelineId}/manual-jobs")]
-    public async Task<ManualJobRunInfo[]> GetManualJobInfos(long projectId, long pipelineId)
+    public ManualJobRunInfo[] GetManualJobInfos(long projectId, long pipelineId)
     {
         var jobs = gitLabClient.GetPipelines(projectId).GetJobs(pipelineId);
         var jobs2 = gitLabClient.GetPipelines(projectId).GetBridgesAsync(new NGitLab.Models.PipelineBridgeQuery { PipelineId = pipelineId }).ToArray();
         if (jobs == null && jobs2 == null)
         {
-            return [];
+            return Array.Empty<ManualJobRunInfo>();
         }
 
-        var deployJobs = jobs.Where(x => x.Name.Contains("deploy", StringComparison.InvariantCultureIgnoreCase)).ToArray();
-        var deployJobs2 = jobs2.Where(x => x.Name.Contains("deploy", StringComparison.InvariantCultureIgnoreCase)).ToArray();
+        var deployJobs = jobs?.Where(x => x.Name.Contains("deploy", StringComparison.InvariantCultureIgnoreCase)).ToArray() ?? Array.Empty<NGitLab.Models.Job>();
+        var deployJobs2 = jobs2.Where(x => x.Name.Contains("deploy", StringComparison.InvariantCultureIgnoreCase)).ToArray() ?? Array.Empty<NGitLab.Models.Bridge>();
         return deployJobs.Select(j => new ManualJobRunInfo()
         {
             JobId = j.Name,

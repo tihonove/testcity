@@ -16,7 +16,7 @@ const root = createRoot(document.getElementById("root") ?? reject("Not found #ro
 root.render(
     <React.StrictMode>
         <TestAnalyticsThemeProvider>
-            <BrowserRouter>
+            <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
                 <GlobalStyle />
                 <Suspense fallback={<PageLoader />}>
                     <App />

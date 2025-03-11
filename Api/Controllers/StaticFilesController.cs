@@ -11,10 +11,14 @@ public class StaticFilesController : ControllerBase
     [Route("")]
     [Route("{*pathInfo:regex(^(?!static|clickhouse|gitlab).*$)}")]
     [HttpGet]
-    public Stream Home(string? pathInfo)
+    public ContentResult Home(string? pathInfo)
     {
-        log.Info($"Access to {pathInfo}");
-        return TestAnalyticsFrontContent.GetFile("index.html");
+        var apiPrefix = Environment.GetEnvironmentVariable("TESTANALYTICS_API_PREFIX") ?? throw new Exception("TESTANALYTICS_API_PREFIX is not set");
+        this.indexHtmlContent ??= TestAnalyticsFrontContent.GetFileContent("index.html")
+            .Replace("__webpack_public_path__ = \"/", $"__webpack_public_path__ = \"/{apiPrefix}/")
+            .Replace("src=\"/", $"src=\"/{apiPrefix}/")
+            .Replace("href=\"/", $"href=\"/{apiPrefix}/");
+        return Content(this.indexHtmlContent, "text/html");
     }
 
     [Route("static/{*pathInfo}")]
@@ -23,4 +27,5 @@ public class StaticFilesController : ControllerBase
     public Stream StaticFiles(string pathInfo) => TestAnalyticsFrontContent.GetFile("static/" + pathInfo);
 
     private readonly ILog log = LogProvider.Get().ForContext<StaticFilesController>();
+    private string indexHtmlContent;
 }

@@ -18,7 +18,7 @@ export function GroupBreadcrumps(props: GroupBreadcrumpsProps) {
     return (
         <RowStack gap={2} block>
             <Fit>
-                <RootGroupTitleLink to={"/" + basePrefix}>
+                <RootGroupTitleLink to={basePrefix}>
                     <BuildingHomeIcon16Light />
                     {props.nodes.length == 0 ? " All groups" : ""}
                 </RootGroupTitleLink>

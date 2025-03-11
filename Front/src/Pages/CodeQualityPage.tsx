@@ -4,10 +4,10 @@ import { OverviewTab } from "../CodeQuality/Overview/OverviewTab";
 import { IssuesTab } from "../CodeQuality/Issues/IssuesTab";
 import { Issue } from "../CodeQuality/types/Issue";
 import { useParams } from "react-router-dom";
-import { useBasePrefix } from "../Domain/Navigation";
+import { useApiUrl, useBasePrefix } from "../Domain/Navigation";
 
 export function CodeQualityPage() {
-    const basePrefix = useBasePrefix();
+    const apiUrl = useApiUrl();
     const { projectId = "", jobId = "" } = useParams();
     const [loading, setLoading] = useState(false);
     const [report, setReport] = useState<undefined | Issue[]>();
@@ -15,7 +15,7 @@ export function CodeQualityPage() {
     const fetcher = async () => {
         setLoading(true);
         try {
-            const res = await fetch(`/${basePrefix}/gitlab/${projectId}/jobs/${jobId}/codequality`);
+            const res = await fetch(`${apiUrl}gitlab/${projectId}/jobs/${jobId}/codequality`);
             // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             setReport(await res.json());
         } finally {

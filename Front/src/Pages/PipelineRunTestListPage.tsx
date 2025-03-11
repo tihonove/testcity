@@ -8,13 +8,12 @@ import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { AdditionalJobInfo } from "../Components/AdditionalJobInfo";
 import { ColorByState } from "../Components/Cells";
 import { JonRunIcon } from "../Components/Icons";
-import { getLinkToPipeline, useBasePrefix } from "../Domain/Navigation";
+import { getLinkToPipeline } from "../Domain/Navigation";
 import { GroupBreadcrumps } from "./GroupBreadcrumps";
 import { TestListView } from "./TestListView";
 import { useProjectContextFromUrlParams } from "./useProjectContextFromUrlParams";
 
 export function PipelineRunTestListPage(): React.JSX.Element {
-    const basePrefix = useBasePrefix();
     const { rootGroup: rootProjectStructure, groupNodes, pathToGroup } = useProjectContextFromUrlParams();
     const { pipelineId = "" } = useParams();
     const pipelineInfo = useStorageQuery(s => s.getPipelineInfo(pipelineId), [pipelineId]);
