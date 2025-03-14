@@ -16,7 +16,7 @@ export function createLinkToTestHistory(
     pathToProject: string[],
     jobRunId?: string
 ): string {
-    let result = `${basePrefix}/history?id=${encodeURIComponent(testId)}`;
+    let result = `${basePrefix}history?id=${encodeURIComponent(testId)}`;
     if (jobRunId) result += `&runId=${jobRunId}`;
     return result;
 }
