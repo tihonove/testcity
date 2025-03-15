@@ -9,7 +9,7 @@ variables:
 Front Typecheck and lint:
   stage: test
   image:
-    name: $BASE_IMAGE
+    name: node:20
   tags:
     - forms-k8s
   script:
@@ -25,7 +25,7 @@ Front Typecheck and lint:
 Front tests:
   stage: test
   image:
-    name: $BASE_IMAGE
+    name: node:20
   tags:
     - forms-k8s
   script:
@@ -41,7 +41,7 @@ Front tests:
 DotNet tests:
   stage: test
   image:
-    name: $BASE_IMAGE
+    name: mcr-proxy.kontur.host/dotnet/sdk:9.0
   tags:
     - forms-k8s
   services:
