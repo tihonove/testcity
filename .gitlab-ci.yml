@@ -1,5 +1,6 @@
 stages:
   - test
+  - build
   - deploy
 
 variables:
@@ -64,7 +65,7 @@ DotNet tests:
       junit: .test-reports/**/*.xml
 
 Build and publish docker images:
-  stage: deploy
+  stage: build
   image:
     name: gcr-proxy.kontur.host/kaniko-project/executor:debug
     entrypoint: [""]
@@ -119,4 +120,7 @@ Deploy to k8s:
     - cd k8s
     - envsubst < deployment.yaml | kubectl apply -n test-analytics -f -
   needs: ["Build and publish docker images"]
-  when: manual
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_STATUS == "success"'
+      when: on_success
+    - when: manual
