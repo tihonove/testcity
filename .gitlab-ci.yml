@@ -104,6 +104,10 @@ Build and publish docker images:
       --cache-copy-layers
   when: manual
   needs: []
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: on_success
+    - when: manual
 
 Deploy to k8s:
   stage: deploy
