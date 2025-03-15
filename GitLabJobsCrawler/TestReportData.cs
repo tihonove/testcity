@@ -1,8 +1,0 @@
-using Kontur.TestAnalytics.Reporter.Cli;
-using Kontur.TestAnalytics.Reporter.Client;
-
-namespace Kontur.TestAnalytics.GitLabJobsCrawler;
-
-public record TestReportData(
-    TestCount Counters,
-    List<TestRun> Runs);

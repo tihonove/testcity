@@ -1,0 +1,16 @@
+FROM mcr-proxy.kontur.host/dotnet/sdk:9.0 AS build
+
+WORKDIR /app
+COPY . ./
+
+WORKDIR /app/TestCity.Api
+RUN dotnet restore
+RUN dotnet publish -c Release -o out
+
+FROM mcr-proxy.kontur.host/dotnet/aspnet:9.0
+WORKDIR /app
+
+ENV ASPNETCORE_ENVIRONMENT="Production"
+COPY --from=build /app/TestCity.Api/out .
+EXPOSE 8124
+ENTRYPOINT ["dotnet", "Kontur.TestCity.Api.dll"]

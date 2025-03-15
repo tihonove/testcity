@@ -4,7 +4,6 @@ stages:
 
 variables:
   BASE_IMAGE: "registry.kontur.host/ke-forms/test-analytics-gitlab-ci:v5"
-  HOUSTON2_TEAM_ID: "07f09d0f-0ee5-4ad4-b585-bc7599374579"
 
 Front Typecheck and lint:
   stage: test
@@ -21,7 +20,7 @@ Front Typecheck and lint:
     reports:
       codequality: Front/eslint-report.json
     expire_in: 1 week
-    
+
 Front tests:
   stage: test
   image:
@@ -64,7 +63,64 @@ DotNet tests:
     reports:
       junit: .test-reports/**/*.xml
 
-Deploy TestAnalytics:
+Build and publish docker images:
+  stage: deploy
+  image:
+    name: gcr-proxy.kontur.host/kaniko-project/executor:debug
+    entrypoint: [""]
+  tags:
+    - forms-k8s
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"registry.kontur.host\":{\"auth\":\"$(printf "%s:%s" "${DOCKER_REGISTRY_USER}" "${DOCKER_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+    - >-
+      /kaniko/executor
+      --context "./"
+      --dockerfile "./Dockerfile.TestCity.RedirectFromSingularToNewUrl"
+      --destination "registry.kontur.host/ke-forms/test-analytics/redirect-from-singular:latest"
+      --destination "registry.kontur.host/ke-forms/test-analytics/redirect-from-singular:$CI_COMMIT_SHORT_SHA"
+      --cache-copy-layers
+    - >-
+      /kaniko/executor
+      --context "./"
+      --dockerfile "./Dockerfile.TestCity.GitLabJobsCrawler"
+      --destination "registry.kontur.host/ke-forms/test-analytics/crawler:latest"
+      --destination "registry.kontur.host/ke-forms/test-analytics/crawler:$CI_COMMIT_SHORT_SHA"
+      --cache-copy-layers
+    - >-
+      /kaniko/executor
+      --context "./"
+      --dockerfile "./Dockerfile.TestCity.Api"
+      --destination "registry.kontur.host/ke-forms/test-analytics/api:latest"
+      --destination "registry.kontur.host/ke-forms/test-analytics/api:$CI_COMMIT_SHORT_SHA"
+      --cache-copy-layers
+    - >-
+      /kaniko/executor
+      --context "./"
+      --dockerfile "./Dockerfile.Front"
+      --destination "registry.kontur.host/ke-forms/test-analytics/front:latest"
+      --destination "registry.kontur.host/ke-forms/test-analytics/front:$CI_COMMIT_SHORT_SHA"
+      --cache-copy-layers
+  when: manual
+  needs: []
+
+Deploy to k8s:
+  stage: deploy
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: [""]
+  tags:
+    - forms-k8s
+  script:
+    - echo "$KUBECONFIG_FILE_CONTENT" | base64 -d > kubeconfig
+    - export KUBECONFIG=$(pwd)/kubeconfig
+    - export IMAGE_TAG=$CI_COMMIT_SHORT_SHA
+    - export GITLAB_TOKEN="$GITLAB_TOKEN"
+    - cd k8s
+    - envsubst < deployment.yaml | kubectl apply -n test-analytics -f -
+  needs: []
+  when: manual
+
   stage: deploy
   image:
     name: $BASE_IMAGE

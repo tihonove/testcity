@@ -1,0 +1,1 @@
+docker run --rm -v $(pwd):/workspace gcr.io/kaniko-project/executor:latest --context=/workspace --dockerfile=Dockerfile --destination=test-front:latest

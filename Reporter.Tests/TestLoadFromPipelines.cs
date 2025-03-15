@@ -1,17 +1,21 @@
 using Kontur.TestAnalytics.Core;
 using Kontur.TestAnalytics.Core.Clickhouse;
-using Kontur.TestAnalytics.GitLabJobsCrawler;
 using Kontur.TestAnalytics.Reporter.Client;
+using Kontur.TestCity.GitLabJobsCrawler;
+using Microsoft.Extensions.Logging;
 using NGitLab.Models;
 using NUnit.Framework;
-using Vostok.Logging.Abstractions;
-using Vostok.Logging.Console;
 
 namespace Kontur.TestAnalytics.Reporter.Tests;
 
 public class TestsLoadFromGitlab
 {
-    private static readonly ILog Log = new SynchronousConsoleLog();
+    private static readonly ILoggerFactory LoggerFactory = Microsoft.Extensions.Logging.LoggerFactory.Create(builder =>
+    {
+        builder.AddConsole();
+    });
+
+    private static readonly ILogger<TestsLoadFromGitlab> Logger = LoggerFactory.CreateLogger<TestsLoadFromGitlab>();
 
     [Test]
     [Explicit]
@@ -20,6 +24,7 @@ public class TestsLoadFromGitlab
         await using var connection = ConnectionFactory.CreateConnection();
         await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);
         var result = await TestRunsUploader.IsJobRunIdExists("31666195");
+        Logger.LogInformation("JobRunIdExists result: {Result}", result);
         Assert.That(result, Is.False);
     }
 
@@ -28,16 +33,17 @@ public class TestsLoadFromGitlab
     {
         foreach (var group in GitLabProjectsService.Projects)
         {
-            Log.Info($"Group ID: {group.Id}, Title: {group.Title}");
+            Logger.LogInformation("Group ID: {GroupId}, Title: {Title}", group.Id, group.Title);
         }
     }
 
     [Test]
     public void TestGetAllProjects()
     {
+        Logger.LogInformation("Starting TestGetAllProjects...");
         foreach (var project in GitLabProjectsService.GetAllProjects())
         {
-            Log.Info($"Project ID: {project.Id}, Title: {project.Title}");
+            Logger.LogInformation("Project ID: {ProjectId}, Title: {Title}", project.Id, project.Title);
         }
     }
 
@@ -45,12 +51,12 @@ public class TestsLoadFromGitlab
     [Explicit]
     public async Task Test01()
     {
+        Logger.LogInformation("Starting Test01...");
         var gitlabClientProvider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
 
-        // var gitLabProjectIds = GitLabProjectsService.GetAllProjects().Select(x => x.Id).Except(new[] { "17358", "19371", "182" }).Select(x => int.Parse(x)).ToList();
         foreach (var projectId in new[] { 2189 })
         {
-            Log.Info($"Pulling jobs for project {projectId}");
+            Logger.LogInformation("Pulling jobs for project {ProjectId}", projectId);
             var client = gitlabClientProvider.GetClient();
             var jobsClient = client.GetJobs(projectId);
             var projectInfo = await client.Projects.GetByIdAsync(projectId, new SingleProjectQuery());
@@ -65,41 +71,41 @@ public class TestsLoadFromGitlab
                     ~NGitLab.Models.JobScopeMask.Created,
             };
             var jobs = Enumerable.Take(jobsClient.GetJobsAsync(jobsQuery), 3000).ToArray();
-            Log.Info($"Take last {jobs.Length} jobs");
+            Logger.LogInformation("Take last {JobsLength} jobs", jobs.Length);
 
             foreach (var job in jobs)
             {
-                Log.Info($"Start processing job with id: {job.Id}");
+                Logger.LogInformation("Start processing job with id: {JobId}", job.Id);
                 if (job.Artifacts != null)
                 {
                     try
                     {
                         var artifactContents = client.GetJobs(projectId).GetJobArtifacts(job.Id);
-                        Log.Info($"Artifact size for job with id: {job.Id}. Size: {artifactContents.Length} bytes");
-                        var extractor = new JUnitExtractor();
+                        Logger.LogInformation("Artifact size for job with id: {JobId}. Size: {Size} bytes", job.Id, artifactContents.Length);
+                        var extractor = new JUnitExtractor(LoggerFactory.CreateLogger<JUnitExtractor>());
                         var extractResult = extractor.TryExtractTestRunsFromGitlabArtifact(artifactContents);
                         if (extractResult != null)
                         {
-                            Log.Info($"Found {extractResult.Counters.Total} tests");
+                            Logger.LogInformation("Found {TotalTests} tests", extractResult.Counters.Total);
 
                             var refId = await client.BranchOrRef(projectId, job.Ref);
                             var jobInfo = GitLabHelpers.GetFullJobInfo(job, refId, extractResult.Counters, projectId.ToString());
                             if (!await TestRunsUploader.IsJobRunIdExists(jobInfo.JobRunId))
                             {
-                                Log.Info($"JobRunId '{jobInfo.JobRunId}' does not exist. Uploading test runs");
+                                Logger.LogInformation("JobRunId '{JobRunId}' does not exist. Uploading test runs", jobInfo.JobRunId);
 
                                 // await TestRunsUploader.JobInfoUploadAsync(jobInfo);
                                 // await TestRunsUploader.UploadAsync(jobInfo, extractResult.Runs);
                             }
                             else
                             {
-                                Log.Info($"JobRunId '{jobInfo.JobRunId}' exists. Skip uploading test runs");
+                                Logger.LogInformation("JobRunId '{JobRunId}' exists. Skip uploading test runs", jobInfo.JobRunId);
                             }
                         }
                     }
                     catch (Exception exception)
                     {
-                        Log.Warn(exception, $"Failed to read artifact for {job.Id}");
+                        Logger.LogWarning(exception, "Failed to read artifact for {JobId}", job.Id);
                     }
                 }
             }

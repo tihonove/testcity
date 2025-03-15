@@ -1,0 +1,231 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gitlab-credentials
+type: Opaque
+stringData:
+  token: ${GITLAB_TOKEN}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-city-front
+  labels:
+    app: test-city-front
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: test-city-front
+  template:
+    metadata:
+      labels:
+        app: test-city-front
+    spec:
+      containers:
+        - name: test-city-front
+          image: registry.kontur.host/ke-forms/test-analytics/front:${IMAGE_TAG}
+          ports:
+            - containerPort: 80
+          env:
+            - name: API_URL
+              value: "http://singular/test-analytics"
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-city-redirect-from-singular
+  labels:
+    app: test-city-redirect-from-singular
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-city-redirect-from-singular
+  template:
+    metadata:
+      labels:
+        app: test-city-redirect-from-singular
+    spec:
+      containers:
+        - name: test-city-redirect-from-singular
+          image: registry.kontur.host/ke-forms/test-analytics/redirect-from-singular:${IMAGE_TAG}
+          ports:
+            - containerPort: 8122
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-city-api
+  labels:
+    app: test-city-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: test-city-api
+  template:
+    metadata:
+      labels:
+        app: test-city-api
+    spec:
+      containers:
+        - name: test-city-api
+          image: registry.kontur.host/ke-forms/test-analytics/api:${IMAGE_TAG}
+          ports:
+            - containerPort: 8124
+          env:
+            - name: GITLAB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: gitlab-credentials
+                  key: token
+            - name: TESTANALYTICS_CLICKHOUSE_HOST
+              value: vm-ch2-stg.dev.kontur.ru
+            - name: TESTANALYTICS_CLICKHOUSE_PORT
+              value: "8123"
+            - name: TESTANALYTICS_CLICKHOUSE_DB
+              value: test_analytics
+            - name: TESTANALYTICS_CLICKHOUSE_USER
+              value: tihonove
+            - name: TESTANALYTICS_CLICKHOUSE_PASSWORD
+              value: "12487562"
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-city-crawler
+  labels:
+    app: test-city-crawler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-city-crawler
+  template:
+    metadata:
+      labels:
+        app: test-city-crawler
+    spec:
+      containers:
+        - name: test-city-crawler
+          image: registry.kontur.host/ke-forms/test-analytics/crawler:${IMAGE_TAG}
+          ports:
+            - containerPort: 8125
+          env:
+            - name: GITLAB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: gitlab-credentials
+                  key: token
+            - name: TESTANALYTICS_CLICKHOUSE_HOST
+              value: vm-ch2-stg.dev.kontur.ru
+            - name: TESTANALYTICS_CLICKHOUSE_PORT
+              value: "8123"
+            - name: TESTANALYTICS_CLICKHOUSE_DB
+              value: test_analytics
+            - name: TESTANALYTICS_CLICKHOUSE_USER
+              value: tihonove
+            - name: TESTANALYTICS_CLICKHOUSE_PASSWORD
+              value: "12487562"
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-city-front-service
+spec:
+  selector:
+    app: test-city-front
+  ports:
+    - protocol: TCP
+      port: 30110
+      targetPort: 80
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-city-api-service
+spec:
+  selector:
+    app: test-city-api
+  ports:
+    - protocol: TCP
+      port: 30111
+      targetPort: 8124
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-city-redirect-from-singular-service
+  annotations:
+    konturSdName: test-analytics
+spec:
+  selector:
+    app: test-city-redirect-from-singular
+  ports:
+    - protocol: TCP
+      port: 30114
+      targetPort: 8122
+  type: NodePort
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: test-city-front-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: testcity.kube.testkontur.ru
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: test-city-front-service
+                port:
+                  number: 30110
+          - path: /clickhouse
+            pathType: Prefix
+            backend:
+              service:
+                name: test-city-api-service
+                port:
+                  number: 30111
+          - path: /gitlab
+            pathType: Prefix
+            backend:
+              service:
+                name: test-city-api-service
+                port:
+                  number: 30111

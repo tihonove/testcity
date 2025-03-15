@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <AssemblyName>Kontur.TestCity.GitLabJobsCrawler</AssemblyName>
+        <RootNamespace>Kontur.TestCity.GitLabJobsCrawler</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+        <PackageReference Include="System.Reactive" />
+        <PackageReference Include="System.Reactive.Linq" />
+        <PackageReference Include="dotenv.net" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Reporter.Cli\Reporter.Cli.csproj" />
+        <ProjectReference Include="..\Reporter.Client\Reporter.Client.csproj" />
+        <ProjectReference Include="..\Core\Core.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -19,7 +19,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Reporter.Cli\Reporter.Cli.csproj" />
         <ProjectReference Include="..\Reporter.Client\Reporter.Client.csproj" />
-        <ProjectReference Include="..\GitLabJobsCrawler\GitLabJobsCrawler.csproj" />
+        <ProjectReference Include="..\TestCity.GitLabJobsCrawler\TestCity.GitLabJobsCrawler.csproj" />
         <ProjectReference Include="..\Core\Core.csproj" />
     </ItemGroup>
 

@@ -16,13 +16,13 @@ tasks:
   api:
     deps: [actualize-db]
     cmds:
-      - dotnet watch run --project Api/Api.csproj
+      - dotnet watch run --project TestCity.Api/TestCity.Api.csproj
     silent: false
 
   crawler:
     deps: [actualize-db]
     cmds:
-      - dotnet watch run --project GitLabJobsCrawler/GitLabJobsCrawler.csproj
+      - dotnet watch run --project TestCity.GitLabJobsCrawler/TestCity.GitLabJobsCrawler.csproj
     silent: false
 
   front:
