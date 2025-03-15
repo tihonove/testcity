@@ -118,5 +118,5 @@ Deploy to k8s:
     - export GITLAB_TOKEN="$GITLAB_TOKEN"
     - cd k8s
     - envsubst < deployment.yaml | kubectl apply -n test-analytics -f -
-  needs: []
+  needs: ["Build and publish docker images"]
   when: manual
