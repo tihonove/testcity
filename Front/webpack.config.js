@@ -34,11 +34,11 @@ module.exports = {
         proxy: [
             {
                 context: ["/clickhouse/"],
-                target: "http://localhost:8124/test-analytics",
+                target: "http://localhost:8124",
             },
             {
                 context: ["/gitlab/"],
-                target: "http://localhost:8124/test-analytics",
+                target: "http://localhost:8124",
             },
         ],
     },

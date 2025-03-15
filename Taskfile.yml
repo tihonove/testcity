@@ -33,9 +33,6 @@ tasks:
     silent: false
 
   dev:
-    deps: [db, api, crawler]
-    silent: false
-
-  dev.front:
     deps: [db, api, crawler, front]
     silent: false
+
