@@ -9,9 +9,12 @@ import { groupLink, useBasePrefix } from "../Domain/Navigation";
 import { useRootGroups } from "../Domain/Storage";
 import { theme } from "../Theme/ITheme";
 import { LogoPageBlock } from "./LogoPageBlock";
+import { useSearchParamAsState } from "../Utils";
+import { AddNewProjectModal } from "./AddNewProjectModal";
 
 export function GroupsPage() {
     const [searchText, setSearchText] = React.useState("");
+    const [showAddNewProjectModal, setShowAddNewProjectModal] = useSearchParamAsState("how-to-add");
     const projects = useRootGroups();
     const filteredGroups = React.useMemo(
         () => projects.filter(p => !searchText.trim() || p.title.toLowerCase().includes(searchText.toLowerCase())),
@@ -19,8 +22,19 @@ export function GroupsPage() {
     );
     const basePrefix = useBasePrefix();
 
+    const handleAddNewProject = () => {
+        setShowAddNewProjectModal("1");
+    };
+
     return (
         <>
+            {showAddNewProjectModal === "1" && (
+                <AddNewProjectModal
+                    onClose={() => {
+                        setShowAddNewProjectModal(undefined);
+                    }}
+                />
+            )}
             <LogoPageBlock />
             <Root>
                 <Content>
@@ -52,12 +66,38 @@ export function GroupsPage() {
                                 </RowStack>
                             </Fit>
                         ))}
+                        <Fit key="new-item">
+                            <RowStack gap={2} block verticalAlign="center">
+                                <Fit>
+                                    <UiMenuShapeCircle4Icon20Light />
+                                </Fit>
+                                <Fit>
+                                    <AddProjectAvatarRoot20>+</AddProjectAvatarRoot20>
+                                </Fit>
+                                <Fit>
+                                    <AddGroupTitleButton onClick={handleAddNewProject}>Add new...</AddGroupTitleButton>
+                                </Fit>
+                            </RowStack>
+                        </Fit>
                     </ColumnStack>
                 </Content>
             </Root>
         </>
     );
 }
+
+const AddProjectAvatarRoot20 = styled.div`
+    font-size: 20px;
+    line-height: 32px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    outline: 2px dashed ${theme.borderLineColor2};
+    outline-offset: -2px;
+    background: ${theme.backgroundColor2};
+`;
 
 const Root = styled.main`
     padding-top: 100px;
@@ -82,4 +122,17 @@ const RootGroupTitle = styled(Link)`
     :hover {
         background-color: ${theme.backgroundColor1};
     }
+`;
+
+const AddGroupTitleButton = styled.button`
+    border: 0;
+    background: none;
+    display: block;
+    font-size: 20px;
+    line-height: 40px;
+    color: ${theme.primaryTextColor};
+    font-family: inherit;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: none;
 `;

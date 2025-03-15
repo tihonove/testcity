@@ -5,6 +5,7 @@ type ThemeColor = string;
 export const normalTheme = {
     primaryBackground: "#fff",
     backgroundColor1: "rgba(0,0,0,0.05)",
+    backgroundColor2: "rgba(0,0,0,0.05)",
     primaryTextColor: "#3D3D3D",
     activeLinkColor: "#000",
     failedTextColor: "rgb(169, 15, 26)",
@@ -28,6 +29,7 @@ export const darkTheme: ITheme = {
     ...normalTheme,
     primaryBackground: DARK_THEME.bgDefault,
     backgroundColor1: "rgba(0,0,0,0.25)",
+    backgroundColor2: "rgba(255,255,255,0.05)",
     primaryTextColor: DARK_THEME.textColorDefault,
     activeLinkColor: DARK_THEME.linkActiveColor,
     failedTextColor: DARK_THEME.linkDangerColor,
