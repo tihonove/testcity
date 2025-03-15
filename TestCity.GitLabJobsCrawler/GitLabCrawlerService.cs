@@ -89,8 +89,8 @@ public sealed class GitLabCrawlerService : IDisposable
                             if (!await TestRunsUploader.IsJobRunIdExists(jobInfo.JobRunId))
                             {
                                 log.LogInformation($"JobRunId '{jobInfo.JobRunId}' does not exist. Uploading test runs");
-                                // await TestRunsUploader.JobInfoUploadAsync(jobInfo);
-                                // await TestRunsUploader.UploadAsync(jobInfo, extractResult.Runs);
+                                await TestRunsUploader.JobInfoUploadAsync(jobInfo);
+                                await TestRunsUploader.UploadAsync(jobInfo, extractResult.Runs);
 
                                 metricsSender.Send(projectInfo, refId, job, extractResult);
                             }
