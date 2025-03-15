@@ -120,13 +120,3 @@ Deploy to k8s:
     - envsubst < deployment.yaml | kubectl apply -n test-analytics -f -
   needs: []
   when: manual
-
-  stage: deploy
-  image:
-    name: $BASE_IMAGE
-  tags:
-    - forms-k8s
-  when: manual
-  allow_failure: true
-  needs: []
-  script: .gitlab-ci/deploy.sh
