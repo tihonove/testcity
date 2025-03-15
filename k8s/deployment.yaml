@@ -27,9 +27,6 @@ spec:
           image: registry.kontur.host/ke-forms/test-analytics/front:${IMAGE_TAG}
           ports:
             - containerPort: 80
-          env:
-            - name: API_URL
-              value: "http://singular/test-analytics"
           resources:
             requests:
               cpu: "250m"
