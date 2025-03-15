@@ -106,7 +106,8 @@ Build and publish docker images:
   needs: []
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
-      when: on_success
+      when: delayed
+      start_in: 5 minutes
     - when: manual
 
 Deploy to k8s:
@@ -123,8 +124,8 @@ Deploy to k8s:
     - export GITLAB_TOKEN="$GITLAB_TOKEN"
     - cd k8s
     - envsubst < deployment.yaml | kubectl apply -n test-analytics -f -
-  needs: ["Build and publish docker images"]
   rules:
     - if: '$CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_STATUS == "success"'
-      when: on_success
+      when: delayed
+      start_in: 5 minutes
     - when: manual
