@@ -1,6 +1,7 @@
 tpsa: Application/29816c2449844ced9f28460215744665
 configurations:
   - configuration:
+      enabled: false
       platform:
         baseImageTag: 1.9.0
       binaryDefaults:
