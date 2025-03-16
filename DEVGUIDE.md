@@ -103,4 +103,4 @@ npm run start-prod-api
 - При проблемах с ClickHouse проверьте настройки подключения и запущен ли контейнер
 - Для Frontend проблем, проверьте версию Node.js (должна быть 20+)
 
-Для сообщений о проблемах используйте [Issue Tracker](https://git.skbkontur.ru/kontur-web-studios/test-analytics/-/issues) в GitLab.
+Для сообщений о проблемах используйте [Issue Tracker](https://git.skbkontur.ru/forms/test-analytics/-/issues) в GitLab.
