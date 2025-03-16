@@ -118,7 +118,6 @@ npm run start-prod-api
 или
 
 - [JetBrains Rider](https://www.jetbrains.com/rider/) (2022.3+)
-- Плагин [Remote Development](https://plugins.jetbrains.com/plugin/16687-remote-development) для JetBrains IDE
 
 ### Начало работы с DevContainer
 
