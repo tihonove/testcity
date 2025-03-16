@@ -102,8 +102,6 @@ Build and publish docker images:
       --destination "registry.kontur.host/ke-forms/test-analytics/front:latest"
       --destination "registry.kontur.host/ke-forms/test-analytics/front:$CI_COMMIT_SHORT_SHA"
       --cache-copy-layers
-  when: manual
-  needs: []
 
 Deploy to k8s:
   stage: deploy
