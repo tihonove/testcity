@@ -19,7 +19,7 @@ public class JUnitExtractor
         var testRunsForWholeJob = new List<TestRun>();
         foreach (var reportPath in reportPaths)
         {
-            log.LogInformation($"Start handling the report {reportPath}");
+            log.LogInformation("Start handling the report {ReportPath}", reportPath);
 
             var testRunsFromReport = CollectTestRunsFromJunit(reportPath);
             testCountForWholeJob += testRunsFromReport.counter;
@@ -121,12 +121,12 @@ public class JUnitExtractor
     {
         if (doNotModifyReports)
         {
-            log.LogInformation($"Report file {reportPath} will be modified by Test Analytics");
+            log.LogInformation("Report file {Path} will be modified by Test Analytics", reportPath);
         }
         else
         {
             report.Save(reportPath);
-            log.LogInformation($"Report file {reportPath} modified by Test Analytics");
+            log.LogInformation("Report file {Path} modified by Test Analytics", reportPath);
         }
     }
 

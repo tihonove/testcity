@@ -110,3 +110,12 @@ dotnet_diagnostic.IDE0022.severity = none
 
 # IDE0079: Remove unnecessary suppression
 dotnet_diagnostic.IDE0079.severity = none
+
+# CA1848: Use the LoggerMessage delegates
+dotnet_diagnostic.CA1848.severity = none
+
+# CA2254: Template should be a static expression
+dotnet_diagnostic.CA2254.severity = none
+
+# IDE0320: Make anonymous function static
+csharp_prefer_static_anonymous_function = true

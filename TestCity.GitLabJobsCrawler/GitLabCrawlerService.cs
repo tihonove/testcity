@@ -49,11 +49,11 @@ public sealed class GitLabCrawlerService : IDisposable
 
         foreach (var projectId in gitLabProjectIds)
         {
-            log.LogInformation($"Pulling jobs for project {projectId}");
+            log.LogInformation("Pulling jobs for project {projectId}", projectId);
             var client = gitLabClientProvider.GetClient();
             var jobsClient = client.GetJobs(projectId);
             var projectInfo = await client.Projects.GetByIdAsync(projectId, new SingleProjectQuery(), token);
-            var jobsQuery = new NGitLab.Models.JobQuery
+            var jobsQuery = new JobQuery
             {
                 PerPage = 300,
                 Scope = JobScopeMask.All &
@@ -64,7 +64,7 @@ public sealed class GitLabCrawlerService : IDisposable
                     ~JobScopeMask.Created,
             };
             var jobs = jobsClient.GetJobsAsync(jobsQuery).Take(300).ToArray();
-            log.LogInformation($"Take last {jobs.Length} jobs");
+            log.LogInformation("Take last {jobsLength} jobs", jobs.Length);
 
             foreach (var job in jobs)
             {

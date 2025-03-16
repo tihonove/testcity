@@ -18,7 +18,8 @@ builder.Logging.AddFilter("Microsoft.AspNetCore", LogLevel.Warning);
 
 var app = builder.Build();
 
-app.Use(async (context, next) =>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+app.Use(async (HttpContext context, Func<Task> next) =>
 {
     var request = context.Request;
     if (request.Path.StartsWithSegments("/test-analytics", out var remainingPath))
@@ -33,8 +34,7 @@ app.Use(async (context, next) =>
         context.Response.Redirect(newUrl, permanent: true);
         return;
     }
-
-    await next();
 });
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 
 app.Run();

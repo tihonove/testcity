@@ -13,6 +13,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 
 builder.Services.AddSingleton<GitLabSettings>(GitLabSettings.Default);
+
 // builder.Services.AddSingleton<IVostokApplicationMetrics>(environment.Metrics)();
 builder.Services.AddSingleton<JUnitExtractor>();
 builder.Services.AddSingleton<TestMetricsSender>();
