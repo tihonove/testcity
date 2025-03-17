@@ -24,6 +24,13 @@
             "presentation": {
                 "clear": true
             }
+        },
+        {
+            "type": "npm",
+            "script": "start-prod-api",
+            "problemMatcher": [],
+            "label": "npm: start-prod-api",
+            "detail": "webpack serve --config webpack.config.prod-api.js"
         }
     ]
 }
