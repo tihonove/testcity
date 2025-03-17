@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import React, { useEffect, useRef, useMemo } from "react";
-import { useParams } from "react-router-dom";
-import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
+import { CheckCircleIcon16Regular } from "@skbkontur/icons/CheckCircleIcon16Regular";
+import { ShapeCircleMOffIcon16Regular } from "@skbkontur/icons/ShapeCircleMOffIcon16Regular";
 import { TimeClockIcon16Regular } from "@skbkontur/icons/TimeClockIcon16Regular";
 import { XCircleIcon16Regular } from "@skbkontur/icons/XCircleIcon16Regular";
-import { ShapeCircleMOffIcon16Regular } from "@skbkontur/icons/ShapeCircleMOffIcon16Regular";
-import { CheckCircleIcon16Regular } from "@skbkontur/icons/CheckCircleIcon16Regular";
-import { RunStatus } from "../Components/TestHistory";
-import { TreeNode, TreeView } from "../Components/TreeView";
-import { ApproximateUnits, ITEMS_UNITS, TIME_UNITS } from "../Components/ApproximateUnits";
+import React, { useMemo } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
+import { ApproximateUnits, ITEMS_UNITS, TIME_UNITS } from "../Components/ApproximateUnits";
+import { TreeNode, TreeView } from "../Components/TreeView";
+import { RunStatus } from "./RunStatus";
 
 interface TestInfo {
     testId: string;

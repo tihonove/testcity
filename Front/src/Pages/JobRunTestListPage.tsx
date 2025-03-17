@@ -18,7 +18,7 @@ import { useProjectContextFromUrlParams } from "./useProjectContextFromUrlParams
 
 export function JobRunTestListPage(): React.JSX.Element {
     const basePrefix = useBasePrefix();
-    const { groupNodes } = useProjectContextFromUrlParams();
+    const { groupNodes, pathToGroup } = useProjectContextFromUrlParams();
     const { jobId = "", jobRunId = "" } = useParams();
     useSearchParamDebouncedAsState("filter", 500, "");
 
@@ -98,6 +98,7 @@ export function JobRunTestListPage(): React.JSX.Element {
                 <Fit>
                     <TestListView
                         jobRunIds={[jobRunId]}
+                        pathToProject={pathToGroup}
                         successTestsCount={Number(successTestsCount)}
                         failedTestsCount={Number(failedTestsCount)}
                         skippedTestsCount={Number(skippedTestsCount)}

@@ -90,6 +90,11 @@ export function getLinkToJob(jobRunId: string, agentName: string) {
     return project ? `https://git.skbkontur.ru/forms/${project}/-/jobs/${jobRunId}` : "https://git.skbkontur.ru/";
 }
 
+export function useSearchParam(paramName: string, defaultValue?: string): [string | undefined] {
+    const [searchParams] = useSearchParams();
+    return [searchParams.get(paramName) ?? defaultValue ?? undefined];
+}
+
 export function useSearchParamAsState(
     paramName: string,
     defaultValue?: string
@@ -149,4 +154,17 @@ export function useSearchParamDebouncedAsState(
             else setSearchParams({ [paramName]: x });
         },
     ];
+}
+
+export function useFilteredValues<T>(
+    value: undefined | string,
+    values: T[],
+    defaultValue: T | undefined
+): T | undefined {
+    for (const allowedValue of values) {
+        if (allowedValue?.toString() == value?.toString()) {
+            return allowedValue;
+        }
+    }
+    return defaultValue;
 }

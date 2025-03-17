@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Button, Tooltip } from "@skbkontur/react-ui";
 import { formatDuration } from "./DurationUtils";
 import { useLayoutEffect, useRef } from "react";
+import { transparentize } from "polished";
 
 interface RunStatisticsChartProps {
     value: Array<[state: string, duration: number, startDate: string]>;
@@ -130,7 +131,7 @@ const GridLine = styled.div<{ index: number }>(props => ({
     left: 50,
     right: 0,
     height: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.1)",
+    backgroundColor: props.theme.borderLineColor2,
     top: 10 + props.index * 25,
 }));
 
@@ -156,7 +157,7 @@ const ChartBar = styled.div<{ scale: number; success: string }>(
         flexShrink: 0,
         flexBasis: 16 * props.scale,
         backgroundColor: "red",
-        borderTop: "2px solid rgba(0,0,0,0.4)",
+        borderTop: "2px solid " + props.theme.inverseColor("0.4"),
         marginLeft: 1,
         boxSizing: "border-box",
         position: "relative",
@@ -164,12 +165,12 @@ const ChartBar = styled.div<{ scale: number; success: string }>(
     props =>
         props.success === "true"
             ? {
-                  backgroundColor: "rgba(0, 0, 0, 0.1)",
-                  "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.2)" },
+                  backgroundColor: props.theme.inverseColor("0.1"),
+                  "&:hover": { backgroundColor: props.theme.inverseColor("0.2") },
               }
             : {
-                  backgroundColor: "rgba(255, 0, 0, 0.4)",
-                  ":hover": { backgroundColor: "rgba(255, 0, 0, 0.6)" },
+                  backgroundColor: transparentize(0.5, props.theme.failedBgColor),
+                  "&:hover": { backgroundColor: transparentize(0.3, props.theme.failedBgColor) },
               }
 );
 

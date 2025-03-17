@@ -2,35 +2,27 @@ import { NetDownloadIcon24Regular, UiMenuDots3VIcon16Regular } from "@skbkontur/
 import { Button, DropdownMenu, Gapped, Input, MenuItem, Paging, Spinner } from "@skbkontur/react-ui";
 import * as React from "react";
 
-import { Suspense, useDeferredValue, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Suspense, useDeferredValue } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useClickhouseClient, useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { RouterLinkAdapter } from "../Components/RouterLinkAdapter";
 import { SortHeaderLink } from "../Components/SortHeaderLink";
-import { RunStatus } from "../Components/TestHistory";
 import { createLinkToTestHistory, useBasePrefix } from "../Domain/Navigation";
+import { TestRunQueryRowNames } from "../Domain/TestRunQueryRow";
 import { formatDuration } from "../RunStatisticsChart/DurationUtils";
-import { useSearchParamAsState, useSearchParamDebouncedAsState } from "../Utils";
+import { useFilteredValues, useSearchParamAsState, useSearchParamDebouncedAsState } from "../Utils";
+import { RunStatus } from "./RunStatus";
 import { TestName } from "./TestName";
 import { TestTypeFilterButton } from "./TestTypeFilterButton";
-import { TestRunQueryRowNames } from "../Domain/TestRunQueryRow";
 import { SuspenseFadingWrapper, useDelayedTransition } from "./useDelayedTransition";
 
 interface TestListViewProps {
     jobRunIds: string[];
+    pathToProject: string[];
     successTestsCount: number;
     skippedTestsCount: number;
     failedTestsCount: number;
-}
-
-function useFilteredValues<T>(value: undefined | string, values: T[], defaultValue: T | undefined): T | undefined {
-    for (const allowedValue of values) {
-        if (allowedValue?.toString() == value?.toString()) {
-            return allowedValue;
-        }
-    }
-    return defaultValue;
 }
 
 export function TestListView(props: TestListViewProps): React.JSX.Element {
@@ -186,7 +178,7 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
                                             href={createLinkToTestHistory(
                                                 basePrefix,
                                                 x[TestRunQueryRowNames.TestId],
-                                                []
+                                                props.pathToProject
                                             )}>
                                             Show test history
                                         </MenuItem>

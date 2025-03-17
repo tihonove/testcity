@@ -6,6 +6,7 @@ import { delay } from "@skbkontur/react-ui/cjs/lib/utils";
 import { reject } from "../TypeHelpers";
 import { PipelineRunsQueryRow } from "./PipelineRunsQueryRow";
 import { TestRunQueryRow } from "./TestRunQueryRow";
+import { TestPerJobRunQueryRow } from "./TestPerJobRunQueryRow";
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports
 const hardCodedGroups: GroupNode[] = require("../../gitlab-projects.json");
@@ -70,6 +71,31 @@ function getQueryId() {
 export class TestAnalyticsStorage {
     public constructor(client: ClickHouseClient) {
         this.client = client;
+    }
+
+    public findPathToProjectByIdOrNull(projectId: string): Promise<[GroupNode[], Project] | undefined> {
+        for (const groupNode of hardCodedGroups) {
+            const projectPath = findPathToProjectByIdOrNull(groupNode, projectId);
+            if (projectPath != undefined) {
+                return Promise.resolve(projectPath);
+            }
+        }
+
+        return Promise.resolve(undefined);
+    }
+
+    public async findProjectByTestId(testId: string, jobId?: string): Promise<string | undefined> {
+        const query = `
+            SELECT
+                JobInfo.ProjectId 
+            FROM TestRuns
+            ANY INNER JOIN JobInfo ON TestRuns.JobRunId = JobInfo.JobRunId
+            WHERE TestRuns.TestId = '${testId}' ${jobId ? `AND JobInfo.JobId = '${jobId}'` : ""}
+            ORDER BY TestRuns.StartDateTime DESC
+            LIMIT 1            
+        `;
+        const result = await this.executeClickHouseQuery<string[]>(query);
+        return result[0][0];
     }
 
     public getPathToProjectById(id: string): (GroupNode | Project)[] | undefined {
@@ -490,6 +516,65 @@ export class TestAnalyticsStorage {
         if (project) return [project];
 
         return collectProjects(group);
+    }
+
+    public async getTestStats(
+        testId: string,
+        jobIds: string[],
+        branchName?: string
+    ): Promise<[string, number, string][]> {
+        let condition = `TestId = '${testId}'`;
+        condition += ` AND JobId IN [${jobIds.map(x => `'${x}'`).join(", ")}]`;
+        if (branchName != undefined) condition += ` AND BranchName = '${branchName}'`;
+        const query = `
+            SELECT
+                State, 
+                Duration, 
+                StartDateTime 
+            FROM TestRuns 
+            WHERE ${condition} 
+            ORDER BY StartDateTime DESC
+            LIMIT 1000`;
+        return this.executeClickHouseQuery<[string, number, string][]>(query);
+    }
+
+    public async getTestRuns(
+        testId: string,
+        jobIds: string[],
+        branchName?: string,
+        page: number = 0,
+        pageSize: number = 50
+    ): Promise<TestPerJobRunQueryRow[]> {
+        let condition = `TestRuns.TestId = '${testId}'`;
+        condition += ` AND TestRuns.JobId IN [${jobIds.map(x => `'${x}'`).join(", ")}]`;
+        if (branchName != undefined) condition += ` AND TestRuns.BranchName = '${branchName}'`;
+
+        const query = `
+        SELECT 
+            TestRuns.JobId, 
+            TestRuns.JobRunId, 
+            TestRuns.BranchName, 
+            TestRuns.State, 
+            TestRuns.Duration, 
+            TestRuns.StartDateTime, 
+            TestRuns.JobUrl,
+            JobInfo.CustomStatusMessage
+        FROM TestRuns 
+        ANY INNER JOIN JobInfo ON JobInfo.JobRunId = TestRuns.JobRunId 
+        WHERE ${condition} 
+        ORDER BY TestRuns.StartDateTime DESC 
+        LIMIT ${(pageSize * page).toString()}, ${pageSize.toString()}`;
+        return this.executeClickHouseQuery<TestPerJobRunQueryRow[]>(query);
+    }
+
+    public async getTestRunCount(testId: string, jobIds: string[], branchName?: string): Promise<number> {
+        let condition = `TestId = '${testId}'`;
+        condition += ` AND JobId IN [${jobIds.map(x => `'${x}'`).join(", ")}]`;
+        if (branchName != undefined) condition += ` AND BranchName = '${branchName}'`;
+
+        const query = `SELECT COUNT(*) FROM TestRuns WHERE ${condition}`;
+        const result = await this.executeClickHouseQuery<[string][]>(query);
+        return Number(result[0][0]);
     }
 
     private client: ClickHouseClient;

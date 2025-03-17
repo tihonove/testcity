@@ -1,19 +1,19 @@
-import * as React from "react";
-import { RunStatus } from "./TestHistory";
 import {
     ArrowARightIcon16Regular,
     ArrowARightIcon24Regular,
     ArrowARightIcon32Regular,
+    BuildingHomeIcon16Regular,
+    BuildingHomeIcon24Regular,
+    BuildingHomeIcon32Regular,
     ShapeCircleMIcon16Regular,
     ShapeCircleMIcon24Regular,
     ShapeCircleMIcon32Regular,
     ShapeSquareIcon16Regular,
     ShapeSquareIcon24Regular,
     ShapeSquareIcon32Regular,
-    BuildingHomeIcon16Regular,
-    BuildingHomeIcon24Regular,
-    BuildingHomeIcon32Regular,
 } from "@skbkontur/icons";
+import * as React from "react";
+import { RunStatus } from "../Pages/RunStatus";
 
 export function JonIcon(props: { size: 16 | 24 | 32; status?: RunStatus }) {
     switch (props.size) {

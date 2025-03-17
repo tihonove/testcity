@@ -50,6 +50,7 @@ export function PipelineRunTestListPage(): React.JSX.Element {
                 />
             </ColumnStack>
             <TestListView
+                pathToProject={pathToGroup}
                 jobRunIds={pipelineInfo.jobRunIds}
                 successTestsCount={pipelineInfo.successTestsCount}
                 skippedTestsCount={pipelineInfo.skippedTestsCount}

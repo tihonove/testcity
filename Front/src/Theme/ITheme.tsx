@@ -6,6 +6,7 @@ export const normalTheme = {
     primaryBackground: "#fff",
     backgroundColor1: "rgba(0,0,0,0.05)",
     backgroundColor2: "rgba(0,0,0,0.05)",
+    inverseColor: (fraction: string) => `rgba(0,0,0,${fraction})`,
     primaryTextColor: "#3D3D3D",
     activeLinkColor: "#000",
     failedTextColor: "rgb(169, 15, 26)",
@@ -13,6 +14,7 @@ export const normalTheme = {
     smallTextSize: "14px",
     mutedTextColor: "rgba(0, 0, 0, 0.48)",
     accentBgColor: LIGHT_THEME.blueLight,
+    failedBgColor: LIGHT_THEME.btnDangerBg,
     accentTextColor: LIGHT_THEME.btnSuccessTextColor,
     borderLineColor2: "rgba(0, 0, 0, 0.1)",
 
@@ -30,6 +32,7 @@ export const darkTheme: ITheme = {
     primaryBackground: DARK_THEME.bgDefault,
     backgroundColor1: "rgba(0,0,0,0.25)",
     backgroundColor2: "rgba(255,255,255,0.05)",
+    inverseColor: (fraction: string) => `rgba(255,255,255,${fraction})`,
     primaryTextColor: DARK_THEME.textColorDefault,
     activeLinkColor: DARK_THEME.linkActiveColor,
     failedTextColor: DARK_THEME.linkDangerColor,
@@ -37,6 +40,7 @@ export const darkTheme: ITheme = {
     smallTextSize: "14px",
     // 00BFFF
     mutedTextColor: DARK_THEME.textColorDisabled,
+    failedBgColor: DARK_THEME.btnDangerBg,
     accentBgColor: DARK_THEME.blueLight,
     accentTextColor: DARK_THEME.btnSuccessTextColor,
     borderLineColor2: "rgba(255, 255, 255, 0.1)",

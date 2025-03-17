@@ -15,6 +15,7 @@ import { TestHistoryPage } from "./Pages/TestHistoryPage";
 import { TestsTreeMapChart } from "./Pages/TestsTreeMapChart";
 import { TestsTreeView } from "./Pages/TestsTreeView";
 import { useTestAnalyticsDarkMode } from "./Theme/UseTestAnalyticsDarkMode";
+import { RedirectToNewTestHistoryPage } from "./RedirectToNewTestHistoryPage";
 
 export function App(): React.JSX.Element {
     const basePrefix = useBasePrefix();
@@ -38,7 +39,7 @@ export function App(): React.JSX.Element {
             <Routes>
                 <Route path={basePrefix}>
                     <Route index element={<GroupsPage />} />
-                    <Route path="history" element={<TestHistoryPage />} />
+                    <Route path="history" element={<RedirectToNewTestHistoryPage />} />
                     <Route
                         path="projects/:projectId/merge-requests/:gitLabMergeRequestId/jobs"
                         element={<MergeRequestJobsPage />}
@@ -52,6 +53,7 @@ export function App(): React.JSX.Element {
                         <Route path="jobs/:jobId/runs/:jobRunId/treemap" element={<TestsTreeMapChart />} />
                         <Route path="jobs/:jobId/runs/:jobRunId/treeview" element={<TestsTreeView />} />
                         <Route path="pipelines/:pipelineId" element={<PipelineRunTestListPage />} />
+                        <Route path="test-history" element={<TestHistoryPage />} />
                     </Route>
 
                     <Route path=":groupIdLevel1/:groupIdLevel2">
@@ -61,6 +63,7 @@ export function App(): React.JSX.Element {
                         <Route path="jobs/:jobId/runs/:jobRunId/treemap" element={<TestsTreeMapChart />} />
                         <Route path="jobs/:jobId/runs/:jobRunId/treeview" element={<TestsTreeView />} />
                         <Route path="pipelines/:pipelineId" element={<PipelineRunTestListPage />} />
+                        <Route path="test-history" element={<TestHistoryPage />} />
                     </Route>
 
                     <Route path=":groupIdLevel1/:groupIdLevel2/:groupIdLevel3">
@@ -70,6 +73,7 @@ export function App(): React.JSX.Element {
                         <Route path="jobs/:jobId/runs/:jobRunId/treemap" element={<TestsTreeMapChart />} />
                         <Route path="jobs/:jobId/runs/:jobRunId/treeview" element={<TestsTreeView />} />
                         <Route path="pipelines/:pipelineId" element={<PipelineRunTestListPage />} />
+                        <Route path="test-history" element={<TestHistoryPage />} />
                     </Route>
 
                     <Route path="jobs/:jobId/runs/:jobRunId" element={<JobRunTestListPage />} />

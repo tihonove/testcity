@@ -10,14 +10,8 @@ export const urlPrefix: string = window.__webpack_public_path__;
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 export const apiUrlPrefix: string = window.__webpack_public_path__;
 
-export function createLinkToTestHistory(
-    basePrefix: string,
-    testId: string,
-    pathToProject: string[],
-    jobRunId?: string
-): string {
-    let result = `${basePrefix}history?id=${encodeURIComponent(testId)}`;
-    if (jobRunId) result += `&runId=${jobRunId}`;
+export function createLinkToTestHistory(basePrefix: string, testId: string, pathToProject: string[]): string {
+    const result = `${basePrefix}${[...pathToProject, "test-history"].join("/")}?id=${encodeURIComponent(testId)}`;
     return result;
 }
 
