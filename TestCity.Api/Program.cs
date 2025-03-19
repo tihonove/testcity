@@ -27,7 +27,7 @@ if (OpenTelemetryExtensions.IsOpenTelemetryEnabled())
 {
     builder.Services
         .AddOpenTelemetry()
-        .ConfigureTestAnalyticsOpenTelemetry("TestCity", "Api", x => x.AddMeter("GitLabProjectTestsMetrics"));
+        .ConfigureTestAnalyticsOpenTelemetry("TestAnalytics", "Api", x => x.AddMeter("GitLabProjectTestsMetrics"));
 }
 
 var app = builder.Build();

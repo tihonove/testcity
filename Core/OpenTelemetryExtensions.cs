@@ -16,7 +16,7 @@ public static class OpenTelemetryExtensions
     {
         var otelEndpoint = GetOtelEndpoint();
         var otelHeaders = GetOtelHeaders();
-
+        Console.WriteLine("Configuring OpenTelemetry with endpoint: {0}.", otelEndpoint);
         return builder
             .WithMetrics(x =>
             {
@@ -87,7 +87,7 @@ public static class OpenTelemetryExtensions
         var explicitlyDisabled = string.Equals(
             Environment.GetEnvironmentVariable("OTEL_SDK_DISABLED"),
             "true",
-            StringComparison.OrdinalIgnoreCase);
+                StringComparison.OrdinalIgnoreCase);
 
         return endpointExists && !explicitlyDisabled;
     }
