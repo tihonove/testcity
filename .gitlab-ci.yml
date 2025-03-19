@@ -5,6 +5,7 @@ stages:
 
 variables:
   BASE_IMAGE: "registry.kontur.host/ke-forms/test-analytics-gitlab-ci:v5"
+  KONTUR_FEMIDA_APP_APIKEY: ${KONTUR_FEMIDA_APP_APIKEY}
 
 Front Typecheck and lint:
   stage: test
@@ -115,6 +116,7 @@ Deploy to k8s:
     - export KUBECONFIG=$(pwd)/kubeconfig
     - export IMAGE_TAG=$CI_COMMIT_SHORT_SHA
     - export GITLAB_TOKEN="$GITLAB_TOKEN"
+    - export OTEL_EXPORTER_OTLP_HEADERS="X-Kontur-Apikey=${KONTUR_FEMIDA_APP_APIKEY}"
     - cd k8s
     - envsubst < deployment.yaml | kubectl apply -n test-analytics -f -
   needs: ["Build and publish docker images"]

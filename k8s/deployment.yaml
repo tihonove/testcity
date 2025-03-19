@@ -6,6 +6,14 @@ type: Opaque
 stringData:
   token: ${GITLAB_TOKEN}
 ---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: oltp-headers
+type: Opaque
+stringData:
+  value: ${OTEL_EXPORTER_OTLP_HEADERS}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -101,6 +109,15 @@ spec:
               value: tihonove
             - name: TESTANALYTICS_CLICKHOUSE_PASSWORD
               value: "12487562"
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "https://opentm-http.kontur.host"
+            - name: OTEL_EXPORTER_OTLP_HEADERS
+              valueFrom:
+                secretKeyRef:
+                  name: oltp-headers
+                  key: value
+            - name: OTEL_ENVIRONMENT
+              value: "cloud"
           resources:
             requests:
               cpu: "250m"
@@ -146,6 +163,15 @@ spec:
               value: tihonove
             - name: TESTANALYTICS_CLICKHOUSE_PASSWORD
               value: "12487562"
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "https://opentm-http.kontur.host"
+            - name: OTEL_EXPORTER_OTLP_HEADERS
+              valueFrom:
+                secretKeyRef:
+                  name: oltp-headers
+                  key: value
+            - name: OTEL_ENVIRONMENT
+              value: "cloud"
           resources:
             requests:
               cpu: "250m"

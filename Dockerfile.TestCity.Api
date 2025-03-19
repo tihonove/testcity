@@ -11,6 +11,13 @@ FROM mcr-proxy.kontur.host/dotnet/aspnet:9.0
 WORKDIR /app
 
 ENV ASPNETCORE_ENVIRONMENT="Production"
+
+# OpenTelemetry configuration
+# OTEL_EXPORTER_OTLP_ENDPOINT - URL для отправки телеметрии, например https://opentm-http.kontur.host
+# OTEL_EXPORTER_OTLP_HEADERS - Заголовки, например для авторизации, например X-Kontur-Apikey={API_KEY}
+# OTEL_ENVIRONMENT - Окружение для маркировки телеметрии (dev/stage/prod)
+# OTEL_ATTRIBUTE_* - Дополнительные пользовательские атрибуты для телеметрии, передаются в ресурсы OTel
+
 COPY --from=build /app/TestCity.Api/out .
 EXPOSE 8124
 ENTRYPOINT ["dotnet", "Kontur.TestCity.Api.dll"]

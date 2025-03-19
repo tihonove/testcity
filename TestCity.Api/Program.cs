@@ -1,6 +1,7 @@
 using System.Text;
 using dotenv.net;
 using Kontur.TestAnalytics.Core;
+using TestCity.Api.Extensions;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -21,6 +22,13 @@ builder.Logging.AddSimpleConsole(options =>
     options.TimestampFormat = "hh:mm:ss ";
 });
 builder.Logging.AddFilter("Microsoft.AspNetCore", LogLevel.Warning);
+
+if (OpenTelemetryExtensions.IsOpenTelemetryEnabled())
+{
+    builder.Services
+        .AddOpenTelemetry()
+        .ConfigureTestAnalyticsOpenTelemetry("TestCity", "Api", x => x.AddMeter("GitLabProjectTestsMetrics"));
+}
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())

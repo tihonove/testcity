@@ -12,11 +12,6 @@
 
     <ItemGroup>
         <PackageReference Include="dotenv.net" />
-        <PackageReference Include="Vostok.Applications.AspNetCore" />
-        <PackageReference Include="Vostok.Hercules.Client" />
-        <PackageReference Include="Vostok.Hosting.Abstractions" />
-        <PackageReference Include="Vostok.Hosting.Houston" />
-        <PackageReference Include="Vostok.Hosting.Houston.Abstractions" />
     </ItemGroup>
 
 </Project>
