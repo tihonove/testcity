@@ -57,8 +57,8 @@ public static class OpenTelemetryExtensions
 
     private static Uri GetOtelEndpoint()
     {
-        var endpoint = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT");
-        return new Uri(endpoint ?? "https://opentm-http.kontur.host");
+        var endpoint = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT") ?? throw new InvalidOperationException("OTEL_EXPORTER_OTLP_ENDPOINT is not set");
+        return new Uri(endpoint);
     }
 
     private static string GetOtelHeaders()
@@ -81,16 +81,9 @@ public static class OpenTelemetryExtensions
         }
     }
 
-    /// <summary>
-    /// Проверяет, настроена ли телеметрия на основании наличия обязательных переменных окружения
-    /// </summary>
-    /// <returns>True если телеметрия настроена и должна быть включена</returns>
     public static bool IsOpenTelemetryEnabled()
     {
-        // Проверяем наличие основного эндпоинта для телеметрии
         var endpointExists = !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT"));
-
-        // Дополнительно можно проверить специальный флаг для явного выключения телеметрии
         var explicitlyDisabled = string.Equals(
             Environment.GetEnvironmentVariable("OTEL_SDK_DISABLED"),
             "true",
