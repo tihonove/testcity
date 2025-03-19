@@ -1,5 +1,6 @@
 using Kontur.TestAnalytics.Reporter.Cli;
 using Kontur.TestAnalytics.Reporter.Client;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
 namespace Kontur.TestAnalytics.Reporter.Tests;
@@ -13,7 +14,7 @@ public class UploaderTests
     public async Task TestRunsUploadTest()
     {
         var path = Path.GetFullPath("../../junit");
-        var report = new JunitReporter(new JunitReporterOptions { ReportsPaths = new[] { path + "/**" } });
+        var report = new JunitReporter(new JunitReporterOptions { ReportsPaths = new[] { path + "/**" } }, GlobalSetup.TestLoggerFactory.CreateLogger<JunitReporter>());
 
         Environment.SetEnvironmentVariable("CI_JOB_STARTED_AT", DateTime.Now.ToString("O"), EnvironmentVariableTarget.Process);
 

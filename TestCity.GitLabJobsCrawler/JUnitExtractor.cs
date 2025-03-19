@@ -6,13 +6,8 @@ using Kontur.TestAnalytics.Reporter.Client;
 
 namespace Kontur.TestCity.GitLabJobsCrawler;
 
-public class JUnitExtractor
+public class JUnitExtractor(ILogger<JUnitExtractor> log)
 {
-    public JUnitExtractor(ILogger<JUnitExtractor> log)
-    {
-        this.log = log;
-    }
-
     public (TestCount counter, List<TestRun> runs) CollectTestsFromReports(IEnumerable<string> reportPaths)
     {
         var testCountForWholeJob = new TestCount();
@@ -131,5 +126,5 @@ public class JUnitExtractor
     }
 
     private readonly bool doNotModifyReports = true;
-    private ILogger<JUnitExtractor> log;
+    private readonly ILogger<JUnitExtractor> log = log;
 }
