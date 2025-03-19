@@ -12,8 +12,7 @@
     <ItemGroup>
       <PackageReference Include="CommandLineParser" />
       <PackageReference Include="dotenv.net" />
-      <PackageReference Include="Vostok.Logging.Abstractions" />
-      <PackageReference Include="Vostok.Logging.Console" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Console" />
     </ItemGroup>
 
 </Project>

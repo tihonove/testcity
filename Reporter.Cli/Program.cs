@@ -1,10 +1,12 @@
 using CommandLine;
 using dotenv.net;
 using Kontur.TestAnalytics.Reporter.Cli;
-using Vostok.Logging.Abstractions;
-using Vostok.Logging.Console;
+using Microsoft.Extensions.Logging;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();
+var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole().SetMinimumLevel(LogLevel.Debug));
+var logger = loggerFactory.CreateLogger<JunitReporter>();
+
 if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TESTANALYTICS_CLICKHOUSE_HOST")))
 {
     Environment.SetEnvironmentVariable("TESTANALYTICS_CLICKHOUSE_HOST", "vm-ch2-stg.dev.kontur.ru");
@@ -15,9 +17,5 @@ if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TESTANALYTICS_CLICK
 }
 
 var options = Parser.Default.ParseArguments<JunitReporterOptions>(args).GetOptionsOrThrow();
-LogProvider.Configure(new ConsoleLog(), true);
-
-var reporter = new JunitReporter(options);
+var reporter = new JunitReporter(options, logger);
 await reporter.DoAsync();
-
-ConsoleLog.Flush();

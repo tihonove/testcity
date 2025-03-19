@@ -11,6 +11,7 @@
     <PackageVersion Include="dotenv.net" Version="3.2.1" />
     <PackageVersion Include="JunitXml.TestLogger" Version="6.0.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.3" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageVersion Include="NGitLab" Version="8.0.0" />
     <PackageVersion Include="NUnit" Version="4.3.2" />
@@ -31,16 +32,6 @@
     <PackageVersion Include="System.Linq.Async" Version="6.0.1" />
     <PackageVersion Include="System.Reactive.Linq" Version="6.0.1" />
     <PackageVersion Include="System.Reactive" Version="6.0.1" />
-    <PackageVersion Include="Vostok.Applications.AspNetCore" Version="0.3.32" />
-    <PackageVersion Include="Vostok.Configuration" Version="0.1.44" />
-    <PackageVersion Include="Vostok.Configuration.Abstractions" Version="0.1.17" />
-    <PackageVersion Include="Vostok.Configuration.Sources" Version="0.1.20" />
-    <PackageVersion Include="Vostok.Hercules.Client" Version="0.1.25" />
-    <PackageVersion Include="Vostok.Hosting.Abstractions" Version="0.3.10" />
-    <PackageVersion Include="Vostok.Hosting.Houston" Version="1.0.613" />
-    <PackageVersion Include="Vostok.Hosting.Houston.Abstractions" Version="1.0.99" />
-    <PackageVersion Include="Vostok.Logging.Abstractions" Version="1.0.33" />
-    <PackageVersion Include="Vostok.Logging.Console" Version="1.0.11" />
     <PackageVersion Include="xunit" Version="2.9.3" />
   </ItemGroup>
 </Project>

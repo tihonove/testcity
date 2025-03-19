@@ -4,28 +4,22 @@ using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using Kontur.TestAnalytics.Reporter.Client;
-using Vostok.Logging.Abstractions;
+using Microsoft.Extensions.Logging;
 
 namespace Kontur.TestAnalytics.Reporter.Cli;
 
-public class JunitReporter
+public class JunitReporter(JunitReporterOptions options, ILogger<JunitReporter> log)
 {
-    public JunitReporter(JunitReporterOptions options)
-    {
-        this.options = options;
-        this.log = LogProvider.Get();
-    }
-
     public async Task DoAsync()
     {
         var (counter, runs) = CollectTestsFromReports();
 
         if (counter.Total == 0 && !options.NoJunit)
         {
-            log.Error($"Не нашли ни одного junit отчёта или теста в них по маске {string.Join(',', options.ReportsPaths)}");
+            log.LogError("Не нашли ни одного junit отчёта или теста в них по маске {ReportsPaths}", string.Join(',', options.ReportsPaths));
         }
 
-        log.Debug(counter.ToString());
+        log.LogDebug("{CounterInfo}", counter.ToString());
         await UploadTestRuns(runs);
 
         var jobInfo = GetFullJobInfo(counter);
@@ -38,13 +32,13 @@ public class JunitReporter
         var testRunsForWholeJob = new List<TestRun>();
         foreach (var reportPath in ReportPathResolver.GetReportPaths(options.ReportsPaths))
         {
-            log.Info($"Start handling the report {reportPath}");
+            log.LogInformation("Start handling the report {ReportPath}", reportPath);
 
             var testRunsFromReport = CollectTestRunsFromJunit(reportPath);
             testCountForWholeJob += testRunsFromReport.counter;
             testRunsForWholeJob.AddRange(testRunsFromReport.testRuns);
 
-            log.Debug(testRunsFromReport.counter.ToString());
+            log.LogDebug("{CounterInfo}", testRunsFromReport.counter.ToString());
         }
 
         return (testCountForWholeJob, testRunsForWholeJob);
@@ -59,7 +53,7 @@ public class JunitReporter
         var testRuns = new List<TestRun>();
         if (root.Name.LocalName != "testsuites")
         {
-            log.Error($"File is not junit report: {reportPath}");
+            log.LogError("File is not junit report: {ReportPath}", reportPath);
             return (new TestCount(), testRuns);
         }
 
@@ -189,12 +183,12 @@ public class JunitReporter
     {
         if (options.DryRun)
         {
-            log.Info($"Report file {reportPath} will be modified by Test Analytics");
+            log.LogInformation("Report file {ReportPath} will be modified by Test Analytics", reportPath);
         }
         else
         {
             report.Save(reportPath);
-            log.Info($"Report file {reportPath} modified by Test Analytics");
+            log.LogInformation("Report file {ReportPath} modified by Test Analytics", reportPath);
         }
     }
 
@@ -202,7 +196,7 @@ public class JunitReporter
     {
         if (options.DryRun)
         {
-            log.Info($"Test runs will be uploaded to Test History Analytics. Batch size: ({testRuns.Count})");
+            log.LogInformation("Test runs will be uploaded to Test History Analytics. Batch size: ({TestRunCount})", testRuns.Count);
         }
         else
         {
@@ -211,7 +205,7 @@ public class JunitReporter
                 await TestRunsUploader.UploadAsync(GetJobRunInfo(), testRuns);
             }
 
-            log.Info($"Test runs uploaded to Test History Analytics. Batch size: ({testRuns.Count})");
+            log.LogInformation("Test runs uploaded to Test History Analytics. Batch size: ({TestRunCount})", testRuns.Count);
         }
     }
 
@@ -219,12 +213,12 @@ public class JunitReporter
     {
         if (options.DryRun)
         {
-            log.Info("Job Info will be uploaded to Test History Analytics");
+            log.LogInformation("Job Info will be uploaded to Test History Analytics");
         }
         else
         {
             await TestRunsUploader.JobInfoUploadAsync(jobInfo);
-            log.Info("Job Info uploaded to Test History Analytics");
+            log.LogInformation("Job Info uploaded to Test History Analytics");
         }
     }
 
@@ -259,7 +253,7 @@ public class JunitReporter
         return jobName;
     }
 
-    private readonly JunitReporterOptions options;
-    private readonly ILog log = LogProvider.Get().ForContext<JunitReporter>();
+    private readonly JunitReporterOptions options = options;
+    private readonly ILogger<JunitReporter> log = log;
     private static Regex myRegex = new Regex(@"(.*?)([\b\s:]+((\[.*\])|(\d+[\s:\/\\]+\d+))){1,3}\s*\z", RegexOptions.Compiled);
 }
