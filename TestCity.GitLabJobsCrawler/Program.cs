@@ -1,6 +1,7 @@
 using System.Text;
 using dotenv.net;
 using Kontur.TestAnalytics.Core;
+using Kontur.TestAnalytics.Core.Graphite;
 using Kontur.TestCity.GitLabJobsCrawler;
 using TestCity.Api.Extensions;
 
@@ -20,6 +21,19 @@ builder.Services.AddSingleton<JUnitExtractor>();
 builder.Services.AddSingleton<TestMetricsSender>();
 builder.Services.AddSingleton<GitLabCrawlerService>();
 builder.Services.AddSingleton<SkbKonturGitLabClientProvider>();
+
+// Регистрация IGraphiteClient на основе переменных окружения
+var graphiteHost = Environment.GetEnvironmentVariable("GRAPHITE_RELAY_HOST");
+var graphitePortStr = Environment.GetEnvironmentVariable("GRAPHITE_RELAY_PORT");
+
+if (!string.IsNullOrEmpty(graphiteHost) && !string.IsNullOrEmpty(graphitePortStr) && int.TryParse(graphitePortStr, out var graphitePort))
+{
+    builder.Services.AddSingleton<IGraphiteClient>(_ => new GraphiteClient(graphiteHost, graphitePort));
+}
+else
+{
+    builder.Services.AddSingleton<IGraphiteClient, NullGraphiteClient>();
+}
 
 builder.Logging.AddSimpleConsole(options =>
 {

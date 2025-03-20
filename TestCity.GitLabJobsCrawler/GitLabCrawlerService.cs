@@ -92,7 +92,7 @@ public sealed class GitLabCrawlerService : IDisposable
                                 await TestRunsUploader.JobInfoUploadAsync(jobInfo);
                                 await TestRunsUploader.UploadAsync(jobInfo, extractResult.Runs);
 
-                                metricsSender.Send(projectInfo, refId, job, extractResult);
+                                await metricsSender.SendAsync(projectInfo, refId, job, extractResult);
                             }
                             else
                             {

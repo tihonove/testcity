@@ -87,7 +87,7 @@ public static class OpenTelemetryExtensions
         var explicitlyDisabled = string.Equals(
             Environment.GetEnvironmentVariable("OTEL_SDK_DISABLED"),
             "true",
-                StringComparison.OrdinalIgnoreCase);
+            StringComparison.OrdinalIgnoreCase);
 
         return endpointExists && !explicitlyDisabled;
     }

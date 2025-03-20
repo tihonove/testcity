@@ -153,6 +153,10 @@ spec:
                 secretKeyRef:
                   name: gitlab-credentials
                   key: token
+            - name: GRAPHITE_RELAY_HOST
+              value: graphite-relay.skbkontur.ru
+            - name: GRAPHITE_RELAY_PORT
+              value: "2003"
             - name: TESTANALYTICS_CLICKHOUSE_HOST
               value: vm-ch2-stg.dev.kontur.ru
             - name: TESTANALYTICS_CLICKHOUSE_PORT
