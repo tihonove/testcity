@@ -42,6 +42,10 @@ export function useClickhouseClient(): ClickhouseClientHooksWrapper {
     return new ClickhouseClientHooksWrapper(client);
 }
 
+export function useStorage(): TestAnalyticsStorage {
+    return new TestAnalyticsStorage(client);
+}
+
 function getQueryId() {
     return uuidv4();
 }

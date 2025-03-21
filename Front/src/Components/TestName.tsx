@@ -2,9 +2,12 @@ import * as React from "react";
 
 import { useMemo } from "react";
 import styled from "styled-components";
+import { theme } from "../Theme/ITheme";
+import { NativeLinkButton } from "./NativeLinkButton";
 
 interface TestNameProps {
     value: string;
+    onTestNameClick: (() => void) | undefined;
     onSetSearchValue: (value: string) => void;
 }
 
@@ -26,23 +29,22 @@ export function TestName(props: TestNameProps): React.JSX.Element {
     }, [props.value]);
     return (
         <>
-            {splitValue[1]}
-            <TestNamePrefix
-                onClick={() => {
-                    props.onSetSearchValue(splitValue[0] ?? "");
-                }}>
-                {splitValue[0]}
-            </TestNamePrefix>
+            {props.onTestNameClick ? (
+                <NativeLinkButton
+                    onClick={() => {
+                        props.onTestNameClick?.();
+                    }}>
+                    {splitValue[1]}
+                </NativeLinkButton>
+            ) : (
+                splitValue[1]
+            )}
+            <TestNamePrefix>{splitValue[0]}</TestNamePrefix>
         </>
     );
 }
 
 const TestNamePrefix = styled.div`
-    cursor: pointer;
     font-size: ${props => props.theme.smallTextSize};
     color: ${props => props.theme.mutedTextColor};
-
-    &:hover {
-        text-decoration: underline;
-    }
 `;
