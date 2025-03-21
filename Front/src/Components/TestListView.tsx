@@ -450,8 +450,7 @@ const TestOutputRow = styled.tr<{ $expanded?: boolean }>`
     }
 `;
 
-const TestOutputCell = styled.td({
-});
+const TestOutputCell = styled.td``;
 
 const Code = styled.pre`
     font-size: 14px;
