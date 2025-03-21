@@ -1,4 +1,9 @@
-import { NetDownloadIcon24Regular, UiMenuDots3VIcon16Regular } from "@skbkontur/icons";
+import {
+    ClipboardTextIcon16Regular,
+    NetDownloadIcon24Regular,
+    TimeClockFastIcon16Regular,
+    UiMenuDots3VIcon16Regular,
+} from "@skbkontur/icons";
 import { Button, DropdownMenu, Gapped, Input, MenuItem, Paging, Spinner } from "@skbkontur/react-ui";
 import * as React from "react";
 
@@ -11,12 +16,18 @@ import { SortHeaderLink } from "./SortHeaderLink";
 import { createLinkToTestHistory, useBasePrefix } from "../Domain/Navigation";
 import { TestRunQueryRowNames } from "../Domain/TestRunQueryRow";
 import { formatDuration } from "./RunStatisticsChart/DurationUtils";
-import { useFilteredValues, useSearchParamAsState, useSearchParamDebouncedAsState } from "../Utils";
+import {
+    useFilteredValues,
+    useSearchParamAsState,
+    useSearchParamDebouncedAsState,
+    useSearchParamsAsState,
+} from "../Utils";
 import { RunStatus } from "./RunStatus";
 import { TestName } from "./TestName";
 import { TestTypeFilterButton } from "./TestTypeFilterButton";
 import { SuspenseFadingWrapper, useDelayedTransition } from "./useDelayedTransition";
 import { Fill, Fit, RowStack } from "@skbkontur/react-stack-layout";
+import { TestOutputModal } from "./TestOutputModal";
 
 interface TestListViewProps {
     jobRunIds: string[];
@@ -48,10 +59,14 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
     const page = React.useMemo(() => (isNaN(Number(pageRaw ?? "0")) ? 0 : Number(pageRaw ?? "0")), [pageRaw]);
     const totalRowCount = props.successTestsCount + props.failedTestsCount + props.skippedTestsCount;
     const searchValue = useDeferredValue(debouncedSearchValue);
+
+    const [outputModalIds, setOutputModalIds] = useSearchParamsAsState(["oid", "ojobid"]);
+
     const testList = useStorageQuery(
         s => s.getTestList(props.jobRunIds, sortField, sortDirection, searchValue, testCasesType, 100, page),
         [props.jobRunIds, sortField, sortDirection, searchValue, testCasesType, page]
     );
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function convertToCSV(data: any[][]): string {
         return data
@@ -89,10 +104,19 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
         downloadCSV(`${props.jobRunIds.join("-")}.csv`, csvString);
     }
 
-
     return (
         <Suspense fallback={<div className="loading">Загрузка...</div>}>
             <SuspenseFadingWrapper $fading={isFading}>
+                {outputModalIds && (
+                    <TestOutputModal
+                        testId={outputModalIds[0]}
+                        jobId={outputModalIds[1]}
+                        jobRunIds={props.jobRunIds}
+                        onClose={() => {
+                            setOutputModalIds(undefined);
+                        }}
+                    />
+                )}
                 <RowStack baseline block gap={2}>
                     <Fit>
                         <Input
@@ -190,13 +214,24 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
                                 <ActionsCell>
                                     <DropdownMenu caption={<KebabButton />}>
                                         <MenuItem
-                                            component={RouterLinkAdapter}
+                                            icon={<TimeClockFastIcon16Regular />}
                                             href={createLinkToTestHistory(
                                                 basePrefix,
                                                 x[TestRunQueryRowNames.TestId],
                                                 props.pathToProject
                                             )}>
                                             Show test history
+                                        </MenuItem>
+                                        <MenuItem
+                                            icon={<ClipboardTextIcon16Regular />}
+                                            disabled={x[TestRunQueryRowNames.State] !== "Failed"}
+                                            onClick={() => {
+                                                setOutputModalIds([
+                                                    x[TestRunQueryRowNames.TestId],
+                                                    x[TestRunQueryRowNames.JobId],
+                                                ]);
+                                            }}>
+                                            Show test outpout
                                         </MenuItem>
                                     </DropdownMenu>
                                 </ActionsCell>
@@ -322,6 +357,6 @@ const StatusCell = styled.td<{ status: RunStatus }>`
         props.status == "Success"
             ? props.theme.successTextColor
             : props.status == "Failed"
-                ? props.theme.failedTextColor
-                : undefined};
+              ? props.theme.failedTextColor
+              : undefined};
 `;

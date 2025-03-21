@@ -116,6 +116,36 @@ export function useSearchParamAsState(
     ];
 }
 
+export function useSearchParamsAsState(
+    paramNames: string[],
+    defaultValue?: string[]
+): [
+    string[] | undefined,
+    (nextValue: undefined | string[] | ((prev: undefined | string[]) => undefined | string[])) => void,
+] {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const currentValue = paramNames.map(n => searchParams.get(n));
+
+    return [
+        currentValue.every(x => x != null) ? currentValue : defaultValue,
+        (value: undefined | string[] | ((prev: undefined | string[]) => undefined | string[])) => {
+            setSearchParams(_ => {
+                // https://github.com/remix-run/react-router/issues/9757
+                const params = new URLSearchParams(window.location.search);
+                const prevValueRaw = paramNames.map(n => searchParams.get(n));
+                const prevValue = (prevValueRaw.every(x => x != null) ? prevValueRaw : defaultValue) ?? undefined;
+                const nextValue = typeof value === "function" ? value(prevValue) : value;
+                if (nextValue == undefined) {
+                    for (const paramName of paramNames) params.delete(paramName);
+                } else {
+                    for (let i = 0; i < paramNames.length; i++) params.set(paramNames[i], nextValue[i]);
+                }
+                return params;
+            });
+        },
+    ];
+}
+
 export function useSearchParamDebouncedAsState(
     paramName: string,
     timeout: number,

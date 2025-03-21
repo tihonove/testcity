@@ -73,6 +73,27 @@ export class TestAnalyticsStorage {
         this.client = client;
     }
 
+    public async getFailedTestOutput(
+        jobId: string,
+        testId: string,
+        jobRunIds: string[]
+    ): Promise<[string, string, string]> {
+        const query = `
+            SELECT
+                JUnitFailureMessage,
+                JUnitFailureOutput,
+                JUnitSystemOutput
+            FROM TestRuns
+            WHERE 
+                TestId = '${testId}' 
+                AND JobId = '${jobId}'
+                AND JobRunId IN [${jobRunIds.map(x => `'${x}'`).join(", ")}]
+            LIMIT 1
+        `;
+        const result = await this.executeClickHouseQuery<[string, string, string][]>(query);
+        return result[0];
+    }
+
     public findPathToProjectByIdOrNull(projectId: string): Promise<[GroupNode[], Project] | undefined> {
         for (const groupNode of hardCodedGroups) {
             const projectPath = findPathToProjectByIdOrNull(groupNode, projectId);
@@ -363,7 +384,8 @@ export class TestAnalyticsStorage {
                 State, 
                 TestId, 
                 Duration, 
-                StartDateTime
+                StartDateTime,
+                JobId 
             FROM TestRunsByRun 
             WHERE ${condition} 
             ORDER BY 
