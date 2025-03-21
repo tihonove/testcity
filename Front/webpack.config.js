@@ -2,44 +2,48 @@
 const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-module.exports = {
-    mode: "development",
-    entry: "./src/index.tsx",
-    output: {
-        path: resolve(__dirname, "dist"),
-        filename: "static/index.js",
-        publicPath: "/",
-    },
-    resolve: {
-        extensions: [".ts", ".tsx", ".js", ".json"],
-    },
-    module: {
-        rules: [
-            {
-                test: /\.(ts|js)x?$/,
-                exclude: /node_modules/,
-                loader: "babel-loader",
-            },
-            {
-                test: /\.css$/i,
-                use: ["style-loader", "css-loader"],
-            },
-        ],
-    },
-    plugins: [new HtmlWebpackPlugin({ inject: "body", template: "./src/index.html", filename: "index.html", })],
-    devServer: {
-        historyApiFallback: {
-            index: "/",
+module.exports = (env, argv) => {
+    const isProduction = argv.mode === "production";
+    
+    return {
+        mode: isProduction ? "production" : "development",
+        entry: "./src/index.tsx",
+        output: {
+            path: resolve(__dirname, "dist"),
+            filename: isProduction ? "static/index.[contenthash].js" : "static/index.js",
+            publicPath: "/",
         },
-        proxy: [
-            {
-                context: ["/clickhouse/"],
-                target: "http://localhost:8124",
+        resolve: {
+            extensions: [".ts", ".tsx", ".js", ".json"],
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.(ts|js)x?$/,
+                    exclude: /node_modules/,
+                    loader: "babel-loader",
+                },
+                {
+                    test: /\.css$/i,
+                    use: ["style-loader", "css-loader"],
+                },
+            ],
+        },
+        plugins: [new HtmlWebpackPlugin({ inject: "body", template: "./src/index.html", filename: "index.html", })],
+        devServer: {
+            historyApiFallback: {
+                index: "/",
             },
-            {
-                context: ["/gitlab/"],
-                target: "http://localhost:8124",
-            },
-        ],
-    },
+            proxy: [
+                {
+                    context: ["/clickhouse/"],
+                    target: "http://localhost:8124",
+                },
+                {
+                    context: ["/gitlab/"],
+                    target: "http://localhost:8124",
+                },
+            ],
+        },
+    };
 };
