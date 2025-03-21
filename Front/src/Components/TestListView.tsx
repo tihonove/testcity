@@ -82,7 +82,7 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
 
     async function createAndDownloadCSV(): Promise<void> {
         const data = await client.query<[string, string, string, string]>(
-            `SELECT rowNumberInAllBlocks() + 1, TestId, State, Duration FROM TestRunsByRun WHERE JobRunId in ['${props.jobRunIds.map(x => "'" + x + "'").join(",")}']`
+            `SELECT rowNumberInAllBlocks() + 1, TestId, State, Duration FROM TestRunsByRun WHERE JobRunId in [${props.jobRunIds.map(x => "'" + x + "'").join(",")}]`
         );
         data.unshift(["Order#", "Test Name", "Status", "Duration(ms)"]);
         const csvString = convertToCSV(data);
