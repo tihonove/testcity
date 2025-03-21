@@ -11,15 +11,15 @@ import { SvgPieChart } from "../Components/PieChart";
 import { JobRunNames } from "../Domain/JobsQueryRow";
 import { useBasePrefix } from "../Domain/Navigation";
 import { TestPerJobRunQueryRowNames } from "../Domain/TestPerJobRunQueryRow";
-import { formatDuration } from "../RunStatisticsChart/DurationUtils";
-import { RunStatisticsChart } from "../RunStatisticsChart/RunStatisticsChart";
+import { formatDuration } from "../Components/RunStatisticsChart/DurationUtils";
+import { RunStatisticsChart } from "../Components/RunStatisticsChart/RunStatisticsChart";
 import { theme } from "../Theme/ITheme";
 import { getOffsetTitle, toLocalTimeFromUtc, useSearchParam, useSearchParamAsState } from "../Utils";
 import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
-import { GroupBreadcrumps } from "./GroupBreadcrumps";
-import { RunStatus } from "./RunStatus";
-import { SuspenseFadingWrapper, useDelayedTransition } from "./useDelayedTransition";
-import { useProjectContextFromUrlParams } from "./useProjectContextFromUrlParams";
+import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
+import { RunStatus } from "../Components/RunStatus";
+import { SuspenseFadingWrapper, useDelayedTransition } from "../Components/useDelayedTransition";
+import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
 
 export function TestHistoryPage(): React.JSX.Element {
     const [testId] = useSearchParam("id");

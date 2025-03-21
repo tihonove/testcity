@@ -7,8 +7,8 @@ import React, { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
-import { ApproximateUnits, ITEMS_UNITS, TIME_UNITS } from "../Components/ApproximateUnits";
-import { TreeNode, TreeView } from "../Components/TreeView";
+import { ApproximateUnits, ITEMS_UNITS, TIME_UNITS } from "./ApproximateUnits";
+import { TreeNode, TreeView } from "./TreeView";
 import { RunStatus } from "./RunStatus";
 
 interface TestInfo {

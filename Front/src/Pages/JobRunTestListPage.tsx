@@ -12,9 +12,9 @@ import { JonRunIcon } from "../Components/Icons";
 import { useBasePrefix } from "../Domain/Navigation";
 import { reject } from "../TypeHelpers";
 import { useSearchParamDebouncedAsState } from "../Utils";
-import { GroupBreadcrumps } from "./GroupBreadcrumps";
-import { TestListView } from "./TestListView";
-import { useProjectContextFromUrlParams } from "./useProjectContextFromUrlParams";
+import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
+import { TestListView } from "../Components/TestListView";
+import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
 
 export function JobRunTestListPage(): React.JSX.Element {
     const basePrefix = useBasePrefix();

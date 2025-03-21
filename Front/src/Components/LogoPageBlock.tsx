@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import Logo from "../Components/Logo";
+import Logo from "./Logo";
 import { useBasePrefix } from "../Domain/Navigation";
 import { theme } from "../Theme/ITheme";
 import { Link } from "react-router-dom";

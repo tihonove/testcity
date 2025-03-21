@@ -1,4 +1,4 @@
-import { RunStatus } from "../Pages/RunStatus";
+import { RunStatus } from "../Components/RunStatus";
 
 export type TestPerJobRunQueryRow = [string, string, string, RunStatus, number, string, string, string, string, string];
 

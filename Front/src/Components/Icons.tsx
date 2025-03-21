@@ -13,7 +13,7 @@ import {
     ShapeSquareIcon32Regular,
 } from "@skbkontur/icons";
 import * as React from "react";
-import { RunStatus } from "../Pages/RunStatus";
+import { RunStatus } from "./RunStatus";
 
 export function JonIcon(props: { size: 16 | 24 | 32; status?: RunStatus }) {
     switch (props.size) {

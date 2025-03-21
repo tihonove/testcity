@@ -8,9 +8,9 @@ import { GroupAvatar } from "../Components/GroupAvatar";
 import { groupLink, useBasePrefix } from "../Domain/Navigation";
 import { useRootGroups } from "../Domain/Storage";
 import { theme } from "../Theme/ITheme";
-import { LogoPageBlock } from "./LogoPageBlock";
+import { LogoPageBlock } from "../Components/LogoPageBlock";
 import { useSearchParamAsState } from "../Utils";
-import { AddNewProjectModal } from "./AddNewProjectModal";
+import { AddNewProjectModal } from "../Components/AddNewProjectModal";
 
 export function GroupsPage() {
     const [searchText, setSearchText] = React.useState("");

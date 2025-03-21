@@ -28,11 +28,11 @@ import { GroupNode, isGroup, isProject, Project } from "../Domain/Storage";
 import { theme } from "../Theme/ITheme";
 import { useSearchParamAsState } from "../Utils";
 import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
-import { GroupBreadcrumps } from "./GroupBreadcrumps";
-import { useProjectContextFromUrlParams } from "./useProjectContextFromUrlParams";
-import { SuspenseFadingWrapper, useDelayedTransition } from "./useDelayedTransition";
+import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
+import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
+import { SuspenseFadingWrapper, useDelayedTransition } from "../Components/useDelayedTransition";
 import { ManualJobsInfo } from "../Domain/ManualJobsInfo";
-import { LogoPageBlock } from "./LogoPageBlock";
+import { LogoPageBlock } from "../Components/LogoPageBlock";
 
 export function ProjectsDashboardPage(): React.JSX.Element {
     const { rootGroup: rootProjectStructure, groupNodes, pathToGroup } = useProjectContextFromUrlParams();
@@ -53,11 +53,11 @@ export function ProjectsDashboardPage(): React.JSX.Element {
     );
     const allPipelineRuns = useStorageQuery(
         x =>
-            usePipelineGrouping && isProject(currentGroupOrProject)
-                ? x.getPipelineRunsByProject(currentGroupOrProject.id, currentBranchName)
-                : usePipelineGrouping
-                  ? x.getPipelineRunsOverview(projectIds, currentBranchName)
-                  : [],
+            usePipelineGrouping
+                ? isProject(currentGroupOrProject)
+                    ? x.getPipelineRunsByProject(currentGroupOrProject.id, currentBranchName)
+                    : x.getPipelineRunsOverview(projectIds, currentBranchName)
+                : [],
         [projectIds, currentBranchName, usePipelineGrouping, pathToGroup]
     );
 
@@ -117,7 +117,6 @@ export function ProjectsDashboardPage(): React.JSX.Element {
                     indentLevel={level}
                     project={project}
                     currentBranchName={currentBranchName}
-                    hideRuns={noRuns === "1"}
                     rootProjectStructure={rootProjectStructure}
                     allPipelineRuns={allPipelineRuns}
                 />

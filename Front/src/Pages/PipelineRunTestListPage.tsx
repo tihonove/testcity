@@ -9,9 +9,9 @@ import { AdditionalJobInfo } from "../Components/AdditionalJobInfo";
 import { ColorByState } from "../Components/Cells";
 import { JonRunIcon } from "../Components/Icons";
 import { getLinkToPipeline } from "../Domain/Navigation";
-import { GroupBreadcrumps } from "./GroupBreadcrumps";
-import { TestListView } from "./TestListView";
-import { useProjectContextFromUrlParams } from "./useProjectContextFromUrlParams";
+import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
+import { TestListView } from "../Components/TestListView";
+import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
 
 export function PipelineRunTestListPage(): React.JSX.Element {
     const { rootGroup: rootProjectStructure, groupNodes, pathToGroup } = useProjectContextFromUrlParams();

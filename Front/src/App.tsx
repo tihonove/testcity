@@ -12,8 +12,8 @@ import { MergeRequestJobsPage } from "./Pages/MergeRequestJobsPage";
 import { PipelineRunTestListPage } from "./Pages/PipelineRunTestListPage";
 import { ProjectsDashboardPage } from "./Pages/ProjectsDashboardPage";
 import { TestHistoryPage } from "./Pages/TestHistoryPage";
-import { TestsTreeMapChart } from "./Pages/TestsTreeMapChart";
-import { TestsTreeView } from "./Pages/TestsTreeView";
+import { TestsTreeMapChart } from "./Components/TestsTreeMapChart";
+import { TestsTreeView } from "./Components/TestsTreeView";
 import { useTestAnalyticsDarkMode } from "./Theme/UseTestAnalyticsDarkMode";
 import { RedirectToNewTestHistoryPage } from "./RedirectToNewTestHistoryPage";
 

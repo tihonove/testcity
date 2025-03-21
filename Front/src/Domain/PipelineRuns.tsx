@@ -1,19 +1,16 @@
-import { ShapeSquareIcon16Regular, ShapeSquareIcon16Solid, ShareNetworkIcon } from "@skbkontur/icons";
+import { ShareNetworkIcon } from "@skbkontur/icons";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import styled, { useTheme } from "styled-components";
-import { BranchCell, JobLinkWithResults, SelectedOnHoverTr } from "../Components/Cells";
-import { createLinkToJob, createLinkToJobRun, createLinkToPipelineRun, getLinkToPipeline } from "./Navigation";
-import { formatTestDuration, getLinkToJob, getText, toLocalTimeFromUtc } from "../Utils";
-import { JobIdWithParentProject, JobIdWithParentProjectNames } from "./JobIdWithParentProject";
-import { GroupNode, Project } from "./Storage";
-import { PipelineRunsQueryRow, PipelineRunsNames } from "./PipelineRunsQueryRow";
+import styled from "styled-components";
 import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
-import { ManualJobsInfo } from "./ManualJobsInfo";
+import { BranchCell, JobLinkWithResults, SelectedOnHoverTr } from "../Components/Cells";
+import { formatTestDuration, getText, toLocalTimeFromUtc } from "../Utils";
+import { createLinkToPipelineRun, getLinkToPipeline } from "./Navigation";
+import { PipelineRunsNames, PipelineRunsQueryRow } from "./PipelineRunsQueryRow";
+import { GroupNode, Project } from "./Storage";
 
 interface PipelineRunsProps {
     indentLevel: number;
-    hideRuns?: boolean;
     project: Project;
     currentBranchName?: string;
     rootProjectStructure: GroupNode;
@@ -23,13 +20,11 @@ interface PipelineRunsProps {
 export function PipelineRuns({
     rootProjectStructure,
     project,
-    hideRuns,
     allPipelineRuns,
     currentBranchName,
     indentLevel,
 }: PipelineRunsProps) {
     const projectPath = useStorageQuery(s => s.getPathToProjectById(project.id), [project.id]) ?? [];
-    const theme = useTheme();
     const hasFailedRuns = false;
     return (
         <tbody>
