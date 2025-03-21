@@ -39,29 +39,29 @@ public sealed class TestMetricsSender : IDisposable
 
             if (job.Duration.HasValue)
             {
-                metrics.Add(new MetricPoint("GitLabProjectTestsMetrics.JobDuration", job.Duration.Value, tags));
+                metrics.Add(new MetricPoint("JobDuration", job.Duration.Value, tags));
             }
 
             if (job.Coverage.HasValue)
             {
-                metrics.Add(new MetricPoint("GitLabProjectTestsMetrics.Coverage", job.Coverage.Value, tags));
+                metrics.Add(new MetricPoint("Coverage", job.Coverage.Value, tags));
             }
 
             if (job.Artifacts != null)
             {
-                metrics.Add(new MetricPoint("GitLabProjectTestsMetrics.ArtifactSize", job.Artifacts.Size, tags));
+                metrics.Add(new MetricPoint("ArtifactSize", job.Artifacts.Size, tags));
             }
 
             if (job.QueuedDuration.HasValue)
             {
-                metrics.Add(new MetricPoint("GitLabProjectTestsMetrics.QueuedDuration", job.QueuedDuration.Value, tags));
+                metrics.Add(new MetricPoint("QueuedDuration", job.QueuedDuration.Value, tags));
             }
 
             await this.graphiteClient.SendAsync(metrics);
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Ошибка при отправке метрик: {ErrorMessage}", ex.Message);
+            logger.LogError(ex, "Error while sending metrics: {ErrorMessage}", ex.Message);
         }
     }
 
