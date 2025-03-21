@@ -26,17 +26,53 @@ public class JUnitExtractor(ILogger<JUnitExtractor> log)
         return (testCountForWholeJob, testRunsForWholeJob);
     }
 
+    public (TestCount counter, List<TestRun> runs) CollectTestsFromStreams(IEnumerable<Stream> xmlStreams)
+    {
+        var testCountForWholeJob = new TestCount();
+        var testRunsForWholeJob = new List<TestRun>();
+
+        log.LogInformation("Start handling test report streams");
+
+        foreach (var stream in xmlStreams)
+        {
+            log.LogDebug("Processing a report stream");
+
+            var result = CollectTestRunsFromJunit(stream);
+            testCountForWholeJob += result.counter;
+            testRunsForWholeJob.AddRange(result.testRuns);
+
+            log.LogDebug(result.counter.ToString());
+        }
+
+        log.LogInformation("Finished processing all report streams. Total tests: {Total}", testCountForWholeJob.Total);
+
+        return (testCountForWholeJob, testRunsForWholeJob);
+    }
+
     private (TestCount counter, List<TestRun> testRuns) CollectTestRunsFromJunit(string reportPath)
     {
+        using var stream = File.OpenRead(reportPath);
+        var result = CollectTestRunsFromJunit(stream);
+
+        if (result.isReportModified)
+        {
+            SaveModifiedReport(reportPath, result.report);
+        }
+
+        return (result.counter, result.testRuns);
+    }
+
+    private (TestCount counter, List<TestRun> testRuns, XDocument report, bool isReportModified) CollectTestRunsFromJunit(Stream stream)
+    {
         var isReportModified = false;
-        var report = XDocument.Load(reportPath);
+        var report = XDocument.Load(stream);
         var root = report.Root!;
 
         var testRuns = new List<TestRun>();
         if (root.Name.LocalName != "testsuites" && root.Name.LocalName != "testsuite")
         {
-            log.LogError($"File is not junit report: {reportPath}");
-            return (new TestCount(), testRuns);
+            log.LogError("File is not junit report");
+            return (new TestCount(), testRuns, report, isReportModified);
         }
 
         var testCount = new TestCount();
@@ -70,12 +106,7 @@ public class JUnitExtractor(ILogger<JUnitExtractor> log)
             });
         }
 
-        if (isReportModified)
-        {
-            SaveModifiedReport(reportPath, report);
-        }
-
-        return (testCount, testRuns);
+        return (testCount, testRuns, report, isReportModified);
     }
 
     private static TestResult GetStatus(bool isSkipped, bool isFailed)
@@ -124,6 +155,7 @@ public class JUnitExtractor(ILogger<JUnitExtractor> log)
             log.LogInformation("Report file {Path} modified by Test Analytics", reportPath);
         }
     }
+
 
     private readonly bool doNotModifyReports = true;
     private readonly ILogger<JUnitExtractor> log = log;

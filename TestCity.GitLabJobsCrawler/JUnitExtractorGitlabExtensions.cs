@@ -6,32 +6,48 @@ public static class JUnitExtractorGitlabExtensions
 {
     public static TestReportData? TryExtractTestRunsFromGitlabArtifact(this JUnitExtractor jUnitExtractor, byte[] artifactContent)
     {
-        var tempPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-        Directory.CreateDirectory(tempPath);
-
-        try
+        using (var zipStream = new MemoryStream(artifactContent))
+        using (var archive = new ZipArchive(zipStream))
         {
-            using (var zipStream = new MemoryStream(artifactContent))
-            using (var archive = new ZipArchive(zipStream))
-            {
-                archive.ExtractToDirectory(tempPath);
-            }
+            var xmlEntries = archive.Entries
+                .Where(entry => entry.FullName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase))
+                .ToList();
 
-            var xmlFiles = Directory.EnumerateFiles(tempPath, "*.xml", SearchOption.AllDirectories)
-                                    .Where(file => File.ReadAllText(file).Contains("<testsuite"))
-                                    .ToList();
-
-            if (xmlFiles.Count == 0)
+            if (xmlEntries.Count == 0)
             {
                 return null;
             }
 
-            var result = jUnitExtractor.CollectTestsFromReports(xmlFiles);
+            IEnumerable<Stream> GetXmlStreams()
+            {
+                foreach (var entry in xmlEntries)
+                {
+                    using var stream = entry.Open();
+                    using var reader = new StreamReader(stream);
+                    var content = reader.ReadToEnd();
+
+                    if (content.Contains("<testsuite"))
+                    {
+                        var contentStream = new MemoryStream();
+                        using (var writer = new StreamWriter(contentStream, leaveOpen: true))
+                        {
+                            writer.Write(content);
+                        }
+                        contentStream.Position = 0;
+                        yield return contentStream;
+
+                        // Это глязный костыль, надо переписать
+                        contentStream.Dispose();
+                    }
+                }
+            }
+
+            var result = jUnitExtractor.CollectTestsFromStreams(GetXmlStreams());
+            if (result.counter.Total == 0)
+            {
+                return null;
+            }
             return new TestReportData(result.counter, result.runs);
-        }
-        finally
-        {
-            Directory.Delete(tempPath, true);
         }
     }
 }
