@@ -31,6 +31,13 @@
             "problemMatcher": [],
             "label": "npm: start-prod-api",
             "detail": "webpack serve --config webpack.config.prod-api.js"
+        },
+        {
+            "type": "npm",
+            "script": "start",
+            "problemMatcher": [],
+            "label": "npm: start",
+            "detail": "webpack serve"
         }
     ]
 }
