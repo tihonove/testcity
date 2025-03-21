@@ -91,10 +91,6 @@ export function JobRunTestListPage(): React.JSX.Element {
                     triggered={triggered}
                     pipelineSource={pipelineSource}
                 />
-                <Link
-                    to={`${basePrefix}jobs/${encodeURIComponent(jobId)}/runs/${encodeURIComponent(jobRunId)}/treemap`}>
-                    Open tree map
-                </Link>
                 <Fit>
                     <TestListView
                         jobRunIds={[jobRunId]}
@@ -102,6 +98,14 @@ export function JobRunTestListPage(): React.JSX.Element {
                         successTestsCount={Number(successTestsCount)}
                         failedTestsCount={Number(failedTestsCount)}
                         skippedTestsCount={Number(skippedTestsCount)}
+                        linksBlock={
+                            <Fit>
+                                <Link
+                                    to={`${basePrefix}jobs/${encodeURIComponent(jobId)}/runs/${encodeURIComponent(jobRunId)}/treemap`}>
+                                    Open tree map
+                                </Link>
+                            </Fit>
+                        }
                     />
                 </Fit>
             </ColumnStack>

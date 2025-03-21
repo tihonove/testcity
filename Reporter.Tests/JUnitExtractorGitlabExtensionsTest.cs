@@ -27,6 +27,26 @@ namespace Kontur.TestCity.GitLabJobsCrawler.Tests
             var result = junitExtractor.TryExtractTestRunsFromGitlabArtifact(artifactContent);
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Counters.Total, Is.EqualTo(374));
+            Assert.That(result.Counters.Failed, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void CheckTestOutput()
+        {
+            var artifactFileName = "diadoc-screenshot-tests-artifacts.zip";
+            var artifactPath = TestFilesAccessor.GetTestFile(Path.Combine("test-data", artifactFileName));
+            var artifactContent = File.ReadAllBytes(artifactPath.Path);
+            var result = junitExtractor.TryExtractTestRunsFromGitlabArtifact(artifactContent);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Counters.Total, Is.EqualTo(402));
+            Assert.That(result.Counters.Failed, Is.EqualTo(42));
+
+            foreach (var test in result.Runs.Where(x => x.TestResult == TestAnalytics.Reporter.Client.TestResult.Failed))
+            {
+                TestContext.WriteLine(test.JUnitFailureMessage);
+                TestContext.WriteLine(test.JUnitFailureOutput);
+                TestContext.WriteLine(test.JUnitSystemOutput);
+            }
         }
     }
 }

@@ -363,7 +363,7 @@ export class TestAnalyticsStorage {
                 State, 
                 TestId, 
                 Duration, 
-                StartDateTime 
+                StartDateTime
             FROM TestRunsByRun 
             WHERE ${condition} 
             ORDER BY 

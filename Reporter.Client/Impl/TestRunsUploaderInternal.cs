@@ -19,10 +19,11 @@ internal class TestRunsUploaderInternal(ClickHouseConnection connection)
         await foreach (var testRuns in lines.Batches(1000))
         {
             var values = testRuns.Select(x =>
-                new object[]
+                new object?[]
                 {
                     info.JobId, info.JobRunId, info.BranchName, x.TestId, (int)x.TestResult, x.Duration,
                     x.StartDateTime.ToUniversalTime(), info.AgentName, info.AgentOSName, info.JobUrl,
+                    x.JUnitFailureMessage, x.JUnitFailureOutput, x.JUnitSystemOutput,
                 });
             await bulkCopyInterface.WriteToServerAsync(values);
         }
@@ -40,5 +41,8 @@ internal class TestRunsUploaderInternal(ClickHouseConnection connection)
         "AgentName",
         "AgentOSName",
         "JobUrl",
+        "JUnitFailureMessage",
+        "JUnitFailureOutput",
+        "JUnitSystemOutput",
     };
 }

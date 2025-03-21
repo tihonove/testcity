@@ -8,61 +8,36 @@ namespace Kontur.TestCity.GitLabJobsCrawler;
 
 public class JUnitExtractor(ILogger<JUnitExtractor> log)
 {
-    public (TestCount counter, List<TestRun> runs) CollectTestsFromReports(IEnumerable<string> reportPaths)
+    public TestReportData CollectTestsFromReports(IEnumerable<string> reportPaths)
     {
-        var testCountForWholeJob = new TestCount();
-        var testRunsForWholeJob = new List<TestRun>();
-        foreach (var reportPath in reportPaths)
-        {
-            log.LogInformation("Start handling the report {ReportPath}", reportPath);
-
-            var testRunsFromReport = CollectTestRunsFromJunit(reportPath);
-            testCountForWholeJob += testRunsFromReport.counter;
-            testRunsForWholeJob.AddRange(testRunsFromReport.testRuns);
-
-            log.LogDebug(testRunsFromReport.counter.ToString());
-        }
-
-        return (testCountForWholeJob, testRunsForWholeJob);
+        return reportPaths.Select(CollectTestRunsFromJunit).Aggregate(TestReportData.CreateEmpty(), TestReportDataExtensions.Merge);
     }
 
-    public (TestCount counter, List<TestRun> runs) CollectTestsFromStreams(IEnumerable<Stream> xmlStreams)
+    public TestReportData CollectTestsFromStreams(IEnumerable<Stream> xmlStreams)
     {
-        var testCountForWholeJob = new TestCount();
-        var testRunsForWholeJob = new List<TestRun>();
-
-        log.LogInformation("Start handling test report streams");
-
-        foreach (var stream in xmlStreams)
-        {
-            log.LogDebug("Processing a report stream");
-
-            var result = CollectTestRunsFromJunit(stream);
-            testCountForWholeJob += result.counter;
-            testRunsForWholeJob.AddRange(result.testRuns);
-
-            log.LogDebug(result.counter.ToString());
-        }
-
-        log.LogInformation("Finished processing all report streams. Total tests: {Total}", testCountForWholeJob.Total);
-
-        return (testCountForWholeJob, testRunsForWholeJob);
+        return xmlStreams.Select(CollectTestRunsFromJunit).Aggregate(TestReportData.CreateEmpty(), TestReportDataExtensions.Merge);
     }
 
-    private (TestCount counter, List<TestRun> testRuns) CollectTestRunsFromJunit(string reportPath)
+    private TestReportData CollectTestRunsFromJunit(string reportPath)
     {
         using var stream = File.OpenRead(reportPath);
-        var result = CollectTestRunsFromJunit(stream);
+        var result = CollectTestRunsFromJunitInternal(stream);
 
         if (result.isReportModified)
         {
             SaveModifiedReport(reportPath, result.report);
         }
 
-        return (result.counter, result.testRuns);
+        return result.Item1;
     }
 
-    private (TestCount counter, List<TestRun> testRuns, XDocument report, bool isReportModified) CollectTestRunsFromJunit(Stream stream)
+    public TestReportData CollectTestRunsFromJunit(Stream stream)
+    {
+        var result = CollectTestRunsFromJunitInternal(stream);
+        return result.Item1;
+    }
+
+    private (TestReportData, XDocument report, bool isReportModified) CollectTestRunsFromJunitInternal(Stream stream)
     {
         var isReportModified = false;
         var report = XDocument.Load(stream);
@@ -72,7 +47,7 @@ public class JUnitExtractor(ILogger<JUnitExtractor> log)
         if (root.Name.LocalName != "testsuites" && root.Name.LocalName != "testsuite")
         {
             log.LogError("File is not junit report");
-            return (new TestCount(), testRuns, report, isReportModified);
+            return (new TestReportData(new TestCount(), testRuns), report, isReportModified);
         }
 
         var testCount = new TestCount();
@@ -86,6 +61,7 @@ public class JUnitExtractor(ILogger<JUnitExtractor> log)
 
             var failure = testCase.Element("failure");
             var skipped = testCase.Element("skipped");
+            var systemOutput = testCase.Element("system-out");
             if (failure?.Value.Contains("Test history") == false)
             {
                 isReportModified = true;
@@ -103,10 +79,13 @@ public class JUnitExtractor(ILogger<JUnitExtractor> log)
                     ? (long)TimeSpan.FromSeconds(time).TotalMilliseconds
                     : 0,
                 StartDateTime = startDateTime.DateTime,
+                JUnitFailureMessage = testStatus != TestResult.Success ? failure?.Attribute("message")?.Value : null,
+                JUnitFailureOutput = testStatus != TestResult.Success ? failure?.Value : null,
+                JUnitSystemOutput = testStatus != TestResult.Success ? systemOutput?.Value : null,
             });
         }
 
-        return (testCount, testRuns, report, isReportModified);
+        return (new TestReportData(testCount, testRuns), report, isReportModified);
     }
 
     private static TestResult GetStatus(bool isSkipped, bool isFailed)

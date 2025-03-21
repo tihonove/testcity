@@ -6,48 +6,30 @@ public static class JUnitExtractorGitlabExtensions
 {
     public static TestReportData? TryExtractTestRunsFromGitlabArtifact(this JUnitExtractor jUnitExtractor, byte[] artifactContent)
     {
+        var result = TestReportData.CreateEmpty();
         using (var zipStream = new MemoryStream(artifactContent))
         using (var archive = new ZipArchive(zipStream))
         {
-            var xmlEntries = archive.Entries
-                .Where(entry => entry.FullName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase))
-                .ToList();
-
-            if (xmlEntries.Count == 0)
+            foreach (var entry in archive.Entries.Where(entry => entry.FullName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase)))
             {
-                return null;
-            }
+                using var stream = entry.Open();
+                using var memoryStream = new MemoryStream();
+                stream.CopyTo(memoryStream);
+                memoryStream.Position = 0;
+                using var reader = new StreamReader(memoryStream);
+                var content = reader.ReadToEnd();
 
-            IEnumerable<Stream> GetXmlStreams()
-            {
-                foreach (var entry in xmlEntries)
+                if (content.Contains("<testsuite"))
                 {
-                    using var stream = entry.Open();
-                    using var reader = new StreamReader(stream);
-                    var content = reader.ReadToEnd();
-
-                    if (content.Contains("<testsuite"))
-                    {
-                        var contentStream = new MemoryStream();
-                        using (var writer = new StreamWriter(contentStream, leaveOpen: true))
-                        {
-                            writer.Write(content);
-                        }
-                        contentStream.Position = 0;
-                        yield return contentStream;
-
-                        // Это глязный костыль, надо переписать
-                        contentStream.Dispose();
-                    }
+                    memoryStream.Position = 0;
+                    result = result.Merge(jUnitExtractor.CollectTestRunsFromJunit(memoryStream));
                 }
             }
-
-            var result = jUnitExtractor.CollectTestsFromStreams(GetXmlStreams());
-            if (result.counter.Total == 0)
-            {
-                return null;
-            }
-            return new TestReportData(result.counter, result.runs);
         }
+        if (result.Counters.Total == 0)
+        {
+            return null;
+        }
+        return result;
     }
 }

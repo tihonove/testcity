@@ -2,8 +2,6 @@ using ClickHouse.Client.ADO;
 using ClickHouse.Client.Copy;
 using ClickHouse.Client.Utility;
 using Kontur.TestAnalytics.Core.Clickhouse;
-using Kontur.TestAnalytics.Reporter.Cli;
-using Kontur.TestAnalytics.Reporter.Client;
 using NUnit.Framework;
 
 namespace Kontur.TestAnalytics.Reporter.Tests;
@@ -20,55 +18,6 @@ public class Tests
         await command.ExecuteNonQueryAsync();
     }
 
-    [Test]
-    public async Task Test013()
-    {
-        await using var connection = CreateConnection();
-        var dateTime = DateTime.Now;
-        foreach (var fileReference in TestFilesAccessor.EnumerateTestFiles("TestData", "*.csv"))
-        {
-            using var file = fileReference.AcquireFile();
-            var filePath = file.Path;
-            var buildId = filePath.Substring(filePath.IndexOf("Wolfs_Unit_tests_")).Replace("Wolfs_Unit_tests_", string.Empty)
-                .Replace("-tests.csv", string.Empty);
-            Console.WriteLine(buildId);
-            var lines = TestRunsReader.ReadFromTeamcityTestReport(filePath);
-            dateTime = dateTime.AddDays(-1);
-            await TestRunsUploader.UploadAsync(
-                new JobRunInfo
-                {
-                    JobId = "Forms_UnitTests",
-                    PipelineId = buildId + "123",
-                    JobRunId = buildId + "1",
-                    BranchName = "master",
-                    AgentName = "KE-FRM-AGENT-01",
-                    AgentOSName = "Windows",
-                    JobUrl = "https://kontur.ru",
-                }, lines);
-            await TestRunsUploader.UploadAsync(
-                new JobRunInfo
-                {
-                    JobId = "Forms_UnitTests",
-                    PipelineId = buildId + "123",
-                    JobRunId = buildId + "2",
-                    BranchName = "tihonove/branch-1",
-                    AgentName = "KE-FRM-AGENT-01",
-                    AgentOSName = "Windows",
-                    JobUrl = "https://kontur.ru",
-                }, lines);
-            await TestRunsUploader.UploadAsync(
-                new JobRunInfo
-                {
-                    JobId = "Forms_UnitTests",
-                    PipelineId = buildId + "123",
-                    JobRunId = buildId + "3",
-                    BranchName = "tihonove/branch-2",
-                    AgentName = "KE-FRM-AGENT-01",
-                    AgentOSName = "Linux",
-                    JobUrl = "https://kontur.ru",
-                }, lines);
-        }
-    }
 
     private static readonly string[] Columns = new[]
         {
@@ -98,24 +47,6 @@ public class Tests
         var values = new[] { new object[] { "1", "1", "1", "1", 1, 1L, DateTime.Now.ToUniversalTime(), "1", "1" } };
         await bulkCopyInterface.WriteToServerAsync(values);
         Console.WriteLine(bulkCopyInterface.RowsWritten);
-    }
-
-    [Test]
-    public async Task Test04()
-    {
-        using var testFile = TestFilesAccessor.GetTestFile(Path.Combine("TestData", "Wolfs_Unit_tests_11582-tests.csv"));
-        var lines = TestRunsReader.ReadFromTeamcityTestReport(testFile.Path);
-        var runInfo = new JobRunInfo
-        {
-            JobId = "Forms_UnitTests",
-            JobRunId = "32028281",
-            PipelineId = "123",
-            BranchName = "master",
-            AgentName = "AGENT-1",
-            AgentOSName = "Windows",
-            JobUrl = "https://kontur.ru",
-        };
-        await TestRunsUploader.UploadAsync(runInfo, lines);
     }
 
     [Ignore("для ручного запуска")]

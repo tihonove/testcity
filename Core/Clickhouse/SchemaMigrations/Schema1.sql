@@ -9,7 +9,11 @@ CREATE TABLE IF NOT EXISTS TestRuns
     `StartDateTime` DateTime,
     `AgentName` String,
     `AgentOSName` String,
-    `JobUrl` String
+    `JobUrl` String,
+    `JUnitFailureMessage` String,
+    `JUnitFailureOutput` String,
+    `JUnitSystemOutput` String
+    
 )
 ENGINE = MergeTree
 PARTITION BY toMonday(StartDateTime)
@@ -104,7 +108,7 @@ AS SELECT
     first_value(TestRuns.AgentOSName) AS AgentOSName,
     min(TestRuns.StartDateTime) AS StartDateTime,
     max(TestRuns.StartDateTime) AS EndDateTime
-FROM test_analytics.TestRuns
+FROM TestRuns
 GROUP BY
     JobId,
     JobRunId;
@@ -120,7 +124,10 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS TestRunsByRun
     `Duration` Decimal(18, 0),
     `StartDateTime` DateTime,
     `AgentName` String,
-    `AgentOSName` String
+    `AgentOSName` String,
+    `JUnitFailureMessage` String,
+    `JUnitFailureOutput` String,
+    `JUnitSystemOutput` String
 )
 ENGINE = MergeTree
 PARTITION BY toMonday(StartDateTime)
@@ -136,5 +143,8 @@ AS SELECT
     Duration,
     StartDateTime,
     AgentName,
-    AgentOSName
-FROM test_analytics.TestRuns
+    AgentOSName,
+    JUnitFailureMessage,
+    JUnitFailureOutput,
+    JUnitSystemOutput
+FROM TestRuns

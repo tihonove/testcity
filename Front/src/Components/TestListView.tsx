@@ -16,6 +16,7 @@ import { RunStatus } from "./RunStatus";
 import { TestName } from "./TestName";
 import { TestTypeFilterButton } from "./TestTypeFilterButton";
 import { SuspenseFadingWrapper, useDelayedTransition } from "./useDelayedTransition";
+import { Fill, Fit, RowStack } from "@skbkontur/react-stack-layout";
 
 interface TestListViewProps {
     jobRunIds: string[];
@@ -23,6 +24,7 @@ interface TestListViewProps {
     successTestsCount: number;
     skippedTestsCount: number;
     failedTestsCount: number;
+    linksBlock?: React.ReactNode;
 }
 
 export function TestListView(props: TestListViewProps): React.JSX.Element {
@@ -87,55 +89,69 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
         downloadCSV(`${props.jobRunIds.join("-")}.csv`, csvString);
     }
 
+
     return (
         <Suspense fallback={<div className="loading">Загрузка...</div>}>
             <SuspenseFadingWrapper $fading={isFading}>
-                <Gapped>
-                    <Input
-                        placeholder={"Search in tests"}
-                        width={500}
-                        value={searchText}
-                        onValueChange={setSearchText}
-                        rightIcon={
-                            debouncedSearchValue != searchValue ? <Spinner type={"mini"} caption={""} /> : undefined
-                        }
-                    />
-                    <TestTypeFilterButton
-                        type={undefined}
-                        currentType={testCasesType}
-                        count={props.successTestsCount + props.failedTestsCount + props.skippedTestsCount}
-                        onClick={setTestCasesType}
-                    />
-                    <TestTypeFilterButton
-                        type="Success"
-                        currentType={testCasesType}
-                        count={props.successTestsCount}
-                        onClick={setTestCasesType}
-                    />
-                    <TestTypeFilterButton
-                        type="Failed"
-                        currentType={testCasesType}
-                        count={props.failedTestsCount}
-                        onClick={setTestCasesType}
-                    />
-                    <TestTypeFilterButton
-                        type="Skipped"
-                        currentType={testCasesType}
-                        count={props.skippedTestsCount}
-                        onClick={setTestCasesType}
-                    />
-                </Gapped>
-                <Gapped>
-                    <Button
-                        title="Download tests list in CSV"
-                        icon={<NetDownloadIcon24Regular />}
-                        onClick={() => {
-                            // eslint-disable-next-line @typescript-eslint/no-floating-promises
-                            createAndDownloadCSV();
-                        }}>
-                        Download
-                    </Button>
-                </Gapped>
+                <RowStack baseline block gap={2}>
+                    <Fit>
+                        <Input
+                            placeholder={"Search in tests"}
+                            width={500}
+                            value={searchText}
+                            onValueChange={setSearchText}
+                            rightIcon={
+                                debouncedSearchValue != searchValue ? <Spinner type={"mini"} caption={""} /> : undefined
+                            }
+                        />
+                    </Fit>
+                    <Fit>
+                        <TestTypeFilterButton
+                            type={undefined}
+                            currentType={testCasesType}
+                            count={props.successTestsCount + props.failedTestsCount + props.skippedTestsCount}
+                            onClick={setTestCasesType}
+                        />
+                    </Fit>
+                    <Fit>
+                        <TestTypeFilterButton
+                            type="Success"
+                            currentType={testCasesType}
+                            count={props.successTestsCount}
+                            onClick={setTestCasesType}
+                        />
+                    </Fit>
+                    <Fit>
+                        <TestTypeFilterButton
+                            type="Failed"
+                            currentType={testCasesType}
+                            count={props.failedTestsCount}
+                            onClick={setTestCasesType}
+                        />
+                    </Fit>
+                    <Fit>
+                        <TestTypeFilterButton
+                            type="Skipped"
+                            currentType={testCasesType}
+                            count={props.skippedTestsCount}
+                            onClick={setTestCasesType}
+                        />
+                    </Fit>
+                    <Fill />
+                    {props.linksBlock}
+                    <Fit>
+                        <Button
+                            use="link"
+                            title="Download tests list in CSV"
+                            icon={<NetDownloadIcon24Regular />}
+                            onClick={() => {
+                                // eslint-disable-next-line @typescript-eslint/no-floating-promises
+                                createAndDownloadCSV();
+                            }}>
+                            Download tests as csv
+                        </Button>
+                    </Fit>
+                </RowStack>
                 <TestList>
                     <thead>
                         <TestRunsTableHeadRow>
@@ -306,6 +322,6 @@ const StatusCell = styled.td<{ status: RunStatus }>`
         props.status == "Success"
             ? props.theme.successTextColor
             : props.status == "Failed"
-              ? props.theme.failedTextColor
-              : undefined};
+                ? props.theme.failedTextColor
+                : undefined};
 `;

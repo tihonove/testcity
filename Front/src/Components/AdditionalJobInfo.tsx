@@ -40,6 +40,7 @@ const InfoRow = styled.tr`
 `;
 
 const InfoKey = styled.td`
+    padding: 5px 0;
     width: 150px;
     font-weight: bold;
 `;
