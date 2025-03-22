@@ -7,7 +7,7 @@ import { createLinkToJob, createLinkToJobRun } from "./Navigation";
 import { formatTestDuration, getLinkToJob, getText, toLocalTimeFromUtc } from "../Utils";
 import { JobIdWithParentProject, JobIdWithParentProjectNames } from "./JobIdWithParentProject";
 import { JobRunNames, JobsQueryRow } from "./JobsQueryRow";
-import { GroupNode } from "./Storage";
+import { GroupNode } from "./Storage/Storage";
 
 interface JobsViewProps {
     hideRuns?: boolean;

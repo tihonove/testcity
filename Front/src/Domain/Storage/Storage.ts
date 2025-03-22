@@ -1,15 +1,15 @@
 import { ClickHouseClient } from "@clickhouse/client-web";
-import { JobIdWithParentProject } from "./JobIdWithParentProject";
-import { uuidv4 } from "./Guids";
-import { JobsQueryRow } from "./JobsQueryRow";
+import { JobIdWithParentProject } from "../JobIdWithParentProject";
+import { uuidv4 } from "../Guids";
+import { JobsQueryRow } from "../JobsQueryRow";
 import { delay } from "@skbkontur/react-ui/cjs/lib/utils";
-import { reject } from "../TypeHelpers";
-import { PipelineRunsQueryRow } from "./PipelineRunsQueryRow";
-import { TestRunQueryRow } from "./TestRunQueryRow";
-import { TestPerJobRunQueryRow } from "./TestPerJobRunQueryRow";
+import { reject } from "../../TypeHelpers";
+import { PipelineRunsQueryRow } from "../PipelineRunsQueryRow";
+import { TestRunQueryRow } from "./TestRunQuery";
+import { TestPerJobRunQueryRow } from "../TestPerJobRunQueryRow";
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports
-const hardCodedGroups: GroupNode[] = require("../../gitlab-projects.json");
+const hardCodedGroups: GroupNode[] = require("../../../gitlab-projects.json");
 
 export interface Group {
     id: string;
@@ -92,6 +92,19 @@ export class TestAnalyticsStorage {
         `;
         const result = await this.executeClickHouseQuery<[string, string, string][]>(query);
         return result[0];
+    }
+
+    public async getTestListForCsv(jobRunIds: string[]): Promise<[string, string, string, string][]> {
+        const query = `SELECT 
+                rowNumberInAllBlocks() + 1, 
+                TestId, 
+                State, 
+                Duration 
+            FROM TestRunsByRun 
+            WHERE 
+                JobRunId in [${jobRunIds.map(x => "'" + x + "'").join(",")}]`;
+        const data = await this.executeClickHouseQuery<[string, string, string, string][]>(query);
+        return data;
     }
 
     public findPathToProjectByIdOrNull(projectId: string): Promise<[GroupNode[], Project] | undefined> {
@@ -377,29 +390,37 @@ export class TestAnalyticsStorage {
     ): Promise<TestRunQueryRow[]> {
         let condition = `JobRunId in [${jobRunIds.map(x => "'" + x + "'").join(",")}]`;
         if (testIdQuery?.trim()) condition += ` AND TestId LIKE '%${testIdQuery}%'`;
-        if (testStateFilter != undefined) condition += ` AND State = '${testStateFilter}'`;
+        let havingCondition = "";
+        const finalStateExpression =
+            "if(has(groupArray(t.State), 'Success'),  'Success', if(has(groupArray(t.State), 'Failed'), 'Failed', any(t.State)))";
+        if (testStateFilter != undefined) havingCondition = `${finalStateExpression} = '${testStateFilter}'`;
 
         const query = `
             SELECT 
-                State, 
-                TestId, 
-                Duration, 
-                StartDateTime,
-                JobId 
-            FROM TestRunsByRun 
+                ${finalStateExpression} AS FinalState,
+                TestId,
+                avg(Duration) AS AvgDuration,
+                min(Duration) AS MinDuration,
+                max(Duration) AS MaxDuration,
+                any(JobId) AS JobId,
+                arrayStringConcat(groupArray(t.State), ',') AS AllStates,
+                min(StartDateTime) AS StartDateTime,
+                count() AS TotalRuns,
+                sum(
+                    CASE 
+                        WHEN t.State = 'Failed' THEN 100
+                        WHEN t.State = 'Success' THEN 1
+                        WHEN t.State = 'Skipped' THEN 0
+                        ELSE 0
+                    END
+                ) AS StateWeight
+            FROM TestRunsByRun t
             WHERE ${condition} 
-            ORDER BY 
-                    ${
-                        sortField ??
-                        `CASE 
-                        WHEN State = 'Failed' THEN 1
-                        WHEN State = 'Success' THEN 2
-                        WHEN State = 'Skipped' THEN 3
-                        ELSE 4
-                    END`
-                    } 
-            ${sortField ? (sortDirection ?? "ASC") : ""}
-            LIMIT ${(itemsPerPage * page).toString()}, ${itemsPerPage.toString()}`;
+            GROUP BY TestId
+            ${havingCondition ? `HAVING ${havingCondition}` : ""}
+            ORDER BY ${sortField ?? "StateWeight"}  ${sortField ? (sortDirection ?? "ASC") : "DESC"}
+            LIMIT ${(itemsPerPage * page).toString()}, ${itemsPerPage.toString()}
+            `;
         return await this.executeClickHouseQuery<TestRunQueryRow[]>(query);
     }
 

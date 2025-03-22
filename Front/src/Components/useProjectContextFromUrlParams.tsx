@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
 import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
-import { GroupNode, Project } from "../Domain/Storage";
+import { GroupNode, Project } from "../Domain/Storage/Storage";
 import { reject } from "../TypeHelpers";
 
 export function useProjectContextFromUrlParams(): {

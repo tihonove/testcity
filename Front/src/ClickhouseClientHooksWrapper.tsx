@@ -3,7 +3,7 @@ import { WebClickHouseClient } from "@clickhouse/client-web/dist/client";
 import { createClient } from "@clickhouse/client-web";
 import fetchIntercept from "fetch-intercept";
 import usePromise from "react-promise-suspense";
-import { TestAnalyticsStorage } from "./Domain/Storage";
+import { TestAnalyticsStorage } from "./Domain/Storage/Storage";
 import { uuidv4 } from "./Domain/Guids";
 import { apiUrlPrefix } from "./Domain/Navigation";
 

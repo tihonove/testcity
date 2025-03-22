@@ -7,7 +7,7 @@ import { BranchCell, JobLinkWithResults, SelectedOnHoverTr } from "../Components
 import { formatTestDuration, getText, toLocalTimeFromUtc } from "../Utils";
 import { createLinkToPipelineRun, getLinkToPipeline } from "./Navigation";
 import { PipelineRunsNames, PipelineRunsQueryRow } from "./PipelineRunsQueryRow";
-import { GroupNode, Project } from "./Storage";
+import { GroupNode, Project } from "./Storage/Storage";
 
 interface PipelineRunsProps {
     indentLevel: number;

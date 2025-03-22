@@ -24,7 +24,7 @@ import { JobIdWithParentProjectNames } from "../Domain/JobIdWithParentProject";
 import { JobsView } from "../Domain/JobsView";
 import { createLinkToCreateNewPipeline, createLinkToGroupOrProject, createLinkToProject } from "../Domain/Navigation";
 import { PipelineRuns } from "../Domain/PipelineRuns";
-import { GroupNode, isGroup, isProject, Project } from "../Domain/Storage";
+import { GroupNode, isGroup, isProject, Project } from "../Domain/Storage/Storage";
 import { theme } from "../Theme/ITheme";
 import { useSearchParamAsState } from "../Utils";
 import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";

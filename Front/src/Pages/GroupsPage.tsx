@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { GroupAvatar } from "../Components/GroupAvatar";
 import { groupLink, useBasePrefix } from "../Domain/Navigation";
-import { useRootGroups } from "../Domain/Storage";
+import { useRootGroups } from "../Domain/Storage/Storage";
 import { theme } from "../Theme/ITheme";
 import { LogoPageBlock } from "../Components/LogoPageBlock";
 import { useSearchParamAsState } from "../Utils";
