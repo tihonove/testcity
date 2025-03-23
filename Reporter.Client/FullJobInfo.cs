@@ -31,6 +31,7 @@ public class FullJobInfo : JobRunInfo
     public required string ProjectId { get; init; }
 
     public string? CustomStatusMessage { get; init; }
+    public bool HasCodeQualityReport { get; set; }
 }
 
 public enum JobStatus

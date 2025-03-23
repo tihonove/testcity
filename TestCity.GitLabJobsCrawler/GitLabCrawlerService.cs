@@ -17,7 +17,7 @@ public sealed class GitLabCrawlerService : IDisposable
 
     public void Start()
     {
-        log.LogInformation("Perioding gitlab jobs update runned");
+        log.LogInformation("Periodic gitlab jobs update runned");
         Task.Run(async () =>
         {
             if (stopTokenSource.IsCancellationRequested)
@@ -82,17 +82,20 @@ public sealed class GitLabCrawlerService : IDisposable
                         var artifactContents = client.GetJobs(projectId).GetJobArtifacts(job.Id);
                         log.LogInformation($"Artifact size for job with id: {job.Id}. Size: {artifactContents.Length} bytes");
                         var extractResult = extractor.TryExtractTestRunsFromGitlabArtifact(artifactContents);
-                        if (extractResult != null)
+                        if (extractResult.TestReportData != null || extractResult.HasCodeQualityReport)
                         {
+                            var testReportData = extractResult.TestReportData;
                             var refId = await client.BranchOrRef(projectId, job.Ref);
-                            var jobInfo = GitLabHelpers.GetFullJobInfo(job, refId, extractResult.Counters, projectId.ToString());
+                            var jobInfo = GitLabHelpers.GetFullJobInfo(job, refId, extractResult, projectId.ToString());
                             if (!await TestRunsUploader.IsJobRunIdExists(jobInfo.JobRunId))
                             {
                                 log.LogInformation($"JobRunId '{jobInfo.JobRunId}' does not exist. Uploading test runs");
                                 await TestRunsUploader.JobInfoUploadAsync(jobInfo);
-                                await TestRunsUploader.UploadAsync(jobInfo, extractResult.Runs);
-
-                                await metricsSender.SendAsync(projectInfo, refId, job, extractResult);
+                                if (testReportData != null)
+                                {
+                                    await TestRunsUploader.UploadAsync(jobInfo, testReportData.Runs);
+                                    await metricsSender.SendAsync(projectInfo, refId, job, testReportData);
+                                }
                             }
                             else
                             {

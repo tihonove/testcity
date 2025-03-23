@@ -24,7 +24,7 @@ namespace Kontur.TestCity.GitLabJobsCrawler.Tests
             var artifactFileName = "remote-banking-run-tests-artifacts.zip";
             var artifactPath = TestFilesAccessor.GetTestFile(Path.Combine("test-data", artifactFileName));
             var artifactContent = File.ReadAllBytes(artifactPath.Path);
-            var result = junitExtractor.TryExtractTestRunsFromGitlabArtifact(artifactContent);
+            var result = junitExtractor.TryExtractTestRunsFromGitlabArtifact(artifactContent).TestReportData;
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Counters.Total, Is.EqualTo(374));
             Assert.That(result.Counters.Failed, Is.EqualTo(0));
@@ -36,7 +36,7 @@ namespace Kontur.TestCity.GitLabJobsCrawler.Tests
             var artifactFileName = "diadoc-screenshot-tests-artifacts.zip";
             var artifactPath = TestFilesAccessor.GetTestFile(Path.Combine("test-data", artifactFileName));
             var artifactContent = File.ReadAllBytes(artifactPath.Path);
-            var result = junitExtractor.TryExtractTestRunsFromGitlabArtifact(artifactContent);
+            var result = junitExtractor.TryExtractTestRunsFromGitlabArtifact(artifactContent).TestReportData;
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Counters.Total, Is.EqualTo(402));
             Assert.That(result.Counters.Failed, Is.EqualTo(42));

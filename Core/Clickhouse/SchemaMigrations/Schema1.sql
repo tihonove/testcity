@@ -45,73 +45,14 @@ CREATE TABLE IF NOT EXISTS JobInfo
     `AgentOSName` LowCardinality(String),
     `ProjectId` String,
     `CustomStatusMessage` String,
-    `PipelineId` String
+    `PipelineId` String,
+    `HasCodeQualityReport` UInt8
 )
 ENGINE = MergeTree
 PARTITION BY toMonday(StartDateTime)
 ORDER BY (JobId, JobRunId)
 TTL StartDateTime + toIntervalMonth(6)
 SETTINGS index_granularity = 8192;
-
--- divider --
-CREATE TABLE IF NOT EXISTS JobInfoYYY
-(
-    `JobId` LowCardinality(String),
-    `JobRunId` String,
-    `JobUrl` String,
-    `State` Enum8('Success' = 1, 'Failed' = 2, 'Canceled' = 3, 'Timeouted' = 4),
-    `Duration` Decimal(18, 0),
-    `StartDateTime` DateTime,
-    `EndDateTime` DateTime,
-    `Triggered` LowCardinality(String),
-    `PipelineSource` LowCardinality(String),
-    `BranchName` String,
-    `CommitSha` String,
-    `CommitMessage` String,
-    `CommitAuthor` LowCardinality(String),
-    `TotalTestsCount` UInt32,
-    `SuccessTestsCount` UInt32,
-    `FailedTestsCount` UInt32,
-    `SkippedTestsCount` UInt32,
-    `AgentName` String,
-    `AgentOSName` LowCardinality(String),
-    `ProjectId` String,
-    `CustomStatusMessage` String
-)
-ENGINE = MergeTree
-PARTITION BY toMonday(StartDateTime)
-ORDER BY (JobId, JobRunId)
-TTL StartDateTime + toIntervalMonth(6)
-SETTINGS index_granularity = 8192;
-
--- divider --
-CREATE MATERIALIZED VIEW IF NOT EXISTS JobRunsMV
-(
-    `JobId` String,
-    `JobRunId` String,
-    `BranchName` String,
-    `AgentName` String,
-    `AgentOSName` String,
-    `StartDateTime` DateTime,
-    `EndDateTime` DateTime
-)
-ENGINE = MergeTree
-PARTITION BY toMonday(StartDateTime)
-ORDER BY JobId
-TTL StartDateTime + toIntervalYear(1)
-SETTINGS index_granularity = 8192
-AS SELECT
-    JobId,
-    JobRunId,
-    first_value(TestRuns.BranchName) AS BranchName,
-    first_value(TestRuns.AgentName) AS AgentName,
-    first_value(TestRuns.AgentOSName) AS AgentOSName,
-    min(TestRuns.StartDateTime) AS StartDateTime,
-    max(TestRuns.StartDateTime) AS EndDateTime
-FROM TestRuns
-GROUP BY
-    JobId,
-    JobRunId;
 
 -- divider --
 CREATE MATERIALIZED VIEW IF NOT EXISTS TestRunsByRun
@@ -124,10 +65,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS TestRunsByRun
     `Duration` Decimal(18, 0),
     `StartDateTime` DateTime,
     `AgentName` String,
-    `AgentOSName` String,
-    `JUnitFailureMessage` String,
-    `JUnitFailureOutput` String,
-    `JUnitSystemOutput` String
+    `AgentOSName` String
 )
 ENGINE = MergeTree
 PARTITION BY toMonday(StartDateTime)
@@ -143,8 +81,5 @@ AS SELECT
     Duration,
     StartDateTime,
     AgentName,
-    AgentOSName,
-    JUnitFailureMessage,
-    JUnitFailureOutput,
-    JUnitSystemOutput
+    AgentOSName
 FROM TestRuns

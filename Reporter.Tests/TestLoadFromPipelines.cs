@@ -84,12 +84,12 @@ public class TestsLoadFromGitlab
                         Logger.LogInformation("Artifact size for job with id: {JobId}. Size: {Size} bytes", job.Id, artifactContents.Length);
                         var extractor = new JUnitExtractor(LoggerFactory.CreateLogger<JUnitExtractor>());
                         var extractResult = extractor.TryExtractTestRunsFromGitlabArtifact(artifactContents);
-                        if (extractResult != null)
+                        if (extractResult.TestReportData != null)
                         {
-                            Logger.LogInformation("Found {TotalTests} tests", extractResult.Counters.Total);
+                            Logger.LogInformation("Found {TotalTests} tests", extractResult.TestReportData.Counters.Total);
 
                             var refId = await client.BranchOrRef(projectId, job.Ref);
-                            var jobInfo = GitLabHelpers.GetFullJobInfo(job, refId, extractResult.Counters, projectId.ToString());
+                            var jobInfo = GitLabHelpers.GetFullJobInfo(job, refId, extractResult, projectId.ToString());
                             if (!await TestRunsUploader.IsJobRunIdExists(jobInfo.JobRunId))
                             {
                                 Logger.LogInformation("JobRunId '{JobRunId}' does not exist. Uploading test runs", jobInfo.JobRunId);

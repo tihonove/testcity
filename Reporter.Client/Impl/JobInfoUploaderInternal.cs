@@ -47,6 +47,7 @@ internal class JobInfoUploaderInternal
                     info.ProjectId,
                     info.CustomStatusMessage,
                     info.PipelineId,
+                    info.HasCodeQualityReport ? 1 : 0,
                 ],
             ]);
     }
@@ -75,5 +76,6 @@ internal class JobInfoUploaderInternal
         "ProjectId",
         "CustomStatusMessage",
         "PipelineId",
+        "HasCodeQualityReport",
     };
 }

@@ -6,20 +6,6 @@ using NGitLab;
 
 namespace Kontur.TestCity.Api.Controllers;
 
-public enum ManualJobRunStatus
-{
-    Manual,
-    Susccess,
-    Failed,
-}
-
-public class ManualJobRunInfo
-{
-    public string JobId { get; set; }
-    public string JobRunId { get; set; }
-    public ManualJobRunStatus Status { get; set; }
-}
-
 [ApiController]
 [Route("gitlab")]
 public class GitlabController : Controller
