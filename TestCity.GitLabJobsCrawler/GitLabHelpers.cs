@@ -1,4 +1,3 @@
-using Kontur.TestAnalytics.Reporter.Cli;
 using Kontur.TestAnalytics.Reporter.Client;
 using Kontur.TestAnalytics.Core;
 using NGitLab.Models;

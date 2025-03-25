@@ -2,17 +2,10 @@
 
     <PropertyGroup>
         <RootNamespace>Kontur.TestAnalytics.Reporter.Cli</RootNamespace>
+        <AssemblyName>Reporter.Cli</AssemblyName>
         <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Reporter.Client\Reporter.Client.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="CommandLineParser" />
-      <PackageReference Include="dotenv.net" />
-      <PackageReference Include="Microsoft.Extensions.Logging.Console" />
-    </ItemGroup>
-
+    
 </Project>
