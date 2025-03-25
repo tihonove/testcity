@@ -9,6 +9,10 @@ import { SeverityOverview } from "../Overview/types";
 import { IssuesTable } from "./IssuesTable";
 import { IssuesTree } from "./IssuesTree";
 import { MultipleSelect } from "./MultipleSelect";
+import { Rows } from "lucide-react";
+import { ColumnStack, Fill, Fit, RowStack } from "@skbkontur/react-stack-layout";
+import { theme } from "../../Theme/ITheme";
+import styled from "styled-components";
 
 interface IssuesTabProps {
     report: Issue[];
@@ -33,32 +37,50 @@ export function IssuesTab({ report }: IssuesTabProps) {
     );
 
     return (
-        <div>
-            <Gapped gap={24}>
-                <Switcher
-                    items={severityItems(severities, overview)}
-                    value={severity}
-                    onValueChange={setSeverity}
-                    caption="Severity"
-                />
-                <MultipleSelect
-                    caption="Categories"
-                    items={availableCategories}
-                    selected={categories}
-                    onChange={setCategories}
-                />
-                <MultipleSelect caption="IDs" items={availableIds} selected={ids} onChange={setIds} />
-            </Gapped>
-            <div style={{ paddingTop: 24, gridTemplateColumns: "1fr 2fr", display: "grid", gap: "1.5rem" }}>
-                <IssuesTree issues={filtered} prefix={prefix} onChangePrefix={setPrefix} />
-                <IssuesTable
-                    key={severity}
-                    report={prefix ? filtered.filter(x => x.location.path.startsWith(prefix)) : filtered}
-                />
-            </div>
-        </div>
+        <ColumnStack gap={5} block stretch>
+            <Fit>
+                <RowStack block baseline gap={2}>
+                    <Fit>
+                        <Switcher
+                            items={severityItems(severities, overview)}
+                            value={severity}
+                            onValueChange={setSeverity}
+                            caption="Severity"
+                        />
+                    </Fit>
+                    <Fit>
+                        <MultipleSelect
+                            caption="Categories"
+                            items={availableCategories}
+                            selected={categories}
+                            onChange={setCategories}
+                        />
+                    </Fit>
+                    <Fit>
+                        <MultipleSelect caption="IDs" items={availableIds} selected={ids} onChange={setIds} />
+                    </Fit>
+                </RowStack>
+            </Fit>
+            <Fit>
+                <RowStack block verticalAlign="top" gap={5}>
+                    <IssuesTreeFit>
+                        <IssuesTree issues={filtered} prefix={prefix} onChangePrefix={setPrefix} />
+                    </IssuesTreeFit>
+                    <Fill>
+                        <IssuesTable
+                            key={severity}
+                            report={prefix ? filtered.filter(x => x.location.path.startsWith(prefix)) : filtered}
+                        />
+                    </Fill>
+                </RowStack>
+            </Fit>
+        </ColumnStack>
     );
 }
+
+const IssuesTreeFit = styled(Fit)`
+    border-right: 1px solid ${theme.borderLineColor2};
+`;
 
 function severityItems(
     severities: Severity[],

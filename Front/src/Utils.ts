@@ -64,8 +64,12 @@ export function getText(
     ignored: string,
     failed: string,
     state: string,
-    info: string
+    info: string,
+    hasCodeQualityReport: number
 ): string {
+    if (Number(total) == 0 && Number(passed) == 0 && Number(ignored) == 0 && Number(failed) == 0 && !info) {
+        return "Finished";
+    }
     let out = formatTestCounts(total, passed, ignored, failed);
     if (state == "Canceled") out = state;
     else if (state == "Timeouted") out = state;

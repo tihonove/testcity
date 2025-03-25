@@ -8,7 +8,7 @@ import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { BranchSelect } from "../Components/BranchSelect";
 import { BranchCell, NumberCell, SelectedOnHoverTr } from "../Components/Cells";
 import { SvgPieChart } from "../Components/PieChart";
-import { JobRunNames } from "../Domain/JobsQueryRow";
+import { JobRunNames } from "../Domain/Storage/JobsQuery";
 import { useBasePrefix } from "../Domain/Navigation";
 import { TestPerJobRunQueryRowNames } from "../Domain/TestPerJobRunQueryRow";
 import { formatDuration } from "../Components/RunStatisticsChart/DurationUtils";

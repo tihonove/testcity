@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useClickhouseClient, useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { JobsView } from "../Domain/JobsView";
-import { JobsQueryRow } from "../Domain/JobsQueryRow";
+import { JobsQueryRow } from "../Domain/Storage/JobsQuery";
 
 export function MergeRequestJobsPage(): React.JSX.Element {
     const { projectId = "", gitLabMergeRequestId = "" } = useParams();

@@ -1,10 +1,18 @@
 import * as React from "react";
 import styled from "styled-components";
 
-export function SubIcon({ children, sub }: { children: React.ReactNode; sub: React.ReactNode }): React.JSX.Element {
+export function SubIcon({
+    children,
+    sub,
+    noclip,
+}: {
+    children: React.ReactNode;
+    sub: React.ReactNode;
+    noclip?: boolean;
+}): React.JSX.Element {
     return (
         <IconContainer>
-            <MainIcon>{children}</MainIcon>
+            <MainIcon $noclip={noclip}>{children}</MainIcon>
             <SubIconContainer>{sub}</SubIconContainer>
         </IconContainer>
     );
@@ -15,10 +23,13 @@ const IconContainer = styled.div`
     display: inline-block;
 `;
 
-const MainIcon = styled.div`
+const MainIcon = styled.div<{ $noclip?: boolean }>`
     position: relative;
     z-index: 1;
     overflow: hidden;
+    ${props =>
+        !props.$noclip &&
+        `
     clip-path: polygon(
         0 0,
         100% 0,
@@ -28,6 +39,7 @@ const MainIcon = styled.div`
         0 100%,
         0 0
     );
+    `}
 `;
 
 const SubIconContainer = styled.div`

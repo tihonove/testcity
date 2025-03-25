@@ -18,7 +18,7 @@ import {
 import { Paging } from "@skbkontur/react-ui";
 import { useState } from "react";
 import { createLinkToJobRun, urlPrefix } from "../Domain/Navigation";
-import { JobRunNames, JobsQueryRow } from "../Domain/JobsQueryRow";
+import { JobRunNames, JobsQueryRow } from "../Domain/Storage/JobsQuery";
 import { reject } from "../TypeHelpers";
 import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
 

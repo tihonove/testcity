@@ -9,23 +9,27 @@ import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
 import { AdditionalJobInfo } from "../Components/AdditionalJobInfo";
 import { ColorByState } from "../Components/Cells";
 import { JonRunIcon } from "../Components/Icons";
-import { useBasePrefix } from "../Domain/Navigation";
+import { useApiUrl, useBasePrefix } from "../Domain/Navigation";
 import { reject } from "../TypeHelpers";
-import { useSearchParamDebouncedAsState } from "../Utils";
+import { useSearchParam, useSearchParamAsState, useSearchParamDebouncedAsState } from "../Utils";
 import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
 import { TestListView } from "../Components/TestListView";
 import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
+import { Loader, Tabs } from "@skbkontur/react-ui";
+import { OverviewTab } from "../CodeQuality/Overview/OverviewTab";
+import { IssuesTab } from "../CodeQuality/Issues/IssuesTab";
 
 export function JobRunTestListPage(): React.JSX.Element {
     const basePrefix = useBasePrefix();
     const { groupNodes, pathToGroup } = useProjectContextFromUrlParams();
+    const projectId = groupNodes[groupNodes.length - 1].id;
     const { jobId = "", jobRunId = "" } = useParams();
     useSearchParamDebouncedAsState("filter", 500, "");
 
     const client = useClickhouseClient();
 
     const data = client.useData2<
-        [string, string, number, string, string, string, string, string, string, string, string, string, string]
+        [string, string, number, string, string, string, string, string, string, string, string, string, string, number]
     >(
         `
         SELECT 
@@ -41,7 +45,8 @@ export function JobRunTestListPage(): React.JSX.Element {
             PipelineSource, 
             JobUrl, 
             CustomStatusMessage, 
-            State
+            State,
+            HasCodeQualityReport
         FROM JobInfo 
         WHERE 
             JobId = '${jobId}' 
@@ -64,11 +69,13 @@ export function JobRunTestListPage(): React.JSX.Element {
         jobUrl,
         customStatusMessage,
         state,
+        hasCodeQualityReport,
     ] = data[0] ?? reject("JobRun not found");
+    const [section, setSection] = useSearchParamAsState("section", "tests");
 
     return (
         <Root>
-            <ColumnStack gap={2} block stretch>
+            <ColumnStack gap={4} block stretch>
                 <JobBreadcrumbs>
                     <GroupBreadcrumps branchName={branchName} nodes={groupNodes} />
                 </JobBreadcrumbs>
@@ -84,62 +91,108 @@ export function JobRunTestListPage(): React.JSX.Element {
                         <ShareNetworkIcon /> {branchName}
                     </Branch>
                 </Fit>
-                <AdditionalJobInfo
-                    startDateTime={startDateTime}
-                    endDateTime={endDateTime}
-                    duration={duration}
-                    triggered={triggered}
-                    pipelineSource={pipelineSource}
-                />
                 <Fit>
-                    <TestListView
-                        jobRunIds={[jobRunId]}
-                        pathToProject={pathToGroup}
-                        successTestsCount={Number(successTestsCount)}
-                        failedTestsCount={Number(failedTestsCount)}
-                        skippedTestsCount={Number(skippedTestsCount)}
-                        linksBlock={
-                            <Fit>
-                                <Link
-                                    to={`${basePrefix}jobs/${encodeURIComponent(jobId)}/runs/${encodeURIComponent(jobRunId)}/treemap`}>
-                                    Open tree map
-                                </Link>
-                            </Fit>
-                        }
+                    <AdditionalJobInfo
+                        startDateTime={startDateTime}
+                        endDateTime={endDateTime}
+                        duration={duration}
+                        triggered={triggered}
+                        pipelineSource={pipelineSource}
                     />
+                </Fit>
+                {hasCodeQualityReport && (
+                    <Fit>
+                        <Tabs value={section ?? "tests"} onValueChange={setSection}>
+                            <Tabs.Tab id="tests">Tests</Tabs.Tab>
+                            <Tabs.Tab id="code-quality-overview">Code quality - overview</Tabs.Tab>
+                            <Tabs.Tab id="code-quality-issues">Code quality - issues</Tabs.Tab>
+                        </Tabs>
+                    </Fit>
+                )}
+                <Fit>
+                    {section === "tests" && (
+                        <TestListView
+                            jobRunIds={[jobRunId]}
+                            pathToProject={pathToGroup}
+                            successTestsCount={Number(successTestsCount)}
+                            failedTestsCount={Number(failedTestsCount)}
+                            skippedTestsCount={Number(skippedTestsCount)}
+                            linksBlock={
+                                <Fit>
+                                    <Link
+                                        to={`${basePrefix}jobs/${encodeURIComponent(jobId)}/runs/${encodeURIComponent(jobRunId)}/treemap`}>
+                                        Open tree map
+                                    </Link>
+                                </Fit>
+                            }
+                        />
+                    )}
+                    {section === "code-quality-overview" && (
+                        <CodeQualityOverviewTabContent jobId={jobRunId} projectId={projectId} />
+                    )}
+                    {section === "code-quality-issues" && (
+                        <CodeQualityIssuesTabContent jobId={jobRunId} projectId={projectId} />
+                    )}
                 </Fit>
             </ColumnStack>
         </Root>
     );
 }
 
-function KebabButton() {
+function CodeQualityOverviewTabContent({ projectId, jobId }) {
+    const apiUrl = useApiUrl();
+    const [loading, setLoading] = React.useState(false);
+    const [report, setReport] = React.useState<undefined | Issue[]>();
+
+    const fetcher = async () => {
+        setLoading(true);
+        try {
+            const res = await fetch(`${apiUrl}gitlab/${projectId}/jobs/${jobId}/codequality`);
+
+            setReport(await res.json());
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    React.useEffect(() => {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        fetcher();
+    }, [projectId, jobId]);
+
     return (
-        <KebabButtonRoot>
-            <UiMenuDots3VIcon16Regular />
-        </KebabButtonRoot>
+        <Loader type="big" active={loading}>
+            {report && <OverviewTab current={report} />}
+        </Loader>
     );
 }
 
-const KebabButtonRoot = styled.span`
-    display: inline-block;
-    padding: 0 2px 1px 2px;
-    border-radius: 10px;
-    cursor: pointer;
+function CodeQualityIssuesTabContent({ projectId, jobId }) {
+    const apiUrl = useApiUrl();
+    const [loading, setLoading] = React.useState(false);
+    const [report, setReport] = React.useState<undefined | Issue[]>();
 
-    &:hover {
-        background-color: ${props => props.theme.backgroundColor1};
-    }
-`;
+    const fetcher = async () => {
+        setLoading(true);
+        try {
+            const res = await fetch(`${apiUrl}gitlab/${projectId}/jobs/${jobId}/codequality`);
 
-interface FetcherProps<T> {
-    value: () => T;
-    children: (value: T) => React.ReactNode;
-}
+            setReport(await res.json());
+        } finally {
+            setLoading(false);
+        }
+    };
 
-function Fetcher<T>(props: FetcherProps<T>): React.JSX.Element {
-    const value = props.value();
-    return <>{props.children(value)}</>;
+    React.useEffect(() => {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        fetcher();
+    }, [projectId, jobId]);
+
+    return (
+        <Loader type="big" active={loading}>
+            {report && <IssuesTab report={report} />}
+        </Loader>
+    );
 }
 
 const StyledLink = styled(Link)`

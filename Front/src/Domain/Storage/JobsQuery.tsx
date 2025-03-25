@@ -14,6 +14,7 @@ export type JobsQueryRow = [
     string,
     string,
     string,
+    number,
 ];
 export const JobRunNames = {
     JobId: 0,
@@ -31,4 +32,5 @@ export const JobRunNames = {
     CustomStatusMessage: 12,
     JobUrl: 13,
     ProjectId: 14,
+    HasCodeQualityReport: 15,
 } as const;

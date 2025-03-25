@@ -1,7 +1,7 @@
 import { ClickHouseClient } from "@clickhouse/client-web";
 import { JobIdWithParentProject } from "../JobIdWithParentProject";
 import { uuidv4 } from "../Guids";
-import { JobsQueryRow } from "../JobsQueryRow";
+import { JobsQueryRow } from "./JobsQuery";
 import { delay } from "@skbkontur/react-ui/cjs/lib/utils";
 import { reject } from "../../TypeHelpers";
 import { PipelineRunsQueryRow } from "../PipelineRunsQueryRow";
@@ -188,7 +188,8 @@ export class TestAnalyticsStorage {
                 State,
                 CustomStatusMessage,
                 JobUrl,
-                ProjectId
+                ProjectId,
+                HasCodeQualityReport
             FROM (
                 SELECT
                     *,
@@ -227,7 +228,8 @@ export class TestAnalyticsStorage {
                 CustomStatusMessage,
                 CommitMessage,
                 CommitAuthor,
-                CommitSha
+                CommitSha,
+                HasCodeQualityReport
             FROM ( 
                 SELECT 
                     ProjectId as ProjectId ,
@@ -245,7 +247,8 @@ export class TestAnalyticsStorage {
                     ROW_NUMBER() OVER (PARTITION BY JobInfo.ProjectId, JobInfo.BranchName ORDER BY MAX(JobInfo.StartDateTime) DESC) AS rn,
                     arrayElement(topK(1)(CommitMessage), 1) as CommitMessage,
                     arrayElement(topK(1)(CommitAuthor), 1) as CommitAuthor,
-                    arrayElement(topK(1)(CommitSha), 1) as CommitSha
+                    arrayElement(topK(1)(CommitSha), 1) as CommitSha,
+                    MAX(HasCodeQualityReport) as HasCodeQualityReport
                 FROM JobInfo
                 WHERE 
                     JobInfo.PipelineId <> ''

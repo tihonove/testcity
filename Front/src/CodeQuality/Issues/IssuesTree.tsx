@@ -10,20 +10,6 @@ import styled from "styled-components";
 
 type Issues = Record<Severity, number>;
 
-const initialIssues: Issues = {
-    info: 0,
-    minor: 0,
-    major: 0,
-    critical: 0,
-    blocker: 0,
-};
-
-const DiffInfo = styled.div`
-    display: flex;
-    gap: 0.5rem;
-    margin-left: 0.5rem;
-    font-size: 0.75rem;
-`;
 
 interface IssuesTreeProps {
     issues: Issue[];
@@ -168,3 +154,18 @@ function sortBySeverity(a: TreeNode<Issues>, b: TreeNode<Issues>): number {
 
     return sortByName(a, b);
 }
+
+const initialIssues: Issues = {
+    info: 0,
+    minor: 0,
+    major: 0,
+    critical: 0,
+    blocker: 0,
+};
+
+const DiffInfo = styled.div`
+    display: flex;
+    gap: 0.5rem;
+    margin-left: 0.5rem;
+    font-size: 0.75rem;
+`;

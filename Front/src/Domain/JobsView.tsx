@@ -1,4 +1,11 @@
-import { ShapeSquareIcon16Regular, ShapeSquareIcon16Solid, ShareNetworkIcon } from "@skbkontur/icons";
+import {
+    FileTypeMarkupIcon16Regular,
+    SearchLoupeIcon16Solid,
+    SearchLoupePlusIcon16Solid,
+    ShapeSquareIcon16Regular,
+    ShapeSquareIcon16Solid,
+    ShareNetworkIcon,
+} from "@skbkontur/icons";
 import * as React from "react";
 import { Link } from "react-router-dom";
 import styled, { useTheme } from "styled-components";
@@ -6,8 +13,10 @@ import { BranchCell, JobLinkWithResults, SelectedOnHoverTr } from "../Components
 import { createLinkToJob, createLinkToJobRun } from "./Navigation";
 import { formatTestDuration, getLinkToJob, getText, toLocalTimeFromUtc } from "../Utils";
 import { JobIdWithParentProject, JobIdWithParentProjectNames } from "./JobIdWithParentProject";
-import { JobRunNames, JobsQueryRow } from "./JobsQueryRow";
+import { JobRunNames, JobsQueryRow } from "./Storage/JobsQuery";
 import { GroupNode } from "./Storage/Storage";
+import { SubIcon } from "../Components/SubIcon";
+import { Hint } from "@skbkontur/react-ui";
 
 interface JobsViewProps {
     hideRuns?: boolean;
@@ -80,11 +89,28 @@ export function JobsView({
                                                         x[JobRunNames.JobRunId],
                                                         currentBranchName
                                                     )}>
-                                                    {getText(x[5], x[8], x[9], x[10], x[11], x[12])}
+                                                    {getText(
+                                                        x[JobRunNames.TotalTestsCount],
+                                                        x[JobRunNames.SuccessTestsCount],
+                                                        x[JobRunNames.SkippedTestsCount],
+                                                        x[JobRunNames.FailedTestsCount],
+                                                        x[JobRunNames.State],
+                                                        x[JobRunNames.CustomStatusMessage],
+                                                        x[JobRunNames.HasCodeQualityReport]
+                                                    )}
                                                 </JobLinkWithResults>
                                             </CountCell>
                                             <StartedCell>{toLocalTimeFromUtc(x[4])}</StartedCell>
                                             <DurationCell>{formatTestDuration(x[7])}</DurationCell>
+                                            <AttributesCell>
+                                                {x[JobRunNames.HasCodeQualityReport] != 0 && (
+                                                    <Hint text="Code quality report available">
+                                                        <SubIcon sub={<SearchLoupePlusIcon16Solid />}>
+                                                            <FileTypeMarkupIcon16Regular />
+                                                        </SubIcon>
+                                                    </Hint>
+                                                )}
+                                            </AttributesCell>
                                         </SelectedOnHoverTr>
                                     ))}
                             </tbody>
@@ -130,4 +156,10 @@ const DurationCell = styled.td`
     max-width: 140px;
     white-space: nowrap;
     text-align: right;
+`;
+
+const AttributesCell = styled.td`
+    max-width: 80px;
+    white-space: nowrap;
+    text-align: left;
 `;

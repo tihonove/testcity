@@ -15,6 +15,7 @@ export type PipelineRunsQueryRow = [
     string,
     string,
     string,
+    string,
 ];
 
 export const PipelineRunsNames = {
@@ -33,4 +34,5 @@ export const PipelineRunsNames = {
     CommitMessage: 12,
     CommitAuthor: 13,
     CommitSha: 14,
+    HasCodeQualityReport: 15,
 } as const;
