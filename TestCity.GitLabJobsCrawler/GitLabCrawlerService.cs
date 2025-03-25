@@ -45,7 +45,7 @@ public sealed class GitLabCrawlerService : IDisposable
     private async Task PullGitLabJobArtifactsAndPushIntoTestAnalytics(CancellationToken token)
     {
         var gitLabClientProvider = new SkbKonturGitLabClientProvider(gitLabSettings);
-        var gitLabProjectIds = GitLabProjectsService.GetAllProjects().Select(x => x.Id).Except(Second).Select(x => int.Parse(x)).ToList();
+        var gitLabProjectIds = GitLabProjectsService.GetAllProjects().Select(x => x.Id).Select(x => int.Parse(x)).ToList();
 
         foreach (var projectId in gitLabProjectIds)
         {
@@ -126,5 +126,4 @@ public sealed class GitLabCrawlerService : IDisposable
     private readonly CancellationTokenSource stopTokenSource;
     private readonly ILogger<GitLabCrawlerService> log;
     private readonly JUnitExtractor extractor;
-    private static readonly string[] Second = new[] { "17358", "19371" };
 }
