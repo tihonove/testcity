@@ -60,7 +60,8 @@ export function PipelineRuns({
                                     x[PipelineRunsNames.SkippedTestsCount]?.toString(),
                                     x[PipelineRunsNames.FailedTestsCount]?.toString(),
                                     x[PipelineRunsNames.State],
-                                    x[PipelineRunsNames.CustomStatusMessage]
+                                    x[PipelineRunsNames.CustomStatusMessage],
+                                    x[PipelineRunsNames.HasCodeQualityReport]
                                 )}
                             </JobLinkWithResults>
                         </CountCell>

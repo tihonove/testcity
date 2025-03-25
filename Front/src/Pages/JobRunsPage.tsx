@@ -121,7 +121,15 @@ export function JobRunsPage(): React.JSX.Element {
                                             x[JobRunNames.JobRunId],
                                             currentBranchName
                                         )}>
-                                        {getText(x[5], x[6], x[7], x[8], x[11], x[12])}
+                                        {getText(
+                                            x[5],
+                                            x[6],
+                                            x[7],
+                                            x[8],
+                                            x[11],
+                                            x[12],
+                                            x[JobRunNames.HasCodeQualityReport]
+                                        )}
                                     </JobLinkWithResults>
                                 </CountCell>
                                 <StartedCell>{toLocalTimeFromUtc(x[4])}</StartedCell>

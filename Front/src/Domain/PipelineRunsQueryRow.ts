@@ -15,7 +15,7 @@ export type PipelineRunsQueryRow = [
     string,
     string,
     string,
-    string,
+    number,
 ];
 
 export const PipelineRunsNames = {

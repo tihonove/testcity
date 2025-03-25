@@ -45,6 +45,7 @@ export const Simple: StoryFn = () => (
                 "Test message",
                 "tihonove",
                 "12131231",
+                0,
             ],
             [
                 "20289",
@@ -62,6 +63,7 @@ export const Simple: StoryFn = () => (
                 "Test message",
                 "tihonove",
                 "12131231",
+                0,
             ],
             [
                 "20289",
@@ -79,6 +81,7 @@ export const Simple: StoryFn = () => (
                 "Test message",
                 "tihonove",
                 "12131231",
+                0,
             ],
             [
                 "20289",
@@ -96,6 +99,7 @@ export const Simple: StoryFn = () => (
                 "Test message",
                 "tihonove",
                 "12131231",
+                0,
             ],
             [
                 "20289",
@@ -113,6 +117,7 @@ export const Simple: StoryFn = () => (
                 "Test message",
                 "tihonove",
                 "12131231",
+                0,
             ],
             [
                 "20289",
@@ -130,6 +135,7 @@ export const Simple: StoryFn = () => (
                 "Test message",
                 "tihonove",
                 "12131231",
+                0,
             ],
             [
                 "20289",
@@ -147,6 +153,7 @@ export const Simple: StoryFn = () => (
                 "Test message",
                 "tihonove",
                 "12131231",
+                0,
             ],
             [
                 "20289",
@@ -164,6 +171,7 @@ export const Simple: StoryFn = () => (
                 "Test message",
                 "tihonove",
                 "12131231",
+                0,
             ],
             [
                 "20289",
@@ -181,6 +189,7 @@ export const Simple: StoryFn = () => (
                 "Test message",
                 "tihonove",
                 "12131231",
+                0,
             ],
         ]}
     />

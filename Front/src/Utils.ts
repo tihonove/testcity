@@ -67,7 +67,14 @@ export function getText(
     info: string,
     hasCodeQualityReport: number
 ): string {
-    if (Number(total) == 0 && Number(passed) == 0 && Number(ignored) == 0 && Number(failed) == 0 && !info) {
+    if (
+        hasCodeQualityReport &&
+        Number(total) == 0 &&
+        Number(passed) == 0 &&
+        Number(ignored) == 0 &&
+        Number(failed) == 0 &&
+        !info
+    ) {
         return "Finished";
     }
     let out = formatTestCounts(total, passed, ignored, failed);
