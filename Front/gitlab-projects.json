@@ -143,6 +143,7 @@
                 "id": "13070",
                 "title": "kedo"
             }
-        ]
+        ],
+        "mergeRunsFromJobs": false
     }
 ]
