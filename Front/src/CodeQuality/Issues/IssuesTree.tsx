@@ -10,7 +10,6 @@ import styled from "styled-components";
 
 type Issues = Record<Severity, number>;
 
-
 interface IssuesTreeProps {
     issues: Issue[];
     prefix: string;

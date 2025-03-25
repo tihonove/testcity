@@ -18,6 +18,7 @@ import { useProjectContextFromUrlParams } from "../Components/useProjectContextF
 import { Loader, Tabs } from "@skbkontur/react-ui";
 import { OverviewTab } from "../CodeQuality/Overview/OverviewTab";
 import { IssuesTab } from "../CodeQuality/Issues/IssuesTab";
+import { Issue } from "../CodeQuality/types/Issue";
 
 export function JobRunTestListPage(): React.JSX.Element {
     const basePrefix = useBasePrefix();
@@ -139,7 +140,7 @@ export function JobRunTestListPage(): React.JSX.Element {
     );
 }
 
-function CodeQualityOverviewTabContent({ projectId, jobId }) {
+function CodeQualityOverviewTabContent({ projectId, jobId }: { projectId: string; jobId: string }) {
     const apiUrl = useApiUrl();
     const [loading, setLoading] = React.useState(false);
     const [report, setReport] = React.useState<undefined | Issue[]>();
@@ -149,6 +150,7 @@ function CodeQualityOverviewTabContent({ projectId, jobId }) {
         try {
             const res = await fetch(`${apiUrl}gitlab/${projectId}/jobs/${jobId}/codequality`);
 
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             setReport(await res.json());
         } finally {
             setLoading(false);
@@ -167,7 +169,7 @@ function CodeQualityOverviewTabContent({ projectId, jobId }) {
     );
 }
 
-function CodeQualityIssuesTabContent({ projectId, jobId }) {
+function CodeQualityIssuesTabContent({ projectId, jobId }: { projectId: string; jobId: string }) {
     const apiUrl = useApiUrl();
     const [loading, setLoading] = React.useState(false);
     const [report, setReport] = React.useState<undefined | Issue[]>();
@@ -177,6 +179,7 @@ function CodeQualityIssuesTabContent({ projectId, jobId }) {
         try {
             const res = await fetch(`${apiUrl}gitlab/${projectId}/jobs/${jobId}/codequality`);
 
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             setReport(await res.json());
         } finally {
             setLoading(false);

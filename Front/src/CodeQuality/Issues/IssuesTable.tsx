@@ -55,7 +55,7 @@ export function IssuesTable({ report }: IssuesTableProps) {
                         </tr>
                     </thead>
                     <tbody>
-                        {paged.map((x) => (
+                        {paged.map(x => (
                             <tr key={`${x.check_name ?? ""}-${x.location.path}-${x.fingerprint}`}>
                                 <td>{x.severity}</td>
                                 <td>
