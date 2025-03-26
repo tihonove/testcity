@@ -49,7 +49,7 @@ public sealed class GitLabCrawlerService : IDisposable
 
         foreach (var projectId in gitLabProjectIds)
         {
-            log.LogInformation("Pulling jobs for project {projectId}", projectId);
+            log.LogInformation("Pulling jobs for project {ProjectId}", projectId);
             var client = gitLabClientProvider.GetClient();
             var jobsClient = client.GetJobs(projectId);
             var projectInfo = await client.Projects.GetByIdAsync(projectId, new SingleProjectQuery(), token);
@@ -63,18 +63,21 @@ public sealed class GitLabCrawlerService : IDisposable
                     ~JobScopeMask.Running &
                     ~JobScopeMask.Created,
             };
-            var jobs = jobsClient.GetJobsAsync(jobsQuery).Take(300).ToArray();
+            var jobs = jobsClient.GetJobsAsync(jobsQuery).Take(600).ToArray();
             log.LogInformation("Take last {jobsLength} jobs", jobs.Length);
+            var processedJobIds = new List<long>();
 
             foreach (var job in jobs)
             {
+                processedJobIds.Add(job.Id);
+
                 if (processedJobSet.Contains(job.Id))
                 {
                     log.LogInformation($"Skip job with id: {job.Id}");
                     continue;
                 }
 
-                log.LogInformation($"Start processing job with id: {job.Id}");
+                log.LogInformation("Start processing job with id: ProjectId: {ProjectId} JobId: {JobRunId}", projectId, job.Id);
                 if (job.Artifacts != null)
                 {
                     try
@@ -104,6 +107,10 @@ public sealed class GitLabCrawlerService : IDisposable
 
                             processedJobSet.Add(job.Id);
                         }
+                        else
+                        {
+                            log.LogInformation("JobRunId '{JobRunId}' does not contain any tests or code quality reports. Skip uploading test runs", job.Id);
+                        }
                     }
                     catch (Exception exception)
                     {
@@ -111,6 +118,8 @@ public sealed class GitLabCrawlerService : IDisposable
                     }
                 }
             }
+
+            log.LogInformation("Processed {JobCount} for {ProjectId}. First job: {FirstJobId}, Last job: {LastJobId}", jobs.Length, projectId, jobs.FirstOrDefault()?.Id, jobs.LastOrDefault()?.Id);
         }
     }
 
