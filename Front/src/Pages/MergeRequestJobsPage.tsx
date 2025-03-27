@@ -3,7 +3,7 @@ import * as React from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useClickhouseClient, useStorageQuery } from "../ClickhouseClientHooksWrapper";
-import { JobsView } from "../Domain/JobsView";
+import { JobsView } from "../Components/JobsView";
 import { JobsQueryRow } from "../Domain/Storage/JobsQuery";
 
 export function MergeRequestJobsPage(): React.JSX.Element {

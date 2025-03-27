@@ -14,6 +14,7 @@ interface BranchSelectProps {
 }
 
 const TOP_BRANCHES = ["main", "master", "release"];
+export const DEFAULT_BRANCHE_NAMES = ["main", "master"];
 
 export function BranchSelect({
     branch,

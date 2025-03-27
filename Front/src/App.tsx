@@ -15,7 +15,7 @@ import { TestHistoryPage } from "./Pages/TestHistoryPage";
 import { TestsTreeMapChart } from "./Components/TestsTreeMapChart";
 import { TestsTreeView } from "./Components/TestsTreeView";
 import { useTestAnalyticsDarkMode } from "./Theme/UseTestAnalyticsDarkMode";
-import { RedirectToNewTestHistoryPage } from "./RedirectToNewTestHistoryPage";
+import { RedirectToNewTestHistoryPage } from "./Pages/RedirectToNewTestHistoryPage";
 
 export function App(): React.JSX.Element {
     const basePrefix = useBasePrefix();

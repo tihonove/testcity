@@ -1,4 +1,4 @@
-import { ShapeSquareIcon32Regular, ShareNetworkIcon } from "@skbkontur/icons";
+import { ShapeSquareIcon32Regular } from "@skbkontur/icons";
 import { ColumnStack, Fit } from "@skbkontur/react-stack-layout";
 import * as React from "react";
 import { Link, useParams } from "react-router-dom";
@@ -19,8 +19,9 @@ import { Paging } from "@skbkontur/react-ui";
 import { useState } from "react";
 import { createLinkToJobRun, urlPrefix } from "../Domain/Navigation";
 import { JobRunNames, JobsQueryRow } from "../Domain/Storage/JobsQuery";
-import { reject } from "../TypeHelpers";
+import { reject } from "../Utils/TypeHelpers";
 import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
+import { BranchBox } from "../Components/BranchBox";
 
 export function JobRunsPage(): React.JSX.Element {
     const { groupIdLevel1, groupIdLevel2, groupIdLevel3, jobId = "" } = useParams();
@@ -108,8 +109,8 @@ export function JobRunsPage(): React.JSX.Element {
                                 <NumberCell>
                                     <Link to={x[13]}>#{x[1]}</Link>
                                 </NumberCell>
-                                <BranchCell $defaultBranch={x[JobRunNames.BranchName] == "master"}>
-                                    <ShareNetworkIcon /> {x[JobRunNames.BranchName]}
+                                <BranchCell>
+                                    <BranchBox name={x[JobRunNames.BranchName]} />
                                 </BranchCell>
                                 <CountCell>
                                     <JobLinkWithResults

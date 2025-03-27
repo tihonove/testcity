@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { useStorageQuery } from "./ClickhouseClientHooksWrapper";
-import { useBasePrefix, createLinkToTestHistory } from "./Domain/Navigation";
-import { useSearchParam } from "./Utils";
+import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
+import { useBasePrefix, createLinkToTestHistory } from "../Domain/Navigation";
+import { useSearchParam } from "../Utils";
 
 export function RedirectToNewTestHistoryPage() {
     const basePrefix = useBasePrefix();

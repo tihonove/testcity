@@ -1,9 +1,9 @@
 import { ClickHouseClient } from "@clickhouse/client-web";
 import { JobIdWithParentProject } from "../JobIdWithParentProject";
-import { uuidv4 } from "../Guids";
+import { uuidv4 } from "../../Utils/Guids";
 import { JobsQueryRow } from "./JobsQuery";
 import { delay } from "@skbkontur/react-ui/cjs/lib/utils";
-import { reject } from "../../TypeHelpers";
+import { reject } from "../../Utils/TypeHelpers";
 import { PipelineRunsQueryRow } from "../PipelineRunsQueryRow";
 import { TestRunQueryRow } from "./TestRunQuery";
 import { TestPerJobRunQueryRow } from "../TestPerJobRunQueryRow";

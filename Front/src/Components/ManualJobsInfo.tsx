@@ -1,9 +1,9 @@
 import * as React from "react";
-import { useApiUrl, useBasePrefix } from "./Navigation";
-import { PipelineRunsNames, PipelineRunsQueryRow } from "./PipelineRunsQueryRow";
+import { useApiUrl, useBasePrefix } from "../Domain/Navigation";
+import { PipelineRunsNames, PipelineRunsQueryRow } from "../Domain/PipelineRunsQueryRow";
 import { Button } from "@skbkontur/react-ui";
 import { RunJobModal } from "./RunJobModal";
-import { ManualJobRunInfo } from "./ManualJobRunInfo";
+import { ManualJobRunInfo } from "../Domain/ManualJobRunInfo";
 
 interface ManualJobsInfoProps {
     projectId: string;

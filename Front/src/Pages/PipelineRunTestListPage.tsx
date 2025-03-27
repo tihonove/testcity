@@ -12,6 +12,7 @@ import { getLinkToPipeline } from "../Domain/Navigation";
 import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
 import { TestListView } from "../Components/TestListView";
 import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
+import { BranchBox } from "../Components/BranchBox";
 
 export function PipelineRunTestListPage(): React.JSX.Element {
     const { rootGroup: rootProjectStructure, groupNodes, pathToGroup } = useProjectContextFromUrlParams();
@@ -20,7 +21,7 @@ export function PipelineRunTestListPage(): React.JSX.Element {
 
     return (
         <Root>
-            <ColumnStack block stretch gap={2}>
+            <ColumnStack block stretch gap={4}>
                 <Fit>
                     <GroupBreadcrumps branchName={pipelineInfo.branchName} nodes={groupNodes} />
                 </Fit>
@@ -37,25 +38,27 @@ export function PipelineRunTestListPage(): React.JSX.Element {
                     </ColorByState>
                 </Fit>
                 <Fit>
-                    <Branch>
-                        <ShareNetworkIcon /> {pipelineInfo.branchName}
-                    </Branch>
+                    <BranchBox name={pipelineInfo.branchName} />
                 </Fit>
-                <AdditionalJobInfo
-                    startDateTime={pipelineInfo.startDateTime}
-                    endDateTime={pipelineInfo.endDateTime}
-                    duration={pipelineInfo.duration}
-                    triggered={pipelineInfo.triggered}
-                    pipelineSource={pipelineInfo.pipelineSource}
-                />
+                <Fit>
+                    <AdditionalJobInfo
+                        startDateTime={pipelineInfo.startDateTime}
+                        endDateTime={pipelineInfo.endDateTime}
+                        duration={pipelineInfo.duration}
+                        triggered={pipelineInfo.triggered}
+                        pipelineSource={pipelineInfo.pipelineSource}
+                    />
+                </Fit>
+                <Fit>
+                    <TestListView
+                        pathToProject={pathToGroup}
+                        jobRunIds={pipelineInfo.jobRunIds}
+                        successTestsCount={pipelineInfo.successTestsCount}
+                        skippedTestsCount={pipelineInfo.skippedTestsCount}
+                        failedTestsCount={pipelineInfo.failedTestsCount}
+                    />
+                </Fit>
             </ColumnStack>
-            <TestListView
-                pathToProject={pathToGroup}
-                jobRunIds={pipelineInfo.jobRunIds}
-                successTestsCount={pipelineInfo.successTestsCount}
-                skippedTestsCount={pipelineInfo.skippedTestsCount}
-                failedTestsCount={pipelineInfo.failedTestsCount}
-            />
         </Root>
     );
 }
@@ -78,11 +81,4 @@ const StyledLink = styled(Link)`
 const StatusMessage = styled.h3`
     display: flex;
     line-height: 32px;
-`;
-
-const Branch = styled.span`
-    display: inline-block;
-    background-color: ${props => props.theme.backgroundColor1};
-    border-radius: 2px;
-    padding: 0 8px;
 `;

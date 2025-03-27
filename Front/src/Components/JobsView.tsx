@@ -9,14 +9,17 @@ import {
 import * as React from "react";
 import { Link } from "react-router-dom";
 import styled, { useTheme } from "styled-components";
-import { BranchCell, JobLinkWithResults, SelectedOnHoverTr } from "../Components/Cells";
-import { createLinkToJob, createLinkToJobRun } from "./Navigation";
+import { BranchCell, JobLinkWithResults, SelectedOnHoverTr } from "./Cells";
+import { createLinkToJob, createLinkToJobRun } from "../Domain/Navigation";
 import { formatTestDuration, getLinkToJob, getText, toLocalTimeFromUtc } from "../Utils";
-import { JobIdWithParentProject, JobIdWithParentProjectNames } from "./JobIdWithParentProject";
-import { JobRunNames, JobsQueryRow } from "./Storage/JobsQuery";
-import { GroupNode } from "./Storage/Storage";
-import { SubIcon } from "../Components/SubIcon";
+import { JobIdWithParentProject, JobIdWithParentProjectNames } from "../Domain/JobIdWithParentProject";
+import { JobRunNames, JobsQueryRow } from "../Domain/Storage/JobsQuery";
+import { GroupNode } from "../Domain/Storage/Storage";
+import { SubIcon } from "./SubIcon";
 import { Hint } from "@skbkontur/react-ui";
+import { RunsTable } from "../Pages/ProjectsWithRunsTable";
+import { stableGroupBy } from "../Utils/ArrayUtils";
+import { BranchBox } from "./BranchBox";
 
 interface JobsViewProps {
     hideRuns?: boolean;
@@ -37,22 +40,35 @@ export function JobsView({
 }: JobsViewProps) {
     const theme = useTheme();
 
+    const jobsWithTheirRuns = allJobs.map(job => {
+        const jobId = job[JobIdWithParentProjectNames.JobId];
+        const projectId = job[JobIdWithParentProjectNames.ProjectId];
+        const jobRuns = allJobRuns.filter(
+            x => x[JobRunNames.JobId] === jobId && x[JobRunNames.ProjectId] === projectId
+        );
+        return { job, jobRuns };
+    });
+
+    const groupedJobs = stableGroupBy(jobsWithTheirRuns, item => item.jobRuns.length > 0);
+
+    const jobsWithRuns = groupedJobs.get(true) || [];
+    const jobsWithoutRuns = groupedJobs.get(false) || [];
+
     return (
         <>
-            {allJobs.map(job => {
+            {jobsWithRuns.map(({ job, jobRuns }) => {
                 const jobId = job[JobIdWithParentProjectNames.JobId];
                 const projectId = job[JobIdWithParentProjectNames.ProjectId];
-                const jonRuns = allJobRuns.filter(
-                    x => x[JobRunNames.JobId] === jobId && x[JobRunNames.ProjectId] === projectId
-                );
-                const hasFailedRuns = jonRuns.some(
+                const hasFailedRuns = jobRuns.some(
                     x => x[JobRunNames.State] != "Success" && x[JobRunNames.State] != "Canceled"
                 );
                 return (
                     <React.Fragment key={jobId + projectId}>
                         <thead>
                             <tr>
-                                <JobHeader colSpan={6} style={{ paddingLeft: indentLevel * 25, paddingRight: 0 }}>
+                                <JobHeader
+                                    colSpan={RunsTable.columnCount}
+                                    style={{ paddingLeft: indentLevel * 25, paddingRight: 0 }}>
                                     {hasFailedRuns ? (
                                         <ShapeSquareIcon16Solid color={theme.failedTextColor} />
                                     ) : (
@@ -68,16 +84,20 @@ export function JobsView({
                         </thead>
                         {!hideRuns && (
                             <tbody>
-                                {jonRuns
-                                    .sort((a, b) => Number(b[1]) - Number(a[1]))
+                                {jobRuns
+                                    .sort(
+                                        (a, b) =>
+                                            Number(b[JobIdWithParentProjectNames.ProjectId]) -
+                                            Number(a[JobIdWithParentProjectNames.ProjectId])
+                                    )
                                     .map(x => (
-                                        <SelectedOnHoverTr key={x[1]}>
+                                        <SelectedOnHoverTr key={x[JobRunNames.JobRunId]}>
                                             <PaddingCell style={{ paddingLeft: indentLevel * 25, paddingRight: 0 }} />
                                             <NumberCell>
                                                 <Link to={x[13] || getLinkToJob(x[1], x[3])}>#{x[1]}</Link>
                                             </NumberCell>
-                                            <BranchCell $defaultBranch={x[JobRunNames.BranchName] == "master"}>
-                                                <ShareNetworkIcon /> {x[JobRunNames.BranchName]}
+                                            <BranchCell>
+                                                <BranchBox name={x[JobRunNames.BranchName]} />
                                             </BranchCell>
                                             <CountCell>
                                                 <JobLinkWithResults
@@ -115,6 +135,29 @@ export function JobsView({
                                     ))}
                             </tbody>
                         )}
+                    </React.Fragment>
+                );
+            })}
+
+            {jobsWithoutRuns.map(({ job }) => {
+                const jobId = job[JobIdWithParentProjectNames.JobId];
+                const projectId = job[JobIdWithParentProjectNames.ProjectId];
+                return (
+                    <React.Fragment key={jobId + projectId}>
+                        <thead>
+                            <tr>
+                                <JobHeader
+                                    colSpan={RunsTable.columnCount}
+                                    style={{ paddingLeft: indentLevel * 25, paddingRight: 0 }}>
+                                    <ShapeSquareIcon16Regular color={theme.mutedTextColor} />{" "}
+                                    <Link
+                                        className="no-underline"
+                                        to={createLinkToJob(rootProjectStructure, projectId, jobId, currentBranchName)}>
+                                        {jobId}
+                                    </Link>
+                                </JobHeader>
+                            </tr>
+                        </thead>
                     </React.Fragment>
                 );
             })}

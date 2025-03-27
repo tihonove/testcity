@@ -5,7 +5,7 @@ import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { theme } from "../Theme/ITheme";
 import { ColumnStack, Fill, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import { CopyIcon16Light } from "@skbkontur/icons";
-import { runAsyncAction } from "../TypeHelpers";
+import { runAsyncAction } from "../Utils/TypeHelpers";
 
 interface TestOutputModalProps {
     jobId: string;

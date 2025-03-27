@@ -9,7 +9,7 @@ import "./CommonStyles/Fonts.css";
 import { GlobalStyle } from "./CommonStyles/GlobalStyle";
 import "./CommonStyles/Reset.css";
 import { PageLoader } from "./Components/PageLoader";
-import { reject } from "./TypeHelpers";
+import { reject } from "./Utils/TypeHelpers";
 
 const root = createRoot(document.getElementById("root") ?? reject("Not found #root element"));
 

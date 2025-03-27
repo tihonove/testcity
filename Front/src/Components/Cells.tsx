@@ -1,21 +1,12 @@
 import { Link } from "react-router-dom";
-import styled, { css } from "styled-components";
+import { css, styled } from "styled-components";
+import { theme } from "../Theme/ITheme";
 
-export const BranchCell = styled.td<{ $defaultBranch: boolean }>`
+export const BranchCell = styled.td`
     max-width: 200px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
-    ${props =>
-        props.$defaultBranch &&
-        css`
-            border-radius: 20px;
-            background: ${props => props.theme.accentBgColor};
-            color: ${props => props.theme.accentTextColor};
-            display: inline;
-            padding: 2px 13px 2px 8px !important;
-        `}
 `;
 
 export const ColorByState = styled.span<{ state: string }>`
@@ -46,6 +37,6 @@ export const NumberCell = styled.td`
 
 export const SelectedOnHoverTr = styled.tr`
     &:hover {
-        background-color: ${props => props.theme.backgroundColor1};
+        background-color: ${theme.inverseColor("0.1")};
     }
 `;

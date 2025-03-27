@@ -47,14 +47,26 @@ export const darkTheme: ITheme = {
 };
 
 type ThemePropsPeeker<T> = <P>(props: P) => T;
+type ThemeFuncPropsPeeker<TResult, TA1> = (a1: TA1) => ThemePropsPeeker<TResult>;
 
-type ThemeHelper<T> = T extends object ? { [K in keyof T]: ThemeHelper<T[K]> } : ThemePropsPeeker<T>;
+/* eslint-disable prettier/prettier */
+type ThemeHelper<T> = 
+    T extends (a1: infer TA1) => infer TResult ? ThemeFuncPropsPeeker<TResult, TA1> :
+    T extends object ? { [K in keyof T]: ThemeHelper<T[K]> } 
+    : ThemePropsPeeker<T>;
+/* eslint-enable prettier/prettier */
 
 type ThemePrimitive = string | number;
 
 function buildThemeHelper<T extends object | ThemePrimitive>(theme: T, fn: ThemePropsPeeker<T>): ThemeHelper<T> {
     if (typeof theme === "string" || typeof theme === "number") {
         return fn as ThemeHelper<T>;
+    }
+    if (typeof theme === "function") {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prettier/prettier, @typescript-eslint/no-unsafe-argument
+        return ((...args) => props => fn(props)(...args)) as ThemeHelper<T>;
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const result: any = {};

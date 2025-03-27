@@ -10,7 +10,7 @@ import { AdditionalJobInfo } from "../Components/AdditionalJobInfo";
 import { ColorByState } from "../Components/Cells";
 import { JonRunIcon } from "../Components/Icons";
 import { useApiUrl, useBasePrefix } from "../Domain/Navigation";
-import { reject } from "../TypeHelpers";
+import { reject } from "../Utils/TypeHelpers";
 import { useSearchParam, useSearchParamAsState, useSearchParamDebouncedAsState } from "../Utils";
 import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
 import { TestListView } from "../Components/TestListView";
@@ -19,6 +19,7 @@ import { Loader, Tabs } from "@skbkontur/react-ui";
 import { OverviewTab } from "../CodeQuality/Overview/OverviewTab";
 import { IssuesTab } from "../CodeQuality/Issues/IssuesTab";
 import { Issue } from "../CodeQuality/types/Issue";
+import { BranchBox } from "../Components/BranchBox";
 
 export function JobRunTestListPage(): React.JSX.Element {
     const basePrefix = useBasePrefix();
@@ -77,20 +78,20 @@ export function JobRunTestListPage(): React.JSX.Element {
     return (
         <Root>
             <ColumnStack gap={4} block stretch>
-                <JobBreadcrumbs>
-                    <GroupBreadcrumps branchName={branchName} nodes={groupNodes} />
-                </JobBreadcrumbs>
-                <ColorByState state={state}>
-                    <JobRunHeader>
-                        <JonRunIcon size={32} />
-                        <StyledLink to={jobUrl}>#{jobRunId}</StyledLink>&nbsp;at {startDateTime}
-                    </JobRunHeader>
-                    <StatusMessage>{customStatusMessage}</StatusMessage>
-                </ColorByState>
                 <Fit>
-                    <Branch>
-                        <ShareNetworkIcon /> {branchName}
-                    </Branch>
+                    <GroupBreadcrumps branchName={branchName} nodes={groupNodes} />
+                </Fit>
+                <Fit>
+                    <ColorByState state={state}>
+                        <JobRunHeader>
+                            <JonRunIcon size={32} />
+                            <StyledLink to={jobUrl}>#{jobRunId}</StyledLink>&nbsp;at {startDateTime}
+                        </JobRunHeader>
+                        <StatusMessage>{customStatusMessage}</StatusMessage>
+                    </ColorByState>
+                </Fit>
+                <Fit>
+                    <BranchBox name={branchName} />
                 </Fit>
                 <Fit>
                     <AdditionalJobInfo
@@ -205,8 +206,6 @@ const StyledLink = styled(Link)`
     display: inherit;
 `;
 
-const JobBreadcrumbs = styled.h2``;
-
 const JobRunHeader = styled.h1`
     display: flex;
     font-size: 32px;
@@ -219,10 +218,3 @@ const StatusMessage = styled.h3`
 `;
 
 const Root = styled.main``;
-
-const Branch = styled.span`
-    display: inline-block;
-    background-color: ${props => props.theme.backgroundColor1};
-    border-radius: 2px;
-    padding: 0 8px;
-`;

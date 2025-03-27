@@ -3,9 +3,7 @@ import {
     EyeOpenIcon16Regular,
     PlusCircleIcon16Solid,
     TextBulletIcon20Regular,
-    TextBulletIcon24Regular,
     TransportAirRocketIcon16Light,
-    TransportAirRocketIcon20Light,
     UiMenuShapeCircle4Icon20Light,
     UiMenuShapeCircle4Icon24Regular,
     UiMenuShapeSquare4TiltIcon20Light,
@@ -15,24 +13,25 @@ import { ColumnStack, Fill, Fit, RowStack } from "@skbkontur/react-stack-layout"
 import { Button, Hint, Link as ReactUILink } from "@skbkontur/react-ui";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { styled } from "styled-components";
 import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { BranchSelect } from "../Components/BranchSelect";
 import { GroupAvatar } from "../Components/GroupAvatar";
+import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
+import { LogoPageBlock } from "../Components/LogoPageBlock";
 import { SubIcon } from "../Components/SubIcon";
+import { SuspenseFadingWrapper, useDelayedTransition } from "../Components/useDelayedTransition";
+import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
 import { JobIdWithParentProjectNames } from "../Domain/JobIdWithParentProject";
-import { JobsView } from "../Domain/JobsView";
+import { JobsView } from "../Components/JobsView";
+import { ManualJobsInfo } from "../Components/ManualJobsInfo";
 import { createLinkToCreateNewPipeline, createLinkToGroupOrProject, createLinkToProject } from "../Domain/Navigation";
-import { PipelineRuns } from "../Domain/PipelineRuns";
+import { PipelineRuns } from "../Components/PipelineRuns";
 import { GroupNode, isGroup, isProject, Project } from "../Domain/Storage/Storage";
 import { theme } from "../Theme/ITheme";
 import { useSearchParamAsState } from "../Utils";
 import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
-import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
-import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
-import { SuspenseFadingWrapper, useDelayedTransition } from "../Components/useDelayedTransition";
-import { ManualJobsInfo } from "../Domain/ManualJobsInfo";
-import { LogoPageBlock } from "../Components/LogoPageBlock";
+import { ProjectsWithRunsTable, RunsTable } from "./ProjectsWithRunsTable";
 
 export function ProjectsDashboardPage(): React.JSX.Element {
     const { rootGroup: rootProjectStructure, groupNodes, pathToGroup } = useProjectContextFromUrlParams();
@@ -66,7 +65,7 @@ export function ProjectsDashboardPage(): React.JSX.Element {
             {project !== currentGroupOrProject && (
                 <thead>
                     <tr>
-                        <td colSpan={6} style={{ paddingLeft: 25 * level }}>
+                        <td colSpan={RunsTable.columnCount} style={{ paddingLeft: 25 * level }}>
                             <SectionTitle gap={2} baseline block>
                                 <Fit>
                                     <UiMenuShapeSquare4TiltIcon20Light />
@@ -272,19 +271,6 @@ export function ProjectsDashboardPage(): React.JSX.Element {
     );
 }
 
-const ProjectsWithRunsTable = styled.table`
-    width: 100%;
-    font-size: 14px;
-
-    td {
-        padding: 6px 8px;
-    }
-
-    thead > tr > th {
-        padding-top: 16px;
-    }
-`;
-
 const TestListRoot = styled(ColumnStack)`
     max-width: ${theme.layout.centered.width};
     width: ${theme.layout.centered.width};
@@ -297,11 +283,6 @@ const SectionTitle = styled(RowStack)`
 
 const Root = styled.main`
     display: flex;
-`;
-
-const Header = styled.h1`
-    font-size: 32px;
-    line-height: 40px;
 `;
 
 const ShowRunsSwitchContainer = styled.div`

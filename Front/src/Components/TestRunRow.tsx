@@ -8,7 +8,7 @@ import { useStorage } from "../ClickhouseClientHooksWrapper";
 import { createLinkToTestHistory } from "../Domain/Navigation";
 import { TestRunQueryRow, TestRunQueryRowNames } from "../Domain/Storage/TestRunQuery";
 import { theme } from "../Theme/ITheme";
-import { runAsyncAction } from "../TypeHelpers";
+import { runAsyncAction } from "../Utils/TypeHelpers";
 import { KebabButton } from "./KebabButton";
 import { formatDuration } from "./RunStatisticsChart/DurationUtils";
 import { RunStatus } from "./RunStatus";

@@ -3,11 +3,12 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
-import { BranchCell, JobLinkWithResults, SelectedOnHoverTr } from "../Components/Cells";
+import { BranchCell, JobLinkWithResults, SelectedOnHoverTr } from "./Cells";
 import { formatTestDuration, getText, toLocalTimeFromUtc } from "../Utils";
-import { createLinkToPipelineRun, getLinkToPipeline } from "./Navigation";
-import { PipelineRunsNames, PipelineRunsQueryRow } from "./PipelineRunsQueryRow";
-import { GroupNode, Project } from "./Storage/Storage";
+import { createLinkToPipelineRun, getLinkToPipeline } from "../Domain/Navigation";
+import { PipelineRunsNames, PipelineRunsQueryRow } from "../Domain/PipelineRunsQueryRow";
+import { GroupNode, Project } from "../Domain/Storage/Storage";
+import { BranchBox } from "./BranchBox";
 
 interface PipelineRunsProps {
     indentLevel: number;
@@ -42,8 +43,8 @@ export function PipelineRuns({
                                 #{x[PipelineRunsNames.PipelineId]}
                             </Link>
                         </NumberCell>
-                        <BranchCell $defaultBranch={x[PipelineRunsNames.BranchName] == "master"}>
-                            <ShareNetworkIcon /> {x[PipelineRunsNames.BranchName]}
+                        <BranchCell>
+                            <BranchBox name={x[PipelineRunsNames.BranchName]} />
                         </BranchCell>
                         <CountCell>
                             <JobLinkWithResults

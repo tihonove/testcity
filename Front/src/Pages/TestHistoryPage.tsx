@@ -140,7 +140,7 @@ export function TestHistoryPage(): React.JSX.Element {
                                             )}
                                         </StatusCell>
                                         <DurationCell>{formatDuration(x[4], x[4])}</DurationCell>
-                                        <BranchCell $defaultBranch={x[JobRunNames.BranchName] == "master"}>
+                                        <BranchCell>
                                             <ShareNetworkIcon /> {x[JobRunNames.BranchName]}
                                         </BranchCell>
                                         <JobIdCell>
