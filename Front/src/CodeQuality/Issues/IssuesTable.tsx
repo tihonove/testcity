@@ -122,8 +122,7 @@ const Table = styled.table`
         padding: 8px 16px;
         text-align: left;
         align: left;
-        font-size: 14px;
-        line-height: 16px;
+        line-height: 20px;
 
         &:nth-child(1),
         &:nth-child(2),

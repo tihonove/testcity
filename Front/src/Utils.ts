@@ -1,6 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import { useDebouncedCallback } from "use-debounce";
 import { useEffect, useState } from "react";
+import { formatDistanceToNow, parseISO } from "date-fns";
 
 export function getProjectNameById(id: string): string {
     return (
@@ -56,6 +57,15 @@ export function formatTestDuration(seconds: string): string {
         .replace(/(\d{2}):(\d{2}):(\d{2})/, "$1h $2m $3s")
         .replace("00h 00m ", "")
         .replace("00h ", "");
+}
+
+export function formatRelativeTime(dateString: string): string {
+    // Преобразуем строку даты/времени в объект Date и добавляем смещение часового пояса (UTC+5)
+    const date = new Date(dateString.replace(" ", "T"));
+    // Добавляем 5 часов чтобы скорректировать для UTC+5
+    // Я лох и на серваке не сохранил вреия в UTC, поэтому приходится так делать
+    date.setHours(date.getHours() + 5);
+    return formatDistanceToNow(date, { addSuffix: true });
 }
 
 export function getText(

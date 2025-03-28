@@ -21,6 +21,7 @@ import { RunsTable } from "../Pages/ProjectsWithRunsTable";
 import { stableGroupBy } from "../Utils/ArrayUtils";
 import { BranchBox } from "./BranchBox";
 import { JobLink } from "./JobLink";
+import { TimingCell } from "./TimingCell";
 
 interface JobsViewProps {
     hideRuns?: boolean;
@@ -121,8 +122,7 @@ export function JobsView({
                                                     )}
                                                 </JobLink>
                                             </CountCell>
-                                            <StartedCell>{toLocalTimeFromUtc(x[4])}</StartedCell>
-                                            <DurationCell>{formatTestDuration(x[7])}</DurationCell>
+                                            <TimingCell startDateTime={x[4]} duration={x[7]} />
                                             <AttributesCell>
                                                 {x[JobRunNames.HasCodeQualityReport] != 0 && (
                                                     <Hint text="Code quality report available">
@@ -189,17 +189,6 @@ const CountCell = styled.td`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-`;
-
-const StartedCell = styled.td`
-    max-width: 150px;
-    white-space: nowrap;
-`;
-
-const DurationCell = styled.td`
-    max-width: 140px;
-    white-space: nowrap;
-    text-align: right;
 `;
 
 const AttributesCell = styled.td`

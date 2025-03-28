@@ -6,7 +6,6 @@ export const RunsTable = {
 
 export const ProjectsWithRunsTable = styled.table`
     width: 100%;
-    font-size: 14px;
 
     td {
         padding: 6px 8px;
