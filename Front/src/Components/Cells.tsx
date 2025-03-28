@@ -18,19 +18,6 @@ export const ColorByState = styled.span<{ state: string }>`
               : props.theme.failedTextColor};
 `;
 
-export const JobLinkWithResults = styled(Link)<{ state: string }>`
-    color: ${props =>
-        props.state == "Success"
-            ? props.theme.successTextColor
-            : props.state == "Canceled"
-              ? props.theme.mutedTextColor
-              : props.theme.failedTextColor};
-    text-decoration: none;
-    &:hover {
-        text-decoration: underline;
-    }
-`;
-
 export const NumberCell = styled.td`
     width: 80px;
 `;

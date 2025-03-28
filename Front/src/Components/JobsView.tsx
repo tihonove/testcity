@@ -9,7 +9,7 @@ import {
 import * as React from "react";
 import { Link } from "react-router-dom";
 import styled, { useTheme } from "styled-components";
-import { BranchCell, JobLinkWithResults, SelectedOnHoverTr } from "./Cells";
+import { BranchCell, SelectedOnHoverTr } from "./Cells";
 import { createLinkToJob, createLinkToJobRun } from "../Domain/Navigation";
 import { formatTestDuration, getLinkToJob, getText, toLocalTimeFromUtc } from "../Utils";
 import { JobIdWithParentProject, JobIdWithParentProjectNames } from "../Domain/JobIdWithParentProject";
@@ -20,6 +20,7 @@ import { Hint } from "@skbkontur/react-ui";
 import { RunsTable } from "../Pages/ProjectsWithRunsTable";
 import { stableGroupBy } from "../Utils/ArrayUtils";
 import { BranchBox } from "./BranchBox";
+import { JobLink } from "./JobLink";
 
 interface JobsViewProps {
     hideRuns?: boolean;
@@ -100,7 +101,7 @@ export function JobsView({
                                                 <BranchBox name={x[JobRunNames.BranchName]} />
                                             </BranchCell>
                                             <CountCell>
-                                                <JobLinkWithResults
+                                                <JobLink
                                                     state={x[JobRunNames.State]}
                                                     to={createLinkToJobRun(
                                                         rootProjectStructure,
@@ -118,7 +119,7 @@ export function JobsView({
                                                         x[JobRunNames.CustomStatusMessage],
                                                         x[JobRunNames.HasCodeQualityReport]
                                                     )}
-                                                </JobLinkWithResults>
+                                                </JobLink>
                                             </CountCell>
                                             <StartedCell>{toLocalTimeFromUtc(x[4])}</StartedCell>
                                             <DurationCell>{formatTestDuration(x[7])}</DurationCell>

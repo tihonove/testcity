@@ -3,12 +3,13 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
-import { BranchCell, JobLinkWithResults, SelectedOnHoverTr } from "./Cells";
+import { BranchCell, SelectedOnHoverTr } from "./Cells";
 import { formatTestDuration, getText, toLocalTimeFromUtc } from "../Utils";
 import { createLinkToPipelineRun, getLinkToPipeline } from "../Domain/Navigation";
 import { PipelineRunsNames, PipelineRunsQueryRow } from "../Domain/PipelineRunsQueryRow";
 import { GroupNode, Project } from "../Domain/Storage/Storage";
 import { BranchBox } from "./BranchBox";
+import { JobLink } from "./JobLink";
 
 interface PipelineRunsProps {
     indentLevel: number;
@@ -47,7 +48,7 @@ export function PipelineRuns({
                             <BranchBox name={x[PipelineRunsNames.BranchName]} />
                         </BranchCell>
                         <CountCell>
-                            <JobLinkWithResults
+                            <JobLink
                                 state={x[PipelineRunsNames.State]}
                                 to={createLinkToPipelineRun(
                                     rootProjectStructure,
@@ -64,7 +65,7 @@ export function PipelineRuns({
                                     x[PipelineRunsNames.CustomStatusMessage],
                                     x[PipelineRunsNames.HasCodeQualityReport]
                                 )}
-                            </JobLinkWithResults>
+                            </JobLink>
                         </CountCell>
                         <StartedCell>{toLocalTimeFromUtc(x[PipelineRunsNames.StartDateTime])}</StartedCell>
                         <DurationCell>{formatTestDuration(x[PipelineRunsNames.Duration].toString())}</DurationCell>

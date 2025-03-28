@@ -4,7 +4,7 @@ import * as React from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useClickhouseClient, useStorageQuery } from "../ClickhouseClientHooksWrapper";
-import { BranchCell, JobLinkWithResults, NumberCell, SelectedOnHoverTr } from "../Components/Cells";
+import { BranchCell, NumberCell, SelectedOnHoverTr } from "../Components/Cells";
 import { HomeIcon } from "../Components/Icons";
 import { BranchSelect } from "../Components/BranchSelect";
 import {
@@ -22,6 +22,7 @@ import { JobRunNames, JobsQueryRow } from "../Domain/Storage/JobsQuery";
 import { reject } from "../Utils/TypeHelpers";
 import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
 import { BranchBox } from "../Components/BranchBox";
+import { JobLink } from "../Components/JobLink";
 
 export function JobRunsPage(): React.JSX.Element {
     const { groupIdLevel1, groupIdLevel2, groupIdLevel3, jobId = "" } = useParams();
@@ -113,7 +114,7 @@ export function JobRunsPage(): React.JSX.Element {
                                     <BranchBox name={x[JobRunNames.BranchName]} />
                                 </BranchCell>
                                 <CountCell>
-                                    <JobLinkWithResults
+                                    <JobLink
                                         state={x[11]}
                                         to={createLinkToJobRun(
                                             rootProjectStructure,
@@ -131,7 +132,7 @@ export function JobRunsPage(): React.JSX.Element {
                                             x[12],
                                             x[JobRunNames.HasCodeQualityReport]
                                         )}
-                                    </JobLinkWithResults>
+                                    </JobLink>
                                 </CountCell>
                                 <StartedCell>{toLocalTimeFromUtc(x[4])}</StartedCell>
                                 <DurationCell>{formatTestDuration(x[10])}</DurationCell>
