@@ -40,12 +40,12 @@ export function RunJobModal(props: RunJobModalProps) {
                     `${apiUrl}gitlab/${props.projectId}/pipelines/${currentPipeline[PipelineRunsNames.PipelineId]}/manual-jobs`
                 )
             ).json();
-            const jobRunId = manualJobsForSelectedPipeline.find(x => x.jobId == jobToRun)?.jobRunId;
-            if (jobRunId == undefined) return;
+            const jobRun = manualJobsForSelectedPipeline.find(x => x.jobId == jobToRun);
+            if (jobRun == undefined) return;
             setRunning(true);
             try {
                 const response = await fetch(
-                    `https://git.skbkontur.ru/api/v4/projects/${props.projectId}/jobs/${jobRunId}/play`,
+                    `https://git.skbkontur.ru/api/v4/projects/${props.projectId}/jobs/${jobRun.jobRunId}/${jobRun.status == "Manual" ? "play" : "retry"}`,
                     {
                         method: "POST",
                         headers: {
