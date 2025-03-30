@@ -19,7 +19,7 @@ public class GlobalSetup
     {
         get
         {
-            loggerFactory ??= LoggerFactory.Create(builder => builder.AddConsole().SetMinimumLevel(LogLevel.Debug));
+            loggerFactory ??= LoggerFactory.Create(builder => builder.AddProvider(new NUnitLoggerProvider()).SetMinimumLevel(LogLevel.Debug));
             return loggerFactory;
         }
     }
