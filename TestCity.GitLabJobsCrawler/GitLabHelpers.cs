@@ -1,5 +1,5 @@
 using Kontur.TestAnalytics.Reporter.Client;
-using Kontur.TestAnalytics.Core;
+using Kontur.TestCity.Core;
 using NGitLab.Models;
 
 namespace Kontur.TestCity.GitLabJobsCrawler;

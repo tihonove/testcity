@@ -1,13 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# 
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reporter.Tests", "Reporter.Tests\Reporter.Tests.csproj", "{7D0AC4CF-0463-4A71-99CE-C9DF3A4ECB9A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCity.UnitTests", "TestCity.UnitTests\TestCity.UnitTests.csproj", "{7D0AC4CF-0463-4A71-99CE-C9DF3A4ECB9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reporter.Cli", "Reporter.Cli\Reporter.Cli.csproj", "{AD686802-3A75-4C8B-97A3-3B0C7C5ABF5E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reporter.Client", "Reporter.Client\Reporter.Client.csproj", "{99EF2400-12EF-4B09-AE5D-E433D645B7A0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{856A0607-7D85-4E27-AA6B-1CD0D71BB7DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCity.Core", "TestCity.Core\TestCity.Core.csproj", "{856A0607-7D85-4E27-AA6B-1CD0D71BB7DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActualizeDb.Cli", "ActualizeDb.Cli\ActualizeDb.Cli.csproj", "{B48E8565-3930-48D3-9819-6447D542FD06}"
 EndProject
@@ -27,14 +22,6 @@ Global
 		{7D0AC4CF-0463-4A71-99CE-C9DF3A4ECB9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D0AC4CF-0463-4A71-99CE-C9DF3A4ECB9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D0AC4CF-0463-4A71-99CE-C9DF3A4ECB9A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AD686802-3A75-4C8B-97A3-3B0C7C5ABF5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AD686802-3A75-4C8B-97A3-3B0C7C5ABF5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AD686802-3A75-4C8B-97A3-3B0C7C5ABF5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AD686802-3A75-4C8B-97A3-3B0C7C5ABF5E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{99EF2400-12EF-4B09-AE5D-E433D645B7A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{99EF2400-12EF-4B09-AE5D-E433D645B7A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{99EF2400-12EF-4B09-AE5D-E433D645B7A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{99EF2400-12EF-4B09-AE5D-E433D645B7A0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{856A0607-7D85-4E27-AA6B-1CD0D71BB7DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{856A0607-7D85-4E27-AA6B-1CD0D71BB7DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{856A0607-7D85-4E27-AA6B-1CD0D71BB7DE}.Release|Any CPU.ActiveCfg = Release|Any CPU

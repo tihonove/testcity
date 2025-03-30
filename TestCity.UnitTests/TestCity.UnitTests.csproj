@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>Kontur.TestCity.UnitTests</RootNamespace>
+        <AssemblyName>Kontur.TestCity.UnitTests</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ClickHouse.Client" />
+        <PackageReference Include="FluentAssertions" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" />
+        <PackageReference Include="NGitLab" />
+        <PackageReference Include="NUnit" />
+        <PackageReference Include="NUnit3TestAdapter" />
+        <PackageReference Include="JunitXml.TestLogger" />
+        <PackageReference Include="System.Linq.Async" />
+        <PackageReference Include="dotenv.net" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="../TestCity.Core/TestCity.Core.csproj" />
+        <ProjectReference Include="../TestCity.GitLabJobsCrawler/TestCity.GitLabJobsCrawler.csproj" />
+    </ItemGroup>
+
+</Project>

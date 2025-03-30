@@ -1,7 +1,7 @@
-using Kontur.TestAnalytics.Core;
-using Kontur.TestAnalytics.Reporter.Client;
-using NGitLab;
 using System.Text.RegularExpressions;
+using Kontur.TestAnalytics.Reporter.Client;
+using Kontur.TestCity.Core;
+using NGitLab;
 
 namespace Kontur.TestCity.GitLabJobsCrawler;
 

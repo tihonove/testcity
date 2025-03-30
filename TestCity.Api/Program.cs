@@ -1,6 +1,6 @@
 using System.Text;
 using dotenv.net;
-using Kontur.TestAnalytics.Core;
+using Kontur.TestCity.Core;
 using TestCity.Api.Extensions;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();

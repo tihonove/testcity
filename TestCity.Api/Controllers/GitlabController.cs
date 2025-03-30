@@ -1,6 +1,6 @@
 using System.IO.Compression;
-using Kontur.TestAnalytics.Core;
-using Kontur.TestAnalytics.Core.Models;
+using Kontur.TestCity.Core;
+using Kontur.TestCity.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using NGitLab;
 

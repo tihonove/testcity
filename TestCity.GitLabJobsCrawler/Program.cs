@@ -1,7 +1,7 @@
 using System.Text;
 using dotenv.net;
-using Kontur.TestAnalytics.Core;
-using Kontur.TestAnalytics.Core.Graphite;
+using Kontur.TestCity.Core;
+using Kontur.TestCity.Core.Graphite;
 using Kontur.TestCity.GitLabJobsCrawler;
 using TestCity.Api.Extensions;
 

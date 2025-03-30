@@ -1,5 +1,5 @@
 ﻿using dotenv.net;
-using Kontur.TestAnalytics.Core.Clickhouse;
+using Kontur.TestCity.Core.Clickhouse;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();
 var connection = ConnectionFactory.CreateConnection();

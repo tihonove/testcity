@@ -1,5 +1,5 @@
 using System.Diagnostics.Metrics;
-using Kontur.TestAnalytics.Core.Graphite;
+using Kontur.TestCity.Core.Graphite;
 using NGitLab.Models;
 
 namespace Kontur.TestCity.GitLabJobsCrawler;

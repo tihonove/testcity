@@ -1,6 +1,6 @@
 using System.Text;
 using dotenv.net;
-using Kontur.TestAnalytics.Core;
+using Kontur.TestCity.Core;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);

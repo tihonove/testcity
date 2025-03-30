@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <AssemblyName>Kontur.TestCity.Core</AssemblyName>
+        <RootNamespace>Kontur.TestCity.Core</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="NGitLab" />
+        <PackageReference Include="ClickHouse.Client" />
+        <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="Clickhouse\SchemaMigrations\Schema1.sql" />
+        <EmbeddedResource Include="..\Front\gitlab-projects.json" />
+    </ItemGroup>
+
+</Project>
