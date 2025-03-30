@@ -135,7 +135,6 @@ public class JUnitExtractor(ILogger<JUnitExtractor> log)
         }
     }
 
-
     private readonly bool doNotModifyReports = true;
     private readonly ILogger<JUnitExtractor> log = log;
 }

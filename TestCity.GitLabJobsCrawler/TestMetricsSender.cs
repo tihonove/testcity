@@ -1,8 +1,6 @@
-using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using Kontur.TestAnalytics.Core.Graphite;
 using NGitLab.Models;
-using Microsoft.Extensions.Logging;
 
 namespace Kontur.TestCity.GitLabJobsCrawler;
 

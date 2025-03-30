@@ -10,9 +10,9 @@ public sealed class GitLabCrawlerService : IDisposable
     {
         this.gitLabSettings = gitLabSettings;
         this.metricsSender = metricsSender;
-        stopTokenSource = new CancellationTokenSource();
         this.log = log;
         this.extractor = extractor;
+        stopTokenSource = new CancellationTokenSource();
     }
 
     public void Start()
@@ -46,11 +46,12 @@ public sealed class GitLabCrawlerService : IDisposable
     {
         var gitLabClientProvider = new SkbKonturGitLabClientProvider(gitLabSettings);
         var gitLabProjectIds = GitLabProjectsService.GetAllProjects().Select(x => x.Id).Select(x => int.Parse(x)).ToList();
+        var client = gitLabClientProvider.GetClient();
+        var jobProcessor = new GitLabJobProcessor(client, extractor, log);
 
         foreach (var projectId in gitLabProjectIds)
         {
             log.LogInformation("Pulling jobs for project {ProjectId}", projectId);
-            var client = gitLabClientProvider.GetClient();
             var jobsClient = client.GetJobs(projectId);
             var projectInfo = await client.Projects.GetByIdAsync(projectId, new SingleProjectQuery(), token);
             var jobsQuery = new JobQuery
@@ -70,52 +71,38 @@ public sealed class GitLabCrawlerService : IDisposable
             foreach (var job in jobs)
             {
                 processedJobIds.Add(job.Id);
-
                 if (processedJobSet.Contains(job.Id))
                 {
-                    log.LogInformation($"Skip job with id: {job.Id}");
+                    log.LogInformation("Skip job with id: {JobId}", job.Id);
                     continue;
                 }
 
-                log.LogInformation("Start processing job with id: ProjectId: {ProjectId} JobId: {JobRunId}", projectId, job.Id);
-                if (job.Artifacts != null)
+                try
                 {
-                    try
+                    var processingResult = await jobProcessor.ProcessJobAsync(projectId, job.Id);
+                    if (processingResult.JobInfo != null)
                     {
-                        var artifactContents = client.GetJobs(projectId).GetJobArtifacts(job.Id);
-                        log.LogInformation($"Artifact size for job with id: {job.Id}. Size: {artifactContents.Length} bytes");
-                        var extractResult = extractor.TryExtractTestRunsFromGitlabArtifact(artifactContents);
-                        if (extractResult.TestReportData != null || extractResult.HasCodeQualityReport)
+                        if (!await TestRunsUploader.IsJobRunIdExists(processingResult.JobInfo.JobRunId))
                         {
-                            var testReportData = extractResult.TestReportData;
-                            var refId = await client.BranchOrRef(projectId, job.Ref);
-                            var jobInfo = GitLabHelpers.GetFullJobInfo(job, refId, extractResult, projectId.ToString());
-                            if (!await TestRunsUploader.IsJobRunIdExists(jobInfo.JobRunId))
-                            {
-                                log.LogInformation($"JobRunId '{jobInfo.JobRunId}' does not exist. Uploading test runs");
-                                await TestRunsUploader.JobInfoUploadAsync(jobInfo);
-                                if (testReportData != null)
-                                {
-                                    await TestRunsUploader.UploadAsync(jobInfo, testReportData.Runs);
-                                    await metricsSender.SendAsync(projectInfo, refId, job, testReportData);
-                                }
-                            }
-                            else
-                            {
-                                log.LogInformation($"JobRunId '{jobInfo.JobRunId}' exists. Skip uploading test runs");
-                            }
+                            log.LogInformation("JobRunId '{JobRunId}' does not exist. Uploading test runs", processingResult.JobInfo.JobRunId);
+                            await TestRunsUploader.JobInfoUploadAsync(processingResult.JobInfo);
 
-                            processedJobSet.Add(job.Id);
+                            if (processingResult.TestReportData != null)
+                            {
+                                await TestRunsUploader.UploadAsync(processingResult.JobInfo, processingResult.TestReportData.Runs);
+                                await metricsSender.SendAsync(projectInfo, processingResult.JobInfo.BranchName, job, processingResult.TestReportData);
+                            }
                         }
                         else
                         {
-                            log.LogInformation("JobRunId '{JobRunId}' does not contain any tests or code quality reports. Skip uploading test runs", job.Id);
+                            log.LogInformation("JobRunId '{JobRunId}' exists. Skip uploading test runs", processingResult.JobInfo.JobRunId);
                         }
                     }
-                    catch (Exception exception)
-                    {
-                        log.LogWarning(exception, $"Failed to read artifact for {job.Id}");
-                    }
+                }
+                catch (Exception exception)
+                {
+                    log.LogError(exception, "Failed to process job {JobId}", job.Id);
+                    throw;
                 }
             }
 

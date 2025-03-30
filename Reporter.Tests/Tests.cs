@@ -18,7 +18,6 @@ public class Tests
         await command.ExecuteNonQueryAsync();
     }
 
-
     private static readonly string[] Columns = new[]
         {
             "JobId",
