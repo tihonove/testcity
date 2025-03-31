@@ -78,7 +78,7 @@ public sealed class GitLabCrawlerService : IDisposable
 
                 try
                 {
-                    var processingResult = await jobProcessor.ProcessJobAsync(projectId, job.Id);
+                    var processingResult = await jobProcessor.ProcessJobAsync(projectId, job.Id, job);
                     if (processingResult.JobInfo != null)
                     {
                         if (!await TestRunsUploader.IsJobRunIdExists(processingResult.JobInfo.JobRunId))

@@ -2,6 +2,7 @@ using System.Text.RegularExpressions;
 using Kontur.TestAnalytics.Reporter.Client;
 using Kontur.TestCity.Core;
 using NGitLab;
+using NGitLab.Models;
 
 namespace Kontur.TestCity.GitLabJobsCrawler;
 
@@ -14,14 +15,14 @@ public class GitLabJobProcessor
         this.extractor = extractor;
     }
 
-    public async Task<GitLabJobProcessingResult> ProcessJobAsync(int projectId, long jobRunId)
+    public async Task<GitLabJobProcessingResult> ProcessJobAsync(int projectId, long jobRunId, Job? job = null)
     {
         logger.LogInformation("Start processing job with id: ProjectId: {ProjectId} JobId: {JobRunId}", projectId, jobRunId);
         try
         {
             var jobClient = client.GetJobs(projectId);
             var jobTrace = await CreateTraceTextReader(jobClient, jobRunId);
-            var job = await jobClient.GetAsync(jobRunId);
+            job ??= await jobClient.GetAsync(jobRunId);
             var result = new GitLabJobProcessingResult
             {
                 JobInfo = null,
