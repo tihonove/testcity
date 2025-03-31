@@ -28,9 +28,7 @@ public class GitLabJobProcessor
                 TestReportData = null,
             };
 
-            var customStatusMessage = await ExtractTeamCityStatusMessage(jobTrace);
-
-            if (job.Artifacts == null && customStatusMessage == null)
+            if (job.Artifacts == null)
             {
                 return result;
             }
@@ -38,6 +36,7 @@ public class GitLabJobProcessor
             var artifactContents = jobClient.GetJobArtifacts(job.Id);
             logger.LogInformation("Artifact size for job with id: {JobId}. Size: {Size} bytes", job.Id, artifactContents.Length);
 
+            var customStatusMessage = await ExtractTeamCityStatusMessage(jobTrace);
             var extractResult = extractor.TryExtractTestRunsFromGitlabArtifact(artifactContents);
             if (extractResult.TestReportData == null && !extractResult.HasCodeQualityReport)
             {
@@ -62,13 +61,13 @@ public class GitLabJobProcessor
         }
     }
 
-    private static async Task<string> ExtractTeamCityStatusMessage(TextReader jobTrace)
+    private static async Task<string?> ExtractTeamCityStatusMessage(TextReader jobTrace)
     {
         var pattern = @"##(team|test)city\[buildStatus text='(?<statusText>.*?)'\]";
         var regex = new Regex(pattern);
 
         string? line;
-        string lastStatusMessage = string.Empty;
+        string? lastStatusMessage = null;
 
         while ((line = await jobTrace.ReadLineAsync()) != null)
         {
