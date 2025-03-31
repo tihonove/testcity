@@ -8,7 +8,7 @@ export const urlPrefix: string = window.__webpack_public_path__;
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-export const apiUrlPrefix: string = window.__webpack_public_path__;
+export const apiUrlPrefix: string = (window.__webpack_public_path__ ?? "/") + "api/";
 
 export function createLinkToTestHistory(basePrefix: string, testId: string, pathToProject: string[]): string {
     const result = `${basePrefix}${[...pathToProject, "test-history"].join("/")}?id=${encodeURIComponent(testId)}`;

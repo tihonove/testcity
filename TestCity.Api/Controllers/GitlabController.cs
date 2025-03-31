@@ -7,7 +7,7 @@ using NGitLab;
 namespace Kontur.TestCity.Api.Controllers;
 
 [ApiController]
-[Route("gitlab")]
+[Route("api/gitlab")]
 public class GitlabController : Controller
 {
     private readonly IGitLabClient gitLabClient;

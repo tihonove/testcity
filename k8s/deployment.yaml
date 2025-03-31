@@ -242,14 +242,7 @@ spec:
                 name: test-city-front-service
                 port:
                   number: 30110
-          - path: /clickhouse
-            pathType: Prefix
-            backend:
-              service:
-                name: test-city-api-service
-                port:
-                  number: 30111
-          - path: /gitlab
+          - path: /api
             pathType: Prefix
             backend:
               service:

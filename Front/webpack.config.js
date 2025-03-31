@@ -36,11 +36,7 @@ module.exports = (env, argv) => {
             },
             proxy: [
                 {
-                    context: ["/clickhouse/"],
-                    target: "http://localhost:8124",
-                },
-                {
-                    context: ["/gitlab/"],
+                    context: ["/api/"],
                     target: "http://localhost:8124",
                 },
             ],

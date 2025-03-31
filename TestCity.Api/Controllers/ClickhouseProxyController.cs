@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Kontur.TestCity.Api.Controllers;
 
 [ApiController]
-[Route("clickhouse")]
+[Route("api/clickhouse")]
 public class ClickhouseProxyController : Controller
 {
     [Route("{*query}")]
