@@ -56,7 +56,7 @@ public sealed class GitLabCrawlerService : IDisposable
             var projectInfo = await client.Projects.GetByIdAsync(projectId, new SingleProjectQuery(), token);
             var jobsQuery = new JobQuery
             {
-                PerPage = 300,
+                PerPage = 100,
                 Scope = JobScopeMask.All &
                     ~JobScopeMask.Canceled &
                     ~JobScopeMask.Skipped &
@@ -102,7 +102,7 @@ public sealed class GitLabCrawlerService : IDisposable
                 catch (Exception exception)
                 {
                     log.LogError(exception, "Failed to process job {JobId}", job.Id);
-                    throw;
+                    continue;
                 }
             }
 
