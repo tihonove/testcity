@@ -70,7 +70,6 @@ public sealed class GitLabCrawlerService : IDisposable
 
             foreach (var job in jobs)
             {
-                processedJobIds.Add(job.Id);
                 if (processedJobSet.Contains(job.Id))
                 {
                     log.LogInformation("Skip job with id: {JobId}", job.Id);
@@ -97,6 +96,7 @@ public sealed class GitLabCrawlerService : IDisposable
                         {
                             log.LogInformation("JobRunId '{JobRunId}' exists. Skip uploading test runs", processingResult.JobInfo.JobRunId);
                         }
+                        processedJobIds.Add(job.Id);
                     }
                 }
                 catch (Exception exception)
