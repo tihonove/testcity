@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using Kontur.TestAnalytics.Reporter.Client;
 using Kontur.TestCity.Core;
 using NGitLab.Models;
@@ -68,11 +69,10 @@ public sealed class GitLabCrawlerService : IDisposable
         };
         var jobs = jobsClient.GetJobsAsync(jobsQuery).Take(600).ToArray();
         log.LogInformation("Take last {jobsLength} jobs", jobs.Length);
-        var processedJobIds = new List<long>();
 
         foreach (var job in jobs)
         {
-            if (processedJobSet.Contains(job.Id))
+            if (processedJobSet.ContainsKey((projectId, job.Id)))
             {
                 log.LogInformation("Skip job with id: {JobId}", job.Id);
                 continue;
@@ -99,13 +99,13 @@ public sealed class GitLabCrawlerService : IDisposable
                         log.LogInformation("JobRunId '{JobRunId}' exists. Skip uploading test runs", processingResult.JobInfo.JobRunId);
                     }
 
-                    processedJobIds.Add(job.Id);
+                    processedJobSet.TryAdd((projectId, job.Id), 0);
                 }
                 else
                 {
                     if (job.Status == NGitLab.JobStatus.Failed || job.Status == NGitLab.JobStatus.Success)
                     {
-                        processedJobIds.Add(job.Id);
+                        processedJobSet.TryAdd((projectId, job.Id), 0);
                     }
                 }
             }
@@ -125,7 +125,7 @@ public sealed class GitLabCrawlerService : IDisposable
         stopTokenSource.Cancel();
     }
 
-    private readonly HashSet<long> processedJobSet = new HashSet<long>();
+    private readonly ConcurrentDictionary<(long, long), byte> processedJobSet = new ();
     private readonly GitLabSettings gitLabSettings;
     private readonly TestMetricsSender metricsSender;
     private readonly CancellationTokenSource stopTokenSource;
