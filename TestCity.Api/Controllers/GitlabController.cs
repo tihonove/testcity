@@ -12,11 +12,13 @@ public class GitlabController : Controller
 {
     private readonly IGitLabClient gitLabClient;
     private readonly List<GitLabProject> projects;
+    private readonly ILogger<GitlabController> logger;
 
-    public GitlabController(SkbKonturGitLabClientProvider gitLabClientProvider)
+    public GitlabController(SkbKonturGitLabClientProvider gitLabClientProvider, ILogger<GitlabController> logger)
     {
         gitLabClient = gitLabClientProvider.GetClient();
         this.projects = GitLabProjectsService.GetAllProjects();
+        this.logger = logger;
     }
 
     [HttpGet("{projectId}/jobs/{jobId}/codequality")]
@@ -35,6 +37,23 @@ public class GitlabController : Controller
         }
 
         return Ok(codequality);
+    }
+
+    [HttpPost("webhook")]
+    public async Task<IActionResult> WebhookHandler()
+    {
+        try
+        {
+            using var reader = new StreamReader(Request.Body);
+            var body = await reader.ReadToEndAsync();
+            logger.LogInformation("Получен webhook от GitLab: {WebhookBody}", body);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Ошибка при обработке webhook от GitLab");
+            return StatusCode(500);
+        }
     }
 
     [HttpGet("{projectId}/pipelines/{pipelineId}/manual-jobs")]
