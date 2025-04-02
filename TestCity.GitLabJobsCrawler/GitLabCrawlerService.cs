@@ -98,7 +98,15 @@ public sealed class GitLabCrawlerService : IDisposable
                     {
                         log.LogInformation("JobRunId '{JobRunId}' exists. Skip uploading test runs", processingResult.JobInfo.JobRunId);
                     }
+
                     processedJobIds.Add(job.Id);
+                }
+                else
+                {
+                    if (job.Status == NGitLab.JobStatus.Failed || job.Status == NGitLab.JobStatus.Success)
+                    {
+                        processedJobIds.Add(job.Id);
+                    }
                 }
             }
             catch (Exception exception)
