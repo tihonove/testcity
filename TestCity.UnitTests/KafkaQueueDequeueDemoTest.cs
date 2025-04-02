@@ -24,7 +24,7 @@ namespace Kontur.TestCity.UnitTests
                 ProjectId = 100,
                 JobRunId = 200,
             };
-            var workerClient = new WorkerClient(logger);
+            var workerClient = new WorkerClient(GlobalSetup.TestLoggerFactory.CreateLogger<WorkerClient>());
             await workerClient.Enqueue(emailTask);
         }
 
