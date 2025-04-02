@@ -69,7 +69,7 @@ DotNet tests:
     - export TESTANALYTICS_CLICKHOUSE_DB="$CLICKHOUSE_DB"
     - export TESTANALYTICS_CLICKHOUSE_USER="$CLICKHOUSE_USER"
     - export TESTANALYTICS_CLICKHOUSE_PASSWORD="$CLICKHOUSE_PASSWORD"
-    - export KAFKA_BOOTSTRAP_SERVERS="locahost:9092"
+    - export KAFKA_BOOTSTRAP_SERVERS="kafka:9092"
     - dotnet test --logger "junit;LogFilePath=../.test-reports/{assembly}.test-result.xml;FailureBodyFormat=Verbose"
   artifacts:
     paths:
