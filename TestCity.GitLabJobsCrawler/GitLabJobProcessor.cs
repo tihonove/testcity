@@ -21,7 +21,6 @@ public class GitLabJobProcessor
         try
         {
             var jobClient = client.GetJobs(projectId);
-            var jobTrace = await CreateTraceTextReader(jobClient, jobRunId);
             job ??= await jobClient.GetAsync(jobRunId);
             var result = new GitLabJobProcessingResult
             {
@@ -37,6 +36,7 @@ public class GitLabJobProcessor
             var artifactContents = jobClient.GetJobArtifacts(job.Id);
             logger.LogInformation("Artifact size for job with id: {JobId}. Size: {Size} bytes", job.Id, artifactContents.Length);
 
+            var jobTrace = await CreateTraceTextReader(jobClient, jobRunId);
             var customStatusMessage = await ExtractTeamCityStatusMessage(jobTrace);
             var extractResult = extractor.TryExtractTestRunsFromGitlabArtifact(artifactContents);
             if (extractResult.TestReportData == null && !extractResult.HasCodeQualityReport)
