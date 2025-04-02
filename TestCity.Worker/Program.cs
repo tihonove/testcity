@@ -25,7 +25,9 @@ var host = Host.CreateDefaultBuilder(args)
 
         if (OpenTelemetryExtensions.IsOpenTelemetryEnabled())
         {
-            services.AddOpenTelemetry();
+            services
+                .AddOpenTelemetry()
+                .ConfigureTestAnalyticsOpenTelemetry("TestAnalytics", "Worker");
         }
     })
     .ConfigureLogging((hostContext, logging) =>
