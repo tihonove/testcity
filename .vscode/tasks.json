@@ -1,0 +1,57 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build solution",
+			"type": "shell",
+			"command": "dotnet build TestAnalytics.sln",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"group": {
+				"kind": "build"
+			},
+			"problemMatcher": [
+				"$msCompile"
+			],
+			"presentation": {
+				"reveal": "always",
+				"panel": "shared",
+				"clear": true
+			},
+			"runOptions": {
+				"runOn": "default"
+			}
+		},
+		{
+			"label": "Clean solution",
+			"type": "shell",
+			"command": "dotnet clean TestAnalytics.sln",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"group": {
+				"kind": "build"
+			},
+			"problemMatcher": [
+				"$msCompile"
+			],
+			"presentation": {
+				"reveal": "always",
+				"panel": "shared",
+				"clear": true
+			},
+			"runOptions": {
+				"runOn": "default"
+			}
+		},
+		{
+			"label": "Rebuild solution",
+			"dependsOn": [
+				"Clean solution",
+				"Build solution"
+			],
+			"dependsOrder": "sequence"
+		}
+	]
+}
