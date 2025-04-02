@@ -19,6 +19,12 @@ tasks:
       - dotnet watch run --project TestCity.Api/TestCity.Api.csproj
     silent: false
 
+  worker:
+    deps: [actualize-db]
+    cmds:
+      - dotnet watch run --project TestCity.Worker/TestCity.Worker.csproj
+    silent: false
+
   crawler:
     deps: [actualize-db]
     cmds:
@@ -33,6 +39,6 @@ tasks:
     silent: false
 
   dev:
-    deps: [db, api, crawler, front]
+    deps: [db, api, worker, crawler, front]
     silent: false
 

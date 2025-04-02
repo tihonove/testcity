@@ -118,6 +118,8 @@ spec:
                   key: value
             - name: OTEL_ENVIRONMENT
               value: "cloud"
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: vm-tc-kfk-01:9092
           resources:
             requests:
               cpu: "50m"
@@ -176,6 +178,8 @@ spec:
                   key: value
             - name: OTEL_ENVIRONMENT
               value: "cloud"
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: vm-tc-kfk-01:9092
           resources:
             requests:
               cpu: "500m"
@@ -183,6 +187,64 @@ spec:
             limits:
               cpu: "1000m"
               memory: "2048Mi"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-city-worker
+  labels:
+    app: test-city-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-city-worker
+  template:
+    metadata:
+      labels:
+        app: test-city-worker
+    spec:
+      containers:
+        - name: test-city-worker
+          image: registry.kontur.host/ke-forms/test-analytics/worker:${IMAGE_TAG}
+          env:
+            - name: GITLAB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: gitlab-credentials
+                  key: token
+            - name: GRAPHITE_RELAY_HOST
+              value: graphite-relay.skbkontur.ru
+            - name: GRAPHITE_RELAY_PORT
+              value: "2003"
+            - name: TESTANALYTICS_CLICKHOUSE_HOST
+              value: vm-ch2-stg.dev.kontur.ru
+            - name: TESTANALYTICS_CLICKHOUSE_PORT
+              value: "8123"
+            - name: TESTANALYTICS_CLICKHOUSE_DB
+              value: test_analytics
+            - name: TESTANALYTICS_CLICKHOUSE_USER
+              value: tihonove
+            - name: TESTANALYTICS_CLICKHOUSE_PASSWORD
+              value: "12487562"
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "https://opentm-http.kontur.host"
+            - name: OTEL_EXPORTER_OTLP_HEADERS
+              valueFrom:
+                secretKeyRef:
+                  name: oltp-headers
+                  key: value
+            - name: OTEL_ENVIRONMENT
+              value: "cloud"
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: vm-tc-kfk-01:9092
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
 ---
 apiVersion: v1
 kind: Service

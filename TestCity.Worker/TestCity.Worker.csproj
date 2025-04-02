@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>Kontur.TestCity.Worker</RootNamespace>
+        <AssemblyName>Kontur.TestCity.Worker</AssemblyName>
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+        <PackageReference Include="dotenv.net" />
+        <PackageReference Include="Confluent.Kafka" />
+        <PackageReference Include="OpenTelemetry.Exporter.Console" />
+        <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" />
+        <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
+        <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <ProjectReference Include="../TestCity.Core/TestCity.Core.csproj" />
+    </ItemGroup>
+
+</Project>

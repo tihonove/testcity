@@ -1,5 +1,4 @@
 namespace Kontur.TestCity.Api.Controllers;
-
 public class ManualJobRunInfo
 {
     public string JobId { get; set; }

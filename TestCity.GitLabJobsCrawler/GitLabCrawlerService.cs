@@ -1,18 +1,21 @@
 using System.Collections.Concurrent;
 using Kontur.TestAnalytics.Reporter.Client;
 using Kontur.TestCity.Core;
+using Kontur.TestCity.Core.Worker;
+using Kontur.TestCity.Core.Worker.TaskPayloads;
 using NGitLab.Models;
 
 namespace Kontur.TestCity.GitLabJobsCrawler;
 
 public sealed class GitLabCrawlerService : IDisposable
 {
-    public GitLabCrawlerService(GitLabSettings gitLabSettings, TestMetricsSender metricsSender, ILogger<GitLabCrawlerService> log, JUnitExtractor extractor)
+    public GitLabCrawlerService(GitLabSettings gitLabSettings, TestMetricsSender metricsSender, ILogger<GitLabCrawlerService> log, JUnitExtractor extractor, WorkerClient workerClient)
     {
         this.gitLabSettings = gitLabSettings;
         this.metricsSender = metricsSender;
         this.log = log;
         this.extractor = extractor;
+        this.workerClient = workerClient;
         stopTokenSource = new CancellationTokenSource();
     }
 
@@ -81,6 +84,21 @@ public sealed class GitLabCrawlerService : IDisposable
             try
             {
                 var processingResult = await jobProcessor.ProcessJobAsync(projectId, job.Id, job);
+                try
+                {
+                    await workerClient.Enqueue(
+                        new ProcessJobRunTaskPayload
+                        {
+                            ProjectId = projectId,
+                            JobRunId = job.Id,
+                        });
+                }
+                catch (Exception e)
+                {
+                    log.LogError(e, "Failed to enqueue job {JobId}", job.Id);
+                    throw;
+                }
+                
                 if (processingResult.JobInfo != null)
                 {
                     if (!await TestRunsUploader.IsJobRunIdExists(processingResult.JobInfo.JobRunId))
@@ -131,4 +149,5 @@ public sealed class GitLabCrawlerService : IDisposable
     private readonly CancellationTokenSource stopTokenSource;
     private readonly ILogger<GitLabCrawlerService> log;
     private readonly JUnitExtractor extractor;
+    private readonly WorkerClient workerClient;
 }
