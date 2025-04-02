@@ -7,7 +7,7 @@ export const urlPrefix: string = window.__webpack_public_path__;
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 export const apiUrlPrefix: string = (window.__webpack_public_path__ ?? "/") + "api/";
 
 export function createLinkToTestHistory(basePrefix: string, testId: string, pathToProject: string[]): string {
