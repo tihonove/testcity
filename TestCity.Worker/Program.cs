@@ -9,6 +9,7 @@ using Kontur.TestCity.Worker.Kafka;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using OpenTelemetry.Metrics;
 using TestCity.Api.Extensions;
 using TestCity.Worker.Kafka;
 using TestCity.Worker.Kafka.Configuration;
@@ -47,7 +48,12 @@ var host = Host.CreateDefaultBuilder(args)
         {
             services
                 .AddOpenTelemetry()
-                .ConfigureTestAnalyticsOpenTelemetry("TestAnalytics", "Worker");
+                .ConfigureTestAnalyticsOpenTelemetry("TestAnalytics", "Worker", metrics =>
+                {
+                    metrics
+                        .AddRuntimeInstrumentation()
+                        .AddMeter("System.Net.Http");
+                });
         }
     })
     .ConfigureLogging((hostContext, logging) =>

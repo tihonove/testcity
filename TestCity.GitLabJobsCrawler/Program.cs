@@ -4,6 +4,7 @@ using Kontur.TestCity.Core;
 using Kontur.TestCity.Core.Graphite;
 using Kontur.TestCity.Core.Worker;
 using Kontur.TestCity.GitLabJobsCrawler;
+using OpenTelemetry.Metrics;
 using TestCity.Api.Extensions;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();
@@ -48,7 +49,13 @@ if (OpenTelemetryExtensions.IsOpenTelemetryEnabled())
 {
     builder.Services
         .AddOpenTelemetry()
-        .ConfigureTestAnalyticsOpenTelemetry("TestAnalytics", "GitLabJobsCrawler", x => x.AddMeter("GitLabProjectTestsMetrics"));
+        .ConfigureTestAnalyticsOpenTelemetry("TestAnalytics", "GitLabJobsCrawler", metrics =>
+        {
+            metrics
+                .AddRuntimeInstrumentation()
+                .AddMeter("System.Net.Http")
+                .AddMeter("GitLabProjectTestsMetrics");
+        });
 }
 
 var app = builder.Build();

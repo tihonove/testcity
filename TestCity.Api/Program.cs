@@ -1,6 +1,7 @@
 using System.Text;
 using dotenv.net;
 using Kontur.TestCity.Core;
+using OpenTelemetry.Metrics;
 using TestCity.Api.Extensions;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();
@@ -27,7 +28,16 @@ if (OpenTelemetryExtensions.IsOpenTelemetryEnabled())
 {
     builder.Services
         .AddOpenTelemetry()
-        .ConfigureTestAnalyticsOpenTelemetry("TestAnalytics", "Api", x => x.AddMeter("GitLabProjectTestsMetrics"));
+        .ConfigureTestAnalyticsOpenTelemetry("TestAnalytics", "Api", metrics =>
+        {
+            metrics
+                .AddRuntimeInstrumentation()
+                .AddAspNetCoreInstrumentation()
+                .AddMeter("Microsoft.AspNetCore.Hosting")
+                .AddMeter("Microsoft.AspNetCore.Server.Kestrel")
+                .AddMeter("System.Net.Http")
+                .AddMeter("GitLabProjectTestsMetrics");
+        });
 }
 
 var app = builder.Build();
