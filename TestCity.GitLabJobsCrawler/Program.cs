@@ -12,10 +12,9 @@ Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseUrls("http://0.0.0.0:8125");
 
-builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 
-builder.Services.AddSingleton<GitLabSettings>(GitLabSettings.Default);
+builder.Services.AddSingleton(GitLabSettings.Default);
 
 // builder.Services.AddSingleton<IVostokApplicationMetrics>(environment.Metrics)();
 builder.Services.AddSingleton<JUnitExtractor>();
@@ -53,11 +52,6 @@ if (OpenTelemetryExtensions.IsOpenTelemetryEnabled())
 }
 
 var app = builder.Build();
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
-
 app.MapControllers();
 app.Services.GetRequiredService<GitLabCrawlerService>().Start();
 app.Run();

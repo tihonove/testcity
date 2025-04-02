@@ -1,5 +1,8 @@
 ﻿using System.Text;
 using dotenv.net;
+using Kontur.TestCity.Core;
+using Kontur.TestCity.Core.Graphite;
+using Kontur.TestCity.GitLabJobsCrawler;
 using Kontur.TestCity.Worker.Handlers;
 using Kontur.TestCity.Worker.Handlers.Base;
 using Kontur.TestCity.Worker.Kafka;
@@ -18,7 +21,24 @@ var host = Host.CreateDefaultBuilder(args)
     {
         services.AddSingleton(KafkaConsumerSettings.Default);
         services.AddSingleton(BatchProcessorSettings.Default);
+        services.AddSingleton(GitLabSettings.Default);
+
+        services.AddSingleton<JUnitExtractor>();
+        services.AddSingleton<TestMetricsSender>();
+        services.AddSingleton<SkbKonturGitLabClientProvider>();
         services.AddSingleton<ITaskHandler, ProcessJobRunTaskHandler>();
+
+        var graphiteHost = Environment.GetEnvironmentVariable("GRAPHITE_RELAY_HOST");
+        var graphitePortStr = Environment.GetEnvironmentVariable("GRAPHITE_RELAY_PORT");
+
+        if (!string.IsNullOrEmpty(graphiteHost) && !string.IsNullOrEmpty(graphitePortStr) && int.TryParse(graphitePortStr, out var graphitePort))
+        {
+            services.AddSingleton<IGraphiteClient>(_ => new GraphiteClient(graphiteHost, graphitePort));
+        }
+        else
+        {
+            services.AddSingleton<IGraphiteClient, NullGraphiteClient>();
+        }
 
         services.AddSingleton<ITaskHandlerRegistry, TaskHandlerRegistry>();
         services.AddSingleton<IHostedService, KafkaConsumerService>();

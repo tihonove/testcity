@@ -3,6 +3,7 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using Kontur.TestAnalytics.Reporter.Cli;
 using Kontur.TestAnalytics.Reporter.Client;
+using Microsoft.Extensions.Logging;
 
 namespace Kontur.TestCity.GitLabJobsCrawler;
 

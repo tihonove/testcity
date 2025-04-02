@@ -9,13 +9,14 @@ namespace Kontur.TestCity.GitLabJobsCrawler;
 
 public sealed class GitLabCrawlerService : IDisposable
 {
-    public GitLabCrawlerService(GitLabSettings gitLabSettings, TestMetricsSender metricsSender, ILogger<GitLabCrawlerService> log, JUnitExtractor extractor, WorkerClient workerClient)
+    public GitLabCrawlerService(GitLabSettings gitLabSettings, TestMetricsSender metricsSender, ILogger<GitLabCrawlerService> log, JUnitExtractor extractor, WorkerClient workerClient, IHostEnvironment hostEnvironment)
     {
         this.gitLabSettings = gitLabSettings;
         this.metricsSender = metricsSender;
         this.log = log;
         this.extractor = extractor;
         this.workerClient = workerClient;
+        this.hostEnvironment = hostEnvironment;
         stopTokenSource = new CancellationTokenSource();
     }
 
@@ -29,32 +30,77 @@ public sealed class GitLabCrawlerService : IDisposable
                 return;
             }
 
-            var gitLabProjectIds = GitLabProjectsService.GetAllProjects().Select(x => x.Id).Select(x => int.Parse(x)).ToList();
+            var gitLabProjectIds = GitLabProjectsService.GetAllProjects().ToList();
             var gitLabClientProvider = new SkbKonturGitLabClientProvider(gitLabSettings);
             var client = gitLabClientProvider.GetClient();
-            await Task.WhenAll(gitLabProjectIds.Select(projectId =>
+            await Task.WhenAll(gitLabProjectIds.Select(project =>
             {
                 return Task.Run(async () =>
                 {
-                    while (!stopTokenSource.IsCancellationRequested)
+                    if (project.UseHooks)
                     {
-                        try
+                        if (hostEnvironment.IsDevelopment())
                         {
-                            await ProcessProjectJobsAsync(projectId, client, stopTokenSource.Token);
+                            await ReadLastJobsAndEnueueToWorker(long.Parse(project.Id), client, stopTokenSource.Token);
                         }
-                        catch (Exception e)
+                    }
+                    else
+                    {
+                        while (!stopTokenSource.IsCancellationRequested)
                         {
-                            log.LogError(e, "Failed to update gitlab artifacts");
-                        }
+                            try
+                            {
+                                await ProcessProjectJobsAsync(long.Parse(project.Id), client, stopTokenSource.Token);
+                            }
+                            catch (Exception e)
+                            {
+                                log.LogError(e, "Failed to update gitlab artifacts");
+                            }
 
-                        await Task.Delay(TimeSpan.FromMinutes(1), stopTokenSource.Token);
+                            await Task.Delay(TimeSpan.FromMinutes(1), stopTokenSource.Token);
+                        }
                     }
                 });
             }).ToArray());
         });
     }
 
-    private async ValueTask ProcessProjectJobsAsync(int projectId, NGitLab.IGitLabClient client, CancellationToken token)
+    private async ValueTask ReadLastJobsAndEnueueToWorker(long projectId, NGitLab.IGitLabClient client, CancellationToken token)
+    {
+        log.LogInformation("Pulling jobs for project {ProjectId} to enqueue to worker", projectId);
+        var jobsClient = client.GetJobs(projectId);
+        var jobsQuery = new JobQuery
+        {
+            PerPage = 100,
+            Scope = JobScopeMask.All &
+                ~JobScopeMask.Canceled &
+                ~JobScopeMask.Skipped &
+                ~JobScopeMask.Pending &
+                ~JobScopeMask.Running &
+                ~JobScopeMask.Created,
+        };
+        var jobs = jobsClient.GetJobsAsync(jobsQuery).Take(100).ToArray();
+        log.LogInformation("Take last {jobsLength} jobs", jobs.Length);
+
+        foreach (var job in jobs)
+        {
+            try
+            {
+                await workerClient.Enqueue(
+                    new ProcessJobRunTaskPayload
+                    {
+                        ProjectId = projectId,
+                        JobRunId = job.Id,
+                    });
+            }
+            catch (Exception exception)
+            {
+                log.LogError(exception, "Failed to enqueue job {JobId}", job.Id);
+            }
+        }
+    }
+
+    private async ValueTask ProcessProjectJobsAsync(long projectId, NGitLab.IGitLabClient client, CancellationToken token)
     {
         log.LogInformation("Pulling jobs for project {ProjectId}", projectId);
         var jobProcessor = new GitLabJobProcessor(client, extractor, log);
@@ -84,21 +130,6 @@ public sealed class GitLabCrawlerService : IDisposable
             try
             {
                 var processingResult = await jobProcessor.ProcessJobAsync(projectId, job.Id, job);
-                try
-                {
-                    await workerClient.Enqueue(
-                        new ProcessJobRunTaskPayload
-                        {
-                            ProjectId = projectId,
-                            JobRunId = job.Id,
-                        });
-                }
-                catch (Exception e)
-                {
-                    log.LogError(e, "Failed to enqueue job {JobId}", job.Id);
-                    throw;
-                }
-                
                 if (processingResult.JobInfo != null)
                 {
                     if (!await TestRunsUploader.IsJobRunIdExists(processingResult.JobInfo.JobRunId))
@@ -150,4 +181,5 @@ public sealed class GitLabCrawlerService : IDisposable
     private readonly ILogger<GitLabCrawlerService> log;
     private readonly JUnitExtractor extractor;
     private readonly WorkerClient workerClient;
+    private readonly IHostEnvironment hostEnvironment;
 }

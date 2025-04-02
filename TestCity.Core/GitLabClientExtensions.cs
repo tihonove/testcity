@@ -6,7 +6,7 @@ namespace Kontur.TestCity.Core;
 
 public static class GitLabClientExtensions
 {
-    public static async Task<string> BranchOrRef(this IGitLabClient client, int projectId, string refId)
+    public static async Task<string> BranchOrRef(this IGitLabClient client, long projectId, string refId)
     {
         if (RefToBranch.TryGetValue(refId, out var branch))
         {

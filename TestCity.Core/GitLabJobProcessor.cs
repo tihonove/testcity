@@ -1,6 +1,7 @@
 using System.Text.RegularExpressions;
 using Kontur.TestAnalytics.Reporter.Client;
 using Kontur.TestCity.Core;
+using Microsoft.Extensions.Logging;
 using NGitLab;
 using NGitLab.Models;
 
@@ -15,7 +16,7 @@ public class GitLabJobProcessor
         this.extractor = extractor;
     }
 
-    public async Task<GitLabJobProcessingResult> ProcessJobAsync(int projectId, long jobRunId, Job? job = null)
+    public async Task<GitLabJobProcessingResult> ProcessJobAsync(long projectId, long jobRunId, Job? job = null)
     {
         logger.LogInformation("Start processing job with id: ProjectId: {ProjectId} JobId: {JobRunId}", projectId, jobRunId);
         try

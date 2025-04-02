@@ -26,5 +26,4 @@ public abstract class TaskHandler<TPayload> : ITaskHandler
             throw new InvalidOperationException($"Failed to deserialize payload to {typeof(TPayload).Name}", ex);
         }
     }
-
 }
