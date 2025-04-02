@@ -25,89 +25,90 @@ public sealed class GitLabCrawlerService : IDisposable
                 return;
             }
 
-            while (!stopTokenSource.IsCancellationRequested)
+            var gitLabProjectIds = GitLabProjectsService.GetAllProjects().Select(x => x.Id).Select(x => int.Parse(x)).ToList();
+            var gitLabClientProvider = new SkbKonturGitLabClientProvider(gitLabSettings);
+            var client = gitLabClientProvider.GetClient();
+            await Task.WhenAll(gitLabProjectIds.Select(projectId =>
             {
-                try
+                return Task.Run(async () =>
                 {
-                    log.LogInformation("Start pulling gitlab job artifacts");
-                    await PullGitLabJobArtifactsAndPushIntoTestAnalytics(stopTokenSource.Token);
-                }
-                catch (Exception e)
-                {
-                    log.LogError(e, "Failed to update gitlab artifacts");
-                }
+                    while (!stopTokenSource.IsCancellationRequested)
+                    {
+                        try
+                        {
+                            await ProcessProjectJobsAsync(projectId, client, stopTokenSource.Token);
+                        }
+                        catch (Exception e)
+                        {
+                            log.LogError(e, "Failed to update gitlab artifacts");
+                        }
 
-                await Task.Delay(TimeSpan.FromMinutes(1), stopTokenSource.Token);
-            }
+                        await Task.Delay(TimeSpan.FromMinutes(1), stopTokenSource.Token);
+                    }
+                });
+            }).ToArray());
         });
     }
 
-    private async Task PullGitLabJobArtifactsAndPushIntoTestAnalytics(CancellationToken token)
+    private async ValueTask ProcessProjectJobsAsync(int projectId, NGitLab.IGitLabClient client, CancellationToken token)
     {
-        var gitLabClientProvider = new SkbKonturGitLabClientProvider(gitLabSettings);
-        var gitLabProjectIds = GitLabProjectsService.GetAllProjects().Select(x => x.Id).Select(x => int.Parse(x)).ToList();
-        var client = gitLabClientProvider.GetClient();
+        log.LogInformation("Pulling jobs for project {ProjectId}", projectId);
         var jobProcessor = new GitLabJobProcessor(client, extractor, log);
-
-        foreach (var projectId in gitLabProjectIds)
+        var jobsClient = client.GetJobs(projectId);
+        var projectInfo = await client.Projects.GetByIdAsync(projectId, new SingleProjectQuery(), token);
+        var jobsQuery = new JobQuery
         {
-            log.LogInformation("Pulling jobs for project {ProjectId}", projectId);
-            var jobsClient = client.GetJobs(projectId);
-            var projectInfo = await client.Projects.GetByIdAsync(projectId, new SingleProjectQuery(), token);
-            var jobsQuery = new JobQuery
+            PerPage = 100,
+            Scope = JobScopeMask.All &
+                ~JobScopeMask.Canceled &
+                ~JobScopeMask.Skipped &
+                ~JobScopeMask.Pending &
+                ~JobScopeMask.Running &
+                ~JobScopeMask.Created,
+        };
+        var jobs = jobsClient.GetJobsAsync(jobsQuery).Take(600).ToArray();
+        log.LogInformation("Take last {jobsLength} jobs", jobs.Length);
+        var processedJobIds = new List<long>();
+
+        foreach (var job in jobs)
+        {
+            if (processedJobSet.Contains(job.Id))
             {
-                PerPage = 100,
-                Scope = JobScopeMask.All &
-                    ~JobScopeMask.Canceled &
-                    ~JobScopeMask.Skipped &
-                    ~JobScopeMask.Pending &
-                    ~JobScopeMask.Running &
-                    ~JobScopeMask.Created,
-            };
-            var jobs = jobsClient.GetJobsAsync(jobsQuery).Take(600).ToArray();
-            log.LogInformation("Take last {jobsLength} jobs", jobs.Length);
-            var processedJobIds = new List<long>();
-
-            foreach (var job in jobs)
-            {
-                if (processedJobSet.Contains(job.Id))
-                {
-                    log.LogInformation("Skip job with id: {JobId}", job.Id);
-                    continue;
-                }
-
-                try
-                {
-                    var processingResult = await jobProcessor.ProcessJobAsync(projectId, job.Id, job);
-                    if (processingResult.JobInfo != null)
-                    {
-                        if (!await TestRunsUploader.IsJobRunIdExists(processingResult.JobInfo.JobRunId))
-                        {
-                            log.LogInformation("JobRunId '{JobRunId}' does not exist. Uploading test runs", processingResult.JobInfo.JobRunId);
-                            await TestRunsUploader.JobInfoUploadAsync(processingResult.JobInfo);
-
-                            if (processingResult.TestReportData != null)
-                            {
-                                await TestRunsUploader.UploadAsync(processingResult.JobInfo, processingResult.TestReportData.Runs);
-                                await metricsSender.SendAsync(projectInfo, processingResult.JobInfo.BranchName, job, processingResult.TestReportData);
-                            }
-                        }
-                        else
-                        {
-                            log.LogInformation("JobRunId '{JobRunId}' exists. Skip uploading test runs", processingResult.JobInfo.JobRunId);
-                        }
-                        processedJobIds.Add(job.Id);
-                    }
-                }
-                catch (Exception exception)
-                {
-                    log.LogError(exception, "Failed to process job {JobId}", job.Id);
-                    continue;
-                }
+                log.LogInformation("Skip job with id: {JobId}", job.Id);
+                continue;
             }
 
-            log.LogInformation("Processed {JobCount} for {ProjectId}. First job: {FirstJobId}, Last job: {LastJobId}", jobs.Length, projectId, jobs.FirstOrDefault()?.Id, jobs.LastOrDefault()?.Id);
+            try
+            {
+                var processingResult = await jobProcessor.ProcessJobAsync(projectId, job.Id, job);
+                if (processingResult.JobInfo != null)
+                {
+                    if (!await TestRunsUploader.IsJobRunIdExists(processingResult.JobInfo.JobRunId))
+                    {
+                        log.LogInformation("JobRunId '{JobRunId}' does not exist. Uploading test runs", processingResult.JobInfo.JobRunId);
+                        await TestRunsUploader.JobInfoUploadAsync(processingResult.JobInfo);
+
+                        if (processingResult.TestReportData != null)
+                        {
+                            await TestRunsUploader.UploadAsync(processingResult.JobInfo, processingResult.TestReportData.Runs);
+                            await metricsSender.SendAsync(projectInfo, processingResult.JobInfo.BranchName, job, processingResult.TestReportData);
+                        }
+                    }
+                    else
+                    {
+                        log.LogInformation("JobRunId '{JobRunId}' exists. Skip uploading test runs", processingResult.JobInfo.JobRunId);
+                    }
+                    processedJobIds.Add(job.Id);
+                }
+            }
+            catch (Exception exception)
+            {
+                log.LogError(exception, "Failed to process job {JobId}", job.Id);
+                continue;
+            }
         }
+
+        log.LogInformation("Processed {JobCount} for {ProjectId}. First job: {FirstJobId}, Last job: {LastJobId}", jobs.Length, projectId, jobs.FirstOrDefault()?.Id, jobs.LastOrDefault()?.Id);
     }
 
     public void Dispose()

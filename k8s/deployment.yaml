@@ -178,11 +178,11 @@ spec:
               value: "cloud"
           resources:
             requests:
-              cpu: "250m"
-              memory: "512Mi"
-            limits:
               cpu: "500m"
-              memory: "1024Mi"
+              memory: "1512Mi"
+            limits:
+              cpu: "1000m"
+              memory: "2048Mi"
 ---
 apiVersion: v1
 kind: Service
