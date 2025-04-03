@@ -10,10 +10,7 @@ namespace Kontur.TestCity.UnitTests;
 
 public class TestsLoadFromGitlab
 {
-    private static readonly ILoggerFactory LoggerFactory = Microsoft.Extensions.Logging.LoggerFactory.Create(builder =>
-    {
-        builder.AddConsole();
-    });
+    private static readonly ILoggerFactory LoggerFactory = GlobalSetup.TestLoggerFactory;
 
     private static readonly ILogger<TestsLoadFromGitlab> Logger = LoggerFactory.CreateLogger<TestsLoadFromGitlab>();
 
