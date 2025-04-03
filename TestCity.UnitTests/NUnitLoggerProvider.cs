@@ -16,7 +16,7 @@ public sealed class NUnitLoggerProvider : ILoggerProvider
 
     private class NUnitLogger(string categoryName) : ILogger
     {
-        private readonly string categoryName = categoryName;
+        private readonly string categoryName = categoryName.Split(".").Last();
 
         public IDisposable BeginScope<TState>(TState state) where TState : notnull => default!;
 
@@ -30,7 +30,17 @@ public sealed class NUnitLoggerProvider : ILoggerProvider
             Func<TState, Exception?, string> formatter)
         {
             var message = formatter(state, exception);
-            TestContext.Out.WriteLine($"{logLevel}: {categoryName}: {message}");
+            var logLevelString = logLevel switch
+            {
+                LogLevel.Trace => "trace",
+                LogLevel.Debug => "debug",
+                LogLevel.Information => "info ",
+                LogLevel.Warning => "warn ",
+                LogLevel.Error => "ERROR",
+                LogLevel.Critical => "CRITL",
+                _ => "UNKWN"
+            };
+            TestContext.Out.WriteLine($"{logLevelString} [{categoryName}] {message}");
 
             if (exception != null)
             {
