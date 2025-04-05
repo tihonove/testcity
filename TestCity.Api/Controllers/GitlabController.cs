@@ -35,6 +35,7 @@ public class GitlabController(SkbKonturGitLabClientProvider gitLabClientProvider
     [HttpPost("webhook")]
     public async Task<IActionResult> WebhookHandler([FromBody] GitLabJobEventInfo jobEventInfo)
     {
+        logger.LogInformation("Recieved webhook from GitLab: {JobRunId}", jobEventInfo.BuildId);
         try
         {
             if (hooksBasedProjectIds.Contains(jobEventInfo.ProjectId))

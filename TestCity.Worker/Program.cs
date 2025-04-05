@@ -12,7 +12,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry.Metrics;
 using TestCity.Api.Extensions;
-using TestCity.Worker.Kafka;
 using TestCity.Worker.Kafka.Configuration;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();
@@ -41,7 +40,8 @@ var host = Host.CreateDefaultBuilder(args)
         }
 
         services.AddSingleton<TaskHandlerRegistry>();
-        services.AddSingleton<IHostedService>(r => {
+        services.AddSingleton<IHostedService>(r =>
+        {
             return new KafkaMessageQueueConsumerBuilder()
                 .WithSettings(KafkaConsumerSettings.Default)
                 .WithTaskHandlers(r.GetServices<ITaskHandler>())
@@ -63,7 +63,6 @@ var host = Host.CreateDefaultBuilder(args)
     })
     .ConfigureLogging((hostContext, logging) =>
     {
-        logging.ClearProviders();
         logging.AddSimpleConsole(options =>
         {
             options.IncludeScopes = true;
