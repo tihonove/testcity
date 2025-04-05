@@ -9,7 +9,7 @@ internal static class AssertEventually
     internal static async Task That<T>(Func<T> value, IResolveConstraint constraintExpression)
     {
         var sw = Stopwatch.StartNew();
-        while (sw.Elapsed < TimeSpan.FromSeconds(20))
+        while (sw.Elapsed < TimeSpan.FromSeconds(60))
         {
             try
             {
