@@ -1,6 +1,7 @@
 using System.IO.Compression;
 using Kontur.TestCity.Core;
-using Kontur.TestCity.Core.Models;
+using Kontur.TestCity.Core.Worker;
+using Kontur.TestCity.Core.Worker.TaskPayloads;
 using Microsoft.AspNetCore.Mvc;
 using NGitLab;
 
@@ -8,18 +9,10 @@ namespace Kontur.TestCity.Api.Controllers;
 
 [ApiController]
 [Route("api/gitlab")]
-public class GitlabController : Controller
+public class GitlabController(SkbKonturGitLabClientProvider gitLabClientProvider, WorkerClient workerClient, ILogger<GitlabController> logger) : Controller
 {
-    private readonly IGitLabClient gitLabClient;
-    private readonly List<GitLabProject> projects;
-    private readonly ILogger<GitlabController> logger;
-
-    public GitlabController(SkbKonturGitLabClientProvider gitLabClientProvider, ILogger<GitlabController> logger)
-    {
-        gitLabClient = gitLabClientProvider.GetClient();
-        this.projects = GitLabProjectsService.GetAllProjects();
-        this.logger = logger;
-    }
+    private readonly IGitLabClient gitLabClient = gitLabClientProvider.GetClient();
+    private readonly HashSet<long> hooksBasedProjectIds = GitLabProjectsService.GetAllProjects().Select(x => long.Parse(x.Id)).ToHashSet();
 
     [HttpGet("{projectId}/jobs/{jobId}/codequality")]
     public IActionResult Get(long projectId, long jobId)
@@ -40,13 +33,19 @@ public class GitlabController : Controller
     }
 
     [HttpPost("webhook")]
-    public async Task<IActionResult> WebhookHandler()
+    public async Task<IActionResult> WebhookHandler([FromBody] GitLabJobEventInfo jobEventInfo)
     {
         try
         {
-            using var reader = new StreamReader(Request.Body);
-            var body = await reader.ReadToEndAsync();
-            logger.LogInformation("Получен webhook от GitLab: {WebhookBody}", body);
+            if (hooksBasedProjectIds.Contains(jobEventInfo.ProjectId))
+            {
+                if (jobEventInfo.BuildStatus == GitLabJobEventBuildStatus.Failed || jobEventInfo.BuildStatus == GitLabJobEventBuildStatus.Success)
+                    await workerClient.Enqueue(new ProcessJobRunTaskPayload
+                    {
+                        ProjectId = jobEventInfo.ProjectId,
+                        JobRunId = jobEventInfo.BuildId,
+                    });
+            }
             return Ok();
         }
         catch (Exception ex)

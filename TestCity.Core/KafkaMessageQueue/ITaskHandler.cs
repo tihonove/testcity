@@ -6,5 +6,5 @@ public interface ITaskHandler
 {
     bool CanHandle(RawTask type);
 
-    ValueTask EnqueueAsync(RawTask payload, CancellationToken ct);
+    ValueTask ExecuteAsync(RawTask payload, CancellationToken ct);
 }

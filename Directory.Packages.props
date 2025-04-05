@@ -13,6 +13,7 @@
     <PackageVersion Include="dotenv.net" Version="3.2.1" />
     <PackageVersion Include="JunitXml.TestLogger" Version="6.0.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.3" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.3" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageVersion Include="NGitLab" Version="8.0.0" />

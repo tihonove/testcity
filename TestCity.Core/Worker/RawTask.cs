@@ -4,6 +4,7 @@ namespace Kontur.TestCity.Core.Worker;
 
 public class RawTask
 {
-    public string Type { get; set; }
-    public JsonElement Payload { get; set; }
+    public required string Type { get; set; }
+    public required JsonElement Payload { get; set; }
+    public int? ExecuteCount { get; set; }
 }

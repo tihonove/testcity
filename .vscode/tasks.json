@@ -51,7 +51,8 @@
 				"Clean solution",
 				"Build solution"
 			],
-			"dependsOrder": "sequence"
+			"dependsOrder": "sequence",
+			"problemMatcher": []
 		}
 	]
 }

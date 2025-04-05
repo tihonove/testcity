@@ -5,11 +5,13 @@
         "projects": [
             {
                 "id": "17358",
-                "title": "forms"
+                "title": "forms",
+                "useHooks": true
             },
             {
                 "id": "19371",
-                "title": "extern.forms"
+                "title": "extern.forms",
+                "useHooks": true
             }
         ],
         "mergeRunsFromJobs": false
@@ -121,7 +123,8 @@
         "projects": [
             {
                 "id": "24783",
-                "title": "test-analytics"
+                "title": "test-analytics",
+                "useHooks": true
             }
         ]
     },

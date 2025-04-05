@@ -44,17 +44,17 @@ public class ProcessJobRunTaskHandler : TaskHandler<ProcessJobRunTaskPayload>
                 if (!await TestRunsUploader.IsJobRunIdExists(processingResult.JobInfo.JobRunId))
                 {
                     logger.LogInformation("JobRunId '{JobRunId}' does not exist. Uploading test runs", processingResult.JobInfo.JobRunId);
-                    // await TestRunsUploader.JobInfoUploadAsync(processingResult.JobInfo);
+                    await TestRunsUploader.JobInfoUploadAsync(processingResult.JobInfo);
 
                     if (processingResult.TestReportData != null)
                     {
-                        // await TestRunsUploader.UploadAsync(processingResult.JobInfo, processingResult.TestReportData.Runs);
-                        // var job = await client.GetJobs(task.ProjectId).GetAsync(task.JobRunId);
-                        // await metricsSender.SendAsync(
-                        //     projectInfo,
-                        //     processingResult.JobInfo.BranchName,
-                        //     job,
-                        //     processingResult.TestReportData);
+                        await TestRunsUploader.UploadAsync(processingResult.JobInfo, processingResult.TestReportData.Runs);
+                        var job = await client.GetJobs(task.ProjectId).GetAsync(task.JobRunId);
+                        await metricsSender.SendAsync(
+                            projectInfo,
+                            processingResult.JobInfo.BranchName,
+                            job,
+                            processingResult.TestReportData);
                     }
                 }
                 else

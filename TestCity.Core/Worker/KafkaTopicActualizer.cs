@@ -1,5 +1,6 @@
 using Confluent.Kafka;
 using Confluent.Kafka.Admin;
+using TestCity.Worker.Kafka.Configuration;
 
 namespace Kontur.TestAnalytics.ActualizeDb.Cli;
 
@@ -7,33 +8,31 @@ public static class KafkaTopicActualizer
 {
     public static async Task EnsureKafkaTopicExists()
     {
-        var tasksTopic = Environment.GetEnvironmentVariable("KAFKA_TASKS_TOPIC") ?? "tasks";
-        var bootstrapServers = Environment.GetEnvironmentVariable("KAFKA_BOOTSTRAP_SERVERS") ?? throw new Exception("KAFKA_BOOTSTRAP_SERVERS is not set");
+        var settings = KafkaConsumerSettings.Default;
 
-        Console.WriteLine($"Waiting for Kafka to be available at {bootstrapServers}...");
+        Console.WriteLine($"Waiting for Kafka to be available at {settings.BootstrapServers}...");
 
-        await WaitForKafkaAvailability(bootstrapServers, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(10));
+        await WaitForKafkaAvailability(settings.BootstrapServers, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(10));
 
-        Console.WriteLine($"Verifying Kafka topic: {tasksTopic}");
+        Console.WriteLine($"Verifying Kafka topics: {settings.TasksTopic}, {settings.DelayedTasksTopic}");
         using var adminClient = new AdminClientBuilder(new AdminClientConfig
         {
-            BootstrapServers = bootstrapServers,
+            BootstrapServers = settings.BootstrapServers,
         }).Build();
 
         try
         {
             var metadata = adminClient.GetMetadata(TimeSpan.FromSeconds(10));
-            var topicExists = metadata.Topics.Any(t => t.Topic == tasksTopic);
 
-            if (!topicExists)
+            if (!metadata.Topics.Any(t => t.Topic == settings.TasksTopic))
             {
-                Console.WriteLine($"Creating Kafka topic: {tasksTopic}");
+                Console.WriteLine($"Creating Kafka topic: {settings.TasksTopic}");
 
                 await adminClient.CreateTopicsAsync(
                 [
                     new TopicSpecification
                     {
-                        Name = tasksTopic,
+                        Name = settings.TasksTopic,
                         ReplicationFactor = 1,
                         NumPartitions = 16,
                         Configs = new Dictionary<string, string>
@@ -42,7 +41,26 @@ public static class KafkaTopicActualizer
                         },
                     },
                 ]);
-                Console.WriteLine($"Kafka topic '{tasksTopic}' created successfully with 14 days retention period");
+                Console.WriteLine($"Kafka topic '{settings.TasksTopic}' created successfully with 14 days retention period");
+            }
+            if (!metadata.Topics.Any(t => t.Topic == settings.DelayedTasksTopic))
+            {
+                Console.WriteLine($"Creating Kafka topic: {settings.DelayedTasksTopic}");
+
+                await adminClient.CreateTopicsAsync(
+                [
+                    new TopicSpecification
+                    {
+                        Name = settings.DelayedTasksTopic,
+                        ReplicationFactor = 1,
+                        NumPartitions = 16,
+                        Configs = new Dictionary<string, string>
+                        {
+                            { "retention.ms", TimeSpan.FromDays(60).TotalMilliseconds.ToString() },
+                        },
+                    },
+                ]);
+                Console.WriteLine($"Kafka topic '{settings.DelayedTasksTopic}' created successfully with 14 days retention period");
             }
         }
         catch (Exception ex)

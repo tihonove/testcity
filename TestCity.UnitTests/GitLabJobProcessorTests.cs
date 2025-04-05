@@ -58,6 +58,77 @@ public class GitLabJobProcessorTests
     }
 
     [Test]
+    public async Task FixMissedFormsJobsForPipeline()
+    {
+        var projectId = 17358;
+        var pipelineId = 4071111;
+        logger.LogInformation("Starting Test01...");
+        var gitlabClientProvider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
+
+        logger.LogInformation("Pulling jobs for project {ProjectId}", projectId);
+        var client = gitlabClientProvider.GetClient();
+        var jobsClient = client.GetJobs(projectId);
+        var projectInfo = await client.Projects.GetByIdAsync(projectId, new SingleProjectQuery());
+        var jobsQuery = new NGitLab.Models.JobQuery
+        {
+            PerPage = 300,
+            Scope = NGitLab.Models.JobScopeMask.All &
+                ~NGitLab.Models.JobScopeMask.Canceled &
+                ~NGitLab.Models.JobScopeMask.Skipped &
+                ~NGitLab.Models.JobScopeMask.Pending &
+                ~NGitLab.Models.JobScopeMask.Running &
+                ~NGitLab.Models.JobScopeMask.Created,
+        };
+        var jobs = client.GetPipelines(projectId).GetJobs(pipelineId);
+        //var jobs = Enumerable.Take(jobsClient.GetJobsAsync(jobsQuery), 100);
+        // logger.LogInformation("Take last {JobsLength} jobs", jobs.Length);
+
+        int count = 0;
+        foreach (var job in jobs)
+        {
+            count++;
+            // logger.LogInformation("Start processing job with id: {JobId}", job.Id);
+            if (job.Artifacts != null)
+            {
+                try
+                {
+                    bool exists = await TestRunsUploader.IsJobRunIdExists(job.Id.ToString());
+                    if (exists)
+                    {
+                        logger.LogInformation("JobRunId '{JobRunId}' exists. Skip processing test runs", job.Id);
+                        continue;
+                    }
+                    var artifactContents = client.GetJobs(projectId).GetJobArtifacts(job.Id);
+                    logger.LogInformation("Artifact size for job with id: {JobId}. Size: {Size} bytes", job.Id, artifactContents.Length);
+                    var extractor = new JUnitExtractor(LoggerFactory.CreateLogger<JUnitExtractor>());
+                    var extractResult = extractor.TryExtractTestRunsFromGitlabArtifact(artifactContents);
+                    if (extractResult.TestReportData != null)
+                    {
+                        var refId = await client.BranchOrRef(projectId, job.Ref);
+                        var jobInfo = GitLabHelpers.GetFullJobInfo(job, refId, extractResult, projectId.ToString());
+                        if (!exists)
+                        {
+                            logger.LogInformation("JobRunId '{JobRunId}' does not exist. Uploading test runs", jobInfo.JobRunId);
+                            // await TestRunsUploader.JobInfoUploadAsync(jobInfo);
+                            // await TestRunsUploader.UploadAsync(jobInfo, extractResult.TestReportData.Runs);
+                        }
+                        else
+                        {
+                            logger.LogInformation("JobRunId '{JobRunId}' exists. Skip uploading test runs", jobInfo.JobRunId);
+                        }
+                    }
+                }
+                catch (Exception exception)
+                {
+                    logger.LogWarning(exception, "Failed to read artifact for {JobId}", job.Id);
+                }
+            }
+        }
+        logger.LogInformation("Processed {Count} jobs", count);
+    }
+
+
+    [Test]
     public async Task FixMissedFormsJobs()
     {
         var projectId = 17358;

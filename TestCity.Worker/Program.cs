@@ -2,6 +2,7 @@
 using dotenv.net;
 using Kontur.TestCity.Core;
 using Kontur.TestCity.Core.Graphite;
+using Kontur.TestCity.Core.KafkaMessageQueue;
 using Kontur.TestCity.GitLabJobsCrawler;
 using Kontur.TestCity.Worker.Handlers;
 using Kontur.TestCity.Worker.Handlers.Base;
@@ -20,8 +21,6 @@ Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostContext, services) =>
     {
-        services.AddSingleton(KafkaConsumerSettings.Default);
-        services.AddSingleton(BatchProcessorSettings.Default);
         services.AddSingleton(GitLabSettings.Default);
 
         services.AddSingleton<JUnitExtractor>();
@@ -41,8 +40,14 @@ var host = Host.CreateDefaultBuilder(args)
             services.AddSingleton<IGraphiteClient, NullGraphiteClient>();
         }
 
-        services.AddSingleton<ITaskHandlerRegistry, TaskHandlerRegistry>();
-        services.AddSingleton<IHostedService, KafkaConsumerService>();
+        services.AddSingleton<TaskHandlerRegistry>();
+        services.AddSingleton<IHostedService>(r => {
+            return new KafkaMessageQueueConsumerBuilder()
+                .WithSettings(KafkaConsumerSettings.Default)
+                .WithTaskHandlers(r.GetServices<ITaskHandler>())
+                .WithLoggerFactory(r.GetRequiredService<ILoggerFactory>())
+                .BuildBackgroundService();
+        });
 
         if (OpenTelemetryExtensions.IsOpenTelemetryEnabled())
         {

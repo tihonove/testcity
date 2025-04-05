@@ -2,6 +2,7 @@ using System.Text;
 using dotenv.net;
 using Kontur.TestCity.Core;
 using Kontur.TestCity.Core.Graphite;
+using Kontur.TestCity.Core.KafkaMessageQueue;
 using Kontur.TestCity.Core.Worker;
 using Kontur.TestCity.GitLabJobsCrawler;
 using OpenTelemetry.Metrics;
@@ -23,6 +24,7 @@ builder.Services.AddSingleton<TestMetricsSender>();
 builder.Services.AddSingleton<GitLabCrawlerService>();
 builder.Services.AddSingleton<SkbKonturGitLabClientProvider>();
 builder.Services.AddSingleton<WorkerClient>();
+builder.Services.AddSingleton(r => KafkaMessageQueueClient.CreateDefault(r.GetRequiredService<ILogger<KafkaMessageQueueClient>>()));
 
 // Регистрация IGraphiteClient на основе переменных окружения
 var graphiteHost = Environment.GetEnvironmentVariable("GRAPHITE_RELAY_HOST");

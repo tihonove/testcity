@@ -1,0 +1,79 @@
+POST http://localhost:8124/api/gitlab/webhook
+Content-Type: application/json
+
+{
+    "object_kind": "build",
+    "ref": "karetnikova/flash-1559",
+    "tag": false,
+    "before_sha": "7cf7b3bdf8e827725019bc1bd886ef16890d8c9a",
+    "sha": "bfb832dda94be6f92d9dbe55855c91ef6f29fb27",
+    "retries_count": 0,
+    "build_id": 38034063,
+    "build_name": "YC Disabled Run all (Hack-job)",
+    "build_stage": "infrastructure",
+    "build_status": "success",
+    "build_created_at": "2025-04-04 19:25:04 +0500",
+    "build_started_at": "2025-04-04 19:25:23 +0500",
+    "build_finished_at": "2025-04-04 19:25:30 +0500",
+    "build_duration": 7.127443,
+    "build_queued_duration": 6.879784,
+    "build_allow_failure": true,
+    "build_failure_reason": "unknown_failure",
+    "pipeline_id": 4115735,
+    "runner": {
+        "id": 12616,
+        "description": null,
+        "runner_type": "group_type",
+        "active": true,
+        "is_shared": false,
+        "tags": [
+            "forms-k8s"
+        ]
+    },
+    "project_id": 17358,
+    "project_name": "forms / forms",
+    "user": {
+        "id": 6449,
+        "name": "Каретникова Ольга Алексеевна",
+        "username": "karetnikova",
+        "avatar_url": "https://secure.gravatar.com/avatar/fa7739002bfb132800cadf23884757acf94943c9ead0e3ccb065ba20bb80ed01?s=80&d=identicon",
+        "email": "[REDACTED]"
+    },
+    "commit": {
+        "id": 4115735,
+        "name": null,
+        "sha": "bfb832dda94be6f92d9dbe55855c91ef6f29fb27",
+        "message": "правки по ревью 2\n",
+        "author_name": "karetnikova",
+        "author_email": "karetnikova@skbkontur.ru",
+        "author_url": "https://git.skbkontur.ru/karetnikova",
+        "status": "manual",
+        "duration": 7,
+        "started_at": "2025-04-04 19:25:16 +0500",
+        "finished_at": null
+    },
+    "repository": {
+        "name": "forms",
+        "url": "git@git.skbkontur.ru:forms/forms.git",
+        "description": "[Аналитика истории тестов](http://singular/test-analytics/jobs?group=Wolfs)",
+        "homepage": "https://git.skbkontur.ru/forms/forms",
+        "git_http_url": "https://git.skbkontur.ru/forms/forms.git",
+        "git_ssh_url": "git@git.skbkontur.ru:forms/forms.git",
+        "visibility_level": 10
+    },
+    "project": {
+        "id": 17358,
+        "name": "forms",
+        "description": "[Аналитика истории тестов](http://singular/test-analytics/jobs?group=Wolfs)",
+        "web_url": "https://git.skbkontur.ru/forms/forms",
+        "avatar_url": null,
+        "git_ssh_url": "git@git.skbkontur.ru:forms/forms.git",
+        "git_http_url": "https://git.skbkontur.ru/forms/forms.git",
+        "namespace": "forms",
+        "visibility_level": 10,
+        "path_with_namespace": "forms/forms",
+        "default_branch": "master",
+        "ci_config_path": ""
+    },
+    "environment": null
+}

@@ -9,13 +9,13 @@ public abstract class TaskHandler<TPayload> : ITaskHandler
 
     public abstract ValueTask EnqueueAsync(TPayload payload, CancellationToken ct);
 
-    public async ValueTask EnqueueAsync(RawTask task, CancellationToken ct)
+    public async ValueTask ExecuteAsync(RawTask task, CancellationToken ct)
     {
-        var payload = Deserialize(task.Payload);
+        var payload = TaskHandler<TPayload>.Deserialize(task.Payload);
         await EnqueueAsync(payload, ct);
     }
 
-    private TPayload Deserialize(JsonElement element)
+    private static TPayload Deserialize(JsonElement element)
     {
         try
         {
