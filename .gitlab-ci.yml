@@ -34,6 +34,7 @@ Front tests:
     - npm install
     - npm test
   artifacts:
+    when: always
     paths:
       - Front/.test-reports/junit.xml
     reports:
@@ -72,6 +73,7 @@ DotNet tests:
     - export KAFKA_BOOTSTRAP_SERVERS="kafka:9092"
     - dotnet test --logger "junit;LogFilePath=../.test-reports/{assembly}.test-result.xml;FailureBodyFormat=Verbose"
   artifacts:
+    when: always
     paths:
       - .test-reports/**/*.xml
     reports:
