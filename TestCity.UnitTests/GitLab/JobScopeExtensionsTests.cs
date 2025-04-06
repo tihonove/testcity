@@ -16,7 +16,7 @@ public class JobScopeExtensionsTests
         var individualScopes = scope.GetIndividualScopes().ToList();
 
         // Assert
-        Assert.That(individualScopes, Has.Count.EqualTo(3));
+        Assert.That(individualScopes, Has.Count.EqualTo(4));
         Assert.That(individualScopes, Contains.Item(JobScope.Failed));
         Assert.That(individualScopes, Contains.Item(JobScope.Success));
         Assert.That(individualScopes, Contains.Item(JobScope.Canceled));
