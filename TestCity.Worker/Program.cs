@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using dotenv.net;
 using Kontur.TestCity.Core;
+using Kontur.TestCity.Core.GitLab;
 using Kontur.TestCity.Core.Graphite;
 using Kontur.TestCity.Core.KafkaMessageQueue;
 using Kontur.TestCity.GitLabJobsCrawler;

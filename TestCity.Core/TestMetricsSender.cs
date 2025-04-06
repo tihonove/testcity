@@ -1,4 +1,5 @@
 using System.Diagnostics.Metrics;
+using Kontur.TestCity.Core.GitLab.Models;
 using Kontur.TestCity.Core.Graphite;
 using Microsoft.Extensions.Logging;
 using NGitLab.Models;
@@ -14,7 +15,7 @@ public sealed class TestMetricsSender : IDisposable
         this.meter = new Meter("GitLabProjectTestsMetrics");
     }
 
-    public async Task SendAsync(Project project, string refId, Job job, TestReportData data)
+    public async Task SendAsync(Project project, string refId, GitLabJob job, TestReportData data)
     {
         try
         {
@@ -48,7 +49,7 @@ public sealed class TestMetricsSender : IDisposable
 
             if (job.Artifacts != null)
             {
-                metrics.Add(new MetricPoint("ArtifactSize", job.Artifacts.Size, tags));
+                metrics.Add(new MetricPoint("ArtifactSize", job.ArtifactsFile?.Size ?? job.Artifacts?.Sum(x => x.Size) ?? 0, tags));
             }
 
             if (job.QueuedDuration.HasValue)

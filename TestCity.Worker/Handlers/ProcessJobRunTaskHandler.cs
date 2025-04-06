@@ -1,5 +1,6 @@
 using Kontur.TestAnalytics.Reporter.Client;
 using Kontur.TestCity.Core;
+using Kontur.TestCity.Core.GitLab;
 using Kontur.TestCity.Core.Worker;
 using Kontur.TestCity.Core.Worker.TaskPayloads;
 using Kontur.TestCity.GitLabJobsCrawler;
@@ -23,6 +24,7 @@ public class ProcessJobRunTaskHandler : TaskHandler<ProcessJobRunTaskPayload>
         this.extractor = extractor;
         var gitLabClientProvider = new SkbKonturGitLabClientProvider(gitLabSettings);
         client = gitLabClientProvider.GetClient();
+        clientEx = gitLabClientProvider.GetExtendedClient();
     }
 
     public override bool CanHandle(RawTask task)
@@ -35,7 +37,7 @@ public class ProcessJobRunTaskHandler : TaskHandler<ProcessJobRunTaskPayload>
         logger.LogInformation("Processing job run for project {ProjectId}, job run id: {JobRunId}", task.ProjectId, task.JobRunId);
         try
         {
-            var jobProcessor = new GitLabJobProcessor(client, extractor, logger);
+            var jobProcessor = new GitLabJobProcessor(client, clientEx, extractor, logger);
             var projectInfo = await client.Projects.GetByIdAsync(task.ProjectId, new SingleProjectQuery(), ct);
             var processingResult = await jobProcessor.ProcessJobAsync(task.ProjectId, task.JobRunId);
 
@@ -49,7 +51,7 @@ public class ProcessJobRunTaskHandler : TaskHandler<ProcessJobRunTaskPayload>
                     if (processingResult.TestReportData != null)
                     {
                         await TestRunsUploader.UploadAsync(processingResult.JobInfo, processingResult.TestReportData.Runs);
-                        var job = await client.GetJobs(task.ProjectId).GetAsync(task.JobRunId);
+                        var job = await clientEx.GetJobAsync(task.ProjectId,task.JobRunId);
                         await metricsSender.SendAsync(
                             projectInfo,
                             processingResult.JobInfo.BranchName,
@@ -77,4 +79,5 @@ public class ProcessJobRunTaskHandler : TaskHandler<ProcessJobRunTaskPayload>
     private readonly TestMetricsSender metricsSender;
     private readonly JUnitExtractor extractor;
     private readonly IGitLabClient client;
+    private readonly GitLabExtendedClient clientEx;
 }

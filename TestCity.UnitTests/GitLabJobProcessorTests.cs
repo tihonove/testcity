@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Kontur.TestAnalytics.Reporter.Client;
 using Kontur.TestCity.Core;
+using Kontur.TestCity.Core.GitLab;
 using Kontur.TestCity.GitLabJobsCrawler;
 using Microsoft.Extensions.Logging;
 using NGitLab.Models;
@@ -31,8 +32,9 @@ public class GitLabJobProcessorTests
 
         var gitLabClientProvider = new SkbKonturGitLabClientProvider(settings);
         var client = gitLabClientProvider.GetClient();
+        var clientEx = gitLabClientProvider.GetExtendedClient();
         var extractor = new JUnitExtractor(GlobalSetup.TestLoggerFactory.CreateLogger<JUnitExtractor>());
-        var jobProcessor = new GitLabJobProcessor(client, extractor, logger);
+        var jobProcessor = new GitLabJobProcessor(client, clientEx, extractor, logger);
 
         var processingResult = await jobProcessor.ProcessJobAsync(projectId, jobId);
 
@@ -50,12 +52,77 @@ public class GitLabJobProcessorTests
         var gitLabClientProvider = new SkbKonturGitLabClientProvider(settings);
         var client = gitLabClientProvider.GetClient();
         var extractor = new JUnitExtractor(GlobalSetup.TestLoggerFactory.CreateLogger<JUnitExtractor>());
-        var jobProcessor = new GitLabJobProcessor(client, extractor, logger);
+        var clientEx = gitLabClientProvider.GetExtendedClient();
+        var jobProcessor = new GitLabJobProcessor(client, clientEx, extractor, logger);
 
         var processingResult = await jobProcessor.ProcessJobAsync(projectId, jobId);
 
         processingResult.JobInfo!.State.Should().Be(JobStatus.Failed);
     }
+
+    [Test]
+    public async Task IterateOverFiitProject()
+    {
+        var projectId = 19564;
+        logger.LogInformation("Starting Test01...");
+        var gitlabClientProvider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
+
+        logger.LogInformation("Pulling jobs for project {ProjectId}", projectId);
+        var client = gitlabClientProvider.GetClient();
+        var clientEx = gitlabClientProvider.GetExtendedClient();
+        const Core.GitLab.JobScope scopes = Core.GitLab.JobScope.All &
+                ~Core.GitLab.JobScope.Canceled &
+                ~Core.GitLab.JobScope.Skipped &
+                ~Core.GitLab.JobScope.Pending &
+                ~Core.GitLab.JobScope.Running &
+                ~Core.GitLab.JobScope.Created;
+        var jobs = await clientEx.GetAllProjectJobsAsync(projectId, scopes, perPage: 100).Take(600).ToListAsync();
+
+        int count = 0;
+        foreach (var job in jobs)
+        {
+            count++;
+            // logger.LogInformation("Start processing job with id: {JobId}", job.Id);
+            if (job.Artifacts != null)
+            {
+                try
+                {
+                    bool exists = await TestRunsUploader.IsJobRunIdExists(job.Id.ToString());
+                    if (exists)
+                    {
+                        logger.LogInformation("JobRunId '{JobRunId}' exists. Skip processing test runs", job.Id);
+                        continue;
+                    }
+                    var artifactContents = client.GetJobs(projectId).GetJobArtifacts(job.Id);
+                    logger.LogInformation("Artifact size for job with id: {JobId}. Size: {Size} bytes", job.Id, artifactContents.Length);
+                    var extractor = new JUnitExtractor(LoggerFactory.CreateLogger<JUnitExtractor>());
+                    var extractResult = extractor.TryExtractTestRunsFromGitlabArtifact(artifactContents);
+                    if (extractResult.TestReportData != null)
+                    {
+                        logger.LogInformation("Found job with artifacts. {JobRunId}", job.Id);
+                        var refId = await client.BranchOrRef(projectId, job.Ref);
+                        var jobInfo = GitLabHelpers.GetFullJobInfo(job, refId, extractResult, projectId.ToString());
+                        if (!exists)
+                        {
+                            logger.LogInformation("JobRunId '{JobRunId}' does not exist. Uploading test runs", jobInfo.JobRunId);
+                            // await TestRunsUploader.JobInfoUploadAsync(jobInfo);
+                            // await TestRunsUploader.UploadAsync(jobInfo, extractResult.TestReportData.Runs);
+                        }
+                        else
+                        {
+                            logger.LogInformation("JobRunId '{JobRunId}' exists. Skip uploading test runs", jobInfo.JobRunId);
+                        }
+                    }
+                }
+                catch (Exception exception)
+                {
+                    logger.LogWarning(exception, "Failed to read artifact for {JobId}", job.Id);
+                }
+            }
+        }
+        logger.LogInformation("Processed {Count} jobs", count);
+    }
+
 
     [Test]
     public async Task FixMissedFormsJobsForPipeline()
@@ -67,19 +134,16 @@ public class GitLabJobProcessorTests
 
         logger.LogInformation("Pulling jobs for project {ProjectId}", projectId);
         var client = gitlabClientProvider.GetClient();
+        var clientEx = gitlabClientProvider.GetExtendedClient();
         var jobsClient = client.GetJobs(projectId);
         var projectInfo = await client.Projects.GetByIdAsync(projectId, new SingleProjectQuery());
-        var jobsQuery = new NGitLab.Models.JobQuery
-        {
-            PerPage = 300,
-            Scope = NGitLab.Models.JobScopeMask.All &
-                ~NGitLab.Models.JobScopeMask.Canceled &
-                ~NGitLab.Models.JobScopeMask.Skipped &
-                ~NGitLab.Models.JobScopeMask.Pending &
-                ~NGitLab.Models.JobScopeMask.Running &
-                ~NGitLab.Models.JobScopeMask.Created,
-        };
-        var jobs = client.GetPipelines(projectId).GetJobs(pipelineId);
+        const Core.GitLab.JobScope scopes = Core.GitLab.JobScope.All &
+                ~Core.GitLab.JobScope.Canceled &
+                ~Core.GitLab.JobScope.Skipped &
+                ~Core.GitLab.JobScope.Pending &
+                ~Core.GitLab.JobScope.Running &
+                ~Core.GitLab.JobScope.Created;
+        var jobs = await clientEx.GetAllProjectJobsAsync(projectId, scopes, perPage: 100).Take(600).ToListAsync();
         //var jobs = Enumerable.Take(jobsClient.GetJobsAsync(jobsQuery), 100);
         // logger.LogInformation("Take last {JobsLength} jobs", jobs.Length);
 
@@ -127,7 +191,6 @@ public class GitLabJobProcessorTests
         logger.LogInformation("Processed {Count} jobs", count);
     }
 
-
     [Test]
     public async Task FixMissedFormsJobs()
     {
@@ -137,22 +200,18 @@ public class GitLabJobProcessorTests
 
         logger.LogInformation("Pulling jobs for project {ProjectId}", projectId);
         var client = gitlabClientProvider.GetClient();
-        var jobsClient = client.GetJobs(projectId);
+        var clientEx = gitlabClientProvider.GetExtendedClient();
         var projectInfo = await client.Projects.GetByIdAsync(projectId, new SingleProjectQuery());
-        var jobsQuery = new NGitLab.Models.JobQuery
-        {
-            PerPage = 300,
-            Scope = NGitLab.Models.JobScopeMask.All &
-                ~NGitLab.Models.JobScopeMask.Canceled &
-                ~NGitLab.Models.JobScopeMask.Skipped &
-                ~NGitLab.Models.JobScopeMask.Pending &
-                ~NGitLab.Models.JobScopeMask.Running &
-                ~NGitLab.Models.JobScopeMask.Created,
-        };
-        var jobs = Enumerable.TakeWhile(jobsClient.GetJobsAsync(jobsQuery), x => x.CreatedAt > DateTime.Now.AddDays(-6));
+        const Core.GitLab.JobScope scopes = Core.GitLab.JobScope.All &
+                ~Core.GitLab.JobScope.Canceled &
+                ~Core.GitLab.JobScope.Skipped &
+                ~Core.GitLab.JobScope.Pending &
+                ~Core.GitLab.JobScope.Running &
+                ~Core.GitLab.JobScope.Created;
+        var jobs = await clientEx.GetAllProjectJobsAsync(projectId, scopes, perPage: 100).TakeWhile(x => x.CreatedAt > DateTime.Now.AddDays(-6)).ToListAsync();
         //var jobs = Enumerable.Take(jobsClient.GetJobsAsync(jobsQuery), 100);
         // logger.LogInformation("Take last {JobsLength} jobs", jobs.Length);
-
+    
         int count = 0;
         foreach (var job in jobs)
         {

@@ -1,12 +1,11 @@
 using Kontur.TestAnalytics.Reporter.Client;
-using Kontur.TestCity.Core;
-using NGitLab.Models;
+using Kontur.TestCity.Core.GitLab.Models;
 
 namespace Kontur.TestCity.GitLabJobsCrawler;
 
 public static class GitLabHelpers
 {
-    public static FullJobInfo GetFullJobInfo(NGitLab.Models.Job job, string refId, ArtifactsContentsInfo testCount, string projectId)
+    public static FullJobInfo GetFullJobInfo(GitLabJob job, string refId, ArtifactsContentsInfo testCount, string projectId)
     {
         var endDateTime = DateTime.Now;
 
@@ -19,8 +18,8 @@ public static class GitLabHelpers
             BranchName = refId,
 
             // TODO Надо добавить в модельки NGitLab поля
-            AgentName = job.Runner?.Description ?? $"agent_${job.Runner?.Id ?? 0}",
-            AgentOSName = "Unknown",
+            AgentName = job.Runner?.Name ?? job.Runner?.Description ?? $"agent_${job.Runner?.Id ?? 0}",
+            AgentOSName = job.RunnerManager?.Platform ?? "Unknown",
         };
         return new FullJobInfo
         {
@@ -32,14 +31,13 @@ public static class GitLabHelpers
             AgentName = shortJobInfo.AgentName,
             AgentOSName = shortJobInfo.AgentOSName,
             State = GetJobStatus(job.Status),
-            StartDateTime = job.StartedAt,
+            StartDateTime = job.StartedAt ?? DateTime.Now,
             EndDateTime = endDateTime,
             Duration = (int)Math.Ceiling(job.Duration ?? 0),
-            Triggered = job.User.Email,
+            Triggered = job.User.PublicEmail,
 
-            // TODO job.Pipeline.Source -- это поляна есть в api но в модель её не протащили , надо сгонять к чувакам и сделать им PR
-            PipelineSource = "push",
-            CommitSha = job.Commit.Id.ToString(),
+            PipelineSource = job.Pipeline.Source,
+            CommitSha = job.Commit.Id,
             CommitMessage = job.Commit.Message,
             CommitAuthor = job.Commit.AuthorName,
             ProjectId = projectId,
@@ -52,21 +50,21 @@ public static class GitLabHelpers
         };
     }
 
-    private static JobStatus GetJobStatus(NGitLab.JobStatus gitlabStatus)
+    private static TestAnalytics.Reporter.Client.JobStatus GetJobStatus(Core.GitLab.Models.JobStatus gitlabStatus)
     {
-        if (gitlabStatus == NGitLab.JobStatus.Success)
+        if (gitlabStatus == Core.GitLab.Models.JobStatus.Success)
         {
-            return JobStatus.Success;
+            return TestAnalytics.Reporter.Client.JobStatus.Success;
         }
-        else if (gitlabStatus == NGitLab.JobStatus.Canceled)
+        else if (gitlabStatus == Core.GitLab.Models.JobStatus.Canceled)
         {
-            return JobStatus.Canceled;
+            return TestAnalytics.Reporter.Client.JobStatus.Canceled;
         }
-        else if (gitlabStatus == NGitLab.JobStatus.Failed)
+        else if (gitlabStatus == Core.GitLab.Models.JobStatus.Failed)
         {
-            return JobStatus.Failed;
+            return TestAnalytics.Reporter.Client.JobStatus.Failed;
         }
 
-        return JobStatus.Failed;
+        return TestAnalytics.Reporter.Client.JobStatus.Failed;
     }
 }

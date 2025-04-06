@@ -1,6 +1,7 @@
 using System.Text;
 using dotenv.net;
 using Kontur.TestCity.Core;
+using Kontur.TestCity.Core.GitLab;
 using Kontur.TestCity.Core.KafkaMessageQueue;
 using Kontur.TestCity.Core.Worker;
 using OpenTelemetry.Metrics;
@@ -15,7 +16,7 @@ builder.WebHost.UseUrls("http://0.0.0.0:8124");
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 
-builder.Services.AddSingleton<GitLabSettings>(new GitLabSettings() { GitLabToken = Environment.GetEnvironmentVariable("GITLAB_TOKEN") ?? "NoToken" });
+builder.Services.AddSingleton<GitLabSettings>(new GitLabSettings() { Token = Environment.GetEnvironmentVariable("GITLAB_TOKEN") ?? "NoToken" });
 builder.Services.AddSingleton<SkbKonturGitLabClientProvider>();
 builder.Services.AddSingleton<WorkerClient>();
 builder.Services.AddSingleton(r => KafkaMessageQueueClient.CreateDefault(r.GetRequiredService<ILogger<KafkaMessageQueueClient>>()));

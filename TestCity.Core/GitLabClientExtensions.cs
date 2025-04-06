@@ -26,6 +26,18 @@ public static class GitLabClientExtensions
         return mr.SourceBranch;
     }
 
+    public static byte[]? GetJobArtifactsOrNull(this IJobClient jobClient, long jobId)
+    {
+        try
+        {
+            return jobClient.GetJobArtifacts(jobId);
+        }
+        catch (GitLabException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+        {
+            return null;
+        }
+    }
+
     private static readonly Regex MergeRequestRef = new ("^refs/merge-requests/(\\d+)/head$", RegexOptions.Compiled);
     private static readonly Dictionary<string, string> RefToBranch = new Dictionary<string, string>();
 }

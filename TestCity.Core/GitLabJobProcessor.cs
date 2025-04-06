@@ -1,6 +1,8 @@
 using System.Text.RegularExpressions;
 using Kontur.TestAnalytics.Reporter.Client;
 using Kontur.TestCity.Core;
+using Kontur.TestCity.Core.GitLab;
+using Kontur.TestCity.Core.GitLab.Models;
 using Microsoft.Extensions.Logging;
 using NGitLab;
 using NGitLab.Models;
@@ -9,33 +11,39 @@ namespace Kontur.TestCity.GitLabJobsCrawler;
 
 public class GitLabJobProcessor
 {
-    public GitLabJobProcessor(IGitLabClient client, JUnitExtractor extractor, ILogger logger)
+    public GitLabJobProcessor(IGitLabClient client, GitLabExtendedClient clientEx, JUnitExtractor extractor, ILogger logger)
     {
         this.logger = logger;
         this.client = client;
+        this.clientEx = clientEx;
         this.extractor = extractor;
     }
 
-    public async Task<GitLabJobProcessingResult> ProcessJobAsync(long projectId, long jobRunId, Job? job = null)
+    public async Task<GitLabJobProcessingResult> ProcessJobAsync(long projectId, long jobRunId, GitLabJob? job = null)
     {
         logger.LogInformation("Start processing job with id: ProjectId: {ProjectId} JobId: {JobRunId}", projectId, jobRunId);
         try
         {
             var jobClient = client.GetJobs(projectId);
-            job ??= await jobClient.GetAsync(jobRunId);
+            job ??= await clientEx.GetJobAsync(projectId, jobRunId);
             var result = new GitLabJobProcessingResult
             {
                 JobInfo = null,
                 TestReportData = null,
             };
 
-            if (job.Artifacts == null)
+            if (job.Artifacts == null || job.Artifacts.Count == 0)
             {
                 return result;
             }
 
-            var artifactContents = jobClient.GetJobArtifacts(job.Id);
-            logger.LogInformation("Artifact size for job with id: {JobId}. Size: {Size} bytes", job.Id, artifactContents.Length);
+            var artifactContents = jobClient.GetJobArtifactsOrNull(job.Id);
+            if (artifactContents == null)
+            {
+                logger.LogInformation("Artifacts does not exist for id: {JobId}", job.Id);
+                return result;
+            }
+            logger.LogInformation("Artifact size for job with id: {JobId}. Size: {Size} bytes", job.Id, artifactContents?.Length ?? 0);
 
             var jobTrace = await CreateTraceTextReader(jobClient, jobRunId);
             var customStatusMessage = await ExtractTeamCityStatusMessage(jobTrace);
@@ -103,6 +111,7 @@ public class GitLabJobProcessor
 
     private readonly ILogger logger;
     private readonly IGitLabClient client;
+    private readonly GitLabExtendedClient clientEx;
     private readonly JUnitExtractor extractor;
 }
 

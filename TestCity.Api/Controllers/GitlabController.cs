@@ -1,5 +1,6 @@
 using System.IO.Compression;
 using Kontur.TestCity.Core;
+using Kontur.TestCity.Core.GitLab;
 using Kontur.TestCity.Core.Worker;
 using Kontur.TestCity.Core.Worker.TaskPayloads;
 using Microsoft.AspNetCore.Mvc;
