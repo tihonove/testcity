@@ -34,14 +34,49 @@ public class GitlabController(SkbKonturGitLabClientProvider gitLabClientProvider
     }
 
     [HttpPost("webhook")]
-    public async Task<IActionResult> WebhookHandler([FromBody] GitLabJobEventInfo jobEventInfo)
+    public async Task<IActionResult> WebhookHandler()
     {
-        logger.LogInformation("Recieved webhook from GitLab: {JobRunId}", jobEventInfo.BuildId);
+        logger.LogInformation("Получен webhook от GitLab");
+
+        GitLabJobEventInfo? jobEventInfo;
+        try
+        {
+            using var reader = new StreamReader(Request.Body);
+            var requestBody = await reader.ReadToEndAsync();
+
+            if (string.IsNullOrEmpty(requestBody))
+            {
+                logger.LogWarning("Получен пустой запрос от GitLab webhook");
+                return BadRequest("Тело запроса не может быть пустым");
+            }
+
+            logger.LogDebug("Содержимое webhook: {RequestBody}", requestBody);
+
+            jobEventInfo = System.Text.Json.JsonSerializer.Deserialize<GitLabJobEventInfo>(requestBody);
+            if (jobEventInfo == null)
+            {
+                logger.LogWarning("Не удалось десериализовать тело запроса в GitLabJobEventInfo");
+                return BadRequest("Неверный формат данных");
+            }
+
+            logger.LogInformation("Получен webhook от GitLab и десериализован: {JobRunId}", jobEventInfo.BuildId);
+        }
+        catch (System.Text.Json.JsonException jsonEx)
+        {
+            logger.LogError(jsonEx, "Ошибка при десериализации webhook данных от GitLab");
+            return BadRequest("Неверный формат JSON");
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Ошибка при чтении данных запроса GitLab webhook");
+            return StatusCode(500);
+        }
+
         try
         {
             if (hooksBasedProjectIds.Contains(jobEventInfo.ProjectId))
             {
-                if (jobEventInfo.BuildStatus == GitLabJobEventBuildStatus.Failed || jobEventInfo.BuildStatus == GitLabJobEventBuildStatus.Success)
+                if (jobEventInfo.BuildStatus == "failed" || jobEventInfo.BuildStatus == "success")
                     await workerClient.Enqueue(new ProcessJobRunTaskPayload
                     {
                         ProjectId = jobEventInfo.ProjectId,
