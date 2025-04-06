@@ -59,7 +59,7 @@ public class GitlabController(SkbKonturGitLabClientProvider gitLabClientProvider
                 return BadRequest("Неверный формат данных");
             }
 
-            logger.LogInformation("Получен webhook от GitLab и десериализован: {JobRunId}", jobEventInfo.BuildId);
+            logger.LogInformation("Получен webhook от GitLab и десериализован: {ProjectId}, {JobRunId}", jobEventInfo.ProjectId, jobEventInfo.BuildId);
         }
         catch (System.Text.Json.JsonException jsonEx)
         {
