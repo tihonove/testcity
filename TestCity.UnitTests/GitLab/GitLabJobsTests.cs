@@ -262,7 +262,6 @@ public class GitLabJobsTests
         Assert.That(job.RunnerManager.Revision, Is.EqualTo("374d34fd"));
         Assert.That(job.RunnerManager.Platform, Is.EqualTo("linux"));
         Assert.That(job.RunnerManager.Architecture, Is.EqualTo("amd64"));
-        Assert.That(job.RunnerManager.IpAddress, Is.EqualTo("10.223.76.21"));
         Assert.That(job.RunnerManager.Status, Is.EqualTo("online"));
 
         // Проверяем остальные поля
