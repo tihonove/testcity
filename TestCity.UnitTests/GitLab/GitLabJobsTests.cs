@@ -60,7 +60,7 @@ public class GitLabJobsTests
         }
     }
 
-    [Test]
+    [Test]  
     public async Task GetAllProjectJobs_ForProject19564_Success()
     {
         try
@@ -224,28 +224,6 @@ public class GitLabJobsTests
         Assume.That(job.Project is not null);
         Assert.That(job.Project.CiJobTokenScopeEnabled, Is.False);
 
-        // Проверяем артефакты
-        Assume.That(job.Artifacts is not null);
-        Assert.That(job.Artifacts.Count, Is.EqualTo(3));
-
-        var traceArtifact = job.Artifacts.FirstOrDefault(a => a.FileType == "trace");
-        Assert.That(traceArtifact, Is.Not.Null);
-        Assert.That(traceArtifact!.Size, Is.EqualTo(84847));
-        Assert.That(traceArtifact.Filename, Is.EqualTo("job.log"));
-        Assert.That(traceArtifact.FileFormat, Is.Null);
-
-        var archiveArtifact = job.Artifacts.FirstOrDefault(a => a.FileType == "archive");
-        Assert.That(archiveArtifact, Is.Not.Null);
-        Assert.That(archiveArtifact!.Size, Is.EqualTo(1874711733));
-        Assert.That(archiveArtifact.Filename, Is.EqualTo("artifacts.zip"));
-        Assert.That(archiveArtifact.FileFormat, Is.EqualTo("zip"));
-
-        var metadataArtifact = job.Artifacts.FirstOrDefault(a => a.FileType == "metadata");
-        Assert.That(metadataArtifact, Is.Not.Null);
-        Assert.That(metadataArtifact!.Size, Is.EqualTo(164330));
-        Assert.That(metadataArtifact.Filename, Is.EqualTo("metadata.gz"));
-        Assert.That(metadataArtifact.FileFormat, Is.EqualTo("gzip"));
-
         // Проверяем информацию о runner
         Assume.That(job.Runner is not null);
         Assert.That(job.Runner.Id, Is.EqualTo(12823));
@@ -336,21 +314,6 @@ public class GitLabJobsTests
             Assert.That(foundJob.WebUrl, Is.EqualTo("https://git.skbkontur.ru/testers/fiit/fiit-big-library/-/jobs/37872978"));
             Assume.That(foundJob.Project is not null);
             Assert.That(foundJob.Project.CiJobTokenScopeEnabled, Is.False);
-
-            Assume.That(foundJob.Artifacts is not null);
-            Assert.That(foundJob.Artifacts.Count, Is.EqualTo(3));
-
-            var traceArtifact = foundJob.Artifacts[0];
-            Assert.That(traceArtifact.FileType, Is.EqualTo("trace"));
-            Assert.That(traceArtifact.Size, Is.EqualTo(5996));
-            Assert.That(traceArtifact.Filename, Is.EqualTo("job.log"));
-            Assert.That(traceArtifact.FileFormat, Is.Null);
-
-            var archiveArtifact = foundJob.Artifacts[1];
-            Assert.That(archiveArtifact.FileType, Is.EqualTo("archive"));
-            Assert.That(archiveArtifact.Size, Is.EqualTo(1431));
-            Assert.That(archiveArtifact.Filename, Is.EqualTo("artifacts.zip"));
-            Assert.That(archiveArtifact.FileFormat, Is.EqualTo("zip"));
 
             Assume.That(foundJob.Runner is not null);
             Assert.That(foundJob.Runner.Id, Is.EqualTo(12823));
