@@ -216,8 +216,12 @@ export class TestAnalyticsStorage {
             ) AS prev 
                 ON prev.JobId = filtered.JobId AND prev.CommitSha = filtered.CommitSha 
 
-            LEFT JOIN CommitParents cp2 ON cp2.ProjectId = filtered.ProjectId AND cp2.CommitSha = filtered.CommitSha AND cp2.Depth < 2
-            WHERE rn = 1
+            LEFT JOIN CommitParents cp2 ON cp2.ProjectId = filtered.ProjectId AND cp2.CommitSha = filtered.CommitSha AND cp2.Depth <= 10
+            WHERE rn = 1 AND (
+                (prev.MinDepth = 0) OR 
+                (prev.MinDepth > 10 AND cp2.Depth < 10) OR 
+                (prev.MinDepth > 0 AND prev.MinDepth < 10 AND cp2.Depth <= prev.MinDepth)
+            )
             GROUP BY filtered.JobRunId, filtered.JobId, filtered.StartDateTime
             ORDER BY filtered.JobId, filtered.StartDateTime DESC
             LIMIT 1000;
@@ -229,35 +233,38 @@ export class TestAnalyticsStorage {
     public async findAllJobsRuns(projectIds: string[], currentBranchName?: string): Promise<JobsQueryRow[]> {
         const query = `
             SELECT
-                any(filtered.JobId),
+                filtered.JobId,
                 filtered.JobRunId,
-                any(filtered.BranchName),
-                any(filtered.AgentName),
-                any(filtered.StartDateTime),
-                any(filtered.TotalTestsCount),
-                any(filtered.AgentOSName),
-                any(filtered.Duration),
-                any(filtered.SuccessTestsCount),
-                any(filtered.SkippedTestsCount),
-                any(filtered.FailedTestsCount),
-                any(filtered.State),
-                any(filtered.CustomStatusMessage),
-                any(filtered.JobUrl),
-                any(filtered.ProjectId),
-                any(filtered.HasCodeQualityReport)
+                filtered.BranchName,
+                filtered.AgentName,
+                filtered.StartDateTime,
+                filtered.TotalTestsCount,
+                filtered.AgentOSName,
+                filtered.Duration,
+                filtered.SuccessTestsCount,
+                filtered.SkippedTestsCount,
+                filtered.FailedTestsCount,
+                filtered.State,
+                filtered.CustomStatusMessage,
+                filtered.JobUrl,
+                filtered.ProjectId,
+                filtered.HasCodeQualityReport
             FROM (
-                SELECT
-                    *,
-                    ROW_NUMBER() OVER (PARTITION BY JobId, BranchName ORDER BY StartDateTime DESC) AS rn
-                FROM JobInfo 
-                WHERE 
-                    StartDateTime >= now() - INTERVAL 30 DAY 
-                    AND ProjectId IN [${projectIds.map(x => "'" + x + "'").join(", ")}]
-                    ${currentBranchName ? `AND BranchName = '${currentBranchName}'` : ""}
+                SELECT *,
+                ROW_NUMBER() OVER (PARTITION BY JobId ORDER BY StartDateTime DESC) AS rnj
+                FROM (
+                    SELECT
+                        *,
+                        ROW_NUMBER() OVER (PARTITION BY JobId, BranchName ORDER BY StartDateTime DESC) AS rn
+                    FROM JobInfo 
+                    WHERE 
+                        StartDateTime >= now() - INTERVAL 30 DAY 
+                        AND ProjectId IN [${projectIds.map(x => "'" + x + "'").join(", ")}]
+                        ${currentBranchName ? `AND BranchName = '${currentBranchName}'` : ""}
+                ) AS filtered_inner 
+                WHERE rn = 1
             ) AS filtered
-
-            WHERE rn = 1
-            GROUP BY filtered.JobRunId, filtered.JobId, filtered.StartDateTime
+            WHERE (rnj <= 5 OR StartDateTime >= now() - INTERVAL 3 DAY)
             ORDER BY filtered.JobId, filtered.StartDateTime DESC
             LIMIT 1000;
         `;

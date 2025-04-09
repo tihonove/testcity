@@ -298,6 +298,6 @@ const Sha = styled.td`
     color: ${theme.mutedTextColor};
 `;
 
-const NoChanges = styled.td`
+const NoChanges = styled.span`
     color: ${theme.mutedTextColor};
 `;
