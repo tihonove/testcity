@@ -15,6 +15,8 @@ export type JobsQueryRow = [
     string,
     string,
     number,
+    [string, string, string],
+    number,
 ];
 export const JobRunNames = {
     JobId: 0,
@@ -33,4 +35,6 @@ export const JobRunNames = {
     JobUrl: 13,
     ProjectId: 14,
     HasCodeQualityReport: 15,
+    CoveredCommits: 16,
+    TotalCoveredCommitCount: 17,
 } as const;

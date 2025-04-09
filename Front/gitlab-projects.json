@@ -126,7 +126,8 @@
                 "title": "test-analytics",
                 "useHooks": true
             }
-        ]
+        ],
+        "mergeRunsFromJobs": false
     },
     {
         "id": "24609",

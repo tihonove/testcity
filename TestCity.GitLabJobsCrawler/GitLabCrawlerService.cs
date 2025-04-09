@@ -128,6 +128,11 @@ public sealed class GitLabCrawlerService : IDisposable
                     {
                         log.LogInformation("JobRunId '{JobRunId}' does not exist. Uploading test runs", processingResult.JobInfo.JobRunId);
                         await TestRunsUploader.JobInfoUploadAsync(processingResult.JobInfo);
+                        await workerClient.Enqueue(new BuildCommitParentsTaskPayload
+                        {
+                            ProjectId = projectId,
+                            CommitSha = processingResult.JobInfo.CommitSha,
+                        });
 
                         if (processingResult.TestReportData != null)
                         {

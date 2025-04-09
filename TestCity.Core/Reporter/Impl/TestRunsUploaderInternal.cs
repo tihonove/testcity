@@ -1,5 +1,6 @@
 using ClickHouse.Client.ADO;
 using ClickHouse.Client.Copy;
+using Kontur.TestCity.Core.Extensions;
 
 namespace Kontur.TestAnalytics.Reporter.Client.Impl;
 

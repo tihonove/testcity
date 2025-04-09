@@ -82,4 +82,21 @@ AS SELECT
     StartDateTime,
     AgentName,
     AgentOSName
-FROM TestRuns
+FROM TestRuns;
+
+-- divider --
+
+CREATE TABLE IF NOT EXISTS CommitParents (
+    CommitSha String,
+    ParentCommitSha String,
+    Depth UInt16,
+    AuthorName String,
+    AuthorEmail String,
+    MessagePreview String,
+    ProjectId String,
+    CreateDate DateTime DEFAULT now()
+)
+ENGINE = MergeTree
+PARTITION BY toYYYYMM(CreateDate)
+ORDER BY (ProjectId, CommitSha, Depth, ParentCommitSha)
+SETTINGS index_granularity = 8192;

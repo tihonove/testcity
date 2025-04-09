@@ -1,24 +1,15 @@
 using System.Text.RegularExpressions;
 using Kontur.TestAnalytics.Reporter.Client;
-using Kontur.TestCity.Core;
 using Kontur.TestCity.Core.GitLab;
 using Kontur.TestCity.Core.GitLab.Models;
+using Kontur.TestCity.GitLabJobsCrawler;
 using Microsoft.Extensions.Logging;
 using NGitLab;
-using NGitLab.Models;
 
-namespace Kontur.TestCity.GitLabJobsCrawler;
+namespace Kontur.TestCity.Core;
 
-public class GitLabJobProcessor
+public class GitLabJobProcessor(IGitLabClient client, GitLabExtendedClient clientEx, JUnitExtractor extractor, ILogger logger)
 {
-    public GitLabJobProcessor(IGitLabClient client, GitLabExtendedClient clientEx, JUnitExtractor extractor, ILogger logger)
-    {
-        this.logger = logger;
-        this.client = client;
-        this.clientEx = clientEx;
-        this.extractor = extractor;
-    }
-
     public async Task<GitLabJobProcessingResult> ProcessJobAsync(long projectId, long jobRunId, GitLabJob? job = null)
     {
         logger.LogInformation("Start processing job with id: ProjectId: {ProjectId} JobId: {JobRunId}", projectId, jobRunId);
@@ -109,10 +100,10 @@ public class GitLabJobProcessor
         return new StringReader(traceFull);
     }
 
-    private readonly ILogger logger;
-    private readonly IGitLabClient client;
-    private readonly GitLabExtendedClient clientEx;
-    private readonly JUnitExtractor extractor;
+    private readonly ILogger logger = logger;
+    private readonly IGitLabClient client = client;
+    private readonly GitLabExtendedClient clientEx = clientEx;
+    private readonly JUnitExtractor extractor = extractor;
 }
 
 public class GitLabJobProcessingResult

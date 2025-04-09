@@ -16,12 +16,13 @@ import { JobIdWithParentProject, JobIdWithParentProjectNames } from "../Domain/J
 import { JobRunNames, JobsQueryRow } from "../Domain/Storage/JobsQuery";
 import { GroupNode } from "../Domain/Storage/Storage";
 import { SubIcon } from "./SubIcon";
-import { Hint } from "@skbkontur/react-ui";
+import { Hint, Tooltip } from "@skbkontur/react-ui";
 import { RunsTable } from "../Pages/ProjectsWithRunsTable";
 import { stableGroupBy } from "../Utils/ArrayUtils";
 import { BranchBox } from "./BranchBox";
 import { JobLink } from "./JobLink";
 import { TimingCell } from "./TimingCell";
+import { theme } from "../Theme/ITheme";
 
 interface JobsViewProps {
     hideRuns?: boolean;
@@ -122,6 +123,42 @@ export function JobsView({
                                                     )}
                                                 </JobLink>
                                             </CountCell>
+                                            {localStorage.getItem("changes") === "true" && (
+                                                <ChangesCell>
+                                                    {x[JobRunNames.TotalCoveredCommitCount] > 0 ? (
+                                                        <Tooltip
+                                                            trigger="click"
+                                                            render={() => (
+                                                                <ChangesList>
+                                                                    <tbody>
+                                                                        {x[JobRunNames.CoveredCommits].map(
+                                                                            (commit, index) => (
+                                                                                <ChangeItem key={index}>
+                                                                                    <Message>{commit[3]}</Message>
+                                                                                    <Author>
+                                                                                        {commit[1]} &lt;{commit[2]}&gt;
+                                                                                    </Author>
+                                                                                    <Sha>
+                                                                                        {commit[0].substring(0, 7)}
+                                                                                    </Sha>
+                                                                                </ChangeItem>
+                                                                            )
+                                                                        )}
+                                                                    </tbody>
+                                                                </ChangesList>
+                                                            )}>
+                                                            <ChangesLink>
+                                                                {x[JobRunNames.TotalCoveredCommitCount]} change
+                                                                {x[JobRunNames.TotalCoveredCommitCount] !== 1
+                                                                    ? "s"
+                                                                    : ""}
+                                                            </ChangesLink>
+                                                        </Tooltip>
+                                                    ) : (
+                                                        <NoChanges>No changes</NoChanges>
+                                                    )}
+                                                </ChangesCell>
+                                            )}
                                             <TimingCell startDateTime={x[4]} duration={x[7]} />
                                             <AttributesCell>
                                                 {x[JobRunNames.HasCodeQualityReport] != 0 && (
@@ -191,8 +228,53 @@ const CountCell = styled.td`
     text-overflow: ellipsis;
 `;
 
+const ChangesCell = styled.td`
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`;
+
+const ChangesLink = styled.span`
+    cursor: pointer;
+    text-decoration: underline;
+`;
+
 const AttributesCell = styled.td`
     max-width: 80px;
     white-space: nowrap;
     text-align: left;
+`;
+
+const ChangesList = styled.table`
+    padding: 10px;
+    max-width: 800px;
+`;
+
+const ChangeItem = styled.tr``;
+
+const Message = styled.td`
+    font-weight: 600;
+    max-width: 300px;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`;
+
+const Author = styled.td`
+    display: inline-block;
+    font-size: 12px;
+    padding-left: 5px;
+    color: ${theme.mutedTextColor};
+`;
+
+const Sha = styled.td`
+    font-size: 12px;
+    padding-left: 5px;
+    color: ${theme.mutedTextColor};
+`;
+
+const NoChanges = styled.td`
+    color: ${theme.mutedTextColor};
 `;

@@ -1,6 +1,8 @@
 using ClickHouse.Client.ADO;
+using ClickHouse.Client.Copy;
 using ClickHouse.Client.Utility;
 using Kontur.TestAnalytics.Reporter.Client.Impl;
+using Kontur.TestCity.Core.Extensions;
 
 namespace Kontur.TestAnalytics.Reporter.Client;
 
@@ -16,6 +18,42 @@ public static class TestRunsUploader
     public static Task UploadAsync(JobRunInfo jobRunInfo, IEnumerable<TestRun> lines)
     {
         return UploadAsync(jobRunInfo, lines.ToAsyncEnumerable());
+    }
+
+    public static async Task UploadCommitParents(IEnumerable<CommitParentsEntry> entries, CancellationToken ct = default)
+    {
+        await using var connection = CreateConnection();
+        using var bulkCopyInterface = new ClickHouseBulkCopy(connection)
+        {
+            DestinationTableName = "CommitParents",
+            BatchSize = 1000,
+            ColumnNames = [
+                "ProjectId",
+                "CommitSha",
+                "ParentCommitSha",
+                "Depth",
+                "AuthorName",
+                "AuthorEmail",
+                "MessagePreview",
+            ],
+        };
+        await bulkCopyInterface.InitAsync();
+        await foreach (var entryBatch in entries.ToAsyncEnumerable().Batches(1000))
+        {
+            var values = entryBatch.Select(x =>
+                new object?[]
+                {
+                    x.ProjectId,
+                    x.CommitSha,
+                    x.ParentCommitSha,
+                    x.Depth,
+                    x.AuthorName,
+                    x.AuthorEmail,
+                    x.MessagePreview,
+                });
+            await bulkCopyInterface.WriteToServerAsync(values, ct);
+
+        }
     }
 
     public static async Task<bool> IsJobRunIdExists(string jobId)

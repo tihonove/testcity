@@ -23,6 +23,32 @@ public sealed class GitLabExtendedClient : IDisposable
         };
     }
 
+    public async Task<PagedApiResponse<List<GitLabCommit>>> GetRepositoryCommitsAsync(
+        long projectId,
+        RepositoryCommitsQueryOptions? options = null)
+    {
+        options ??= new RepositoryCommitsQueryOptions();
+
+        var queryParams = options.BuildQueryParameters();
+        string url = $"projects/{projectId}/repository/commits";
+
+        if (queryParams.Count > 0)
+        {
+            url += "?" + string.Join("&", queryParams);
+        }
+
+        return await GetWithResponseAsync<List<GitLabCommit>>(url);
+    }
+
+    public async Task<PagedApiResponse<List<GitLabCommit>>> GetRepositoryCommitsAsync(
+        long projectId,
+        Action<RepositoryCommitsQueryOptions> optionsBuilder)
+    {
+        var options = new RepositoryCommitsQueryOptions();
+        optionsBuilder(options);
+        return await GetRepositoryCommitsAsync(projectId, options);
+    }
+
     public async Task<GitLabJob> GetJobAsync(long projectId, long jobId)
     {
         var url = $"projects/{projectId}/jobs/{jobId}";
@@ -35,6 +61,65 @@ public sealed class GitLabExtendedClient : IDisposable
             ?? throw new InvalidOperationException($"Failed to deserialize response to {nameof(GitLabJob)}");
 
         return result;
+    }
+
+    /// <summary>
+    /// Retrieves all repository commits asynchronously using pagination
+    /// </summary>
+    /// <param name="projectId">ID of the GitLab project</param>
+    /// <param name="options">Options for filtering and pagination of commits</param>
+    /// <param name="cancellationToken">Token to cancel the operation</param>
+    /// <returns>An async enumerable of all commits matching the criteria</returns>
+    public async IAsyncEnumerable<GitLabCommit> GetAllRepositoryCommitsAsync(
+        long projectId,
+        RepositoryCommitsQueryOptions? options = null,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        var response = await GetRepositoryCommitsAsync(projectId, options);
+
+        foreach (var commit in response.Result)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            yield return commit;
+        }
+
+        var nextPageUrl = response.NextPageLink;
+        while (!string.IsNullOrEmpty(nextPageUrl))
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var relativeUrl = nextPageUrl.Replace(httpClient.BaseAddress!.ToString(), "");
+            var nextPageResponse = await GetWithResponseAsync<List<GitLabCommit>>(relativeUrl);
+
+            foreach (var commit in nextPageResponse.Result)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                yield return commit;
+            }
+
+            nextPageUrl = nextPageResponse.NextPageLink;
+        }
+    }
+
+    /// <summary>
+    /// Retrieves all repository commits asynchronously using pagination
+    /// </summary>
+    /// <param name="projectId">ID of the GitLab project</param>
+    /// <param name="optionsBuilder">Action to configure commit query options</param>
+    /// <param name="cancellationToken">Token to cancel the operation</param>
+    /// <returns>An async enumerable of all commits matching the criteria</returns>
+    public async IAsyncEnumerable<GitLabCommit> GetAllRepositoryCommitsAsync(
+        long projectId,
+        Action<RepositoryCommitsQueryOptions> optionsBuilder,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        var options = new RepositoryCommitsQueryOptions();
+        optionsBuilder(options);
+        
+        await foreach (var commit in GetAllRepositoryCommitsAsync(projectId, options, cancellationToken))
+        {
+            yield return commit;
+        }
     }
 
     public async Task<PagedApiResponse<List<GitLabJob>>> GetProjectJobsAsync(long projectId, JobScope? scope = null, int? page = null, int? perPage = null)

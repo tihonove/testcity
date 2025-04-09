@@ -4,6 +4,7 @@ using Kontur.TestCity.Core;
 using Kontur.TestCity.Core.GitLab;
 using Kontur.TestCity.Core.Graphite;
 using Kontur.TestCity.Core.KafkaMessageQueue;
+using Kontur.TestCity.Core.Worker;
 using Kontur.TestCity.GitLabJobsCrawler;
 using Kontur.TestCity.Worker.Handlers;
 using Kontur.TestCity.Worker.Handlers.Base;
@@ -26,7 +27,10 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddSingleton<JUnitExtractor>();
         services.AddSingleton<TestMetricsSender>();
         services.AddSingleton<SkbKonturGitLabClientProvider>();
+        services.AddSingleton<WorkerClient>();
+        services.AddSingleton(r => KafkaMessageQueueClient.CreateDefault(r.GetRequiredService<ILogger<KafkaMessageQueueClient>>()));
         services.AddSingleton<ITaskHandler, ProcessJobRunTaskHandler>();
+        services.AddSingleton<ITaskHandler, BuildCommitParentsHandler>();
 
         var graphiteHost = Environment.GetEnvironmentVariable("GRAPHITE_RELAY_HOST");
         var graphitePortStr = Environment.GetEnvironmentVariable("GRAPHITE_RELAY_PORT");

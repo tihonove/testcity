@@ -50,6 +50,7 @@ export function ProjectsDashboardPage(): React.JSX.Element {
         x => (usePipelineGrouping ? [] : x.findAllJobsRuns(projectIds, currentBranchName)),
         [projectIds, currentBranchName, usePipelineGrouping, pathToGroup]
     );
+
     const allPipelineRuns = useStorageQuery(
         x =>
             usePipelineGrouping

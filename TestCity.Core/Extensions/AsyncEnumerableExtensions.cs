@@ -1,6 +1,6 @@
-namespace Kontur.TestAnalytics.Reporter.Client.Impl;
+namespace Kontur.TestCity.Core.Extensions;
 
-internal static class AsyncEnumerableExtensions
+public static class AsyncEnumerableExtensions
 {
 #pragma warning disable CS1998
     public static async IAsyncEnumerable<T> ToAsyncEnumerable<T>(this IEnumerable<T> enumerable)
@@ -11,7 +11,6 @@ internal static class AsyncEnumerableExtensions
         }
     }
 #pragma warning restore CS1998
-
     public static async IAsyncEnumerable<List<T>> Batches<T>(this IAsyncEnumerable<T> items, int batchSize)
     {
         var currentBatch = new List<T>();

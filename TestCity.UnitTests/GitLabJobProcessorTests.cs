@@ -194,7 +194,7 @@ public class GitLabJobProcessorTests
     [Test]
     public async Task FixMissedFormsJobs()
     {
-        var projectId = 17358;
+        var projectId = 19371;
         logger.LogInformation("Starting Test01...");
         var gitlabClientProvider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
 
@@ -238,8 +238,8 @@ public class GitLabJobProcessorTests
                         if (!exists)
                         {
                             logger.LogInformation("JobRunId '{JobRunId}' does not exist. Uploading test runs", jobInfo.JobRunId);
-                            // await TestRunsUploader.JobInfoUploadAsync(jobInfo);
-                            // await TestRunsUploader.UploadAsync(jobInfo, extractResult.TestReportData.Runs);
+                            await TestRunsUploader.JobInfoUploadAsync(jobInfo);
+                            await TestRunsUploader.UploadAsync(jobInfo, extractResult.TestReportData.Runs);
                         }
                         else
                         {

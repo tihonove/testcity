@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCity.RedirectFromSingul
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCity.Worker", "TestCity.Worker\TestCity.Worker.csproj", "{825E843C-2879-4728-B6E9-CBDF80BBBA85}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCity.Tool", "TestCity.Tool\TestCity.Tool.csproj", "{8263D6FB-D5EF-4626-B5CD-37AB343FC6C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{825E843C-2879-4728-B6E9-CBDF80BBBA85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{825E843C-2879-4728-B6E9-CBDF80BBBA85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{825E843C-2879-4728-B6E9-CBDF80BBBA85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8263D6FB-D5EF-4626-B5CD-37AB343FC6C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8263D6FB-D5EF-4626-B5CD-37AB343FC6C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8263D6FB-D5EF-4626-B5CD-37AB343FC6C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8263D6FB-D5EF-4626-B5CD-37AB343FC6C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

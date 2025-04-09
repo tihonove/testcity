@@ -174,22 +174,24 @@ export class TestAnalyticsStorage {
     public async findAllJobsRuns(projectIds: string[], currentBranchName?: string): Promise<JobsQueryRow[]> {
         const query = `
             SELECT
-                JobId,
-                JobRunId,
-                BranchName,
-                AgentName,
-                StartDateTime,
-                TotalTestsCount,
-                AgentOSName,
-                Duration,
-                SuccessTestsCount,
-                SkippedTestsCount,
-                FailedTestsCount,
-                State,
-                CustomStatusMessage,
-                JobUrl,
-                ProjectId,
-                HasCodeQualityReport
+                any(filtered.JobId),
+                filtered.JobRunId,
+                any(filtered.BranchName),
+                any(filtered.AgentName),
+                any(filtered.StartDateTime),
+                any(filtered.TotalTestsCount),
+                any(filtered.AgentOSName),
+                any(filtered.Duration),
+                any(filtered.SuccessTestsCount),
+                any(filtered.SkippedTestsCount),
+                any(filtered.FailedTestsCount),
+                any(filtered.State),
+                any(filtered.CustomStatusMessage),
+                any(filtered.JobUrl),
+                any(filtered.ProjectId),
+                any(filtered.HasCodeQualityReport),
+                groupArray((cp2.ParentCommitSha, cp2.AuthorName, cp2.AuthorEmail, cp2.MessagePreview)) AS CoveredCommits,
+                any(prev.MinDepth) as TotalCoveredCommitCount
             FROM (
                 SELECT
                     *,
@@ -200,8 +202,23 @@ export class TestAnalyticsStorage {
                     AND ProjectId IN [${projectIds.map(x => "'" + x + "'").join(", ")}]
                     ${currentBranchName ? `AND BranchName = '${currentBranchName}'` : ""}
             ) AS filtered
+
+            LEFT JOIN (
+                SELECT
+                    prevji.ProjectId,
+                    prevji.JobId,
+                    cp.CommitSha AS CommitSha,
+                    argMin(cp.ParentCommitSha, cp.Depth) AS ClosestAncestorSha,
+                    min(cp.Depth) AS MinDepth
+                FROM CommitParents cp
+                INNER JOIN JobInfo prevji ON cp.ProjectId = prevji.ProjectId AND cp.ParentCommitSha = prevji.CommitSha AND cp.Depth > 0
+                GROUP BY prevji.ProjectId, prevji.JobId, cp.CommitSha
+            ) AS prev ON  prev.JobId = filtered.JobId AND prev.CommitSha = filtered.CommitSha 
+            LEFT JOIN CommitParents cp2 ON cp2.ProjectId = filtered.ProjectId AND cp2.CommitSha = filtered.CommitSha AND cp2.Depth < coalesce(prev.MinDepth, 20)
+
             WHERE rn = 1
-            ORDER BY JobId, StartDateTime DESC
+            GROUP BY filtered.JobRunId, filtered.JobId, filtered.StartDateTime
+            ORDER BY filtered.JobId, filtered.StartDateTime DESC
             LIMIT 1000;
         `;
 
