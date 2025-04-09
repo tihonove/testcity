@@ -15,15 +15,15 @@ export type JobsQueryRow = [
     string,
     string,
     number,
-    Array<(
+    Array<
         | [string, string, string, string]
         | {
               AuthorEmail: string;
               AuthorName: string;
               MessagePreview: string;
-              CommitSha: string;
+              ParentCommitSha: string;
           }
-    )>,
+    >,
     number,
 ];
 export const JobRunNames = {
