@@ -23,6 +23,8 @@ import { BranchBox } from "./BranchBox";
 import { JobLink } from "./JobLink";
 import { TimingCell } from "./TimingCell";
 import { theme } from "../Theme/ITheme";
+import { useReadLocalStorage } from "usehooks-ts";
+import { useShowChangesFeature } from "../Pages/useShowChangesFeature";
 
 interface JobsViewProps {
     hideRuns?: boolean;
@@ -42,6 +44,7 @@ export function JobsView({
     indentLevel,
 }: JobsViewProps) {
     const theme = useTheme();
+    const showChanges = useShowChangesFeature();
 
     const jobsWithTheirRuns = allJobs.map(job => {
         const jobId = job[JobIdWithParentProjectNames.JobId];
@@ -123,7 +126,7 @@ export function JobsView({
                                                     )}
                                                 </JobLink>
                                             </CountCell>
-                                            {localStorage.getItem("changes") === "true" && (
+                                            {showChanges && (
                                                 <ChangesCell>
                                                     {x[JobRunNames.TotalCoveredCommitCount] > 0 ? (
                                                         <Tooltip
@@ -132,17 +135,37 @@ export function JobsView({
                                                                 <ChangesList>
                                                                     <tbody>
                                                                         {x[JobRunNames.CoveredCommits].map(
-                                                                            (commit, index) => (
-                                                                                <ChangeItem key={index}>
-                                                                                    <Message>{commit[3]}</Message>
-                                                                                    <Author>
-                                                                                        {commit[1]} &lt;{commit[2]}&gt;
-                                                                                    </Author>
-                                                                                    <Sha>
-                                                                                        {commit[0].substring(0, 7)}
-                                                                                    </Sha>
-                                                                                </ChangeItem>
-                                                                            )
+                                                                            (commit, index) =>
+                                                                                Array.isArray(commit) ? (
+                                                                                    <ChangeItem key={index}>
+                                                                                        <Message>{commit[3]}</Message>
+                                                                                        <Author>
+                                                                                            {commit[1]} &lt;
+                                                                                            {commit[2]}
+                                                                                            &gt;
+                                                                                        </Author>
+                                                                                        <Sha>
+                                                                                            {commit[0].substring(0, 7)}
+                                                                                        </Sha>
+                                                                                    </ChangeItem>
+                                                                                ) : (
+                                                                                    <ChangeItem key={index}>
+                                                                                        <Message>
+                                                                                            {commit.MessagePreview}
+                                                                                        </Message>
+                                                                                        <Author>
+                                                                                            {commit.AuthorName} &lt;
+                                                                                            {commit.AuthorEmail}
+                                                                                            &gt;
+                                                                                        </Author>
+                                                                                        <Sha>
+                                                                                            {commit.ParentCommitSha.substring(
+                                                                                                0,
+                                                                                                7
+                                                                                            )}
+                                                                                        </Sha>
+                                                                                    </ChangeItem>
+                                                                                )
                                                                         )}
                                                                     </tbody>
                                                                 </ChangesList>

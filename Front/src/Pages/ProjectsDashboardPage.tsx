@@ -32,6 +32,7 @@ import { theme } from "../Theme/ITheme";
 import { useSearchParamAsState } from "../Utils";
 import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
 import { ProjectsWithRunsTable, RunsTable } from "./ProjectsWithRunsTable";
+import { useShowChangesFeature } from "./useShowChangesFeature";
 
 export function ProjectsDashboardPage(): React.JSX.Element {
     const { rootGroup: rootProjectStructure, groupNodes, pathToGroup } = useProjectContextFromUrlParams();
@@ -40,6 +41,7 @@ export function ProjectsDashboardPage(): React.JSX.Element {
     usePopularBranchStoring(currentBranchName);
     const [noRuns, setNoRuns] = useSearchParamAsState("noruns");
 
+    const showChanges = useShowChangesFeature();
     const usePipelineGrouping = rootProjectStructure.mergeRunsFromJobs ?? true;
     const currentGroupOrProject = groupNodes[groupNodes.length - 1];
     const projects = useStorageQuery(x => x.getProjects(pathToGroup), [pathToGroup]);
@@ -47,7 +49,12 @@ export function ProjectsDashboardPage(): React.JSX.Element {
     const allJobs = useStorageQuery(x => x.findAllJobs(projectIds), [projectIds]);
 
     const allJobRuns = useStorageQuery(
-        x => (usePipelineGrouping ? [] : x.findAllJobsRuns(projectIds, currentBranchName)),
+        x =>
+            usePipelineGrouping
+                ? []
+                : showChanges
+                  ? x.findAllJobsRunsWithChanges(projectIds, currentBranchName)
+                  : x.findAllJobsRuns(projectIds, currentBranchName),
         [projectIds, currentBranchName, usePipelineGrouping, pathToGroup]
     );
 
