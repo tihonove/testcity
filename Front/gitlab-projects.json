@@ -12,6 +12,11 @@
                 "id": "19371",
                 "title": "extern.forms",
                 "useHooks": true
+            },
+            {
+                "id": "807",
+                "title": "candy",
+                "useHooks": true
             }
         ],
         "mergeRunsFromJobs": false
