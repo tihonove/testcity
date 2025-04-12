@@ -1,6 +1,7 @@
 /* eslint-disable */
 const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 module.exports = (env, argv) => {
     const isProduction = argv.mode === "production";
@@ -29,10 +30,18 @@ module.exports = (env, argv) => {
                 },
             ],
         },
-        plugins: [new HtmlWebpackPlugin({ inject: "body", template: "./src/index.html", filename: "index.html", })],
+        plugins: [
+            new HtmlWebpackPlugin({ inject: "body", template: "./src/index.html", filename: "index.html", }),
+            !isProduction && new ReactRefreshWebpackPlugin()
+        ].filter(Boolean),
         devServer: {
             historyApiFallback: {
                 index: "/",
+            },
+            hot: true,
+            client: {
+                overlay: true,
+                progress: true,
             },
             proxy: [
                 {

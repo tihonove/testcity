@@ -4,6 +4,7 @@ WORKDIR /app
 COPY Front/package.json Front/package-lock.json ./
 RUN npm ci --omit=dev
 COPY Front/ ./
+ENV NODE_ENV=production
 RUN npm run build -- --mode=production
 
 

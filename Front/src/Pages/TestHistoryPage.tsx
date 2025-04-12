@@ -204,8 +204,7 @@ const SuiteName = styled.div`
 `;
 
 const Title = styled.h1`
-    font-size: 32px;
-    line-height: 40px;
+    ${theme.typography.pages.header1};
 `;
 
 const TestRunsTableHeadRow = styled.tr({

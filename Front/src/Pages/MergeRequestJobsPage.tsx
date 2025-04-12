@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useClickhouseClient, useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { JobsView } from "../Components/JobsView";
 import { JobsQueryRow } from "../Domain/Storage/JobsQuery";
+import { theme } from "../Theme/ITheme";
 
 export function MergeRequestJobsPage(): React.JSX.Element {
     const { projectId = "", gitLabMergeRequestId = "" } = useParams();
@@ -73,6 +74,5 @@ const Root = styled.main`
 `;
 
 const Header = styled.h1`
-    font-size: 32px;
-    line-height: 40px;
+    ${theme.typography.pages.header1};
 `;

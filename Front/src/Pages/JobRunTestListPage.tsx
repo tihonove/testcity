@@ -20,6 +20,8 @@ import { OverviewTab } from "../CodeQuality/Overview/OverviewTab";
 import { IssuesTab } from "../CodeQuality/Issues/IssuesTab";
 import { Issue } from "../CodeQuality/types/Issue";
 import { BranchBox } from "../Components/BranchBox";
+import { theme } from "../Theme/ITheme";
+import { format, parseISO } from "date-fns";
 
 export function JobRunTestListPage(): React.JSX.Element {
     const basePrefix = useBasePrefix();
@@ -85,9 +87,14 @@ export function JobRunTestListPage(): React.JSX.Element {
                     <ColorByState state={state}>
                         <JobRunHeader>
                             <JonRunIcon size={32} />
-                            <StyledLink to={jobUrl}>#{jobRunId}</StyledLink>&nbsp;at {startDateTime}
+                            <StyledLink to={jobUrl}>#{jobRunId}</StyledLink>&nbsp;at {formatDateTime(startDateTime)}
                         </JobRunHeader>
                         <StatusMessage>{customStatusMessage}</StatusMessage>
+                        <TestsStatusMessage>
+                            Tests passed: {successTestsCount}
+                            {Number(failedTestsCount) > 0 && `, failed: ${failedTestsCount}`}
+                            {Number(skippedTestsCount) > 0 && `, ignored: ${skippedTestsCount}`}.
+                        </TestsStatusMessage>
                     </ColorByState>
                 </Fit>
                 <Fit>
@@ -102,7 +109,7 @@ export function JobRunTestListPage(): React.JSX.Element {
                         pipelineSource={pipelineSource}
                     />
                 </Fit>
-                {hasCodeQualityReport && (
+                {Boolean(hasCodeQualityReport) && (
                     <Fit>
                         <Tabs value={section ?? "tests"} onValueChange={setSection}>
                             <Tabs.Tab id="tests">Tests</Tabs.Tab>
@@ -139,6 +146,21 @@ export function JobRunTestListPage(): React.JSX.Element {
             </ColumnStack>
         </Root>
     );
+}
+
+function formatDateTime(dateTimeString: string): string {
+    if (!dateTimeString) {
+        return "";
+    }
+    try {
+        const date = parseISO(dateTimeString);
+        if (isNaN(date.getTime())) {
+            return dateTimeString;
+        }
+        return format(date, "d MMM HH:mm");
+    } catch (e) {
+        return dateTimeString;
+    }
 }
 
 function CodeQualityOverviewTabContent({ projectId, jobId }: { projectId: string; jobId: string }) {
@@ -207,12 +229,16 @@ const StyledLink = styled(Link)`
 `;
 
 const JobRunHeader = styled.h1`
+    ${theme.typography.pages.header1};
     display: flex;
-    font-size: 32px;
-    line-height: 32px;
 `;
 
 const StatusMessage = styled.h3`
+    display: flex;
+    line-height: 32px;
+`;
+
+const TestsStatusMessage = styled.span`
     display: flex;
     line-height: 32px;
 `;

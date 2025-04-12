@@ -18,6 +18,12 @@ export const normalTheme = {
     accentTextColor: LIGHT_THEME.btnSuccessTextColor,
     borderLineColor2: "rgba(0, 0, 0, 0.1)",
 
+    typography: {
+        pages: {
+            header1: "font-size: 28px; line-height: 36px;",
+        },
+    },
+
     layout: {
         centered: {
             width: "1000px",

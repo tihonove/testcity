@@ -305,9 +305,8 @@ const Header3 = styled.h3`
 `;
 
 const RootGroupTitle = styled.h1`
+    ${theme.typography.pages.header1};
     display: block;
-    font-size: 32px;
-    line-height: 40px;
     text-decoration: none;
 
     :hover {

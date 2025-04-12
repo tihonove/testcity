@@ -13,6 +13,7 @@ import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
 import { TestListView } from "../Components/TestListView";
 import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
 import { BranchBox } from "../Components/BranchBox";
+import { theme } from "../Theme/ITheme";
 
 export function PipelineRunTestListPage(): React.JSX.Element {
     const { rootGroup: rootProjectStructure, groupNodes, pathToGroup } = useProjectContextFromUrlParams();
@@ -67,8 +68,7 @@ const Root = styled.main``;
 
 const JobRunHeader = styled.h1`
     display: flex;
-    font-size: 32px;
-    line-height: 32px;
+    ${theme.typography.pages.header1};
 `;
 
 const StyledLink = styled(Link)`

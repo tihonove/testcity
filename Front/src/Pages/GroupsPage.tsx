@@ -109,8 +109,7 @@ const Content = styled.div`
 `;
 
 const Header = styled.h1`
-    font-size: 32px;
-    line-height: 40px;
+    ${theme.typography.pages.header1};
 `;
 
 const RootGroupTitle = styled(Link)`
