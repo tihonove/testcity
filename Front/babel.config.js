@@ -5,8 +5,7 @@ module.exports = function (api) {
     const presets = ["@babel/preset-env", "@babel/preset-typescript", "@babel/react"];
     const plugins = ["babel-plugin-styled-components", "@babel/plugin-proposal-class-properties"];
 
-    const isDevelopment = process.env.NODE_ENV !== "production";
-    if (isDevelopment) {
+    if (process.env.NODE_ENV !== "production" && process.env.NODE_ENV !== "test") {
         plugins.push("react-refresh/babel");
     }
 
