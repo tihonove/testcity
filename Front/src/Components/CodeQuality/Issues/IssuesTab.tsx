@@ -11,7 +11,7 @@ import { IssuesTree } from "./IssuesTree";
 import { MultipleSelect } from "./MultipleSelect";
 import { Rows } from "lucide-react";
 import { ColumnStack, Fill, Fit, RowStack } from "@skbkontur/react-stack-layout";
-import { theme } from "../../Theme/ITheme";
+import { theme } from "../../../Theme/ITheme";
 import styled from "styled-components";
 
 interface IssuesTabProps {

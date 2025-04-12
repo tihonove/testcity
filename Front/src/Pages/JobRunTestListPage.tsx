@@ -16,15 +16,15 @@ import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
 import { TestListView } from "../Components/TestListView";
 import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
 import { Loader, Tabs } from "@skbkontur/react-ui";
-import { OverviewTab } from "../CodeQuality/Overview/OverviewTab";
-import { IssuesTab } from "../CodeQuality/Issues/IssuesTab";
-import { Issue } from "../CodeQuality/types/Issue";
+import { OverviewTab } from "../Components/CodeQuality/Overview/OverviewTab";
+import { IssuesTab } from "../Components/CodeQuality/Issues/IssuesTab";
+import { Issue } from "../Components/CodeQuality/types/Issue";
 import { BranchBox } from "../Components/BranchBox";
 import { theme } from "../Theme/ITheme";
 import { format, parseISO } from "date-fns";
 import { FailedTestListView } from "../Components/FailedTestListView";
-import { Spoiler } from "./Spoiler";
-import { CommitRow } from "./CommitRow";
+import { Spoiler } from "../Components/Spoiler";
+import { CommitRow } from "../Components/CommitRow";
 
 export function JobRunTestListPage(): React.JSX.Element {
     const basePrefix = useBasePrefix();

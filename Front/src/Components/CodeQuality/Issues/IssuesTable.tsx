@@ -2,7 +2,7 @@ import { Paging } from "@skbkontur/react-ui";
 import { Issue } from "../types/Issue";
 import React, { useState } from "react";
 import { SEVERITY_VALUES } from "../types/Severity";
-import { theme } from "../../Theme/ITheme";
+import { theme } from "../../../Theme/ITheme";
 import styled from "styled-components";
 
 interface IssuesTableProps {

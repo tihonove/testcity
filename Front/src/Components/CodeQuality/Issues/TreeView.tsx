@@ -7,7 +7,7 @@ import { FolderMinusIcon16Regular } from "@skbkontur/icons/FolderMinusIcon16Regu
 import { FileTypeMarkupIcon16Regular } from "@skbkontur/icons/FileTypeMarkupIcon16Regular";
 import { TreeNode, TreeViewProps } from "./types";
 import styled from "styled-components";
-import { theme } from "../../Theme/ITheme";
+import { theme } from "../../../Theme/ITheme";
 
 export function TreeView<T>({ data, onSelect, selectedPath, renderDetails }: TreeViewProps<T>) {
     const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set());

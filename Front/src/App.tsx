@@ -5,7 +5,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import { useBasePrefix } from "./Domain/Navigation";
 import { CodeQualityPage } from "./Pages/CodeQualityPage";
-import { GroupsPage } from "./Pages/GroupsPage";
+import { GroupsPage } from "./Components/GroupsPage";
 import { JobRunsPage } from "./Pages/JobRunsPage";
 import { JobRunTestListPage } from "./Pages/JobRunTestListPage";
 import { MergeRequestJobsPage } from "./Pages/MergeRequestJobsPage";

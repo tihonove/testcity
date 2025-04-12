@@ -1,8 +1,8 @@
 import { Gapped, Loader, Tabs } from "@skbkontur/react-ui";
 import React, { useEffect, useState } from "react";
-import { OverviewTab } from "../CodeQuality/Overview/OverviewTab";
-import { IssuesTab } from "../CodeQuality/Issues/IssuesTab";
-import { Issue } from "../CodeQuality/types/Issue";
+import { OverviewTab } from "../Components/CodeQuality/Overview/OverviewTab";
+import { IssuesTab } from "../Components/CodeQuality/Issues/IssuesTab";
+import { Issue } from "../Components/CodeQuality/types/Issue";
 import { useParams } from "react-router-dom";
 import { useApiUrl, useBasePrefix } from "../Domain/Navigation";
 

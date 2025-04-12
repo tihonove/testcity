@@ -1,8 +1,8 @@
 import * as React from "react";
-import { CommitRowProps } from "./JobRunTestListPage";
+import { CommitRowProps } from "../Pages/JobRunTestListPage";
 import { theme } from "../Theme/ITheme";
 import styled from "styled-components";
-import { GravatarImage } from "../Components/GravatarImage";
+import { GravatarImage } from "./GravatarImage";
 import { Fit, RowStack } from "@skbkontur/react-stack-layout";
 
 export function CommitRow(props: CommitRowProps) {
