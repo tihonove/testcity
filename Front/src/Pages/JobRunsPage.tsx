@@ -23,13 +23,15 @@ import { reject } from "../Utils/TypeHelpers";
 import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
 import { BranchBox } from "../Components/BranchBox";
 import { JobLink } from "../Components/JobLink";
+import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
+import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
 
 export function JobRunsPage(): React.JSX.Element {
     const { groupIdLevel1, groupIdLevel2, groupIdLevel3, jobId = "" } = useParams();
     if (groupIdLevel1 == null || groupIdLevel1 === "") {
         throw new Error(`Group is not defined`);
     }
-    const pathToGroup = [groupIdLevel1, groupIdLevel2, groupIdLevel3].filter(x => x != null);
+    const { groupNodes, pathToGroup } = useProjectContextFromUrlParams();
     const rootProjectStructure = useStorageQuery(x => x.getRootProjectStructure(groupIdLevel1), [groupIdLevel1]);
     const project = useStorageQuery(x => x.getProject(pathToGroup), [pathToGroup]) ?? reject("Project not found");
 
@@ -77,13 +79,9 @@ export function JobRunsPage(): React.JSX.Element {
     );
 
     return (
-        <ColumnStack block stretch gap={2}>
+        <ColumnStack block stretch gap={4}>
             <Fit>
-                <HomeHeader>
-                    <Link to={urlPrefix}>
-                        <HomeIcon size={16} /> All jobs
-                    </Link>
-                </HomeHeader>
+                <GroupBreadcrumps branchName={currentBranchName} nodes={groupNodes} />
             </Fit>
             <Fit>
                 <Header1>

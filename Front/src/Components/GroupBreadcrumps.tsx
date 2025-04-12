@@ -1,7 +1,7 @@
 import { BuildingHomeIcon16Light, UiMenuShapeCircle4Icon16Light } from "@skbkontur/icons";
 import { RowStack, Fit } from "@skbkontur/react-stack-layout";
 import * as React from "react";
-import { useBasePrefix, groupLink } from "../Domain/Navigation";
+import { useBasePrefix, groupLink, createLinkToJob } from "../Domain/Navigation";
 import { GroupNode, Project } from "../Domain/Storage/Storage";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -10,6 +10,7 @@ import { theme } from "../Theme/ITheme";
 interface GroupBreadcrumpsProps {
     nodes: (GroupNode | Project)[];
     branchName: undefined | string;
+    jobId?: undefined | string;
 }
 
 export function GroupBreadcrumps(props: GroupBreadcrumpsProps) {
@@ -45,6 +46,29 @@ export function GroupBreadcrumps(props: GroupBreadcrumpsProps) {
                     </Fit>
                 </React.Fragment>
             ))}
+            {props.jobId && (
+                <React.Fragment key={props.jobId}>
+                    {<Fit> / </Fit>}
+                    <Fit>
+                        <RowStack gap={2} block verticalAlign="center">
+                            <Fit>
+                                <UiMenuShapeCircle4Icon16Light />
+                            </Fit>
+                            <Fit>
+                                <RootGroupTitleLink
+                                    to={createLinkToJob(
+                                        props.nodes[0],
+                                        props.nodes[props.nodes.length - 1].id,
+                                        props.jobId,
+                                        props.branchName
+                                    )}>
+                                    {props.jobId}
+                                </RootGroupTitleLink>
+                            </Fit>
+                        </RowStack>
+                    </Fit>
+                </React.Fragment>
+            )}
         </RowStack>
     );
 }

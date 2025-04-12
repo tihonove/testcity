@@ -79,7 +79,7 @@ export function JobRunTestListPage(): React.JSX.Element {
         <Root>
             <ColumnStack gap={4} block stretch>
                 <Fit>
-                    <GroupBreadcrumps branchName={branchName} nodes={groupNodes} />
+                    <GroupBreadcrumps branchName={branchName} nodes={groupNodes} jobId={jobId} />
                 </Fit>
                 <Fit>
                     <ColorByState state={state}>
