@@ -138,27 +138,31 @@ export function JobRunTestListPage(): React.JSX.Element {
                                     </Spoiler>
                                 </Fit>
                             )}
-                            <Fit>
-                                <Spoiler
-                                    iconSize={18}
-                                    title={
-                                        <OverviewSectionHeader>{totalCoveredCommitCount} changes</OverviewSectionHeader>
-                                    }
-                                    openedByDefault={true}>
-                                    <ColumnStack gap={4} stretch block>
-                                        {coveredCommits.map(commit => (
-                                            <CommitRow
-                                                sha={Array.isArray(commit) ? commit[0] : commit.AuthorEmail}
-                                                authorName={Array.isArray(commit) ? commit[1] : commit.AuthorName}
-                                                authorEmail={Array.isArray(commit) ? commit[2] : commit.AuthorEmail}
-                                                messagePreview={
-                                                    Array.isArray(commit) ? commit[3] : commit.MessagePreview
-                                                }
-                                            />
-                                        ))}
-                                    </ColumnStack>
-                                </Spoiler>
-                            </Fit>
+                            {totalCoveredCommitCount > 0 && (
+                                <Fit>
+                                    <Spoiler
+                                        iconSize={18}
+                                        title={
+                                            <OverviewSectionHeader>
+                                                {totalCoveredCommitCount} changes
+                                            </OverviewSectionHeader>
+                                        }
+                                        openedByDefault={true}>
+                                        <ColumnStack gap={4} stretch block>
+                                            {coveredCommits.map(commit => (
+                                                <CommitRow
+                                                    sha={Array.isArray(commit) ? commit[0] : commit.AuthorEmail}
+                                                    authorName={Array.isArray(commit) ? commit[1] : commit.AuthorName}
+                                                    authorEmail={Array.isArray(commit) ? commit[2] : commit.AuthorEmail}
+                                                    messagePreview={
+                                                        Array.isArray(commit) ? commit[3] : commit.MessagePreview
+                                                    }
+                                                />
+                                            ))}
+                                        </ColumnStack>
+                                    </Spoiler>
+                                </Fit>
+                            )}
                         </ColumnStack>
                     )}
                     {section === "tests" && (

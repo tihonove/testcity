@@ -122,7 +122,7 @@ export class TestAnalyticsStorage {
 
                 WHERE  
                     (ji.ProjectId = '${projectId}' AND ji.JobId = '${jobId}' AND ji.JobRunId = '${jobRunId}') AND
-                    (cp2.Depth < prev.MinDepth)
+                    (prev.MinDepth = 0 OR cp2.Depth < prev.MinDepth)
 
                 GROUP BY ji.JobRunId
                 `;
