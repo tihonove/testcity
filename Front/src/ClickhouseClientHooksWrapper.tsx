@@ -26,7 +26,7 @@ const client = createClient({
 
 export function useStorageQuery<T>(
     fn: (storage: TestAnalyticsStorage) => T | Promise<T>,
-    deps?: React.DependencyList
+    deps: React.DependencyList
 ): T {
     const storage = React.useRef(new TestAnalyticsStorage(client));
     /* eslint-disable @typescript-eslint/no-unsafe-return */

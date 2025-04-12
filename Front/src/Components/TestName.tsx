@@ -12,21 +12,7 @@ interface TestNameProps {
 }
 
 export function TestName(props: TestNameProps): React.JSX.Element {
-    const splitValue = useMemo(() => {
-        const parts = props.value.split("(");
-        if (parts.length > 1) {
-            const lastPart = parts.slice(1);
-            const dotParts = (parts[0] ?? "").split(/[.]/);
-            const prefix = dotParts.slice(0, -2).join(".");
-            const testcaseName = dotParts.slice(-2).join(".");
-            return [prefix, `${testcaseName}(${lastPart.join("(")}`];
-        }
-
-        const dotParts = props.value.split(/[.]/);
-        const prefix = dotParts.slice(0, -2).join(".");
-        const testcaseName = dotParts.slice(-2).join(".");
-        return [prefix, testcaseName];
-    }, [props.value]);
+    const splitValue = useMemo(() => splitTestName(props.value), [props.value]);
     return (
         <>
             {props.onTestNameClick ? (
@@ -48,3 +34,19 @@ const TestNamePrefix = styled.div`
     font-size: ${props => props.theme.smallTextSize};
     color: ${props => props.theme.mutedTextColor};
 `;
+
+export function splitTestName(testName: string): [string, string] {
+    const parts = testName.split("(");
+    if (parts.length > 1) {
+        const lastPart = parts.slice(1);
+        const dotParts = (parts[0] ?? "").split(/[.]/);
+        const prefix = dotParts.slice(0, -2).join(".");
+        const testcaseName = dotParts.slice(-2).join(".");
+        return [prefix, `${testcaseName}(${lastPart.join("(")}`];
+    }
+
+    const dotParts = testName.split(/[.]/);
+    const prefix = dotParts.slice(0, -2).join(".");
+    const testcaseName = dotParts.slice(-2).join(".");
+    return [prefix, testcaseName];
+}

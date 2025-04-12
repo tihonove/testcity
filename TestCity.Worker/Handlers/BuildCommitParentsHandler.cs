@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using ClickHouse.Client.ADO;
 using Kontur.TestAnalytics.Reporter.Client;
 using Kontur.TestCity.Core.GitLab;
 using Kontur.TestCity.Core.Worker;
@@ -32,6 +33,16 @@ public class BuildCommitParentsHandler(ILogger<BuildCommitParentsHandler> logger
         processLock.EnterWriteLock();
         try
         {
+            // Проверка наличия корневого коммита (с Depth = 0) в таблице CommitParents
+            bool commitExists = await IsCommitParentExists(task.ProjectId, task.CommitSha, ct);
+            if (commitExists)
+            {
+                logger.LogInformation("Коммит {CommitSha} в проекте {ProjectId} уже существует в таблице CommitParents, пропускаем",
+                    task.CommitSha, task.ProjectId);
+                processedCommits.Add(processingKey);
+                return;
+            }
+
             var client = gitLabClientProvider.GetExtendedClient();
 
             var commits = client.GetAllRepositoryCommitsAsync(task.ProjectId, x => x.ForReference(task.CommitSha), ct);
@@ -64,6 +75,14 @@ public class BuildCommitParentsHandler(ILogger<BuildCommitParentsHandler> logger
             logger.LogDebug("Снята блокировка для коммита {CommitSha} в проекте {ProjectId}",
                 task.CommitSha, task.ProjectId);
         }
+    }
+
+    private static async Task<bool> IsCommitParentExists(long projectId, string commitSha, CancellationToken ct = default)
+    {
+        await using var connection = TestRunsUploader.CreateConnection();
+        var query = $"SELECT count() > 0 FROM CommitParents WHERE ProjectId = '{projectId}' AND CommitSha = '{commitSha}' AND Depth = 0";
+        var result = await connection.ExecuteScalarAsync(query, ct);
+        return result != null && (byte)result > 0;
     }
 
     private static string? GetMessagePreview(GitLabCommit x)

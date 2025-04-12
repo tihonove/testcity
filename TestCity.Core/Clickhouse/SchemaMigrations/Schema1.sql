@@ -31,8 +31,8 @@ CREATE TABLE IF NOT EXISTS JobInfo
     `Duration` Decimal(18, 0),
     `StartDateTime` DateTime,
     `EndDateTime` DateTime,
-    `Triggered` LowCardinality(String),
     `PipelineSource` LowCardinality(String),
+    `Triggered` LowCardinality(String),
     `BranchName` String,
     `CommitSha` String,
     `CommitMessage` String,
@@ -87,16 +87,16 @@ FROM TestRuns;
 -- divider --
 
 CREATE TABLE IF NOT EXISTS CommitParents (
+    ProjectId String,
     CommitSha String,
     ParentCommitSha String,
     Depth UInt16,
     AuthorName String,
     AuthorEmail String,
     MessagePreview String,
-    ProjectId String,
     CreateDate DateTime DEFAULT now()
 )
-ENGINE = MergeTree
+ENGINE = ReplacingMergeTree(CreateDate)
 PARTITION BY toYYYYMM(CreateDate)
 ORDER BY (ProjectId, CommitSha, Depth, ParentCommitSha)
 SETTINGS index_granularity = 8192;

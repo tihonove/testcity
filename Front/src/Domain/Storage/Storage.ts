@@ -1,7 +1,7 @@
 import { ClickHouseClient } from "@clickhouse/client-web";
 import { JobIdWithParentProject } from "../JobIdWithParentProject";
 import { uuidv4 } from "../../Utils/Guids";
-import { JobsQueryRow } from "./JobsQuery";
+import { JobRunFullInfoQueryRow, JobsQueryRow } from "./JobsQuery";
 import { delay } from "@skbkontur/react-ui/cjs/lib/utils";
 import { reject } from "../../Utils/TypeHelpers";
 import { PipelineRunsQueryRow } from "../PipelineRunsQueryRow";
@@ -71,6 +71,63 @@ function getQueryId() {
 export class TestAnalyticsStorage {
     public constructor(client: ClickHouseClient) {
         this.client = client;
+    }
+
+    public async getJobInfo(
+        projectId: string,
+        jobId: string,
+        jobRunId: string
+    ): Promise<JobRunFullInfoQueryRow | undefined> {
+        const query = `
+                SELECT 
+                    any(ji.JobId),
+                    ji.JobRunId,
+                    any(ji.BranchName),
+                    any(ji.AgentName),
+                    any(ji.StartDateTime),
+                    any(ji.EndDateTime),
+                    any(ji.TotalTestsCount),
+                    any(ji.AgentOSName),
+                    any(ji.Duration),
+                    any(ji.SuccessTestsCount),
+                    any(ji.SkippedTestsCount),
+                    any(ji.FailedTestsCount),
+                    any(ji.State),
+                    any(ji.CustomStatusMessage),
+                    any(ji.JobUrl),
+                    any(ji.ProjectId),
+                    any(ji.PipelineSource),
+                    any(ji.Triggered),
+                    any(ji.HasCodeQualityReport),
+                    groupArray((cp2.ParentCommitSha, cp2.AuthorName, cp2.AuthorEmail, cp2.MessagePreview)) AS CoveredCommits,
+                    any(prev.MinDepth) as TotalCoveredCommitCount                    
+                FROM JobInfo ji
+
+                LEFT JOIN (
+                    SELECT
+                        prevji.ProjectId as ProjectId,
+                        prevji.JobId as JobId,
+                        cp.CommitSha AS CommitSha,
+                        argMin(cp.ParentCommitSha, cp.Depth) AS ClosestAncestorSha,
+                        min(cp.Depth) AS MinDepth
+                    FROM CommitParents cp
+                    INNER JOIN JobInfo prevji ON 
+                        cp.ProjectId = prevji.ProjectId 
+                        AND cp.ParentCommitSha = prevji.CommitSha
+                        AND cp.Depth > 0
+                    GROUP BY prevji.ProjectId, prevji.JobId, cp.CommitSha
+                ) AS prev ON prev.ProjectId = ji.ProjectId AND prev.JobId = ji.JobId AND prev.CommitSha = ji.CommitSha 
+
+                LEFT JOIN CommitParents cp2 ON cp2.ProjectId = ji.ProjectId AND cp2.CommitSha = ji.CommitSha
+
+                WHERE  
+                    (ji.ProjectId = '${projectId}' AND ji.JobId = '${jobId}' AND ji.JobRunId = '${jobRunId}') AND
+                    (cp2.Depth < prev.MinDepth)
+
+                GROUP BY ji.JobRunId
+                `;
+        const result = await this.executeClickHouseQuery<JobRunFullInfoQueryRow[]>(query);
+        return result[0];
     }
 
     public async getFailedTestOutput(
@@ -220,7 +277,7 @@ export class TestAnalyticsStorage {
             WHERE rn = 1 AND (
                 (prev.MinDepth = 0) OR 
                 (prev.MinDepth > 10 AND cp2.Depth < 10) OR 
-                (prev.MinDepth > 0 AND prev.MinDepth < 10 AND cp2.Depth <= prev.MinDepth)
+                (prev.MinDepth > 0 AND prev.MinDepth < 10 AND cp2.Depth < prev.MinDepth)
             )
             GROUP BY filtered.JobRunId, filtered.JobId, filtered.StartDateTime
             ORDER BY filtered.JobId, filtered.StartDateTime DESC

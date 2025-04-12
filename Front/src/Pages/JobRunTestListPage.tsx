@@ -5,7 +5,7 @@ import * as React from "react";
 import { useDeferredValue } from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
+import { useClickhouseClient, useStorage, useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { AdditionalJobInfo } from "../Components/AdditionalJobInfo";
 import { ColorByState } from "../Components/Cells";
 import { JonRunIcon } from "../Components/Icons";
@@ -22,6 +22,9 @@ import { Issue } from "../CodeQuality/types/Issue";
 import { BranchBox } from "../Components/BranchBox";
 import { theme } from "../Theme/ITheme";
 import { format, parseISO } from "date-fns";
+import { FailedTestListView } from "../Components/FailedTestListView";
+import { Spoiler } from "./Spoiler";
+import { CommitRow } from "./CommitRow";
 
 export function JobRunTestListPage(): React.JSX.Element {
     const basePrefix = useBasePrefix();
@@ -31,51 +34,35 @@ export function JobRunTestListPage(): React.JSX.Element {
     useSearchParamDebouncedAsState("filter", 500, "");
 
     const client = useClickhouseClient();
-
-    const data = client.useData2<
-        [string, string, number, string, string, string, string, string, string, string, string, string, string, number]
-    >(
-        `
-        SELECT 
-            StartDateTime, 
-            EndDateTime, 
-            Duration, 
-            BranchName, 
-            TotalTestsCount, 
-            SuccessTestsCount, 
-            FailedTestsCount, 
-            SkippedTestsCount, 
-            Triggered, 
-            PipelineSource, 
-            JobUrl, 
-            CustomStatusMessage, 
-            State,
-            HasCodeQualityReport
-        FROM JobInfo 
-        WHERE 
-            JobId = '${jobId}' 
-            AND JobRunId in ['${jobRunId}']
-        `,
-        [jobId, jobRunId]
-    );
-
+    const jobInfo =
+        useStorageQuery(x => x.getJobInfo(projectId, jobId, jobRunId), [projectId, jobId, jobRunId]) ??
+        reject("JobInfo not found");
     const [
+        ,
+        ,
+        branchName,
+        agentName,
         startDateTime,
         endDateTime,
-        duration,
-        branchName,
         totalTestsCount,
+        agentOSName,
+        duration,
         successTestsCount,
-        failedTestsCount,
         skippedTestsCount,
-        triggered,
-        pipelineSource,
-        jobUrl,
-        customStatusMessage,
+        failedTestsCount,
         state,
+        customStatusMessage,
+        jobUrl,
+        ,
+        pipelineSource,
+        triggered,
         hasCodeQualityReport,
-    ] = data[0] ?? reject("JobRun not found");
-    const [section, setSection] = useSearchParamAsState("section", "tests");
+        coveredCommits,
+        totalCoveredCommitCount,
+    ] = jobInfo;
+    console.log(JSON.stringify(jobInfo, null, 2));
+
+    const [section, setSection] = useSearchParamAsState("section", "overview");
 
     return (
         <Root>
@@ -92,8 +79,8 @@ export function JobRunTestListPage(): React.JSX.Element {
                         <StatusMessage>{customStatusMessage}</StatusMessage>
                         <TestsStatusMessage>
                             Tests passed: {successTestsCount}
-                            {Number(failedTestsCount) > 0 && `, failed: ${failedTestsCount}`}
-                            {Number(skippedTestsCount) > 0 && `, ignored: ${skippedTestsCount}`}.
+                            {Number(failedTestsCount) > 0 && `, failed: ${failedTestsCount.toString()}`}
+                            {Number(skippedTestsCount) > 0 && `, ignored: ${skippedTestsCount.toString()}`}.
                         </TestsStatusMessage>
                     </ColorByState>
                 </Fit>
@@ -109,16 +96,71 @@ export function JobRunTestListPage(): React.JSX.Element {
                         pipelineSource={pipelineSource}
                     />
                 </Fit>
-                {Boolean(hasCodeQualityReport) && (
-                    <Fit>
-                        <Tabs value={section ?? "tests"} onValueChange={setSection}>
-                            <Tabs.Tab id="tests">Tests</Tabs.Tab>
-                            <Tabs.Tab id="code-quality-overview">Code quality - overview</Tabs.Tab>
-                            <Tabs.Tab id="code-quality-issues">Code quality - issues</Tabs.Tab>
-                        </Tabs>
-                    </Fit>
-                )}
+
                 <Fit>
+                    <Tabs value={section ?? "tests"} onValueChange={setSection}>
+                        <Tabs.Tab id="overview">Overview</Tabs.Tab>
+                        <Tabs.Tab id="tests">Tests</Tabs.Tab>
+                        {Boolean(hasCodeQualityReport) && (
+                            <Tabs.Tab id="code-quality-overview">Code quality - overview</Tabs.Tab>
+                        )}
+                        {Boolean(hasCodeQualityReport) && (
+                            <Tabs.Tab id="code-quality-issues">Code quality - issues</Tabs.Tab>
+                        )}
+                    </Tabs>
+                </Fit>
+                <Fit>
+                    {section === "overview" && (
+                        <ColumnStack gap={4} stretch block>
+                            {failedTestsCount > 0 && (
+                                <Fit>
+                                    <Spoiler
+                                        openedByDefault={true}
+                                        iconSize={18}
+                                        title={
+                                            <>
+                                                <OverviewSectionHeader>Failed tests</OverviewSectionHeader> (first 50)
+                                            </>
+                                        }>
+                                        <FailedTestListView
+                                            jobRunIds={[jobRunId]}
+                                            pathToProject={pathToGroup}
+                                            failedTestsCount={Number(failedTestsCount)}
+                                            linksBlock={
+                                                <Fit>
+                                                    <Link
+                                                        to={`${basePrefix}jobs/${encodeURIComponent(jobId)}/runs/${encodeURIComponent(jobRunId)}/treemap`}>
+                                                        Open tree map
+                                                    </Link>
+                                                </Fit>
+                                            }
+                                        />
+                                    </Spoiler>
+                                </Fit>
+                            )}
+                            <Fit>
+                                <Spoiler
+                                    iconSize={18}
+                                    title={
+                                        <OverviewSectionHeader>{totalCoveredCommitCount} changes</OverviewSectionHeader>
+                                    }
+                                    openedByDefault={true}>
+                                    <ColumnStack gap={4} stretch block>
+                                        {coveredCommits.map(commit => (
+                                            <CommitRow
+                                                sha={Array.isArray(commit) ? commit[0] : commit.AuthorEmail}
+                                                authorName={Array.isArray(commit) ? commit[1] : commit.AuthorName}
+                                                authorEmail={Array.isArray(commit) ? commit[2] : commit.AuthorEmail}
+                                                messagePreview={
+                                                    Array.isArray(commit) ? commit[3] : commit.MessagePreview
+                                                }
+                                            />
+                                        ))}
+                                    </ColumnStack>
+                                </Spoiler>
+                            </Fit>
+                        </ColumnStack>
+                    )}
                     {section === "tests" && (
                         <TestListView
                             jobRunIds={[jobRunId]}
@@ -221,6 +263,13 @@ function CodeQualityIssuesTabContent({ projectId, jobId }: { projectId: string; 
     );
 }
 
+export interface CommitRowProps {
+    sha: string;
+    authorName: string;
+    authorEmail: string;
+    messagePreview: string;
+}
+
 const StyledLink = styled(Link)`
     color: inherit;
     font-size: inherit;
@@ -244,3 +293,8 @@ const TestsStatusMessage = styled.span`
 `;
 
 const Root = styled.main``;
+
+const OverviewSectionHeader = styled.span`
+    font-size: 18px;
+    line-height: 24px;
+`;

@@ -46,3 +46,58 @@ export const JobRunNames = {
     CoveredCommits: 16,
     TotalCoveredCommitCount: 17,
 } as const;
+
+export type JobRunFullInfoQueryRow = [
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    number,
+    string,
+    number,
+    number,
+    number,
+    number,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    number,
+    Array<
+        | [string, string, string, string]
+        | {
+              ParentCommitSha: string;
+              AuthorName: string;
+              AuthorEmail: string;
+              MessagePreview: string;
+          }
+    >,
+    number,
+];
+export const JobRunFullInfoNames = {
+    JobId: 0,
+    JobRunId: 1,
+    BranchName: 2,
+    AgentName: 3,
+    StartDateTime: 4,
+    EndDateTime: 5,
+    TotalTestsCount: 6,
+    AgentOSName: 7,
+    Duration: 8,
+    SuccessTestsCount: 9,
+    SkippedTestsCount: 10,
+    FailedTestsCount: 11,
+    State: 12,
+    CustomStatusMessage: 13,
+    JobUrl: 14,
+    ProjectId: 15,
+    PipelineSource: 16,
+    Triggered: 17,
+    HasCodeQualityReport: 18,
+    CoveredCommits: 19,
+    TotalCoveredCommitCount: 20,
+} as const;
