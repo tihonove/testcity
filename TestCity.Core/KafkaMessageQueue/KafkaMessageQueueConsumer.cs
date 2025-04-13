@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using System.Diagnostics.Metrics;
 using System.Text.Json;
 using System.Threading.Channels;
 using Confluent.Kafka;
@@ -8,8 +9,28 @@ using TestCity.Worker.Kafka.Configuration;
 
 namespace Kontur.TestCity.Worker.Kafka;
 
-public sealed class KafkaMessageQueueConsumer(TaskHandlerRegistry taskHandlerRegistry, KafkaConsumerSettings settings, ILogger<KafkaMessageQueueConsumer> logger)
+public sealed class KafkaMessageQueueConsumer : IDisposable
 {
+    private readonly TaskHandlerRegistry taskHandlerRegistry;
+    private readonly KafkaConsumerSettings settings;
+    private readonly ILogger<KafkaMessageQueueConsumer> logger;
+    private readonly Meter meter;
+    private readonly Counter<long> processedTasksCounter;
+    private readonly Counter<long> failedTasksCounter;
+    private readonly Counter<long> delayedTasksCounter;
+    public const string QueueMeterName = "KafkaMessageQueueMetrics";
+
+    public KafkaMessageQueueConsumer(TaskHandlerRegistry taskHandlerRegistry, KafkaConsumerSettings settings, ILogger<KafkaMessageQueueConsumer> logger)
+    {
+        this.taskHandlerRegistry = taskHandlerRegistry;
+        this.settings = settings;
+        this.logger = logger;
+        meter = new Meter(QueueMeterName);
+        processedTasksCounter = meter.CreateCounter<long>("kmq_processed_tasks", "tasks", "Количество обработанных задач");
+        failedTasksCounter = meter.CreateCounter<long>("kmq_failed_tasks", "tasks", "Количество ошибочных задач");
+        delayedTasksCounter = meter.CreateCounter<long>("kmq_delayed_tasks", "tasks", "Количество задач из очереди отложенных задач");
+    }
+
     public Task ExecuteAsync(CancellationToken stoppingToken)
     {
         return Task.Run(async () =>
@@ -135,6 +156,7 @@ public sealed class KafkaMessageQueueConsumer(TaskHandlerRegistry taskHandlerReg
                         }
                         await Task.Delay(settings.DelayedBase, stoppingToken);
                         delayedTasksBuffer.Add(consumeResult);
+                        delayedTasksCounter.Add(1);
                     }
                     foreach (var delayedTask in delayedTasksBuffer)
                         await inputChannel.Writer.WriteAsync((consumer, delayedTask), stoppingToken);
@@ -226,6 +248,7 @@ public sealed class KafkaMessageQueueConsumer(TaskHandlerRegistry taskHandlerReg
                 {
                     logger.LogError(ex, "Failed to deserialize message: {Message}", message);
                     executionItem.State = TaskExecutionResult.Skipped;
+                    failedTasksCounter.Add(1); // Увеличиваем счетчик ошибок при неудачной десериализации
                     semaphore.Release();
                     return;
                 }
@@ -234,6 +257,7 @@ public sealed class KafkaMessageQueueConsumer(TaskHandlerRegistry taskHandlerReg
                 {
                     await taskHandlerRegistry.DispatchTaskAsync(rawTask, ct);
                     executionItem.State = TaskExecutionResult.Success;
+                    processedTasksCounter.Add(1); // Увеличиваем счетчик успешно обработанных задач
                 }
                 catch (OperationCanceledException) when (ct.IsCancellationRequested)
                 {
@@ -244,6 +268,7 @@ public sealed class KafkaMessageQueueConsumer(TaskHandlerRegistry taskHandlerReg
                     await EnqueueTaskToDelayedTopicWithRetriesOrSkip(delayedQueueProducer, executionItem, rawTask);
                     executionItem.State = TaskExecutionResult.Failure;
                     executionItem.ErrorMessage = e.Message;
+                    failedTasksCounter.Add(1); // Увеличиваем счетчик ошибок при исключении
                 }
                 finally
                 {
@@ -286,6 +311,7 @@ public sealed class KafkaMessageQueueConsumer(TaskHandlerRegistry taskHandlerReg
 
                     // If we reached here, the message was produced successfully
                     logger.LogInformation("Successfully produced delayed task message on attempt {Attempt}", attempt);
+                    delayedTasksCounter.Add(1);
                     return;
                 }
                 catch (Exception e)
@@ -340,4 +366,9 @@ public sealed class KafkaMessageQueueConsumer(TaskHandlerRegistry taskHandlerReg
     }
 
     private readonly Lock lockCommit = new Lock();
+
+    public void Dispose()
+    {
+        meter.Dispose();
+    }
 }

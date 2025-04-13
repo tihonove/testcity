@@ -62,6 +62,7 @@ var host = Host.CreateDefaultBuilder(args)
                 {
                     metrics
                         .AddRuntimeInstrumentation()
+                        .AddMeter(KafkaMessageQueueConsumer.QueueMeterName)
                         .AddMeter("System.Net.Http");
                 });
         }

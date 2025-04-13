@@ -100,3 +100,36 @@ ENGINE = ReplacingMergeTree(CreateDate)
 PARTITION BY toYYYYMM(CreateDate)
 ORDER BY (ProjectId, CommitSha, Depth, ParentCommitSha)
 SETTINGS index_granularity = 8192;
+
+-- CREATE MATERIALIZED VIEW IF NOT EXISTS JobRunChanges
+-- ENGINE = ReplacingMergeTree(AggregationVersion)
+-- PARTITION BY toMonday(StartDateTime)
+-- ORDER BY (JobId, JobRunId)
+-- TTL StartDateTime + toIntervalYear(1)
+-- SETTINGS index_granularity = 8192
+-- AS
+-- SELECT 
+--     ji.JobId as JobId,
+--     ji.JobRunId as JobRunId,
+--     any(ji.StartDateTime) as StartDateTime,
+--     if(any(prev.MinDepth) = 0, [], groupArray((cp2.ParentCommitSha, cp2.AuthorName, cp2.AuthorEmail, cp2.MessagePreview))) AS CoveredCommits,
+--     any(prev.MinDepth) as TotalCoveredCommitCount,                    
+--     if(any(prev.MinDepth) = 0, 1000, any(prev.MinDepth)) * -1 as AggregationVersion
+-- FROM JobInfo ji
+-- LEFT JOIN (
+--     SELECT
+--         prevji.ProjectId as ProjectId,
+--         prevji.JobId as JobId,
+--         cp.CommitSha AS CommitSha,
+--         argMin(cp.ParentCommitSha, cp.Depth) AS ClosestAncestorSha,
+--         min(cp.Depth) AS MinDepth
+--     FROM CommitParents cp
+--     INNER JOIN JobInfo prevji ON 
+--         cp.ProjectId = prevji.ProjectId 
+--         AND cp.ParentCommitSha = prevji.CommitSha
+--         AND cp.Depth > 0
+--     GROUP BY prevji.ProjectId, prevji.JobId, cp.CommitSha
+-- ) AS prev ON prev.ProjectId = ji.ProjectId AND prev.JobId = ji.JobId AND prev.CommitSha = ji.CommitSha 
+-- LEFT JOIN CommitParents cp2 ON cp2.ProjectId = ji.ProjectId AND cp2.CommitSha = ji.CommitSha AND prev.MinDepth != 0
+-- WHERE (prev.MinDepth = 0 OR cp2.Depth < prev.MinDepth)
+-- GROUP BY ji.JobId, ji.JobRunId

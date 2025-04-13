@@ -102,13 +102,7 @@ public sealed class GitLabCrawlerService : IDisposable
         log.LogInformation("Pulling jobs for project {ProjectId}", projectId);
         var jobProcessor = new GitLabJobProcessor(client, clientEx, extractor, log);
         var projectInfo = await client.Projects.GetByIdAsync(projectId, new SingleProjectQuery(), token);
-        const Core.GitLab.JobScope scopes = Core.GitLab.JobScope.All &
-                ~Core.GitLab.JobScope.Canceled &
-                ~Core.GitLab.JobScope.Skipped &
-                ~Core.GitLab.JobScope.Pending &
-                ~Core.GitLab.JobScope.Running &
-                ~Core.GitLab.JobScope.Created;
-        var jobs = await clientEx.GetAllProjectJobsAsync(projectId, scopes, perPage: 100, token).Take(600).ToListAsync(token);
+        var jobs = await clientEx.GetAllProjectJobsAsync(projectId, Core.GitLab.JobScope.Failed | Core.GitLab.JobScope.Success, perPage: 100, token).Take(600).ToListAsync(token);
         log.LogInformation("Take last {jobsLength} jobs", jobs.Count);
 
         foreach (var job in jobs)

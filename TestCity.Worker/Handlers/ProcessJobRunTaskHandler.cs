@@ -53,12 +53,11 @@ public class ProcessJobRunTaskHandler : TaskHandler<ProcessJobRunTaskPayload>
                         ProjectId = task.ProjectId,
                         CommitSha = processingResult.JobInfo.CommitSha,
                     });
-                    
 
                     if (processingResult.TestReportData != null)
                     {
                         await TestRunsUploader.UploadAsync(processingResult.JobInfo, processingResult.TestReportData.Runs);
-                        var job = await clientEx.GetJobAsync(task.ProjectId,task.JobRunId);
+                        var job = await clientEx.GetJobAsync(task.ProjectId, task.JobRunId);
                         await metricsSender.SendAsync(
                             projectInfo,
                             processingResult.JobInfo.BranchName,

@@ -6,13 +6,12 @@ using NGitLab.Models;
 
 namespace Kontur.TestCity.GitLabJobsCrawler;
 
-public sealed class TestMetricsSender : IDisposable
+public sealed class TestMetricsSender
 {
     public TestMetricsSender(IGraphiteClient graphiteClient, ILogger<TestMetricsSender> logger)
     {
         this.graphiteClient = graphiteClient;
         this.logger = logger;
-        this.meter = new Meter("GitLabProjectTestsMetrics");
     }
 
     public async Task SendAsync(Project project, string refId, GitLabJob job, TestReportData data)
@@ -57,7 +56,7 @@ public sealed class TestMetricsSender : IDisposable
                 metrics.Add(new MetricPoint("QueuedDuration", job.QueuedDuration.Value, tags));
             }
 
-            await this.graphiteClient.SendAsync(metrics);
+            await graphiteClient.SendAsync(metrics);
         }
         catch (Exception ex)
         {
@@ -65,12 +64,6 @@ public sealed class TestMetricsSender : IDisposable
         }
     }
 
-    public void Dispose()
-    {
-        this.meter.Dispose();
-    }
-
     private readonly IGraphiteClient graphiteClient;
-    private readonly Meter meter;
     private readonly ILogger<TestMetricsSender> logger;
 }
