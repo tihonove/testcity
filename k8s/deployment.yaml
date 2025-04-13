@@ -240,10 +240,10 @@ spec:
               value: vm-tc-kfk-01:9092
           resources:
             requests:
-              cpu: "250m"
-              memory: "1024Mi"
-            limits:
               cpu: "500m"
+              memory: "1536Mi"
+            limits:
+              cpu: "1000m"
               memory: "2048Mi"
 ---
 apiVersion: v1

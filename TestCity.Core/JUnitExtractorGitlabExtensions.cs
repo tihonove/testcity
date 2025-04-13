@@ -16,16 +16,27 @@ public static class JUnitExtractorGitlabExtensions
                 if (entry.FullName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase))
                 {
                     using var stream = entry.Open();
-                    using var memoryStream = new MemoryStream();
-                    stream.CopyTo(memoryStream);
-                    memoryStream.Position = 0;
-                    using var reader = new StreamReader(memoryStream);
-                    var content = reader.ReadToEnd();
+                    bool containsTestSuite = false;
+                    var reader = new StreamReader(stream);
+                    string? line;
+                    int lineCount = 0;
+                    const int maxLinesToCheck = 20;
 
-                    if (content.Contains("<testsuite"))
+                    while ((line = reader.ReadLine()) != null && lineCount < maxLinesToCheck)
                     {
-                        memoryStream.Position = 0;
-                        result = result.Merge(jUnitExtractor.CollectTestRunsFromJunit(memoryStream));
+                        lineCount++;
+                        if (line.Contains("<testsuite"))
+                        {
+                            containsTestSuite = true;
+                            break;
+                        }
+                    }
+                    stream.Close();
+                    using var stream2 = entry.Open();
+
+                    if (containsTestSuite)
+                    {
+                        result = result.Merge(jUnitExtractor.CollectTestRunsFromJunit(stream2));
                     }
                 }
                 else if (entry.FullName.EndsWith(".json", StringComparison.OrdinalIgnoreCase))

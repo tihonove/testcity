@@ -95,7 +95,7 @@ public sealed class GitLabCrawlerService : IDisposable
         log.LogInformation("Pulling jobs for project {ProjectId}", projectId);
         var jobs = await clientEx.GetAllProjectJobsAsync(projectId, Core.GitLab.JobScope.Failed | Core.GitLab.JobScope.Success, perPage: 100, token).Take(600).ToListAsync(token);
         log.LogInformation("Take last {jobsLength} jobs", jobs.Count);
-
+        var enqueuedCount = 0;
         foreach (var job in jobs)
         {
             if (processedJobSet.ContainsKey((projectId, job.Id)))
@@ -112,6 +112,7 @@ public sealed class GitLabCrawlerService : IDisposable
                         ProjectId = projectId,
                         JobRunId = job.Id,
                     });
+                enqueuedCount++;
                 processedJobSet.TryAdd((projectId, job.Id), 0);
             }
             catch (Exception exception)
@@ -121,7 +122,7 @@ public sealed class GitLabCrawlerService : IDisposable
             }
         }
 
-        log.LogInformation("Enqueued {JobCount} jobs for {ProjectId}. First job: {FirstJobId}, Last job: {LastJobId}", jobs.Count, projectId, jobs.FirstOrDefault()?.Id, jobs.LastOrDefault()?.Id);
+        log.LogInformation("Enqueued {JobCount} jobs for {ProjectId}.", enqueuedCount, projectId);
     }
 
     public void Dispose()
