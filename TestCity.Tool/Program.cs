@@ -1,5 +1,7 @@
 ﻿using System.Text;
+using ClickHouse.Client.Utility;
 using dotenv.net;
+using Kontur.TestAnalytics.Reporter.Client;
 using Kontur.TestCity.Core;
 using Kontur.TestCity.Core.GitLab;
 using Kontur.TestCity.Core.KafkaMessageQueue;
@@ -28,20 +30,38 @@ foreach (var project in projects)
 
     try
     {
-        await foreach (var commit in clientEx.GetAllRepositoryCommitsAsync(long.Parse(project.Id)).TakeWhile(x => x.CommittedDate > DateTime.Now.AddMonths(-2)))
+        var connection = TestRunsUploader.CreateConnection();
+        var query = $"SELECT DISTINCT CommitSha FROM JobInfo WHERE ProjectId = '{project.Id}'";
+        using var reader = await connection.ExecuteReaderAsync(query);
+
+        var commitHashes = new List<string>();
+        while (await reader.ReadAsync())
         {
-            logger.LogDebug("Processing commit {CommitSha} from {CommitDate} by {AuthorName}",
-                commit.Id, commit.CommittedDate, commit.AuthorName);
+            var commitSha = reader.GetString(0);
+            commitHashes.Add(commitSha);
+        }
+
+        logger.LogInformation("Found {CommitCount} unique commits in ClickHouse for project {ProjectId}",
+            commitHashes.Count, project.Id);
+
+        foreach (var commitSha in commitHashes)
+        {
+            logger.LogDebug("Processing commit {CommitSha} from ClickHouse", commitSha);
 
             try
             {
-                await workreClient.Enqueue(new BuildCommitParentsTaskPayload { ProjectId = long.Parse(project.Id), CommitSha = commit.Id });
-                logger.LogDebug("Successfully enqueued task for commit {CommitSha}", commit.Id);
+                await workreClient.Enqueue(new BuildCommitParentsTaskPayload
+                {
+                    ProjectId = long.Parse(project.Id),
+                    CommitSha = commitSha
+                });
+                logger.LogDebug("Successfully enqueued task for commit {CommitSha}", commitSha);
                 commitCount++;
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Failed to enqueue task for commit {CommitSha} in project {ProjectId}", commit.Id, project.Id);
+                logger.LogError(ex, "Failed to enqueue task for commit {CommitSha} in project {ProjectId}",
+                    commitSha, project.Id);
             }
         }
 
