@@ -147,16 +147,22 @@ export function JobRunTestListPage(): React.JSX.Element {
                                             </OverviewSectionHeader>
                                         }
                                         openedByDefault={true}>
-                                        <ColumnStack gap={4} stretch block>
+                                        <ColumnStack gap={2} stretch block>
                                             {coveredCommits.map(commit => (
-                                                <CommitRow
-                                                    sha={Array.isArray(commit) ? commit[0] : commit.AuthorEmail}
-                                                    authorName={Array.isArray(commit) ? commit[1] : commit.AuthorName}
-                                                    authorEmail={Array.isArray(commit) ? commit[2] : commit.AuthorEmail}
-                                                    messagePreview={
-                                                        Array.isArray(commit) ? commit[3] : commit.MessagePreview
-                                                    }
-                                                />
+                                                <Fit>
+                                                    <CommitRow
+                                                        sha={Array.isArray(commit) ? commit[0] : commit.ParentCommitSha}
+                                                        authorName={
+                                                            Array.isArray(commit) ? commit[1] : commit.AuthorName
+                                                        }
+                                                        authorEmail={
+                                                            Array.isArray(commit) ? commit[2] : commit.AuthorEmail
+                                                        }
+                                                        messagePreview={
+                                                            Array.isArray(commit) ? commit[3] : commit.MessagePreview
+                                                        }
+                                                    />
+                                                </Fit>
                                             ))}
                                         </ColumnStack>
                                     </Spoiler>

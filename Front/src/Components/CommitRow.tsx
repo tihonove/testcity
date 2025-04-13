@@ -14,7 +14,7 @@ export function CommitRow(props: CommitRowProps) {
             <Fit>
                 <Message>{props.messagePreview}</Message>
                 <Details>
-                    {props.authorName}·#{props.sha.substring(0, 7)}
+                    {props.authorName} · #{props.sha.substring(0, 7)}
                 </Details>
             </Fit>
         </RowStack>

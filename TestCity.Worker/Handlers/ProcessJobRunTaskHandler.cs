@@ -11,23 +11,13 @@ using NGitLab.Models;
 
 namespace Kontur.TestCity.Worker.Handlers;
 
-public class ProcessJobRunTaskHandler : TaskHandler<ProcessJobRunTaskPayload>
+public class ProcessJobRunTaskHandler(
+    ILogger<ProcessJobRunTaskHandler> logger,
+    TestMetricsSender metricsSender,
+    WorkerClient workerClient,
+    SkbKonturGitLabClientProvider gitLabClientProvider,
+    JUnitExtractor extractor) : TaskHandler<ProcessJobRunTaskPayload>
 {
-    public ProcessJobRunTaskHandler(
-        ILogger<ProcessJobRunTaskHandler> logger,
-        TestMetricsSender metricsSender,
-        WorkerClient workerClient,
-        SkbKonturGitLabClientProvider gitLabClientProvider,
-        JUnitExtractor extractor)
-    {
-        this.logger = logger;
-        this.metricsSender = metricsSender;
-        this.workerClient = workerClient;
-        this.extractor = extractor;
-        client = gitLabClientProvider.GetClient();
-        clientEx = gitLabClientProvider.GetExtendedClient();
-    }
-
     public override bool CanHandle(RawTask task)
     {
         return task.Type == ProcessJobRunTaskPayload.TaskType;
@@ -38,36 +28,33 @@ public class ProcessJobRunTaskHandler : TaskHandler<ProcessJobRunTaskPayload>
         logger.LogInformation("Processing job run for project {ProjectId}, job run id: {JobRunId}", task.ProjectId, task.JobRunId);
         try
         {
+            if (!await TestRunsUploader.IsJobRunIdExists(task.JobRunId.ToString()))
+            {
+                logger.LogInformation("JobRunId '{JobRunId}' in '{ProjectId}' already exists. Skipping upload of test runs", task.JobRunId, task.ProjectId);
+            }
             var jobProcessor = new GitLabJobProcessor(client, clientEx, extractor, logger);
             var projectInfo = await client.Projects.GetByIdAsync(task.ProjectId, new SingleProjectQuery(), ct);
             var processingResult = await jobProcessor.ProcessJobAsync(task.ProjectId, task.JobRunId);
 
             if (processingResult.JobInfo != null)
             {
-                if (!await TestRunsUploader.IsJobRunIdExists(processingResult.JobInfo.JobRunId))
+                logger.LogInformation("JobRunId '{JobRunId}' does not exist. Uploading test runs", processingResult.JobInfo.JobRunId);
+                await TestRunsUploader.JobInfoUploadAsync(processingResult.JobInfo);
+                await workerClient.Enqueue(new BuildCommitParentsTaskPayload
                 {
-                    logger.LogInformation("JobRunId '{JobRunId}' does not exist. Uploading test runs", processingResult.JobInfo.JobRunId);
-                    await TestRunsUploader.JobInfoUploadAsync(processingResult.JobInfo);
-                    await workerClient.Enqueue(new BuildCommitParentsTaskPayload
-                    {
-                        ProjectId = task.ProjectId,
-                        CommitSha = processingResult.JobInfo.CommitSha,
-                    });
+                    ProjectId = task.ProjectId,
+                    CommitSha = processingResult.JobInfo.CommitSha,
+                });
 
-                    if (processingResult.TestReportData != null)
-                    {
-                        await TestRunsUploader.UploadAsync(processingResult.JobInfo, processingResult.TestReportData.Runs);
-                        var job = await clientEx.GetJobAsync(task.ProjectId, task.JobRunId);
-                        await metricsSender.SendAsync(
-                            projectInfo,
-                            processingResult.JobInfo.BranchName,
-                            job,
-                            processingResult.TestReportData);
-                    }
-                }
-                else
+                if (processingResult.TestReportData != null)
                 {
-                    logger.LogInformation("JobRunId '{JobRunId}' already exists. Skipping upload of test runs", processingResult.JobInfo.JobRunId);
+                    await TestRunsUploader.UploadAsync(processingResult.JobInfo, processingResult.TestReportData.Runs);
+                    var job = await clientEx.GetJobAsync(task.ProjectId, task.JobRunId);
+                    await metricsSender.SendAsync(
+                        projectInfo,
+                        processingResult.JobInfo.BranchName,
+                        job,
+                        processingResult.TestReportData);
                 }
             }
             else
@@ -81,10 +68,10 @@ public class ProcessJobRunTaskHandler : TaskHandler<ProcessJobRunTaskPayload>
         }
     }
 
-    private readonly ILogger<ProcessJobRunTaskHandler> logger;
-    private readonly TestMetricsSender metricsSender;
-    private readonly WorkerClient workerClient;
-    private readonly JUnitExtractor extractor;
-    private readonly IGitLabClient client;
-    private readonly GitLabExtendedClient clientEx;
+    private readonly ILogger<ProcessJobRunTaskHandler> logger = logger;
+    private readonly TestMetricsSender metricsSender = metricsSender;
+    private readonly WorkerClient workerClient = workerClient;
+    private readonly JUnitExtractor extractor = extractor;
+    private readonly IGitLabClient client = gitLabClientProvider.GetClient();
+    private readonly GitLabExtendedClient clientEx = gitLabClientProvider.GetExtendedClient();
 }
