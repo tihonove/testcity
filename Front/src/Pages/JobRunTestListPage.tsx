@@ -60,7 +60,6 @@ export function JobRunTestListPage(): React.JSX.Element {
         coveredCommits,
         totalCoveredCommitCount,
     ] = jobInfo;
-    console.log(JSON.stringify(jobInfo, null, 2));
 
     const [section, setSection] = useSearchParamAsState("section", "overview");
 
