@@ -265,6 +265,7 @@ public sealed class KafkaMessageQueueConsumer : IDisposable
                 }
                 catch (Exception e)
                 {
+                    logger.LogError(e, "Failed to process message of type {TaskType}: {Message}", rawTask.Type, message);
                     await EnqueueTaskToDelayedTopicWithRetriesOrSkip(delayedQueueProducer, executionItem, rawTask);
                     executionItem.State = TaskExecutionResult.Failure;
                     executionItem.ErrorMessage = e.Message;

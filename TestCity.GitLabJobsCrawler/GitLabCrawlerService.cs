@@ -10,10 +10,9 @@ namespace Kontur.TestCity.GitLabJobsCrawler;
 
 public sealed class GitLabCrawlerService : IDisposable
 {
-    public GitLabCrawlerService(GitLabSettings gitLabSettings, TestMetricsSender metricsSender, ILogger<GitLabCrawlerService> log, JUnitExtractor extractor, WorkerClient workerClient, IHostEnvironment hostEnvironment)
+    public GitLabCrawlerService(GitLabSettings gitLabSettings, ILogger<GitLabCrawlerService> log, JUnitExtractor extractor, WorkerClient workerClient, IHostEnvironment hostEnvironment)
     {
         this.gitLabSettings = gitLabSettings;
-        this.metricsSender = metricsSender;
         this.log = log;
         this.extractor = extractor;
         this.workerClient = workerClient;
@@ -52,7 +51,7 @@ public sealed class GitLabCrawlerService : IDisposable
                         {
                             try
                             {
-                                await ProcessProjectJobsAsync(long.Parse(project.Id), client, clientEx, stopTokenSource.Token);
+                                await ProcessProjectJobsAsync(long.Parse(project.Id), clientEx, stopTokenSource.Token);
                             }
                             catch (Exception e)
                             {
@@ -70,13 +69,7 @@ public sealed class GitLabCrawlerService : IDisposable
     private async ValueTask ReadLastJobsAndEnueueToWorker(long projectId, GitLabExtendedClient clientEx, CancellationToken token)
     {
         log.LogInformation("Pulling jobs for project {ProjectId} to enqueue to worker", projectId);
-        const Core.GitLab.JobScope scopes = Core.GitLab.JobScope.All &
-                ~Core.GitLab.JobScope.Canceled &
-                ~Core.GitLab.JobScope.Skipped &
-                ~Core.GitLab.JobScope.Pending &
-                ~Core.GitLab.JobScope.Running &
-                ~Core.GitLab.JobScope.Created;
-        var jobs = await clientEx.GetAllProjectJobsAsync(projectId, scopes, perPage: 100, token).Take(200).ToListAsync(token);
+        var jobs = await clientEx.GetAllProjectJobsAsync(projectId, Core.GitLab.JobScope.Failed | Core.GitLab.JobScope.Success, perPage: 100, token).Take(200).ToListAsync(token);
         log.LogInformation("Take last {jobsLength} jobs", jobs.Count);
 
         foreach (var job in jobs)
@@ -97,11 +90,9 @@ public sealed class GitLabCrawlerService : IDisposable
         }
     }
 
-    private async ValueTask ProcessProjectJobsAsync(long projectId, NGitLab.IGitLabClient client, GitLabExtendedClient clientEx, CancellationToken token)
+    private async ValueTask ProcessProjectJobsAsync(long projectId, GitLabExtendedClient clientEx, CancellationToken token)
     {
         log.LogInformation("Pulling jobs for project {ProjectId}", projectId);
-        var jobProcessor = new GitLabJobProcessor(client, clientEx, extractor, log);
-        var projectInfo = await client.Projects.GetByIdAsync(projectId, new SingleProjectQuery(), token);
         var jobs = await clientEx.GetAllProjectJobsAsync(projectId, Core.GitLab.JobScope.Failed | Core.GitLab.JobScope.Success, perPage: 100, token).Take(600).ToListAsync(token);
         log.LogInformation("Take last {jobsLength} jobs", jobs.Count);
 
@@ -115,48 +106,22 @@ public sealed class GitLabCrawlerService : IDisposable
 
             try
             {
-                var processingResult = await jobProcessor.ProcessJobAsync(projectId, job.Id, job);
-                if (processingResult.JobInfo != null)
-                {
-                    if (!await TestRunsUploader.IsJobRunIdExists(processingResult.JobInfo.JobRunId))
+                await workerClient.Enqueue(
+                    new ProcessJobRunTaskPayload
                     {
-                        log.LogInformation("JobRunId '{JobRunId}' does not exist. Uploading test runs", processingResult.JobInfo.JobRunId);
-                        await TestRunsUploader.JobInfoUploadAsync(processingResult.JobInfo);
-                        await workerClient.Enqueue(new BuildCommitParentsTaskPayload
-                        {
-                            ProjectId = projectId,
-                            CommitSha = processingResult.JobInfo.CommitSha,
-                        });
-
-                        if (processingResult.TestReportData != null)
-                        {
-                            await TestRunsUploader.UploadAsync(processingResult.JobInfo, processingResult.TestReportData.Runs);
-                            await metricsSender.SendAsync(projectInfo, processingResult.JobInfo.BranchName, job, processingResult.TestReportData);
-                        }
-                    }
-                    else
-                    {
-                        log.LogInformation("JobRunId '{JobRunId}' exists. Skip uploading test runs", processingResult.JobInfo.JobRunId);
-                    }
-
-                    processedJobSet.TryAdd((projectId, job.Id), 0);
-                }
-                else
-                {
-                    if (job.Status == Core.GitLab.Models.JobStatus.Failed || job.Status == Core.GitLab.Models.JobStatus.Success)
-                    {
-                        processedJobSet.TryAdd((projectId, job.Id), 0);
-                    }
-                }
+                        ProjectId = projectId,
+                        JobRunId = job.Id,
+                    });
+                processedJobSet.TryAdd((projectId, job.Id), 0);
             }
             catch (Exception exception)
             {
-                log.LogError(exception, "Failed to process job {JobId}", job.Id);
+                log.LogError(exception, "Failed to enqueue job {JobId}", job.Id);
                 continue;
             }
         }
 
-        log.LogInformation("Processed {JobCount} for {ProjectId}. First job: {FirstJobId}, Last job: {LastJobId}", jobs.Count, projectId, jobs.FirstOrDefault()?.Id, jobs.LastOrDefault()?.Id);
+        log.LogInformation("Enqueued {JobCount} jobs for {ProjectId}. First job: {FirstJobId}, Last job: {LastJobId}", jobs.Count, projectId, jobs.FirstOrDefault()?.Id, jobs.LastOrDefault()?.Id);
     }
 
     public void Dispose()
@@ -167,7 +132,6 @@ public sealed class GitLabCrawlerService : IDisposable
 
     private readonly ConcurrentDictionary<(long, long), byte> processedJobSet = new();
     private readonly GitLabSettings gitLabSettings;
-    private readonly TestMetricsSender metricsSender;
     private readonly CancellationTokenSource stopTokenSource;
     private readonly ILogger<GitLabCrawlerService> log;
     private readonly JUnitExtractor extractor;
