@@ -29,8 +29,8 @@ public class BuildCommitParentsHandler(ILogger<BuildCommitParentsHandler> logger
             return;
         }
 
-        var processLock = commitProcessLocks.GetOrAdd(processingKey, _ => new ReaderWriterLockSlim());
-        processLock.EnterWriteLock();
+        var processLock = commitProcessLocks.GetOrAdd(processingKey, _ => new SemaphoreSlim(1, 1));
+        await processLock.WaitAsync(ct);
         try
         {
             // Проверка наличия корневого коммита (с Depth = 0) в таблице CommitParents
@@ -71,7 +71,7 @@ public class BuildCommitParentsHandler(ILogger<BuildCommitParentsHandler> logger
         }
         finally
         {
-            processLock.ExitWriteLock();
+            processLock.Release();
             logger.LogDebug("Снята блокировка для коммита {CommitSha} в проекте {ProjectId}",
                 task.CommitSha, task.ProjectId);
         }
@@ -95,5 +95,5 @@ public class BuildCommitParentsHandler(ILogger<BuildCommitParentsHandler> logger
     }
 
     private static readonly ConcurrentBag<(string, string)> processedCommits = new();
-    private static readonly ConcurrentDictionary<(string, string), ReaderWriterLockSlim> commitProcessLocks = new();
+    private static readonly ConcurrentDictionary<(string, string), SemaphoreSlim> commitProcessLocks = new();
 }
