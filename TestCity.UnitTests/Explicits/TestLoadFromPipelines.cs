@@ -4,7 +4,7 @@ using Kontur.TestCity.Core.Clickhouse;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
-namespace Kontur.TestCity.UnitTests;
+namespace Kontur.TestCity.UnitTests.Explicits;
 
 public class TestsLoadFromGitlab
 {

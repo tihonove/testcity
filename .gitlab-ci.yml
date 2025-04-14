@@ -65,6 +65,7 @@ DotNet tests:
     KAFKA_KRAFT_CLUSTER_ID: 2451c12e-a37d-4349-b744-a1047b01cbd3
     ALLOW_PLAINTEXT_LISTENER: yes
   script:
+    - export GRAPHITE_RELAY_HOST="graphite-relay.skbkontur.ru"
     - export TESTANALYTICS_CLICKHOUSE_HOST="clickhouse"
     - export TESTANALYTICS_CLICKHOUSE_PORT="8123"
     - export TESTANALYTICS_CLICKHOUSE_DB="$CLICKHOUSE_DB"

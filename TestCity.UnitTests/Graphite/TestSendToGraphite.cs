@@ -3,18 +3,16 @@ using NUnit.Framework;
 
 namespace Kontur.TestCity.UnitTests;
 
-[Explicit]
 public class TestSendToGraphite
 {
-    private const string GraphiteHost = "graphite-relay.skbkontur.ru";
-    private const int GraphitePort = 2003;
-
     [Test]
     public async Task TestSend()
     {
+        var GraphiteHost = Environment.GetEnvironmentVariable("GRAPHITE_RELAY_HOST") ?? throw new InvalidOperationException("GRAPHITE_RELAY_HOST is not set");
+        var GraphitePort = int.Parse(Environment.GetEnvironmentVariable("GRAPHITE_RELAY_PORT") ?? throw new InvalidOperationException("GRAPHITE_RELAY_PORT is not set"));
         var client = new GraphiteClient(GraphiteHost, GraphitePort);
-        var metricPath = "TestCount.TCP";
-        var value = 42.0;
+        const string metricPath = "TestCount.TCP";
+        const double value = 42.0;
         var timestamp = DateTime.UtcNow;
 
         await client.SendAsync(metricPath, value, timestamp);
@@ -23,6 +21,8 @@ public class TestSendToGraphite
     [Test]
     public async Task TestSendWithTags()
     {
+        var GraphiteHost = Environment.GetEnvironmentVariable("GRAPHITE_RELAY_HOST") ?? throw new InvalidOperationException("GRAPHITE_RELAY_HOST is not set");
+        var GraphitePort = int.Parse(Environment.GetEnvironmentVariable("GRAPHITE_RELAY_PORT") ?? throw new InvalidOperationException("GRAPHITE_RELAY_PORT is not set"));
         // Arrange
         var client = new GraphiteClient(GraphiteHost, GraphitePort);
         var timestamp = DateTime.UtcNow;

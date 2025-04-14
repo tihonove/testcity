@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using NGitLab.Models;
 using NUnit.Framework;
 
-namespace Kontur.TestCity.UnitTests;
+namespace Kontur.TestCity.UnitTests.Explicits;
 
 [TestFixture]
 [Explicit]
