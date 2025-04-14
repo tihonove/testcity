@@ -1,10 +1,10 @@
 using System.Text;
 using dotenv.net;
-using Kontur.TestCity.Core;
 using Kontur.TestCity.Core.Clickhouse;
 using Kontur.TestCity.Core.GitLab;
 using Kontur.TestCity.Core.Graphite;
 using Kontur.TestCity.Core.Infrastructure;
+using Kontur.TestCity.Core.JobProcessing;
 using Kontur.TestCity.Core.JUnit;
 using Kontur.TestCity.Core.KafkaMessageQueue;
 using Kontur.TestCity.Core.Logging;

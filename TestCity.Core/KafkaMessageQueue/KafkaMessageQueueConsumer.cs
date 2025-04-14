@@ -5,9 +5,8 @@ using System.Threading.Channels;
 using Confluent.Kafka;
 using Kontur.TestCity.Core.Worker;
 using Microsoft.Extensions.Logging;
-using TestCity.Worker.Kafka.Configuration;
 
-namespace Kontur.TestCity.Worker.Kafka;
+namespace Kontur.TestCity.Core.KafkaMessageQueue;
 
 public sealed class KafkaMessageQueueConsumer : IDisposable
 {

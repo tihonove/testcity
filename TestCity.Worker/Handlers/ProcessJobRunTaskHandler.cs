@@ -1,13 +1,11 @@
-using Kontur.TestCity.Core;
 using Kontur.TestCity.Core.GitLab;
 using Kontur.TestCity.Core.JobProcessing;
 using Kontur.TestCity.Core.JUnit;
+using Kontur.TestCity.Core.KafkaMessageQueue;
 using Kontur.TestCity.Core.Logging;
 using Kontur.TestCity.Core.Storage;
 using Kontur.TestCity.Core.Worker;
 using Kontur.TestCity.Core.Worker.TaskPayloads;
-using Kontur.TestCity.GitLabJobsCrawler;
-using Kontur.TestCity.Worker.Handlers.Base;
 using Microsoft.Extensions.Logging;
 using NGitLab;
 using NGitLab.Models;

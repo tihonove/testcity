@@ -1,4 +1,3 @@
-using FluentAssertions;
 using Kontur.TestCity.Core.Clickhouse;
 using Kontur.TestCity.Core.GitLab;
 using Kontur.TestCity.Core.Storage;

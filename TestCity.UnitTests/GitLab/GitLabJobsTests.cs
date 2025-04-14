@@ -12,7 +12,7 @@ public class GitLabJobsTests
     public void SetUp()
     {
         var provider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
-        gitLabClient = provider.GetExtendedClient(); ;
+        gitLabClient = provider.GetExtendedClient();
         logger = GlobalSetup.TestLoggerFactory.CreateLogger<GitLabJobsTests>();
     }
 
@@ -343,12 +343,12 @@ public class GitLabJobsTests
         // const int projectId = 25483;
         const int maxJobsToRetrieve = 600;
 
-        const Core.GitLab.JobScope scopes = Core.GitLab.JobScope.All &
-                ~Core.GitLab.JobScope.Canceled &
-                ~Core.GitLab.JobScope.Skipped &
-                ~Core.GitLab.JobScope.Pending &
-                ~Core.GitLab.JobScope.Running &
-                ~Core.GitLab.JobScope.Created;
+        const JobScope scopes = JobScope.All &
+                ~JobScope.Canceled &
+                ~JobScope.Skipped &
+                ~JobScope.Pending &
+                ~JobScope.Running &
+                ~JobScope.Created;
         var retrievedJobs = await gitLabClient.GetAllProjectJobsAsync(projectId, scopes, perPage: 100).Take(maxJobsToRetrieve).ToListAsync();
 
         Assert.That(retrievedJobs, Is.Not.Null);

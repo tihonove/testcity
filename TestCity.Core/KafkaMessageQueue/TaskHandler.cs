@@ -1,7 +1,7 @@
 using System.Text.Json;
 using Kontur.TestCity.Core.Worker;
 
-namespace Kontur.TestCity.Worker.Handlers.Base;
+namespace Kontur.TestCity.Core.KafkaMessageQueue;
 
 public abstract class TaskHandler<TPayload> : ITaskHandler
 {
@@ -11,7 +11,7 @@ public abstract class TaskHandler<TPayload> : ITaskHandler
 
     public async ValueTask ExecuteAsync(RawTask task, CancellationToken ct)
     {
-        var payload = TaskHandler<TPayload>.Deserialize(task.Payload);
+        var payload = Deserialize(task.Payload);
         await EnqueueAsync(payload, ct);
     }
 

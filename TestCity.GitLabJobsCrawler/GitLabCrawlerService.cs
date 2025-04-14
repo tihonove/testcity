@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using Kontur.TestCity.Core.GitLab;
+using Kontur.TestCity.Core.GitLab.Models;
 using Kontur.TestCity.Core.GitlabProjects;
 using Kontur.TestCity.Core.Logging;
 using Kontur.TestCity.Core.Worker;
@@ -31,7 +32,7 @@ public sealed class GitLabCrawlerService(GitLabSettings gitLabSettings, WorkerCl
                     {
                         if (hostEnvironment.IsDevelopment())
                         {
-                            await ReadLastJobsAndEnueueToWorker(long.Parse(project.Id), clientEx, stopTokenSource.Token);
+                            await ReadLastJobsAndEnqueueToWorker(long.Parse(project.Id), clientEx, stopTokenSource.Token);
                         }
                     }
                     else
@@ -55,10 +56,10 @@ public sealed class GitLabCrawlerService(GitLabSettings gitLabSettings, WorkerCl
         });
     }
 
-    private async ValueTask ReadLastJobsAndEnueueToWorker(long projectId, GitLabExtendedClient clientEx, CancellationToken token)
+    private async ValueTask ReadLastJobsAndEnqueueToWorker(long projectId, GitLabExtendedClient clientEx, CancellationToken token)
     {
         log.LogInformation("Pulling jobs for project {ProjectId} to enqueue to worker", projectId);
-        var jobs = await clientEx.GetAllProjectJobsAsync(projectId, Core.GitLab.JobScope.Failed | Core.GitLab.JobScope.Success, perPage: 100, token).Take(200).ToListAsync(token);
+        var jobs = await clientEx.GetAllProjectJobsAsync(projectId, JobScope.Failed | JobScope.Success, perPage: 100, token).Take(200).ToListAsync(token);
         log.LogInformation("Take last {jobsLength} jobs", jobs.Count);
 
         foreach (var job in jobs)
@@ -82,7 +83,7 @@ public sealed class GitLabCrawlerService(GitLabSettings gitLabSettings, WorkerCl
     private async ValueTask ProcessProjectJobsAsync(long projectId, GitLabExtendedClient clientEx, CancellationToken token)
     {
         log.LogInformation("Pulling jobs for project {ProjectId}", projectId);
-        var jobs = await clientEx.GetAllProjectJobsAsync(projectId, Core.GitLab.JobScope.Failed | Core.GitLab.JobScope.Success, perPage: 100, token).Take(600).ToListAsync(token);
+        var jobs = await clientEx.GetAllProjectJobsAsync(projectId, JobScope.Failed | JobScope.Success, perPage: 100, token).Take(600).ToListAsync(token);
         log.LogInformation("Take last {jobsLength} jobs", jobs.Count);
         var enqueuedCount = 0;
         foreach (var job in jobs)

@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
-namespace Kontur.TestCity.UnitTests;
+namespace Kontur.TestCity.UnitTests.Utils;
 
 public sealed class NUnitLoggerProvider : ILoggerProvider
 {

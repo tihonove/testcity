@@ -1,4 +1,4 @@
-namespace TestCity.Worker.Kafka.Configuration
+namespace Kontur.TestCity.Core.KafkaMessageQueue
 {
     public class KafkaConsumerSettings
     {

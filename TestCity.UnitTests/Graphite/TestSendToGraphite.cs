@@ -1,7 +1,7 @@
 using Kontur.TestCity.Core.Graphite;
 using NUnit.Framework;
 
-namespace Kontur.TestCity.UnitTests;
+namespace Kontur.TestCity.UnitTests.Graphite;
 
 public class TestSendToGraphite
 {

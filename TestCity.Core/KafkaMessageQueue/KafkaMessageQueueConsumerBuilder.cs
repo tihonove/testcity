@@ -1,8 +1,5 @@
-using Kontur.TestCity.Worker.Handlers.Base;
-using Kontur.TestCity.Worker.Kafka;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using TestCity.Worker.Kafka.Configuration;
 
 namespace Kontur.TestCity.Core.KafkaMessageQueue;
 

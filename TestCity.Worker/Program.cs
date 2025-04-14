@@ -1,24 +1,20 @@
 ﻿using System.Text;
 using dotenv.net;
-using Kontur.TestCity.Core;
 using Kontur.TestCity.Core.Clickhouse;
 using Kontur.TestCity.Core.GitLab;
 using Kontur.TestCity.Core.Graphite;
 using Kontur.TestCity.Core.Infrastructure;
+using Kontur.TestCity.Core.JobProcessing;
 using Kontur.TestCity.Core.JUnit;
 using Kontur.TestCity.Core.KafkaMessageQueue;
 using Kontur.TestCity.Core.Logging;
 using Kontur.TestCity.Core.Storage;
 using Kontur.TestCity.Core.Worker;
-using Kontur.TestCity.GitLabJobsCrawler;
 using Kontur.TestCity.Worker.Handlers;
-using Kontur.TestCity.Worker.Handlers.Base;
-using Kontur.TestCity.Worker.Kafka;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry.Metrics;
-using TestCity.Worker.Kafka.Configuration;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);

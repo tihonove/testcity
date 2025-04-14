@@ -12,7 +12,7 @@ public static class PreconfiguredGitLabProjectsService
     private static List<GitLabGroup> LoadProjects()
     {
         var assembly = Assembly.GetExecutingAssembly();
-        var resourceName = typeof(PreconfiguredGitLabProjectsService).Namespace + ".gitlab-projects.json";
+        var resourceName = "Kontur.TestCity.Core.gitlab-projects.json";
 
         using var stream = assembly.GetManifestResourceStream(resourceName) ?? throw new InvalidOperationException($"Resource '{resourceName}' not found.");
         using var reader = new StreamReader(stream);

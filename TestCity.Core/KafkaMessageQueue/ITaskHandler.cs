@@ -1,6 +1,6 @@
 using Kontur.TestCity.Core.Worker;
 
-namespace Kontur.TestCity.Worker.Handlers.Base;
+namespace Kontur.TestCity.Core.KafkaMessageQueue;
 
 public interface ITaskHandler
 {

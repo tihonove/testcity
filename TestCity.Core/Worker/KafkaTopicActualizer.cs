@@ -1,8 +1,9 @@
+using System.Globalization;
 using Confluent.Kafka;
 using Confluent.Kafka.Admin;
-using TestCity.Worker.Kafka.Configuration;
+using Kontur.TestCity.Core.KafkaMessageQueue;
 
-namespace Kontur.TestAnalytics.ActualizeDb.Cli;
+namespace Kontur.TestCity.Core.Worker;
 
 public static class KafkaTopicActualizer
 {
@@ -37,7 +38,7 @@ public static class KafkaTopicActualizer
                         NumPartitions = 16,
                         Configs = new Dictionary<string, string>
                         {
-                            { "retention.ms", TimeSpan.FromDays(14).TotalMilliseconds.ToString() },
+                            { "retention.ms", TimeSpan.FromDays(14).TotalMilliseconds.ToString(CultureInfo.InvariantCulture) },
                         },
                     },
                 ]);
@@ -56,7 +57,7 @@ public static class KafkaTopicActualizer
                         NumPartitions = 16,
                         Configs = new Dictionary<string, string>
                         {
-                            { "retention.ms", TimeSpan.FromDays(60).TotalMilliseconds.ToString() },
+                            { "retention.ms", TimeSpan.FromDays(60).TotalMilliseconds.ToString(CultureInfo.InvariantCulture) },
                         },
                     },
                 ]);

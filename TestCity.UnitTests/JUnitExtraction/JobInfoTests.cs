@@ -1,7 +1,7 @@
-using Kontur.TestAnalytics.Reporter.Cli;
+using Kontur.TestCity.Core.JUnit;
 using NUnit.Framework;
 
-namespace Kontur.TestCity.UnitTests;
+namespace Kontur.TestCity.UnitTests.JUnitExtraction;
 
 public class JobInfoTests
 {

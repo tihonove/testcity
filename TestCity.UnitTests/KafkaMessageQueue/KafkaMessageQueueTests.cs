@@ -2,12 +2,11 @@ using Confluent.Kafka;
 using Confluent.Kafka.Admin;
 using Kontur.TestCity.Core.KafkaMessageQueue;
 using Kontur.TestCity.Core.Worker;
-using Kontur.TestCity.Worker.Handlers.Base;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using System.Collections.Concurrent;
 using System.Diagnostics;
-using TestCity.Worker.Kafka.Configuration;
+using Kontur.TestCity.UnitTests.Utils;
 
 namespace Kontur.TestCity.UnitTests.KafkaMessageQueue;
 
@@ -20,7 +19,7 @@ class KafkaMessageQueueTests
     [SetUp]
     public void SetUp()
     {
-        this.logger = GlobalSetup.TestLoggerFactory.CreateLogger("KafkaMessageQueueTests");
+        logger = GlobalSetup.TestLoggerFactory.CreateLogger("KafkaMessageQueueTests");
     }
 
     [Test]
@@ -506,7 +505,7 @@ internal class TestConsumerInstance : IAsyncDisposable
 
     private TestConsumerInstance(KafkaMessageQueueClient client, Func<Task> dispose)
     {
-        this.Client = client;
+        Client = client;
         this.dispose = dispose;
     }
 

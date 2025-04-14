@@ -7,9 +7,9 @@ public static class Log
 {
     private static ILoggerFactory loggerFactory = new NullLoggerFactory();
 
-    public static void ConfigureGlobalLogProvider(ILoggerFactory loggerFactory)
+    public static void ConfigureGlobalLogProvider(ILoggerFactory globalLoggerFactory)
     {
-        Log.loggerFactory = loggerFactory;
+        loggerFactory = globalLoggerFactory;
     }
 
     public static ILogger LogForMe<T>(this T _)

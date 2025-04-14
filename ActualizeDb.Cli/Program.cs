@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-using dotenv.net;
-using Kontur.TestAnalytics.ActualizeDb.Cli;
+﻿using dotenv.net;
 using Kontur.TestCity.Core.Clickhouse;
+using Kontur.TestCity.Core.Worker;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();
 

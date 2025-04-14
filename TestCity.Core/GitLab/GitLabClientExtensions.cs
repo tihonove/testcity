@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 using NGitLab;
 using NGitLab.Models;
 
-namespace Kontur.TestCity.Core;
+namespace Kontur.TestCity.Core.GitLab;
 
 public static class GitLabClientExtensions
 {

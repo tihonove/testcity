@@ -1,4 +1,4 @@
-namespace Kontur.TestAnalytics.Reporter.Cli;
+namespace Kontur.TestCity.Core.JUnit;
 
 public static class JUnitReportHelper
 {

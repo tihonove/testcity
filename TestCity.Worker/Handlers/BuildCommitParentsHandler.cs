@@ -1,11 +1,11 @@
 using System.Collections.Concurrent;
 using Kontur.TestCity.Core.GitLab;
+using Kontur.TestCity.Core.KafkaMessageQueue;
 using Kontur.TestCity.Core.Logging;
 using Kontur.TestCity.Core.Storage;
 using Kontur.TestCity.Core.Storage.DTO;
 using Kontur.TestCity.Core.Worker;
 using Kontur.TestCity.Core.Worker.TaskPayloads;
-using Kontur.TestCity.Worker.Handlers.Base;
 using Microsoft.Extensions.Logging;
 
 namespace Kontur.TestCity.Worker.Handlers;

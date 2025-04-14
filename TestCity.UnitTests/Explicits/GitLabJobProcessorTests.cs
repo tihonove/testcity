@@ -10,6 +10,7 @@ using Kontur.TestCity.GitLabJobsCrawler;
 using Microsoft.Extensions.Logging;
 using NGitLab.Models;
 using NUnit.Framework;
+using JobScope = Kontur.TestCity.Core.GitLab.Models.JobScope;
 
 namespace Kontur.TestCity.UnitTests.Explicits;
 
@@ -73,12 +74,12 @@ public class GitLabJobProcessorTests
         logger.LogInformation("Pulling jobs for project {ProjectId}", projectId);
         var client = gitlabClientProvider.GetClient();
         var clientEx = gitlabClientProvider.GetExtendedClient();
-        const Core.GitLab.JobScope scopes = Core.GitLab.JobScope.All &
-                ~Core.GitLab.JobScope.Canceled &
-                ~Core.GitLab.JobScope.Skipped &
-                ~Core.GitLab.JobScope.Pending &
-                ~Core.GitLab.JobScope.Running &
-                ~Core.GitLab.JobScope.Created;
+        const JobScope scopes = JobScope.All &
+                                ~JobScope.Canceled &
+                                ~JobScope.Skipped &
+                                ~JobScope.Pending &
+                                ~JobScope.Running &
+                                ~JobScope.Created;
         var jobs = await clientEx.GetAllProjectJobsAsync(projectId, scopes, perPage: 100).Take(600).ToListAsync();
 
         int count = 0;
@@ -140,12 +141,12 @@ public class GitLabJobProcessorTests
         var clientEx = gitlabClientProvider.GetExtendedClient();
         var jobsClient = client.GetJobs(projectId);
         var projectInfo = await client.Projects.GetByIdAsync(projectId, new SingleProjectQuery());
-        const Core.GitLab.JobScope scopes = Core.GitLab.JobScope.All &
-                ~Core.GitLab.JobScope.Canceled &
-                ~Core.GitLab.JobScope.Skipped &
-                ~Core.GitLab.JobScope.Pending &
-                ~Core.GitLab.JobScope.Running &
-                ~Core.GitLab.JobScope.Created;
+        const JobScope scopes = JobScope.All &
+                                ~JobScope.Canceled &
+                                ~JobScope.Skipped &
+                                ~JobScope.Pending &
+                                ~JobScope.Running &
+                                ~JobScope.Created;
         var jobs = await clientEx.GetAllProjectJobsAsync(projectId, scopes, perPage: 100).Take(600).ToListAsync();
         //var jobs = Enumerable.Take(jobsClient.GetJobsAsync(jobsQuery), 100);
         // logger.LogInformation("Take last {JobsLength} jobs", jobs.Length);
@@ -205,12 +206,12 @@ public class GitLabJobProcessorTests
         var client = gitlabClientProvider.GetClient();
         var clientEx = gitlabClientProvider.GetExtendedClient();
         var projectInfo = await client.Projects.GetByIdAsync(projectId, new SingleProjectQuery());
-        const Core.GitLab.JobScope scopes = Core.GitLab.JobScope.All &
-                ~Core.GitLab.JobScope.Canceled &
-                ~Core.GitLab.JobScope.Skipped &
-                ~Core.GitLab.JobScope.Pending &
-                ~Core.GitLab.JobScope.Running &
-                ~Core.GitLab.JobScope.Created;
+        const JobScope scopes = JobScope.All &
+                                ~JobScope.Canceled &
+                                ~JobScope.Skipped &
+                                ~JobScope.Pending &
+                                ~JobScope.Running &
+                                ~JobScope.Created;
         var jobs = await clientEx.GetAllProjectJobsAsync(projectId, scopes, perPage: 100).TakeWhile(x => x.CreatedAt > DateTime.Now.AddDays(-6)).ToListAsync();
         //var jobs = Enumerable.Take(jobsClient.GetJobsAsync(jobsQuery), 100);
         // logger.LogInformation("Take last {JobsLength} jobs", jobs.Length);

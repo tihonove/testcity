@@ -1,4 +1,3 @@
-using System.Diagnostics.Metrics;
 using Kontur.TestCity.Core.GitLab.Models;
 using Kontur.TestCity.Core.Graphite;
 using Kontur.TestCity.Core.JUnit;
@@ -6,7 +5,7 @@ using Kontur.TestCity.Core.Logging;
 using Microsoft.Extensions.Logging;
 using NGitLab.Models;
 
-namespace Kontur.TestCity.GitLabJobsCrawler;
+namespace Kontur.TestCity.Core.JobProcessing;
 
 public sealed class TestMetricsSender(IGraphiteClient graphiteClient)
 {

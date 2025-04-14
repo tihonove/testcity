@@ -3,7 +3,6 @@ using Kontur.TestCity.Core.GitLab;
 using Kontur.TestCity.Core.GitLab.Models;
 using Kontur.TestCity.Core.JUnit;
 using Kontur.TestCity.Core.Storage.DTO;
-using Kontur.TestCity.GitLabJobsCrawler;
 using Microsoft.Extensions.Logging;
 using NGitLab;
 

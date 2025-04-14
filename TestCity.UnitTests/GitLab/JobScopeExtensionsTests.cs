@@ -1,4 +1,5 @@
 using Kontur.TestCity.Core.GitLab;
+using Kontur.TestCity.Core.GitLab.Models;
 using NUnit.Framework;
 
 namespace Kontur.TestCity.UnitTests.GitLab;

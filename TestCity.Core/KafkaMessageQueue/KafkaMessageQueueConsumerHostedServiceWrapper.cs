@@ -1,4 +1,3 @@
-using Kontur.TestCity.Worker.Kafka;
 using Microsoft.Extensions.Hosting;
 
 namespace Kontur.TestCity.Core.KafkaMessageQueue;

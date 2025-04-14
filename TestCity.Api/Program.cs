@@ -1,6 +1,5 @@
 using System.Text;
 using dotenv.net;
-using Kontur.TestCity.Core;
 using Kontur.TestCity.Core.Clickhouse;
 using Kontur.TestCity.Core.GitLab;
 using Kontur.TestCity.Core.Infrastructure;

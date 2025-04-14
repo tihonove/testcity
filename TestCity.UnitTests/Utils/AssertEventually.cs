@@ -2,7 +2,7 @@ using System.Diagnostics;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 
-namespace Kontur.TestCity.UnitTests.KafkaMessageQueue;
+namespace Kontur.TestCity.UnitTests.Utils;
 
 internal static class AssertEventually
 {

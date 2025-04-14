@@ -1,4 +1,4 @@
-namespace Kontur.TestCity.Core;
+namespace Kontur.TestCity.Core.GitLab;
 
 /// <summary>
 /// Builder class for repository commits query options

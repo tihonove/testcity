@@ -1,7 +1,6 @@
 using System.Globalization;
 using System.IO.Compression;
 using System.Xml;
-using Kontur.TestAnalytics.Reporter.Cli;
 using Kontur.TestCity.Core.Storage.DTO;
 
 namespace Kontur.TestCity.Core.JUnit;

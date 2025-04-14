@@ -1,5 +1,4 @@
 using ClickHouse.Client.Copy;
-using ClickHouse.Client.Utility;
 using Kontur.TestCity.Core.Clickhouse;
 using Kontur.TestCity.Core.Extensions;
 using Kontur.TestCity.Core.Storage.DTO;
