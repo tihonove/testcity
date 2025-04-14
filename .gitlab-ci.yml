@@ -66,6 +66,7 @@ DotNet tests:
     ALLOW_PLAINTEXT_LISTENER: yes
   script:
     - export GRAPHITE_RELAY_HOST="graphite-relay.skbkontur.ru"
+    - export GRAPHITE_RELAY_PORT="2003"
     - export TESTANALYTICS_CLICKHOUSE_HOST="clickhouse"
     - export TESTANALYTICS_CLICKHOUSE_PORT="8123"
     - export TESTANALYTICS_CLICKHOUSE_DB="$CLICKHOUSE_DB"
