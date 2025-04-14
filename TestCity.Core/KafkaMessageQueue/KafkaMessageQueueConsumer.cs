@@ -43,6 +43,11 @@ public sealed class KafkaMessageQueueConsumer : IDisposable
 
             var primaryConsumer = RunPrimiaryTasksConsumer(inputChannel, stoppingToken);
             var delayedConsumer = RunDelayedTasksConsumer(inputChannel, stoppingToken);
+            var delayedQueueProducer = new ProducerBuilder<string, string>(new ProducerConfig
+            {
+                BootstrapServers = settings.BootstrapServers,
+                Acks = Acks.Leader,
+            }).Build();
 
             stoppingToken.Register(() =>
             {
@@ -63,7 +68,7 @@ public sealed class KafkaMessageQueueConsumer : IDisposable
                     };
                     var queue = queueMap.GetOrAdd((consumeResult.Item1, consumeResult.Item2.Partition), (_) => new ConcurrentQueue<TaskExecutionItem>());
                     queue.Enqueue(executionItem);
-                    RunTaskExecution(executionItem, semaphore, consumeResult.Item1, queue, stoppingToken);
+                    RunTaskExecution(executionItem, semaphore, consumeResult.Item1, queue, delayedQueueProducer, stoppingToken);
                 }
                 catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
                 {
@@ -225,14 +230,8 @@ public sealed class KafkaMessageQueueConsumer : IDisposable
         }
     }
 
-    private void RunTaskExecution(TaskExecutionItem executionItem, SemaphoreSlim semaphore, IConsumer<string, string> item1, ConcurrentQueue<TaskExecutionItem> queue, CancellationToken ct)
+    private void RunTaskExecution(TaskExecutionItem executionItem, SemaphoreSlim semaphore, IConsumer<string, string> item1, ConcurrentQueue<TaskExecutionItem> queue, IProducer<string, string> delayedQueueProducer, CancellationToken ct)
     {
-        var delayedQueueProducer = new ProducerBuilder<string, string>(new ProducerConfig
-        {
-            BootstrapServers = settings.BootstrapServers,
-            Acks = Acks.Leader,
-        }).Build();
-
         Task.Run(async () =>
         {
             try
