@@ -1,6 +1,6 @@
-using Kontur.TestAnalytics.Reporter.Client;
-using Kontur.TestCity.Core;
 using Kontur.TestCity.Core.Clickhouse;
+using Kontur.TestCity.Core.GitlabProjects;
+using Kontur.TestCity.Core.Storage;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
@@ -12,9 +12,9 @@ public class TestsLoadFromGitlab
     [Explicit]
     public async Task TestIsJobRunExists()
     {
-        await using var connection = ConnectionFactory.CreateConnection();
+        await using var connection = new ConnectionFactory().CreateConnection();
         await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);
-        var result = await TestRunsUploader.IsJobRunIdExists("31666195");
+        var result = await new TestCityDatabase(new ConnectionFactory()).JobInfo.ExistsAsync("31666195");
         Logger.LogInformation("JobRunIdExists result: {Result}", result);
         Assert.That(result, Is.False);
     }
@@ -22,7 +22,7 @@ public class TestsLoadFromGitlab
     [Test]
     public void TestOutputRootGroups()
     {
-        foreach (var group in GitLabProjectsService.Projects)
+        foreach (var group in PreconfiguredGitLabProjectsService.Projects)
         {
             Logger.LogInformation("Group ID: {GroupId}, Title: {Title}", group.Id, group.Title);
         }
@@ -32,7 +32,7 @@ public class TestsLoadFromGitlab
     public void TestGetAllProjects()
     {
         Logger.LogInformation("Starting TestGetAllProjects...");
-        foreach (var project in GitLabProjectsService.GetAllProjects())
+        foreach (var project in PreconfiguredGitLabProjectsService.GetAllProjects())
         {
             Logger.LogInformation("Project ID: {ProjectId}, Title: {Title}", project.Id, project.Title);
         }

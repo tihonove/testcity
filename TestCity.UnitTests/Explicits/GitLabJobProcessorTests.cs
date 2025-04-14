@@ -1,7 +1,11 @@
 using FluentAssertions;
-using Kontur.TestAnalytics.Reporter.Client;
 using Kontur.TestCity.Core;
+using Kontur.TestCity.Core.Clickhouse;
 using Kontur.TestCity.Core.GitLab;
+using Kontur.TestCity.Core.JobProcessing;
+using Kontur.TestCity.Core.JUnit;
+using Kontur.TestCity.Core.Storage;
+using Kontur.TestCity.Core.Storage.DTO;
 using Kontur.TestCity.GitLabJobsCrawler;
 using Microsoft.Extensions.Logging;
 using NGitLab.Models;
@@ -13,7 +17,6 @@ namespace Kontur.TestCity.UnitTests.Explicits;
 [Explicit]
 public class GitLabJobProcessorTests
 {
-    private static readonly ILoggerFactory LoggerFactory = GlobalSetup.TestLoggerFactory;
     private ILogger<GitLabJobProcessor> logger;
     private GitLabSettings settings;
 
@@ -33,7 +36,7 @@ public class GitLabJobProcessorTests
         var gitLabClientProvider = new SkbKonturGitLabClientProvider(settings);
         var client = gitLabClientProvider.GetClient();
         var clientEx = gitLabClientProvider.GetExtendedClient();
-        var extractor = new JUnitExtractor(GlobalSetup.TestLoggerFactory.CreateLogger<JUnitExtractor>());
+        var extractor = new JUnitExtractor();
         var jobProcessor = new GitLabJobProcessor(client, clientEx, extractor, logger);
 
         var processingResult = await jobProcessor.ProcessJobAsync(projectId, jobId);
@@ -51,7 +54,7 @@ public class GitLabJobProcessorTests
 
         var gitLabClientProvider = new SkbKonturGitLabClientProvider(settings);
         var client = gitLabClientProvider.GetClient();
-        var extractor = new JUnitExtractor(GlobalSetup.TestLoggerFactory.CreateLogger<JUnitExtractor>());
+        var extractor = new JUnitExtractor();
         var clientEx = gitLabClientProvider.GetExtendedClient();
         var jobProcessor = new GitLabJobProcessor(client, clientEx, extractor, logger);
 
@@ -87,7 +90,7 @@ public class GitLabJobProcessorTests
             {
                 try
                 {
-                    bool exists = await TestRunsUploader.IsJobRunIdExists(job.Id.ToString());
+                    bool exists = await new TestCityDatabase(new ConnectionFactory()).JobInfo.ExistsAsync(job.Id.ToString());
                     if (exists)
                     {
                         logger.LogInformation("JobRunId '{JobRunId}' exists. Skip processing test runs", job.Id);
@@ -95,7 +98,7 @@ public class GitLabJobProcessorTests
                     }
                     var artifactContents = client.GetJobs(projectId).GetJobArtifacts(job.Id);
                     logger.LogInformation("Artifact size for job with id: {JobId}. Size: {Size} bytes", job.Id, artifactContents.Length);
-                    var extractor = new JUnitExtractor(LoggerFactory.CreateLogger<JUnitExtractor>());
+                    var extractor = new JUnitExtractor();
                     var extractResult = extractor.TryExtractTestRunsFromGitlabArtifact(artifactContents);
                     if (extractResult.TestReportData != null)
                     {
@@ -128,7 +131,7 @@ public class GitLabJobProcessorTests
     public async Task FixMissedFormsJobsForPipeline()
     {
         var projectId = 17358;
-        var pipelineId = 4071111;
+        // var pipelineId = 4071111;
         logger.LogInformation("Starting Test01...");
         var gitlabClientProvider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
 
@@ -156,7 +159,7 @@ public class GitLabJobProcessorTests
             {
                 try
                 {
-                    bool exists = await TestRunsUploader.IsJobRunIdExists(job.Id.ToString());
+                    bool exists = await new TestCityDatabase(new ConnectionFactory()).JobInfo.ExistsAsync(job.Id.ToString());
                     if (exists)
                     {
                         logger.LogInformation("JobRunId '{JobRunId}' exists. Skip processing test runs", job.Id);
@@ -164,7 +167,7 @@ public class GitLabJobProcessorTests
                     }
                     var artifactContents = client.GetJobs(projectId).GetJobArtifacts(job.Id);
                     logger.LogInformation("Artifact size for job with id: {JobId}. Size: {Size} bytes", job.Id, artifactContents.Length);
-                    var extractor = new JUnitExtractor(LoggerFactory.CreateLogger<JUnitExtractor>());
+                    var extractor = new JUnitExtractor();
                     var extractResult = extractor.TryExtractTestRunsFromGitlabArtifact(artifactContents);
                     if (extractResult.TestReportData != null)
                     {
@@ -212,6 +215,7 @@ public class GitLabJobProcessorTests
         //var jobs = Enumerable.Take(jobsClient.GetJobsAsync(jobsQuery), 100);
         // logger.LogInformation("Take last {JobsLength} jobs", jobs.Length);
     
+        var database = new TestCityDatabase(new ConnectionFactory());
         int count = 0;
         foreach (var job in jobs)
         {
@@ -221,7 +225,7 @@ public class GitLabJobProcessorTests
             {
                 try
                 {
-                    bool exists = await TestRunsUploader.IsJobRunIdExists(job.Id.ToString());
+                    bool exists = await database.JobInfo.ExistsAsync(job.Id.ToString());
                     if (exists)
                     {
                         logger.LogInformation("JobRunId '{JobRunId}' exists. Skip processing test runs", job.Id);
@@ -229,7 +233,7 @@ public class GitLabJobProcessorTests
                     }
                     var artifactContents = client.GetJobs(projectId).GetJobArtifacts(job.Id);
                     logger.LogInformation("Artifact size for job with id: {JobId}. Size: {Size} bytes", job.Id, artifactContents.Length);
-                    var extractor = new JUnitExtractor(LoggerFactory.CreateLogger<JUnitExtractor>());
+                    var extractor = new JUnitExtractor();
                     var extractResult = extractor.TryExtractTestRunsFromGitlabArtifact(artifactContents);
                     if (extractResult.TestReportData != null)
                     {
@@ -238,8 +242,8 @@ public class GitLabJobProcessorTests
                         if (!exists)
                         {
                             logger.LogInformation("JobRunId '{JobRunId}' does not exist. Uploading test runs", jobInfo.JobRunId);
-                            await TestRunsUploader.JobInfoUploadAsync(jobInfo);
-                            await TestRunsUploader.UploadAsync(jobInfo, extractResult.TestReportData.Runs);
+                            await database.JobInfo.InsertAsync(jobInfo);
+                            await database.TestRuns.InsertBatchAsync(jobInfo, extractResult.TestReportData.Runs);
                         }
                         else
                         {

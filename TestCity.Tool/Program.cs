@@ -1,10 +1,11 @@
 ﻿using System.Text;
 using ClickHouse.Client.Utility;
 using dotenv.net;
-using Kontur.TestAnalytics.Reporter.Client;
-using Kontur.TestCity.Core;
+using Kontur.TestCity.Core.Clickhouse;
 using Kontur.TestCity.Core.GitLab;
+using Kontur.TestCity.Core.GitlabProjects;
 using Kontur.TestCity.Core.KafkaMessageQueue;
+using Kontur.TestCity.Core.Logging;
 using Kontur.TestCity.Core.Worker;
 using Kontur.TestCity.Core.Worker.TaskPayloads;
 using Microsoft.Extensions.Logging;
@@ -14,10 +15,11 @@ Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
 var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
 var logger = loggerFactory.CreateLogger<Program>();
+Log.ConfigureGlobalLogProvider(loggerFactory);
 
 var clientProvider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
 var clientEx = clientProvider.GetExtendedClient();
-var projects = GitLabProjectsService.GetAllProjects();
+var projects = PreconfiguredGitLabProjectsService.GetAllProjects();
 var client = clientProvider.GetClient();
 var messageQueueClient = KafkaMessageQueueClient.CreateDefault(loggerFactory.CreateLogger<KafkaMessageQueueClient>());
 var workreClient = new WorkerClient(messageQueueClient);
@@ -30,7 +32,8 @@ foreach (var project in projects)
 
     try
     {
-        var connection = TestRunsUploader.CreateConnection();
+        var connectionFactory = new ConnectionFactory();
+        var connection = connectionFactory.CreateConnection();
         var query = $"SELECT DISTINCT CommitSha FROM JobInfo WHERE ProjectId = '{project.Id}'";
         using var reader = await connection.ExecuteReaderAsync(query);
 

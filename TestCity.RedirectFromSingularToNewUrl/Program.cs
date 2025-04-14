@@ -1,6 +1,7 @@
 using System.Text;
 using dotenv.net;
 using Kontur.TestCity.Core;
+using Kontur.TestCity.Core.Logging;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -17,6 +18,7 @@ builder.Logging.AddSimpleConsole(options =>
 builder.Logging.AddFilter("Microsoft.AspNetCore", LogLevel.Warning);
 
 var app = builder.Build();
+Log.ConfigureGlobalLogProvider(app.Services.GetRequiredService<ILoggerFactory>());
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
 app.Use(async (HttpContext context, Func<Task> next) =>

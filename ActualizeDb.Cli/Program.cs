@@ -6,7 +6,7 @@ using Kontur.TestCity.Core.Clickhouse;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();
 
-var connection = ConnectionFactory.CreateConnection();
+var connection = new ConnectionFactory().CreateConnection();
 await connection.EnsureDbIsAccessibleAsync(TimeSpan.FromMinutes(20));
 
 await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);

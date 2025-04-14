@@ -1,4 +1,5 @@
 using dotenv.net;
+using Kontur.TestCity.Core.Logging;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
@@ -13,6 +14,7 @@ public class GlobalSetup
     public void LoadEnv()
     {
         DotEnv.Fluent().WithProbeForEnv(10).Load();
+        Log.ConfigureGlobalLogProvider(TestLoggerFactory);
     }
 
     public static ILoggerFactory TestLoggerFactory

@@ -1,11 +1,14 @@
 using System.Text;
 using dotenv.net;
 using Kontur.TestCity.Core;
+using Kontur.TestCity.Core.Clickhouse;
 using Kontur.TestCity.Core.GitLab;
+using Kontur.TestCity.Core.Infrastructure;
 using Kontur.TestCity.Core.KafkaMessageQueue;
+using Kontur.TestCity.Core.Logging;
+using Kontur.TestCity.Core.Storage;
 using Kontur.TestCity.Core.Worker;
 using OpenTelemetry.Metrics;
-using TestCity.Api.Extensions;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -19,8 +22,9 @@ builder.Services.AddControllers();
 builder.Services.AddSingleton<GitLabSettings>(new GitLabSettings() { Token = Environment.GetEnvironmentVariable("GITLAB_TOKEN") ?? "NoToken" });
 builder.Services.AddSingleton<SkbKonturGitLabClientProvider>();
 builder.Services.AddSingleton<WorkerClient>();
+builder.Services.AddSingleton<ConnectionFactory>();
+builder.Services.AddSingleton<TestCityDatabase>();
 builder.Services.AddSingleton(r => KafkaMessageQueueClient.CreateDefault(r.GetRequiredService<ILogger<KafkaMessageQueueClient>>()));
-
 builder.Logging.AddSimpleConsole(options =>
 {
     options.IncludeScopes = true;
@@ -46,6 +50,8 @@ if (OpenTelemetryExtensions.IsOpenTelemetryEnabled())
 }
 
 var app = builder.Build();
+Log.ConfigureGlobalLogProvider(app.Services.GetRequiredService<ILoggerFactory>());
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();

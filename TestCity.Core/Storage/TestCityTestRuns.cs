@@ -1,0 +1,54 @@
+using ClickHouse.Client.Copy;
+using Kontur.TestCity.Core.Clickhouse;
+using Kontur.TestCity.Core.Extensions;
+using Kontur.TestCity.Core.Storage.DTO;
+
+namespace Kontur.TestCity.Core.Storage;
+
+public class TestCityTestRuns(ConnectionFactory connectionFactory)
+{
+    public Task InsertBatchAsync(JobRunInfo jobRunInfo, IEnumerable<TestRun> lines)
+    {
+        return InsertBatchAsync(jobRunInfo, lines.ToAsyncEnumerable());
+    }
+
+    public async Task InsertBatchAsync(JobRunInfo info, IAsyncEnumerable<TestRun> lines)
+    {
+        await using var connection = connectionFactory.CreateConnection();
+        using var bulkCopyInterface = new ClickHouseBulkCopy(connection)
+        {
+            DestinationTableName = "TestRuns",
+            BatchSize = 1000,
+            ColumnNames = Fields,
+        };
+        await bulkCopyInterface.InitAsync();
+        await foreach (var testRuns in lines.Batches(1000))
+        {
+            var values = testRuns.Select(x =>
+                new object?[]
+                {
+                    info.JobId, info.JobRunId, info.BranchName, x.TestId, (int)x.TestResult, x.Duration,
+                    x.StartDateTime.ToUniversalTime(), info.AgentName, info.AgentOSName, info.JobUrl,
+                    x.JUnitFailureMessage, x.JUnitFailureOutput, x.JUnitSystemOutput,
+                });
+            await bulkCopyInterface.WriteToServerAsync(values);
+        }
+    }
+
+    private static readonly string[] Fields =
+    [
+        "JobId",
+        "JobRunId",
+        "BranchName",
+        "TestId",
+        "State",
+        "Duration",
+        "StartDateTime",
+        "AgentName",
+        "AgentOSName",
+        "JobUrl",
+        "JUnitFailureMessage",
+        "JUnitFailureOutput",
+        "JUnitSystemOutput",
+    ];
+}

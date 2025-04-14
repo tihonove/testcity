@@ -12,7 +12,7 @@ public class TestAnalyticsDatabaseSchema
         await using var stream = assembly.GetManifestResourceStream(resourceName) ?? throw new Exception($"Resource {resourceName} not found");
         using var reader = new StreamReader(stream);
         var sqlScript = await reader.ReadToEndAsync();
-        var statements = sqlScript.Split(new[] { "-- divider --" }, StringSplitOptions.RemoveEmptyEntries);
+        var statements = sqlScript.Split(["-- divider --"], StringSplitOptions.RemoveEmptyEntries);
         await using var command = connection.CreateCommand();
         foreach (var statement in statements)
         {

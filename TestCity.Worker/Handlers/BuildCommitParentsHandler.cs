@@ -1,7 +1,8 @@
 using System.Collections.Concurrent;
-using ClickHouse.Client.ADO;
-using Kontur.TestAnalytics.Reporter.Client;
 using Kontur.TestCity.Core.GitLab;
+using Kontur.TestCity.Core.Logging;
+using Kontur.TestCity.Core.Storage;
+using Kontur.TestCity.Core.Storage.DTO;
 using Kontur.TestCity.Core.Worker;
 using Kontur.TestCity.Core.Worker.TaskPayloads;
 using Kontur.TestCity.Worker.Handlers.Base;
@@ -9,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Kontur.TestCity.Worker.Handlers;
 
-public class BuildCommitParentsHandler(ILogger<BuildCommitParentsHandler> logger, SkbKonturGitLabClientProvider gitLabClientProvider) : TaskHandler<BuildCommitParentsTaskPayload>
+public sealed class BuildCommitParentsHandler(SkbKonturGitLabClientProvider gitLabClientProvider, TestCityDatabase testCityDatabase) : TaskHandler<BuildCommitParentsTaskPayload>
 {
     public override bool CanHandle(RawTask task)
     {
@@ -34,7 +35,7 @@ public class BuildCommitParentsHandler(ILogger<BuildCommitParentsHandler> logger
         try
         {
             // Проверка наличия корневого коммита (с Depth = 0) в таблице CommitParents
-            bool commitExists = await IsCommitParentExists(task.ProjectId, task.CommitSha, ct);
+            bool commitExists = await testCityDatabase.CommitParents.ExistsAsync(task.ProjectId, task.CommitSha, ct);
             if (commitExists)
             {
                 logger.LogInformation("Коммит {CommitSha} в проекте {ProjectId} уже существует в таблице CommitParents, пропускаем",
@@ -59,7 +60,7 @@ public class BuildCommitParentsHandler(ILogger<BuildCommitParentsHandler> logger
             }).ToListAsync(cancellationToken: ct);
 
             logger.LogInformation("Загружаем родительские коммиты для {CommitSha}", task.CommitSha);
-            await TestRunsUploader.UploadCommitParents(entries, ct);
+            await testCityDatabase.CommitParents.InsertBatchAsync(entries, ct);
 
             processedCommits.Add(processingKey);
         }
@@ -77,14 +78,6 @@ public class BuildCommitParentsHandler(ILogger<BuildCommitParentsHandler> logger
         }
     }
 
-    private static async Task<bool> IsCommitParentExists(long projectId, string commitSha, CancellationToken ct = default)
-    {
-        await using var connection = TestRunsUploader.CreateConnection();
-        var query = $"SELECT count() > 0 FROM CommitParents WHERE ProjectId = '{projectId}' AND CommitSha = '{commitSha}' AND Depth = 0";
-        var result = await connection.ExecuteScalarAsync(query, ct);
-        return result != null && (byte)result > 0;
-    }
-
     private static string? GetMessagePreview(GitLabCommit x)
     {
         var firstLine = x.Message?.Split('\n').FirstOrDefault();
@@ -94,6 +87,7 @@ public class BuildCommitParentsHandler(ILogger<BuildCommitParentsHandler> logger
         return firstLine[..Math.Min(100, firstLine.Length)];
     }
 
-    private static readonly ConcurrentBag<(string, string)> processedCommits = new();
+    private readonly ILogger logger = Log.GetLog<BuildCommitParentsHandler>();
+    private static readonly ConcurrentBag<(string, string)> processedCommits = [];
     private static readonly ConcurrentDictionary<(string, string), SemaphoreSlim> commitProcessLocks = new();
 }

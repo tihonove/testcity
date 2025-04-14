@@ -1,3 +1,5 @@
+using Kontur.TestCity.Core.JUnit;
+using Kontur.TestCity.Core.Storage.DTO;
 using Kontur.TestCity.UnitTests;
 using Kontur.TestCity.UnitTests.Utils;
 using Microsoft.Extensions.Logging;
@@ -13,7 +15,7 @@ namespace Kontur.TestCity.GitLabJobsCrawler.Tests
         [SetUp]
         public void SetUp()
         {
-            junitExtractor = new JUnitExtractor(GlobalSetup.TestLoggerFactory.CreateLogger<JUnitExtractor>());
+            junitExtractor = new JUnitExtractor();
         }
 
         [Test]
@@ -39,7 +41,7 @@ namespace Kontur.TestCity.GitLabJobsCrawler.Tests
             Assert.That(result!.Counters.Total, Is.EqualTo(402));
             Assert.That(result!.Counters.Failed, Is.EqualTo(42));
 
-            foreach (var test in result!.Runs.Where(x => x.TestResult == TestAnalytics.Reporter.Client.TestResult.Failed))
+            foreach (var test in result!.Runs.Where(x => x.TestResult == TestResult.Failed))
             {
                 TestContext.WriteLine(test.JUnitFailureMessage);
                 TestContext.WriteLine(test.JUnitFailureOutput);

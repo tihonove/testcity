@@ -32,7 +32,7 @@ public class GitLabCommitsTests
         Console.WriteLine($"Found {commits.Count} commits:");
         foreach (var commit in commits)
         {
-            Console.WriteLine($"-----------------------------------------------------");
+            Console.WriteLine("-----------------------------------------------------");
             Console.WriteLine($"ID: {commit.Id}");
             Console.WriteLine($"Short ID: {commit.ShortId}");
             Console.WriteLine($"Title: {commit.Title}");
@@ -87,7 +87,7 @@ public class GitLabCommitsTests
         Console.WriteLine($"Found {commits.Count} commits with keyset pagination:");
         foreach (var commit in commits.Take(3)) // Display just first 3 to keep output manageable
         {
-            Console.WriteLine($"-----------------------------------------------------");
+            Console.WriteLine("-----------------------------------------------------");
             Console.WriteLine($"ID: {commit.Id}");
             Console.WriteLine($"Created At: {commit.CreatedAt}");
             Console.WriteLine($"Title: {commit.Title}");

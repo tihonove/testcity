@@ -1,6 +1,8 @@
 using System.IO.Compression;
-using Kontur.TestCity.Core;
+using Kontur.TestCity.Api.Models;
 using Kontur.TestCity.Core.GitLab;
+using Kontur.TestCity.Core.GitlabProjects;
+using Kontur.TestCity.Core.Logging;
 using Kontur.TestCity.Core.Worker;
 using Kontur.TestCity.Core.Worker.TaskPayloads;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +12,11 @@ namespace Kontur.TestCity.Api.Controllers;
 
 [ApiController]
 [Route("api/gitlab")]
-public class GitlabController(SkbKonturGitLabClientProvider gitLabClientProvider, WorkerClient workerClient, ILogger<GitlabController> logger) : Controller
+public class GitlabController(SkbKonturGitLabClientProvider gitLabClientProvider, WorkerClient workerClient) : Controller
 {
+    private readonly ILogger logger = Log.GetLog<GitlabController>();
     private readonly IGitLabClient gitLabClient = gitLabClientProvider.GetClient();
-    private readonly HashSet<long> hooksBasedProjectIds = GitLabProjectsService.GetAllProjects().Select(x => long.Parse(x.Id)).ToHashSet();
+    private readonly HashSet<long> hooksBasedProjectIds = PreconfiguredGitLabProjectsService.GetAllProjects().Select(x => long.Parse(x.Id)).ToHashSet();
 
     [HttpGet("{projectId}/jobs/{jobId}/codequality")]
     public IActionResult Get(long projectId, long jobId)

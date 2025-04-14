@@ -1,9 +1,8 @@
 using FluentAssertions;
-using Kontur.TestAnalytics.Reporter.Client;
-using Kontur.TestCity.Core;
+using Kontur.TestCity.Core.Clickhouse;
 using Kontur.TestCity.Core.GitLab;
-using Microsoft.Extensions.Logging;
-using NGitLab.Models;
+using Kontur.TestCity.Core.Storage;
+using Kontur.TestCity.Core.Storage.DTO;
 using NUnit.Framework;
 
 namespace Kontur.TestCity.UnitTests.Explicits;
@@ -12,13 +11,11 @@ namespace Kontur.TestCity.UnitTests.Explicits;
 [Explicit]
 public class CommitParentFillTest
 {
-    private ILogger<GitLabJobProcessor> logger;
     private GitLabSettings settings;
 
     [OneTimeSetUp]
     public void Setup()
     {
-        logger = GlobalSetup.TestLoggerFactory.CreateLogger<GitLabJobProcessor>();
         settings = GitLabSettings.Default;
     }
 
@@ -45,8 +42,7 @@ public class CommitParentFillTest
                 MessagePreview = GetMessagePreview(x),
             }).ToListAsync();
 
-            await TestRunsUploader.UploadCommitParents(entries);
-
+            await new TestCityDatabase(new ConnectionFactory()).CommitParents.InsertBatchAsync(entries);
         }
     }
 

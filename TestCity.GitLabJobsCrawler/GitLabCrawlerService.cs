@@ -1,25 +1,14 @@
 using System.Collections.Concurrent;
-using Kontur.TestAnalytics.Reporter.Client;
-using Kontur.TestCity.Core;
 using Kontur.TestCity.Core.GitLab;
+using Kontur.TestCity.Core.GitlabProjects;
+using Kontur.TestCity.Core.Logging;
 using Kontur.TestCity.Core.Worker;
 using Kontur.TestCity.Core.Worker.TaskPayloads;
-using NGitLab.Models;
 
 namespace Kontur.TestCity.GitLabJobsCrawler;
 
-public sealed class GitLabCrawlerService : IDisposable
+public sealed class GitLabCrawlerService(GitLabSettings gitLabSettings, WorkerClient workerClient, IHostEnvironment hostEnvironment) : IDisposable
 {
-    public GitLabCrawlerService(GitLabSettings gitLabSettings, ILogger<GitLabCrawlerService> log, JUnitExtractor extractor, WorkerClient workerClient, IHostEnvironment hostEnvironment)
-    {
-        this.gitLabSettings = gitLabSettings;
-        this.log = log;
-        this.extractor = extractor;
-        this.workerClient = workerClient;
-        this.hostEnvironment = hostEnvironment;
-        stopTokenSource = new CancellationTokenSource();
-    }
-
     public void Start()
     {
         log.LogInformation("Periodic gitlab jobs update runned");
@@ -30,7 +19,7 @@ public sealed class GitLabCrawlerService : IDisposable
                 return;
             }
 
-            var gitLabProjectIds = GitLabProjectsService.GetAllProjects().ToList();
+            var gitLabProjectIds = PreconfiguredGitLabProjectsService.GetAllProjects().ToList();
             var gitLabClientProvider = new SkbKonturGitLabClientProvider(gitLabSettings);
             var client = gitLabClientProvider.GetClient();
             var clientEx = gitLabClientProvider.GetExtendedClient();
@@ -132,10 +121,6 @@ public sealed class GitLabCrawlerService : IDisposable
     }
 
     private readonly ConcurrentDictionary<(long, long), byte> processedJobSet = new();
-    private readonly GitLabSettings gitLabSettings;
-    private readonly CancellationTokenSource stopTokenSource;
-    private readonly ILogger<GitLabCrawlerService> log;
-    private readonly JUnitExtractor extractor;
-    private readonly WorkerClient workerClient;
-    private readonly IHostEnvironment hostEnvironment;
+    private readonly CancellationTokenSource stopTokenSource = new();
+    private readonly ILogger log = Log.GetLog<GitLabCrawlerService>();
 }
