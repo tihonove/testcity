@@ -33,6 +33,7 @@ import { useSearchParamAsState } from "../Utils";
 import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
 import { ProjectsWithRunsTable, RunsTable } from "./ProjectsWithRunsTable";
 import { useShowChangesFeature } from "./useShowChangesFeature";
+import { JobRunNames } from "../Domain/Storage/JobsQuery";
 
 export function ProjectsDashboardPage(): React.JSX.Element {
     const { rootGroup: rootProjectStructure, groupNodes, pathToGroup } = useProjectContextFromUrlParams();
@@ -48,7 +49,31 @@ export function ProjectsDashboardPage(): React.JSX.Element {
     const projectIds = React.useMemo(() => projects.map(p => p.id), [projects]);
 
     const allJobs = useStorageQuery(x => x.findAllJobs(projectIds), [projectIds]);
-    const allJobRuns = useStorageQuery(
+    const inProgressJobRuns = useStorageQuery(
+        x => (usePipelineGrouping ? [] : showChanges ? [] : x.findAllJobsRunsInProgress(projectIds, currentBranchName)),
+        [projectIds, currentBranchName, usePipelineGrouping, pathToGroup]
+    );
+    // const inProgressJobRuns = [
+    //     [
+    //         "DotNet tests",
+    //         "38995054",
+    //         "main",
+    //         "agent_12616",
+    //         "2025-04-15 20:49:41",
+    //         null,
+    //         "linux",
+    //         null,
+    //         null,
+    //         null,
+    //         null,
+    //         "Running",
+    //         null,
+    //         "https://git.skbkontur.ru/forms/test-analytics/-/jobs/38995054",
+    //         "24783",
+    //         0,
+    //     ],
+    // ];
+    const allJobRuns2 = useStorageQuery(
         x =>
             usePipelineGrouping
                 ? []
@@ -57,6 +82,7 @@ export function ProjectsDashboardPage(): React.JSX.Element {
                   : x.findAllJobsRuns(projectIds, currentBranchName),
         [projectIds, currentBranchName, usePipelineGrouping, pathToGroup]
     );
+    const allJobRuns = [...inProgressJobRuns, ...allJobRuns2];
 
     const allPipelineRuns = useStorageQuery(
         x =>

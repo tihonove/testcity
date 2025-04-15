@@ -329,6 +329,39 @@ export class TestAnalyticsStorage {
         return this.executeClickHouseQuery<JobsQueryRow[]>(query);
     }
 
+    public async findAllJobsRunsInProgress(projectIds: string[], currentBranchName?: string): Promise<JobsQueryRow[]> {
+        const query = `
+            SELECT
+                ipji.JobId,
+                ipji.JobRunId,
+                ipji.BranchName,
+                ipji.AgentName,
+                ipji.StartDateTime,
+                null as TotalTestsCount,
+                ipji.AgentOSName,
+                null as Duration,
+                null as SuccessTestsCount,
+                null as SkippedTestsCount,
+                null as FailedTestsCount,
+                'Running' as State,
+                null as CustomStatusMessage,
+                ipji.JobUrl,
+                ipji.ProjectId,
+                0 as HasCodeQualityReport
+            FROM InProgressJobInfo ipji
+            LEFT JOIN JobInfo AS ji ON ji.JobId = ipji.JobId AND ji.JobRunId = ipji.JobRunId
+            WHERE 
+                ji.JobRunId = ''
+                AND ipji.StartDateTime >= now() - INTERVAL 30 DAY 
+                AND ipji.ProjectId IN [${projectIds.map(x => "'" + x + "'").join(", ")}]
+                ${currentBranchName ? `AND ipji.BranchName = '${currentBranchName}'` : ""}
+            ORDER BY ipji.JobId, ipji.StartDateTime DESC
+            LIMIT 1000;
+        `;
+
+        return this.executeClickHouseQuery<JobsQueryRow[]>(query);
+    }
+
     public async getPipelineRunsOverview(
         projectIds: string[],
         currentBranchName?: string

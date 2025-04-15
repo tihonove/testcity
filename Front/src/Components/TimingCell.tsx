@@ -5,7 +5,7 @@ import { formatRelativeTime, formatTestDuration, toLocalTimeFromUtc } from "../U
 
 interface TimingCellProps {
     startDateTime: string;
-    duration: string | number;
+    duration: string | number | null;
 }
 
 export function TimingCell({ startDateTime, duration }: TimingCellProps) {
@@ -19,19 +19,23 @@ export function TimingCell({ startDateTime, duration }: TimingCellProps) {
                             <TimingHintCaption>Start time:</TimingHintCaption>
                             {toLocalTimeFromUtc(startDateTime)}
                         </div>
-                        <div>
-                            <TimingHintCaption>Duration:</TimingHintCaption>
-                            {formatTestDuration(duration.toString())}
-                        </div>
+                        {duration != null && (
+                            <div>
+                                <TimingHintCaption>Duration:</TimingHintCaption>
+                                {formatTestDuration(duration.toString())}
+                            </div>
+                        )}
                     </TimingHintContent>
                 }>
                 <Started>{formatRelativeTime(startDateTime)}</Started>
-                <Duration
-                    style={{
-                        width: formatTestDuration(duration.toString()).length * 9,
-                    }}>
-                    {formatTestDuration(duration.toString())}
-                </Duration>
+                {duration != null && (
+                    <Duration
+                        style={{
+                            width: formatTestDuration(duration.toString()).length * 9,
+                        }}>
+                        {formatTestDuration(duration.toString())}
+                    </Duration>
+                )}
             </Hint>
         </StyledTimingCell>
     );

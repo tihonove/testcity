@@ -5,6 +5,7 @@ import {
     ShapeSquareIcon16Regular,
     ShapeSquareIcon16Solid,
     ShareNetworkIcon,
+    UiLoadSpinnerIcon16Light,
 } from "@skbkontur/icons";
 import * as React from "react";
 import { Link } from "react-router-dom";
@@ -25,6 +26,7 @@ import { TimingCell } from "./TimingCell";
 import { theme } from "../Theme/ITheme";
 import { useReadLocalStorage } from "usehooks-ts";
 import { useShowChangesFeature } from "../Pages/useShowChangesFeature";
+import { RotatingSpinner } from "./RotatingSpinner";
 
 interface JobsViewProps {
     hideRuns?: boolean;
@@ -100,31 +102,43 @@ export function JobsView({
                                         <SelectedOnHoverTr key={x[JobRunNames.JobRunId]}>
                                             <PaddingCell style={{ paddingLeft: indentLevel * 25, paddingRight: 0 }} />
                                             <NumberCell>
-                                                <Link to={x[13] || getLinkToJob(x[1], x[3])}>#{x[1]}</Link>
+                                                <Link
+                                                    to={
+                                                        x[JobRunNames.JobUrl] ||
+                                                        getLinkToJob(x[JobRunNames.JobRunId], x[JobRunNames.ProjectId])
+                                                    }>
+                                                    #{x[JobRunNames.JobRunId]}
+                                                </Link>
                                             </NumberCell>
                                             <BranchCell>
                                                 <BranchBox name={x[JobRunNames.BranchName]} />
                                             </BranchCell>
                                             <CountCell>
-                                                <JobLink
-                                                    state={x[JobRunNames.State]}
-                                                    to={createLinkToJobRun(
-                                                        rootProjectStructure,
-                                                        projectId,
-                                                        jobId,
-                                                        x[JobRunNames.JobRunId],
-                                                        currentBranchName
-                                                    )}>
-                                                    {getText(
-                                                        x[JobRunNames.TotalTestsCount],
-                                                        x[JobRunNames.SuccessTestsCount],
-                                                        x[JobRunNames.SkippedTestsCount],
-                                                        x[JobRunNames.FailedTestsCount],
-                                                        x[JobRunNames.State],
-                                                        x[JobRunNames.CustomStatusMessage],
-                                                        x[JobRunNames.HasCodeQualityReport]
-                                                    )}
-                                                </JobLink>
+                                                {x[JobRunNames.State] === "Running" ? (
+                                                    <>
+                                                        <RotatingSpinner /> Running...
+                                                    </>
+                                                ) : (
+                                                    <JobLink
+                                                        state={x[JobRunNames.State]}
+                                                        to={createLinkToJobRun(
+                                                            rootProjectStructure,
+                                                            projectId,
+                                                            jobId,
+                                                            x[JobRunNames.JobRunId],
+                                                            currentBranchName
+                                                        )}>
+                                                        {getText(
+                                                            x[JobRunNames.TotalTestsCount]?.toString() ?? "0",
+                                                            x[JobRunNames.SuccessTestsCount]?.toString() ?? "0",
+                                                            x[JobRunNames.SkippedTestsCount]?.toString() ?? "0",
+                                                            x[JobRunNames.FailedTestsCount]?.toString() ?? "0",
+                                                            x[JobRunNames.State],
+                                                            x[JobRunNames.CustomStatusMessage],
+                                                            x[JobRunNames.HasCodeQualityReport]
+                                                        )}
+                                                    </JobLink>
+                                                )}
                                             </CountCell>
                                             {showChanges && (
                                                 <ChangesCell>
@@ -182,7 +196,10 @@ export function JobsView({
                                                     )}
                                                 </ChangesCell>
                                             )}
-                                            <TimingCell startDateTime={x[4]} duration={x[7]} />
+                                            <TimingCell
+                                                startDateTime={x[JobRunNames.StartDateTime]}
+                                                duration={x[JobRunNames.Duration]}
+                                            />
                                             <AttributesCell>
                                                 {x[JobRunNames.HasCodeQualityReport] != 0 && (
                                                     <Hint text="Code quality report available">

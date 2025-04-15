@@ -1,20 +1,20 @@
 export type JobsQueryRow = [
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    string,
-    number,
+    string, // JobId
+    string, // JobRunId
+    string, // BranchName
+    string, // AgentName
+    string, // StartDateTime
+    string | number | null, // TotalTestsCount
+    string, // AgentOSName
+    string | number | null, // Duration
+    string | number | null, // SuccessTestsCount
+    string | number | null, // SkippedTestsCount
+    string | number | null, // FailedTestsCount
+    "Failed" | "Success" | "Cancelled" | "Running", // State
+    string, // CustomStatusMessage
+    string, // JobUrl
+    string, // ProjectId
+    number, // HasCodeQualityReport
     Array<
         | [string, string, string, string]
         | {
