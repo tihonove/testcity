@@ -62,7 +62,6 @@ public class ProcessJobRunTaskHandler(
                 if (processingResult.TestReportData != null)
                 {
                     await testCityDatabase.TestRuns.InsertBatchAsync(processingResult.JobInfo, processingResult.TestReportData.Runs);
-                    var job = await clientEx.GetJobAsync(task.ProjectId, task.JobRunId);
                     await metricsSender.SendAsync(
                         projectInfo,
                         processingResult.JobInfo.BranchName,
