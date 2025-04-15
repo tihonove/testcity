@@ -2,9 +2,14 @@ version: '3'
 
 tasks:
   db:
-    run: once
     cmds:
-      - docker compose up -d
+      - docker compose up
+    silent: false
+
+  clean-db:
+    desc: Удалить все данные ClickHouse и Kafka (volume)
+    cmds:
+      - docker compose down -v
     silent: false
 
   actualize-db:

@@ -7,6 +7,8 @@ services:
       CLICKHOUSE_DB: default
       CLICKHOUSE_USER: testanalytics-user
       CLICKHOUSE_PASSWORD: 123123
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
   kafka:
     image: bitnami/kafka:4.0
     container_name: kafka
@@ -24,3 +26,9 @@ services:
       - KAFKA_KRAFT_CLUSTER_ID=2451c12e-a37d-4349-b744-a1047b01cbd3
       - ALLOW_PLAINTEXT_LISTENER=yes
     restart: unless-stopped
+    volumes:
+      - kafka_data:/bitnami/kafka
+
+volumes:
+  clickhouse_data:
+  kafka_data:
