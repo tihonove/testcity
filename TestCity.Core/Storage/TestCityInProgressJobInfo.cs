@@ -37,7 +37,7 @@ public class TestCityInProgressJobInfo(ConnectionFactory connectionFactory)
                 ],
             ]);
     }
-    
+
     public async Task<bool> ExistsAsync(string projectId, string jobRunId)
     {
         await using var connection = connectionFactory.CreateConnection();
@@ -62,4 +62,35 @@ public class TestCityInProgressJobInfo(ConnectionFactory connectionFactory)
         "ProjectId",
         "PipelineId"
     };
+
+    public async Task<List<InProgressJobInfo>> GetAllByProjectIdAsync(string projectId)
+    {
+        var result = new List<InProgressJobInfo>();
+        await using var connection = connectionFactory.CreateConnection();
+        await using var command = connection.CreateCommand();
+        command.CommandText = $@"SELECT JobId, JobRunId, JobUrl, StartDateTime, PipelineSource, Triggered, BranchName, CommitSha, CommitMessage, CommitAuthor, AgentName, AgentOSName, ProjectId, PipelineId FROM InProgressJobInfo WHERE ProjectId = '{projectId}'";
+        await using var reader = await command.ExecuteReaderAsync();
+        while (await reader.ReadAsync())
+        {
+            var info = new InProgressJobInfo
+            {
+                JobId = reader.GetString(0),
+                JobRunId = reader.GetString(1),
+                JobUrl = reader.IsDBNull(2) ? null : reader.GetString(2),
+                StartDateTime = reader.GetDateTime(3),
+                PipelineSource = reader.IsDBNull(4) ? null : reader.GetString(4),
+                Triggered = reader.IsDBNull(5) ? null : reader.GetString(5),
+                BranchName = reader.IsDBNull(6) ? null : reader.GetString(6),
+                CommitSha = reader.IsDBNull(7) ? null : reader.GetString(7),
+                CommitMessage = reader.IsDBNull(8) ? null : reader.GetString(8),
+                CommitAuthor = reader.IsDBNull(9) ? null : reader.GetString(9),
+                AgentName = reader.IsDBNull(10) ? null : reader.GetString(10),
+                AgentOSName = reader.IsDBNull(11) ? null : reader.GetString(11),
+                ProjectId = reader.GetString(12),
+                PipelineId = reader.IsDBNull(13) ? null : reader.GetString(13)
+            };
+            result.Add(info);
+        }
+        return result;
+    }
 }

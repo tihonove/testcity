@@ -79,7 +79,7 @@ public class GitlabController(SkbKonturGitLabClientProvider gitLabClientProvider
         {
             if (hooksBasedProjectIds.Contains(jobEventInfo.ProjectId))
             {
-                if (jobEventInfo.BuildStatus == "failed" || jobEventInfo.BuildStatus == "success")
+                if (jobEventInfo.BuildStatus == "canceled" || jobEventInfo.BuildStatus == "failed" || jobEventInfo.BuildStatus == "success")
                 {
                     await workerClient.Enqueue(new ProcessJobRunTaskPayload
                     {

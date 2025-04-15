@@ -17,7 +17,9 @@ public class ProcessJobRunTaskHandler(
     WorkerClient workerClient,
     SkbKonturGitLabClientProvider gitLabClientProvider,
     TestCityDatabase testCityDatabase,
-    JUnitExtractor extractor) : TaskHandler<ProcessJobRunTaskPayload>
+    JUnitExtractor extractor,
+    ProjectJobTypesCache projectJobTypesCache
+    ) : TaskHandler<ProcessJobRunTaskPayload>
 {
     public override bool CanHandle(RawTask task)
     {
@@ -29,13 +31,16 @@ public class ProcessJobRunTaskHandler(
         logger.LogInformation("Processing job run for project {ProjectId}, job run id: {JobRunId}", task.ProjectId, task.JobRunId);
         try
         {
-            if (!await testCityDatabase.JobInfo.ExistsAsync(task.JobRunId.ToString()))
+            if (await testCityDatabase.JobInfo.ExistsAsync(task.JobRunId.ToString()))
             {
                 logger.LogInformation("JobRunId '{JobRunId}' in '{ProjectId}' already exists. Skipping upload of test runs", task.JobRunId, task.ProjectId);
+                return;
             }
+            var job = await clientEx.GetJobAsync(task.ProjectId, task.JobRunId);
+            var needProcessFailedJob = await projectJobTypesCache.JobTypeExistsAsync(task.ProjectId.ToString(), job.Name, ct);
             var jobProcessor = new GitLabJobProcessor(client, clientEx, extractor, logger);
             var projectInfo = await client.Projects.GetByIdAsync(task.ProjectId, new SingleProjectQuery(), ct);
-            var processingResult = await jobProcessor.ProcessJobAsync(task.ProjectId, task.JobRunId);
+            var processingResult = await jobProcessor.ProcessJobAsync(task.ProjectId, task.JobRunId, job, needProcessFailedJob);
 
             if (processingResult.JobInfo != null)
             {

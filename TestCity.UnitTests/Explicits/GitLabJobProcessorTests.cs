@@ -40,7 +40,7 @@ public class GitLabJobProcessorTests
         var extractor = new JUnitExtractor();
         var jobProcessor = new GitLabJobProcessor(client, clientEx, extractor, logger);
 
-        var processingResult = await jobProcessor.ProcessJobAsync(projectId, jobId);
+        var processingResult = await jobProcessor.ProcessJobAsync(projectId, jobId, null, false);
 
         processingResult.JobInfo!.State.Should().Be(JobStatus.Failed);
         processingResult.TestReportData!.Runs.Should().HaveCount(421);
@@ -59,7 +59,7 @@ public class GitLabJobProcessorTests
         var clientEx = gitLabClientProvider.GetExtendedClient();
         var jobProcessor = new GitLabJobProcessor(client, clientEx, extractor, logger);
 
-        var processingResult = await jobProcessor.ProcessJobAsync(projectId, jobId);
+        var processingResult = await jobProcessor.ProcessJobAsync(projectId, jobId, null, false);
 
         processingResult.JobInfo!.State.Should().Be(JobStatus.Failed);
     }

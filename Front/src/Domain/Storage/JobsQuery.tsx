@@ -10,7 +10,7 @@ export type JobsQueryRow = [
     string | number | null, // SuccessTestsCount
     string | number | null, // SkippedTestsCount
     string | number | null, // FailedTestsCount
-    "Failed" | "Success" | "Cancelled" | "Running", // State
+    "Failed" | "Success" | "Canceled" | "Running", // State
     string, // CustomStatusMessage
     string, // JobUrl
     string, // ProjectId

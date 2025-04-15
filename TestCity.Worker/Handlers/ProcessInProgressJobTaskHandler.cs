@@ -15,7 +15,8 @@ namespace Kontur.TestCity.Worker.Handlers;
 public class ProcessInProgressJobTaskHandler(
     SkbKonturGitLabClientProvider gitLabClientProvider,
     TestCityDatabase testCityDatabase,
-    WorkerClient workerClient) : TaskHandler<ProcessInProgressJobTaskPayload>
+    WorkerClient workerClient,
+    ProjectJobTypesCache projectJobTypesCache) : TaskHandler<ProcessInProgressJobTaskPayload>()
 {
     public override bool CanHandle(RawTask task)
     {
@@ -56,7 +57,7 @@ public class ProcessInProgressJobTaskHandler(
                 string projectId = task.ProjectId.ToString();
                 string jobType = job.Name;
 
-                if (!await JobTypeExistsAsync(projectId, jobType, ct))
+                if (!await projectJobTypesCache.JobTypeExistsAsync(projectId, jobType, ct))
                 {
                     logger.LogInformation("Тип задачи {JobType} не существует в списке завершенных задач для проекта {ProjectId}. Пропускаем.", jobType, projectId);
                 }
@@ -96,55 +97,6 @@ public class ProcessInProgressJobTaskHandler(
         {
             processLock.Release();
         }
-
-    }
-
-    private async Task<bool> JobTypeExistsAsync(string projectId, string jobType, CancellationToken ct)
-    {
-        if (!projectJobTypesCache.TryGetValue(projectId, out var entry) || IsExpired(entry.Timestamp))
-        {
-            await UpdateJobTypesForProjectAsync(projectId, ct);
-            if (!projectJobTypesCache.TryGetValue(projectId, out entry))
-            {
-                return false;
-            }
-        }
-
-        return entry.JobTypes.Contains(jobType);
-    }
-
-    private async Task UpdateJobTypesForProjectAsync(string projectId, CancellationToken ct)
-    {
-        var cacheLock = projectJobTypesLocks.GetOrAdd(projectId, _ => new SemaphoreSlim(1, 1));
-        await cacheLock.WaitAsync(ct);
-
-        try
-        {
-            if (projectJobTypesCache.TryGetValue(projectId, out var existingEntry) && !IsExpired(existingEntry.Timestamp))
-            {
-                return;
-            }
-
-            logger.LogInformation("Обновление кэша типов задач для проекта {ProjectId}", projectId);
-            var jobTypes = await testCityDatabase.JobInfo.GetAllJonRunIdsAsync(long.Parse(projectId), ct).ToHashSetAsync();
-            logger.LogInformation("Получено {Count} типов задач для проекта {ProjectId}", jobTypes.Count, projectId);
-
-            projectJobTypesCache[projectId] = new ProjectJobTypesEntry
-            {
-                JobTypes = jobTypes,
-                Timestamp = DateTime.UtcNow
-            };
-        }
-        finally
-        {
-            cacheLock.Release();
-        }
-    }
-
-    private bool IsExpired(DateTime timestamp)
-    {
-        // Кэш считается устаревшим после 1 часа
-        return (DateTime.UtcNow - timestamp).TotalHours > 1;
     }
 
     private readonly ILogger logger = Log.GetLog<ProcessInProgressJobTaskHandler>();
@@ -153,12 +105,4 @@ public class ProcessInProgressJobTaskHandler(
     private static readonly ConcurrentBag<(string, long)> processedJobs = [];
     private static readonly ConcurrentDictionary<(string, long), SemaphoreSlim> jobProcessLocks = new();
 
-    private class ProjectJobTypesEntry
-    {
-        public HashSet<string> JobTypes { get; set; } = new();
-        public DateTime Timestamp { get; set; }
-    }
-
-    private static readonly ConcurrentDictionary<string, ProjectJobTypesEntry> projectJobTypesCache = new();
-    private static readonly ConcurrentDictionary<string, SemaphoreSlim> projectJobTypesLocks = new();
 }

@@ -49,10 +49,10 @@ public class TestCityJobInfo(ConnectionFactory connectionFactory)
             ]);
     }
 
-    public async Task<bool> ExistsAsync(string jobId)
+    public async Task<bool> ExistsAsync(string jobRunId)
     {
         await using var connection = connectionFactory.CreateConnection();
-        var result = await connection.ExecuteScalarAsync($"Select count(JobRunId) > 0 from JobInfo where JobInfo.JobRunId == '{jobId}'");
+        var result = await connection.ExecuteScalarAsync($"Select count(JobRunId) > 0 from JobInfo where JobInfo.JobRunId == '{jobRunId}'");
         return (byte)result == 1;
     }
 

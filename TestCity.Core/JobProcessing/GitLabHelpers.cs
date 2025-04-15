@@ -6,7 +6,7 @@ namespace Kontur.TestCity.Core.JobProcessing;
 
 public static class GitLabHelpers
 {
-    public static FullJobInfo GetFullJobInfo(GitLabJob job, string? refId, ArtifactsContentsInfo testCount, string projectId)
+    public static FullJobInfo GetFullJobInfo(GitLabJob job, string? refId, ArtifactsContentsInfo? testCount, string projectId)
     {
         var endDateTime = DateTime.Now;
 
@@ -42,11 +42,11 @@ public static class GitLabHelpers
             CommitAuthor = job.Commit?.AuthorName,
             ProjectId = projectId,
             CustomStatusMessage = string.Empty,
-            TotalTestsCount = testCount.TestReportData?.Counters.Total ?? 0,
-            SuccessTestsCount = testCount.TestReportData?.Counters.Success ?? 0,
-            FailedTestsCount = testCount.TestReportData?.Counters.Failed ?? 0,
-            SkippedTestsCount = testCount.TestReportData?.Counters.Skipped ?? 0,
-            HasCodeQualityReport = testCount.HasCodeQualityReport,
+            TotalTestsCount = testCount?.TestReportData?.Counters.Total ?? 0,
+            SuccessTestsCount = testCount?.TestReportData?.Counters.Success ?? 0,
+            FailedTestsCount = testCount?.TestReportData?.Counters.Failed ?? 0,
+            SkippedTestsCount = testCount?.TestReportData?.Counters.Skipped ?? 0,
+            HasCodeQualityReport = testCount?.HasCodeQualityReport ?? false,
         };
     }
 

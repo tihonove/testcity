@@ -10,7 +10,7 @@ namespace Kontur.TestCity.Core.JobProcessing;
 
 public class GitLabJobProcessor(IGitLabClient client, GitLabExtendedClient clientEx, JUnitExtractor extractor, ILogger logger)
 {
-    public async Task<GitLabJobProcessingResult> ProcessJobAsync(long projectId, long jobRunId, GitLabJob? job = null)
+    public async Task<GitLabJobProcessingResult> ProcessJobAsync(long projectId, long jobRunId, GitLabJob? job, bool needProcessFailedJob)
     {
         logger.LogInformation("Start processing job with id: ProjectId: {ProjectId} JobId: {JobRunId}", projectId, jobRunId);
         try
@@ -23,29 +23,32 @@ public class GitLabJobProcessor(IGitLabClient client, GitLabExtendedClient clien
                 TestReportData = null,
             };
 
-            if (job.Artifacts == null || job.Artifacts.Count == 0)
-            {
-                return result;
-            }
-
-            var artifactContents = jobClient.GetJobArtifactsOrNull(job.Id);
-            if (artifactContents == null)
+            var hasArtifacts = job.Artifacts?.Count > 0;
+            var artifactContents = hasArtifacts ? jobClient.GetJobArtifactsOrNull(job.Id) : null;
+            if (artifactContents == null && !needProcessFailedJob)
             {
                 logger.LogInformation("Artifacts does not exist for id: {JobId}", job.Id);
                 return result;
             }
-            logger.LogInformation("Artifact size for job with id: {JobId}. Size: {Size} bytes", job.Id, artifactContents.Length);
+            else
+            {
+                if (needProcessFailedJob)
+                    logger.LogInformation("Artifacts does not exist for id: {JobId}. But job must be processed", job.Id);
+                else
+                    logger.LogInformation("Artifact size for job with id: {JobId}. Size: {Size} bytes", job.Id, artifactContents?.Length ?? 0);
+            }
 
             var jobTrace = await CreateTraceTextReader(jobClient, jobRunId);
             var customStatusMessage = await ExtractTeamCityStatusMessage(jobTrace);
-            var extractResult = extractor.TryExtractTestRunsFromGitlabArtifact(artifactContents);
-            if (extractResult.TestReportData == null && !extractResult.HasCodeQualityReport)
+            var extractResult = artifactContents != null ? extractor.TryExtractTestRunsFromGitlabArtifact(artifactContents) : null;
+            if (extractResult?.TestReportData == null && !(extractResult?.HasCodeQualityReport ?? false))
             {
                 logger.LogInformation("JobRunId '{JobRunId}' does not contain any tests or code quality reports. Skip uploading test runs", job.Id);
-                return result;
+                if (!needProcessFailedJob)
+                    return result;
             }
 
-            result.TestReportData = extractResult.TestReportData;
+            result.TestReportData = extractResult?.TestReportData;
             var refId = await client.BranchOrRef(projectId, job.Ref);
             result.JobInfo = GitLabHelpers.GetFullJobInfo(job, refId, extractResult, projectId.ToString());
 

@@ -106,14 +106,14 @@ export function JobRunsPage(): React.JSX.Element {
                         {jobRuns.map(x => (
                             <SelectedOnHoverTr key={x[JobRunNames.JobRunId]}>
                                 <NumberCell>
-                                    <Link to={x[13]}>#{x[1]}</Link>
+                                    <Link to={x[JobRunNames.JobUrl]}>#{x[JobRunNames.JobRunId]}</Link>
                                 </NumberCell>
                                 <BranchCell>
                                     <BranchBox name={x[JobRunNames.BranchName]} />
                                 </BranchCell>
                                 <CountCell>
                                     <JobLink
-                                        state={x[11]}
+                                        state={x[JobRunNames.State]}
                                         to={createLinkToJobRun(
                                             rootProjectStructure,
                                             project.id,
@@ -122,18 +122,20 @@ export function JobRunsPage(): React.JSX.Element {
                                             currentBranchName
                                         )}>
                                         {getText(
-                                            x[5],
-                                            x[6],
-                                            x[7],
-                                            x[8],
-                                            x[11],
-                                            x[12],
+                                            x[JobRunNames.TotalTestsCount]?.toString() ?? "0",
+                                            x[JobRunNames.SuccessTestsCount]?.toString() ?? "0",
+                                            x[JobRunNames.SkippedTestsCount]?.toString() ?? "0",
+                                            x[JobRunNames.FailedTestsCount]?.toString() ?? "0",
+                                            x[JobRunNames.State],
+                                            x[JobRunNames.CustomStatusMessage],
                                             x[JobRunNames.HasCodeQualityReport]
                                         )}
                                     </JobLink>
                                 </CountCell>
-                                <StartedCell>{toLocalTimeFromUtc(x[4])}</StartedCell>
-                                <DurationCell>{formatTestDuration(x[10])}</DurationCell>
+                                <StartedCell>{toLocalTimeFromUtc(x[JobRunNames.StartDateTime])}</StartedCell>
+                                <DurationCell>
+                                    {formatTestDuration(x[JobRunNames.Duration]?.toString() ?? "0")}
+                                </DurationCell>
                             </SelectedOnHoverTr>
                         ))}
                     </tbody>
