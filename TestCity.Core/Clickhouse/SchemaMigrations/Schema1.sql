@@ -55,6 +55,30 @@ TTL StartDateTime + toIntervalMonth(6)
 SETTINGS index_granularity = 8192;
 
 -- divider --
+CREATE TABLE IF NOT EXISTS InProgressJobInfo
+(
+    `JobId` LowCardinality(String),
+    `JobRunId` String,
+    `JobUrl` String,
+    `StartDateTime` DateTime,
+    `PipelineSource` LowCardinality(String),
+    `Triggered` LowCardinality(String),
+    `BranchName` String,
+    `CommitSha` String,
+    `CommitMessage` String,
+    `CommitAuthor` LowCardinality(String),
+    `AgentName` String,
+    `AgentOSName` LowCardinality(String),
+    `ProjectId` String,
+    `PipelineId` String
+)
+ENGINE = MergeTree
+PARTITION BY toMonday(StartDateTime)
+ORDER BY (JobId, JobRunId)
+TTL StartDateTime + toIntervalDay(2)
+SETTINGS index_granularity = 8192;
+
+-- divider --
 CREATE MATERIALIZED VIEW IF NOT EXISTS TestRunsByRun
 (
     `JobId` String,

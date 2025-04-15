@@ -33,11 +33,3 @@ public class FullJobInfo : JobRunInfo
     public string? CustomStatusMessage { get; set; }
     public bool HasCodeQualityReport { get; set; }
 }
-
-public enum JobStatus
-{
-    Success = 1,
-    Failed = 2,
-    Canceled = 3,
-    Timeouted = 4,
-}

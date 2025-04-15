@@ -1,0 +1,164 @@
+using System.Collections.Concurrent;
+using Kontur.TestCity.Core.GitLab;
+using Kontur.TestCity.Core.GitLab.Models;
+using Kontur.TestCity.Core.KafkaMessageQueue;
+using Kontur.TestCity.Core.Logging;
+using Kontur.TestCity.Core.Storage;
+using Kontur.TestCity.Core.Storage.DTO;
+using Kontur.TestCity.Core.Worker;
+using Kontur.TestCity.Core.Worker.TaskPayloads;
+using Microsoft.Extensions.Logging;
+using NGitLab;
+
+namespace Kontur.TestCity.Worker.Handlers;
+
+public class ProcessInProgressJobTaskHandler(
+    SkbKonturGitLabClientProvider gitLabClientProvider,
+    TestCityDatabase testCityDatabase,
+    WorkerClient workerClient) : TaskHandler<ProcessInProgressJobTaskPayload>
+{
+    public override bool CanHandle(RawTask task)
+    {
+        return task.Type == ProcessInProgressJobTaskPayload.TaskType;
+    }
+
+    public override async ValueTask EnqueueAsync(ProcessInProgressJobTaskPayload task, CancellationToken ct)
+    {
+        logger.LogInformation("Обработка незавершенной задачи для проекта {ProjectId}, job run id: {JobRunId}",
+            task.ProjectId, task.JobRunId);
+
+        (string, long JobRunId) processingKey = (task.ProjectId.ToString(), task.JobRunId);
+        if (processedJobs.Contains(processingKey))
+        {
+            logger.LogInformation("Задача {JobRunId} в проекте {ProjectId} уже была обработана, пропускаем", task.JobRunId, task.ProjectId);
+            return;
+        }
+
+        var processLock = jobProcessLocks.GetOrAdd(processingKey, _ => new SemaphoreSlim(1, 1));
+        await processLock.WaitAsync(ct);
+        try
+        {
+            var job = await clientEx.GetJobAsync(task.ProjectId, task.JobRunId);
+            var projectInfo = await client.Projects.GetByIdAsync(task.ProjectId, new(), ct);
+
+            if (job.Status != Core.GitLab.Models.JobStatus.Running)
+            {
+                logger.LogInformation("Задача {JobRunId} в проекте {ProjectId} завершилась со статусом {Status}. Пропускаем.", task.JobRunId, task.ProjectId, job.Status);
+                processedJobs.Add(processingKey);
+                return;
+            }
+
+            bool exists = await testCityDatabase.InProgressJobInfo.ExistsAsync(task.ProjectId.ToString(), task.JobRunId.ToString());
+
+            if (!exists)
+            {
+                // Проверяем, существуют ли завершенные задачи такого типа для этого проекта
+                string projectId = task.ProjectId.ToString();
+                string jobType = job.Name;
+
+                if (!await JobTypeExistsAsync(projectId, jobType, ct))
+                {
+                    logger.LogInformation("Тип задачи {JobType} не существует в списке завершенных задач для проекта {ProjectId}. Пропускаем.", jobType, projectId);
+                }
+
+                var refId = await client.BranchOrRef(task.ProjectId, job.Ref);
+                var inProgressJobInfo = new InProgressJobInfo
+                {
+                    JobId = job.Name,
+                    JobRunId = job.Id.ToString(),
+                    JobUrl = job.WebUrl,
+                    StartDateTime = job.StartedAt ?? DateTime.Now,
+                    PipelineSource = job.Pipeline?.Source,
+                    Triggered = job.User?.PublicEmail,
+                    BranchName = refId,
+                    CommitSha = job.Commit?.Id,
+                    CommitMessage = job.Commit?.Message,
+                    CommitAuthor = job.Commit?.AuthorName,
+                    AgentName = job.Runner?.Name ?? job.Runner?.Description ?? $"agent_{job.Runner?.Id ?? 0}",
+                    AgentOSName = job.RunnerManager?.Platform ?? "Unknown",
+                    ProjectId = task.ProjectId.ToString(),
+                    PipelineId = job.Pipeline?.Id.ToString(),
+                    JobStatus = job.Status.ToString(),
+                    LastUpdateTime = DateTime.UtcNow
+                };
+                await testCityDatabase.InProgressJobInfo.InsertAsync(inProgressJobInfo);
+                if (job.Commit?.Id != null)
+                {
+                    await workerClient.Enqueue(new BuildCommitParentsTaskPayload
+                    {
+                        ProjectId = task.ProjectId,
+                        CommitSha = job.Commit.Id,
+                    });
+                }
+            }
+        }
+        finally
+        {
+            processLock.Release();
+        }
+
+    }
+
+    private async Task<bool> JobTypeExistsAsync(string projectId, string jobType, CancellationToken ct)
+    {
+        if (!projectJobTypesCache.TryGetValue(projectId, out var entry) || IsExpired(entry.Timestamp))
+        {
+            await UpdateJobTypesForProjectAsync(projectId, ct);
+            if (!projectJobTypesCache.TryGetValue(projectId, out entry))
+            {
+                return false;
+            }
+        }
+
+        return entry.JobTypes.Contains(jobType);
+    }
+
+    private async Task UpdateJobTypesForProjectAsync(string projectId, CancellationToken ct)
+    {
+        var cacheLock = projectJobTypesLocks.GetOrAdd(projectId, _ => new SemaphoreSlim(1, 1));
+        await cacheLock.WaitAsync(ct);
+
+        try
+        {
+            if (projectJobTypesCache.TryGetValue(projectId, out var existingEntry) && !IsExpired(existingEntry.Timestamp))
+            {
+                return;
+            }
+
+            logger.LogInformation("Обновление кэша типов задач для проекта {ProjectId}", projectId);
+            var jobTypes = await testCityDatabase.JobInfo.GetAllJonRunIdsAsync(long.Parse(projectId), ct).ToHashSetAsync();
+            logger.LogInformation("Получено {Count} типов задач для проекта {ProjectId}", jobTypes.Count, projectId);
+
+            projectJobTypesCache[projectId] = new ProjectJobTypesEntry
+            {
+                JobTypes = jobTypes,
+                Timestamp = DateTime.UtcNow
+            };
+        }
+        finally
+        {
+            cacheLock.Release();
+        }
+    }
+
+    private bool IsExpired(DateTime timestamp)
+    {
+        // Кэш считается устаревшим после 1 часа
+        return (DateTime.UtcNow - timestamp).TotalHours > 1;
+    }
+
+    private readonly ILogger logger = Log.GetLog<ProcessInProgressJobTaskHandler>();
+    private readonly IGitLabClient client = gitLabClientProvider.GetClient();
+    private readonly GitLabExtendedClient clientEx = gitLabClientProvider.GetExtendedClient();
+    private static readonly ConcurrentBag<(string, long)> processedJobs = [];
+    private static readonly ConcurrentDictionary<(string, long), SemaphoreSlim> jobProcessLocks = new();
+
+    private class ProjectJobTypesEntry
+    {
+        public HashSet<string> JobTypes { get; set; } = new();
+        public DateTime Timestamp { get; set; }
+    }
+
+    private static readonly ConcurrentDictionary<string, ProjectJobTypesEntry> projectJobTypesCache = new();
+    private static readonly ConcurrentDictionary<string, SemaphoreSlim> projectJobTypesLocks = new();
+}

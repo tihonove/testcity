@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using ClickHouse.Client.Copy;
 using ClickHouse.Client.Utility;
 using Kontur.TestCity.Core.Clickhouse;
@@ -53,6 +54,19 @@ public class TestCityJobInfo(ConnectionFactory connectionFactory)
         await using var connection = connectionFactory.CreateConnection();
         var result = await connection.ExecuteScalarAsync($"Select count(JobRunId) > 0 from JobInfo where JobInfo.JobRunId == '{jobId}'");
         return (byte)result == 1;
+    }
+
+    public async IAsyncEnumerable<string> GetAllJonRunIdsAsync(long projectId, [EnumeratorCancellation] CancellationToken ct)
+    {
+        await using var connection = connectionFactory.CreateConnection();
+        var query = $"SELECT DISTINCT JobId FROM JobInfo WHERE ProjectId = '{projectId}'";
+
+        var result = await connection.ExecuteQueryAsync(query, ct);
+
+        while (await result.ReadAsync(ct))
+        {
+            yield return result.GetString(0);
+        }
     }
 
     private static readonly string[] Fields2 =

@@ -80,11 +80,21 @@ public class GitlabController(SkbKonturGitLabClientProvider gitLabClientProvider
             if (hooksBasedProjectIds.Contains(jobEventInfo.ProjectId))
             {
                 if (jobEventInfo.BuildStatus == "failed" || jobEventInfo.BuildStatus == "success")
+                {
                     await workerClient.Enqueue(new ProcessJobRunTaskPayload
                     {
                         ProjectId = jobEventInfo.ProjectId,
                         JobRunId = jobEventInfo.BuildId,
                     });
+                }
+                else if (jobEventInfo.BuildStatus == "running")
+                {
+                    await workerClient.Enqueue(new ProcessInProgressJobTaskPayload
+                    {
+                        ProjectId = jobEventInfo.ProjectId,
+                        JobRunId = jobEventInfo.BuildId
+                    });
+                }
             }
             return Ok();
         }

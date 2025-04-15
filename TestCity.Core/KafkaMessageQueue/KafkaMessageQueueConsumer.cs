@@ -37,7 +37,7 @@ public sealed class KafkaMessageQueueConsumer : IDisposable
             logger.LogInformation("Kafka consumer service started");
 
             var queueMap = new ConcurrentDictionary<(IConsumer<string, string>, long), ConcurrentQueue<TaskExecutionItem>>();
-            var semaphore = new SemaphoreSlim(20, 20);
+            var semaphore = new SemaphoreSlim(100, 100);
             var inputChannel = Channel.CreateBounded<(IConsumer<string, string>, ConsumeResult<string, string>)>(new BoundedChannelOptions(10000) { });
 
             var primaryConsumer = RunPrimiaryTasksConsumer(inputChannel, stoppingToken);
