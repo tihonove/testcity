@@ -31,6 +31,7 @@ builder.Services.AddSingleton<SkbKonturGitLabClientProvider>();
 builder.Services.AddSingleton<WorkerClient>();
 builder.Services.AddSingleton<ConnectionFactory>();
 builder.Services.AddSingleton<TestCityDatabase>();
+builder.Services.AddSingleton<ProjectJobTypesCache>();
 builder.Services.AddSingleton(r => KafkaMessageQueueClient.CreateDefault(r.GetRequiredService<ILogger<KafkaMessageQueueClient>>()));
 
 // Регистрация IGraphiteClient на основе переменных окружения
