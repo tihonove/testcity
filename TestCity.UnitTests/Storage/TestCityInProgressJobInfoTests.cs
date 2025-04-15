@@ -7,12 +7,19 @@ namespace Kontur.TestCity.UnitTests.Storage;
 
 public class TestCityInProgressJobInfoTests
 {
+    [SetUp]
+    public async Task SetUp()
+    {
+        await using var connection = new ConnectionFactory().CreateConnection();
+        await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);
+    }
+
     [Test]
     public async Task Insert_ShouldCorrectlyAddRecord()
     {
         // Arrange
         var connectionFactory = new ConnectionFactory();
-        var inProgressJobInfo = new TestCityInProgressJobInfo(connectionFactory);
+        var inProgressJobInfo = new TestCityDatabase(connectionFactory).InProgressJobInfo;
         var job = CreateTestInProgressJobInfo();
 
         // Act
@@ -28,7 +35,7 @@ public class TestCityInProgressJobInfoTests
     {
         // Arrange
         var connectionFactory = new ConnectionFactory();
-        var inProgressJobInfo = new TestCityInProgressJobInfo(connectionFactory);
+        var inProgressJobInfo = new TestCityDatabase(connectionFactory).InProgressJobInfo;
         const string projectId = "non-existent-project-id";
         const string jobRunId = "non-existent-job-run-id";
 
@@ -44,7 +51,7 @@ public class TestCityInProgressJobInfoTests
     {
         // Arrange
         var connectionFactory = new ConnectionFactory();
-        var inProgressJobInfo = new TestCityInProgressJobInfo(connectionFactory);
+        var inProgressJobInfo = new TestCityDatabase(connectionFactory).InProgressJobInfo;
         var job = CreateTestInProgressJobInfo();
         // Act
         await inProgressJobInfo.InsertAsync(job);
@@ -59,7 +66,7 @@ public class TestCityInProgressJobInfoTests
     {
         // Arrange
         var connectionFactory = new ConnectionFactory();
-        var inProgressJobInfo = new TestCityInProgressJobInfo(connectionFactory);
+        var inProgressJobInfo = new TestCityDatabase(connectionFactory).InProgressJobInfo;
         const string projectId = "non-existent-project-id";
         const string jobRunId = "non-existent-job-run-id";
 
@@ -75,7 +82,7 @@ public class TestCityInProgressJobInfoTests
     {
         // Arrange
         var connectionFactory = new ConnectionFactory();
-        var inProgressJobInfo = new TestCityInProgressJobInfo(connectionFactory);
+        var inProgressJobInfo = new TestCityDatabase(connectionFactory).InProgressJobInfo;
         var job = CreateTestInProgressJobInfo();
         // Act
         await inProgressJobInfo.InsertAsync(job);
