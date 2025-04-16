@@ -1,4 +1,3 @@
-using Kontur.TestCity.Core;
 using Kontur.TestCity.Core.GitLab;
 using NUnit.Framework;
 

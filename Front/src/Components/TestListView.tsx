@@ -20,6 +20,7 @@ import { TestOutputModal } from "./TestOutputModal";
 import { TestRunRow } from "./TestRunRow";
 import { TestTypeFilterButton } from "./TestTypeFilterButton";
 import { SuspenseFadingWrapper, useDelayedTransition } from "./useDelayedTransition";
+import { useUrlBasedPaging } from "./useUrlBasedPaging";
 
 interface TestListViewProps {
     jobRunIds: string[];
@@ -48,8 +49,7 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
     const [searchText, setSearchText, debouncedSearchValue = "", setSearchTextImmediate] =
         useSearchParamDebouncedAsState("filter", 500, "");
     const itemsPerPage = 100;
-    const [pageRaw, setPage] = useSearchParamAsState("page");
-    const page = React.useMemo(() => (isNaN(Number(pageRaw ?? "0")) ? 0 : Number(pageRaw ?? "0")), [pageRaw]);
+    const [page, setPage] = useUrlBasedPaging();
     const totalRowCount = props.successTestsCount + props.failedTestsCount + props.skippedTestsCount;
     const searchValue = useDeferredValue(debouncedSearchValue);
 
@@ -175,7 +175,7 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
                     activePage={page + 1}
                     onPageChange={x => {
                         startTransition(() => {
-                            setPage((x - 1).toString());
+                            setPage(x - 1);
                         });
                     }}
                     pagesCount={Math.ceil(Number(totalRowCount) / itemsPerPage)}

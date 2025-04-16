@@ -362,6 +362,77 @@ export class TestAnalyticsStorage {
         return this.executeClickHouseQuery<JobsQueryRow[]>(query);
     }
 
+    public async findAllJobsRunsPerJobId(
+        projectId: string,
+        jobId: string,
+        currentBranchName?: string,
+        page: number = 0
+    ): Promise<JobsQueryRow[]> {
+        const itemsPerPage = 100;
+        const condition = (a: string) => {
+            let result = `${a}.JobId = '${jobId}' AND ${a}.ProjectId = '${projectId}'`;
+            if (currentBranchName != undefined) result += ` AND ${a}.BranchName = '${currentBranchName}'`;
+            return result;
+        };
+
+        const query = `
+            SELECT * FROM (
+
+                SELECT 
+
+                    ipji.JobId,
+                    ipji.JobRunId,
+                    ipji.BranchName,
+                    ipji.AgentName,
+                    ipji.StartDateTime,
+                    null as TotalTestsCount,
+                    ipji.AgentOSName,
+                    null as Duration,
+                    null as SuccessTestsCount,
+                    null as SkippedTestsCount,
+                    null as FailedTestsCount,
+                    'Running' as State,
+                    '' as CustomStatusMessage,
+                    ipji.JobUrl,
+                    ipji.ProjectId,
+                    0 as HasCodeQualityReport
+
+                FROM InProgressJobInfo ipji
+                LEFT JOIN JobInfo eji ON eji.JobId = ipji.JobId AND eji.JobRunId = ipji.JobRunId
+                WHERE eji.JobRunId = '' AND ${condition("ipji")}
+
+                UNION ALL
+
+                SELECT 
+
+                    ji.JobId,
+                    ji.JobRunId,
+                    ji.BranchName,
+                    ji.AgentName,
+                    ji.StartDateTime,
+                    ji.TotalTestsCount,
+                    ji.AgentOSName,
+                    ji.Duration,
+                    ji.SuccessTestsCount,
+                    ji.SkippedTestsCount,
+                    ji.FailedTestsCount,
+                    ji.State,
+                    ji.CustomStatusMessage,
+                    ji.JobUrl,
+                    ji.ProjectId,
+                    ji.HasCodeQualityReport
+
+                FROM JobInfo ji
+                WHERE ${condition("ji")}
+
+            )
+            ORDER BY StartDateTime DESC
+            LIMIT ${(itemsPerPage * page).toString()}, ${itemsPerPage.toString()}
+        `;
+
+        return this.executeClickHouseQuery<JobsQueryRow[]>(query);
+    }
+
     public async getPipelineRunsOverview(
         projectIds: string[],
         currentBranchName?: string

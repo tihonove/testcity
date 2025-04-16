@@ -25,58 +25,24 @@ import { BranchBox } from "../Components/BranchBox";
 import { JobLink } from "../Components/JobLink";
 import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
 import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
+import { useUrlBasedPaging } from "../Components/useUrlBasedPaging";
+import { SuspenseFadingWrapper, useDelayedTransition } from "../Components/useDelayedTransition";
+import { RotatingSpinner } from "../Components/RotatingSpinner";
 
 export function JobRunsPage(): React.JSX.Element {
-    const { groupIdLevel1, groupIdLevel2, groupIdLevel3, jobId = "" } = useParams();
-    if (groupIdLevel1 == null || groupIdLevel1 === "") {
-        throw new Error(`Group is not defined`);
-    }
-    const { groupNodes, pathToGroup } = useProjectContextFromUrlParams();
-    const rootProjectStructure = useStorageQuery(x => x.getRootProjectStructure(groupIdLevel1), [groupIdLevel1]);
+    const { jobId = "" } = useParams();
+    const { groupNodes, pathToGroup, rootGroup } = useProjectContextFromUrlParams();
     const project = useStorageQuery(x => x.getProject(pathToGroup), [pathToGroup]) ?? reject("Project not found");
 
     const [currentBranchName, setCurrentBranchName] = useSearchParamAsState("branch");
     usePopularBranchStoring(currentBranchName);
-    const [page, setPage] = useState(1);
-    const itemsPerPage = 100;
-    const client = useClickhouseClient();
 
-    const condition = React.useMemo(() => {
-        let result = `JobId = '${jobId}' AND ProjectId = '${project.id}'`;
-        if (currentBranchName != undefined) result += ` AND BranchName = '${currentBranchName}'`;
-        return result;
-    }, [jobId, currentBranchName]);
-
-    const jobRuns = client.useData2<JobsQueryRow>(
-        `
-        SELECT
-            JobId,
-            JobRunId,
-            BranchName,
-            AgentName,
-            StartDateTime,
-            TotalTestsCount,
-            SuccessTestsCount,
-            SkippedTestsCount,
-            FailedTestsCount,
-            AgentOSName,
-            Duration,
-            State,
-            CustomStatusMessage,
-            JobUrl,
-            ProjectId
-        FROM JobInfo
-        WHERE ${condition}
-        ORDER BY StartDateTime DESC
-        LIMIT ${(itemsPerPage * (page - 1)).toString()}, ${itemsPerPage.toString()}
-        `,
-        [condition, page]
+    const [page, setPage] = useUrlBasedPaging();
+    const jobRuns = useStorageQuery(
+        x => x.findAllJobsRunsPerJobId(project.id, jobId, currentBranchName, page),
+        [project.id, jobId, currentBranchName, page]
     );
-
-    const getTotalTestsCount = React.useCallback(
-        () => client.useData2<[string]>(`SELECT COUNT(*) FROM JobInfo WHERE ${condition}`, [condition]),
-        [condition]
-    );
+    const [isPending, startTransition, isFading] = useDelayedTransition();
 
     return (
         <ColumnStack block stretch gap={4}>
@@ -92,57 +58,71 @@ export function JobRunsPage(): React.JSX.Element {
                 <BranchSelect branch={currentBranchName} onChangeBranch={setCurrentBranchName} jobId={jobId} />
             </Fit>
             <Fit>
-                <RunList>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>branch</th>
-                            <th></th>
-                            <th>started {getOffsetTitle()}</th>
-                            <th>duration</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {jobRuns.map(x => (
-                            <SelectedOnHoverTr key={x[JobRunNames.JobRunId]}>
-                                <NumberCell>
-                                    <Link to={x[13]}>#{x[1]}</Link>
-                                </NumberCell>
-                                <BranchCell>
-                                    <BranchBox name={x[JobRunNames.BranchName]} />
-                                </BranchCell>
-                                <CountCell>
-                                    <JobLink
-                                        state={x[11]}
-                                        to={createLinkToJobRun(
-                                            rootProjectStructure,
-                                            project.id,
-                                            jobId,
-                                            x[JobRunNames.JobRunId],
-                                            currentBranchName
-                                        )}>
-                                        {getText(
-                                            x[5]?.toString() ?? "0",
-                                            x[6],
-                                            x[7]?.toString() ?? "0",
-                                            x[8]?.toString() ?? "0",
-                                            x[11],
-                                            x[12],
-                                            x[JobRunNames.HasCodeQualityReport]
+                <SuspenseFadingWrapper $fading={isFading}>
+                    <RunList>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>branch</th>
+                                <th></th>
+                                <th>started {getOffsetTitle()}</th>
+                                <th>duration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {jobRuns.map(x => (
+                                <SelectedOnHoverTr key={x[JobRunNames.JobRunId]}>
+                                    <NumberCell>
+                                        <Link to={x[13]}>#{x[1]}</Link>
+                                    </NumberCell>
+                                    <BranchCell>
+                                        <BranchBox name={x[JobRunNames.BranchName]} />
+                                    </BranchCell>
+                                    <CountCell>
+                                        {x[JobRunNames.State] === "Running" ? (
+                                            <>
+                                                <RotatingSpinner /> Running...
+                                            </>
+                                        ) : (
+                                            <JobLink
+                                                state={x[11]}
+                                                to={createLinkToJobRun(
+                                                    rootGroup,
+                                                    project.id,
+                                                    jobId,
+                                                    x[JobRunNames.JobRunId],
+                                                    currentBranchName
+                                                )}>
+                                                {getText(
+                                                    x[JobRunNames.TotalTestsCount]?.toString() ?? "0",
+                                                    x[JobRunNames.SuccessTestsCount]?.toString() ?? "0",
+                                                    x[JobRunNames.SkippedTestsCount]?.toString() ?? "0",
+                                                    x[JobRunNames.FailedTestsCount]?.toString() ?? "0",
+                                                    x[JobRunNames.State],
+                                                    x[JobRunNames.CustomStatusMessage],
+                                                    x[JobRunNames.HasCodeQualityReport]
+                                                )}
+                                            </JobLink>
                                         )}
-                                    </JobLink>
-                                </CountCell>
-                                <StartedCell>{toLocalTimeFromUtc(x[4])}</StartedCell>
-                                <DurationCell>{formatTestDuration(x[10]?.toString() ?? "0")}</DurationCell>
-                            </SelectedOnHoverTr>
-                        ))}
-                    </tbody>
-                </RunList>
-                <Paging
-                    activePage={page}
-                    onPageChange={setPage}
-                    pagesCount={Math.ceil(Number(getTotalTestsCount()[0][0]) / itemsPerPage)}
-                />
+                                    </CountCell>
+                                    <StartedCell>{toLocalTimeFromUtc(x[JobRunNames.StartDateTime])}</StartedCell>
+                                    <DurationCell>
+                                        {formatTestDuration(x[JobRunNames.Duration]?.toString() ?? "0")}
+                                    </DurationCell>
+                                </SelectedOnHoverTr>
+                            ))}
+                        </tbody>
+                    </RunList>
+                    <Paging
+                        activePage={page + 1}
+                        onPageChange={x => {
+                            startTransition(() => {
+                                setPage(x - 1);
+                            });
+                        }}
+                        pagesCount={100}
+                    />
+                </SuspenseFadingWrapper>
             </Fit>
         </ColumnStack>
     );
@@ -159,6 +139,7 @@ const Header1 = styled.h1`
 const RunList = styled.table`
     width: 100%;
     max-width: 100vw;
+    table-layout: auto;
 
     th {
         font-size: 12px;
@@ -176,12 +157,15 @@ const RunList = styled.table`
     }
 `;
 
-const CountCell = styled.td``;
+const CountCell = styled.td`
+    width: 100%;
+    white-space: nowrap;
+`;
 
 const StartedCell = styled.td`
-    width: 160px;
+    min-width: 160px;
 `;
 
 const DurationCell = styled.td`
-    width: 100px;
+    min-width: 100px;
 `;

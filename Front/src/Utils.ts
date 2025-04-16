@@ -91,6 +91,7 @@ export function getText(
     if (state == "Canceled") out = state;
     else if (state == "Timeouted") out = state;
     else if (state == "Failed" && out == "") out = state;
+    if (!out) out = state;
 
     return info ? `${info}. ${out}` : out;
 }
