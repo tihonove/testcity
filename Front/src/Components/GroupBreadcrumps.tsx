@@ -2,7 +2,7 @@ import { BuildingHomeIcon16Light, UiMenuShapeCircle4Icon16Light } from "@skbkont
 import { RowStack, Fit } from "@skbkontur/react-stack-layout";
 import * as React from "react";
 import { useBasePrefix, groupLink, createLinkToJob } from "../Domain/Navigation";
-import { GroupNode, Project } from "../Domain/Storage/Storage";
+import { GroupNode, Project } from "../Domain/Storage/Projects/GroupNode";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { theme } from "../Theme/ITheme";

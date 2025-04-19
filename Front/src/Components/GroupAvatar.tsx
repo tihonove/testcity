@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Group } from "../Domain/Storage/Storage";
+import { Group } from "../Domain/Storage/Projects/GroupNode";
 import styled from "styled-components";
 import { theme } from "../Theme/ITheme";
 

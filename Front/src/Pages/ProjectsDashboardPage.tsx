@@ -27,7 +27,7 @@ import { JobsView } from "../Components/JobsView";
 import { ManualJobsInfo } from "../Components/ManualJobsInfo";
 import { createLinkToCreateNewPipeline, createLinkToGroupOrProject, createLinkToProject } from "../Domain/Navigation";
 import { PipelineRuns } from "../Components/PipelineRuns";
-import { GroupNode, isGroup, isProject, Project } from "../Domain/Storage/Storage";
+import { isGroup, isProject, GroupNode, Project, getProjects } from "../Domain/Storage/Projects/GroupNode";
 import { theme } from "../Theme/ITheme";
 import { useSearchParamAsState } from "../Utils";
 import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
@@ -36,16 +36,16 @@ import { useShowChangesFeature } from "./useShowChangesFeature";
 import { JobRunNames } from "../Domain/Storage/JobsQuery";
 
 export function ProjectsDashboardPage(): React.JSX.Element {
-    const { rootGroup: rootProjectStructure, groupNodes, pathToGroup } = useProjectContextFromUrlParams();
+    const { rootGroup, groupNodes, pathToGroup } = useProjectContextFromUrlParams();
     const [isPending, startTransition, isFading] = useDelayedTransition();
     const [currentBranchName, setCurrentBranchName] = useSearchParamAsState("branch");
     usePopularBranchStoring(currentBranchName);
     const [noRuns, setNoRuns] = useSearchParamAsState("noruns");
 
     const showChanges = useShowChangesFeature();
-    const usePipelineGrouping = rootProjectStructure.mergeRunsFromJobs ?? true;
+    const usePipelineGrouping = rootGroup.mergeRunsFromJobs ?? true;
     const currentGroupOrProject = groupNodes[groupNodes.length - 1];
-    const projects = useStorageQuery(x => x.getProjects(pathToGroup), [pathToGroup]);
+    const projects = getProjects(currentGroupOrProject);
     const projectIds = React.useMemo(() => projects.map(p => p.id), [projects]);
 
     const allJobs = useStorageQuery(x => x.findAllJobs(projectIds), [projectIds]);
@@ -53,26 +53,6 @@ export function ProjectsDashboardPage(): React.JSX.Element {
         x => (usePipelineGrouping ? [] : showChanges ? [] : x.findAllJobsRunsInProgress(projectIds, currentBranchName)),
         [projectIds, currentBranchName, usePipelineGrouping, pathToGroup]
     );
-    // const inProgressJobRuns = [
-    //     [
-    //         "DotNet tests",
-    //         "38995054",
-    //         "main",
-    //         "agent_12616",
-    //         "2025-04-15 20:49:41",
-    //         null,
-    //         "linux",
-    //         null,
-    //         null,
-    //         null,
-    //         null,
-    //         "Running",
-    //         null,
-    //         "https://git.skbkontur.ru/forms/test-analytics/-/jobs/38995054",
-    //         "24783",
-    //         0,
-    //     ],
-    // ];
     const allJobRuns2 = useStorageQuery(
         x =>
             usePipelineGrouping
@@ -94,7 +74,7 @@ export function ProjectsDashboardPage(): React.JSX.Element {
         [projectIds, currentBranchName, usePipelineGrouping, pathToGroup]
     );
 
-    const renderProject = (project: Project, level: number) => (
+    const renderProject = (project: Project, level: number, nodes: (GroupNode | Project)[]) => (
         <React.Fragment key={project.id}>
             {project !== currentGroupOrProject && (
                 <thead>
@@ -110,7 +90,7 @@ export function ProjectsDashboardPage(): React.JSX.Element {
                                 <Fit>
                                     <Link
                                         className="no-underline"
-                                        to={createLinkToProject(rootProjectStructure, project.id, currentBranchName)}>
+                                        to={createLinkToProject(rootGroup, project.id, currentBranchName)}>
                                         <Header3>{project.title}</Header3>
                                     </Link>
                                 </Fit>
@@ -126,7 +106,7 @@ export function ProjectsDashboardPage(): React.JSX.Element {
                                     <Hint text="Create new pipeline">
                                         <ReactUILink
                                             href={createLinkToCreateNewPipeline(
-                                                rootProjectStructure,
+                                                rootGroup,
                                                 project.id,
                                                 currentBranchName
                                             )}
@@ -147,10 +127,11 @@ export function ProjectsDashboardPage(): React.JSX.Element {
             )}
             {usePipelineGrouping ? (
                 <PipelineRuns
+                    groupNodes={nodes}
                     indentLevel={level}
                     project={project}
                     currentBranchName={currentBranchName}
-                    rootProjectStructure={rootProjectStructure}
+                    rootProjectStructure={rootGroup}
                     allPipelineRuns={allPipelineRuns}
                 />
             ) : (
@@ -158,7 +139,7 @@ export function ProjectsDashboardPage(): React.JSX.Element {
                     indentLevel={level}
                     hideRuns={noRuns === "1"}
                     currentBranchName={currentBranchName}
-                    rootProjectStructure={rootProjectStructure}
+                    rootProjectStructure={rootGroup}
                     allJobs={allJobs.filter(j => j[JobIdWithParentProjectNames.ProjectId] === project.id)}
                     allJobRuns={allJobRuns}
                 />
@@ -194,7 +175,7 @@ export function ProjectsDashboardPage(): React.JSX.Element {
                         </td>
                     </tr>
                 </thead>
-                {(group.projects ?? []).map(x => renderProject(x, level + 1))}
+                {(group.projects ?? []).map(x => renderProject(x, level + 1, [...nodesPath, x]))}
                 {renderGroupList(group.groups ?? [], [...nodesPath, group], level + 1)}
             </React.Fragment>
         );
@@ -237,7 +218,7 @@ export function ProjectsDashboardPage(): React.JSX.Element {
                                             <Hint text="Create new pipeline">
                                                 <ReactUILink
                                                     href={createLinkToCreateNewPipeline(
-                                                        rootProjectStructure,
+                                                        rootGroup,
                                                         currentGroupOrProject.id,
                                                         currentBranchName
                                                     )}
@@ -275,7 +256,7 @@ export function ProjectsDashboardPage(): React.JSX.Element {
                     <SuspenseFadingWrapper $fading={isFading}>
                         <ProjectsWithRunsTable>
                             {(isGroup(currentGroupOrProject) ? (currentGroupOrProject.projects ?? []) : []).map(x =>
-                                renderProject(x, 0)
+                                renderProject(x, 0, groupNodes)
                             )}
                             {isGroup(currentGroupOrProject) &&
                                 renderGroupList(
@@ -283,7 +264,7 @@ export function ProjectsDashboardPage(): React.JSX.Element {
                                     groupNodes.filter(x => isGroup(x)),
                                     0
                                 )}
-                            {isProject(currentGroupOrProject) && renderProject(currentGroupOrProject, 0)}
+                            {isProject(currentGroupOrProject) && renderProject(currentGroupOrProject, 0, groupNodes)}
                         </ProjectsWithRunsTable>
                     </SuspenseFadingWrapper>
                 </Fit>

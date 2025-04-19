@@ -7,7 +7,7 @@ import { BranchCell, SelectedOnHoverTr } from "./Cells";
 import { formatRelativeTime, formatTestDuration, getText, toLocalTimeFromUtc } from "../Utils";
 import { createLinkToPipelineRun, getLinkToPipeline } from "../Domain/Navigation";
 import { PipelineRunsNames, PipelineRunsQueryRow } from "../Domain/PipelineRunsQueryRow";
-import { GroupNode, Project } from "../Domain/Storage/Storage";
+import { GroupNode, Project } from "../Domain/Storage/Projects/GroupNode";
 import { BranchBox } from "./BranchBox";
 import { JobLink } from "./JobLink";
 import { theme } from "../Theme/ITheme";
@@ -19,6 +19,7 @@ interface PipelineRunsProps {
     project: Project;
     currentBranchName?: string;
     rootProjectStructure: GroupNode;
+    groupNodes: (GroupNode | Project)[];
     allPipelineRuns: PipelineRunsQueryRow[];
 }
 
@@ -28,8 +29,9 @@ export function PipelineRuns({
     allPipelineRuns,
     currentBranchName,
     indentLevel,
+    groupNodes,
 }: PipelineRunsProps) {
-    const projectPath = useStorageQuery(s => s.getPathToProjectById(project.id), [project.id]) ?? [];
+    const projectPath = groupNodes;
     const hasFailedRuns = false;
     return (
         <tbody>

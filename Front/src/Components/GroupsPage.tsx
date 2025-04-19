@@ -6,11 +6,11 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { GroupAvatar } from "./GroupAvatar";
 import { groupLink, useBasePrefix } from "../Domain/Navigation";
-import { useRootGroups } from "../Domain/Storage/Storage";
 import { theme } from "../Theme/ITheme";
 import { LogoPageBlock } from "./LogoPageBlock";
 import { useSearchParamAsState } from "../Utils";
 import { AddNewProjectModal } from "./AddNewProjectModal";
+import { useRootGroups } from "./useProjectContextFromUrlParams";
 
 export function GroupsPage() {
     const [searchText, setSearchText] = React.useState("");

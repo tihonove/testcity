@@ -8,14 +8,12 @@ import { CodeQualityPage } from "./Pages/CodeQualityPage";
 import { GroupsPage } from "./Components/GroupsPage";
 import { JobRunsPage } from "./Pages/JobRunsPage";
 import { JobRunTestListPage } from "./Pages/JobRunTestListPage";
-import { MergeRequestJobsPage } from "./Pages/MergeRequestJobsPage";
 import { PipelineRunTestListPage } from "./Pages/PipelineRunTestListPage";
 import { ProjectsDashboardPage } from "./Pages/ProjectsDashboardPage";
 import { TestHistoryPage } from "./Pages/TestHistoryPage";
 import { TestsTreeMapChart } from "./Components/TestsTreeMapChart";
 import { TestsTreeView } from "./Components/TestsTreeView";
 import { useTestAnalyticsDarkMode } from "./Theme/UseTestAnalyticsDarkMode";
-import { RedirectToNewTestHistoryPage } from "./Pages/RedirectToNewTestHistoryPage";
 
 export function App(): React.JSX.Element {
     const basePrefix = useBasePrefix();
@@ -39,11 +37,6 @@ export function App(): React.JSX.Element {
             <Routes>
                 <Route path={basePrefix}>
                     <Route index element={<GroupsPage />} />
-                    <Route path="history" element={<RedirectToNewTestHistoryPage />} />
-                    <Route
-                        path="projects/:projectId/merge-requests/:gitLabMergeRequestId/jobs"
-                        element={<MergeRequestJobsPage />}
-                    />
                     <Route path="jobs" element={<Navigate to={basePrefix} />} />
 
                     <Route path=":groupIdLevel1">
@@ -75,10 +68,6 @@ export function App(): React.JSX.Element {
                         <Route path="pipelines/:pipelineId" element={<PipelineRunTestListPage />} />
                         <Route path="test-history" element={<TestHistoryPage />} />
                     </Route>
-
-                    <Route path="jobs/:jobId/runs/:jobRunId" element={<JobRunTestListPage />} />
-                    <Route path="jobs/:jobId/runs/:jobRunId/treemap" element={<TestsTreeMapChart />} />
-                    <Route path="jobs/:jobId/runs/:jobRunId/treeview" element={<TestsTreeView />} />
 
                     <Route path="project/:projectId/jobs/:jobId/codequality" element={<CodeQualityPage />} />
                 </Route>

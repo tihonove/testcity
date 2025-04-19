@@ -1,4 +1,5 @@
-import { GroupNode, Project, findPathToProjectById } from "./Storage/Storage";
+import { findPathToProjectById } from "./Storage/Storage";
+import { GroupNode, Project } from "./Storage/Projects/GroupNode";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore

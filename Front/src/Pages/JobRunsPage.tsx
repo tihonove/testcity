@@ -1,38 +1,29 @@
 import { ShapeSquareIcon32Regular } from "@skbkontur/icons";
 import { ColumnStack, Fit } from "@skbkontur/react-stack-layout";
+import { Paging } from "@skbkontur/react-ui";
 import * as React from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useClickhouseClient, useStorageQuery } from "../ClickhouseClientHooksWrapper";
-import { BranchCell, NumberCell, SelectedOnHoverTr } from "../Components/Cells";
-import { HomeIcon } from "../Components/Icons";
-import { BranchSelect } from "../Components/BranchSelect";
-import {
-    formatTestDuration,
-    getLinkToJob,
-    getOffsetTitle,
-    getText,
-    toLocalTimeFromUtc,
-    useSearchParamAsState,
-} from "../Utils";
-import { Paging } from "@skbkontur/react-ui";
-import { useState } from "react";
-import { createLinkToJobRun, urlPrefix } from "../Domain/Navigation";
-import { JobRunNames, JobsQueryRow } from "../Domain/Storage/JobsQuery";
-import { reject } from "../Utils/TypeHelpers";
-import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
+import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { BranchBox } from "../Components/BranchBox";
-import { JobLink } from "../Components/JobLink";
-import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
+import { BranchSelect } from "../Components/BranchSelect";
+import { BranchCell, NumberCell, SelectedOnHoverTr } from "../Components/Cells";
 import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
-import { useUrlBasedPaging } from "../Components/useUrlBasedPaging";
-import { SuspenseFadingWrapper, useDelayedTransition } from "../Components/useDelayedTransition";
+import { JobLink } from "../Components/JobLink";
 import { RotatingSpinner } from "../Components/RotatingSpinner";
+import { SuspenseFadingWrapper, useDelayedTransition } from "../Components/useDelayedTransition";
+import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
+import { useUrlBasedPaging } from "../Components/useUrlBasedPaging";
+import { createLinkToJobRun } from "../Domain/Navigation";
+import { JobRunNames } from "../Domain/Storage/JobsQuery";
+import { formatTestDuration, getOffsetTitle, getText, toLocalTimeFromUtc, useSearchParamAsState } from "../Utils";
+import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
+import { reject } from "../Utils/TypeHelpers";
 
 export function JobRunsPage(): React.JSX.Element {
     const { jobId = "" } = useParams();
-    const { groupNodes, pathToGroup, rootGroup } = useProjectContextFromUrlParams();
-    const project = useStorageQuery(x => x.getProject(pathToGroup), [pathToGroup]) ?? reject("Project not found");
+    const { groupNodes, rootGroup } = useProjectContextFromUrlParams();
+    const project = groupNodes[groupNodes.length - 1] ?? reject("Project not found");
 
     const [currentBranchName, setCurrentBranchName] = useSearchParamAsState("branch");
     usePopularBranchStoring(currentBranchName);

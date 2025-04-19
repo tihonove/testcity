@@ -15,7 +15,7 @@ import { createLinkToJob, createLinkToJobRun } from "../Domain/Navigation";
 import { formatTestDuration, getLinkToJob, getText, toLocalTimeFromUtc } from "../Utils";
 import { JobIdWithParentProject, JobIdWithParentProjectNames } from "../Domain/JobIdWithParentProject";
 import { JobRunNames, JobsQueryRow } from "../Domain/Storage/JobsQuery";
-import { GroupNode } from "../Domain/Storage/Storage";
+import { GroupNode } from "../Domain/Storage/Projects/GroupNode";
 import { SubIcon } from "./SubIcon";
 import { Hint, Tooltip } from "@skbkontur/react-ui";
 import { RunsTable } from "../Pages/ProjectsWithRunsTable";

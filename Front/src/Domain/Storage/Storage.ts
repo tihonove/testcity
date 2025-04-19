@@ -1,43 +1,12 @@
 import { ClickHouseClient } from "@clickhouse/client-web";
-import { JobIdWithParentProject } from "../JobIdWithParentProject";
 import { uuidv4 } from "../../Utils/Guids";
-import { JobRunFullInfoQueryRow, JobsQueryRow } from "./JobsQuery";
-import { delay } from "@skbkontur/react-ui/cjs/lib/utils";
 import { reject } from "../../Utils/TypeHelpers";
+import { JobIdWithParentProject } from "../JobIdWithParentProject";
 import { PipelineRunsQueryRow } from "../PipelineRunsQueryRow";
-import { TestRunQueryRow } from "./TestRunQuery";
 import { TestPerJobRunQueryRow } from "../TestPerJobRunQueryRow";
-
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports
-const hardCodedGroups: GroupNode[] = require("../../../gitlab-projects.json");
-
-export interface Group {
-    id: string;
-    title: string;
-    mergeRunsFromJobs?: boolean;
-}
-
-export interface GroupNode extends Group {
-    groups?: GroupNode[];
-    projects?: Project[];
-}
-
-export interface Project {
-    id: string;
-    title: string;
-}
-
-export function isGroup(node: GroupNode | Project): node is GroupNode {
-    return "projects" in node || "groups" in node;
-}
-
-export function isProject(node: GroupNode | Project): node is Project {
-    return !isGroup(node);
-}
-
-export function useRootGroups(): Group[] {
-    return hardCodedGroups.map(x => ({ id: x.id, title: x.title }));
-}
+import { JobRunFullInfoQueryRow, JobsQueryRow } from "./JobsQuery";
+import { GroupNode, Project } from "./Projects/GroupNode";
+import { TestRunQueryRow } from "./TestRunQuery";
 
 export function findPathToProjectById(groupNode: GroupNode, projectId: string): [GroupNode[], Project] {
     return findPathToProjectByIdOrNull(groupNode, projectId) ?? reject(`Project with id ${projectId} not found`);
@@ -162,57 +131,6 @@ export class TestAnalyticsStorage {
                 JobRunId in [${jobRunIds.map(x => "'" + x + "'").join(",")}]`;
         const data = await this.executeClickHouseQuery<[string, string, string, string][]>(query);
         return data;
-    }
-
-    public findPathToProjectByIdOrNull(projectId: string): Promise<[GroupNode[], Project] | undefined> {
-        for (const groupNode of hardCodedGroups) {
-            const projectPath = findPathToProjectByIdOrNull(groupNode, projectId);
-            if (projectPath != undefined) {
-                return Promise.resolve(projectPath);
-            }
-        }
-
-        return Promise.resolve(undefined);
-    }
-
-    public async findProjectByTestId(testId: string, jobId?: string): Promise<string | undefined> {
-        const query = `
-            SELECT
-                JobInfo.ProjectId 
-            FROM TestRuns
-            ANY INNER JOIN JobInfo ON TestRuns.JobRunId = JobInfo.JobRunId
-            WHERE TestRuns.TestId = '${testId}' ${jobId ? `AND JobInfo.JobId = '${jobId}'` : ""}
-            ORDER BY TestRuns.StartDateTime DESC
-            LIMIT 1            
-        `;
-        const result = await this.executeClickHouseQuery<string[]>(query);
-        return result[0][0];
-    }
-
-    public getPathToProjectById(id: string): (GroupNode | Project)[] | undefined {
-        const nodesPath: (GroupNode | Project)[] = [];
-        const traverse = (groupNode: GroupNode): boolean => {
-            nodesPath.push(groupNode);
-            const project = (groupNode.projects ?? []).find(x => x.id === id);
-            if (project != undefined) {
-                nodesPath.push(project);
-                return true;
-            }
-            for (const childGroup of groupNode.groups ?? []) {
-                if (traverse(childGroup)) {
-                    return true;
-                }
-            }
-            nodesPath.pop();
-            return false;
-        };
-
-        for (const rootGroup of hardCodedGroups) {
-            if (traverse(rootGroup)) {
-                return nodesPath;
-            }
-        }
-        return undefined;
     }
 
     public async findAllJobs(projectIds: string[]): Promise<JobIdWithParentProject[]> {
@@ -667,7 +585,7 @@ export class TestAnalyticsStorage {
         return result.map(row => row[0]);
     }
 
-    public async executeClickHouseQuery<T>(query: string): Promise<T> {
+    private async executeClickHouseQuery<T>(query: string): Promise<T> {
         const id = getQueryId();
         const response = await this.client.query({ query: query, format: "JSONCompact", query_id: id });
         const result = await response.json();
@@ -678,115 +596,6 @@ export class TestAnalyticsStorage {
         } else {
             throw new Error("Invalid output");
         }
-    }
-
-    public async getRootProjectStructure(groupIdOrTitle: string): Promise<GroupNode> {
-        await delay(100);
-        return (
-            hardCodedGroups.find(
-                x => x.id === groupIdOrTitle || x.title.toLowerCase() === groupIdOrTitle.toLowerCase()
-            ) ?? reject(`Unable to find group ${groupIdOrTitle}`)
-        );
-    }
-
-    public getProject(idOrTitleList: string[]): Project | undefined {
-        const groupIdOrTitleList = idOrTitleList.slice(0, -1);
-        const projectIdOrTitleList = idOrTitleList[idOrTitleList.length - 1];
-        let currentGroup: GroupNode | undefined;
-        for (const idOrTitle of groupIdOrTitleList) {
-            if (!currentGroup) {
-                currentGroup = hardCodedGroups.find(
-                    g => g.id === idOrTitle || g.title.toLowerCase() === idOrTitle.toLowerCase()
-                );
-            } else {
-                currentGroup = (currentGroup.groups ?? []).find(
-                    g => g.id === idOrTitle || g.title.toLowerCase() === idOrTitle.toLowerCase()
-                );
-            }
-        }
-        return (currentGroup?.projects ?? []).find(
-            p => p.id === projectIdOrTitleList || p.title.toLowerCase() === projectIdOrTitleList.toLowerCase()
-        );
-    }
-
-    public resolvePathToNodes(groupIdOrTitleList: string[]): (GroupNode | Project)[] | undefined {
-        const result: (GroupNode | Project)[] = [];
-        for (const groupIdOrTitle of groupIdOrTitleList) {
-            const prevNode = result[result.length - 1];
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-            if (prevNode != undefined) {
-                const nextGroupOrProject =
-                    ("groups" in prevNode
-                        ? prevNode.groups?.find(
-                              x => x.id === groupIdOrTitle || x.title === groupIdOrTitle.toLowerCase()
-                          )
-                        : undefined) ??
-                    ("projects" in prevNode
-                        ? prevNode.projects?.find(
-                              x => x.id === groupIdOrTitle || x.title === groupIdOrTitle.toLowerCase()
-                          )
-                        : undefined);
-                if (nextGroupOrProject != undefined) {
-                    result.push(nextGroupOrProject);
-                } else {
-                    return undefined;
-                }
-            } else {
-                const nextGroup = hardCodedGroups.find(
-                    x => x.id === groupIdOrTitle || x.title === groupIdOrTitle.toLowerCase()
-                );
-                if (nextGroup != undefined) {
-                    result.push(nextGroup);
-                } else {
-                    return undefined;
-                }
-            }
-        }
-        return result;
-    }
-
-    public getProjects(groupIdOrTitle: string[]): Project[] {
-        const findGroup = (groups: GroupNode[], path: string[]): GroupNode | undefined => {
-            if (path.length === 0) return undefined;
-            const [current, ...rest] = path;
-            const group = groups.find(g => g.id === current || g.title.toLowerCase() === current.toLowerCase());
-            if (!group) return undefined;
-            if (rest.length === 0) return group;
-
-            if (group.groups) return findGroup(group.groups, rest);
-            return undefined;
-        };
-
-        const findProject = (projects: Project[], idOrTitle: string): Project | undefined => {
-            return projects.find(p => p.id === idOrTitle || p.title.toLowerCase() === idOrTitle.toLowerCase());
-        };
-
-        const collectProjects = (group: GroupNode): Project[] => {
-            let projects = group.projects || [];
-
-            if (group.groups) {
-                for (const subGroup of group.groups) {
-                    projects = projects.concat(collectProjects(subGroup));
-                }
-            }
-            return projects;
-        };
-
-        const groupPath = groupIdOrTitle.slice(0, -1);
-
-        let group = findGroup(hardCodedGroups, groupIdOrTitle);
-        if (group) {
-            return collectProjects(group);
-        }
-
-        const lastElement = groupIdOrTitle[groupIdOrTitle.length - 1];
-        group = findGroup(hardCodedGroups, groupPath);
-        if (!group) return [];
-
-        const project = findProject(group.projects || [], lastElement);
-        if (project) return [project];
-
-        return collectProjects(group);
     }
 
     public async getTestStats(
