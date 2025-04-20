@@ -6,6 +6,8 @@ public class GitLabGroup
 
     public required string Title { get; set; }
 
+    public bool? MergeRunsFromJobs { get; set; }
+
     public List<GitLabProject> Projects { get; set; } = new List<GitLabProject>();
 
     public List<GitLabGroup> Groups { get; set; } = new List<GitLabGroup>();

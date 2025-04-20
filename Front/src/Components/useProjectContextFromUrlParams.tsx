@@ -1,13 +1,9 @@
 import * as React from "react";
+import usePromise from "react-promise-suspense";
 import { useParams } from "react-router-dom";
-import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
+import { useApiUrl } from "../Domain/Navigation";
 import { Group, GroupNode, Project, resolvePathToNodes } from "../Domain/Storage/Projects/GroupNode";
 import { reject } from "../Utils/TypeHelpers";
-import usePromise from "react-promise-suspense";
-import { delay } from "../Utils/AsyncUtils";
-
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports
-const hardCodedGroups: GroupNode[] = require("../../gitlab-projects.json");
 
 export function useProjectContextFromUrlParams(): {
     rootGroup: GroupNode;
@@ -37,21 +33,23 @@ export function useProjectContextFromUrlParams(): {
 }
 
 export function useRootGroup(groupIdOrTitle: string): GroupNode {
-    /* eslint-disable @typescript-eslint/no-unsafe-return */
+    const apiUrl = useApiUrl();
     return usePromise(async () => {
-        await delay(100);
-        return (
-            hardCodedGroups.find(
-                x => x.id === groupIdOrTitle || x.title.toLowerCase() === groupIdOrTitle.toLowerCase()
-            ) ?? reject(`Unable to find group ${groupIdOrTitle}`)
-        );
-    }, ["hardCodedGroups", groupIdOrTitle]);
+        const response = await fetch(`${apiUrl}/groups/${encodeURIComponent(groupIdOrTitle)}`);
+        if (!response.ok) {
+            throw new Error(`Unable to find group ${groupIdOrTitle}`);
+        }
+        return response.json();
+    }, ["groups", groupIdOrTitle]);
 }
 
 export function useRootGroups(): Group[] {
-    /* eslint-disable @typescript-eslint/no-unsafe-return */
+    const apiUrl = useApiUrl();
     return usePromise(async () => {
-        await delay(100);
-        return hardCodedGroups.map(x => ({ id: x.id, title: x.title }));
-    }, ["rootGroups"]);
+        const response = await fetch(`${apiUrl}groups`);
+        if (!response.ok) {
+            throw new Error("Unable to load root groups");
+        }
+        return response.json();
+    }, ["groups-root"]);
 }
