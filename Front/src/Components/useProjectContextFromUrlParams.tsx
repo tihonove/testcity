@@ -34,22 +34,28 @@ export function useProjectContextFromUrlParams(): {
 
 export function useRootGroup(groupIdOrTitle: string): GroupNode {
     const apiUrl = useApiUrl();
-    return usePromise(async () => {
-        const response = await fetch(`${apiUrl}/groups/${encodeURIComponent(groupIdOrTitle)}`);
-        if (!response.ok) {
-            throw new Error(`Unable to find group ${groupIdOrTitle}`);
-        }
-        return response.json();
-    }, ["groups", groupIdOrTitle]);
+    return usePromise(
+        async (x: string) => {
+            const response = await fetch(`${apiUrl}/groups/${encodeURIComponent(x)}`);
+            if (!response.ok) {
+                throw new Error(`Unable to find group ${x}`);
+            }
+            return (await response.json()) as GroupNode;
+        },
+        [groupIdOrTitle, "groups"]
+    );
 }
 
 export function useRootGroups(): Group[] {
     const apiUrl = useApiUrl();
-    return usePromise(async () => {
-        const response = await fetch(`${apiUrl}groups`);
-        if (!response.ok) {
-            throw new Error("Unable to load root groups");
-        }
-        return response.json();
-    }, ["groups-root"]);
+    return usePromise(
+        async _ => {
+            const response = await fetch(`${apiUrl}groups`);
+            if (!response.ok) {
+                throw new Error("Unable to load root groups");
+            }
+            return (await response.json()) as Group[];
+        },
+        ["groups-root"]
+    );
 }
