@@ -36,7 +36,7 @@ export function useRootGroup(groupIdOrTitle: string): GroupNode {
     const apiUrl = useApiUrl();
     return usePromise(
         async (x: string) => {
-            const response = await fetch(`${apiUrl}/groups/${encodeURIComponent(x)}`);
+            const response = await fetch(`${apiUrl}groups/${encodeURIComponent(x)}`);
             if (!response.ok) {
                 throw new Error(`Unable to find group ${x}`);
             }
