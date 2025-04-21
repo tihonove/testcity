@@ -91,6 +91,16 @@
         ]
     },
     {
+        "id": "848",
+        "title": "focus",
+        "projects": [
+            {
+                "id": "2189",
+                "title": "bingo"
+            }
+        ]
+    },
+    {
         "id": "1546",
         "title": "cpp.studio",
         "projects": [
@@ -153,6 +163,7 @@
                 "id": "19564",
                 "title": "fiit-big-library"
             }
-        ]
+        ],
+        "mergeRunsFromJobs": false
     }
 ]
