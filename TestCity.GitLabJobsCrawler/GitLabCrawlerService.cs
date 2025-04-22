@@ -21,8 +21,8 @@ public sealed class GitLabCrawlerService(GitLabSettings gitLabSettings, WorkerCl
             }
 
             var gitLabProjectIds = PreconfiguredGitLabProjectsService.GetAllProjects().ToList();
-            if (hostEnvironment.IsDevelopment())
-                gitLabProjectIds = gitLabProjectIds.Where(x => x.Id == "2680" || x.Id == "24783").ToList();
+            // if (hostEnvironment.IsDevelopment())
+            //     gitLabProjectIds = gitLabProjectIds.Where(x => x.Id == "2680" || x.Id == "24783").ToList();
             var gitLabClientProvider = new SkbKonturGitLabClientProvider(gitLabSettings);
             var client = gitLabClientProvider.GetClient();
             var clientEx = gitLabClientProvider.GetExtendedClient();
@@ -73,7 +73,11 @@ public sealed class GitLabCrawlerService(GitLabSettings gitLabSettings, WorkerCl
     private async ValueTask ProcessProjectJobsAsync(long projectId, GitLabExtendedClient clientEx, CancellationToken token)
     {
         log.LogInformation("Pulling jobs for project {ProjectId}", projectId);
-        var jobs = await clientEx.GetAllProjectJobsAsync(projectId, JobScope.Failed | JobScope.Success | JobScope.Running | JobScope.Canceled, perPage: 100, token).Take(600).ToListAsync(token);
+        var jobs = await clientEx
+            .GetAllProjectJobsAsync(projectId, JobScope.Failed | JobScope.Success | JobScope.Running | JobScope.Canceled, perPage: 100, token)
+            .Take(600)
+            .ToListAsync(token);
+        jobs.Reverse();
         log.LogInformation("Take last {jobsLength} jobs", jobs.Count);
         var enqueuedCount = 0;
         foreach (var job in jobs)

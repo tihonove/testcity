@@ -18,4 +18,5 @@ public class InProgressJobInfo
     public string? PipelineId { get; set; }
     public string JobStatus { get; set; } = string.Empty;
     public DateTime LastUpdateTime { get; set; } = DateTime.UtcNow;
+    public List<CommitParentsChangesEntry> ChangesSinceLastRun { get; set; } = new();
 }

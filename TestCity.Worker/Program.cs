@@ -31,6 +31,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddSingleton<ConnectionFactory>();
         services.AddSingleton<TestCityDatabase>();
         services.AddSingleton<ProjectJobTypesCache>();
+        services.AddSingleton<CommitParentsBuilderService>();
         services.AddSingleton(r => KafkaMessageQueueClient.CreateDefault(r.GetRequiredService<ILogger<KafkaMessageQueueClient>>()));
         services.AddSingleton<ITaskHandler, ProcessJobRunTaskHandler>();
         services.AddSingleton<ITaskHandler, BuildCommitParentsHandler>();

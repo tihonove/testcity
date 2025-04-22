@@ -14,11 +14,11 @@ namespace Kontur.TestCity.Worker.Handlers;
 
 public class ProcessJobRunTaskHandler(
     TestMetricsSender metricsSender,
-    WorkerClient workerClient,
     SkbKonturGitLabClientProvider gitLabClientProvider,
     TestCityDatabase testCityDatabase,
     JUnitExtractor extractor,
-    ProjectJobTypesCache projectJobTypesCache
+    ProjectJobTypesCache projectJobTypesCache,
+    CommitParentsBuilderService commitParentsBuilder
     ) : TaskHandler<ProcessJobRunTaskPayload>
 {
     public override bool CanHandle(RawTask task)
@@ -37,6 +37,8 @@ public class ProcessJobRunTaskHandler(
                 return;
             }
             var job = await clientEx.GetJobAsync(task.ProjectId, task.JobRunId);
+            if (job.Commit?.Id is not null)
+                await commitParentsBuilder.BuildCommitParent(task.ProjectId, job.Commit.Id, ct);
             var needProcessFailedJob = await projectJobTypesCache.JobTypeExistsAsync(task.ProjectId.ToString(), job.Name, ct);
             var jobProcessor = new GitLabJobProcessor(client, clientEx, extractor, logger);
             var projectInfo = await client.Projects.GetByIdAsync(task.ProjectId, new SingleProjectQuery(), ct);
@@ -45,20 +47,9 @@ public class ProcessJobRunTaskHandler(
             if (processingResult.JobInfo != null)
             {
                 logger.LogInformation("JobRunId '{JobRunId}' does not exist. Uploading test runs", processingResult.JobInfo.JobRunId);
+                if (job.Commit?.Id is not null && job.Ref is not null)
+                    processingResult.JobInfo.ChangesSinceLastRun = await testCityDatabase.GetCommitChangesAsync(job.Commit.Id, job.Name, job.Ref, ct);
                 await testCityDatabase.JobInfo.InsertAsync(processingResult.JobInfo);
-                if (processingResult.JobInfo.CommitSha != null)
-                {
-                    await workerClient.Enqueue(new BuildCommitParentsTaskPayload
-                    {
-                        ProjectId = task.ProjectId,
-                        CommitSha = processingResult.JobInfo.CommitSha,
-                    });
-                }
-                else
-                {
-                    logger.LogInformation("JobRunId '{JobRunId}' does not have commit sha. Skipping upload of commit parents", processingResult.JobInfo.JobRunId);
-                }
-
                 if (processingResult.TestReportData != null)
                 {
                     await testCityDatabase.TestRuns.InsertBatchAsync(processingResult.JobInfo, processingResult.TestReportData.Runs);

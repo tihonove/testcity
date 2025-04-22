@@ -6,19 +6,8 @@ using NUnit.Framework;
 
 namespace Kontur.TestCity.UnitTests.Explicits;
 
-public class TestsLoadFromGitlab
+public class PreconfiguredGitLabProjectsServiceTests
 {
-    [Test]
-    [Explicit]
-    public async Task TestIsJobRunExists()
-    {
-        await using var connection = new ConnectionFactory().CreateConnection();
-        await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);
-        var result = await new TestCityDatabase(new ConnectionFactory()).JobInfo.ExistsAsync("31666195");
-        Logger.LogInformation("JobRunIdExists result: {Result}", result);
-        Assert.That(result, Is.False);
-    }
-
     [Test]
     public void TestOutputRootGroups()
     {
@@ -39,5 +28,5 @@ public class TestsLoadFromGitlab
     }
 
     private static readonly ILoggerFactory LoggerFactory = GlobalSetup.TestLoggerFactory;
-    private static readonly ILogger<TestsLoadFromGitlab> Logger = LoggerFactory.CreateLogger<TestsLoadFromGitlab>();
+    private static readonly ILogger<PreconfiguredGitLabProjectsServiceTests> Logger = LoggerFactory.CreateLogger<PreconfiguredGitLabProjectsServiceTests>();
 }

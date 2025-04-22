@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using Kontur.TestCity.Core.GitLab;
 using Kontur.TestCity.Core.GitLab.Models;
+using Kontur.TestCity.Core.JobProcessing;
 using Kontur.TestCity.Core.KafkaMessageQueue;
 using Kontur.TestCity.Core.Logging;
 using Kontur.TestCity.Core.Storage;
@@ -15,8 +16,8 @@ namespace Kontur.TestCity.Worker.Handlers;
 public class ProcessInProgressJobTaskHandler(
     SkbKonturGitLabClientProvider gitLabClientProvider,
     TestCityDatabase testCityDatabase,
-    WorkerClient workerClient,
-    ProjectJobTypesCache projectJobTypesCache) : TaskHandler<ProcessInProgressJobTaskPayload>()
+    ProjectJobTypesCache projectJobTypesCache,
+    CommitParentsBuilderService commitParentsBuilder) : TaskHandler<ProcessInProgressJobTaskPayload>()
 {
     public override bool CanHandle(RawTask task)
     {
@@ -41,6 +42,8 @@ public class ProcessInProgressJobTaskHandler(
         {
             var job = await clientEx.GetJobAsync(task.ProjectId, task.JobRunId);
             var projectInfo = await client.Projects.GetByIdAsync(task.ProjectId, new(), ct);
+            if (job.Commit?.Id is not null)
+                await commitParentsBuilder.BuildCommitParent(task.ProjectId, job.Commit.Id, ct);
 
             if (job.Status != Core.GitLab.Models.JobStatus.Running)
             {
@@ -82,15 +85,9 @@ public class ProcessInProgressJobTaskHandler(
                     JobStatus = job.Status.ToString(),
                     LastUpdateTime = DateTime.UtcNow
                 };
+                if (job.Commit?.Id is not null && job.Ref is not null)
+                    inProgressJobInfo.ChangesSinceLastRun = await testCityDatabase.GetCommitChangesAsync(job.Commit.Id, job.Name, job.Ref, ct);
                 await testCityDatabase.InProgressJobInfo.InsertAsync(inProgressJobInfo);
-                if (job.Commit?.Id != null)
-                {
-                    await workerClient.Enqueue(new BuildCommitParentsTaskPayload
-                    {
-                        ProjectId = task.ProjectId,
-                        CommitSha = job.Commit.Id,
-                    });
-                }
             }
         }
         finally

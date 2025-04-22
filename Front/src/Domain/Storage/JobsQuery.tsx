@@ -21,7 +21,7 @@ export type JobsQueryRow = [
               AuthorEmail: string;
               AuthorName: string;
               MessagePreview: string;
-              ParentCommitSha: string;
+              CommitSha: string;
           }
     >,
     number,
@@ -70,7 +70,7 @@ export type JobRunFullInfoQueryRow = [
     Array<
         | [string, string, string, string]
         | {
-              ParentCommitSha: string;
+              CommitSha: string;
               AuthorName: string;
               AuthorEmail: string;
               MessagePreview: string;

@@ -151,7 +151,7 @@ export function JobRunTestListPage(): React.JSX.Element {
                                             {coveredCommits.map(commit => (
                                                 <Fit>
                                                     <CommitRow
-                                                        sha={Array.isArray(commit) ? commit[0] : commit.ParentCommitSha}
+                                                        sha={Array.isArray(commit) ? commit[0] : commit.CommitSha}
                                                         authorName={
                                                             Array.isArray(commit) ? commit[1] : commit.AuthorName
                                                         }

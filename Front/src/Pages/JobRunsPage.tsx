@@ -1,6 +1,6 @@
 import { ShapeSquareIcon32Regular } from "@skbkontur/icons";
 import { ColumnStack, Fit } from "@skbkontur/react-stack-layout";
-import { Paging } from "@skbkontur/react-ui";
+import { Paging, Tooltip } from "@skbkontur/react-ui";
 import * as React from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -19,11 +19,14 @@ import { JobRunNames } from "../Domain/Storage/JobsQuery";
 import { formatTestDuration, getOffsetTitle, getText, toLocalTimeFromUtc, useSearchParamAsState } from "../Utils";
 import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
 import { reject } from "../Utils/TypeHelpers";
+import { useShowChangesFeature } from "./useShowChangesFeature";
+import { theme } from "../Theme/ITheme";
 
 export function JobRunsPage(): React.JSX.Element {
     const { jobId = "" } = useParams();
     const { groupNodes, rootGroup } = useProjectContextFromUrlParams();
     const project = groupNodes[groupNodes.length - 1] ?? reject("Project not found");
+    const showChanges = useShowChangesFeature();
 
     const [currentBranchName, setCurrentBranchName] = useSearchParamAsState("branch");
     usePopularBranchStoring(currentBranchName);
@@ -56,6 +59,7 @@ export function JobRunsPage(): React.JSX.Element {
                                 <th>#</th>
                                 <th>branch</th>
                                 <th></th>
+                                {showChanges && <th>changes</th>}
                                 <th>started {getOffsetTitle()}</th>
                                 <th>duration</th>
                             </tr>
@@ -96,6 +100,52 @@ export function JobRunsPage(): React.JSX.Element {
                                             </JobLink>
                                         )}
                                     </CountCell>
+                                    {showChanges && (
+                                        <ChangesCell>
+                                            {x[JobRunNames.TotalCoveredCommitCount] > 0 ? (
+                                                <Tooltip
+                                                    trigger="click"
+                                                    render={() => (
+                                                        <ChangesList>
+                                                            <tbody>
+                                                                {x[JobRunNames.CoveredCommits].map((commit, index) =>
+                                                                    Array.isArray(commit) ? (
+                                                                        <ChangeItem key={index}>
+                                                                            <Message>{commit[3]}</Message>
+                                                                            <Author>
+                                                                                {commit[1]} &lt;
+                                                                                {commit[2]}
+                                                                                &gt;
+                                                                            </Author>
+                                                                            <Sha>{commit[0].substring(0, 7)}</Sha>
+                                                                        </ChangeItem>
+                                                                    ) : (
+                                                                        <ChangeItem key={index}>
+                                                                            <Message>{commit.MessagePreview}</Message>
+                                                                            <Author>
+                                                                                {commit.AuthorName} &lt;
+                                                                                {commit.AuthorEmail}
+                                                                                &gt;
+                                                                            </Author>
+                                                                            <Sha>
+                                                                                {commit.CommitSha.substring(0, 7)}
+                                                                            </Sha>
+                                                                        </ChangeItem>
+                                                                    )
+                                                                )}
+                                                            </tbody>
+                                                        </ChangesList>
+                                                    )}>
+                                                    <ChangesLink>
+                                                        {x[JobRunNames.TotalCoveredCommitCount]} change
+                                                        {x[JobRunNames.TotalCoveredCommitCount] !== 1 ? "s" : ""}
+                                                    </ChangesLink>
+                                                </Tooltip>
+                                            ) : (
+                                                <NoChanges>No changes</NoChanges>
+                                            )}
+                                        </ChangesCell>
+                                    )}
                                     <StartedCell>{toLocalTimeFromUtc(x[JobRunNames.StartDateTime])}</StartedCell>
                                     <DurationCell>
                                         {formatTestDuration(x[JobRunNames.Duration]?.toString() ?? "0")}
@@ -159,4 +209,55 @@ const StartedCell = styled.td`
 
 const DurationCell = styled.td`
     min-width: 100px;
+`;
+
+const ChangesCell = styled.td`
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`;
+
+const ChangesLink = styled.span`
+    cursor: pointer;
+    text-decoration: underline;
+`;
+
+const AttributesCell = styled.td`
+    max-width: 80px;
+    white-space: nowrap;
+    text-align: left;
+`;
+
+const ChangesList = styled.table`
+    padding: 10px;
+    max-width: 800px;
+`;
+
+const ChangeItem = styled.tr``;
+
+const Message = styled.td`
+    font-weight: 600;
+    max-width: 300px;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`;
+
+const Author = styled.td`
+    display: inline-block;
+    font-size: 12px;
+    padding-left: 5px;
+    color: ${theme.mutedTextColor};
+`;
+
+const Sha = styled.td`
+    font-size: 12px;
+    padding-left: 5px;
+    color: ${theme.mutedTextColor};
+`;
+
+const NoChanges = styled.span`
+    color: ${theme.mutedTextColor};
 `;

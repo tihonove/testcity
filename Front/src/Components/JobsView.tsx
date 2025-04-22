@@ -173,7 +173,7 @@ export function JobsView({
                                                                                             &gt;
                                                                                         </Author>
                                                                                         <Sha>
-                                                                                            {commit.ParentCommitSha.substring(
+                                                                                            {commit.CommitSha.substring(
                                                                                                 0,
                                                                                                 7
                                                                                             )}

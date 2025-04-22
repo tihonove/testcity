@@ -31,5 +31,8 @@ public class FullJobInfo : JobRunInfo
     public required string ProjectId { get; init; }
 
     public string? CustomStatusMessage { get; set; }
+
     public bool HasCodeQualityReport { get; set; }
+
+    public List<CommitParentsChangesEntry> ChangesSinceLastRun { get; set; } = new();
 }

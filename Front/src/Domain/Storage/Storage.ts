@@ -49,51 +49,29 @@ export class TestAnalyticsStorage {
     ): Promise<JobRunFullInfoQueryRow | undefined> {
         const query = `
                 SELECT 
-                    any(ji.JobId),
+                    ji.JobId,
                     ji.JobRunId,
-                    any(ji.BranchName),
-                    any(ji.AgentName),
-                    any(ji.StartDateTime),
-                    any(ji.EndDateTime),
-                    any(ji.TotalTestsCount),
-                    any(ji.AgentOSName),
-                    any(ji.Duration),
-                    any(ji.SuccessTestsCount),
-                    any(ji.SkippedTestsCount),
-                    any(ji.FailedTestsCount),
-                    any(ji.State),
-                    any(ji.CustomStatusMessage),
-                    any(ji.JobUrl),
-                    any(ji.ProjectId),
-                    any(ji.PipelineSource),
-                    any(ji.Triggered),
-                    any(ji.HasCodeQualityReport),
-                    groupArray((cp2.ParentCommitSha, cp2.AuthorName, cp2.AuthorEmail, cp2.MessagePreview)) AS CoveredCommits,
-                    any(prev.MinDepth) as TotalCoveredCommitCount                    
+                    ji.BranchName,
+                    ji.AgentName,
+                    ji.StartDateTime,
+                    ji.EndDateTime,
+                    ji.TotalTestsCount,
+                    ji.AgentOSName,
+                    ji.Duration,
+                    ji.SuccessTestsCount,
+                    ji.SkippedTestsCount,
+                    ji.FailedTestsCount,
+                    ji.State,
+                    ji.CustomStatusMessage,
+                    ji.JobUrl,
+                    ji.ProjectId,
+                    ji.PipelineSource,
+                    ji.Triggered,
+                    ji.HasCodeQualityReport,
+                    ji.ChangesSinceLastRun,
+                    length(ji.ChangesSinceLastRun) as TotalCoveredCommitCount 
                 FROM JobInfo ji
-
-                LEFT JOIN (
-                    SELECT
-                        prevji.ProjectId as ProjectId,
-                        prevji.JobId as JobId,
-                        cp.CommitSha AS CommitSha,
-                        argMin(cp.ParentCommitSha, cp.Depth) AS ClosestAncestorSha,
-                        min(cp.Depth) AS MinDepth
-                    FROM CommitParents cp
-                    INNER JOIN JobInfo prevji ON 
-                        cp.ProjectId = prevji.ProjectId 
-                        AND cp.ParentCommitSha = prevji.CommitSha
-                        AND cp.Depth > 0
-                    GROUP BY prevji.ProjectId, prevji.JobId, cp.CommitSha
-                ) AS prev ON prev.ProjectId = ji.ProjectId AND prev.JobId = ji.JobId AND prev.CommitSha = ji.CommitSha 
-
-                LEFT JOIN CommitParents cp2 ON cp2.ProjectId = ji.ProjectId AND cp2.CommitSha = ji.CommitSha
-
-                WHERE  
-                    (ji.ProjectId = '${projectId}' AND ji.JobId = '${jobId}' AND ji.JobRunId = '${jobRunId}') AND
-                    (prev.MinDepth = 0 OR cp2.Depth < prev.MinDepth)
-
-                GROUP BY ji.JobRunId
+                WHERE ji.ProjectId = '${projectId}' AND ji.JobId = '${jobId}' AND ji.JobRunId = '${jobRunId}'
                 `;
         const result = await this.executeClickHouseQuery<JobRunFullInfoQueryRow[]>(query);
         return result[0];
@@ -146,65 +124,6 @@ export class TestAnalyticsStorage {
         return this.executeClickHouseQuery<JobIdWithParentProject[]>(query);
     }
 
-    public async findAllJobsRunsWithChanges(projectIds: string[], currentBranchName?: string): Promise<JobsQueryRow[]> {
-        const query = `
-            SELECT
-                any(filtered.JobId),
-                filtered.JobRunId,
-                any(filtered.BranchName),
-                any(filtered.AgentName),
-                any(filtered.StartDateTime),
-                any(filtered.TotalTestsCount),
-                any(filtered.AgentOSName),
-                any(filtered.Duration),
-                any(filtered.SuccessTestsCount),
-                any(filtered.SkippedTestsCount),
-                any(filtered.FailedTestsCount),
-                any(filtered.State),
-                any(filtered.CustomStatusMessage),
-                any(filtered.JobUrl),
-                any(filtered.ProjectId),
-                any(filtered.HasCodeQualityReport),
-                groupArray((cp2.ParentCommitSha, cp2.AuthorName, cp2.AuthorEmail, cp2.MessagePreview)) AS CoveredCommits,
-                any(prev.MinDepth) as TotalCoveredCommitCount
-            FROM (
-                SELECT
-                    *,
-                    ROW_NUMBER() OVER (PARTITION BY JobId, BranchName ORDER BY StartDateTime DESC) AS rn
-                FROM JobInfo 
-                WHERE 
-                    StartDateTime >= now() - INTERVAL 30 DAY 
-                    AND ProjectId IN [${projectIds.map(x => "'" + x + "'").join(", ")}]
-                    ${currentBranchName ? `AND BranchName = '${currentBranchName}'` : ""}
-            ) AS filtered
-
-            LEFT JOIN (
-                SELECT
-                    prevji.ProjectId,
-                    prevji.JobId,
-                    cp.CommitSha AS CommitSha,
-                    argMin(cp.ParentCommitSha, cp.Depth) AS ClosestAncestorSha,
-                    min(cp.Depth) AS MinDepth
-                FROM CommitParents cp
-                INNER JOIN JobInfo prevji ON cp.ProjectId = prevji.ProjectId AND cp.ParentCommitSha = prevji.CommitSha AND cp.Depth > 0
-                GROUP BY prevji.ProjectId, prevji.JobId, cp.CommitSha
-            ) AS prev 
-                ON prev.JobId = filtered.JobId AND prev.CommitSha = filtered.CommitSha 
-
-            LEFT JOIN CommitParents cp2 ON cp2.ProjectId = filtered.ProjectId AND cp2.CommitSha = filtered.CommitSha AND cp2.Depth <= 10
-            WHERE rn = 1 AND (
-                (prev.MinDepth = 0) OR 
-                (prev.MinDepth > 10 AND cp2.Depth < 10) OR 
-                (prev.MinDepth > 0 AND prev.MinDepth < 10 AND cp2.Depth < prev.MinDepth)
-            )
-            GROUP BY filtered.JobRunId, filtered.JobId, filtered.StartDateTime
-            ORDER BY filtered.JobId, filtered.StartDateTime DESC
-            LIMIT 1000;
-        `;
-
-        return this.executeClickHouseQuery<JobsQueryRow[]>(query);
-    }
-
     public async findAllJobsRuns(projectIds: string[], currentBranchName?: string): Promise<JobsQueryRow[]> {
         const query = `
             SELECT
@@ -223,7 +142,9 @@ export class TestAnalyticsStorage {
                 filtered.CustomStatusMessage,
                 filtered.JobUrl,
                 filtered.ProjectId,
-                filtered.HasCodeQualityReport
+                filtered.HasCodeQualityReport,
+                arraySlice(filtered.ChangesSinceLastRun, 1, 20),
+                length(filtered.ChangesSinceLastRun) as TotalCoveredCommitCount
             FROM (
                 SELECT *,
                 ROW_NUMBER() OVER (PARTITION BY JobId ORDER BY StartDateTime DESC) AS rnj
@@ -313,7 +234,9 @@ export class TestAnalyticsStorage {
                     '' as CustomStatusMessage,
                     ipji.JobUrl,
                     ipji.ProjectId,
-                    0 as HasCodeQualityReport
+                    0 as HasCodeQualityReport,
+                    arraySlice(ipji.ChangesSinceLastRun, 1, 20),
+                    length(ipji.ChangesSinceLastRun) as TotalCoveredCommitCount
 
                 FROM InProgressJobInfo ipji
                 LEFT JOIN JobInfo eji ON eji.JobId = ipji.JobId AND eji.JobRunId = ipji.JobRunId
@@ -338,7 +261,9 @@ export class TestAnalyticsStorage {
                     ji.CustomStatusMessage,
                     ji.JobUrl,
                     ji.ProjectId,
-                    ji.HasCodeQualityReport
+                    ji.HasCodeQualityReport,
+                    arraySlice(ji.ChangesSinceLastRun, 1, 20),
+                    length(ji.ChangesSinceLastRun) as TotalCoveredCommitCount
 
                 FROM JobInfo ji
                 WHERE ${condition("ji")}

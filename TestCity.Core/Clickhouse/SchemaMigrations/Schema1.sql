@@ -46,7 +46,16 @@ CREATE TABLE IF NOT EXISTS JobInfo
     `ProjectId` String,
     `CustomStatusMessage` String,
     `PipelineId` String,
-    `HasCodeQualityReport` UInt8
+    `HasCodeQualityReport` UInt8,
+    `ChangesSinceLastRun` Array(
+        Tuple(
+            CommitSha       String,
+            Depth           UInt16,
+            AuthorName      String,
+            AuthorEmail     String,
+            MessagePreview  String
+        )
+    ) DEFAULT []
 )
 ENGINE = MergeTree
 PARTITION BY toMonday(StartDateTime)
@@ -70,7 +79,16 @@ CREATE TABLE IF NOT EXISTS InProgressJobInfo
     `AgentName` String,
     `AgentOSName` LowCardinality(String),
     `ProjectId` String,
-    `PipelineId` String
+    `PipelineId` String,
+    `ChangesSinceLastRun` Array(
+        Tuple(
+            CommitSha       String,
+            Depth           UInt16,
+            AuthorName      String,
+            AuthorEmail     String,
+            MessagePreview  String
+        )
+    ) DEFAULT []
 )
 ENGINE = MergeTree
 PARTITION BY toMonday(StartDateTime)
@@ -118,6 +136,7 @@ CREATE TABLE IF NOT EXISTS CommitParents (
     AuthorName String,
     AuthorEmail String,
     MessagePreview String,
+    BranchType Enum8('Main' = 1, 'Side' = 2) DEFAULT 'Main',
     CreateDate DateTime DEFAULT now()
 )
 ENGINE = ReplacingMergeTree(CreateDate)
