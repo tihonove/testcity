@@ -30,8 +30,6 @@ public class TestCityInProgressJobInfo(ConnectionFactory connectionFactory)
                 @AgentOSName, 
                 @ProjectId, 
                 @PipelineId,
-                @JobStatus,
-                @LastUpdateTime,
                 {changesSinceLastRunJson}
             )";
 
@@ -47,10 +45,8 @@ public class TestCityInProgressJobInfo(ConnectionFactory connectionFactory)
         command.AddParameter("CommitAuthor", info.CommitAuthor ?? string.Empty);
         command.AddParameter("AgentName", info.AgentName ?? string.Empty);
         command.AddParameter("AgentOSName", info.AgentOSName ?? string.Empty);
-        command.AddParameter("ProjectId", info.ProjectId);
+        command.AddParameter("ProjectId", info.ProjectId ?? string.Empty);
         command.AddParameter("PipelineId", info.PipelineId ?? string.Empty);
-        command.AddParameter("JobStatus", info.JobStatus);
-        command.AddParameter("LastUpdateTime", info.LastUpdateTime.ToUniversalTime());
 
         await command.ExecuteNonQueryAsync();
     }
@@ -82,9 +78,7 @@ public class TestCityInProgressJobInfo(ConnectionFactory connectionFactory)
         "AgentOSName",
         "ProjectId",
         "PipelineId",
-        "JobStatus",
-        "LastUpdateTime",
-        "ChangesSinceLastRun"
+        "ChangesSinceLastRun",
     };
 
     private static string SerializeChangesSinceLastRun(List<CommitParentsChangesEntry> changes)
@@ -107,8 +101,8 @@ public class TestCityInProgressJobInfo(ConnectionFactory connectionFactory)
         await using var connection = connectionFactory.CreateConnection();
         await using var command = connection.CreateCommand();
 
-        var columns = string.Join(", ", Fields.Take(14)); // Берем только первые 14 полей, которые были изначально
-        command.CommandText = $"SELECT {columns}, JobStatus, LastUpdateTime FROM InProgressJobInfo WHERE ProjectId = @ProjectId";
+        var columns = string.Join(", ", Fields.Except(new[] { "ChangesSinceLastRun" }));
+        command.CommandText = $"SELECT {columns} FROM InProgressJobInfo WHERE ProjectId = @ProjectId";
         command.AddParameter("ProjectId", projectId);
 
         await using var reader = await command.ExecuteReaderAsync();
@@ -130,8 +124,6 @@ public class TestCityInProgressJobInfo(ConnectionFactory connectionFactory)
                 AgentOSName = reader.IsDBNull(11) ? null : reader.GetString(11),
                 ProjectId = reader.GetString(12),
                 PipelineId = reader.IsDBNull(13) ? null : reader.GetString(13),
-                JobStatus = reader.IsDBNull(14) ? string.Empty : reader.GetString(14),
-                LastUpdateTime = reader.IsDBNull(15) ? DateTime.UtcNow : reader.GetDateTime(15)
                 // ChangesSinceLastRun не вычитываем, так как оно используется только при вставке
             };
             result.Add(info);

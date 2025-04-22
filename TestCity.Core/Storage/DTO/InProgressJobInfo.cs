@@ -16,7 +16,5 @@ public class InProgressJobInfo
     public string? AgentOSName { get; set; }
     public string ProjectId { get; set; } = string.Empty;
     public string? PipelineId { get; set; }
-    public string JobStatus { get; set; } = string.Empty;
-    public DateTime LastUpdateTime { get; set; } = DateTime.UtcNow;
     public List<CommitParentsChangesEntry> ChangesSinceLastRun { get; set; } = new();
 }

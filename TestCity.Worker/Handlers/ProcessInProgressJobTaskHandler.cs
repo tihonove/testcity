@@ -82,8 +82,6 @@ public class ProcessInProgressJobTaskHandler(
                     AgentOSName = job.RunnerManager?.Platform ?? "Unknown",
                     ProjectId = task.ProjectId.ToString(),
                     PipelineId = job.Pipeline?.Id.ToString(),
-                    JobStatus = job.Status.ToString(),
-                    LastUpdateTime = DateTime.UtcNow
                 };
                 if (job.Commit?.Id is not null && job.Ref is not null)
                     inProgressJobInfo.ChangesSinceLastRun = await testCityDatabase.GetCommitChangesAsync(job.Commit.Id, job.Name, job.Ref, ct);
