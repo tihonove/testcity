@@ -1,3 +1,5 @@
+import { CoveredCommitsColumn } from "./CoveredCommitsColumn";
+
 export type PipelineRunsQueryRow = [
     string, // ProjectId,
     string, // PipelineId,
@@ -15,6 +17,8 @@ export type PipelineRunsQueryRow = [
     string,
     string,
     string,
+    number,
+    CoveredCommitsColumn,
     number,
 ];
 
@@ -35,4 +39,6 @@ export const PipelineRunsNames = {
     CommitAuthor: 13,
     CommitSha: 14,
     HasCodeQualityReport: 15,
+    CoveredCommits: 16,
+    TotalCoveredCommitCount: 17,
 } as const;

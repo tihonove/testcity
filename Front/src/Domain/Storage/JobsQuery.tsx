@@ -1,3 +1,5 @@
+import { CoveredCommitsColumn } from "./CoveredCommitsColumn";
+
 export type JobsQueryRow = [
     string, // JobId
     string, // JobRunId
@@ -15,17 +17,10 @@ export type JobsQueryRow = [
     string, // JobUrl
     string, // ProjectId
     number, // HasCodeQualityReport
-    Array<
-        | [string, string, string, string]
-        | {
-              AuthorEmail: string;
-              AuthorName: string;
-              MessagePreview: string;
-              CommitSha: string;
-          }
-    >,
+    CoveredCommitsColumn,
     number,
 ];
+
 export const JobRunNames = {
     JobId: 0,
     JobRunId: 1,

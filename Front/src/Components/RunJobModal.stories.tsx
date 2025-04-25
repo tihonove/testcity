@@ -46,6 +46,8 @@ export const Simple: StoryFn = () => (
                 "tihonove",
                 "12131231",
                 0,
+                [],
+                0,
             ],
             [
                 "20289",
@@ -63,6 +65,8 @@ export const Simple: StoryFn = () => (
                 "Test message",
                 "tihonove",
                 "12131231",
+                0,
+                [],
                 0,
             ],
             [
@@ -82,6 +86,8 @@ export const Simple: StoryFn = () => (
                 "tihonove",
                 "12131231",
                 0,
+                [],
+                0,
             ],
             [
                 "20289",
@@ -99,6 +105,8 @@ export const Simple: StoryFn = () => (
                 "Test message",
                 "tihonove",
                 "12131231",
+                0,
+                [],
                 0,
             ],
             [
@@ -118,6 +126,8 @@ export const Simple: StoryFn = () => (
                 "tihonove",
                 "12131231",
                 0,
+                [],
+                0,
             ],
             [
                 "20289",
@@ -135,6 +145,8 @@ export const Simple: StoryFn = () => (
                 "Test message",
                 "tihonove",
                 "12131231",
+                0,
+                [],
                 0,
             ],
             [
@@ -154,6 +166,8 @@ export const Simple: StoryFn = () => (
                 "tihonove",
                 "12131231",
                 0,
+                [],
+                0,
             ],
             [
                 "20289",
@@ -172,6 +186,8 @@ export const Simple: StoryFn = () => (
                 "tihonove",
                 "12131231",
                 0,
+                [],
+                0,
             ],
             [
                 "20289",
@@ -189,6 +205,8 @@ export const Simple: StoryFn = () => (
                 "Test message",
                 "tihonove",
                 "12131231",
+                0,
+                [],
                 0,
             ],
         ]}

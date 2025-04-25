@@ -2,18 +2,12 @@ import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
     a {
-      color: ${props => props.theme.primaryTextColor};
+        color: ${props => props.theme.primaryTextColor};
+        text-decoration: none;
 
-      &:hover {
-        color: ${props => props.theme.activeLinkColor};
-      }
-        
-        &.no-underline {
-            text-decoration: none;
-            
-            &:hover {
-                text-decoration: underline;
-            }
+        &:hover {
+            color: ${props => props.theme.activeLinkColor};
+            text-decoration: underline;
         }
     }
     

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useApiUrl, useBasePrefix } from "../Domain/Navigation";
-import { PipelineRunsNames, PipelineRunsQueryRow } from "../Domain/PipelineRunsQueryRow";
+import { PipelineRunsNames, PipelineRunsQueryRow } from "../Domain/Storage/PipelineRunsQueryRow";
 import { Button } from "@skbkontur/react-ui";
 import { RunJobModal } from "./RunJobModal";
 import { ManualJobRunInfo } from "../Domain/ManualJobRunInfo";

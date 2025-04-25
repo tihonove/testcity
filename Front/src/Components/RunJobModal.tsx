@@ -7,7 +7,7 @@ import { useLocalStorage } from "usehooks-ts";
 import { theme } from "../Theme/ITheme";
 import { ManualJobRunInfo } from "../Domain/ManualJobRunInfo";
 import { useApiUrl, useBasePrefix } from "../Domain/Navigation";
-import { PipelineRunsNames, PipelineRunsQueryRow } from "../Domain/PipelineRunsQueryRow";
+import { PipelineRunsNames, PipelineRunsQueryRow } from "../Domain/Storage/PipelineRunsQueryRow";
 import { GitCommitVertical, UserRound } from "lucide-react";
 
 interface RunJobModalProps {

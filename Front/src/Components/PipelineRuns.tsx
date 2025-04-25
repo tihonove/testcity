@@ -6,13 +6,14 @@ import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { BranchCell, SelectedOnHoverTr } from "./Cells";
 import { formatRelativeTime, formatTestDuration, getText, toLocalTimeFromUtc } from "../Utils";
 import { createLinkToPipelineRun, getLinkToPipeline } from "../Domain/Navigation";
-import { PipelineRunsNames, PipelineRunsQueryRow } from "../Domain/PipelineRunsQueryRow";
+import { PipelineRunsNames, PipelineRunsQueryRow } from "../Domain/Storage/PipelineRunsQueryRow";
 import { GroupNode, Project } from "../Domain/Storage/Projects/GroupNode";
 import { BranchBox } from "./BranchBox";
 import { JobLink } from "./JobLink";
 import { theme } from "../Theme/ITheme";
 import { Hint } from "@skbkontur/react-ui";
 import { TimingCell } from "./TimingCell";
+import { CommitChanges } from "./CommitChanges";
 
 interface PipelineRunsProps {
     indentLevel: number;
@@ -68,10 +69,16 @@ export function PipelineRuns({
                                     x[PipelineRunsNames.FailedTestsCount]?.toString(),
                                     x[PipelineRunsNames.State],
                                     x[PipelineRunsNames.CustomStatusMessage],
-                                    x[PipelineRunsNames.HasCodeQualityReport]
+                                    0
                                 )}
                             </JobLink>
                         </CountCell>
+                        <ChangesCell>
+                            <CommitChanges
+                                totalCoveredCommitCount={x[PipelineRunsNames.TotalCoveredCommitCount]}
+                                coveredCommits={x[PipelineRunsNames.CoveredCommits] || []}
+                            />
+                        </ChangesCell>
                         <TimingCell
                             startDateTime={x[PipelineRunsNames.StartDateTime]}
                             duration={x[PipelineRunsNames.Duration]}
@@ -98,4 +105,11 @@ const CountCell = styled.td`
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: left;
+`;
+
+const ChangesCell = styled.td`
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;

@@ -2,7 +2,7 @@ import { ClickHouseClient } from "@clickhouse/client-web";
 import { uuidv4 } from "../../Utils/Guids";
 import { reject } from "../../Utils/TypeHelpers";
 import { JobIdWithParentProject } from "../JobIdWithParentProject";
-import { PipelineRunsQueryRow } from "../PipelineRunsQueryRow";
+import { PipelineRunsQueryRow } from "./PipelineRunsQueryRow";
 import { TestPerJobRunQueryRow } from "../TestPerJobRunQueryRow";
 import { JobRunFullInfoQueryRow, JobsQueryRow } from "./JobsQuery";
 import { GroupNode, Project } from "./Projects/GroupNode";
@@ -297,7 +297,9 @@ export class TestAnalyticsStorage {
                 CommitMessage,
                 CommitAuthor,
                 CommitSha,
-                HasCodeQualityReport
+                HasCodeQualityReport,
+                ChangesSinceLastRun,
+                TotalCoveredCommitCount
             FROM ( 
                 SELECT 
                     ProjectId as ProjectId ,
@@ -316,8 +318,10 @@ export class TestAnalyticsStorage {
                     arrayElement(topK(1)(CommitMessage), 1) as CommitMessage,
                     arrayElement(topK(1)(CommitAuthor), 1) as CommitAuthor,
                     arrayElement(topK(1)(CommitSha), 1) as CommitSha,
-                    MAX(HasCodeQualityReport) as HasCodeQualityReport
-                FROM JobInfo
+                    MAX(HasCodeQualityReport) as HasCodeQualityReport,
+                    arraySlice(any(ji.ChangesSinceLastRun), 1, 20) as ChangesSinceLastRun,
+                    length(any(ji.ChangesSinceLastRun)) as TotalCoveredCommitCount
+                FROM JobInfo ji
                 WHERE 
                     JobInfo.PipelineId <> ''
                     AND JobInfo.ProjectId IN [${projectIds.map(x => "'" + x + "'").join(", ")}]
@@ -356,8 +360,11 @@ export class TestAnalyticsStorage {
                 arrayStringConcat(groupArrayIf(JobInfo.CustomStatusMessage, JobInfo.CustomStatusMessage != ''), ', ') as CustomStatusMessage,
                 arrayElement(topK(1)(CommitMessage), 1) as CommitMessage,
                 arrayElement(topK(1)(CommitAuthor), 1) as CommitAuthor,
-                arrayElement(topK(1)(CommitSha), 1) as CommitSha
-            FROM JobInfo
+                arrayElement(topK(1)(CommitSha), 1) as CommitSha,
+                0 as HasCodeQualityReport,
+                arraySlice(any(ji.ChangesSinceLastRun), 1, 20),
+                length(any(ji.ChangesSinceLastRun)) as TotalCoveredCommitCount
+            FROM JobInfo ji
             WHERE 
                 JobInfo.PipelineId <> ''
                 AND JobInfo.ProjectId = '${projectId}'

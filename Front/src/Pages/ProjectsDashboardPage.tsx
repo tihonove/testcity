@@ -32,8 +32,6 @@ import { theme } from "../Theme/ITheme";
 import { useSearchParamAsState } from "../Utils";
 import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
 import { ProjectsWithRunsTable, RunsTable } from "./ProjectsWithRunsTable";
-import { useShowChangesFeature } from "./useShowChangesFeature";
-import { JobRunNames } from "../Domain/Storage/JobsQuery";
 
 export function ProjectsDashboardPage(): React.JSX.Element {
     const { rootGroup, groupNodes, pathToGroup } = useProjectContextFromUrlParams();
@@ -42,7 +40,6 @@ export function ProjectsDashboardPage(): React.JSX.Element {
     usePopularBranchStoring(currentBranchName);
     const [noRuns, setNoRuns] = useSearchParamAsState("noruns");
 
-    const showChanges = useShowChangesFeature();
     const usePipelineGrouping = rootGroup.mergeRunsFromJobs ?? true;
     const currentGroupOrProject = groupNodes[groupNodes.length - 1];
     const projects = getProjects(currentGroupOrProject);
@@ -50,7 +47,7 @@ export function ProjectsDashboardPage(): React.JSX.Element {
 
     const allJobs = useStorageQuery(x => x.findAllJobs(projectIds), [projectIds]);
     const inProgressJobRuns = useStorageQuery(
-        x => (usePipelineGrouping ? [] : showChanges ? [] : x.findAllJobsRunsInProgress(projectIds, currentBranchName)),
+        x => (usePipelineGrouping ? [] : x.findAllJobsRunsInProgress(projectIds, currentBranchName)),
         [projectIds, currentBranchName, usePipelineGrouping, pathToGroup]
     );
     const allJobRuns2 = useStorageQuery(
@@ -160,9 +157,7 @@ export function ProjectsDashboardPage(): React.JSX.Element {
                                     <GroupAvatar size="20px" group={group}></GroupAvatar>
                                 </Fit>
                                 <Fit>
-                                    <Link
-                                        className="no-underline"
-                                        to={createLinkToGroupOrProject(nodesPath, currentBranchName)}>
+                                    <Link to={createLinkToGroupOrProject(nodesPath, currentBranchName)}>
                                         <Header3>{group.title}</Header3>
                                     </Link>
                                 </Fit>
