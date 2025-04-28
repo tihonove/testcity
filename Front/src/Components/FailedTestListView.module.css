@@ -1,0 +1,23 @@
+.testNamePrefix {
+    font-size: var(--small-text-size);
+    color: var(--muted-text-color);
+}
+
+.testOutputRow {
+    max-height: 0;
+}
+
+.testOutputRowExpanded {
+    max-height: none;
+}
+
+.code {
+    font-size: 14px;
+    line-height: 18px;
+    max-height: 800px;
+    margin-top: 5px;
+    margin-bottom: 25px;
+    overflow: hidden;
+    padding: 15px;
+    border: 1px solid var(--border-line-color-2);
+}

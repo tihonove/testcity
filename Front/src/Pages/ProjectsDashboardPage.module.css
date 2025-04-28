@@ -1,0 +1,35 @@
+.testListRoot {
+    max-width: var(--layout-centered-width);
+    width: var(--layout-centered-width);
+    margin: 24px auto;
+}
+
+.sectionTitle {
+    margin-top: 16px;
+}
+
+.root {
+    display: flex;
+}
+
+.showRunsSwitchContainer {
+    position: fixed;
+    right: 40px;
+    top: 10px;
+}
+
+.header3 {
+    font-size: 22px;
+    line-height: 24px;
+}
+
+.rootGroupTitle {
+    font-size: 28px;
+    line-height: 36px;
+    display: block;
+    text-decoration: none;
+}
+
+.rootGroupTitle:hover {
+    background-color: var(--background-color-1);
+}

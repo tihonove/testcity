@@ -1,0 +1,8 @@
+.suspenseFadingWrapper {
+    transition: opacity 0.5s ease-in-out;
+    opacity: 1;
+}
+
+.suspenseFadingWrapperFading {
+    opacity: 0.3;
+}

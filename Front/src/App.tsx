@@ -2,10 +2,9 @@ import { WeatherMoonIcon20Regular, WeatherSunIcon20Regular, WeatherSunMoonIcon20
 import { Button, Hint } from "@skbkontur/react-ui";
 import * as React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import styled from "styled-components";
 import { useBasePrefix } from "./Domain/Navigation";
 import { CodeQualityPage } from "./Pages/CodeQualityPage";
-import { GroupsPage } from "./Components/GroupsPage";
+import { GroupsPage } from "./Pages/GroupsPage";
 import { JobRunsPage } from "./Pages/JobRunsPage";
 import { JobRunTestListPage } from "./Pages/JobRunTestListPage";
 import { PipelineRunTestListPage } from "./Pages/PipelineRunTestListPage";
@@ -14,14 +13,15 @@ import { TestHistoryPage } from "./Pages/TestHistoryPage";
 import { TestsTreeMapChart } from "./Components/TestsTreeMapChart";
 import { TestsTreeView } from "./Components/TestsTreeView";
 import { useTestAnalyticsDarkMode } from "./Theme/UseTestAnalyticsDarkMode";
+import styles from "./App.module.css";
 
 export function App(): React.JSX.Element {
     const basePrefix = useBasePrefix();
     const { ternaryDarkMode, toggle } = useTestAnalyticsDarkMode();
 
     return (
-        <AppContainer>
-            <ThemeSwitchContainer>
+        <div className={styles.root}>
+            <div className={styles.themeSwitchContainer}>
                 <Hint text={`Toggle color mode. Current: ${ternaryDarkMode}`} pos="left middle" maxWidth={400}>
                     <Button use="link" onClick={toggle}>
                         {ternaryDarkMode === "dark" ? (
@@ -33,7 +33,7 @@ export function App(): React.JSX.Element {
                         )}
                     </Button>
                 </Hint>
-            </ThemeSwitchContainer>
+            </div>
             <Routes>
                 <Route path={basePrefix}>
                     <Route index element={<GroupsPage />} />
@@ -72,16 +72,6 @@ export function App(): React.JSX.Element {
                     <Route path="project/:projectId/jobs/:jobId/codequality" element={<CodeQualityPage />} />
                 </Route>
             </Routes>
-        </AppContainer>
+        </div>
     );
 }
-
-const ThemeSwitchContainer = styled.div({
-    position: "fixed",
-    top: 10,
-    right: 10,
-});
-
-const AppContainer = styled.div({
-    padding: 20,
-});

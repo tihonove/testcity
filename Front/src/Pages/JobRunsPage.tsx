@@ -3,7 +3,6 @@ import { ColumnStack, Fit } from "@skbkontur/react-stack-layout";
 import { Paging, Tooltip } from "@skbkontur/react-ui";
 import * as React from "react";
 import { Link, useParams } from "react-router-dom";
-import styled from "styled-components";
 import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { BranchBox } from "../Components/BranchBox";
 import { BranchSelect } from "../Components/BranchSelect";
@@ -20,6 +19,7 @@ import { JobRunNames } from "../Domain/Storage/JobsQuery";
 import { formatTestDuration, getOffsetTitle, getText, toLocalTimeFromUtc, useSearchParamAsState } from "../Utils";
 import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
 import { reject } from "../Utils/TypeHelpers";
+import styles from "./JobRunsPage.module.css";
 
 export function JobRunsPage(): React.JSX.Element {
     const { jobId = "" } = useParams();
@@ -42,16 +42,16 @@ export function JobRunsPage(): React.JSX.Element {
                 <GroupBreadcrumps branchName={currentBranchName} nodes={groupNodes} />
             </Fit>
             <Fit>
-                <Header1>
+                <h1 className={styles.header1}>
                     <ShapeSquareIcon32Regular /> {jobId}
-                </Header1>
+                </h1>
             </Fit>
             <Fit>
                 <BranchSelect branch={currentBranchName} onChangeBranch={setCurrentBranchName} jobId={jobId} />
             </Fit>
             <Fit>
-                <SuspenseFadingWrapper $fading={isFading}>
-                    <RunList>
+                <SuspenseFadingWrapper fading={isFading}>
+                    <table className={styles.runList}>
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -71,7 +71,7 @@ export function JobRunsPage(): React.JSX.Element {
                                     <BranchCell>
                                         <BranchBox name={x[JobRunNames.BranchName]} />
                                     </BranchCell>
-                                    <CountCell>
+                                    <td className={styles.countCell}>
                                         {x[JobRunNames.State] === "Running" ? (
                                             <>
                                                 <RotatingSpinner /> Running...
@@ -97,21 +97,23 @@ export function JobRunsPage(): React.JSX.Element {
                                                 )}
                                             </JobLink>
                                         )}
-                                    </CountCell>
-                                    <ChangesCell>
+                                    </td>
+                                    <td className={styles.changesCell}>
                                         <CommitChanges
                                             totalCoveredCommitCount={x[JobRunNames.TotalCoveredCommitCount]}
                                             coveredCommits={x[JobRunNames.CoveredCommits] || []}
                                         />
-                                    </ChangesCell>
-                                    <StartedCell>{toLocalTimeFromUtc(x[JobRunNames.StartDateTime])}</StartedCell>
-                                    <DurationCell>
+                                    </td>
+                                    <td className={styles.startedCell}>
+                                        {toLocalTimeFromUtc(x[JobRunNames.StartDateTime])}
+                                    </td>
+                                    <td className={styles.durationCell}>
                                         {formatTestDuration(x[JobRunNames.Duration]?.toString() ?? "0")}
-                                    </DurationCell>
+                                    </td>
                                 </SelectedOnHoverTr>
                             ))}
                         </tbody>
-                    </RunList>
+                    </table>
                     <Paging
                         activePage={page + 1}
                         onPageChange={x => {
@@ -126,58 +128,3 @@ export function JobRunsPage(): React.JSX.Element {
         </ColumnStack>
     );
 }
-
-const HomeHeader = styled.h2``;
-
-const Header1 = styled.h1`
-    font-size: 32px;
-    line-height: 40px;
-    display: flex;
-`;
-
-const RunList = styled.table`
-    width: 100%;
-    max-width: 100vw;
-    table-layout: auto;
-
-    th {
-        font-size: 12px;
-        text-align: left;
-        padding: 4px 8px;
-    }
-
-    td {
-        text-align: left;
-        padding: 6px 8px;
-    }
-
-    thead > tr {
-        border-bottom: 1px solid #eee;
-    }
-`;
-
-const CountCell = styled.td`
-    width: 100%;
-    white-space: nowrap;
-`;
-
-const StartedCell = styled.td`
-    min-width: 160px;
-`;
-
-const DurationCell = styled.td`
-    min-width: 100px;
-`;
-
-const ChangesCell = styled.td`
-    max-width: 300px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-`;
-
-const AttributesCell = styled.td`
-    max-width: 80px;
-    white-space: nowrap;
-    text-align: left;
-`;

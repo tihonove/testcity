@@ -1,7 +1,6 @@
 import { ShareNetworkIcon } from "@skbkontur/icons";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { BranchCell, SelectedOnHoverTr } from "./Cells";
 import { formatRelativeTime, formatTestDuration, getText, toLocalTimeFromUtc } from "../Utils";
@@ -10,10 +9,10 @@ import { PipelineRunsNames, PipelineRunsQueryRow } from "../Domain/Storage/Pipel
 import { GroupNode, Project } from "../Domain/Storage/Projects/GroupNode";
 import { BranchBox } from "./BranchBox";
 import { JobLink } from "./JobLink";
-import { theme } from "../Theme/ITheme";
 import { Hint } from "@skbkontur/react-ui";
 import { TimingCell } from "./TimingCell";
 import { CommitChanges } from "./CommitChanges";
+import styles from "./PipelineRuns.module.css";
 
 interface PipelineRunsProps {
     indentLevel: number;
@@ -40,8 +39,8 @@ export function PipelineRuns({
                 .filter(x => x[PipelineRunsNames.ProjectId] == project.id)
                 .map(x => (
                     <SelectedOnHoverTr key={x[PipelineRunsNames.PipelineId]}>
-                        <PaddingCell style={{ paddingLeft: indentLevel * 25, paddingRight: 0 }} />
-                        <NumberCell>
+                        <td className={styles.paddingCell} style={{ paddingLeft: indentLevel * 25, paddingRight: 0 }} />
+                        <td className={styles.numberCell}>
                             <Link
                                 to={getLinkToPipeline(
                                     projectPath.map(x => x.title),
@@ -49,11 +48,11 @@ export function PipelineRuns({
                                 )}>
                                 #{x[PipelineRunsNames.PipelineId]}
                             </Link>
-                        </NumberCell>
+                        </td>
                         <BranchCell>
                             <BranchBox name={x[PipelineRunsNames.BranchName]} />
                         </BranchCell>
-                        <CountCell>
+                        <td className={styles.countCell}>
                             <JobLink
                                 state={x[PipelineRunsNames.State]}
                                 to={createLinkToPipelineRun(
@@ -72,13 +71,13 @@ export function PipelineRuns({
                                     0
                                 )}
                             </JobLink>
-                        </CountCell>
-                        <ChangesCell>
+                        </td>
+                        <td className={styles.changesCell}>
                             <CommitChanges
                                 totalCoveredCommitCount={x[PipelineRunsNames.TotalCoveredCommitCount]}
                                 coveredCommits={x[PipelineRunsNames.CoveredCommits] || []}
                             />
-                        </ChangesCell>
+                        </td>
                         <TimingCell
                             startDateTime={x[PipelineRunsNames.StartDateTime]}
                             duration={x[PipelineRunsNames.Duration]}
@@ -88,28 +87,3 @@ export function PipelineRuns({
         </tbody>
     );
 }
-
-const NumberCell = styled.td`
-    width: 80px;
-    text-align: left;
-`;
-
-const PaddingCell = styled.td`
-    width: 12px;
-    text-align: left;
-`;
-
-const CountCell = styled.td`
-    max-width: 300px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: left;
-`;
-
-const ChangesCell = styled.td`
-    max-width: 300px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-`;

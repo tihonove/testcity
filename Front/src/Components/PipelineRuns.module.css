@@ -1,0 +1,24 @@
+.numberCell {
+    width: 80px;
+    text-align: left;
+}
+
+.paddingCell {
+    width: 12px;
+    text-align: left;
+}
+
+.countCell {
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+}
+
+.changesCell {
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

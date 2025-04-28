@@ -1,38 +1,26 @@
 import * as React from "react";
 import { CommitRowProps } from "../Pages/JobRunTestListPage";
-import { theme } from "../Theme/ITheme";
-import styled from "styled-components";
-import { GravatarImage } from "./GravatarImage";
 import { Fit, RowStack } from "@skbkontur/react-stack-layout";
+import { GravatarImage } from "./GravatarImage";
+import styles from "./CommitRow.module.css";
 
 export function CommitRow(props: CommitRowProps) {
     return (
         <RowStack gap={2} block>
             <Fit>
-                <StyledGravatarImage email={props.authorEmail} size={32} alt={props.authorName} />
+                <GravatarImage
+                    className={styles.avatarImage}
+                    email={props.authorEmail}
+                    size={32}
+                    alt={props.authorName}
+                />
             </Fit>
             <Fit>
-                <Message>{props.messagePreview}</Message>
-                <Details>
+                <div className={styles.message}>{props.messagePreview}</div>
+                <div className={styles.details}>
                     {props.authorName} · #{props.sha.substring(0, 7)}
-                </Details>
+                </div>
             </Fit>
         </RowStack>
     );
 }
-
-const Message = styled.div`
-    line-height: 20px;
-`;
-
-const Details = styled.div`
-    font-size: ${theme.smallTextSize};
-`;
-
-const StyledGravatarImage = styled(GravatarImage)`
-    width: 32px;
-    height: 32px;
-    border-radius: 4px;
-    margin-right: 4px;
-    vertical-align: middle;
-`;

@@ -5,7 +5,6 @@ import * as React from "react";
 import { Fill, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import { Suspense, useDeferredValue } from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 import { useClickhouseClient, useStorage, useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { useBasePrefix } from "../Domain/Navigation";
 import { TestRunQueryRowNames } from "../Domain/Storage/TestRunQuery";
@@ -21,6 +20,7 @@ import { TestRunRow } from "./TestRunRow";
 import { TestTypeFilterButton } from "./TestTypeFilterButton";
 import { SuspenseFadingWrapper, useDelayedTransition } from "./useDelayedTransition";
 import { useUrlBasedPaging } from "./useUrlBasedPaging";
+import styles from "./TestListView.module.css";
 
 interface TestListViewProps {
     jobRunIds: string[];
@@ -69,7 +69,7 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
 
     return (
         <Suspense fallback={<div className="loading">Загрузка...</div>}>
-            <SuspenseFadingWrapper $fading={isFading}>
+            <SuspenseFadingWrapper fading={isFading}>
                 {outputModalIds && (
                     <TestOutputModal
                         testId={outputModalIds[0]}
@@ -139,9 +139,9 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
                         </Button>
                     </Fit>
                 </RowStack>
-                <TestList>
+                <table className={styles.testList}>
                     <thead>
-                        <TestRunsTableHeadRow>
+                        <tr className={styles.testRunsTableHeadRow}>
                             <th style={{ width: 100 }}>Status</th>
                             <th>Name</th>
                             <th style={{ width: 80 }}>
@@ -155,7 +155,7 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
                                 </SortHeaderLink>
                             </th>
                             <th style={{ width: 20 }}></th>
-                        </TestRunsTableHeadRow>
+                        </tr>
                     </thead>
                     <tbody>
                         {testList.map((x, i) => (
@@ -170,7 +170,7 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
                             />
                         ))}
                     </tbody>
-                </TestList>
+                </table>
                 <Paging
                     activePage={page + 1}
                     onPageChange={x => {
@@ -184,22 +184,6 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
         </Suspense>
     );
 }
-
-const TestRunsTableHeadRow = styled.tr({
-    th: {
-        fontSize: "12px",
-        textAlign: "left",
-        padding: "4px 8px",
-    },
-
-    borderBottom: "1px solid #eee",
-});
-
-const TestList = styled.table`
-    width: 100%;
-    max-width: 100vw;
-    table-layout: fixed;
-`;
 
 function convertToCSV(data: string[][]): string {
     return data

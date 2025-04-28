@@ -1,0 +1,10 @@
+.root {
+    font-size: 12px;
+    color: var(--muted-text-color);
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.root:hover {
+    text-decoration: underline;
+}

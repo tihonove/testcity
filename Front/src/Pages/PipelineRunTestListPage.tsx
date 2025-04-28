@@ -3,7 +3,6 @@ import { ColumnStack, Fit } from "@skbkontur/react-stack-layout";
 import * as React from "react";
 
 import { Link, useParams } from "react-router-dom";
-import styled from "styled-components";
 import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { AdditionalJobInfo } from "../Components/AdditionalJobInfo";
 import { ColorByState } from "../Components/Cells";
@@ -13,7 +12,7 @@ import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
 import { TestListView } from "../Components/TestListView";
 import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
 import { BranchBox } from "../Components/BranchBox";
-import { theme } from "../Theme/ITheme";
+import styles from "./PipelineRunTestListPage.module.css";
 
 export function PipelineRunTestListPage(): React.JSX.Element {
     const { rootGroup: rootProjectStructure, groupNodes, pathToGroup } = useProjectContextFromUrlParams();
@@ -21,21 +20,23 @@ export function PipelineRunTestListPage(): React.JSX.Element {
     const pipelineInfo = useStorageQuery(s => s.getPipelineInfo(pipelineId), [pipelineId]);
 
     return (
-        <Root>
+        <main className={styles.root}>
             <ColumnStack block stretch gap={4}>
                 <Fit>
                     <GroupBreadcrumps branchName={pipelineInfo.branchName} nodes={groupNodes} />
                 </Fit>
                 <Fit>
                     <ColorByState state={pipelineInfo.state}>
-                        <JobRunHeader>
+                        <h1 className={styles.jobRunHeader}>
                             <JonRunIcon size={32} />
-                            <StyledLink to={getLinkToPipeline(pathToGroup, pipelineInfo.pipelineId)}>
+                            <Link
+                                className={styles.styledLink}
+                                to={getLinkToPipeline(pathToGroup, pipelineInfo.pipelineId)}>
                                 #{pipelineInfo.pipelineId}
-                            </StyledLink>
+                            </Link>
                             &nbsp;at {pipelineInfo.startDateTime}
-                        </JobRunHeader>
-                        <StatusMessage>{pipelineInfo.customStatusMessage}</StatusMessage>
+                        </h1>
+                        <h3 className={styles.statusMessage}>{pipelineInfo.customStatusMessage}</h3>
                     </ColorByState>
                 </Fit>
                 <Fit>
@@ -60,25 +61,6 @@ export function PipelineRunTestListPage(): React.JSX.Element {
                     />
                 </Fit>
             </ColumnStack>
-        </Root>
+        </main>
     );
 }
-
-const Root = styled.main``;
-
-const JobRunHeader = styled.h1`
-    display: flex;
-    ${theme.typography.pages.header1};
-`;
-
-const StyledLink = styled(Link)`
-    color: inherit;
-    font-size: inherit;
-    line-height: inherit;
-    display: inherit;
-`;
-
-const StatusMessage = styled.h3`
-    display: flex;
-    line-height: 32px;
-`;

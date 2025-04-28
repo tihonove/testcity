@@ -2,13 +2,12 @@ import { MediaUiCirclePlayIcon16Regular, People1CheckIcon16Light, ShareNetworkIc
 import { ColumnStack, Fit, Fixed, RowStack } from "@skbkontur/react-stack-layout";
 import { Button, ComboBox, Input, Modal, Select, Toast } from "@skbkontur/react-ui";
 import * as React from "react";
-import styled from "styled-components";
 import { useLocalStorage } from "usehooks-ts";
-import { theme } from "../Theme/ITheme";
-import { ManualJobRunInfo } from "../Domain/ManualJobRunInfo";
 import { useApiUrl, useBasePrefix } from "../Domain/Navigation";
 import { PipelineRunsNames, PipelineRunsQueryRow } from "../Domain/Storage/PipelineRunsQueryRow";
+import { ManualJobRunInfo } from "../Domain/ManualJobRunInfo";
 import { GitCommitVertical, UserRound } from "lucide-react";
+import styles from "./RunJobModal.module.css";
 
 interface RunJobModalProps {
     projectId: string;
@@ -79,7 +78,7 @@ export function RunJobModal(props: RunJobModalProps) {
                 <ColumnStack gap={4} block stretch>
                     <Fit>
                         <RowStack baseline gap={2}>
-                            <Caption width={100}>Job status:</Caption>
+                            <Fixed width={100}>Job status:</Fixed>
                             <Fit>
                                 <Select
                                     width={400}
@@ -92,7 +91,7 @@ export function RunJobModal(props: RunJobModalProps) {
                     </Fit>
                     <Fit>
                         <RowStack baseline gap={2}>
-                            <Caption width={100}>Pipeline:</Caption>
+                            <Fixed width={100}>Pipeline:</Fixed>
                             <Fit>
                                 <ComboBox<PipelineRunsQueryRow>
                                     width={400}
@@ -109,23 +108,25 @@ export function RunJobModal(props: RunJobModalProps) {
                                                 </span>
                                             </span>
                                             <div>
-                                                <CommonInfo>
+                                                <div className={styles.commonInfo}>
                                                     <UserRound size={"1em"} /> {x[PipelineRunsNames.CommitAuthor]}
                                                     {" | "}
                                                     <GitCommitVertical size={"1em"} />{" "}
                                                     {x[PipelineRunsNames.CommitSha]?.slice(0, 8)?.toLowerCase()}{" "}
-                                                </CommonInfo>
-                                                <CommonMessage>{x[PipelineRunsNames.CommitMessage]}</CommonMessage>
+                                                </div>
+                                                <div className={styles.commonMessage}>
+                                                    {x[PipelineRunsNames.CommitMessage]}
+                                                </div>
                                             </div>
                                         </div>
                                     )}
                                     renderValue={x => (
                                         <span>
                                             #{x[PipelineRunsNames.PipelineId]}{" "}
-                                            <ValueHint>
+                                            <span className={styles.valueHint}>
                                                 <ShareNetworkIcon16Light />
                                                 {x[PipelineRunsNames.BranchName]}
-                                            </ValueHint>
+                                            </span>
                                         </span>
                                     )}
                                 />
@@ -134,22 +135,22 @@ export function RunJobModal(props: RunJobModalProps) {
                     </Fit>
                     <Fit>
                         <RowStack baseline gap={2} block>
-                            <Caption width={100}>Auth token:</Caption>
-                            <Value>
+                            <Fixed width={100}>Auth token:</Fixed>
+                            <Fit style={{ flexShrink: 1 }}>
                                 <Input
                                     type="password"
                                     width={600}
                                     value={gitlabAuthToken}
                                     onValueChange={setGitlabAuthToken}
                                 />
-                                <HintText>
+                                <div className={styles.hintText}>
                                     Get here:{" "}
                                     <a href="https://git.skbkontur.ru/-/user_settings/personal_access_tokens">
                                         git.skbkontur.ru/-/user_settings/personal_access_tokens
                                     </a>
                                     . Grant "api" permission.
-                                </HintText>
-                            </Value>
+                                </div>
+                            </Fit>
                         </RowStack>
                     </Fit>
                 </ColumnStack>
@@ -176,39 +177,3 @@ export function RunJobModal(props: RunJobModalProps) {
         </Modal>
     );
 }
-
-const Caption = styled(Fixed)({});
-
-const Value = styled(Fit)`
-    flex-shrink: 1;
-`;
-
-const HintText = styled.div`
-    margin-top: 4px;
-    font-size: 12px;
-    color: ${theme.mutedTextColor};
-
-    a {
-        font-size: 12px;
-        color: ${theme.mutedTextColor};
-    }
-`;
-
-const ValueHint = styled.span`
-    color: ${theme.mutedTextColor};
-`;
-
-const CommonMessage = styled.div`
-    font-size: 12px;
-    line-height: 16px;
-    color: ${theme.mutedTextColor};
-    max-height: 32px;
-    max-width: 800px;
-    overflow-y: hidden;
-`;
-
-const CommonInfo = styled.div`
-    font-size: 12px;
-    line-height: 16px;
-    color: ${theme.mutedTextColor};
-`;

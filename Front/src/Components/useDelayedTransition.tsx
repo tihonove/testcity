@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import styled from "styled-components";
+import styles from "./useDelayedTransition.module.css";
 
 export function useDelayedTransition(): [boolean, React.TransitionStartFunction, boolean] {
     const [isPending, startTransition] = React.useTransition();
@@ -20,7 +20,10 @@ export function useDelayedTransition(): [boolean, React.TransitionStartFunction,
     return [isPending, startTransition, isFading];
 }
 
-export const SuspenseFadingWrapper = styled.div<{ $fading: boolean }>`
-    transition: opacity 0.5s ease-in-out;
-    opacity: ${props => (props.$fading ? "0.3" : "1")};
-`;
+export function SuspenseFadingWrapper({ children, fading }: { children: React.ReactNode; fading: boolean }) {
+    return (
+        <div className={`${styles.suspenseFadingWrapper} ${fading ? styles.suspenseFadingWrapperFading : ""}`}>
+            {children}
+        </div>
+    );
+}

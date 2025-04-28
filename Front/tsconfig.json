@@ -97,8 +97,8 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
   "include": [
-    ".storybook/**/*.ts",
-    ".storybook/**/*.tsx",
+    ".ladle/**/*.ts",
+    ".ladle/**/*.tsx",
     "src/**/*.ts",
     "src/**/*.tsx",
     "test/**/*.ts",

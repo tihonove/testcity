@@ -1,0 +1,19 @@
+.jobLinkWithResults {
+    text-decoration: none;
+}
+
+.jobLinkWithResults:hover {
+    text-decoration: underline;
+}
+
+.success {
+    color: var(--success-text-color);
+}
+
+.canceled {
+    color: var(--muted-text-color);
+}
+
+.failed {
+    color: var(--failed-text-color);
+}

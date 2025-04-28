@@ -1,0 +1,29 @@
+.root {
+    border-radius: 4px;
+    border: 1px solid var(--border-line-color-2);
+    padding: 2px 4px;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    white-space: nowrap;
+
+    &[data-default="true"] {
+        background-color: var(--accent-bg-color);
+        color: var(--accent-text-color);
+    }
+
+    & > :first-child {
+        flex-shrink: 0;
+        margin-right: 4px;
+    }
+}
+
+.name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;   
+}

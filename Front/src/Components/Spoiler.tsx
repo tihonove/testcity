@@ -1,7 +1,7 @@
 import { ArrowCDownIcon, ArrowCRightIcon } from "@skbkontur/icons";
 import { RowStack, Fit } from "@skbkontur/react-stack-layout";
 import * as React from "react";
-import styled from "styled-components";
+import styles from "./Spoiler.module.css";
 
 interface SpoilerProps {
     iconSize: number;
@@ -25,11 +25,11 @@ export function Spoiler(props: SpoilerProps) {
                 <Fit>{open ? <ArrowCDownIcon size={props.iconSize} /> : <ArrowCRightIcon size={props.iconSize} />}</Fit>
                 <Fit>{props.title}</Fit>
             </RowStack>
-            {open && <SpoilerContent style={{ paddingLeft: props.iconSize + 2 * 5 }}>{props.children}</SpoilerContent>}
+            {open && (
+                <div className={styles.spoilerContent} style={{ paddingLeft: props.iconSize + 2 * 5 }}>
+                    {props.children}
+                </div>
+            )}
         </>
     );
 }
-
-const SpoilerContent = styled.div`
-    padding: 10px 10px 10px 20px;
-`;

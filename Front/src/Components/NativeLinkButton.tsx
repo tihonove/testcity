@@ -1,12 +1,16 @@
-import styled from "styled-components";
-import { theme } from "../Theme/ITheme";
+import * as React from "react";
+import styles from "./NativeLinkButton.module.css";
 
-export const NativeLinkButton = styled.span`
-    cursor: pointer;
-    color: ${theme.activeLinkColor};
-    text-decoration: none;
+interface NativeLinkButtonProps {
+    onClick?: React.MouseEventHandler<HTMLSpanElement>;
+    children?: React.ReactNode;
+    className?: string;
+}
 
-    &:hover {
-        text-decoration: underline;
-    }
-`;
+export const NativeLinkButton: React.FC<NativeLinkButtonProps> = ({ onClick, children, className }) => {
+    return (
+        <span className={`${styles.button} ${className || ""}`} onClick={onClick}>
+            {children}
+        </span>
+    );
+};

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Group } from "../Domain/Storage/Projects/GroupNode";
-import styled from "styled-components";
-import { theme } from "../Theme/ITheme";
+import styles from "./GroupAvatar.module.css";
 
 interface GroupAvatarProps {
     group: Group;
@@ -9,33 +8,13 @@ interface GroupAvatarProps {
 }
 
 export function GroupAvatar(props: GroupAvatarProps) {
-    const Root = props.size == "20px" ? GroupAvatarRoot20 : GroupAvatarRoot32;
-    return <Root style={{ backgroundColor: deterministicColor(props.group.title) }}>{props.group.title[0]}</Root>;
+    const rootClass = props.size === "20px" ? styles.groupAvatarRoot20 : styles.groupAvatarRoot32;
+    return (
+        <div className={rootClass} style={{ backgroundColor: deterministicColor(props.group.title) }}>
+            {props.group.title[0]}
+        </div>
+    );
 }
-
-const GroupAvatarRoot20 = styled.div`
-    font-size: 20px;
-    line-height: 32px;
-    text-align: center;
-    text-transform: uppercase;
-    width: 32px;
-    height: 32px;
-    border-radius: 4px;
-    outline: 1px solid ${theme.borderLineColor2};
-    outline-offset: -1px;
-`;
-
-const GroupAvatarRoot32 = styled.div`
-    font-size: 24px;
-    line-height: 40px;
-    text-align: center;
-    text-transform: uppercase;
-    width: 40px;
-    height: 40px;
-    border-radius: 4px;
-    outline: 1px solid ${theme.borderLineColor2};
-    outline-offset: -1px;
-`;
 
 function deterministicColor(input: string) {
     let hash = 0;

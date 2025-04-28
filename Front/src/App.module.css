@@ -1,0 +1,12 @@
+.themeSwitchContainer {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    color: var(--primary-text-color);
+}
+
+.root {
+    padding: 20px;
+    background-color: var(--primary-bg);
+    color: var(--primary-text-color);
+}

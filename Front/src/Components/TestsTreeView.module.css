@@ -1,0 +1,11 @@
+.countSuccess {
+    color: var(--success-text-color);
+}
+
+.countFailed {
+    color: var(--failed-text-color);
+}
+
+.countSkipped {
+    color: var(--muted-text-color);
+}

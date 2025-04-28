@@ -1,0 +1,58 @@
+.treeContainer {
+    min-width: 400px;
+    max-width: 400px;
+    width: 400px;
+    height: calc(100vh - 40px);
+    width: 100%;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+    background-color: white;
+    overflow: auto;
+}
+
+.nodeContent {
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 150ms ease-in-out;
+    background-color: transparent;
+    color: inherit;
+}
+
+.nodeContent:hover {
+    background-color: #f9fafb;
+}
+
+.nodeContentSelected {
+    background-color: #eff6ff;
+    color: #2563eb;
+}
+
+.nodeContentSelected:hover {
+    background-color: #eff6ff;
+}
+
+.iconWrapper {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.25rem;
+    flex-shrink: 0;
+}
+
+.fileIconWrapper {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.5rem;
+    flex-shrink: 0;
+    color: #6b7280;
+}
+
+.nodeName {
+    font-size: 0.875rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+}

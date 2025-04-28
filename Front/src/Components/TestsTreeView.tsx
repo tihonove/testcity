@@ -5,7 +5,7 @@ import { TimeClockIcon16Regular } from "@skbkontur/icons/TimeClockIcon16Regular"
 import { XCircleIcon16Regular } from "@skbkontur/icons/XCircleIcon16Regular";
 import React, { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
+import styles from "./TestsTreeView.module.css";
 import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
 import { ApproximateUnits, ITEMS_UNITS, TIME_UNITS } from "./ApproximateUnits";
 import { TreeNode, TreeView } from "./TreeView";
@@ -20,15 +20,6 @@ interface TestInfo {
 type TestStats = { duration: number } & Record<RunStatus, number>;
 
 const initialStats: TestStats = { duration: 0, Failed: 0, Skipped: 0, Success: 0 };
-
-const Count = styled.span<{ state: RunStatus }>`
-    color: ${props =>
-        props.state == "Success"
-            ? props.theme.successTextColor
-            : props.state == "Skipped"
-              ? props.theme.mutedTextColor
-              : props.theme.failedTextColor};
-`;
 
 export function TestsTreeView(): React.JSX.Element {
     const { jobId = "", jobRunId = "" } = useParams();
@@ -61,30 +52,30 @@ export function TestsTreeView(): React.JSX.Element {
             }}
             renderDetails={details => (
                 <div style={{ whiteSpace: "nowrap" }}>
-                    <Count state="Success">
+                    <span className={styles.countSuccess}>
                         {details.Success !== 0 && (
                             <>
                                 <CheckCircleIcon16Regular />
                                 <ApproximateUnits value={details.Success} units={ITEMS_UNITS} />
                             </>
                         )}
-                    </Count>{" "}
-                    <Count state="Failed">
+                    </span>{" "}
+                    <span className={styles.countFailed}>
                         {details.Failed !== 0 && (
                             <>
                                 <XCircleIcon16Regular />
                                 <ApproximateUnits value={details.Failed} units={ITEMS_UNITS} />
                             </>
                         )}
-                    </Count>{" "}
-                    <Count state="Skipped">
+                    </span>{" "}
+                    <span className={styles.countSkipped}>
                         {details.Skipped !== 0 && (
                             <>
                                 <ShapeCircleMOffIcon16Regular />
                                 <ApproximateUnits value={details.Skipped} units={ITEMS_UNITS} />
                             </>
                         )}
-                    </Count>{" "}
+                    </span>{" "}
                     {
                         <>
                             <TimeClockIcon16Regular />{" "}

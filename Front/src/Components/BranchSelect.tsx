@@ -1,9 +1,9 @@
 import { ShareNetworkIcon, TimeClockMoveBackIcon16Light } from "@skbkontur/icons";
 import { ComboBox, MenuSeparator } from "@skbkontur/react-ui";
 import * as React from "react";
-import styled from "styled-components";
 import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { usePopularBranches } from "../Utils/PopularBranchStoring";
+import styles from "./BranchSelect.module.css";
 
 interface BranchSelectProps {
     branch: undefined | string;
@@ -78,28 +78,17 @@ export function BranchSelect({
                         <ShareNetworkIcon /> All branches
                     </span>
                 ) : (
-                    <IconWrapper>
-                        <BranchName>
+                    <div className={styles.iconWrapper}>
+                        <div className={styles.branchName}>
                             <ShareNetworkIcon /> {x}
-                        </BranchName>
+                        </div>
                         {popularBranches.includes(x) && <TimeClockMoveBackIcon16Light />}
-                    </IconWrapper>
+                    </div>
                 )
             }
         />
     );
 }
-
-const IconWrapper = styled.span`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-`;
-
-const BranchName = styled.span`
-    flex-grow: 1;
-`;
 
 function createMoveToTopSorter<T>(topItems: T[]) {
     return (a: T, b: T) => {

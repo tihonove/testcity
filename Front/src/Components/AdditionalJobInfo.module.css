@@ -1,0 +1,10 @@
+.infoRow {
+    height: 20px;
+}
+
+.infoKey {
+    padding: 5px 0;
+    width: 150px;
+    font-weight: bold;
+    color: var(--primary-text-color);
+}

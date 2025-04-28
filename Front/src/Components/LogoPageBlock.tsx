@@ -1,27 +1,15 @@
 import * as React from "react";
-import styled from "styled-components";
+import { Link } from "react-router-dom";
 import Logo from "./Logo";
 import { useBasePrefix } from "../Domain/Navigation";
-import { theme } from "../Theme/ITheme";
-import { Link } from "react-router-dom";
+import styles from "./LogoPageBlock.module.css";
 
 export function LogoPageBlock() {
     const basePrefix = useBasePrefix();
     return (
-        <FixedLogoRoot to={basePrefix}>
+        <Link to={basePrefix} className={styles.root}>
             <Logo />
             TestCity
-        </FixedLogoRoot>
+        </Link>
     );
 }
-
-const FixedLogoRoot = styled(Link)`
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    line-height: 32px;
-    font-size: 20px;
-    display: flex;
-    text-decoration: none;
-    color: ${theme.primaryTextColor};
-`;

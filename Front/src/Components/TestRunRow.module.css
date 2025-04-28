@@ -1,0 +1,78 @@
+.testRunsTableRow td {
+    text-align: left;
+    padding: 6px 8px;
+}
+
+.testOutputRow {
+    max-height: 0;
+}
+
+.testOutputRowExpanded {
+    max-height: none;
+}
+
+.testOutputRow > td {
+    padding: 0 0 0 24px;
+}
+
+.testOutputRowExpanded > td {
+    padding: 6px 0 6px 24px;
+}
+
+.testOutputCell {
+    /* Пустой класс для выделения ячейки вывода теста */
+}
+
+.code {
+    font-size: 14px;
+    line-height: 18px;
+    max-height: 800px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    padding: 15px;
+    border: 1px solid var(--border-line-color-2);
+}
+
+.durationCell {
+    width: 80px;
+}
+
+.actionsCell {
+    width: 20px;
+}
+
+.testNameCell {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.countInfo {
+    color: var(--muted-text-color);
+    margin-left: 5px;
+}
+
+.runCountInfo {
+    color: var(--muted-text-color);
+}
+
+.successCount {
+    color: var(--success-text-color);
+}
+
+.failedCount {
+    color: var(--failed-text-color);
+}
+
+.statusCellDefault {
+    width: 100px;
+}
+
+.statusCellSuccess {
+    color: var(--success-text-color);
+}
+
+.statusCellFailed {
+    color: var(--failed-text-color);
+}

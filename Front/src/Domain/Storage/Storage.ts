@@ -186,7 +186,9 @@ export class TestAnalyticsStorage {
                 null as CustomStatusMessage,
                 ipji.JobUrl,
                 ipji.ProjectId,
-                0 as HasCodeQualityReport
+                0 as HasCodeQualityReport,
+                arraySlice(ipji.ChangesSinceLastRun, 1, 20),
+                length(ipji.ChangesSinceLastRun) as TotalCoveredCommitCount
             FROM InProgressJobInfo ipji
             LEFT JOIN JobInfo AS ji ON ji.JobId = ipji.JobId AND ji.JobRunId = ipji.JobRunId
             WHERE 

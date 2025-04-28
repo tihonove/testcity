@@ -1,0 +1,79 @@
+.homeHeader {
+    /* Стиль для заголовка домашней страницы */
+}
+
+.statusCellBase {
+    max-width: 100px;
+}
+
+.statusCellSuccess {
+    color: var(--success-text-color);
+}
+
+.statusCellFailed {
+    color: var(--failed-text-color);
+}
+
+.durationCell {
+    width: 100px;
+}
+
+.jobIdCell {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.startDateCell {
+    width: 200px;
+}
+
+.suiteName {
+    font-size: var(--small-text-size);
+    color: var(--muted-text-color);
+}
+
+.title {
+    font-size: 28px;
+    line-height: 36px;
+}
+
+.testRunsTableHeadRow th {
+    font-size: 12px;
+    text-align: left;
+    padding: 4px 8px;
+}
+
+.testRunsTableHeadRow {
+    border-bottom: 1px solid #eee;
+}
+
+.testRunsTableRow td {
+    text-align: left;
+    padding: 6px 8px;
+}
+
+.testRunsTableRowHover:hover {
+    background-color: var(--background-color-1);
+}
+
+.testRunsTable {
+    width: 100%;
+}
+
+.successRateText {
+    font-weight: bold;
+}
+
+.failedText {
+    margin-left: 10px;
+    color: var(--failed-text-color);
+    font-size: 14px;
+}
+
+.successfulText {
+    margin-left: 10px;
+    color: var(--success-text-color);
+    font-size: 14px;
+}

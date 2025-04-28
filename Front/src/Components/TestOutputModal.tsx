@@ -1,11 +1,10 @@
 import * as React from "react";
 import { Button, Modal, Toast } from "@skbkontur/react-ui";
-import styled from "styled-components";
 import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
-import { theme } from "../Theme/ITheme";
 import { ColumnStack, Fill, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import { CopyIcon16Light } from "@skbkontur/icons";
 import { runAsyncAction } from "../Utils/TypeHelpers";
+import styles from "./TestOutputModal.module.css";
 
 interface TestOutputModalProps {
     jobId: string;
@@ -36,7 +35,7 @@ export function TestOutputModal(props: TestOutputModalProps): React.JSX.Element 
             <Modal.Body>
                 <ColumnStack block gap={2} stretch>
                     <Fit>
-                        <TestId>{props.testId}</TestId>
+                        <h3 className={styles.testId}>{props.testId}</h3>
                     </Fit>
                     <Fit>
                         <RowStack block>
@@ -49,13 +48,13 @@ export function TestOutputModal(props: TestOutputModalProps): React.JSX.Element 
                         </RowStack>
                     </Fit>
                     <Fit>
-                        <Code>
+                        <pre className={styles.code}>
                             {failedMessage}
                             ---
                             {failedOutput}
                             ---
                             {systemOutput}
-                        </Code>
+                        </pre>
                     </Fit>
                 </ColumnStack>
             </Modal.Body>
@@ -65,18 +64,3 @@ export function TestOutputModal(props: TestOutputModalProps): React.JSX.Element 
         </Modal>
     );
 }
-
-const TestId = styled.h3`
-    font-size: 20px;
-    line-height: 30px;
-`;
-
-const Code = styled.pre`
-    font-size: 14px;
-    line-height: 18px;
-    padding: 15px;
-    margin: 0 -15px;
-    border: 1px solid ${theme.borderLineColor2};
-    overflow: scroll;
-    max-height: 500px;
-`;

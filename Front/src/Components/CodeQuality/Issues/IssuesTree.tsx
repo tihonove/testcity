@@ -6,7 +6,7 @@ import { Severity } from "../types/Severity";
 import { ApproximateUnits, ITEMS_UNITS } from "./ApproximateUnits";
 import { TreeView } from "./TreeView";
 import { TreeNode } from "./types";
-import styled from "styled-components";
+import styles from "./IssuesTree.module.css";
 
 type Issues = Record<Severity, number>;
 
@@ -25,7 +25,7 @@ export function IssuesTree({ issues, prefix, onChangePrefix }: IssuesTreeProps) 
                 onChangePrefix(n.path);
             }}
             renderDetails={details => (
-                <DiffInfo>
+                <div className={styles.diffInfo}>
                     {details.blocker !== 0 && (
                         <>
                             <SeverityIcon type="blocker" />
@@ -56,7 +56,7 @@ export function IssuesTree({ issues, prefix, onChangePrefix }: IssuesTreeProps) 
                             <ApproximateUnits value={details.info} units={ITEMS_UNITS} />
                         </>
                     )}{" "}
-                </DiffInfo>
+                </div>
             )}
         />
     );
@@ -161,10 +161,3 @@ const initialIssues: Issues = {
     critical: 0,
     blocker: 0,
 };
-
-const DiffInfo = styled.div`
-    display: flex;
-    gap: 0.5rem;
-    margin-left: 0.5rem;
-    font-size: 0.75rem;
-`;

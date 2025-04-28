@@ -1,13 +1,8 @@
-import { StoryFn } from "@storybook/react";
-
+import { Story } from "@ladle/react";
 import { RunJobModal } from "./RunJobModal";
 import * as React from "react";
 
-export default {
-    title: "RunJobModal",
-};
-
-export const Simple: StoryFn = () => (
+export const Simple: Story = () => (
     <RunJobModal
         onClose={() => {}}
         projectId="20289"

@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styles from "./AdditionalJobInfo.module.css";
 import { toLocalTimeFromUtc, formatTestDuration } from "../Utils";
 
 interface AdditionalJobInfoProps {
@@ -14,33 +14,23 @@ export function AdditionalJobInfo(props: AdditionalJobInfoProps) {
     return (
         <table>
             <tbody>
-                <InfoRow>
-                    <InfoKey>Time</InfoKey>
+                <tr className={styles.infoRow}>
+                    <td className={styles.infoKey}>Time</td>
                     <td>
                         {toLocalTimeFromUtc(props.startDateTime, "short")} —{" "}
                         {toLocalTimeFromUtc(props.endDateTime, "short")} (
                         {formatTestDuration(props.duration.toString())})
                     </td>
-                </InfoRow>
-                <InfoRow>
-                    <InfoKey>Triggered</InfoKey>
+                </tr>
+                <tr className={styles.infoRow}>
+                    <td className={styles.infoKey}>Triggered</td>
                     <td>{props.triggered.replace("@skbkontur.ru", "")}</td>
-                </InfoRow>
-                <InfoRow>
-                    <InfoKey>Pipeline created by</InfoKey>
+                </tr>
+                <tr className={styles.infoRow}>
+                    <td className={styles.infoKey}>Pipeline created by</td>
                     <td>{props.pipelineSource}</td>
-                </InfoRow>
+                </tr>
             </tbody>
         </table>
     );
 }
-
-const InfoRow = styled.tr`
-    height: 20px;
-`;
-
-const InfoKey = styled.td`
-    padding: 5px 0;
-    width: 150px;
-    font-weight: bold;
-`;

@@ -1,7 +1,7 @@
 import * as React from "react";
-import styled from "styled-components";
 import { Hint } from "@skbkontur/react-ui";
 import { formatRelativeTime, formatTestDuration, toLocalTimeFromUtc } from "../Utils";
+import styles from "./TimingCell.module.css";
 
 interface TimingCellProps {
     startDateTime: string;
@@ -10,59 +10,34 @@ interface TimingCellProps {
 
 export function TimingCell({ startDateTime, duration }: TimingCellProps) {
     return (
-        <StyledTimingCell>
+        <td className={styles.styledTimingCell}>
             <Hint
                 maxWidth={400}
                 text={
-                    <TimingHintContent>
+                    <div className={styles.timingHintContent}>
                         <div>
-                            <TimingHintCaption>Start time:</TimingHintCaption>
+                            <span className={styles.timingHintCaption}>Start time:</span>
                             {toLocalTimeFromUtc(startDateTime)}
                         </div>
                         {duration != null && (
                             <div>
-                                <TimingHintCaption>Duration:</TimingHintCaption>
+                                <span className={styles.timingHintCaption}>Duration:</span>
                                 {formatTestDuration(duration.toString())}
                             </div>
                         )}
-                    </TimingHintContent>
+                    </div>
                 }>
-                <Started>{formatRelativeTime(startDateTime)}</Started>
+                <span className={styles.started}>{formatRelativeTime(startDateTime)}</span>
                 {duration != null && (
-                    <Duration
+                    <span
+                        className={styles.duration}
                         style={{
                             width: formatTestDuration(duration.toString()).length * 9,
                         }}>
                         {formatTestDuration(duration.toString())}
-                    </Duration>
+                    </span>
                 )}
             </Hint>
-        </StyledTimingCell>
+        </td>
     );
 }
-
-const TimingHintContent = styled.div`
-    text-align: left;
-`;
-
-const TimingHintCaption = styled.span`
-    display: inline-block;
-    width: 80px;
-`;
-
-const StyledTimingCell = styled.td`
-    max-width: 250px;
-    white-space: nowrap;
-    text-align: right;
-    cursor: default;
-    font-size: 14px;
-`;
-
-const Started = styled.span`
-    color: ${props => props.theme.mutedTextColor};
-`;
-
-const Duration = styled.span`
-    display: inline-block;
-    margin-left: 4px;
-`;

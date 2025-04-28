@@ -13,25 +13,25 @@ import { ColumnStack, Fill, Fit, RowStack } from "@skbkontur/react-stack-layout"
 import { Button, Hint, Link as ReactUILink } from "@skbkontur/react-ui";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { styled } from "styled-components";
 import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { BranchSelect } from "../Components/BranchSelect";
 import { GroupAvatar } from "../Components/GroupAvatar";
 import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
+import { JobsView } from "../Components/JobsView";
 import { LogoPageBlock } from "../Components/LogoPageBlock";
+import { ManualJobsInfo } from "../Components/ManualJobsInfo";
+import { PipelineRuns } from "../Components/PipelineRuns";
 import { SubIcon } from "../Components/SubIcon";
 import { SuspenseFadingWrapper, useDelayedTransition } from "../Components/useDelayedTransition";
 import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
 import { JobIdWithParentProjectNames } from "../Domain/JobIdWithParentProject";
-import { JobsView } from "../Components/JobsView";
-import { ManualJobsInfo } from "../Components/ManualJobsInfo";
 import { createLinkToCreateNewPipeline, createLinkToGroupOrProject, createLinkToProject } from "../Domain/Navigation";
-import { PipelineRuns } from "../Components/PipelineRuns";
-import { isGroup, isProject, GroupNode, Project, getProjects } from "../Domain/Storage/Projects/GroupNode";
-import { theme } from "../Theme/ITheme";
+import { GroupNode, Project, getProjects, isGroup, isProject } from "../Domain/Storage/Projects/GroupNode";
 import { useSearchParamAsState } from "../Utils";
 import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
 import { ProjectsWithRunsTable, RunsTable } from "./ProjectsWithRunsTable";
+
+import styles from "./ProjectsDashboardPage.module.css";
 
 export function ProjectsDashboardPage(): React.JSX.Element {
     const { rootGroup, groupNodes, pathToGroup } = useProjectContextFromUrlParams();
@@ -72,47 +72,49 @@ export function ProjectsDashboardPage(): React.JSX.Element {
                 <thead>
                     <tr>
                         <td colSpan={RunsTable.columnCount} style={{ paddingLeft: 25 * level }}>
-                            <SectionTitle gap={2} baseline block>
-                                <Fit>
-                                    <UiMenuShapeSquare4TiltIcon20Light />
-                                </Fit>
-                                <Fit>
-                                    <GroupAvatar size="20px" group={project}></GroupAvatar>
-                                </Fit>
-                                <Fit>
-                                    <Link
-                                        className="no-underline"
-                                        to={createLinkToProject(rootGroup, project.id, currentBranchName)}>
-                                        <Header3>{project.title}</Header3>
-                                    </Link>
-                                </Fit>
-                                <Fill />
-                                <Fit style={{ minHeight: "35px" }}>
-                                    <ManualJobsInfo
-                                        key={project.id + (currentBranchName ?? "all")}
-                                        projectId={project.id}
-                                        allPipelineRuns={allPipelineRuns}
-                                    />
-                                </Fit>
-                                <Fit>
-                                    <Hint text="Create new pipeline">
-                                        <ReactUILink
-                                            href={createLinkToCreateNewPipeline(
-                                                rootGroup,
-                                                project.id,
-                                                currentBranchName
-                                            )}
-                                            target="_blank"
-                                            icon={
-                                                <SubIcon sub={<PlusCircleIcon16Solid />}>
-                                                    <TransportAirRocketIcon16Light />
-                                                </SubIcon>
-                                            }>
-                                            New pipeline
-                                        </ReactUILink>
-                                    </Hint>
-                                </Fit>
-                            </SectionTitle>
+                            <div className={styles.sectionTitle}>
+                                <RowStack gap={2} baseline block>
+                                    <Fit>
+                                        <UiMenuShapeSquare4TiltIcon20Light />
+                                    </Fit>
+                                    <Fit>
+                                        <GroupAvatar size="20px" group={project}></GroupAvatar>
+                                    </Fit>
+                                    <Fit>
+                                        <Link
+                                            className="no-underline"
+                                            to={createLinkToProject(rootGroup, project.id, currentBranchName)}>
+                                            <h3 className={styles.header3}>{project.title}</h3>
+                                        </Link>
+                                    </Fit>
+                                    <Fill />
+                                    <Fit style={{ minHeight: "35px" }}>
+                                        <ManualJobsInfo
+                                            key={project.id + (currentBranchName ?? "all")}
+                                            projectId={project.id}
+                                            allPipelineRuns={allPipelineRuns}
+                                        />
+                                    </Fit>
+                                    <Fit>
+                                        <Hint text="Create new pipeline">
+                                            <ReactUILink
+                                                href={createLinkToCreateNewPipeline(
+                                                    rootGroup,
+                                                    project.id,
+                                                    currentBranchName
+                                                )}
+                                                target="_blank"
+                                                icon={
+                                                    <SubIcon sub={<PlusCircleIcon16Solid />}>
+                                                        <TransportAirRocketIcon16Light />
+                                                    </SubIcon>
+                                                }>
+                                                New pipeline
+                                            </ReactUILink>
+                                        </Hint>
+                                    </Fit>
+                                </RowStack>
+                            </div>
                         </td>
                     </tr>
                 </thead>
@@ -149,19 +151,21 @@ export function ProjectsDashboardPage(): React.JSX.Element {
                 <thead>
                     <tr>
                         <td colSpan={5} style={{ paddingLeft: 25 * level }}>
-                            <SectionTitle gap={2} baseline block>
-                                <Fit>
-                                    <UiMenuShapeCircle4Icon20Light />
-                                </Fit>
-                                <Fit>
-                                    <GroupAvatar size="20px" group={group}></GroupAvatar>
-                                </Fit>
-                                <Fit>
-                                    <Link to={createLinkToGroupOrProject(nodesPath, currentBranchName)}>
-                                        <Header3>{group.title}</Header3>
-                                    </Link>
-                                </Fit>
-                            </SectionTitle>
+                            <div className={styles.sectionTitle}>
+                                <RowStack gap={2} baseline block>
+                                    <Fit>
+                                        <UiMenuShapeCircle4Icon20Light />
+                                    </Fit>
+                                    <Fit>
+                                        <GroupAvatar size="20px" group={group}></GroupAvatar>
+                                    </Fit>
+                                    <Fit>
+                                        <Link to={createLinkToGroupOrProject(nodesPath, currentBranchName)}>
+                                            <h3 className={styles.header3}>{group.title}</h3>
+                                        </Link>
+                                    </Fit>
+                                </RowStack>
+                            </div>
                         </td>
                     </tr>
                 </thead>
@@ -172,95 +176,98 @@ export function ProjectsDashboardPage(): React.JSX.Element {
     };
 
     return (
-        <Root>
+        <main className={styles.root}>
             <LogoPageBlock />
-            <TestListRoot block gap={1} stretch>
-                <Fit>
-                    <ColumnStack block gap={1} stretch>
-                        <Fit>
-                            <GroupBreadcrumps branchName={currentBranchName} nodes={groupNodes.slice(0, -1)} />
-                        </Fit>
-                        <Fit>
-                            <RowStack gap={2} block verticalAlign="center">
-                                <Fit>
-                                    {isProject(currentGroupOrProject) ? (
-                                        <UiMenuShapeSquare4TiltIcon24Regular />
-                                    ) : (
-                                        <UiMenuShapeCircle4Icon24Regular />
+            <div className={styles.testListRoot}>
+                <ColumnStack block gap={1} stretch>
+                    <Fit>
+                        <ColumnStack block gap={1} stretch>
+                            <Fit>
+                                <GroupBreadcrumps branchName={currentBranchName} nodes={groupNodes.slice(0, -1)} />
+                            </Fit>
+                            <Fit>
+                                <RowStack gap={2} block verticalAlign="center">
+                                    <Fit>
+                                        {isProject(currentGroupOrProject) ? (
+                                            <UiMenuShapeSquare4TiltIcon24Regular />
+                                        ) : (
+                                            <UiMenuShapeCircle4Icon24Regular />
+                                        )}
+                                    </Fit>
+                                    <Fit>
+                                        <GroupAvatar size="32px" group={currentGroupOrProject}></GroupAvatar>
+                                    </Fit>
+                                    <Fit>
+                                        <h1 className={styles.rootGroupTitle}>{currentGroupOrProject.title}</h1>
+                                    </Fit>
+                                    {isProject(currentGroupOrProject) && (
+                                        <>
+                                            <Fill />
+                                            <Fit style={{ minHeight: "35px" }}>
+                                                <ManualJobsInfo
+                                                    projectId={currentGroupOrProject.id}
+                                                    allPipelineRuns={allPipelineRuns}
+                                                />
+                                            </Fit>
+                                            <Fit>
+                                                <Hint text="Create new pipeline">
+                                                    <ReactUILink
+                                                        href={createLinkToCreateNewPipeline(
+                                                            rootGroup,
+                                                            currentGroupOrProject.id,
+                                                            currentBranchName
+                                                        )}
+                                                        target="_blank"
+                                                        icon={
+                                                            <SubIcon sub={<PlusCircleIcon16Solid />}>
+                                                                <TransportAirRocketIcon16Light />
+                                                            </SubIcon>
+                                                        }>
+                                                        New pipeline
+                                                    </ReactUILink>
+                                                </Hint>
+                                            </Fit>
+                                        </>
                                     )}
-                                </Fit>
-                                <Fit>
-                                    <GroupAvatar size="32px" group={currentGroupOrProject}></GroupAvatar>
-                                </Fit>
-                                <Fit>
-                                    <RootGroupTitle>{currentGroupOrProject.title}</RootGroupTitle>
-                                </Fit>
-                                {isProject(currentGroupOrProject) && (
-                                    <>
-                                        <Fill />
-                                        <Fit style={{ minHeight: "35px" }}>
-                                            <ManualJobsInfo
-                                                projectId={currentGroupOrProject.id}
-                                                allPipelineRuns={allPipelineRuns}
-                                            />
-                                        </Fit>
-                                        <Fit>
-                                            <Hint text="Create new pipeline">
-                                                <ReactUILink
-                                                    href={createLinkToCreateNewPipeline(
-                                                        rootGroup,
-                                                        currentGroupOrProject.id,
-                                                        currentBranchName
-                                                    )}
-                                                    target="_blank"
-                                                    icon={
-                                                        <SubIcon sub={<PlusCircleIcon16Solid />}>
-                                                            <TransportAirRocketIcon16Light />
-                                                        </SubIcon>
-                                                    }>
-                                                    New pipeline
-                                                </ReactUILink>
-                                            </Hint>
-                                        </Fit>
-                                    </>
+                                </RowStack>
+                            </Fit>
+                        </ColumnStack>
+                    </Fit>
+                    <Fit>
+                        <div style={{ height: 20 }} />
+                    </Fit>
+                    <Fit>
+                        <BranchSelect
+                            branch={currentBranchName}
+                            onChangeBranch={x => {
+                                startTransition(() => {
+                                    setCurrentBranchName(x);
+                                });
+                            }}
+                            projectIds={projectIds}
+                        />
+                    </Fit>
+                    <Fit>
+                        <SuspenseFadingWrapper fading={isFading}>
+                            <ProjectsWithRunsTable>
+                                {(isGroup(currentGroupOrProject) ? (currentGroupOrProject.projects ?? []) : []).map(x =>
+                                    renderProject(x, 0, groupNodes)
                                 )}
-                            </RowStack>
-                        </Fit>
-                    </ColumnStack>
-                </Fit>
-                <Fit>
-                    <div style={{ height: 20 }} />
-                </Fit>
-                <Fit>
-                    <BranchSelect
-                        branch={currentBranchName}
-                        onChangeBranch={x => {
-                            startTransition(() => {
-                                setCurrentBranchName(x);
-                            });
-                        }}
-                        projectIds={projectIds}
-                    />
-                </Fit>
-                <Fit>
-                    <SuspenseFadingWrapper $fading={isFading}>
-                        <ProjectsWithRunsTable>
-                            {(isGroup(currentGroupOrProject) ? (currentGroupOrProject.projects ?? []) : []).map(x =>
-                                renderProject(x, 0, groupNodes)
-                            )}
-                            {isGroup(currentGroupOrProject) &&
-                                renderGroupList(
-                                    currentGroupOrProject.groups ?? [],
-                                    groupNodes.filter(x => isGroup(x)),
-                                    0
-                                )}
-                            {isProject(currentGroupOrProject) && renderProject(currentGroupOrProject, 0, groupNodes)}
-                        </ProjectsWithRunsTable>
-                    </SuspenseFadingWrapper>
-                </Fit>
-            </TestListRoot>
+                                {isGroup(currentGroupOrProject) &&
+                                    renderGroupList(
+                                        currentGroupOrProject.groups ?? [],
+                                        groupNodes.filter(x => isGroup(x)),
+                                        0
+                                    )}
+                                {isProject(currentGroupOrProject) &&
+                                    renderProject(currentGroupOrProject, 0, groupNodes)}
+                            </ProjectsWithRunsTable>
+                        </SuspenseFadingWrapper>
+                    </Fit>
+                </ColumnStack>
+            </div>
             {!usePipelineGrouping && (
-                <ShowRunsSwitchContainer>
+                <div className={styles.showRunsSwitchContainer}>
                     <Button
                         use="link"
                         onClick={() => {
@@ -270,43 +277,8 @@ export function ProjectsDashboardPage(): React.JSX.Element {
                             <TextBulletIcon20Regular />
                         </SubIcon>
                     </Button>
-                </ShowRunsSwitchContainer>
+                </div>
             )}
-        </Root>
+        </main>
     );
 }
-
-const TestListRoot = styled(ColumnStack)`
-    max-width: ${theme.layout.centered.width};
-    width: ${theme.layout.centered.width};
-    margin: 24px auto;
-`;
-
-const SectionTitle = styled(RowStack)`
-    margin-top: 16px;
-`;
-
-const Root = styled.main`
-    display: flex;
-`;
-
-const ShowRunsSwitchContainer = styled.div`
-    position: fixed;
-    right: 40px;
-    top: 10px;
-`;
-
-const Header3 = styled.h3`
-    font-size: 22px;
-    line-height: 24px;
-`;
-
-const RootGroupTitle = styled.h1`
-    ${theme.typography.pages.header1};
-    display: block;
-    text-decoration: none;
-
-    :hover {
-        background-color: ${theme.backgroundColor1};
-    }
-`;

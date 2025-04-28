@@ -6,7 +6,6 @@ import {
 } from "@skbkontur/icons";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import styled, { useTheme } from "styled-components";
 import { BranchCell, SelectedOnHoverTr } from "./Cells";
 import { CommitChanges } from "./CommitChanges";
 import { createLinkToJob, createLinkToJobRun } from "../Domain/Navigation";
@@ -22,6 +21,7 @@ import { BranchBox } from "./BranchBox";
 import { JobLink } from "./JobLink";
 import { TimingCell } from "./TimingCell";
 import { RotatingSpinner } from "./RotatingSpinner";
+import styles from "./JobsView.module.css";
 
 interface JobsViewProps {
     hideRuns?: boolean;
@@ -40,8 +40,6 @@ export function JobsView({
     currentBranchName,
     indentLevel,
 }: JobsViewProps) {
-    const theme = useTheme();
-
     const jobsWithTheirRuns = allJobs.map(job => {
         const jobId = job[JobIdWithParentProjectNames.JobId];
         const projectId = job[JobIdWithParentProjectNames.ProjectId];
@@ -68,13 +66,14 @@ export function JobsView({
                     <React.Fragment key={jobId + projectId}>
                         <thead>
                             <tr>
-                                <JobHeader
+                                <th
+                                    className={styles.jobHeader}
                                     colSpan={RunsTable.columnCount}
                                     style={{ paddingLeft: indentLevel * 25, paddingRight: 0 }}>
                                     {hasFailedRuns ? (
-                                        <ShapeSquareIcon16Solid color={theme.failedTextColor} />
+                                        <ShapeSquareIcon16Solid color="var(--failed-text-color)" />
                                     ) : (
-                                        <ShapeSquareIcon16Regular color={theme.successTextColor} />
+                                        <ShapeSquareIcon16Regular color="var(--success-text-color)" />
                                     )}{" "}
                                     <a
                                         href={createLinkToJob(
@@ -85,7 +84,7 @@ export function JobsView({
                                         )}>
                                         {jobId}
                                     </a>
-                                </JobHeader>
+                                </th>
                             </tr>
                         </thead>
                         {!hideRuns && (
@@ -98,8 +97,11 @@ export function JobsView({
                                     )
                                     .map(x => (
                                         <SelectedOnHoverTr key={x[JobRunNames.JobRunId]}>
-                                            <PaddingCell style={{ paddingLeft: indentLevel * 25, paddingRight: 0 }} />
-                                            <NumberCell>
+                                            <td
+                                                className={styles.paddingCell}
+                                                style={{ paddingLeft: indentLevel * 25, paddingRight: 0 }}
+                                            />
+                                            <td className={styles.numberCell}>
                                                 <Link
                                                     to={
                                                         x[JobRunNames.JobUrl] ||
@@ -107,11 +109,11 @@ export function JobsView({
                                                     }>
                                                     #{x[JobRunNames.JobRunId]}
                                                 </Link>
-                                            </NumberCell>
+                                            </td>
                                             <BranchCell>
                                                 <BranchBox name={x[JobRunNames.BranchName]} />
                                             </BranchCell>
-                                            <CountCell>
+                                            <td className={styles.countCell}>
                                                 {x[JobRunNames.State] === "Running" ? (
                                                     <>
                                                         <RotatingSpinner /> Running...
@@ -137,18 +139,18 @@ export function JobsView({
                                                         )}
                                                     </JobLink>
                                                 )}
-                                            </CountCell>
-                                            <ChangesCell>
+                                            </td>
+                                            <td className={styles.changesCell}>
                                                 <CommitChanges
                                                     totalCoveredCommitCount={x[JobRunNames.TotalCoveredCommitCount]}
                                                     coveredCommits={x[JobRunNames.CoveredCommits] || []}
                                                 />
-                                            </ChangesCell>
+                                            </td>
                                             <TimingCell
                                                 startDateTime={x[JobRunNames.StartDateTime]}
                                                 duration={x[JobRunNames.Duration]}
                                             />
-                                            <AttributesCell>
+                                            <td className={styles.attributesCell}>
                                                 {x[JobRunNames.HasCodeQualityReport] != 0 && (
                                                     <Hint text="Code quality report available">
                                                         <SubIcon sub={<SearchLoupePlusIcon16Solid />}>
@@ -156,7 +158,7 @@ export function JobsView({
                                                         </SubIcon>
                                                     </Hint>
                                                 )}
-                                            </AttributesCell>
+                                            </td>
                                         </SelectedOnHoverTr>
                                     ))}
                             </tbody>
@@ -172,16 +174,17 @@ export function JobsView({
                     <React.Fragment key={jobId + projectId}>
                         <thead>
                             <tr>
-                                <JobHeader
+                                <th
+                                    className={styles.jobHeader}
                                     colSpan={RunsTable.columnCount}
                                     style={{ paddingLeft: indentLevel * 25, paddingRight: 0 }}>
-                                    <ShapeSquareIcon16Regular color={theme.mutedTextColor} />{" "}
+                                    <ShapeSquareIcon16Regular color="var(--muted-text-color)" />{" "}
                                     <Link
                                         className="no-underline"
                                         to={createLinkToJob(rootProjectStructure, projectId, jobId, currentBranchName)}>
                                         {jobId}
                                     </Link>
-                                </JobHeader>
+                                </th>
                             </tr>
                         </thead>
                     </React.Fragment>
@@ -190,42 +193,3 @@ export function JobsView({
         </>
     );
 }
-
-const JobHeader = styled.th`
-    margin-top: 8px;
-    text-align: left;
-
-    a {
-        font-weight: 600;
-    }
-`;
-
-const NumberCell = styled.td`
-    width: 80px;
-    text-align: left;
-`;
-
-const PaddingCell = styled.td`
-    padding: 0 !important;
-    min-width: 12px;
-`;
-
-const CountCell = styled.td`
-    max-width: 300px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-`;
-
-const ChangesCell = styled.td`
-    max-width: 300px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-`;
-
-const AttributesCell = styled.td`
-    max-width: 80px;
-    white-space: nowrap;
-    text-align: left;
-`;

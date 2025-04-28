@@ -1,6 +1,6 @@
 import { Button, Modal } from "@skbkontur/react-ui";
 import * as React from "react";
-import styled from "styled-components";
+import styles from "./AddNewProjectModal.module.css";
 
 interface AddNewProjectModalProps {
     onClose: () => void;
@@ -11,8 +11,8 @@ export function AddNewProjectModal(props: AddNewProjectModalProps) {
         <Modal width="700px" onClose={props.onClose} ignoreBackgroundClick>
             <Modal.Header>Добавить новый проект</Modal.Header>
             <Modal.Body>
-                <Paragraph>Добавление нового проекта на текущем этапе происходит вручную.</Paragraph>
-                <Paragraph>
+                <p className={styles.paragraph}>Добавление нового проекта на текущем этапе происходит вручную.</p>
+                <p className={styles.paragraph}>
                     Чтобы добавить проект, обратитесь в канал{" "}
                     <a target="_blank" href="https://chat.skbkontur.ru/kontur/channels/testcity">
                         #testcity
@@ -22,9 +22,9 @@ export function AddNewProjectModal(props: AddNewProjectModalProps) {
                         @tihonove
                     </a>
                     .{" "}
-                </Paragraph>
-                <Header4>Важная информация:</Header4>
-                <Paragraph>
+                </p>
+                <p className={styles.header4}>Важная информация:</p>
+                <p className={styles.paragraph}>
                     Чтобы тесты были видны за пределами GitLab, надо, чтобы тесты попадали в артефакты, а не только в
                     JUnit report. (Подробнее см.{" "}
                     <a
@@ -33,11 +33,11 @@ export function AddNewProjectModal(props: AddNewProjectModalProps) {
                         документацию GitLab
                     </a>
                     .)
-                </Paragraph>
-                <Paragraph>
+                </p>
+                <p className={styles.paragraph}>
                     Если ваш проект не открыт для всех контуровцев, необходимо будет выдать доступ учетной записи, под
                     которой работает сервис (уточним при добавлении).
-                </Paragraph>
+                </p>
             </Modal.Body>
             <Modal.Footer panel>
                 <Button onClick={props.onClose}>Закрыть</Button>
@@ -45,15 +45,3 @@ export function AddNewProjectModal(props: AddNewProjectModalProps) {
         </Modal>
     );
 }
-
-const Paragraph = styled.p`
-    margin-bottom: 20px;
-    line-height: 24px;
-`;
-
-const Header4 = styled.p`
-    margin-top: 40px;
-    margin-bottom: 20px;
-    font-weight: bold;
-    line-height: 24px;
-`;

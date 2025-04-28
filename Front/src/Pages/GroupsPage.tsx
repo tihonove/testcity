@@ -3,14 +3,13 @@ import { ColumnStack, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import { Input } from "@skbkontur/react-ui";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { GroupAvatar } from "./GroupAvatar";
+import { GroupAvatar } from "../Components/GroupAvatar";
 import { groupLink, useBasePrefix } from "../Domain/Navigation";
-import { theme } from "../Theme/ITheme";
-import { LogoPageBlock } from "./LogoPageBlock";
+import { LogoPageBlock } from "../Components/LogoPageBlock";
 import { useSearchParamAsState } from "../Utils";
-import { AddNewProjectModal } from "./AddNewProjectModal";
-import { useRootGroups } from "./useProjectContextFromUrlParams";
+import { AddNewProjectModal } from "../Components/AddNewProjectModal";
+import { useRootGroups } from "../Components/useProjectContextFromUrlParams";
+import styles from "./GroupsPage.module.css";
 
 export function GroupsPage() {
     const [searchText, setSearchText] = React.useState("");
@@ -36,11 +35,11 @@ export function GroupsPage() {
                 />
             )}
             <LogoPageBlock />
-            <Root>
-                <Content>
+            <main className={styles.root}>
+                <div className={styles.content}>
                     <ColumnStack gap={2} block horizontalAlign="stretch">
                         <Fit>
-                            <Header>Groups</Header>
+                            <h1 className={styles.header}>Groups</h1>
                         </Fit>
                         <Fit>
                             <Input
@@ -61,7 +60,9 @@ export function GroupsPage() {
                                         <GroupAvatar size="20px" group={p}></GroupAvatar>
                                     </Fit>
                                     <Fit>
-                                        <RootGroupTitle to={groupLink(basePrefix, [p.title])}>{p.title}</RootGroupTitle>
+                                        <Link className={styles.rootGroupTitle} to={groupLink(basePrefix, [p.title])}>
+                                            {p.title}
+                                        </Link>
                                     </Fit>
                                 </RowStack>
                             </Fit>
@@ -72,66 +73,18 @@ export function GroupsPage() {
                                     <UiMenuShapeCircle4Icon20Light />
                                 </Fit>
                                 <Fit>
-                                    <AddProjectAvatarRoot20>+</AddProjectAvatarRoot20>
+                                    <div className={styles.addProjectAvatarRoot20}>+</div>
                                 </Fit>
                                 <Fit>
-                                    <AddGroupTitleButton onClick={handleAddNewProject}>Add new...</AddGroupTitleButton>
+                                    <button className={styles.addGroupTitleButton} onClick={handleAddNewProject}>
+                                        Add new...
+                                    </button>
                                 </Fit>
                             </RowStack>
                         </Fit>
                     </ColumnStack>
-                </Content>
-            </Root>
+                </div>
+            </main>
         </>
     );
 }
-
-const AddProjectAvatarRoot20 = styled.div`
-    font-size: 20px;
-    line-height: 32px;
-    text-align: center;
-    text-transform: uppercase;
-    width: 32px;
-    height: 32px;
-    border-radius: 4px;
-    outline: 2px dashed ${theme.borderLineColor2};
-    outline-offset: -2px;
-    background: ${theme.backgroundColor2};
-`;
-
-const Root = styled.main`
-    padding-top: 100px;
-`;
-
-const Content = styled.div`
-    margin: 0 auto;
-    max-width: ${theme.layout.centered.width};
-`;
-
-const Header = styled.h1`
-    ${theme.typography.pages.header1};
-`;
-
-const RootGroupTitle = styled(Link)`
-    display: block;
-    font-size: 20px;
-    line-height: 40px;
-    text-decoration: none;
-
-    :hover {
-        background-color: ${theme.backgroundColor1};
-    }
-`;
-
-const AddGroupTitleButton = styled.button`
-    border: 0;
-    background: none;
-    display: block;
-    font-size: 20px;
-    line-height: 40px;
-    color: ${theme.primaryTextColor};
-    font-family: inherit;
-    cursor: pointer;
-    padding: 0;
-    text-decoration: none;
-`;

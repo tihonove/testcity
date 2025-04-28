@@ -1,0 +1,11 @@
+.projectsWithRunsTable {
+    width: 100%;
+}
+
+.projectsWithRunsTable td {
+    padding: 6px 8px;
+}
+
+.projectsWithRunsTable thead > tr > th {
+    padding-top: 16px;
+}

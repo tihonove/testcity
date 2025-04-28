@@ -1,29 +1,39 @@
+import * as React from "react";
 import { Link } from "react-router-dom";
-import { css, styled } from "styled-components";
-import { theme } from "../Theme/ITheme";
+import styles from "./Cells.module.css";
 
-export const BranchCell = styled.td`
-    max-width: 200px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-`;
+export const BranchCell = ({ children, ...rest }: React.TdHTMLAttributes<HTMLTableCellElement>) => (
+    <td className={styles.branchCell} {...rest}>
+        {children}
+    </td>
+);
 
-export const ColorByState = styled.span<{ state: string }>`
-    color: ${props =>
-        props.state == "Success"
-            ? props.theme.successTextColor
-            : props.state == "Canceled"
-              ? props.theme.mutedTextColor
-              : props.theme.failedTextColor};
-`;
+interface ColorByStateProps extends React.HTMLAttributes<HTMLSpanElement> {
+    state: string;
+}
 
-export const NumberCell = styled.td`
-    width: 80px;
-`;
+export const ColorByState = ({ state, children, ...rest }: ColorByStateProps) => {
+    const className =
+        state === "Success"
+            ? styles.colorByStateSuccess
+            : state === "Canceled"
+              ? styles.colorByStateCanceled
+              : styles.colorByStateFailed;
+    return (
+        <span className={className} {...rest}>
+            {children}
+        </span>
+    );
+};
 
-export const SelectedOnHoverTr = styled.tr`
-    &:hover {
-        background-color: ${theme.inverseColor("0.1")};
-    }
-`;
+export const NumberCell = ({ children, ...rest }: React.TdHTMLAttributes<HTMLTableCellElement>) => (
+    <td className={styles.numberCell} {...rest}>
+        {children}
+    </td>
+);
+
+export const SelectedOnHoverTr = ({ children, ...rest }: React.HTMLAttributes<HTMLTableRowElement>) => (
+    <tr className={styles.selectedOnHoverTr} {...rest}>
+        {children}
+    </tr>
+);

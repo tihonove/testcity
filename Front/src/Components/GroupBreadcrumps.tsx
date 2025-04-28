@@ -3,9 +3,8 @@ import { RowStack, Fit } from "@skbkontur/react-stack-layout";
 import * as React from "react";
 import { useBasePrefix, groupLink, createLinkToJob } from "../Domain/Navigation";
 import { GroupNode, Project } from "../Domain/Storage/Projects/GroupNode";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { theme } from "../Theme/ITheme";
+import styles from "./GroupBreadcrumps.module.css";
 
 interface GroupBreadcrumpsProps {
     nodes: (GroupNode | Project)[];
@@ -19,10 +18,10 @@ export function GroupBreadcrumps(props: GroupBreadcrumpsProps) {
     return (
         <RowStack gap={2} block>
             <Fit>
-                <RootGroupTitleLink to={basePrefix}>
+                <Link className={styles.rootGroupTitleLink} to={basePrefix}>
                     <BuildingHomeIcon16Light />
                     {props.nodes.length == 0 ? " All groups" : ""}
-                </RootGroupTitleLink>
+                </Link>
             </Fit>
             {props.nodes.map((p, index) => (
                 <React.Fragment key={p.id}>
@@ -33,14 +32,15 @@ export function GroupBreadcrumps(props: GroupBreadcrumpsProps) {
                                 <UiMenuShapeCircle4Icon16Light />
                             </Fit>
                             <Fit>
-                                <RootGroupTitleLink
+                                <Link
+                                    className={styles.rootGroupTitleLink}
                                     to={groupLink(
                                         basePrefix,
                                         props.nodes.slice(0, index + 1).map(x => x.title),
                                         props.branchName
                                     )}>
                                     {p.title}
-                                </RootGroupTitleLink>
+                                </Link>
                             </Fit>
                         </RowStack>
                     </Fit>
@@ -55,7 +55,8 @@ export function GroupBreadcrumps(props: GroupBreadcrumpsProps) {
                                 <UiMenuShapeCircle4Icon16Light />
                             </Fit>
                             <Fit>
-                                <RootGroupTitleLink
+                                <Link
+                                    className={styles.rootGroupTitleLink}
                                     to={createLinkToJob(
                                         props.nodes[0],
                                         props.nodes[props.nodes.length - 1].id,
@@ -63,7 +64,7 @@ export function GroupBreadcrumps(props: GroupBreadcrumpsProps) {
                                         props.branchName
                                     )}>
                                     {props.jobId}
-                                </RootGroupTitleLink>
+                                </Link>
                             </Fit>
                         </RowStack>
                     </Fit>
@@ -72,14 +73,3 @@ export function GroupBreadcrumps(props: GroupBreadcrumpsProps) {
         </RowStack>
     );
 }
-
-const RootGroupTitleLink = styled(Link)`
-    display: block;
-    font-size: 16px;
-    line-height: 20px;
-    text-decoration: none;
-
-    :hover {
-        background-color: ${theme.backgroundColor1};
-    }
-`;

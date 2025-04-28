@@ -2,12 +2,11 @@ import { ClipboardTextIcon16Regular, CopyIcon16Light, TimeClockFastIcon16Regular
 import { Button, DropdownMenu, Hint, MenuItem, Toast } from "@skbkontur/react-ui";
 import { Fill, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import * as React from "react";
-import styled from "styled-components";
+import styles from "./TestRunRow.module.css";
 
 import { useStorage } from "../ClickhouseClientHooksWrapper";
 import { createLinkToTestHistory } from "../Domain/Navigation";
 import { TestRunQueryRow, TestRunQueryRowNames } from "../Domain/Storage/TestRunQuery";
-import { theme } from "../Theme/ITheme";
 import { runAsyncAction } from "../Utils/TypeHelpers";
 import { KebabButton } from "./KebabButton";
 import { formatDuration } from "./RunStatisticsChart/DurationUtils";
@@ -65,29 +64,37 @@ export function TestRunRow({
     const statuses = testRun[TestRunQueryRowNames.AllStates].split(",");
     const failureCount = statuses.filter(x => x === "Failed").length;
     const successCount = statuses.filter(x => x === "Success").length;
+
+    const getStatusCellClass = (status: RunStatus) => {
+        const baseClass = styles.statusCellDefault;
+        if (status === "Success") return `${baseClass} ${styles.statusCellSuccess}`;
+        if (status === "Failed") return `${baseClass} ${styles.statusCellFailed}`;
+        return baseClass;
+    };
+
     return (
         <>
-            <TestRunsTableRow>
-                <StatusCell status={testRun[TestRunQueryRowNames.State]}>
+            <tr className={styles.testRunsTableRow}>
+                <td className={getStatusCellClass(testRun[TestRunQueryRowNames.State])}>
                     {testRun[TestRunQueryRowNames.State]}
                     {testRun[TestRunQueryRowNames.TotalRuns] > 1 && (
-                        <RunCountInfo>
+                        <span className={styles.runCountInfo}>
                             {" ("}
                             {failureCount == 0 && successCount > 0 ? (
-                                <SuccessCount>{successCount}</SuccessCount>
+                                <span className={styles.successCount}>{successCount}</span>
                             ) : failureCount > 0 && successCount == 0 ? (
-                                <FailedCount>{failureCount}</FailedCount>
+                                <span className={styles.failedCount}>{failureCount}</span>
                             ) : (
                                 <>
-                                    <FailedCount>{failureCount}</FailedCount>/
-                                    <SuccessCount>{successCount}</SuccessCount>
+                                    <span className={styles.failedCount}>{failureCount}</span>/
+                                    <span className={styles.successCount}>{successCount}</span>
                                 </>
                             )}
                             )
-                        </RunCountInfo>
+                        </span>
                     )}
-                </StatusCell>
-                <TestNameCell>
+                </td>
+                <td className={styles.testNameCell}>
                     <TestName
                         onTestNameClick={
                             testRun[TestRunQueryRowNames.State] === "Failed"
@@ -101,14 +108,14 @@ export function TestRunRow({
                         }}
                         value={testRun[TestRunQueryRowNames.TestId]}
                     />
-                </TestNameCell>
-                <DurationCell>
+                </td>
+                <td className={styles.durationCell}>
                     {formatDuration(
                         testRun[TestRunQueryRowNames.AvgDuration],
                         testRun[TestRunQueryRowNames.AvgDuration]
                     )}
-                </DurationCell>
-                <ActionsCell>
+                </td>
+                <td className={styles.actionsCell}>
                     <DropdownMenu caption={<KebabButton />}>
                         <MenuItem
                             icon={<TimeClockFastIcon16Regular />}
@@ -131,10 +138,10 @@ export function TestRunRow({
                             Show test outpout
                         </MenuItem>
                     </DropdownMenu>
-                </ActionsCell>
-            </TestRunsTableRow>
-            <TestOutputRow $expanded={expandOutput}>
-                <TestOutputCell colSpan={4}>
+                </td>
+            </tr>
+            <tr className={expandOutput ? styles.testOutputRowExpanded : styles.testOutputRow}>
+                <td className={styles.testOutputCell} colSpan={4}>
                     {expandOutput && (failedOutput || failedMessage || systemOutput) && (
                         <>
                             <RowStack block>
@@ -145,13 +152,13 @@ export function TestRunRow({
                                     </Button>
                                 </Fit>
                             </RowStack>
-                            <Code>
+                            <pre className={styles.code}>
                                 {failedOutput}
                                 ---
                                 {failedMessage}
                                 ---
                                 {systemOutput}
-                            </Code>
+                            </pre>
                             <a
                                 href="#"
                                 onClick={e => {
@@ -166,78 +173,8 @@ export function TestRunRow({
                             </a>
                         </>
                     )}
-                </TestOutputCell>
-            </TestOutputRow>
+                </td>
+            </tr>
         </>
     );
 }
-
-const TestRunsTableRow = styled.tr({
-    td: {
-        textAlign: "left",
-        padding: "6px 8px",
-    },
-});
-
-const TestOutputRow = styled.tr<{ $expanded?: boolean }>`
-    max-height: ${props => (props.$expanded ? "none" : "0")};
-
-    & > td {
-        padding: ${props => (props.$expanded ? "6px 0 6px 24px" : "0 0 0 24px")};
-    }
-`;
-
-const TestOutputCell = styled.td``;
-
-const Code = styled.pre`
-    font-size: 14px;
-    line-height: 18px;
-    max-height: 800px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    overflow: hidden;
-    padding: 15px;
-    border: 1px solid ${theme.borderLineColor2};
-`;
-
-const DurationCell = styled.td`
-    width: 80px;
-`;
-
-const ActionsCell = styled.td`
-    width: 20px;
-`;
-
-const TestNameCell = styled.td`
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-`;
-
-const CountInfo = styled.span`
-    color: ${theme.mutedTextColor};
-    margin-left: 5px;
-`;
-
-const RunCountInfo = styled.span`
-    // font-size: ${theme.smallTextSize};
-    color: ${theme.mutedTextColor};
-`;
-
-const SuccessCount = styled.span`
-    color: ${theme.successTextColor};
-`;
-
-const FailedCount = styled.span`
-    color: ${theme.failedTextColor};
-`;
-
-const StatusCell = styled.td<{ status: RunStatus }>`
-    width: 100px;
-    color: ${props =>
-        props.status == "Success"
-            ? props.theme.successTextColor
-            : props.status == "Failed"
-              ? props.theme.failedTextColor
-              : undefined};
-`;

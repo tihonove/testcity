@@ -1,0 +1,110 @@
+.chartContainer {
+    display: flex;
+    position: relative;
+    align-items: stretch;
+}
+
+.scrollContainer {
+    flex-basis: 100%;
+    flex-shrink: 1;
+    flex-grow: 1;
+    overflow-x: scroll;
+    position: relative;
+}
+
+.gaugeLabels {
+    flex-basis: 50px;
+    flex-shrink: 0;
+    flex-grow: 1;
+    width: 50px;
+    position: relative;
+
+    > div {
+        position: absolute;
+        right: 5px;
+        text-align: right;
+        font-size: 12px;    
+    }
+}
+
+.gridLine {
+    position: absolute;
+    left: 50px;
+    right: 0;
+    height: 1px;
+    background-color: var(--border-line-color-2);
+    top: 10px;
+    
+    & + .gridLine {
+        top: 35px;
+    
+        & + .gridLine {
+            top: 60px;
+
+            & + .gridLine {
+                top: 85px;
+            }    
+        }
+    }
+}
+
+
+.scaleButtons {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    z-index: 10;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-flow: revert;
+    align-items: flex-end;
+    height: 110px;
+    position: relative;
+
+    > div{
+        flex-grow: 0;
+        flex-shrink: 0;
+        box-sizing: border-box;
+        position: relative;
+        margin-left: 1px;
+        border-top: 2px solid rgb(var(--inverse-color-base) / 0.4);
+
+        &[data-state='Success'] {
+            background-color: rgb(var(--inverse-color-base) / 0.1);
+            
+            &:hover {
+                background-color: rgb(var(--inverse-color-base) / 0.2);
+            }
+        }    
+
+        &[data-state='Failed'] {
+            background-color: rgb(from var(--failed-bg-color) r g b / 50%);
+            
+            &:hover {
+                background-color: rgb(from var(--failed-bg-color) r g b / 70%);
+            }
+        }
+    }
+}
+
+
+
+.datesContainer {
+    height: 20px;
+}
+
+.dateLabel {
+    background-color: transparent;
+    font-size: 12px;
+    position: absolute;
+    bottom: -16px;
+    left: 0;
+    width: 140px;
+}
+
+.dateLabel:hover {
+    background-color: transparent;
+}

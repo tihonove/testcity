@@ -1,0 +1,15 @@
+.testRunsTableHeadRow th {
+    font-size: 12px;
+    text-align: left;
+    padding: 4px 8px;
+}
+
+.testRunsTableHeadRow {
+    border-bottom: 1px solid #eee;
+}
+
+.testList {
+    width: 100%;
+    max-width: 100vw;
+    table-layout: fixed;
+}

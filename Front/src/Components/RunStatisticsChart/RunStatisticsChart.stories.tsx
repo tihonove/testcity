@@ -1,14 +1,14 @@
 import * as React from "react";
 import { RunStatisticsChart } from "./RunStatisticsChart";
-import { StoryFn } from "@storybook/react";
+import { Story } from "@ladle/react";
 
 export default {
     title: "RunStatisticsChart",
 };
 
-export const SingleItem: StoryFn = () => <RunStatisticsChart value={[["Success", 12, "2010-01-01T12:00:00Z"]]} />;
+export const SingleItem: Story = () => <RunStatisticsChart value={[["Success", 12, "2010-01-01T12:00:00Z"]]} />;
 
-export const LotOfItems: StoryFn = () => (
+export const LotOfItems: Story = () => (
     <RunStatisticsChart
         value={new Array(100)
             .fill(null)

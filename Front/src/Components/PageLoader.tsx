@@ -1,26 +1,12 @@
 import * as React from "react";
 import { NetCloudIcon32Regular } from "@skbkontur/icons";
-import styled from "styled-components";
-import { theme } from "../Theme/ITheme";
-import { Loader, Spinner } from "@skbkontur/react-ui";
+import { Spinner } from "@skbkontur/react-ui";
+import styles from "./PageLoader.module.css";
 
 export const PageLoader = () => (
-    <LoaderContainer>
-        <LoaderMessage>
+    <div className={styles.loaderContainer}>
+        <h2 className={styles.loaderMessage}>
             <Spinner type="big" caption="Loading" />
-        </LoaderMessage>
-    </LoaderContainer>
+        </h2>
+    </div>
 );
-
-const LoaderContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-`;
-
-const LoaderMessage = styled.h2`
-    font-size: 32px;
-    line-height: 40px;
-    color: ${theme.primaryTextColor};
-`;

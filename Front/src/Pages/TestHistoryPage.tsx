@@ -3,23 +3,22 @@ import { ColumnStack, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import { Paging } from "@skbkontur/react-ui";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { BranchSelect } from "../Components/BranchSelect";
-import { BranchCell, NumberCell, SelectedOnHoverTr } from "../Components/Cells";
+import { NumberCell } from "../Components/Cells";
 import { SvgPieChart } from "../Components/PieChart";
 import { JobRunNames } from "../Domain/Storage/JobsQuery";
 import { useBasePrefix } from "../Domain/Navigation";
 import { TestPerJobRunQueryRowNames } from "../Domain/TestPerJobRunQueryRow";
 import { formatDuration } from "../Components/RunStatisticsChart/DurationUtils";
 import { RunStatisticsChart } from "../Components/RunStatisticsChart/RunStatisticsChart";
-import { theme } from "../Theme/ITheme";
 import { getOffsetTitle, toLocalTimeFromUtc, useSearchParam, useSearchParamAsState } from "../Utils";
 import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
 import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
 import { RunStatus } from "../Components/RunStatus";
 import { SuspenseFadingWrapper, useDelayedTransition } from "../Components/useDelayedTransition";
 import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
+import styles from "./TestHistoryPage.module.css";
 
 export function TestHistoryPage(): React.JSX.Element {
     const [testId] = useSearchParam("id");
@@ -56,6 +55,12 @@ export function TestHistoryPage(): React.JSX.Element {
         return `${message}. ${status}`;
     };
 
+    const getStatusCellClass = (status: RunStatus) => {
+        if (status === "Success") return `${styles.statusCellBase} ${styles.statusCellSuccess}`;
+        if (status === "Failed") return `${styles.statusCellBase} ${styles.statusCellFailed}`;
+        return styles.statusCellBase;
+    };
+
     const [suiteId, testName] = splitTestId(testId);
     // Success Rate: 0.7% (Last 149 Runs) 148 failed 1 successful Download
     return (
@@ -65,8 +70,8 @@ export function TestHistoryPage(): React.JSX.Element {
             </Fit>
 
             <Fit>
-                <Title>Test History: {testName}</Title>
-                <SuiteName>{suiteId}</SuiteName>
+                <h1 className={styles.title}>Test History: {testName}</h1>
+                <div className={styles.suiteName}>{suiteId}</div>
             </Fit>
             <Fit>
                 <RowStack verticalAlign="center">
@@ -77,18 +82,18 @@ export function TestHistoryPage(): React.JSX.Element {
                         />
                     </Fit>
                     <Fit>
-                        <SuccessRateText>
+                        <span className={styles.successRateText}>
                             {`Success Rate: ${(
                                 (stats.reduce((x, y) => (y[0] == "Success" ? x + 1 : x), 0) / stats.length) *
                                 100
                             ).toFixed(1)}% (Last ${stats.length.toString()} Runs)`}
-                        </SuccessRateText>
-                        <FailedText>
+                        </span>
+                        <span className={styles.failedText}>
                             {`${stats.reduce((x, y) => (y[0] != "Success" ? x + 1 : x), 0).toString()} failed`}
-                        </FailedText>
-                        <SuccessfulText>
+                        </span>
+                        <span className={styles.successfulText}>
                             {`${stats.reduce((x, y) => (y[0] == "Success" ? x + 1 : x), 0).toString()} successful`}
-                        </SuccessfulText>
+                        </span>
                     </Fit>
                 </RowStack>
             </Fit>
@@ -108,21 +113,22 @@ export function TestHistoryPage(): React.JSX.Element {
             </Fit>
             <Fit>
                 <React.Suspense fallback={"Loading test list...."}>
-                    <SuspenseFadingWrapper $fading={isFading}>
-                        <TestRunsTable>
+                    <SuspenseFadingWrapper fading={isFading}>
+                        <table className={styles.testRunsTable}>
                             <thead>
-                                <TestRunsTableHeadRow>
+                                <tr className={styles.testRunsTableHeadRow}>
                                     <th>#</th>
                                     <th>Status</th>
                                     <th>Duration</th>
                                     <th>Branch</th>
                                     <th>Job</th>
                                     <th>Started {getOffsetTitle()}</th>
-                                </TestRunsTableHeadRow>
+                                </tr>
                             </thead>
                             <tbody>
                                 {testRuns.map(x => (
-                                    <TestRunsTableRow
+                                    <tr
+                                        className={`${styles.testRunsTableRow} ${styles.testRunsTableRowHover}`}
                                         key={
                                             x[TestPerJobRunQueryRowNames.JobId] +
                                             "-" +
@@ -133,28 +139,28 @@ export function TestHistoryPage(): React.JSX.Element {
                                                 #{x[TestPerJobRunQueryRowNames.JobRunId]}
                                             </Link>
                                         </NumberCell>
-                                        <StatusCell status={x[TestPerJobRunQueryRowNames.State]}>
+                                        <td className={getStatusCellClass(x[TestPerJobRunQueryRowNames.State])}>
                                             {buildStatus(
                                                 x[TestPerJobRunQueryRowNames.State],
                                                 x[TestPerJobRunQueryRowNames.CustomStatusMessage]
                                             )}
-                                        </StatusCell>
-                                        <DurationCell>{formatDuration(x[4], x[4])}</DurationCell>
-                                        <BranchCell>
+                                        </td>
+                                        <td className={styles.durationCell}>{formatDuration(x[4], x[4])}</td>
+                                        <td>
                                             <ShareNetworkIcon /> {x[JobRunNames.BranchName]}
-                                        </BranchCell>
-                                        <JobIdCell>
+                                        </td>
+                                        <td className={styles.jobIdCell}>
                                             <Link to={`${basePrefix}jobs/${x[TestPerJobRunQueryRowNames.JobId]}`}>
                                                 <ShapeSquareIcon16Regular /> {x[TestPerJobRunQueryRowNames.JobId]}
                                             </Link>
-                                        </JobIdCell>
-                                        <StartDateCell>
+                                        </td>
+                                        <td className={styles.startDateCell}>
                                             {toLocalTimeFromUtc(x[TestPerJobRunQueryRowNames.StartDateTime])}
-                                        </StartDateCell>
-                                    </TestRunsTableRow>
+                                        </td>
+                                    </tr>
                                 ))}
                             </tbody>
-                        </TestRunsTable>
+                        </table>
                     </SuspenseFadingWrapper>
                 </React.Suspense>
                 <Paging
@@ -170,79 +176,6 @@ export function TestHistoryPage(): React.JSX.Element {
         </ColumnStack>
     );
 }
-
-const HomeHeader = styled.h2``;
-
-const StatusCell = styled.td<{ status: RunStatus; width?: string }>`
-    max-width: 100px;
-    color: ${props =>
-        props.status == "Success"
-            ? props.theme.successTextColor
-            : props.status == "Failed"
-              ? props.theme.failedTextColor
-              : undefined};
-`;
-
-const DurationCell = styled.td`
-    width: 100px;
-`;
-
-const JobIdCell = styled.td`
-    max-width: 200px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-`;
-
-const StartDateCell = styled.td`
-    width: 200px;
-`;
-
-const SuiteName = styled.div`
-    font-size: ${props => props.theme.smallTextSize};
-    color: ${props => props.theme.mutedTextColor};
-`;
-
-const Title = styled.h1`
-    ${theme.typography.pages.header1};
-`;
-
-const TestRunsTableHeadRow = styled.tr({
-    th: {
-        fontSize: "12px",
-        textAlign: "left",
-        padding: "4px 8px",
-    },
-
-    borderBottom: "1px solid #eee",
-});
-
-const TestRunsTableRow = styled(SelectedOnHoverTr)({
-    td: {
-        textAlign: "left",
-        padding: "6px 8px",
-    },
-});
-
-const TestRunsTable = styled.table({
-    width: "100%",
-});
-
-const SuccessRateText = styled.span`
-    font-weight: bold;
-`;
-
-const FailedText = styled.span`
-    margin-left: 10px;
-    color: ${theme.failedTextColor};
-    font-size: 14px;
-`;
-
-const SuccessfulText = styled.span`
-    margin-left: 10px;
-    color: ${theme.successTextColor};
-    font-size: 14px;
-`;
 
 function splitTestId(testId: string): [string, string] {
     const testIdParts = testId.match(/(?:[^."]+|"[^"]*")+/g);

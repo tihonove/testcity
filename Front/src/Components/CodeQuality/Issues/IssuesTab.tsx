@@ -9,10 +9,8 @@ import { SeverityOverview } from "../Overview/types";
 import { IssuesTable } from "./IssuesTable";
 import { IssuesTree } from "./IssuesTree";
 import { MultipleSelect } from "./MultipleSelect";
-import { Rows } from "lucide-react";
 import { ColumnStack, Fill, Fit, RowStack } from "@skbkontur/react-stack-layout";
-import { theme } from "../../../Theme/ITheme";
-import styled from "styled-components";
+import styles from "./IssuesTab.module.css";
 
 interface IssuesTabProps {
     report: Issue[];
@@ -63,9 +61,9 @@ export function IssuesTab({ report }: IssuesTabProps) {
             </Fit>
             <Fit>
                 <RowStack block verticalAlign="top" gap={5}>
-                    <IssuesTreeFit>
+                    <Fit className={styles.issuesTreeFit}>
                         <IssuesTree issues={filtered} prefix={prefix} onChangePrefix={setPrefix} />
-                    </IssuesTreeFit>
+                    </Fit>
                     <Fill>
                         <IssuesTable
                             key={severity}
@@ -77,10 +75,6 @@ export function IssuesTab({ report }: IssuesTabProps) {
         </ColumnStack>
     );
 }
-
-const IssuesTreeFit = styled(Fit)`
-    border-right: 1px solid ${theme.borderLineColor2};
-`;
 
 function severityItems(
     severities: Severity[],

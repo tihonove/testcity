@@ -1,26 +1,18 @@
-import { Button, Paging } from "@skbkontur/react-ui";
+import { Button } from "@skbkontur/react-ui";
 import * as React from "react";
 
-import { ClipboardTextIcon16Regular, CopyIcon16Light, TimeClockFastIcon16Regular } from "@skbkontur/icons";
+import { CopyIcon16Light } from "@skbkontur/icons";
 import { Fill, Fit, RowStack } from "@skbkontur/react-stack-layout";
-import { DropdownMenu, MenuItem, Toast } from "@skbkontur/react-ui";
+import { Toast } from "@skbkontur/react-ui";
 import { Suspense } from "react";
-import styled from "styled-components";
+import styles from "./FailedTestListView.module.css";
 import { useStorage, useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { useBasePrefix } from "../Domain/Navigation";
 import { TestRunQueryRowNames } from "../Domain/Storage/TestRunQuery";
-import { useSearchParamAsState, useSearchParamsAsState } from "../Utils";
-import { TestOutputModal } from "./TestOutputModal";
-import { SuspenseFadingWrapper, useDelayedTransition } from "./useDelayedTransition";
 
-import { createLinkToTestHistory } from "../Domain/Navigation";
 import { TestRunQueryRow } from "../Domain/Storage/TestRunQuery";
-import { theme } from "../Theme/ITheme";
 import { runAsyncAction } from "../Utils/TypeHelpers";
-import { KebabButton } from "./KebabButton";
-import { formatDuration } from "./RunStatisticsChart/DurationUtils";
-import { RunStatus } from "./RunStatus";
-import { splitTestName, TestName } from "./TestName";
+import { splitTestName } from "./TestName";
 
 interface FailedTestListViewProps {
     jobRunIds: string[];
@@ -104,8 +96,8 @@ export function TestRunRow({ testRun, basePrefix, pathToProject, jobRunIds }: Te
                 }}>
                 {name}
             </a>{" "}
-            <TestNamePrefix>({prefix})</TestNamePrefix>
-            <TestOutputRow $expanded={expandOutput}>
+            <span className={styles.testNamePrefix}>({prefix})</span>
+            <div className={expandOutput ? styles.testOutputRowExpanded : styles.testOutputRow}>
                 {expandOutput && (failedOutput || failedMessage || systemOutput) && (
                     <>
                         <RowStack block>
@@ -116,36 +108,16 @@ export function TestRunRow({ testRun, basePrefix, pathToProject, jobRunIds }: Te
                                 </Button>
                             </Fit>
                         </RowStack>
-                        <Code>
+                        <pre className={styles.code}>
                             {failedOutput}
                             ---
                             {failedMessage}
                             ---
                             {systemOutput}
-                        </Code>
+                        </pre>
                     </>
                 )}
-            </TestOutputRow>
+            </div>
         </>
     );
 }
-
-const TestNamePrefix = styled.span`
-    font-size: ${theme.smallTextSize};
-    color: ${theme.mutedTextColor};
-`;
-
-const TestOutputRow = styled.div<{ $expanded?: boolean }>`
-    max-height: ${props => (props.$expanded ? "none" : "0")};
-`;
-
-const Code = styled.pre`
-    font-size: 14px;
-    line-height: 18px;
-    max-height: 800px;
-    margin-top: 5px;
-    margin-bottom: 25px;
-    overflow: hidden;
-    padding: 15px;
-    border: 1px solid ${theme.borderLineColor2};
-`;

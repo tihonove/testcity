@@ -1,23 +1,15 @@
 import { UiMenuDots3VIcon16Regular } from "@skbkontur/icons";
 import * as React from "react";
-import styled from "styled-components";
-import { theme } from "../Theme/ITheme";
+import styles from "./KebabButton.module.css";
 
 export function KebabButton() {
     return (
-        <KebabButtonRoot>
+        <span className={styles.kebabButtonRoot}>
             <UiMenuDots3VIcon16Regular />
-        </KebabButtonRoot>
+        </span>
     );
 }
 
-export const KebabButtonRoot = styled.span`
-    display: inline-block;
-    padding: 0 2px 1px 2px;
-    border-radius: 10px;
-    cursor: pointer;
-
-    &:hover {
-        background-color: ${theme.backgroundColor1};
-    }
-`;
+export const KebabButtonRoot = (props: React.HTMLProps<HTMLSpanElement>) => (
+    <span {...props} className={`${styles.kebabButtonRoot} ${props.className || ""}`} />
+);

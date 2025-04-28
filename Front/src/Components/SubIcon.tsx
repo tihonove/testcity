@@ -1,5 +1,5 @@
 import * as React from "react";
-import styled from "styled-components";
+import styles from "./SubIcon.module.css";
 
 export function SubIcon({
     children,
@@ -11,42 +11,9 @@ export function SubIcon({
     noclip?: boolean;
 }): React.JSX.Element {
     return (
-        <IconContainer>
-            <MainIcon $noclip={noclip}>{children}</MainIcon>
-            <SubIconContainer>{sub}</SubIconContainer>
-        </IconContainer>
+        <div className={styles.iconContainer}>
+            <div className={`${styles.mainIcon} ${!noclip ? styles.mainIconWithClip : ""}`}>{children}</div>
+            <div className={styles.subIconContainer}>{sub}</div>
+        </div>
     );
 }
-
-const IconContainer = styled.div`
-    position: relative;
-    display: inline-block;
-`;
-
-const MainIcon = styled.div<{ $noclip?: boolean }>`
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-    ${props =>
-        !props.$noclip &&
-        `
-    clip-path: polygon(
-        0 0,
-        100% 0,
-        100% calc(100% - 10px),
-        calc(100% - 10px) calc(100% - 10px),
-        calc(100% - 10px) 100%,
-        0 100%,
-        0 0
-    );
-    `}
-`;
-
-const SubIconContainer = styled.div`
-    position: absolute;
-    bottom: -3px;
-    right: -3px;
-    transform: scale(0.8);
-    transform-origin: bottom right;
-    z-index: 2;
-`;

@@ -2,7 +2,6 @@ import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
 import eslintConfigPrettier from "eslint-config-prettier";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
-import storybook from "eslint-plugin-storybook";
 
 export default [
     ...tseslint.config(
@@ -10,7 +9,6 @@ export default [
         tseslint.configs.strictTypeChecked,
         eslintPluginPrettierRecommended,
         eslintConfigPrettier,
-        ...storybook.configs["flat/recommended"],
         {
             languageOptions: {
                 parserOptions: {

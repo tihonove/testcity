@@ -1,17 +1,10 @@
-import { styled } from "styled-components";
+import * as React from "react";
+import styles from "./ProjectsWithRunsTable.module.css";
 
 export const RunsTable = {
     columnCount: 6,
 } as const;
 
-export const ProjectsWithRunsTable = styled.table`
-    width: 100%;
-
-    td {
-        padding: 6px 8px;
-    }
-
-    thead > tr > th {
-        padding-top: 16px;
-    }
-`;
+export const ProjectsWithRunsTable = (props: React.TableHTMLAttributes<HTMLTableElement>) => (
+    <table className={styles.projectsWithRunsTable} {...props} />
+);

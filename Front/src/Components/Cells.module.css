@@ -1,0 +1,26 @@
+.branchCell {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.colorByStateSuccess {
+    color: var(--success-text-color);
+}
+
+.colorByStateCanceled {
+    color: var(--muted-text-color);
+}
+
+.colorByStateFailed {
+    color: var(--failed-text-color);
+}
+
+.numberCell {
+    width: 80px;
+}
+
+.selectedOnHoverTr:hover {
+    background-color: rgb(var(--inverse-color-base) / 0.1);
+}

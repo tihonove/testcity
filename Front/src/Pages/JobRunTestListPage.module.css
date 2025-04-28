@@ -1,0 +1,31 @@
+.styledLink {
+    color: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    display: inherit;
+}
+
+.jobRunHeader {
+    font-size: 28px;
+    line-height: 36px;
+    display: flex;
+}
+
+.statusMessage {
+    display: flex;
+    line-height: 32px;
+}
+
+.testsStatusMessage {
+    display: flex;
+    line-height: 32px;
+}
+
+.root {
+    /* Пустой класс для root элемента */
+}
+
+.overviewSectionHeader {
+    font-size: 18px;
+    line-height: 24px;
+}

@@ -1,30 +1,27 @@
-import { ShareNetworkIcon, UiMenuDots3VIcon16Regular } from "@skbkontur/icons";
 import { ColumnStack, Fit } from "@skbkontur/react-stack-layout";
 import * as React from "react";
 
-import { useDeferredValue } from "react";
+import { Loader, Tabs } from "@skbkontur/react-ui";
+import { format, parseISO } from "date-fns";
 import { Link, useParams } from "react-router-dom";
-import styled from "styled-components";
-import { useClickhouseClient, useStorage, useStorageQuery } from "../ClickhouseClientHooksWrapper";
+import { useClickhouseClient, useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { AdditionalJobInfo } from "../Components/AdditionalJobInfo";
+import { BranchBox } from "../Components/BranchBox";
 import { ColorByState } from "../Components/Cells";
-import { JonRunIcon } from "../Components/Icons";
-import { useApiUrl, useBasePrefix } from "../Domain/Navigation";
-import { reject } from "../Utils/TypeHelpers";
-import { useSearchParam, useSearchParamAsState, useSearchParamDebouncedAsState } from "../Utils";
+import { IssuesTab } from "../Components/CodeQuality/Issues/IssuesTab";
+import { OverviewTab } from "../Components/CodeQuality/Overview/OverviewTab";
+import { Issue } from "../Components/CodeQuality/types/Issue";
+import { CommitRow } from "../Components/CommitRow";
+import { FailedTestListView } from "../Components/FailedTestListView";
 import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
+import { JonRunIcon } from "../Components/Icons";
+import { Spoiler } from "../Components/Spoiler";
 import { TestListView } from "../Components/TestListView";
 import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
-import { Loader, Tabs } from "@skbkontur/react-ui";
-import { OverviewTab } from "../Components/CodeQuality/Overview/OverviewTab";
-import { IssuesTab } from "../Components/CodeQuality/Issues/IssuesTab";
-import { Issue } from "../Components/CodeQuality/types/Issue";
-import { BranchBox } from "../Components/BranchBox";
-import { theme } from "../Theme/ITheme";
-import { format, parseISO } from "date-fns";
-import { FailedTestListView } from "../Components/FailedTestListView";
-import { Spoiler } from "../Components/Spoiler";
-import { CommitRow } from "../Components/CommitRow";
+import { useApiUrl, useBasePrefix } from "../Domain/Navigation";
+import { useSearchParamAsState, useSearchParamDebouncedAsState } from "../Utils";
+import { reject } from "../Utils/TypeHelpers";
+import styles from "./JobRunTestListPage.module.css";
 
 export function JobRunTestListPage(): React.JSX.Element {
     const basePrefix = useBasePrefix();
@@ -64,23 +61,26 @@ export function JobRunTestListPage(): React.JSX.Element {
     const [section, setSection] = useSearchParamAsState("section", "overview");
 
     return (
-        <Root>
+        <main className={styles.root}>
             <ColumnStack gap={4} block stretch>
                 <Fit>
                     <GroupBreadcrumps branchName={branchName} nodes={groupNodes} jobId={jobId} />
                 </Fit>
                 <Fit>
                     <ColorByState state={state}>
-                        <JobRunHeader>
+                        <h1 className={styles.jobRunHeader}>
                             <JonRunIcon size={32} />
-                            <StyledLink to={jobUrl}>#{jobRunId}</StyledLink>&nbsp;at {formatDateTime(startDateTime)}
-                        </JobRunHeader>
-                        <StatusMessage>{customStatusMessage}</StatusMessage>
-                        <TestsStatusMessage>
+                            <Link className={styles.styledLink} to={jobUrl}>
+                                #{jobRunId}
+                            </Link>
+                            &nbsp;at {formatDateTime(startDateTime)}
+                        </h1>
+                        <h3 className={styles.statusMessage}>{customStatusMessage}</h3>
+                        <span className={styles.testsStatusMessage}>
                             Tests passed: {successTestsCount}
                             {Number(failedTestsCount) > 0 && `, failed: ${failedTestsCount.toString()}`}
                             {Number(skippedTestsCount) > 0 && `, ignored: ${skippedTestsCount.toString()}`}.
-                        </TestsStatusMessage>
+                        </span>
                     </ColorByState>
                 </Fit>
                 <Fit>
@@ -118,7 +118,8 @@ export function JobRunTestListPage(): React.JSX.Element {
                                         iconSize={18}
                                         title={
                                             <>
-                                                <OverviewSectionHeader>Failed tests</OverviewSectionHeader> (first 50)
+                                                <span className={styles.overviewSectionHeader}>Failed tests</span>{" "}
+                                                (first 50)
                                             </>
                                         }>
                                         <FailedTestListView
@@ -142,9 +143,9 @@ export function JobRunTestListPage(): React.JSX.Element {
                                     <Spoiler
                                         iconSize={18}
                                         title={
-                                            <OverviewSectionHeader>
+                                            <span className={styles.overviewSectionHeader}>
                                                 {totalCoveredCommitCount} changes
-                                            </OverviewSectionHeader>
+                                            </span>
                                         }
                                         openedByDefault={true}>
                                         <ColumnStack gap={2} stretch block>
@@ -195,7 +196,7 @@ export function JobRunTestListPage(): React.JSX.Element {
                     )}
                 </Fit>
             </ColumnStack>
-        </Root>
+        </main>
     );
 }
 
@@ -278,32 +279,3 @@ export interface CommitRowProps {
     authorEmail: string;
     messagePreview: string;
 }
-
-const StyledLink = styled(Link)`
-    color: inherit;
-    font-size: inherit;
-    line-height: inherit;
-    display: inherit;
-`;
-
-const JobRunHeader = styled.h1`
-    ${theme.typography.pages.header1};
-    display: flex;
-`;
-
-const StatusMessage = styled.h3`
-    display: flex;
-    line-height: 32px;
-`;
-
-const TestsStatusMessage = styled.span`
-    display: flex;
-    line-height: 32px;
-`;
-
-const Root = styled.main``;
-
-const OverviewSectionHeader = styled.span`
-    font-size: 18px;
-    line-height: 24px;
-`;

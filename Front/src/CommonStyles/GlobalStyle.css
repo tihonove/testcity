@@ -1,0 +1,19 @@
+a {
+    color: var(--primary-text-color);
+    text-decoration: none;
+
+    &:hover {
+        color: var(--active-link-color);
+        text-decoration: underline;
+    }
+}
+
+:root {
+    background-color: var(--primary-bg);
+    color: var(--primary-text-color);
+}
+
+.lucide {
+    display: inline-block;
+    vertical-align: middle;
+}

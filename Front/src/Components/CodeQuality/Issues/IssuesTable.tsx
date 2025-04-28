@@ -2,8 +2,7 @@ import { Paging } from "@skbkontur/react-ui";
 import { Issue } from "../types/Issue";
 import React, { useState } from "react";
 import { SEVERITY_VALUES } from "../types/Severity";
-import { theme } from "../../../Theme/ITheme";
-import styled from "styled-components";
+import styles from "./IssuesTable.module.css";
 
 interface IssuesTableProps {
     report: Issue[];
@@ -24,8 +23,8 @@ export function IssuesTable({ report }: IssuesTableProps) {
 
     return (
         <div>
-            <TableContainer>
-                <Table>
+            <div className={styles.tableContainer}>
+                <table className={styles.table}>
                     <thead>
                         <tr>
                             <th
@@ -74,63 +73,12 @@ export function IssuesTable({ report }: IssuesTableProps) {
                             </tr>
                         ))}
                     </tbody>
-                </Table>
-            </TableContainer>
+                </table>
+            </div>
             <Paging activePage={page} onPageChange={setPage} pagesCount={Math.ceil(report.length / PAGE_SIZE)} />
         </div>
     );
 }
-
-const TableContainer = styled.div`
-    height: calc(100vh - 100px);
-    max-height: calc(100vh - 100px);
-    overflow-y: auto;
-    overflow-x: auto;
-    width: 100%;
-    border-bottom: 1px solid ${theme.borderLineColor2};
-    margin-bottom: 10px;
-`;
-
-const Table = styled.table`
-    width: auto;
-    min-width: 50%;
-    border-collapse: collapse;
-
-    th {
-        position: sticky;
-        top: 0;
-        background-color: ${theme.primaryBackground};
-        padding: 8px 16px;
-        text-align: left;
-        align: left;
-        font-size: 14px;
-        border-bottom: 1px solid ${theme.borderLineColor2};
-        white-space: nowrap;
-
-        &:nth-child(1),
-        &:nth-child(2),
-        &:nth-child(3) {
-            white-space: nowrap;
-        }
-
-        &:nth-child(4) {
-            min-width: 200px;
-        }
-    }
-
-    td {
-        padding: 8px 16px;
-        text-align: left;
-        align: left;
-        line-height: 20px;
-
-        &:nth-child(1),
-        &:nth-child(2),
-        &:nth-child(3) {
-            white-space: nowrap;
-        }
-    }
-`;
 
 function changeSort(prev: null | SortState, field: string): null | SortState {
     if (prev == null) {

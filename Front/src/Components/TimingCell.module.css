@@ -1,0 +1,25 @@
+.timingHintContent {
+    text-align: left;
+}
+
+.timingHintCaption {
+    display: inline-block;
+    width: 80px;
+}
+
+.styledTimingCell {
+    max-width: 250px;
+    white-space: nowrap;
+    text-align: right;
+    cursor: default;
+    font-size: 14px;
+}
+
+.started {
+    color: var(--muted-text-color);
+}
+
+.duration {
+    display: inline-block;
+    margin-left: 4px;
+}

@@ -1,0 +1,61 @@
+@layer tokens;
+
+:root, [data-theme='light'] {
+    --primary-bg: #ffffff;
+    --background-color-1: rgba(0, 0, 0, 0.05);
+    --background-color-2: rgba(0, 0, 0, 0.05);
+    --primary-text-color: #3D3D3D;
+    --active-link-color: #000000;
+    --failed-text-color: rgb(169, 15, 26);
+    --success-text-color: #538A1B;
+    --small-text-size: 14px;
+    --muted-text-color: rgba(0, 0, 0, 0.48);
+    --accent-bg-color: #1f87ef;
+    --failed-bg-color: #FE4C4C;
+    --accent-text-color: #ffffff;
+    --border-line-color-2: rgba(0, 0, 0, 0.1);
+    --typography-pages-header-1: "font-size: 28px; line-height: 36px;";
+    --layout-centered-width: 1000px;
+    --inverse-color-base: 0 0 0;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+        --primary-bg: #1f1f1f;
+        --background-color-1: rgba(0, 0, 0, 0.25);
+        --background-color-2: rgba(255, 255, 255, 0.05);
+        --primary-text-color: rgba(255, 255, 255, 0.865);
+        --active-link-color: #c2c2c2;
+        --failed-text-color: #FE6C6C;
+        --success-text-color: #46CD68;
+        --small-text-size: 14px;
+        --muted-text-color: rgba(255, 255, 255, 0.32);
+        --accent-bg-color: #1f87ef;
+        --failed-bg-color: #FE4C4C;
+        --accent-text-color: rgba(255, 255, 255, 0.865);
+        --border-line-color-2: rgba(255, 255, 255, 0.1);
+        --typography-pages-header-1: "font-size: 28px; line-height: 36px;";
+        --layout-centered-width: 1000px;
+        --inverse-color-base: 255 255 255;
+    }
+}
+
+[data-theme='dark'] {
+    --primary-bg: #1f1f1f;
+    --background-color-1: rgba(0, 0, 0, 0.25);
+    --background-color-2: rgba(255, 255, 255, 0.05);
+    --primary-text-color: rgba(255, 255, 255, 0.865);
+    --active-link-color: #c2c2c2;
+    --failed-text-color: #FE6C6C;
+    --success-text-color: #46CD68;
+    --small-text-size: 14px;
+    --muted-text-color: rgba(255, 255, 255, 0.32);
+    --accent-bg-color: #1f87ef;
+    --failed-bg-color: #FE4C4C;
+    --accent-text-color: rgba(255, 255, 255, 0.865);
+    --border-line-color-2: rgba(255, 255, 255, 0.1);
+    --typography-pages-header-1: "font-size: 28px; line-height: 36px;";
+    --layout-centered-width: 1000px;
+    --inverse-color-base: 255 255 255;
+}
+

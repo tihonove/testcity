@@ -1,0 +1,9 @@
+.button {
+    cursor: pointer;
+    color: var(--active-link-color);
+    text-decoration: none;
+}
+
+.button:hover {
+    text-decoration: underline;
+}

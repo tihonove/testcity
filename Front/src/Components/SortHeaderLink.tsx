@@ -4,7 +4,7 @@ import {
     UiFilterSortAHighToLowIcon16Regular,
 } from "@skbkontur/icons";
 import * as React from "react";
-import styled from "styled-components";
+import styles from "./SortHeaderLink.module.css";
 
 type SortHeaderLinkProps = {
     sortKey: string;
@@ -16,7 +16,8 @@ type SortHeaderLinkProps = {
 };
 export function SortHeaderLink(props: SortHeaderLinkProps): React.JSX.Element {
     return (
-        <SortHeaderLinkRoot
+        <a
+            className={styles.root}
             href="#"
             onClick={() => {
                 if (props.sortKey == props.currentSortKey) {
@@ -44,17 +45,6 @@ export function SortHeaderLink(props: SortHeaderLinkProps): React.JSX.Element {
             ) : (
                 <UiFilterSortADefaultIcon16Regular />
             )}
-        </SortHeaderLinkRoot>
+        </a>
     );
 }
-
-const SortHeaderLinkRoot = styled.a`
-    font-size: 12px;
-    color: ${props => props.theme.mutedTextColor};
-    white-space: nowrap;
-    text-decoration: none;
-
-    &:hover {
-        text-decoration: underline;
-    }
-`;

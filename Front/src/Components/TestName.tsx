@@ -1,8 +1,7 @@
 import * as React from "react";
 
 import { useMemo } from "react";
-import styled from "styled-components";
-import { theme } from "../Theme/ITheme";
+import styles from "./TestName.module.css";
 import { NativeLinkButton } from "./NativeLinkButton";
 
 interface TestNameProps {
@@ -25,15 +24,10 @@ export function TestName(props: TestNameProps): React.JSX.Element {
             ) : (
                 splitValue[1]
             )}
-            <TestNamePrefix>{splitValue[0]}</TestNamePrefix>
+            <div className={styles.testNamePrefix}>{splitValue[0]}</div>
         </>
     );
 }
-
-const TestNamePrefix = styled.div`
-    font-size: ${props => props.theme.smallTextSize};
-    color: ${props => props.theme.mutedTextColor};
-`;
 
 export function splitTestName(testName: string): [string, string] {
     const parts = testName.split("(");

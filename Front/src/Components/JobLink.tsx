@@ -1,11 +1,14 @@
 import { CheckCircleIcon16Light, MinusCircleIcon16Light, WarningCircleIcon16Light } from "@skbkontur/icons";
 import * as React from "react";
 import { Link, To } from "react-router-dom";
-import styled from "styled-components";
+import styles from "./JobLink.module.css";
 
 export function JobLink(props: { state: string; to: To; children: React.ReactNode }) {
+    const stateClass =
+        props.state === "Success" ? styles.success : props.state === "Canceled" ? styles.canceled : styles.failed;
+
     return (
-        <JobLinkWithResults $state={props.state} to={props.to}>
+        <Link className={`${styles.jobLinkWithResults} ${stateClass}`} to={props.to}>
             {props.state == "Success" ? (
                 <CheckCircleIcon16Light />
             ) : props.state == "Canceled" ? (
@@ -15,19 +18,6 @@ export function JobLink(props: { state: string; to: To; children: React.ReactNod
             )}
 
             {props.children}
-        </JobLinkWithResults>
+        </Link>
     );
 }
-
-const JobLinkWithResults = styled(Link)<{ $state: string }>`
-    color: ${props =>
-        props.$state == "Success"
-            ? props.theme.successTextColor
-            : props.$state == "Canceled"
-              ? props.theme.mutedTextColor
-              : props.theme.failedTextColor};
-    text-decoration: none;
-    &:hover {
-        text-decoration: underline;
-    }
-`;

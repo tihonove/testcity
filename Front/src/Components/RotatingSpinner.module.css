@@ -1,0 +1,10 @@
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.spinnerWrapper {
+    display: inline-flex;
+    animation: rotate 2s linear infinite;
+}
