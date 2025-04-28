@@ -15,18 +15,18 @@
     user-select: none;
     background-color: transparent;
     color: var(--primary-text-color);
-}
 
-.nodeContent.selected {
-    background-color: rgb(var(--inverse-color-base) / 0.1);
-}
+    &:hover {
+        background-color: rgb(var(--inverse-color-base) / 0.05);
+    }
 
-.nodeContent:hover {
-    background-color: rgb(var(--inverse-color-base) / 0.05);
-}
+    &[data-selected='true'] {
+        background-color: rgb(var(--inverse-color-base) / 0.1);
 
-.nodeContent.selected:hover {
-    background-color: rgb(var(--inverse-color-base) / 0.2);
+        &:hover {
+            background-color: rgb(var(--inverse-color-base) / 0.2);
+        }
+    }
 }
 
 .iconWrapper {

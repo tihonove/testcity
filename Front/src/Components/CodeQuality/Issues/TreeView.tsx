@@ -7,7 +7,6 @@ import { FolderMinusIcon16Regular } from "@skbkontur/icons/FolderMinusIcon16Regu
 import { FileTypeMarkupIcon16Regular } from "@skbkontur/icons/FileTypeMarkupIcon16Regular";
 import { TreeNode, TreeViewProps } from "./types";
 import styles from "./TreeView.module.css";
-import cn from "classnames";
 
 export function TreeView<T>({ data, onSelect, selectedPath, renderDetails }: TreeViewProps<T>) {
     const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set());
@@ -31,7 +30,8 @@ export function TreeView<T>({ data, onSelect, selectedPath, renderDetails }: Tre
         return (
             <div key={node.path}>
                 <div
-                    className={cn(styles.nodeContent, { [styles.selected]: isSelected })}
+                    data-selected={isSelected.toString()}
+                    className={styles.nodeContent}
                     onClick={() => {
                         if (node.type === "directory") {
                             toggleNode(node.path);
