@@ -2,9 +2,11 @@
 const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 module.exports = (env, argv) => {
     const isProduction = argv.mode === "production";
+    const analyzeBundle = env && env.analyze;
 
     return {
         mode: isProduction ? "production" : "development",
@@ -59,6 +61,10 @@ module.exports = (env, argv) => {
                 return new MiniCssExtractPlugin({
                     filename: "static/[name].[contenthash].css"
                 });
+            })(),
+            (function () {
+                if (!analyzeBundle) return null;
+                return new BundleAnalyzerPlugin();
             })(),
         ].filter(Boolean),
         devServer: {

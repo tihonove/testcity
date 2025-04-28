@@ -62,6 +62,7 @@
     "react-refresh": "^0.17.0",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0",
+    "webpack-bundle-analyzer": "^4.10.2",
     "webpack-dev-server": "^5.2.0"
   }
 }
