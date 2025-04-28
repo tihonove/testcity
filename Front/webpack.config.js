@@ -2,7 +2,6 @@
 const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 module.exports = (env, argv) => {
     const isProduction = argv.mode === "production";
@@ -63,6 +62,7 @@ module.exports = (env, argv) => {
                 });
             })(),
             (function () {
+                const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
                 if (!analyzeBundle) return null;
                 return new BundleAnalyzerPlugin();
             })(),
