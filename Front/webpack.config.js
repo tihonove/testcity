@@ -62,8 +62,8 @@ module.exports = (env, argv) => {
                 });
             })(),
             (function () {
-                const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
                 if (!analyzeBundle) return null;
+                const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
                 return new BundleAnalyzerPlugin();
             })(),
         ].filter(Boolean),
