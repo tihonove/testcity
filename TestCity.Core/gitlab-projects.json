@@ -165,5 +165,16 @@
             }
         ],
         "mergeRunsFromJobs": false
+    },
+    {
+        "id": "867",
+        "title": "KE.Infra",
+        "projects": [
+            {
+                "id": "6212",
+                "title": "isup"
+            }
+        ],
+        "mergeRunsFromJobs": false
     }
 ]
