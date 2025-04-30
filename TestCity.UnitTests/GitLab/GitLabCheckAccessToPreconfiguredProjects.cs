@@ -15,11 +15,15 @@ namespace Kontur.TestCity.UnitTests.GitLab;
 public class GitLabCheckAccessToPreconfiguredProjects
 {
     [SetUp]
-    public void SetUp()
+    public async Task SetUp()
     {
         var provider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
         clientEx = provider.GetExtendedClient();
         client = provider.GetClient();
+        var connectionFactory = new ConnectionFactory();
+        await using var connection = connectionFactory.CreateConnection();
+        await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);
+        await TestAnalyticsDatabaseSchema.InsertPredefinedProjects(connectionFactory);
     }
 
     [TearDown]
