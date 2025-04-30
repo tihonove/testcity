@@ -13,6 +13,7 @@ import { TestHistoryPage } from "./Pages/TestHistoryPage";
 import { TestsTreeMapChart } from "./Components/TestsTreeMapChart";
 import { TestsTreeView } from "./Components/TestsTreeView";
 import { useTestAnalyticsDarkMode } from "./Theme/UseTestAnalyticsDarkMode";
+import { AppNewProjectsWizard } from "./Pages/AppNewProjectsWizard";
 import styles from "./App.module.css";
 
 export function App(): React.JSX.Element {
@@ -38,6 +39,7 @@ export function App(): React.JSX.Element {
                 <Route path={basePrefix}>
                     <Route index element={<GroupsPage />} />
                     <Route path="jobs" element={<Navigate to={basePrefix} />} />
+                    <Route path="add-project" element={<AppNewProjectsWizard />} />
 
                     <Route path=":groupIdLevel1">
                         <Route index element={<ProjectsDashboardPage />} />

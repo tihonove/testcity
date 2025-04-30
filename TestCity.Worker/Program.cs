@@ -2,6 +2,7 @@
 using dotenv.net;
 using Kontur.TestCity.Core.Clickhouse;
 using Kontur.TestCity.Core.GitLab;
+using Kontur.TestCity.Core.GitlabProjects;
 using Kontur.TestCity.Core.Graphite;
 using Kontur.TestCity.Core.Infrastructure;
 using Kontur.TestCity.Core.JobProcessing;
@@ -28,6 +29,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddSingleton<TestMetricsSender>();
         services.AddSingleton<SkbKonturGitLabClientProvider>();
         services.AddSingleton<WorkerClient>();
+        services.AddSingleton<GitLabProjectsService>();
         services.AddSingleton<ConnectionFactory>();
         services.AddSingleton<TestCityDatabase>();
         services.AddSingleton<ProjectJobTypesCache>();

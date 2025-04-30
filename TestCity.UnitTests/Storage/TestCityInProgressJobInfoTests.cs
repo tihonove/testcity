@@ -10,8 +10,10 @@ public class TestCityInProgressJobInfoTests
     [SetUp]
     public async Task SetUp()
     {
-        await using var connection = new ConnectionFactory().CreateConnection();
+        var connectionFactory = new ConnectionFactory();
+        await using var connection = connectionFactory.CreateConnection();
         await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);
+        await TestAnalyticsDatabaseSchema.InsertPredefinedProjects(connectionFactory);
     }
 
     [Test]

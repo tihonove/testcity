@@ -7,16 +7,16 @@ using Kontur.TestCity.Core.Worker;
 using Kontur.TestCity.Core.Worker.TaskPayloads;
 using Microsoft.AspNetCore.Mvc;
 using NGitLab;
+using NGitLab.Models;
 
 namespace Kontur.TestCity.Api.Controllers;
 
 [ApiController]
 [Route("api/gitlab")]
-public class GitlabController(SkbKonturGitLabClientProvider gitLabClientProvider, WorkerClient workerClient) : Controller
+public class GitlabController(SkbKonturGitLabClientProvider gitLabClientProvider, GitLabProjectsService gitLabProjectsService, WorkerClient workerClient) : Controller
 {
     private readonly ILogger logger = Log.GetLog<GitlabController>();
     private readonly IGitLabClient gitLabClient = gitLabClientProvider.GetClient();
-    private readonly HashSet<long> hooksBasedProjectIds = PreconfiguredGitLabProjectsService.GetAllProjects().Select(x => long.Parse(x.Id)).ToHashSet();
 
     [HttpGet("{projectId}/jobs/{jobId}/codequality")]
     public IActionResult Get(long projectId, long jobId)
@@ -57,6 +57,7 @@ public class GitlabController(SkbKonturGitLabClientProvider gitLabClientProvider
 
             jobEventInfo = System.Text.Json.JsonSerializer.Deserialize<GitLabJobEventInfo>(requestBody);
             if (jobEventInfo == null)
+
             {
                 logger.LogWarning("Не удалось десериализовать тело запроса в GitLabJobEventInfo");
                 return BadRequest("Неверный формат данных");
@@ -77,7 +78,7 @@ public class GitlabController(SkbKonturGitLabClientProvider gitLabClientProvider
 
         try
         {
-            if (hooksBasedProjectIds.Contains(jobEventInfo.ProjectId))
+            if (await gitLabProjectsService.HasProject(jobEventInfo.ProjectId))
             {
                 if (jobEventInfo.BuildStatus == "canceled" || jobEventInfo.BuildStatus == "failed" || jobEventInfo.BuildStatus == "success")
                 {
@@ -102,6 +103,52 @@ public class GitlabController(SkbKonturGitLabClientProvider gitLabClientProvider
         {
             logger.LogError(ex, "Ошибка при обработке webhook от GitLab");
             return StatusCode(500);
+        }
+    }
+
+    [HttpGet("projects/{projectId}/access-check")]
+    public async Task<IActionResult> CheckProjectAccess(long projectId)
+    {
+        logger.LogInformation("Проверка доступа к проекту GitLab с ID: {ProjectId}", projectId);
+
+        try
+        {
+            var projectInfo = await gitLabClient.Projects.GetByIdAsync(projectId, new SingleProjectQuery());
+            if (projectInfo == null)
+            {
+                logger.LogWarning("Не удалось получить доступ к проекту с ID: {ProjectId} - проект не существует", projectId);
+                return BadRequest("Проект не существует или нет доступа к нему. Проверьте ID проекта и права доступа.");
+            }
+
+            var clientEx = gitLabClientProvider.GetExtendedClient();
+
+            try
+            {
+                var _ = await clientEx.GetAllProjectJobsAsync(projectId, perPage: 1).Take(1).ToArrayAsync();
+            }
+            catch (Exception ex)
+            {
+                logger.LogWarning(ex, "Не удалось получить доступ к джобам проекта с ID: {ProjectId}", projectId);
+                return BadRequest($"Проект '{projectInfo.Name}' найден, но нет доступа к его джобам. Проверьте права доступа.");
+            }
+
+            try
+            {
+                var response = await clientEx.GetRepositoryCommitsAsync(projectId, options => options.UseKeysetPagination(perPage: 1, orderBy: "created_at", sort: "desc"));
+            }
+            catch (Exception ex)
+            {
+                logger.LogWarning(ex, "Не удалось получить доступ к коммитам проекта с ID: {ProjectId}", projectId);
+                return BadRequest($"Проект '{projectInfo.Name}' найден, но нет доступа к его коммитам. Проверьте права доступа.");
+            }
+
+            logger.LogInformation("Успешная проверка доступа к проекту: {ProjectName} (ID: {ProjectId})", projectInfo.Name, projectId);
+            return Ok($"Доступ к проекту '{projectInfo.Name}' и его данным подтвержден.");
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Ошибка при проверке доступа к проекту с ID: {ProjectId}", projectId);
+            return BadRequest("Не удалось проверить доступ к проекту. Проверьте ID проекта и права доступа.");
         }
     }
 
@@ -160,4 +207,6 @@ public class GitlabController(SkbKonturGitLabClientProvider gitLabClientProvider
             Directory.Delete(tempPath, true);
         }
     }
+
+    private readonly GitLabExtendedClient gitLabExtendedClient = gitLabClientProvider.GetExtendedClient();
 }

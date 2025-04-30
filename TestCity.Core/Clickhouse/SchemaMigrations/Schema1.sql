@@ -144,6 +144,21 @@ PARTITION BY toYYYYMM(CreateDate)
 ORDER BY (ProjectId, CommitSha, Depth, ParentCommitSha)
 SETTINGS index_granularity = 8192;
 
+-- divider --
+
+CREATE TABLE IF NOT EXISTS GitLabEntities
+(
+    `Id` Int64,
+    `Type` Enum8('Group' = 1, 'Project' = 2),
+    `Title` String,
+    `ParentId` Nullable(Int64),
+    `ParamsJson` String,
+    `UpdatedAt` DateTime DEFAULT now()
+)
+ENGINE = ReplacingMergeTree(UpdatedAt)
+ORDER BY (Id, Type)
+SETTINGS index_granularity = 8192;
+
 -- CREATE MATERIALIZED VIEW IF NOT EXISTS JobRunChanges
 -- ENGINE = ReplacingMergeTree(AggregationVersion)
 -- PARTITION BY toMonday(StartDateTime)

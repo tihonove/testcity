@@ -16,7 +16,6 @@
 
     <ItemGroup>
         <EmbeddedResource Include="Clickhouse\SchemaMigrations\Schema1.sql" />
-        <EmbeddedResource Include="gitlab-projects.json" />
-    </ItemGroup>
+   </ItemGroup>
 
 </Project>

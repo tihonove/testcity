@@ -8,7 +8,7 @@ using Kontur.TestCity.Core.Worker.TaskPayloads;
 
 namespace Kontur.TestCity.GitLabJobsCrawler;
 
-public sealed class GitLabCrawlerService(GitLabSettings gitLabSettings, WorkerClient workerClient, IHostEnvironment hostEnvironment) : IDisposable
+public sealed class GitLabCrawlerService(GitLabSettings gitLabSettings, WorkerClient workerClient, GitLabProjectsService gitLabProjectsService, IHostEnvironment hostEnvironment) : IDisposable
 {
     public void Start()
     {
@@ -20,9 +20,9 @@ public sealed class GitLabCrawlerService(GitLabSettings gitLabSettings, WorkerCl
                 return;
             }
 
-            var gitLabProjectIds = PreconfiguredGitLabProjectsService.GetAllProjects().ToList();
-            // if (hostEnvironment.IsDevelopment())
-            //     gitLabProjectIds = gitLabProjectIds.Where(x => x.Id == "2680" || x.Id == "24783").ToList();
+            var gitLabProjectIds = (await gitLabProjectsService.GetAllProjects()).ToList();
+            if (hostEnvironment.IsDevelopment())
+                gitLabProjectIds = gitLabProjectIds.Where(x => x.Id == "2680" || x.Id == "24783").ToList();
             var gitLabClientProvider = new SkbKonturGitLabClientProvider(gitLabSettings);
             var client = gitLabClientProvider.GetClient();
             var clientEx = gitLabClientProvider.GetExtendedClient();

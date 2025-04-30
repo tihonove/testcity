@@ -15,7 +15,7 @@ tasks:
   actualize-db:
     run: once
     cmds:
-      - dotnet run --project ActualizeDb.Cli/ActualizeDb.Cli.csproj
+      - dotnet run --project ActualizeDb.Cli/ActualizeDb.Cli.csproj --add-predefined-projects
     silent: false
 
   api:

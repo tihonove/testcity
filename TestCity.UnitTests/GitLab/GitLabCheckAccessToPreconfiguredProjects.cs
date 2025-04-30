@@ -1,6 +1,9 @@
+using Kontur.TestCity.Core.Clickhouse;
 using Kontur.TestCity.Core.GitLab;
 using Kontur.TestCity.Core.GitLab.Models;
+using Kontur.TestCity.Core.GitlabProjects;
 using Kontur.TestCity.Core.Logging;
+using Kontur.TestCity.Core.Storage;
 using Microsoft.Extensions.Logging;
 using NGitLab;
 using NGitLab.Models;
@@ -29,7 +32,10 @@ public class GitLabCheckAccessToPreconfiguredProjects
     public async Task CheckAccessToProject()
     {
         logger = GlobalSetup.TestLoggerFactory.CreateLogger<GitLabCheckAccessToPreconfiguredProjects>();
-        var allProjects = Core.GitlabProjects.PreconfiguredGitLabProjectsService.GetAllProjects();
+        var connectionFactory = new ConnectionFactory();
+        var database = new TestCityDatabase(connectionFactory);
+        var gitLabProjectsService = new GitLabProjectsService(database);
+        var allProjects = await gitLabProjectsService.GetAllProjects();
         foreach (var project in allProjects)
         {
             try
@@ -56,7 +62,7 @@ public class GitLabCheckAccessToPreconfiguredProjects
             }
             catch (Exception e)
             {
-                logger.LogError($"Cannot access to {project.Title}");
+                logger.LogError(e, $"Cannot access to {project.Title}");
             }
         }
     }

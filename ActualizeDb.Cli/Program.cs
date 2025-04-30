@@ -1,14 +1,23 @@
-﻿using dotenv.net;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using dotenv.net;
 using Kontur.TestCity.Core.Clickhouse;
 using Kontur.TestCity.Core.Worker;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();
 
-var connection = new ConnectionFactory().CreateConnection();
+var connectionFactory = new ConnectionFactory();
+await using var connection = connectionFactory.CreateConnection();
 await connection.EnsureDbIsAccessibleAsync(TimeSpan.FromMinutes(20));
 
 await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);
 Console.WriteLine("Database schema actualized successfully.");
+
+if (Environment.GetCommandLineArgs().Contains("--add-predefined-projects"))
+{
+    await TestAnalyticsDatabaseSchema.InsertPredefinedProjects(connectionFactory);
+    Console.WriteLine("Actualized predefined projects.");
+}
 
 await KafkaTopicActualizer.EnsureKafkaTopicExists();
 Console.WriteLine("Kafka topics verified successfully.");
