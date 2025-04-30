@@ -13,8 +13,9 @@ import { TestHistoryPage } from "./Pages/TestHistoryPage";
 import { TestsTreeMapChart } from "./Components/TestsTreeMapChart";
 import { TestsTreeView } from "./Components/TestsTreeView";
 import { useTestAnalyticsDarkMode } from "./Theme/UseTestAnalyticsDarkMode";
-import { AppNewProjectsWizard } from "./Pages/AppNewProjectsWizard";
+import { AddNewProjectsWizard } from "./Pages/AddNewProjectsWizard";
 import styles from "./App.module.css";
+import { FeedbackPageBlock } from "./Components/FeedbackPageBlock";
 
 export function App(): React.JSX.Element {
     const basePrefix = useBasePrefix();
@@ -22,6 +23,7 @@ export function App(): React.JSX.Element {
 
     return (
         <div className={styles.root}>
+            <FeedbackPageBlock />
             <div className={styles.themeSwitchContainer}>
                 <Hint text={`Toggle color mode. Current: ${ternaryDarkMode}`} pos="left middle" maxWidth={400}>
                     <Button use="link" onClick={toggle}>
@@ -39,7 +41,7 @@ export function App(): React.JSX.Element {
                 <Route path={basePrefix}>
                     <Route index element={<GroupsPage />} />
                     <Route path="jobs" element={<Navigate to={basePrefix} />} />
-                    <Route path="add-project" element={<AppNewProjectsWizard />} />
+                    <Route path="add-project" element={<AddNewProjectsWizard />} />
 
                     <Route path=":groupIdLevel1">
                         <Route index element={<ProjectsDashboardPage />} />

@@ -31,6 +31,17 @@ module.exports = (env, argv) => {
                     use: [isProduction ? MiniCssExtractPlugin.loader : "style-loader", "css-loader"],
                 },
                 {
+                    test: /\.png$/i,
+                    use: [{
+                        loader: "file-loader",
+                        options: {
+                            name: "[contenthash].[ext]",
+                            outputPath: "static/",
+                            publicPath: "static/",
+                        },
+                    }],
+                },
+                {
                     test: /\.module\.css$/i,
                     use: [
                         isProduction ? MiniCssExtractPlugin.loader : "style-loader",

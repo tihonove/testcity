@@ -152,6 +152,93 @@ public class GitlabController(SkbKonturGitLabClientProvider gitLabClientProvider
         }
     }
 
+    [HttpPost("projects/{projectId}/add")]
+    public async Task<IActionResult> AddProject(long projectId)
+    {
+        logger.LogInformation("Запрос на добавление проекта GitLab с ID: {ProjectId}", projectId);
+
+        try
+        {
+            // Проверяем существование проекта и доступ к нему
+            var projectInfo = await gitLabClient.Projects.GetByIdAsync(projectId, new SingleProjectQuery());
+            if (projectInfo == null)
+            {
+                logger.LogWarning("Не удалось получить доступ к проекту с ID: {ProjectId} - проект не существует", projectId);
+                return BadRequest("Проект не существует или нет доступа к нему. Проверьте ID проекта и права доступа.");
+            }
+
+            // Проверяем, существует ли проект уже в системе
+            var exists = await gitLabProjectsService.HasProject(projectId);
+            if (exists)
+            {
+                logger.LogInformation("Проект с ID: {ProjectId} уже существует в системе", projectId);
+                return Ok($"Проект '{projectInfo.Name}' уже добавлен в систему.");
+            }
+
+            var rootGroup = await BuildGroupHierarchyAsync(projectInfo.Namespace.Id);
+            GitLabGroup leafGroup = FindGroupById(rootGroup, projectInfo.Namespace.Id.ToString());
+
+            leafGroup.Projects ??= [];
+            leafGroup.Projects.Add(new GitLabProject
+            {
+                Id = projectId.ToString(),
+                Title = projectInfo.Path,
+                UseHooks = true
+            });
+
+            // Сохраняем иерархию в системе
+            await gitLabProjectsService.SaveGitLabHierarchy([rootGroup]);
+
+            logger.LogInformation("Успешно добавлен проект: {ProjectName} (ID: {ProjectId}) в иерархию групп", projectInfo.Name, projectId);
+            return Ok($"Проект '{projectInfo.Name}' успешно добавлен в систему.");
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Ошибка при добавлении проекта с ID: {ProjectId}", projectId);
+            return StatusCode(500, "Произошла ошибка при добавлении проекта. Пожалуйста, попробуйте позже.");
+        }
+    }
+
+    private async Task<GitLabGroup> BuildGroupHierarchyAsync(long namespaceId)
+    {
+        var currentGroupInfo = await gitLabClient.Groups.GetByIdAsync(namespaceId);
+        var currentGroup = new GitLabGroup
+        {
+            Id = currentGroupInfo.Id.ToString(),
+            Title = currentGroupInfo.Path,
+            Groups = []
+        };
+
+        if (currentGroupInfo.ParentId.HasValue)
+        {
+            var parentGroup = await BuildGroupHierarchyAsync(currentGroupInfo.ParentId.Value);
+            var targetParentGroup = FindGroupById(parentGroup, currentGroupInfo.ParentId.Value.ToString());
+            targetParentGroup.Groups ??= [];
+            targetParentGroup.Groups.Add(currentGroup);
+            return parentGroup;
+        }
+
+        return currentGroup;
+    }
+
+    private static GitLabGroup FindGroupById(GitLabGroup group, string targetId)
+    {
+        if (group.Id == targetId)
+            return group;
+
+        if (group.Groups != null)
+        {
+            foreach (var childGroup in group.Groups)
+            {
+                var result = FindGroupById(childGroup, targetId);
+                if (result != null)
+                    return result;
+            }
+        }
+
+        return group;
+    }
+
     [HttpGet("{projectId}/pipelines/{pipelineId}/manual-jobs")]
     public ManualJobRunInfo[] GetManualJobInfos(long projectId, long pipelineId)
     {
@@ -210,3 +297,4 @@ public class GitlabController(SkbKonturGitLabClientProvider gitLabClientProvider
 
     private readonly GitLabExtendedClient gitLabExtendedClient = gitLabClientProvider.GetExtendedClient();
 }
+

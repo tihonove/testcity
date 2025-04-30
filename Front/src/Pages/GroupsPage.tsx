@@ -6,14 +6,11 @@ import { Link } from "react-router-dom";
 import { GroupAvatar } from "../Components/GroupAvatar";
 import { groupLink, useBasePrefix } from "../Domain/Navigation";
 import { LogoPageBlock } from "../Components/LogoPageBlock";
-import { useSearchParamAsState } from "../Utils";
-import { AddNewProjectModal } from "../Components/AddNewProjectModal";
 import { useRootGroups } from "../Components/useProjectContextFromUrlParams";
 import styles from "./GroupsPage.module.css";
 
 export function GroupsPage() {
     const [searchText, setSearchText] = React.useState("");
-    const [showAddNewProjectModal, setShowAddNewProjectModal] = useSearchParamAsState("how-to-add");
     const projects = useRootGroups();
     const filteredGroups = React.useMemo(
         () => projects.filter(p => !searchText.trim() || p.title.toLowerCase().includes(searchText.toLowerCase())),
@@ -21,19 +18,8 @@ export function GroupsPage() {
     );
     const basePrefix = useBasePrefix();
 
-    const handleAddNewProject = () => {
-        setShowAddNewProjectModal("1");
-    };
-
     return (
         <>
-            {showAddNewProjectModal === "1" && (
-                <AddNewProjectModal
-                    onClose={() => {
-                        setShowAddNewProjectModal(undefined);
-                    }}
-                />
-            )}
             <LogoPageBlock />
             <main className={styles.root}>
                 <div className={styles.content}>
@@ -76,9 +62,9 @@ export function GroupsPage() {
                                     <div className={styles.addProjectAvatarRoot20}>+</div>
                                 </Fit>
                                 <Fit>
-                                    <button className={styles.addGroupTitleButton} onClick={handleAddNewProject}>
+                                    <Link className={styles.addGroupTitleButton} to={"add-project"}>
                                         Add new...
-                                    </button>
+                                    </Link>
                                 </Fit>
                             </RowStack>
                         </Fit>
