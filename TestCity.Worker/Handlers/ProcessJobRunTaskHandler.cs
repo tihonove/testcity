@@ -68,6 +68,7 @@ public class ProcessJobRunTaskHandler(
         catch (Exception exception)
         {
             logger.LogError(exception, "Failed to process job {JobId}", task.JobRunId);
+            throw;
         }
     }
 
