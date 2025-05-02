@@ -1,5 +1,6 @@
 using System.Text;
 using dotenv.net;
+using Kontur.TestCity.Api.Models;
 using Kontur.TestCity.Core.Clickhouse;
 using Kontur.TestCity.Core.GitLab;
 using Kontur.TestCity.Core.GitlabProjects;
@@ -47,7 +48,8 @@ if (OpenTelemetryExtensions.IsOpenTelemetryEnabled())
                 .AddMeter("Microsoft.AspNetCore.Hosting")
                 .AddMeter("Microsoft.AspNetCore.Server.Kestrel")
                 .AddMeter("System.Net.Http")
-                .AddMeter("GitLabProjectTestsMetrics");
+                .AddMeter("GitLabProjectTestsMetrics")
+                .AddMeter("UserActivityMetrics");
         });
 }
 

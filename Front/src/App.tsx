@@ -16,6 +16,7 @@ import { useTestAnalyticsDarkMode } from "./Theme/UseTestAnalyticsDarkMode";
 import { AddNewProjectsWizard } from "./Pages/AddNewProjectsWizard";
 import styles from "./App.module.css";
 import { FeedbackPageBlock } from "./Components/FeedbackPageBlock";
+import { NavigationTracker } from "./Components/NavigationTracker";
 
 export function App(): React.JSX.Element {
     const basePrefix = useBasePrefix();
@@ -23,6 +24,7 @@ export function App(): React.JSX.Element {
 
     return (
         <div className={styles.root}>
+            <NavigationTracker />
             <FeedbackPageBlock />
             <div className={styles.themeSwitchContainer}>
                 <Hint text={`Toggle color mode. Current: ${ternaryDarkMode}`} pos="left middle" maxWidth={400}>
