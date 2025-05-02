@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { useApiUrl } from "../Domain/Navigation";
 import { getOrCreateUserId } from "../Utils/UserIdentification";
+import { runAsyncAction } from "../Utils/TypeHelpers";
 
 export function NavigationTracker(): null {
     const location = useLocation();
@@ -12,18 +13,20 @@ export function NavigationTracker(): null {
         const currentRoute = location.pathname;
         if (lastTrackedRouteRef.current === currentRoute) {
             return;
-        }        
+        }
         lastTrackedRouteRef.current = currentRoute;
-        const userId = getOrCreateUserId();        
-        fetch(`${apiUrl}track/route`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                userId,
-                route: currentRoute
-            }),
+        const userId = getOrCreateUserId();
+        runAsyncAction(async () => {
+            await fetch(`${apiUrl}track/route`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    userId,
+                    route: currentRoute,
+                }),
+            });
         });
     }, [location.pathname, apiUrl]);
 
