@@ -19,7 +19,7 @@ builder.WebHost.UseUrls("http://0.0.0.0:8124");
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 
-builder.Services.AddSingleton<GitLabSettings>(new GitLabSettings() { Token = Environment.GetEnvironmentVariable("GITLAB_TOKEN") ?? "NoToken" });
+builder.Services.AddSingleton<GitLabSettings>(GitLabSettings.Default);
 builder.Services.AddSingleton<SkbKonturGitLabClientProvider>();
 builder.Services.AddSingleton<WorkerClient>();
 builder.Services.AddSingleton<GitLabProjectsService>();

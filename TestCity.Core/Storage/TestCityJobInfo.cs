@@ -105,10 +105,15 @@ public class TestCityJobInfo(ConnectionFactory connectionFactory)
         var tuples = new List<string>();
         foreach (var change in changes)
         {
-            tuples.Add($"('{change.ParentCommitSha.Replace("'", "''")}',{change.Depth},'{change.AuthorName.Replace("'", "''")}','{change.AuthorEmail.Replace("'", "''")}','{change.MessagePreview.Replace("'", "''")}')");
+            tuples.Add($"({ToSqlStringLiteral(change.ParentCommitSha)},{change.Depth},{ToSqlStringLiteral(change.AuthorName)},{ToSqlStringLiteral(change.AuthorEmail)},{ToSqlStringLiteral(change.MessagePreview)})");
         }
 
         return "[" + string.Join(",", tuples) + "]";
+    }
+
+    private static string ToSqlStringLiteral(string value)
+    {
+        return $"'{value.Replace("'", "''").Replace(@"\", @"\\")}'";
     }
 
     private static readonly string[] Fields2 =

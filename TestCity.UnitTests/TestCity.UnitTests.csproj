@@ -20,6 +20,7 @@
 
     <ItemGroup>
         <ProjectReference Include="../TestCity.Core/TestCity.Core.csproj" />
+        <ProjectReference Include="../TestCity.Worker/TestCity.Worker.csproj" />
         <ProjectReference Include="../TestCity.GitLabJobsCrawler/TestCity.GitLabJobsCrawler.csproj" />
     </ItemGroup>
 
