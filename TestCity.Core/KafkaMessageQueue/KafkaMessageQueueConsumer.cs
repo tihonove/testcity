@@ -246,16 +246,17 @@ public sealed class KafkaMessageQueueConsumer : IDisposable
                 {
                     logger.LogError(ex, "Failed to deserialize message: {Message}", message);
                     executionItem.State = TaskExecutionResult.Skipped;
-                    failedTasksCounter.Add(1); // Увеличиваем счетчик ошибок при неудачной десериализации
+                    failedTasksCounter.Add(1);
                     semaphore.Release();
                     return;
                 }
 
                 try
                 {
+                    logger.LogInformation("Start execution {TaskType}: {Message}. ExecuteCount: {ExecuteCount}", rawTask.Type, message, rawTask.ExecuteCount);
                     await taskHandlerRegistry.DispatchTaskAsync(rawTask, ct);
                     executionItem.State = TaskExecutionResult.Success;
-                    processedTasksCounter.Add(1); // Увеличиваем счетчик успешно обработанных задач
+                    processedTasksCounter.Add(1);
                 }
                 catch (OperationCanceledException) when (ct.IsCancellationRequested)
                 {
@@ -267,7 +268,7 @@ public sealed class KafkaMessageQueueConsumer : IDisposable
                     await EnqueueTaskToDelayedTopicWithRetriesOrSkip(delayedQueueProducer, executionItem, rawTask);
                     executionItem.State = TaskExecutionResult.Failure;
                     executionItem.ErrorMessage = e.Message;
-                    failedTasksCounter.Add(1); // Увеличиваем счетчик ошибок при исключении
+                    failedTasksCounter.Add(1);
                 }
                 finally
                 {
