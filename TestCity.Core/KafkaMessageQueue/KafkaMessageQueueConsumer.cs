@@ -283,8 +283,8 @@ public sealed class KafkaMessageQueueConsumer : IDisposable
 
     private async Task EnqueueTaskToDelayedTopicWithRetriesOrSkip(IProducer<string, string> delayedQueueProducer, TaskExecutionItem executionItem, RawTask rawTask)
     {
-        const int maxRetryAttempts = 5;
-        const int initialRetryDelayMs = 1000;
+        const int maxRetryAttempts = 100;
+        const int initialRetryDelayMs = 20000; // Примерно неделю будем ретрайтить
         const int maxTotalRetryTimeMs = 30000; // 30 seconds total retry time
 
         var startTime = DateTime.UtcNow;
