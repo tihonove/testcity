@@ -160,35 +160,101 @@ ENGINE = ReplacingMergeTree(UpdatedAt)
 ORDER BY (Id, Type)
 SETTINGS index_granularity = 8192;
 
--- CREATE MATERIALIZED VIEW IF NOT EXISTS JobRunChanges
--- ENGINE = ReplacingMergeTree(AggregationVersion)
--- PARTITION BY toMonday(StartDateTime)
--- ORDER BY (JobId, JobRunId)
--- TTL StartDateTime + toIntervalYear(1)
--- SETTINGS index_granularity = 8192
--- AS
--- SELECT 
---     ji.JobId as JobId,
---     ji.JobRunId as JobRunId,
---     any(ji.StartDateTime) as StartDateTime,
---     if(any(prev.MinDepth) = 0, [], groupArray((cp2.ParentCommitSha, cp2.AuthorName, cp2.AuthorEmail, cp2.MessagePreview))) AS CoveredCommits,
---     any(prev.MinDepth) as TotalCoveredCommitCount,                    
---     if(any(prev.MinDepth) = 0, 1000, any(prev.MinDepth)) * -1 as AggregationVersion
--- FROM JobInfo ji
--- LEFT JOIN (
---     SELECT
---         prevji.ProjectId as ProjectId,
---         prevji.JobId as JobId,
---         cp.CommitSha AS CommitSha,
---         argMin(cp.ParentCommitSha, cp.Depth) AS ClosestAncestorSha,
---         min(cp.Depth) AS MinDepth
---     FROM CommitParents cp
---     INNER JOIN JobInfo prevji ON 
---         cp.ProjectId = prevji.ProjectId 
---         AND cp.ParentCommitSha = prevji.CommitSha
---         AND cp.Depth > 0
---     GROUP BY prevji.ProjectId, prevji.JobId, cp.CommitSha
--- ) AS prev ON prev.ProjectId = ji.ProjectId AND prev.JobId = ji.JobId AND prev.CommitSha = ji.CommitSha 
--- LEFT JOIN CommitParents cp2 ON cp2.ProjectId = ji.ProjectId AND cp2.CommitSha = ji.CommitSha AND prev.MinDepth != 0
--- WHERE (prev.MinDepth = 0 OR cp2.Depth < prev.MinDepth)
--- GROUP BY ji.JobId, ji.JobRunId
+-- divider --
+CREATE TABLE IF NOT EXISTS `.inner-FlakyTestsWeeklyRaw`
+(
+    WeekStart   Date,
+    ProjectId   LowCardinality(String),
+    JobId       LowCardinality(String),
+    TestId      LowCardinality(String),
+
+    RunsState   AggregateFunction(count,  UInt32),
+    FailState   AggregateFunction(sum,    UInt32),
+    SeqState    AggregateFunction(groupArray, Tuple(DateTime, UInt8))
+)
+ENGINE = AggregatingMergeTree
+ORDER BY (WeekStart, ProjectId, JobId, TestId)
+TTL WeekStart + toIntervalMonth(12) DELETE
+SETTINGS index_granularity = 8192;
+
+
+-- divider --
+CREATE MATERIALIZED VIEW IF NOT EXISTS FillFlakyWeeklyRaw
+TO `.inner-FlakyTestsWeeklyRaw`
+AS
+SELECT
+    toMonday(StartDateTime)                                 AS WeekStart,
+    ProjectId,
+    JobId,
+    TestId,
+    countState()                                            AS RunsState,
+    sumState(toUInt32(State = 'Failed'))                    AS FailState,
+    groupArrayState(tuple(StartDateTime, toUInt8(State)))   AS SeqState
+FROM TestRuns
+WHERE StartDateTime >= now() - INTERVAL 7 DAY
+GROUP BY
+    WeekStart,
+    ProjectId,
+    JobId,
+    TestId;
+
+
+-- divider --
+CREATE TABLE IF NOT EXISTS `.inner-FlakyTestsWeekly`
+(
+    WeekStart    Date,
+    ProjectId    LowCardinality(String),
+    JobId        LowCardinality(String),
+    TestId       LowCardinality(String),
+
+    TotalRuns    UInt32,
+    FailedRuns   UInt32,
+    Flips        UInt32,
+    FlipRate     Float32,
+
+    LastEventTs  DateTime
+)
+ENGINE = ReplacingMergeTree(LastEventTs)
+ORDER BY (WeekStart, ProjectId, JobId, TestId)
+TTL WeekStart + toIntervalMonth(12) DELETE
+SETTINGS index_granularity = 8192;
+
+
+-- divider --
+CREATE MATERIALIZED VIEW IF NOT EXISTS FlakyWeekly
+TO `.inner-FlakyTestsWeekly`
+AS
+SELECT
+    WeekStart,
+    ProjectId,
+    JobId,
+    TestId,
+    TotalRuns,
+    FailedRuns,
+    Flips,
+    round(Flips / greatest(TotalRuns - 1, 1), 3)            AS FlipRate,
+    now()                                                   AS LastEventTs
+FROM
+(
+    SELECT
+        WeekStart,
+        ProjectId,
+        JobId,
+        TestId,
+
+        countMerge(RunsState)                               AS TotalRuns,
+        sumMerge(FailState)                                 AS FailedRuns,
+
+        arrayMap(t -> t.2,
+                 arraySort(x -> x.1, groupArrayMerge(SeqState))) AS StatusSeq,
+
+        arrayCount(i -> StatusSeq[i] != StatusSeq[i-1],
+                   arrayEnumerate(StatusSeq))               AS Flips
+    FROM FillFlakyWeeklyRaw
+    GROUP BY
+        WeekStart,
+        ProjectId,
+        JobId,
+        TestId
+    HAVING TotalRuns > 1
+);
