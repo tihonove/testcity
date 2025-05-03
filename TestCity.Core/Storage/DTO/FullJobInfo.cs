@@ -28,8 +28,6 @@ public class FullJobInfo : JobRunInfo
 
     public int SkippedTestsCount { get; set; }
 
-    public required string ProjectId { get; init; }
-
     public string? CustomStatusMessage { get; set; }
 
     public bool HasCodeQualityReport { get; set; }

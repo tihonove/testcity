@@ -23,15 +23,24 @@ public class GitLabJobProcessor(IGitLabClient client, GitLabExtendedClient clien
                 TestReportData = null,
             };
 
+            const long maxArtifactSize = 500 * 1024 * 1024; // 500 MB
             var hasArtifacts = job.Artifacts?.Count > 0;
-            var artifactContents = hasArtifacts ? jobClient.GetJobArtifactsOrNull(job.Id) : null;
+            var size = job.Artifacts?.FirstOrDefault(x => x.Filename == "artifacts.zip")?.Size;
+            var artifactContents = hasArtifacts && size < maxArtifactSize  ? jobClient.GetJobArtifactsOrNull(job.Id) : null;
             if (artifactContents == null && !needProcessFailedJob)
             {
-                logger.LogInformation("Artifacts does not exist for id: {JobId}", job.Id);
+                if (size.HasValue && size > maxArtifactSize) {
+                    logger.LogInformation("Artifacts to large. {artifactSize}. {JobId}", size, job.Id);
+                } else {
+                    logger.LogInformation("Artifacts does not exist for id: {JobId}", job.Id);
+                }
                 return result;
             }
             else
             {
+                if (size.HasValue && size > maxArtifactSize) {
+                    logger.LogInformation("Artifacts to large. {artifactSize}. {JobId}", size, job.Id);
+                }
                 if (needProcessFailedJob)
                     logger.LogInformation("Artifacts does not exist for id: {JobId}. But job must be processed", job.Id);
                 else

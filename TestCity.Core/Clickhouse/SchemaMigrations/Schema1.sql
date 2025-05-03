@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS TestRuns
 (
     `JobId` LowCardinality(String),
     `JobRunId` String,
+    `ProjectId` LowCardinality(String),
     `BranchName` String,
     `TestId` String,
     `State` Enum8('Success' = 1, 'Failed' = 2, 'Skipped' = 3),

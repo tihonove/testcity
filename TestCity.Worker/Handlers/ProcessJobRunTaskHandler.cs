@@ -9,6 +9,7 @@ using Kontur.TestCity.Core.Worker.TaskPayloads;
 using Microsoft.Extensions.Logging;
 using NGitLab;
 using NGitLab.Models;
+using OpenTelemetry;
 
 namespace Kontur.TestCity.Worker.Handlers;
 
@@ -28,6 +29,8 @@ public class ProcessJobRunTaskHandler(
 
     public override async ValueTask EnqueueAsync(ProcessJobRunTaskPayload task, CancellationToken ct)
     {
+        Baggage.SetBaggage("ProjectId", task.ProjectId.ToString());
+        Baggage.SetBaggage("JobRunId", task.JobRunId.ToString());
         logger.LogInformation("Processing job run for project {ProjectId}, job run id: {JobRunId}", task.ProjectId, task.JobRunId);
         try
         {
@@ -37,6 +40,9 @@ public class ProcessJobRunTaskHandler(
                 return;
             }
             var job = await clientEx.GetJobAsync(task.ProjectId, task.JobRunId);
+            Baggage.SetBaggage("JobId", job.Name.ToString());
+            if (job.Ref is not null)
+                Baggage.SetBaggage("Ref", job.Ref);
             if (job.Commit?.Id is not null)
                 await commitParentsBuilder.BuildCommitParent(task.ProjectId, job.Commit.Id, ct);
             var needProcessFailedJob = await projectJobTypesCache.JobTypeExistsAsync(task.ProjectId.ToString(), job.Name, ct);
@@ -63,6 +69,17 @@ public class ProcessJobRunTaskHandler(
             else
             {
                 logger.LogInformation("No job info was found for job run id: {JobRunId}", task.JobRunId);
+            }
+        }
+        catch (HttpRequestException httpRequestException)
+        {
+            if (httpRequestException.StatusCode == System.Net.HttpStatusCode.Forbidden)
+            {
+                logger.LogInformation("Job run id: {JobRunId} is not accessible. Skipping upload of test runs", task.JobRunId);
+            }
+            else
+            {
+                throw;
             }
         }
         catch (Exception exception)

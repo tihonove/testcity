@@ -27,7 +27,7 @@ public class TestCityTestRuns(ConnectionFactory connectionFactory)
             var values = testRuns.Select(x =>
                 new object?[]
                 {
-                    info.JobId, info.JobRunId, info.BranchName, x.TestId, (int)x.TestResult, x.Duration,
+                    info.JobId, info.JobRunId, info.ProjectId, info.BranchName, x.TestId, (int)x.TestResult, x.Duration,
                     x.StartDateTime.ToUniversalTime(), info.AgentName, info.AgentOSName, info.JobUrl,
                     x.JUnitFailureMessage, x.JUnitFailureOutput, x.JUnitSystemOutput,
                 });
@@ -39,6 +39,7 @@ public class TestCityTestRuns(ConnectionFactory connectionFactory)
     [
         "JobId",
         "JobRunId",
+        "ProjectId",
         "BranchName",
         "TestId",
         "State",

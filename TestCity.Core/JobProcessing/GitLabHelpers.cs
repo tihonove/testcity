@@ -13,6 +13,7 @@ public static class GitLabHelpers
         var shortJobInfo = new JobRunInfo()
         {
             JobUrl = job.WebUrl,
+            ProjectId = projectId,
             JobId = job.Name,
             PipelineId = job.Pipeline?.Id.ToString(),
             JobRunId = job.Id.ToString(),
@@ -26,6 +27,7 @@ public static class GitLabHelpers
         {
             JobUrl = shortJobInfo.JobUrl,
             JobId = shortJobInfo.JobId,
+            ProjectId = shortJobInfo.ProjectId,
             PipelineId = shortJobInfo.PipelineId,
             JobRunId = shortJobInfo.JobRunId,
             BranchName = shortJobInfo.BranchName,
@@ -40,7 +42,6 @@ public static class GitLabHelpers
             CommitSha = job.Commit?.Id,
             CommitMessage = job.Commit?.Message,
             CommitAuthor = job.Commit?.AuthorName,
-            ProjectId = projectId,
             CustomStatusMessage = string.Empty,
             TotalTestsCount = testCount?.TestReportData?.Counters.Total ?? 0,
             SuccessTestsCount = testCount?.TestReportData?.Counters.Success ?? 0,
