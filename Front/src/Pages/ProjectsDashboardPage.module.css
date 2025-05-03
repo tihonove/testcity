@@ -26,10 +26,4 @@
 .rootGroupTitle {
     font-size: 28px;
     line-height: 36px;
-    display: block;
-    text-decoration: none;
-}
-
-.rootGroupTitle:hover {
-    background-color: var(--background-color-1);
 }

@@ -9,11 +9,6 @@
     max-width: var(--layout-centered-width);
 }
 
-.header {
-    font-size: 28px;
-    line-height: 36px;
-}
-
 .rootGroupTitle {
     display: block;
     font-size: 20px;

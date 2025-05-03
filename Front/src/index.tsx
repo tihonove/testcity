@@ -5,6 +5,7 @@ import { reject } from "./Utils/TypeHelpers";
 import { AppBootstrap } from "./AppBootstrap";
 import "./CommonStyles/Theme.css";
 import "./CommonStyles/Fonts.css";
+import "./CommonStyles/BaseTypography.css";
 import "./CommonStyles/Reset.css";
 import "./CommonStyles/GlobalStyle.css";
 

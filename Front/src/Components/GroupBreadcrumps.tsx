@@ -33,7 +33,6 @@ export function GroupBreadcrumps(props: GroupBreadcrumpsProps) {
                             </Fit>
                             <Fit>
                                 <Link
-                                    className={styles.rootGroupTitleLink}
                                     to={groupLink(
                                         basePrefix,
                                         props.nodes.slice(0, index + 1).map(x => x.title),
@@ -56,7 +55,6 @@ export function GroupBreadcrumps(props: GroupBreadcrumpsProps) {
                             </Fit>
                             <Fit>
                                 <Link
-                                    className={styles.rootGroupTitleLink}
                                     to={createLinkToJob(
                                         props.nodes[0],
                                         props.nodes[props.nodes.length - 1].id,

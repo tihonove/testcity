@@ -25,7 +25,7 @@ export function GroupsPage() {
                 <div className={styles.content}>
                     <ColumnStack gap={2} block horizontalAlign="stretch">
                         <Fit>
-                            <h1 className={styles.header}>Groups</h1>
+                            <h1>Groups</h1>
                         </Fit>
                         <Fit>
                             <Input
