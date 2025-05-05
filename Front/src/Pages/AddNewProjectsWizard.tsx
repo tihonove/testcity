@@ -83,6 +83,10 @@ export function AddNewProjectsWizard() {
                 <h1>New project wizard</h1>
                 <h2>Step 1</h2>
                 <p>Get project id and check access</p>
+                <p>
+                    If the project is private, you need to grant access to the project for the system account{" "}
+                    <a href="https://git.skbkontur.ru/svc_testcity_gitlab">svc_testcity_gitlab</a>.
+                </p>
                 <img src={getProjectIdImage} />
                 <p>Enter the project ID in the field below and click "Check"</p>
                 <p>
