@@ -1,6 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# 
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCity.UnitTests", "TestCity.UnitTests\TestCity.UnitTests.csproj", "{7D0AC4CF-0463-4A71-99CE-C9DF3A4ECB9A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCity.Core", "TestCity.Core\TestCity.Core.csproj", "{856A0607-7D85-4E27-AA6B-1CD0D71BB7DE}"
@@ -10,8 +9,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCity.Api", "TestCity.Api\TestCity.Api.csproj", "{3CF5A2BE-CA08-4537-B2EB-ACD9DA190827}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCity.GitLabJobsCrawler", "TestCity.GitLabJobsCrawler\TestCity.GitLabJobsCrawler.csproj", "{823E7BCE-A766-4822-A431-C5C928B2DDE0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCity.RedirectFromSingularToNewUrl", "TestCity.RedirectFromSingularToNewUrl\TestCity.RedirectFromSingularToNewUrl.csproj", "{7897BE1A-3969-49F1-854E-360231FA3350}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCity.Worker", "TestCity.Worker\TestCity.Worker.csproj", "{825E843C-2879-4728-B6E9-CBDF80BBBA85}"
 EndProject
@@ -43,10 +40,6 @@ Global
 		{823E7BCE-A766-4822-A431-C5C928B2DDE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{823E7BCE-A766-4822-A431-C5C928B2DDE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{823E7BCE-A766-4822-A431-C5C928B2DDE0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7897BE1A-3969-49F1-854E-360231FA3350}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7897BE1A-3969-49F1-854E-360231FA3350}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7897BE1A-3969-49F1-854E-360231FA3350}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7897BE1A-3969-49F1-854E-360231FA3350}.Release|Any CPU.Build.0 = Release|Any CPU
 		{825E843C-2879-4728-B6E9-CBDF80BBBA85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{825E843C-2879-4728-B6E9-CBDF80BBBA85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{825E843C-2879-4728-B6E9-CBDF80BBBA85}.Release|Any CPU.ActiveCfg = Release|Any CPU

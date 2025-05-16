@@ -46,35 +46,6 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: test-city-redirect-from-singular
-  labels:
-    app: test-city-redirect-from-singular
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: test-city-redirect-from-singular
-  template:
-    metadata:
-      labels:
-        app: test-city-redirect-from-singular
-    spec:
-      containers:
-        - name: test-city-redirect-from-singular
-          image: registry.kontur.host/ke-forms/test-analytics/redirect-from-singular:${IMAGE_TAG}
-          ports:
-            - containerPort: 8122
-          resources:
-            requests:
-              cpu: "50m"
-              memory: "64Mi"
-            limits:
-              cpu: "100m"
-              memory: "256Mi"
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
   name: test-city-api
   labels:
     app: test-city-api
