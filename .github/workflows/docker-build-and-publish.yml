@@ -63,7 +63,7 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
             tihonove/testcity-front:latest
-            tihonove/testcity-front:${{ env.SHORT_SHA }}
+            tihonove/testcity-front:0.1.0-test.${{ env.SHORT_SHA }}
           cache-from: type=registry,ref=tihonove/testcity-front:latest
           cache-to: type=inline
       
@@ -75,6 +75,6 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
             tihonove/testcity-worker:latest
-            tihonove/testcity-worker:${{ env.SHORT_SHA }}
+            tihonove/testcity-worker:0.1.0-test.${{ env.SHORT_SHA }}
           cache-from: type=registry,ref=tihonove/testcity-worker:latest
           cache-to: type=inline
