@@ -13,4 +13,5 @@
 **/npm-debug.log
 **/secrets.dev.yaml
 **/values.dev.yaml
+**/values.cloud.yaml
 **/README.md
