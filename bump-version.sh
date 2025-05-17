@@ -73,7 +73,7 @@ echo "Version in $CHART_FILE updated."
 
 # Committing changes
 git add "$CHART_FILE"
-git commit -m "Bump version to $NEW_VERSION"
+git commit -m "$NEW_VERSION"
 
 # Creating a tag
 TAG_NAME="v$NEW_VERSION"
