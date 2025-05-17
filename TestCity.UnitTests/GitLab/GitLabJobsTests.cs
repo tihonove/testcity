@@ -2,6 +2,7 @@ using TestCity.Core.GitLab;
 using TestCity.Core.GitLab.Models;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
+using TestCity.UnitTests.Utils;
 
 namespace TestCity.UnitTests.GitLab;
 
@@ -14,6 +15,7 @@ public class GitLabJobsTests
         var provider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
         gitLabClient = provider.GetExtendedClient();
         logger = GlobalSetup.TestLoggerFactory.CreateLogger<GitLabJobsTests>();
+        CIUtils.SkipOnGitHubActions();
     }
 
     [TearDown]

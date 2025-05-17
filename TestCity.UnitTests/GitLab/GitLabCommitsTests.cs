@@ -1,5 +1,6 @@
 using TestCity.Core.GitLab;
 using NUnit.Framework;
+using TestCity.UnitTests.Utils;
 
 namespace TestCity.UnitTests.GitLab;
 
@@ -18,6 +19,7 @@ public class GitLabCommitsTests
     [Test]
     public async Task GetRepositoryCommitsAsync_WithSpecificRefName_ReturnsCommits()
     {
+        CIUtils.SkipOnGitHubActions();
         const int projectId = 17358;
         const string refName = "2a9b75152e9ce789d47ca310952c4d160d005207";
 
@@ -65,6 +67,7 @@ public class GitLabCommitsTests
     [Test]
     public async Task GetRepositoryCommitsAsync_WithKeysetPagination_ReturnsCommits()
     {
+        CIUtils.SkipOnGitHubActions();
         const int projectId = 17358;
         const int perPage = 10;
 
@@ -96,10 +99,9 @@ public class GitLabCommitsTests
     [Test]
     public async Task GetRepositoryCommitsAsync_WithComplexOptions_ReturnsFilteredCommits()
     {
-        // Arrange
+        CIUtils.SkipOnGitHubActions();
         const int projectId = 17358;
 
-        // Act - using a more complex query with chained options
         var response = await gitLabExtendedClient.GetRepositoryCommitsAsync(
             projectId,
             new RepositoryCommitsQueryOptions()
@@ -113,7 +115,6 @@ public class GitLabCommitsTests
 
         var commits = response.Result;
 
-        // Assert
         Assert.That(commits, Is.Not.Null);
         Console.WriteLine($"Found {commits.Count} commits from the last month");
     }
