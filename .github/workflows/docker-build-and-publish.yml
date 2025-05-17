@@ -91,7 +91,10 @@ jobs:
         with:
           version: 'latest'
           
-      - name: Login to Docker Hub
+      - name: Login to Docker Hub via helm
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
           helm registry login registry-1.docker.io -u "$DOCKERHUB_USERNAME" --password-stdin <<<"$DOCKERHUB_TOKEN"
           
