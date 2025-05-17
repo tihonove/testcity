@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.worker.name }}
+  labels:
+    app: {{ .Values.worker.name }}
+    {{- include "testcity.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.worker.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.worker.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.worker.name }}
+        {{- include "testcity.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Values.worker.name }}
+          image: "{{ .Values.worker.image.repository }}:{{ include "testcity.imageTag" (dict "tag" .Values.worker.image.tag "global" .Values.global) }}"
+          imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
+          env:
+            - name: GITLAB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: gitlab-credentials
+                  key: token
+            - name: GRAPHITE_RELAY_HOST
+              value: {{ .Values.graphite.relay.host }}
+            - name: GRAPHITE_RELAY_PORT
+              value: {{ .Values.graphite.relay.port | quote }}
+            - name: TESTANALYTICS_CLICKHOUSE_HOST
+              value: {{ .Values.clickhouse.host }}
+            - name: TESTANALYTICS_CLICKHOUSE_PORT
+              value: {{ .Values.clickhouse.port | quote }}
+            - name: TESTANALYTICS_CLICKHOUSE_DB
+              value: {{ .Values.clickhouse.db }}
+            - name: TESTANALYTICS_CLICKHOUSE_USER
+              value: {{ .Values.clickhouse.user }}
+            - name: TESTANALYTICS_CLICKHOUSE_PASSWORD
+              value: {{ .Values.clickhouse.password | quote }}
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ .Values.otlp.endpoint | quote }}
+            - name: OTEL_EXPORTER_OTLP_HEADERS
+              valueFrom:
+                secretKeyRef:
+                  name: oltp-headers
+                  key: value
+            - name: OTEL_ENVIRONMENT
+              value: {{ .Values.global.environment | quote }}
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: {{ .Values.kafka.bootstrapServers }}
+          resources:
+            {{- toYaml .Values.worker.resources | nindent 12 }}

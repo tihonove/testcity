@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.api.name }}
+  labels:
+    app: {{ .Values.api.name }}
+    {{- include "testcity.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.api.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.api.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.api.name }}
+        {{- include "testcity.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Values.api.name }}
+          image: "{{ .Values.api.image.repository }}:{{ include "testcity.imageTag" (dict "tag" .Values.api.image.tag "global" .Values.global) }}"
+          imagePullPolicy: {{ .Values.api.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.api.service.targetPort }}
+          env:
+            - name: GITLAB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: gitlab-credentials
+                  key: token
+            - name: TESTANALYTICS_CLICKHOUSE_HOST
+              value: {{ .Values.clickhouse.host }}
+            - name: TESTANALYTICS_CLICKHOUSE_PORT
+              value: {{ .Values.clickhouse.port | quote }}
+            - name: TESTANALYTICS_CLICKHOUSE_DB
+              value: {{ .Values.clickhouse.db }}
+            - name: TESTANALYTICS_CLICKHOUSE_USER
+              value: {{ .Values.clickhouse.user }}
+            - name: TESTANALYTICS_CLICKHOUSE_PASSWORD
+              value: {{ .Values.clickhouse.password | quote }}
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ .Values.otlp.endpoint | quote }}
+            - name: OTEL_EXPORTER_OTLP_HEADERS
+              valueFrom:
+                secretKeyRef:
+                  name: oltp-headers
+                  key: value
+            - name: OTEL_ENVIRONMENT
+              value: {{ .Values.global.environment | quote }}
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: {{ .Values.kafka.bootstrapServers }}
+          resources:
+            {{- toYaml .Values.api.resources | nindent 12 }}

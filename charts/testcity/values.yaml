@@ -1,0 +1,117 @@
+## Глобальные параметры
+global:
+  environment: cloud
+  # Версия для всех компонентов, если не переопределяется
+  tag: 0.1.0-test.81f2390
+
+clickhouse:
+  host: vm-ch2-stg.dev.kontur.ru
+  port: "8123"
+  db: test_analytics
+  user: tihonove
+  password: "12487562"
+
+otlp:
+  endpoint: ""
+
+kafka:
+  bootstrapServers: 
+
+graphite:
+  relay:
+    host: graphite-relay.skbkontur.ru
+    port: "2003"
+
+## Настройки компонентов
+front:
+  name: test-city-front
+  replicaCount: 2
+  image:
+    repository: tihonove/testcity-front
+    tag: ""  #Если пусто, используется global.tag
+    pullPolicy: IfNotPresent 
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 100m
+      memory: 256Mi
+  service:
+    type: NodePort
+    port: 30110
+    targetPort: 80
+
+api:
+  name: test-city-api
+  replicaCount: 2
+  image:
+    repository: tihonove/testcity-api
+    tag: ""  # Если пусто, используется global.tag
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: 50m
+      memory: 256Mi
+    limits:
+      cpu: 100m
+      memory: 512Mi
+  service:
+    type: NodePort
+    port: 30111
+    targetPort: 8124
+
+crawler:
+  name: test-city-crawler
+  replicaCount: 1
+  image:
+    repository: tihonove/testcity-crawler
+    tag: ""  # Если пусто, используется global.tag
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 200m
+      memory: 512Mi
+  ports:
+    containerPort: 8125
+
+worker:
+  name: test-city-worker
+  replicaCount: 2
+  image:
+    repository: tihonove/testcity-worker
+    tag: ""  # Если пусто, используется global.tag
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1536Mi
+    limits:
+      cpu: 1000m
+      memory: 2048Mi
+
+ingress:
+  enabled: true
+  className: nginx
+  host: testcity.kube.testkontur.ru
+  paths:
+    - path: /
+      pathType: Prefix
+      service: test-city-front-service
+      port: 30110
+    - path: /api
+      pathType: Prefix
+      service: test-city-api-service
+      port: 30111
+
+## Секреты
+secrets:
+  gitlab:
+    # Будет замещен через --set secrets.gitlab.token=$GITLAB_TOKEN при установке
+    token: ""
+  otlp:
+    # Будет замещен через --set secrets.otlp.headers=$OTEL_EXPORTER_OTLP_HEADERS при установке
+    headers: ""

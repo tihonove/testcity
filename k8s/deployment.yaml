@@ -17,35 +17,6 @@ stringData:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: test-city-front
-  labels:
-    app: test-city-front
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: test-city-front
-  template:
-    metadata:
-      labels:
-        app: test-city-front
-    spec:
-      containers:
-        - name: test-city-front
-          image: registry.kontur.host/ke-forms/test-analytics/front:${IMAGE_TAG}
-          ports:
-            - containerPort: 80
-          resources:
-            requests:
-              cpu: "50m"
-              memory: "128Mi"
-            limits:
-              cpu: "100m"
-              memory: "256Mi"
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
   name: test-city-api
   labels:
     app: test-city-api
@@ -155,9 +126,39 @@ spec:
             requests:
               cpu: "100m"
               memory: "256Mi"
+
             limits:
               cpu: "200m"
               memory: "512Mi"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-city-front
+  labels:
+    app: test-city-front
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: test-city-front
+  template:
+    metadata:
+      labels:
+        app: test-city-front
+    spec:
+      containers:
+        - name: test-city-front
+          image: registry.kontur.host/ke-forms/test-analytics/front:${IMAGE_TAG}
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "128Mi"
+            limits:
+              cpu: "100m"
+              memory: "256Mi"
 ---
 apiVersion: apps/v1
 kind: Deployment

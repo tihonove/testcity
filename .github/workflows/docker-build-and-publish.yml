@@ -78,3 +78,37 @@ jobs:
             tihonove/testcity-worker:0.1.0-test.${{ env.SHORT_SHA }}
           cache-from: type=registry,ref=tihonove/testcity-worker:latest
           cache-to: type=inline
+
+  publish-helm-chart:
+    name: Publish Helm Chart
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    if: github.event_name != 'pull_request'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Extract metadata
+        id: meta
+        run: |
+          echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
+      
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: 'latest'
+          
+      - name: Package Helm chart
+        run: |
+          helm package ./charts/testcity
+          
+      - name: Push Helm chart to Docker Hub
+        run: |
+          helm push testcity-*.tgz oci://registry-1.docker.io/tihonove/testcity-helm

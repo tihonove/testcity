@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-city-api-service
+  labels:
+    app: {{ .Values.api.name }}
+    {{- include "testcity.labels" . | nindent 4 }}
+spec:
+  selector:
+    app: {{ .Values.api.name }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.api.service.port }}
+      targetPort: {{ .Values.api.service.targetPort }}
+  type: {{ .Values.api.service.type }}

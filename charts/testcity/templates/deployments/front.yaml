@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.front.name }}
+  labels:
+    app: {{ .Values.front.name }}
+    {{- include "testcity.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.front.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.front.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.front.name }}
+        {{- include "testcity.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Values.front.name }}
+          image: "{{ .Values.front.image.repository }}:{{ include "testcity.imageTag" (dict "tag" .Values.front.image.tag "global" .Values.global) }}"
+          imagePullPolicy: {{ .Values.front.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.front.service.targetPort }}
+          resources:
+            {{- toYaml .Values.front.resources | nindent 12 }}
