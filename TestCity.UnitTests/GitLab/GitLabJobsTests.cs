@@ -21,7 +21,7 @@ public class GitLabJobsTests
     [TearDown]
     public void TearDown()
     {
-        gitLabClient.Dispose();
+        gitLabClient?.Dispose();
     }
 
     [Test]
