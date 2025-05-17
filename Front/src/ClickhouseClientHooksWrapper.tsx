@@ -16,12 +16,9 @@ const unregister = fetchIntercept.register({
 
 const client = createClient({
     host: "http://zzz",
-    database: "test_analytics",
-    username: "tihonove",
-    password: "12487562",
-    clickhouse_settings: {
-        add_http_cors_header: 1,
-    },
+    database: "DATABASE",
+    username: "USERNAME",
+    password: "PASSWORD"
 });
 
 export function useStorageQuery<T>(

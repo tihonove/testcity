@@ -27,6 +27,7 @@ internal sealed class ProxyToUriActionResult : IActionResult
         {
             var database = Environment.GetEnvironmentVariable("TESTANALYTICS_CLICKHOUSE_DB") ?? throw new Exception("TESTANALYTICS_CLICKHOUSE_DB is not set");
             queryString = queryString.Replace("database=test_analytics", $"database={database}");
+            queryString = queryString.Replace("database=DATABASE", $"database={database}");
         }
 
         var request = new HttpRequestMessage(new HttpMethod(sourceRequest.Method), targetUri + queryString);
