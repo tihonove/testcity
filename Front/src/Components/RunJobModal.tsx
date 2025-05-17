@@ -56,9 +56,11 @@ export function RunJobModal(props: RunJobModalProps) {
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
                 const data: any = await response.json();
                 if (!response.ok) {
+                    // eslint-disable-next-line @typescript-eslint/no-deprecated
                     Toast.push(`Failed to run job. ${JSON.stringify(data)}`);
                     return;
                 }
+                // eslint-disable-next-line @typescript-eslint/no-deprecated
                 Toast.push("Job successfully started", {
                     label: "Open at gitlab",
                     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access

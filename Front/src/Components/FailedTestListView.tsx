@@ -1,4 +1,4 @@
-import { Button } from "@skbkontur/react-ui";
+import { Button, SingleToast } from "@skbkontur/react-ui";
 import * as React from "react";
 
 import { CopyIcon16Light } from "@skbkontur/icons";
@@ -80,7 +80,8 @@ export function TestRunRow({ testRun, basePrefix, pathToProject, jobRunIds }: Te
                 systemOutput,
             ].join("\n");
             await navigator.clipboard.writeText(textToCopy);
-            Toast.push("Copied to clipboard");
+            // eslint-disable-next-line @typescript-eslint/no-deprecated
+            SingleToast.push("Copied to clipboard");
         });
     }, [failedMessage, failedOutput, systemOutput, testRun[TestRunQueryRowNames.TestId]]);
 

@@ -58,6 +58,8 @@ export function TestRunRow({
                 systemOutput,
             ].join("\n");
             await navigator.clipboard.writeText(textToCopy);
+
+            // eslint-disable-next-line @typescript-eslint/no-deprecated
             Toast.push("Copied to clipboard");
         });
     }, [failedMessage, failedOutput, systemOutput, testRun[TestRunQueryRowNames.TestId]]);

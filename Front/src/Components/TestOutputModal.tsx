@@ -25,6 +25,8 @@ export function TestOutputModal(props: TestOutputModalProps): React.JSX.Element 
                 "\n"
             );
             await navigator.clipboard.writeText(textToCopy);
+
+            // eslint-disable-next-line @typescript-eslint/no-deprecated
             Toast.push("Copied to clipboard");
         });
     }, [failedMessage, failedOutput, systemOutput, props.testId]);
