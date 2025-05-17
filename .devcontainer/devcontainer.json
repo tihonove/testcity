@@ -12,5 +12,5 @@
 			"composeVersion": "latest"
 		}
 	},
-	"forwardPorts": [8124, 8125]
+	"forwardPorts": [8124]
 }
