@@ -101,4 +101,4 @@ jobs:
           
       - name: Push Helm chart to Docker Hub
         run: |
-          helm push testcity-*.tgz oci://registry-1.docker.io/tihonove/testcity-helm
+          helm push testcity-*.tgz oci://registry-1.docker.io/tihonove
