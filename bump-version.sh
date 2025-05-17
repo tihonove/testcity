@@ -2,6 +2,7 @@
 
 # Script for version bumping (major, minor or patch) in Chart.yaml
 # Also creates a corresponding git tag
+# Usage: ./bump-version.sh <major|minor|patch>
 
 set -e
 
