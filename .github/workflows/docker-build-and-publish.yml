@@ -2,11 +2,8 @@ name: Build and Publish Docker Images
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    tags:
+      - 'v*.*.*'
 
 jobs:
   build-and-push:
@@ -37,7 +34,7 @@ jobs:
         with:
           context: .
           file: ./Dockerfile.TestCity.GitLabJobsCrawler
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: |
             tihonove/testcity-crawler:${{ env.VERSION }}
           cache-from: type=registry,ref=tihonove/testcity-crawler:${{ env.VERSION }}
@@ -48,7 +45,7 @@ jobs:
         with:
           context: .
           file: ./Dockerfile.TestCity.Api
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: |
             tihonove/testcity-api:${{ env.VERSION }}
           cache-from: type=registry,ref=tihonove/testcity-api:${{ env.VERSION }}
@@ -59,7 +56,7 @@ jobs:
         with:
           context: .
           file: ./Dockerfile.Front
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: |
             tihonove/testcity-front:${{ env.VERSION }}
           cache-from: type=registry,ref=tihonove/testcity-front:${{ env.VERSION }}
@@ -70,7 +67,7 @@ jobs:
         with:
           context: .
           file: ./Dockerfile.Worker
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: |
             tihonove/testcity-worker:${{ env.VERSION }}
           cache-from: type=registry,ref=tihonove/testcity-worker:${{ env.VERSION }}
@@ -80,7 +77,6 @@ jobs:
     name: Publish Helm Chart
     runs-on: ubuntu-latest
     needs: build-and-push
-    if: github.event_name != 'pull_request'
     
     steps:
       - name: Checkout repository
