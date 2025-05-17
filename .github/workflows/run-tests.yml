@@ -1,0 +1,140 @@
+name: Run Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  front-typecheck-and-lint:
+    name: Front Typecheck and Lint
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: Front/package-lock.json
+      
+      - name: Install dependencies
+        working-directory: ./Front
+        run: npm install
+      
+      - name: Run ESLint
+        working-directory: ./Front
+        run: npm run lint -- . --format json --output-file eslint-report.json
+      
+      - name: Run Typecheck
+        working-directory: ./Front
+        run: npm run typecheck
+      
+      - name: Upload ESLint report
+        uses: actions/upload-artifact@v3
+        with:
+          name: eslint-report
+          path: Front/eslint-report.json
+  
+  front-tests:
+    name: Front Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: Front/package-lock.json
+      
+      - name: Install dependencies
+        working-directory: ./Front
+        run: npm install
+      
+      - name: Run Tests
+        working-directory: ./Front
+        run: npm test
+      
+      - name: Upload Test Reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: front-test-reports
+          path: Front/.test-reports/junit.xml
+      
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: Front/.test-reports/junit.xml
+  
+  dotnet-tests:
+    name: DotNet Tests
+    runs-on: ubuntu-latest
+    
+    services:
+      clickhouse:
+        image: clickhouse/clickhouse-server
+        ports:
+          - 8123:8123
+        env:
+          CLICKHOUSE_DB: default
+          CLICKHOUSE_USER: testanalytics-user
+          CLICKHOUSE_PASSWORD: 123123
+      
+      kafka:
+        image: bitnami/kafka
+        ports:
+          - 9092:9092
+        env:
+          KAFKA_CFG_NODE_ID: 1
+          KAFKA_CFG_PROCESS_ROLES: broker,controller
+          KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+          KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
+          KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+          KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+          KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
+          KAFKA_KRAFT_CLUSTER_ID: 2451c12e-a37d-4349-b744-a1047b01cbd3
+          ALLOW_PLAINTEXT_LISTENER: yes
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0.x'
+      
+      - name: Run .NET Tests
+        env:
+          GRAPHITE_RELAY_HOST: graphite-relay.skbkontur.ru
+          GRAPHITE_RELAY_PORT: 2003
+          TESTANALYTICS_CLICKHOUSE_HOST: localhost
+          TESTANALYTICS_CLICKHOUSE_PORT: 8123
+          TESTANALYTICS_CLICKHOUSE_DB: default
+          TESTANALYTICS_CLICKHOUSE_USER: testanalytics-user
+          TESTANALYTICS_CLICKHOUSE_PASSWORD: 123123
+          KAFKA_BOOTSTRAP_SERVERS: localhost:9092
+        run: dotnet test --logger "junit;LogFilePath=../.test-reports/{assembly}.test-result.xml;FailureBodyFormat=Verbose"
+      
+      - name: Upload Test Reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: dotnet-test-reports
+          path: .test-reports/**/*.xml
+      
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: .test-reports/**/*.xml
