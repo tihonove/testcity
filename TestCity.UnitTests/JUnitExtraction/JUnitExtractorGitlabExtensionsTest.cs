@@ -1,9 +1,9 @@
-using Kontur.TestCity.Core.JUnit;
-using Kontur.TestCity.Core.Storage.DTO;
-using Kontur.TestCity.UnitTests.Utils;
+using TestCity.Core.JUnit;
+using TestCity.Core.Storage.DTO;
+using TestCity.UnitTests.Utils;
 using NUnit.Framework;
 
-namespace Kontur.TestCity.UnitTests.JUnitExtraction
+namespace TestCity.UnitTests.JUnitExtraction
 {
     [TestFixture]
     public class JUnitExtractorGitlabExtensionsTest

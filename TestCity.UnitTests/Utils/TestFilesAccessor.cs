@@ -1,4 +1,4 @@
-namespace Kontur.TestCity.UnitTests.Utils;
+namespace TestCity.UnitTests.Utils;
 
 internal static class TestFilesAccessor
 {

@@ -1,7 +1,7 @@
-using Kontur.TestCity.Core.KafkaMessageQueue;
-using Kontur.TestCity.Core.Worker.TaskPayloads;
+using TestCity.Core.KafkaMessageQueue;
+using TestCity.Core.Worker.TaskPayloads;
 
-namespace Kontur.TestCity.Core.Worker;
+namespace TestCity.Core.Worker;
 
 public class WorkerClient(KafkaMessageQueueClient messageQueueClient)
 {

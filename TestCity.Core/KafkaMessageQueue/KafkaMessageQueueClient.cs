@@ -1,9 +1,9 @@
 using System.Text.Json;
 using Confluent.Kafka;
-using Kontur.TestCity.Core.Worker;
+using TestCity.Core.Worker;
 using Microsoft.Extensions.Logging;
 
-namespace Kontur.TestCity.Core.KafkaMessageQueue;
+namespace TestCity.Core.KafkaMessageQueue;
 
 public class KafkaMessageQueueClient
 {

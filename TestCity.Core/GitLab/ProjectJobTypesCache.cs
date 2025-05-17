@@ -1,9 +1,9 @@
-namespace Kontur.TestCity.Core.GitLab;
+namespace TestCity.Core.GitLab;
 
 using System.Collections.Concurrent;
 using Microsoft.Extensions.Logging;
-using Kontur.TestCity.Core.Logging;
-using Kontur.TestCity.Core.Storage;
+using TestCity.Core.Logging;
+using TestCity.Core.Storage;
 
 public class ProjectJobTypesCache(TestCityDatabase testCityDatabase)
 {

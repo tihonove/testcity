@@ -1,10 +1,10 @@
 using System.Reflection;
 using System.Text.Json;
 using ClickHouse.Client.ADO;
-using Kontur.TestCity.Core.GitlabProjects;
-using Kontur.TestCity.Core.Storage;
+using TestCity.Core.GitlabProjects;
+using TestCity.Core.Storage;
 
-namespace Kontur.TestCity.Core.Clickhouse;
+namespace TestCity.Core.Clickhouse;
 
 public class TestAnalyticsDatabaseSchema
 {

@@ -1,9 +1,9 @@
-using Kontur.TestCity.Core.JobProcessing;
-using Kontur.TestCity.Core.KafkaMessageQueue;
-using Kontur.TestCity.Core.Worker;
-using Kontur.TestCity.Core.Worker.TaskPayloads;
+using TestCity.Core.JobProcessing;
+using TestCity.Core.KafkaMessageQueue;
+using TestCity.Core.Worker;
+using TestCity.Core.Worker.TaskPayloads;
 
-namespace Kontur.TestCity.Worker.Handlers;
+namespace TestCity.Worker.Handlers;
 
 public sealed class BuildCommitParentsHandler(CommitParentsBuilderService commitParentsBuilder) : TaskHandler<BuildCommitParentsTaskPayload>
 {

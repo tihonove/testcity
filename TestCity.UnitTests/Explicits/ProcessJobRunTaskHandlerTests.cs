@@ -1,16 +1,16 @@
-using Kontur.TestCity.Core.Clickhouse;
-using Kontur.TestCity.Core.GitLab;
-using Kontur.TestCity.Core.GitLab.Models;
-using Kontur.TestCity.Core.Graphite;
-using Kontur.TestCity.Core.JobProcessing;
-using Kontur.TestCity.Core.JUnit;
-using Kontur.TestCity.Core.Storage;
-using Kontur.TestCity.Core.Worker.TaskPayloads;
-using Kontur.TestCity.Worker.Handlers;
+using TestCity.Core.Clickhouse;
+using TestCity.Core.GitLab;
+using TestCity.Core.GitLab.Models;
+using TestCity.Core.Graphite;
+using TestCity.Core.JobProcessing;
+using TestCity.Core.JUnit;
+using TestCity.Core.Storage;
+using TestCity.Core.Worker.TaskPayloads;
+using TestCity.Worker.Handlers;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
-namespace Kontur.TestCity.UnitTests.Handlers;
+namespace TestCity.UnitTests.Handlers;
 
 [TestFixture]
 [Explicit]

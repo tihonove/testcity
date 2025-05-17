@@ -13,4 +13,4 @@ WORKDIR /app
 ENV ASPNETCORE_ENVIRONMENT="Production"
 COPY --from=build /app/TestCity.GitLabJobsCrawler/out .
 EXPOSE 8125
-ENTRYPOINT ["dotnet", "Kontur.TestCity.GitLabJobsCrawler.dll"]
+ENTRYPOINT ["dotnet", "TestCity.GitLabJobsCrawler.dll"]

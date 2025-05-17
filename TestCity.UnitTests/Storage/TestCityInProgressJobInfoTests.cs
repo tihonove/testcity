@@ -1,9 +1,9 @@
-using Kontur.TestCity.Core.Clickhouse;
-using Kontur.TestCity.Core.Storage;
-using Kontur.TestCity.Core.Storage.DTO;
+using TestCity.Core.Clickhouse;
+using TestCity.Core.Storage;
+using TestCity.Core.Storage.DTO;
 using NUnit.Framework;
 
-namespace Kontur.TestCity.UnitTests.Storage;
+namespace TestCity.UnitTests.Storage;
 
 public class TestCityInProgressJobInfoTests
 {

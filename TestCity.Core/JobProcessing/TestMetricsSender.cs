@@ -1,11 +1,11 @@
-using Kontur.TestCity.Core.GitLab.Models;
-using Kontur.TestCity.Core.Graphite;
-using Kontur.TestCity.Core.JUnit;
-using Kontur.TestCity.Core.Logging;
+using TestCity.Core.GitLab.Models;
+using TestCity.Core.Graphite;
+using TestCity.Core.JUnit;
+using TestCity.Core.Logging;
 using Microsoft.Extensions.Logging;
 using NGitLab.Models;
 
-namespace Kontur.TestCity.Core.JobProcessing;
+namespace TestCity.Core.JobProcessing;
 
 public sealed class TestMetricsSender(IGraphiteClient graphiteClient)
 {

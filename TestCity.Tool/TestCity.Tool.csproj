@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <RootNamespace>Kontur.TestCity.Tool</RootNamespace>
-        <AssemblyName>Kontur.TestCity.Tool</AssemblyName>
+        <RootNamespace>TestCity.Tool</RootNamespace>
+        <AssemblyName>TestCity.Tool</AssemblyName>
         <OutputType>Exe</OutputType>
     </PropertyGroup>
 

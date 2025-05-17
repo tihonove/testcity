@@ -1,4 +1,4 @@
-namespace Kontur.TestCity.Core.GitLab.Models;
+namespace TestCity.Core.GitLab.Models;
 
 [Flags]
 public enum JobScope

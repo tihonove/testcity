@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <RootNamespace>Kontur.TestCity.Worker</RootNamespace>
-        <AssemblyName>Kontur.TestCity.Worker</AssemblyName>
+        <RootNamespace>TestCity.Worker</RootNamespace>
+        <AssemblyName>TestCity.Worker</AssemblyName>
         <OutputType>Exe</OutputType>
     </PropertyGroup>
 

@@ -1,12 +1,12 @@
 using System.Text.Json;
 
-using Kontur.TestCity.Core.Clickhouse;
-using Kontur.TestCity.Core.GitlabProjects;
-using Kontur.TestCity.Core.Storage;
+using TestCity.Core.Clickhouse;
+using TestCity.Core.GitlabProjects;
+using TestCity.Core.Storage;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
-namespace Kontur.TestCity.UnitTests.Storage;
+namespace TestCity.UnitTests.Storage;
 
 [TestFixture]
 public sealed class GitLabProjectsServiceTests : IDisposable

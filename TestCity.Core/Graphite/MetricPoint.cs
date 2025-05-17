@@ -1,4 +1,4 @@
-namespace Kontur.TestCity.Core.Graphite;
+namespace TestCity.Core.Graphite;
 
 public class MetricPoint(string name, double value, Dictionary<string, string>? tags = null, DateTime? timestamp = null)
 {

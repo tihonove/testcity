@@ -1,8 +1,8 @@
-using Kontur.TestCity.Core.GitLab;
-using Kontur.TestCity.Core.GitLab.Models;
+using TestCity.Core.GitLab;
+using TestCity.Core.GitLab.Models;
 using NUnit.Framework;
 
-namespace Kontur.TestCity.UnitTests.GitLab;
+namespace TestCity.UnitTests.GitLab;
 
 [TestFixture]
 public class JobScopeExtensionsTests

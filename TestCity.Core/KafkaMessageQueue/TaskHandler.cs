@@ -1,7 +1,7 @@
 using System.Text.Json;
-using Kontur.TestCity.Core.Worker;
+using TestCity.Core.Worker;
 
-namespace Kontur.TestCity.Core.KafkaMessageQueue;
+namespace TestCity.Core.KafkaMessageQueue;
 
 public abstract class TaskHandler<TPayload> : ITaskHandler
 {

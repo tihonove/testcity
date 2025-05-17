@@ -1,10 +1,10 @@
 using dotenv.net;
-using Kontur.TestCity.Core.Logging;
-using Kontur.TestCity.UnitTests.Utils;
+using TestCity.Core.Logging;
+using TestCity.UnitTests.Utils;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
-namespace Kontur.TestCity.UnitTests;
+namespace TestCity.UnitTests;
 
 [SetUpFixture]
 public class GlobalSetup

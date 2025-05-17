@@ -1,4 +1,4 @@
-namespace Kontur.TestCity.Api.Models;
+namespace TestCity.Api.Models;
 public class ManualJobRunInfo
 {
     public string JobId { get; set; }

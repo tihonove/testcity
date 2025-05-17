@@ -1,12 +1,12 @@
 using System.Text.RegularExpressions;
-using Kontur.TestCity.Core.GitLab;
-using Kontur.TestCity.Core.GitLab.Models;
-using Kontur.TestCity.Core.JUnit;
-using Kontur.TestCity.Core.Storage.DTO;
+using TestCity.Core.GitLab;
+using TestCity.Core.GitLab.Models;
+using TestCity.Core.JUnit;
+using TestCity.Core.Storage.DTO;
 using Microsoft.Extensions.Logging;
 using NGitLab;
 
-namespace Kontur.TestCity.Core.JobProcessing;
+namespace TestCity.Core.JobProcessing;
 
 public class GitLabJobProcessor(IGitLabClient client, GitLabExtendedClient clientEx, JUnitExtractor extractor, ILogger logger)
 {

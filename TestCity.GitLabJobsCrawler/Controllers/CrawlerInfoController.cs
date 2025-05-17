@@ -1,7 +1,7 @@
-using Kontur.TestCity.Core.Logging;
+using TestCity.Core.Logging;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Kontur.TestCity.GitLabJobsCrawler.Controllers;
+namespace TestCity.GitLabJobsCrawler.Controllers;
 
 [ApiController]
 public class CrawlerInfoController : Controller

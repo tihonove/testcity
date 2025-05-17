@@ -1,6 +1,6 @@
 using System.Net.Http.Headers;
 
-namespace Kontur.TestCity.Core.GitLab;
+namespace TestCity.Core.GitLab;
 
 public class PagedApiResponse<T>
 {

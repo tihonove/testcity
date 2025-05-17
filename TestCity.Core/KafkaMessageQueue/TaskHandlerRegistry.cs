@@ -1,6 +1,6 @@
-using Kontur.TestCity.Core.Worker;
+using TestCity.Core.Worker;
 
-namespace Kontur.TestCity.Core.KafkaMessageQueue;
+namespace TestCity.Core.KafkaMessageQueue;
 
 public class TaskHandlerRegistry(IEnumerable<ITaskHandler> taskHandlers)
 {

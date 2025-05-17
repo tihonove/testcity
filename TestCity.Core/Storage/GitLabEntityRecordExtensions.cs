@@ -1,8 +1,8 @@
 using System.Text.Json;
-using Kontur.TestCity.Core.GitlabProjects;
-using Kontur.TestCity.Core.Storage.DTO;
+using TestCity.Core.GitlabProjects;
+using TestCity.Core.Storage.DTO;
 
-namespace Kontur.TestCity.Core.Storage;
+namespace TestCity.Core.Storage;
 
 public static class GitLabEntityRecordExtensions
 {

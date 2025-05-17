@@ -1,17 +1,17 @@
-using Kontur.TestCity.Core.GitLab;
-using Kontur.TestCity.Core.JobProcessing;
-using Kontur.TestCity.Core.JUnit;
-using Kontur.TestCity.Core.KafkaMessageQueue;
-using Kontur.TestCity.Core.Logging;
-using Kontur.TestCity.Core.Storage;
-using Kontur.TestCity.Core.Worker;
-using Kontur.TestCity.Core.Worker.TaskPayloads;
+using TestCity.Core.GitLab;
+using TestCity.Core.JobProcessing;
+using TestCity.Core.JUnit;
+using TestCity.Core.KafkaMessageQueue;
+using TestCity.Core.Logging;
+using TestCity.Core.Storage;
+using TestCity.Core.Worker;
+using TestCity.Core.Worker.TaskPayloads;
 using Microsoft.Extensions.Logging;
 using NGitLab;
 using NGitLab.Models;
 using OpenTelemetry;
 
-namespace Kontur.TestCity.Worker.Handlers;
+namespace TestCity.Worker.Handlers;
 
 public class ProcessJobRunTaskHandler(
     TestMetricsSender metricsSender,

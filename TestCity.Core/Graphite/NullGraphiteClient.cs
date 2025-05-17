@@ -1,4 +1,4 @@
-namespace Kontur.TestCity.Core.Graphite;
+namespace TestCity.Core.Graphite;
 
 public class NullGraphiteClient : IGraphiteClient
 {

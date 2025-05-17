@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Kontur.TestCity.Api.Controllers;
+namespace TestCity.Api.Controllers;
 
 [ApiController]
 [Route("api/clickhouse")]

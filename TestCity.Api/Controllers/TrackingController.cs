@@ -1,9 +1,9 @@
 using System.Collections.Concurrent;
 using System.Diagnostics.Metrics;
-using Kontur.TestCity.Api.Models;
+using TestCity.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Kontur.TestCity.Api.Controllers;
+namespace TestCity.Api.Controllers;
 
 [ApiController]
 [Route("api/track")]

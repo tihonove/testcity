@@ -1,7 +1,7 @@
 using System.Net.Sockets;
 using System.Text;
 
-namespace Kontur.TestCity.Core.Graphite;
+namespace TestCity.Core.Graphite;
 
 public class GraphiteClient(string host, int port = 2003) : IGraphiteClient
 {

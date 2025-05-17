@@ -1,12 +1,12 @@
 using System.Collections.Concurrent;
-using Kontur.TestCity.Core.GitLab;
-using Kontur.TestCity.Core.GitLab.Models;
-using Kontur.TestCity.Core.GitlabProjects;
-using Kontur.TestCity.Core.Logging;
-using Kontur.TestCity.Core.Worker;
-using Kontur.TestCity.Core.Worker.TaskPayloads;
+using TestCity.Core.GitLab;
+using TestCity.Core.GitLab.Models;
+using TestCity.Core.GitlabProjects;
+using TestCity.Core.Logging;
+using TestCity.Core.Worker;
+using TestCity.Core.Worker.TaskPayloads;
 
-namespace Kontur.TestCity.GitLabJobsCrawler;
+namespace TestCity.GitLabJobsCrawler;
 
 public sealed class GitLabCrawlerService(GitLabSettings gitLabSettings, WorkerClient workerClient, GitLabProjectsService gitLabProjectsService, IHostEnvironment hostEnvironment) : IDisposable
 {

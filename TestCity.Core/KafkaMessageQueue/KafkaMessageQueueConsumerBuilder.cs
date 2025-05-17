@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Kontur.TestCity.Core.KafkaMessageQueue;
+namespace TestCity.Core.KafkaMessageQueue;
 
 public class KafkaMessageQueueConsumerBuilder
 {

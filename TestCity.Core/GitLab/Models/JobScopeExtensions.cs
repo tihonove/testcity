@@ -1,4 +1,4 @@
-namespace Kontur.TestCity.Core.GitLab.Models;
+namespace TestCity.Core.GitLab.Models;
 
 public static class JobScopeExtensions
 {

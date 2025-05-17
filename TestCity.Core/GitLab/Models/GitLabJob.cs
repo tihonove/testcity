@@ -1,7 +1,7 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace Kontur.TestCity.Core.GitLab.Models;
+namespace TestCity.Core.GitLab.Models;
 
 public class GitLabJob
 {

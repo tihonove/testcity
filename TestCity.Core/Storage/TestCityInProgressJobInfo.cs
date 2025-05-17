@@ -1,8 +1,8 @@
 using ClickHouse.Client.Utility;
-using Kontur.TestCity.Core.Clickhouse;
-using Kontur.TestCity.Core.Storage.DTO;
+using TestCity.Core.Clickhouse;
+using TestCity.Core.Storage.DTO;
 
-namespace Kontur.TestCity.Core.Storage;
+namespace TestCity.Core.Storage;
 
 public class TestCityInProgressJobInfo(ConnectionFactory connectionFactory)
 {

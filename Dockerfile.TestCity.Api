@@ -14,4 +14,4 @@ ENV ASPNETCORE_ENVIRONMENT="Production"
 
 COPY --from=build /app/TestCity.Api/out .
 EXPOSE 8124
-ENTRYPOINT ["dotnet", "Kontur.TestCity.Api.dll"]
+ENTRYPOINT ["dotnet", "TestCity.Api.dll"]

@@ -1,14 +1,14 @@
 using Confluent.Kafka;
 using Confluent.Kafka.Admin;
-using Kontur.TestCity.Core.KafkaMessageQueue;
-using Kontur.TestCity.Core.Worker;
+using TestCity.Core.KafkaMessageQueue;
+using TestCity.Core.Worker;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using System.Collections.Concurrent;
 using System.Diagnostics;
-using Kontur.TestCity.UnitTests.Utils;
+using TestCity.UnitTests.Utils;
 
-namespace Kontur.TestCity.UnitTests.KafkaMessageQueue;
+namespace TestCity.UnitTests.KafkaMessageQueue;
 
 [TestFixture]
 class KafkaMessageQueueTests

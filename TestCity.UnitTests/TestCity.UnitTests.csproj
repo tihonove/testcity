@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <RootNamespace>Kontur.TestCity.UnitTests</RootNamespace>
-        <AssemblyName>Kontur.TestCity.UnitTests</AssemblyName>
+        <RootNamespace>TestCity.UnitTests</RootNamespace>
+        <AssemblyName>TestCity.UnitTests</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

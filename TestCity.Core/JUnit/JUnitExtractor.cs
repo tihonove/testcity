@@ -1,9 +1,9 @@
 using System.Globalization;
 using System.IO.Compression;
 using System.Xml;
-using Kontur.TestCity.Core.Storage.DTO;
+using TestCity.Core.Storage.DTO;
 
-namespace Kontur.TestCity.Core.JUnit;
+namespace TestCity.Core.JUnit;
 
 public class JUnitExtractor
 {

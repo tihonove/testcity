@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace Kontur.TestCity.Core.Worker;
+namespace TestCity.Core.Worker;
 
 public class RawTask
 {

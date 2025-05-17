@@ -1,15 +1,15 @@
-using Kontur.TestCity.Core.Clickhouse;
-using Kontur.TestCity.Core.GitLab;
-using Kontur.TestCity.Core.GitLab.Models;
-using Kontur.TestCity.Core.GitlabProjects;
-using Kontur.TestCity.Core.Logging;
-using Kontur.TestCity.Core.Storage;
+using TestCity.Core.Clickhouse;
+using TestCity.Core.GitLab;
+using TestCity.Core.GitLab.Models;
+using TestCity.Core.GitlabProjects;
+using TestCity.Core.Logging;
+using TestCity.Core.Storage;
 using Microsoft.Extensions.Logging;
 using NGitLab;
 using NGitLab.Models;
 using NUnit.Framework;
 
-namespace Kontur.TestCity.UnitTests.GitLab;
+namespace TestCity.UnitTests.GitLab;
 
 [TestFixture]
 public class GitLabCheckAccessToPreconfiguredProjects

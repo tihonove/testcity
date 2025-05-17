@@ -1,4 +1,4 @@
-namespace Kontur.TestCity.Core.Worker.TaskPayloads;
+namespace TestCity.Core.Worker.TaskPayloads;
 
 public class BuildCommitParentsTaskPayload
 {

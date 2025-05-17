@@ -1,4 +1,4 @@
-namespace Kontur.TestCity.Api.Models;
+namespace TestCity.Api.Models;
 
 using System.Text.Json.Serialization;
 

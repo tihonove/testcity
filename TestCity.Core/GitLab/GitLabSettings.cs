@@ -1,4 +1,4 @@
-namespace Kontur.TestCity.Core.GitLab;
+namespace TestCity.Core.GitLab;
 
 public class GitLabSettings
 {

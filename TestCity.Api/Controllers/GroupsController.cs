@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
-using Kontur.TestCity.Api.Models;
-using Kontur.TestCity.Core.GitlabProjects;
+using TestCity.Api.Models;
+using TestCity.Core.GitlabProjects;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Kontur.TestCity.Api.Controllers;
+namespace TestCity.Api.Controllers;
 
 [ApiController]
 [Route("api/groups")]

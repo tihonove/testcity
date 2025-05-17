@@ -1,11 +1,11 @@
-using Kontur.TestCity.Core.Clickhouse;
-using Kontur.TestCity.Core.GitLab;
-using Kontur.TestCity.Core.JobProcessing;
-using Kontur.TestCity.Core.Storage;
-using Kontur.TestCity.Core.Storage.DTO;
+using TestCity.Core.Clickhouse;
+using TestCity.Core.GitLab;
+using TestCity.Core.JobProcessing;
+using TestCity.Core.Storage;
+using TestCity.Core.Storage.DTO;
 using NUnit.Framework;
 
-namespace Kontur.TestCity.UnitTests.Explicits;
+namespace TestCity.UnitTests.Explicits;
 
 [TestFixture]
 [Explicit]

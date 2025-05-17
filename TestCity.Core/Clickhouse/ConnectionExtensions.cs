@@ -1,6 +1,6 @@
 using System.Data.Common;
 
-namespace Kontur.TestCity.Core.Clickhouse;
+namespace TestCity.Core.Clickhouse;
 
 public static class ConnectionExtensions
 {

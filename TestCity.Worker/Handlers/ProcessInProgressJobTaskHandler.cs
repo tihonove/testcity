@@ -1,17 +1,17 @@
 using System.Collections.Concurrent;
-using Kontur.TestCity.Core.GitLab;
-using Kontur.TestCity.Core.GitLab.Models;
-using Kontur.TestCity.Core.JobProcessing;
-using Kontur.TestCity.Core.KafkaMessageQueue;
-using Kontur.TestCity.Core.Logging;
-using Kontur.TestCity.Core.Storage;
-using Kontur.TestCity.Core.Storage.DTO;
-using Kontur.TestCity.Core.Worker;
-using Kontur.TestCity.Core.Worker.TaskPayloads;
+using TestCity.Core.GitLab;
+using TestCity.Core.GitLab.Models;
+using TestCity.Core.JobProcessing;
+using TestCity.Core.KafkaMessageQueue;
+using TestCity.Core.Logging;
+using TestCity.Core.Storage;
+using TestCity.Core.Storage.DTO;
+using TestCity.Core.Worker;
+using TestCity.Core.Worker.TaskPayloads;
 using Microsoft.Extensions.Logging;
 using NGitLab;
 
-namespace Kontur.TestCity.Worker.Handlers;
+namespace TestCity.Worker.Handlers;
 
 public class ProcessInProgressJobTaskHandler(
     SkbKonturGitLabClientProvider gitLabClientProvider,

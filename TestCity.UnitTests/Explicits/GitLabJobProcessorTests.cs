@@ -1,18 +1,18 @@
 using FluentAssertions;
-using Kontur.TestCity.Core;
-using Kontur.TestCity.Core.Clickhouse;
-using Kontur.TestCity.Core.GitLab;
-using Kontur.TestCity.Core.JobProcessing;
-using Kontur.TestCity.Core.JUnit;
-using Kontur.TestCity.Core.Storage;
-using Kontur.TestCity.Core.Storage.DTO;
-using Kontur.TestCity.GitLabJobsCrawler;
+using TestCity.Core;
+using TestCity.Core.Clickhouse;
+using TestCity.Core.GitLab;
+using TestCity.Core.JobProcessing;
+using TestCity.Core.JUnit;
+using TestCity.Core.Storage;
+using TestCity.Core.Storage.DTO;
+using TestCity.GitLabJobsCrawler;
 using Microsoft.Extensions.Logging;
 using NGitLab.Models;
 using NUnit.Framework;
-using JobScope = Kontur.TestCity.Core.GitLab.Models.JobScope;
+using JobScope = TestCity.Core.GitLab.Models.JobScope;
 
-namespace Kontur.TestCity.UnitTests.Explicits;
+namespace TestCity.UnitTests.Explicits;
 
 [TestFixture]
 [Explicit]

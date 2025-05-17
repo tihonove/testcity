@@ -1,14 +1,14 @@
 using System.Text;
 using dotenv.net;
-using Kontur.TestCity.Api.Models;
-using Kontur.TestCity.Core.Clickhouse;
-using Kontur.TestCity.Core.GitLab;
-using Kontur.TestCity.Core.GitlabProjects;
-using Kontur.TestCity.Core.Infrastructure;
-using Kontur.TestCity.Core.KafkaMessageQueue;
-using Kontur.TestCity.Core.Logging;
-using Kontur.TestCity.Core.Storage;
-using Kontur.TestCity.Core.Worker;
+using TestCity.Api.Models;
+using TestCity.Core.Clickhouse;
+using TestCity.Core.GitLab;
+using TestCity.Core.GitlabProjects;
+using TestCity.Core.Infrastructure;
+using TestCity.Core.KafkaMessageQueue;
+using TestCity.Core.Logging;
+using TestCity.Core.Storage;
+using TestCity.Core.Worker;
 using OpenTelemetry.Metrics;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();

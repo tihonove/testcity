@@ -1,15 +1,15 @@
 using System.IO.Compression;
-using Kontur.TestCity.Api.Models;
-using Kontur.TestCity.Core.GitLab;
-using Kontur.TestCity.Core.GitlabProjects;
-using Kontur.TestCity.Core.Logging;
-using Kontur.TestCity.Core.Worker;
-using Kontur.TestCity.Core.Worker.TaskPayloads;
+using TestCity.Api.Models;
+using TestCity.Core.GitLab;
+using TestCity.Core.GitlabProjects;
+using TestCity.Core.Logging;
+using TestCity.Core.Worker;
+using TestCity.Core.Worker.TaskPayloads;
 using Microsoft.AspNetCore.Mvc;
 using NGitLab;
 using NGitLab.Models;
 
-namespace Kontur.TestCity.Api.Controllers;
+namespace TestCity.Api.Controllers;
 
 [ApiController]
 [Route("api/gitlab")]

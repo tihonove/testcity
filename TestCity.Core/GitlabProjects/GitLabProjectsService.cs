@@ -1,11 +1,11 @@
-using Kontur.TestCity.Core.Logging;
-using Kontur.TestCity.Core.Storage;
+using TestCity.Core.Logging;
+using TestCity.Core.Storage;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
 using System.Runtime.Versioning;
 
-namespace Kontur.TestCity.Core.GitlabProjects;
+namespace TestCity.Core.GitlabProjects;
 
 public class GitLabProjectsService : IDisposable
 {

@@ -1,11 +1,11 @@
 using System.Collections.Concurrent;
-using Kontur.TestCity.Core.GitLab;
-using Kontur.TestCity.Core.Logging;
-using Kontur.TestCity.Core.Storage;
-using Kontur.TestCity.Core.Storage.DTO;
+using TestCity.Core.GitLab;
+using TestCity.Core.Logging;
+using TestCity.Core.Storage;
+using TestCity.Core.Storage.DTO;
 using Microsoft.Extensions.Logging;
 
-namespace Kontur.TestCity.Core.JobProcessing;
+namespace TestCity.Core.JobProcessing;
 
 public sealed class CommitParentsBuilderService(SkbKonturGitLabClientProvider gitLabClientProvider, TestCityDatabase testCityDatabase)
 {

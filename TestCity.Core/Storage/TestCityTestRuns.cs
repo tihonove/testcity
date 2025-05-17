@@ -1,9 +1,9 @@
 using ClickHouse.Client.Copy;
-using Kontur.TestCity.Core.Clickhouse;
-using Kontur.TestCity.Core.Extensions;
-using Kontur.TestCity.Core.Storage.DTO;
+using TestCity.Core.Clickhouse;
+using TestCity.Core.Extensions;
+using TestCity.Core.Storage.DTO;
 
-namespace Kontur.TestCity.Core.Storage;
+namespace TestCity.Core.Storage;
 
 public class TestCityTestRuns(ConnectionFactory connectionFactory)
 {

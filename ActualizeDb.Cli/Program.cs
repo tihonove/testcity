@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using dotenv.net;
-using Kontur.TestCity.Core.Clickhouse;
-using Kontur.TestCity.Core.Worker;
+using TestCity.Core.Clickhouse;
+using TestCity.Core.Worker;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();
 

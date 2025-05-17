@@ -1,4 +1,4 @@
-namespace Kontur.TestCity.Core.Extensions;
+namespace TestCity.Core.Extensions;
 
 public static class AsyncEnumerableExtensions
 {

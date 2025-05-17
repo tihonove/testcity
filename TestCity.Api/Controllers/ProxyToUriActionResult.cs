@@ -2,7 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 
-namespace Kontur.TestCity.Api.Controllers;
+namespace TestCity.Api.Controllers;
 
 internal sealed class ProxyToUriActionResult : IActionResult
 {

@@ -1,6 +1,6 @@
 using NGitLab;
 
-namespace Kontur.TestCity.Core.GitLab;
+namespace TestCity.Core.GitLab;
 
 public class SkbKonturGitLabClientProvider(GitLabSettings gitLabSettings)
 {

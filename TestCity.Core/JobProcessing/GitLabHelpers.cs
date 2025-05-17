@@ -1,8 +1,8 @@
-using Kontur.TestCity.Core.GitLab.Models;
-using Kontur.TestCity.Core.JUnit;
-using Kontur.TestCity.Core.Storage.DTO;
+using TestCity.Core.GitLab.Models;
+using TestCity.Core.JUnit;
+using TestCity.Core.Storage.DTO;
 
-namespace Kontur.TestCity.Core.JobProcessing;
+namespace TestCity.Core.JobProcessing;
 
 public static class GitLabHelpers
 {

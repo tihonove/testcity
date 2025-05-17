@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
-namespace Kontur.TestCity.Core.Logging;
+namespace TestCity.Core.Logging;
 
 public static class Log
 {

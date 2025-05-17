@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Hosting;
 
-namespace Kontur.TestCity.Core.KafkaMessageQueue;
+namespace TestCity.Core.KafkaMessageQueue;
 
 public class KafkaMessageQueueConsumerHostedServiceWrapper(KafkaMessageQueueConsumer messageQueueConsumer) : BackgroundService
 {

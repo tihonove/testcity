@@ -1,6 +1,6 @@
-using Kontur.TestCity.Core.Storage.DTO;
+using TestCity.Core.Storage.DTO;
 
-namespace Kontur.TestCity.Core.JUnit;
+namespace TestCity.Core.JUnit;
 
 public record TestReportData(TestCount Counters, List<TestRun> Runs)
 {

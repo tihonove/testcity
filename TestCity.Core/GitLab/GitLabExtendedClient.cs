@@ -1,9 +1,9 @@
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using Kontur.TestCity.Core.GitLab.Models;
+using TestCity.Core.GitLab.Models;
 
-namespace Kontur.TestCity.Core.GitLab;
+namespace TestCity.Core.GitLab;
 
 public sealed class GitLabExtendedClient : IDisposable
 {

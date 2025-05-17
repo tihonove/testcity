@@ -1,7 +1,7 @@
-using Kontur.TestCity.Core.GitLab;
+using TestCity.Core.GitLab;
 using NUnit.Framework;
 
-namespace Kontur.TestCity.UnitTests.GitLab;
+namespace TestCity.UnitTests.GitLab;
 
 [TestFixture]
 public class GitLabCommitsTests

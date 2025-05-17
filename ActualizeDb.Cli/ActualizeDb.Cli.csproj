@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <AssemblyName>Kontur.TestAnalytics.ActualizeDb.Cli</AssemblyName>
-        <RootNamespace>Kontur.TestAnalytics.ActualizeDb.Cli</RootNamespace>
+        <AssemblyName>TestAnalytics.ActualizeDb.Cli</AssemblyName>
+        <RootNamespace>TestAnalytics.ActualizeDb.Cli</RootNamespace>
         <OutputType>Exe</OutputType>
     </PropertyGroup>
 

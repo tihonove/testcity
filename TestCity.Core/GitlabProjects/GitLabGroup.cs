@@ -1,4 +1,4 @@
-namespace Kontur.TestCity.Core.GitlabProjects;
+namespace TestCity.Core.GitlabProjects;
 
 public class GitLabGroup : GitLabGroupShortInfo
 {

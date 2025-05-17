@@ -1,9 +1,9 @@
 using System.Globalization;
 using Confluent.Kafka;
 using Confluent.Kafka.Admin;
-using Kontur.TestCity.Core.KafkaMessageQueue;
+using TestCity.Core.KafkaMessageQueue;
 
-namespace Kontur.TestCity.Core.Worker;
+namespace TestCity.Core.Worker;
 
 public static class KafkaTopicActualizer
 {

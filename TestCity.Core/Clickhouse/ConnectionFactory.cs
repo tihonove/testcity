@@ -1,6 +1,6 @@
 using ClickHouse.Client.ADO;
 
-namespace Kontur.TestCity.Core.Clickhouse;
+namespace TestCity.Core.Clickhouse;
 
 public class ConnectionFactory
 {

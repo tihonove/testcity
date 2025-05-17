@@ -4,7 +4,7 @@ using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 
-namespace Kontur.TestCity.Core.Infrastructure;
+namespace TestCity.Core.Infrastructure;
 
 public static class OpenTelemetryExtensions
 {

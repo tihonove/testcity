@@ -1,4 +1,4 @@
-namespace Kontur.TestCity.Core.Storage.DTO;
+namespace TestCity.Core.Storage.DTO;
 
 public class InProgressJobInfo
 {
