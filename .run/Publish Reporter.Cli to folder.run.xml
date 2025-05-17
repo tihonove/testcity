@@ -1,6 +1,0 @@
-﻿<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Publish Reporter.Cli to folder" type="DotNetFolderPublish" factoryName="Publish to folder">
-    <riderPublish configuration="Release" platform="Any CPU" produce_single_file="true" ready_to_run="true" runtime="linux-x64" target_folder="$PROJECT_DIR$/../forms/Assemblies/bin" target_framework="net7.0" uuid_high="-5951392548790121333" uuid_low="-7520102027966628002" />
-    <method v="2" />
-  </configuration>
-</component>

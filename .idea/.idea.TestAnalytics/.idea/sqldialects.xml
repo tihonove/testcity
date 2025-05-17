@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="SqlDialectMappings">
-    <file url="PROJECT" dialect="ClickHouse" />
-  </component>
-  <component name="SqlResolveMappings">
-    <file url="file://$PROJECT_DIR$/Front/src/Pages/JobRunsPage.tsx" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;name&quot;:{     &quot;@qname&quot;:&quot;8ced3c1c-aa74-4cce-ae6f-bf6a264150b3&quot;    },    &quot;group&quot;:{     &quot;@kind&quot;:&quot;schema&quot;,     &quot;node&quot;:{      &quot;name&quot;:{       &quot;@qname&quot;:&quot;test_analytics&quot;      }     }    }   }  } }}" />
-  </component>
-</project>
