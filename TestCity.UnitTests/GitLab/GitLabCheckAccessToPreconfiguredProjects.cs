@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using NGitLab;
 using NGitLab.Models;
 using NUnit.Framework;
+using TestCity.UnitTests.Utils;
 
 namespace TestCity.UnitTests.GitLab;
 
@@ -17,6 +18,7 @@ public class GitLabCheckAccessToPreconfiguredProjects
     [SetUp]
     public async Task SetUp()
     {
+        CIUtils.SkipOnGitHubActions();
         var provider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
         clientEx = provider.GetExtendedClient();
         client = provider.GetClient();
@@ -29,7 +31,7 @@ public class GitLabCheckAccessToPreconfiguredProjects
     [TearDown]
     public void TearDown()
     {
-        clientEx.Dispose();
+        clientEx?.Dispose();
     }
 
     [Test]
