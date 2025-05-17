@@ -12,10 +12,10 @@ public class GitLabJobsTests
     [SetUp]
     public void SetUp()
     {
+        CIUtils.SkipOnGitHubActions();
         var provider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
         gitLabClient = provider.GetExtendedClient();
         logger = GlobalSetup.TestLoggerFactory.CreateLogger<GitLabJobsTests>();
-        CIUtils.SkipOnGitHubActions();
     }
 
     [TearDown]
