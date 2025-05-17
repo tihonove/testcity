@@ -60,15 +60,3 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
-
-{{/*
-Helper function to determine image tag
-*/}}
-{{- define "testcity.imageTag" -}}
-{{- $tag := .tag -}}
-{{- if $tag -}}
-{{- $tag -}}
-{{- else -}}
-{{- .global.tag | default "latest" -}}
-{{- end -}}
-{{- end -}}

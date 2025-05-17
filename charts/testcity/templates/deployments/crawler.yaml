@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.crawler.name }}
-          image: "{{ .Values.crawler.image.repository }}:{{ include "testcity.imageTag" (dict "tag" .Values.crawler.image.tag "global" .Values.global) }}"
+          image: "{{ .Values.crawler.image.repository }}:{{ default .Chart.Version .Values.crawler.image.tag }}"
           imagePullPolicy: {{ .Values.crawler.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.crawler.ports.containerPort }}

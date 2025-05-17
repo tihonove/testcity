@@ -29,7 +29,8 @@ jobs:
       - name: Extract metadata
         id: meta
         run: |
-          echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
+          VERSION=$(grep 'version:' ./charts/testcity/Chart.yaml | awk '{print $2}')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
       
       - name: Build and push TestCity.GitLabJobsCrawler
         uses: docker/build-push-action@v4
@@ -38,9 +39,8 @@ jobs:
           file: ./Dockerfile.TestCity.GitLabJobsCrawler
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            tihonove/testcity-crawler:latest
-            tihonove/testcity-crawler:0.1.0-test.${{ env.SHORT_SHA }}
-          cache-from: type=registry,ref=tihonove/testcity-crawler:latest
+            tihonove/testcity-crawler:${{ env.VERSION }}
+          cache-from: type=registry,ref=tihonove/testcity-crawler:${{ env.VERSION }}
           cache-to: type=inline
       
       - name: Build and push TestCity.Api
@@ -50,9 +50,8 @@ jobs:
           file: ./Dockerfile.TestCity.Api
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            tihonove/testcity-api:latest
-            tihonove/testcity-api:0.1.0-test.${{ env.SHORT_SHA }}
-          cache-from: type=registry,ref=tihonove/testcity-api:latest
+            tihonove/testcity-api:${{ env.VERSION }}
+          cache-from: type=registry,ref=tihonove/testcity-api:${{ env.VERSION }}
           cache-to: type=inline
       
       - name: Build and push Front
@@ -62,9 +61,8 @@ jobs:
           file: ./Dockerfile.Front
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            tihonove/testcity-front:latest
-            tihonove/testcity-front:0.1.0-test.${{ env.SHORT_SHA }}
-          cache-from: type=registry,ref=tihonove/testcity-front:latest
+            tihonove/testcity-front:${{ env.VERSION }}
+          cache-from: type=registry,ref=tihonove/testcity-front:${{ env.VERSION }}
           cache-to: type=inline
       
       - name: Build and push Worker
@@ -74,9 +72,8 @@ jobs:
           file: ./Dockerfile.Worker
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            tihonove/testcity-worker:latest
-            tihonove/testcity-worker:0.1.0-test.${{ env.SHORT_SHA }}
-          cache-from: type=registry,ref=tihonove/testcity-worker:latest
+            tihonove/testcity-worker:${{ env.VERSION }}
+          cache-from: type=registry,ref=tihonove/testcity-worker:${{ env.VERSION }}
           cache-to: type=inline
 
   publish-helm-chart:
@@ -88,11 +85,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      
-      - name: Extract metadata
-        id: meta
-        run: |
-          echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
       
       - name: Set up Helm
         uses: azure/setup-helm@v3

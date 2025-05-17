@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.worker.name }}
-          image: "{{ .Values.worker.image.repository }}:{{ include "testcity.imageTag" (dict "tag" .Values.worker.image.tag "global" .Values.global) }}"
+          image: "{{ .Values.worker.image.repository }}:{{ default .Chart.Version .Values.worker.image.tag }}"
           imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
           env:
             - name: GITLAB_TOKEN

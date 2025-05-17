@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.api.name }}
-          image: "{{ .Values.api.image.repository }}:{{ include "testcity.imageTag" (dict "tag" .Values.api.image.tag "global" .Values.global) }}"
+          image: "{{ .Values.api.image.repository }}:{{ default .Chart.Version .Values.api.image.tag }}"
           imagePullPolicy: {{ .Values.api.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.api.service.targetPort }}

@@ -1,6 +1,5 @@
 global:
   environment: cloud
-  tag: 0.1.0-test.81f2390
 
 clickhouse:
   host: vm-ch2-stg.dev.kontur.ru
@@ -25,7 +24,7 @@ front:
   replicaCount: 2
   image:
     repository: tihonove/testcity-front
-    tag: ""  #Если пусто, используется global.tag
+    tag: ""  #Если пусто, используется версия из Chart.yaml
     pullPolicy: IfNotPresent 
   resources:
     requests:
@@ -44,7 +43,7 @@ api:
   replicaCount: 2
   image:
     repository: tihonove/testcity-api
-    tag: ""  # Если пусто, используется global.tag
+    tag: ""  # Если пусто, используется версия из Chart.yaml
     pullPolicy: IfNotPresent
   resources:
     requests:
@@ -63,7 +62,7 @@ crawler:
   replicaCount: 1
   image:
     repository: tihonove/testcity-crawler
-    tag: ""  # Если пусто, используется global.tag
+    tag: ""  # Если пусто, используется версия из Chart.yaml
     pullPolicy: IfNotPresent
   resources:
     requests:
@@ -80,7 +79,7 @@ worker:
   replicaCount: 2
   image:
     repository: tihonove/testcity-worker
-    tag: ""  # Если пусто, используется global.tag
+    tag: ""  # Если пусто, используется версия из Chart.yaml
     pullPolicy: IfNotPresent
   resources:
     requests:
