@@ -1,7 +1,5 @@
-## Глобальные параметры
 global:
   environment: cloud
-  # Версия для всех компонентов, если не переопределяется
   tag: 0.1.0-test.81f2390
 
 clickhouse:
@@ -22,7 +20,6 @@ graphite:
     host: graphite-relay.skbkontur.ru
     port: "2003"
 
-## Настройки компонентов
 front:
   name: test-city-front
   replicaCount: 2
@@ -107,11 +104,8 @@ ingress:
       service: test-city-api-service
       port: 30111
 
-## Секреты
 secrets:
   gitlab:
-    # Будет замещен через --set secrets.gitlab.token=$GITLAB_TOKEN при установке
     token: ""
   otlp:
-    # Будет замещен через --set secrets.otlp.headers=$OTEL_EXPORTER_OTLP_HEADERS при установке
     headers: ""
