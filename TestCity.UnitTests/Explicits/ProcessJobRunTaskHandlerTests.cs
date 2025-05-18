@@ -32,7 +32,7 @@ public class ProcessJobRunTaskHandlerTests
         gitLabClientProvider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
         var graphiteClient = new NullGraphiteClient();
         metricsSender = new TestMetricsSender(graphiteClient);
-        var connectionFactory = new ConnectionFactory();
+        var connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
         testCityDatabase = new TestCityDatabase(connectionFactory);
         extractor = new JUnitExtractor();
         projectJobTypesCache = new ProjectJobTypesCache(testCityDatabase);

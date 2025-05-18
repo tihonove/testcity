@@ -14,7 +14,7 @@ public sealed class GitLabProjectsServiceTests : IDisposable
     [SetUp]
     public async Task SetUp()
     {
-        connectionFactory = new ConnectionFactory();
+        connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
         database = new TestCityDatabase(connectionFactory);
         service = new GitLabProjectsService(database);
         await using var connection = connectionFactory.CreateConnection();
