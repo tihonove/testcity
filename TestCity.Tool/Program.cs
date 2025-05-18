@@ -207,31 +207,30 @@ async Task CopyData(ConnectionFactory sourceConnectionFactory, ConnectionFactory
     // }
     // logger.LogInformation("Перенос JobInfo завершен. Всего перенесено {Count} записей", jobInfoCount);
 
-    logger.LogInformation("Начало переноса CommitParents");
-    int commitParentsCount = 0;
-    await foreach (var batch in sourceDb.CommitParents.GetAllAsync().Batches(1000))
-    {
-        await targetDb.CommitParents.InsertBatchAsync(batch);
-        commitParentsCount += batch.Count;
-        logger.LogInformation("Перенесено {Count} записей CommitParents", commitParentsCount);
-    }
-    logger.LogInformation("Перенос CommitParents завершен. Всего перенесено {Count} записей", commitParentsCount);
+    // logger.LogInformation("Начало переноса CommitParents");
+    // int commitParentsCount = 0;
+    // await foreach (var batch in sourceDb.CommitParents.GetAllAsync().Batches(10000))
+    // {
+
+    //     await Retry.Action(() => targetDb.CommitParents.InsertBatchAsync(batch), TimeSpan.FromMinutes(10));
+    //     commitParentsCount += batch.Count;
+    //     logger.LogInformation("Перенесено {Count} записей CommitParents", commitParentsCount);
+    // }
+    // logger.LogInformation("Перенос CommitParents завершен. Всего перенесено {Count} записей", commitParentsCount);
 
     // Перенос TestRuns (потоково, пакетами по 1000)
-    // logger.LogInformation("Начало переноса TestRuns");
-    // int testRunsCount = 0;
+    logger.LogInformation("Начало переноса TestRuns");
+    int testRunsCount = 0;
 
-    // Группируем TestRuns по JobRunInfo
+    await foreach (var batch in sourceDb.TestRuns.GetAllAsync().Batches(5000))
+    {
+        testRunsCount += batch.Count;
+        await Retry.Action(() => targetDb.TestRuns.InsertBatchAsync(batch.ToAsyncEnumerable()), TimeSpan.FromMinutes(10));
+        if (testRunsCount % 10000 == 0)
+        {
+            logger.LogInformation("Прочитано {Count} записей TestRuns", testRunsCount);
+        }
+    }    
 
-    // await foreach (var batch in sourceDb.TestRuns.GetAllAsync().Batches(1000))
-    // {
-    //     testRunsCount += batch.Count;
-    //     await targetDb.TestRuns.InsertBatchAsync(batch.ToAsyncEnumerable());
-    //     if (testRunsCount % 10000 == 0)
-    //     {
-    //         logger.LogInformation("Прочитано {Count} записей TestRuns", testRunsCount);
-    //     }
-    // }    
-
-    // logger.LogInformation("Перенос TestRuns завершен.");
+    logger.LogInformation("Перенос TestRuns завершен.");
 }

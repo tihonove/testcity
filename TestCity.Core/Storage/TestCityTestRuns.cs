@@ -46,7 +46,7 @@ public class TestCityTestRuns(ConnectionFactory connectionFactory)
             ColumnNames = Fields,
         };
         await bulkCopyInterface.InitAsync();
-        await foreach (var testRunLine in lines.Batches(1000))
+        await foreach (var testRunLine in lines.Batches(5000))
         {
             var values = testRunLine.Select(x =>
                 new object?[]
