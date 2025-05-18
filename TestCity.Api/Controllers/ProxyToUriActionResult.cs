@@ -1,18 +1,16 @@
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
+using TestCity.Core.Clickhouse;
 
 namespace TestCity.Api.Controllers;
 
-internal sealed class ProxyToUriActionResult : IActionResult
+internal sealed class ProxyToUriActionResult(
+    ClickHouseConnectionSettings clickHouseConnectionSettings,
+    HttpRequest sourceRequest,
+    string targetUri,
+    IReadOnlyDictionary<string, string>? additionalHeaders = null) : IActionResult
 {
-    public ProxyToUriActionResult(HttpRequest sourceRequest, string targetUri, IReadOnlyDictionary<string, string>? additionalHeaders = null)
-    {
-        this.sourceRequest = sourceRequest;
-        this.targetUri = targetUri;
-        this.additionalHeaders = additionalHeaders ?? new Dictionary<string, string>();
-    }
-
     public async Task ExecuteResultAsync(ActionContext context)
     {
         var handler = new HttpClientHandler
@@ -25,7 +23,7 @@ internal sealed class ProxyToUriActionResult : IActionResult
         var queryString = sourceRequest.QueryString.ToString();
         if (!string.IsNullOrEmpty(queryString))
         {
-            var database = Environment.GetEnvironmentVariable("TESTANALYTICS_CLICKHOUSE_DB") ?? throw new Exception("TESTANALYTICS_CLICKHOUSE_DB is not set");
+            var database = clickHouseConnectionSettings.Database;
             queryString = queryString.Replace("database=test_analytics", $"database={database}");
             queryString = queryString.Replace("database=DATABASE", $"database={database}");
         }
@@ -40,8 +38,8 @@ internal sealed class ProxyToUriActionResult : IActionResult
 
             if (sourceRequestHeader.Key == "Authorization")
             {
-                var user = Environment.GetEnvironmentVariable("TESTANALYTICS_CLICKHOUSE_USER");
-                var password = Environment.GetEnvironmentVariable("TESTANALYTICS_CLICKHOUSE_PASSWORD");
+                var user = clickHouseConnectionSettings.Username;
+                var password = clickHouseConnectionSettings.Password;
                 var base64authorization = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{user}:{password}"));
                 request.Headers.Add("Authorization", $"Basic {base64authorization}");
             }
@@ -74,7 +72,5 @@ internal sealed class ProxyToUriActionResult : IActionResult
         await responseStream.CopyToAsync(clientResponse.Body);
     }
 
-    private readonly HttpRequest sourceRequest;
-    private readonly string targetUri;
-    private readonly IReadOnlyDictionary<string, string> additionalHeaders;
+    private readonly IReadOnlyDictionary<string, string> additionalHeaders = additionalHeaders ?? new Dictionary<string, string>();
 }

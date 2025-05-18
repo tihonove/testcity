@@ -1,18 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
+using TestCity.Core.Clickhouse;
 
 namespace TestCity.Api.Controllers;
 
 [ApiController]
 [Route("api/clickhouse")]
-public class ClickhouseProxyController : Controller
+public class ClickhouseProxyController(ClickHouseConnectionSettings clickHouseConnectionSettings) : Controller
 {
     [Route("{*query}")]
     [AcceptVerbs("GET", "POST", "PUT", "DELETE")]
     public IActionResult Proxy(string? query)
     {
-        var host = Environment.GetEnvironmentVariable("TESTANALYTICS_CLICKHOUSE_HOST") ?? throw new Exception("TESTANALYTICS_CLICKHOUSE_HOST is not set");
-        var port = ushort.Parse(Environment.GetEnvironmentVariable("TESTANALYTICS_CLICKHOUSE_PORT") ?? throw new Exception("TESTANALYTICS_CLICKHOUSE_PORT is not set"));
+        var host = clickHouseConnectionSettings.Host;
+        var port = clickHouseConnectionSettings.Port;
         return new ProxyToUriActionResult(
+            clickHouseConnectionSettings,
             Request,
             $"http://{host}:{port}/{query}");
     }

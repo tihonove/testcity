@@ -162,3 +162,11 @@ async Task ProcessCommits(GitLabProject project)
     }
 }
 #pragma warning restore CS8321 // Local function is declared but never used
+
+async Task CopyData(ConnectionFactory sourceConnectionFactory, ConnectionFactory targetConnectionFactory)
+{
+    var sourceDb = new TestCityDatabase(sourceConnectionFactory);
+    var targetDb = new TestCityDatabase(targetConnectionFactory);
+
+    
+}

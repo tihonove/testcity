@@ -1,12 +1,10 @@
-﻿using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using dotenv.net;
+﻿using dotenv.net;
 using TestCity.Core.Clickhouse;
 using TestCity.Core.Worker;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();
 
-var connectionFactory = new ConnectionFactory();
+var connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
 await using var connection = connectionFactory.CreateConnection();
 await connection.EnsureDbIsAccessibleAsync(TimeSpan.FromMinutes(20));
 

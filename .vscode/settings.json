@@ -1,0 +1,58 @@
+{
+    "sqltools.connections": [
+        {
+            "server": "http://localhost",
+            "port": 8123,
+            "database": "default",
+            "useJWT": false,
+            "requestTimeout": 30000,
+            "enableTls": false,
+            "previewLimit": 50,
+            "password": "123123",
+            "username": "testanalytics-user",
+            "driver": "ClickHouse",
+            "name": "127.0.0.1"
+        },
+        {
+            "server": "http://vm-ch2-stg.dev.kontur.ru",
+            "port": 8123,
+            "database": "test_analytics",
+            "useJWT": false,
+            "requestTimeout": 30000,
+            "enableTls": false,
+            "previewLimit": 50,
+            "password": "12487562",
+            "username": "tihonove",
+            "driver": "ClickHouse",
+            "name": "vm-ch2-stg.dev.kontur.ru"
+        },
+        {
+            "server": "https://clickhouse.kontur.host/",
+            "port": 8123,
+            "database": "testcity",
+            "useJWT": false,
+            "requestTimeout": 30000,
+            "enableTls": false,
+            "previewLimit": 50,
+            "password": "scowl4grew5coach7slash3movie",
+            "username": "svc_testcity_gitlab",
+            "driver": "ClickHouse",
+            "name": "clickhouse.kontur.host",
+            "group": "kontur"
+        },
+        {
+            "server": "http://vm-ch-tstct-1.dev.kontur.ru",
+            "port": 8123,
+            "database": "default",
+            "useJWT": false,
+            "requestTimeout": 30000,
+            "enableTls": false,
+            "previewLimit": 50,
+            "password": "h7h2vh",
+            "username": "default",
+            "driver": "ClickHouse",
+            "name": "vm-ch-tstct-1",
+            "group": "kontur"
+        }
+    ]
+}

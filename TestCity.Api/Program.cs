@@ -21,6 +21,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 
 builder.Services.AddSingleton<GitLabSettings>(GitLabSettings.Default);
+builder.Services.AddSingleton<ClickHouseConnectionSettings>(ClickHouseConnectionSettings.Default);
 builder.Services.AddSingleton<SkbKonturGitLabClientProvider>();
 builder.Services.AddSingleton<WorkerClient>();
 builder.Services.AddSingleton<GitLabProjectsService>();
