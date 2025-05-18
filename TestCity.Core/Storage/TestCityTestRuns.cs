@@ -61,56 +61,69 @@ public class TestCityTestRuns(ConnectionFactory connectionFactory)
 
     public async IAsyncEnumerable<(JobRunInfo, TestRun)> GetAllAsync([EnumeratorCancellation] CancellationToken ct = default)
     {
+        const int batchSize = 1_000_000;
+        long offset = 0;
+        bool hasMoreData = true;
         await using var connection = connectionFactory.CreateConnection();
-        var query = @"
-            SELECT
-                tr.JobId,
-                tr.JobRunId,
-                tr.ProjectId,
-                tr.BranchName,
-                tr.TestId,
-                tr.State,
-                tr.Duration,
-                tr.StartDateTime,
-                tr.AgentName,
-                tr.AgentOSName,
-                tr.JobUrl,
-                tr.JUnitFailureMessage,
-                tr.JUnitFailureOutput,
-                tr.JUnitSystemOutput
-            FROM TestRuns tr
-        ";
 
-        var reader = await connection.ExecuteQueryAsync(query, ct);
-        while (await reader.ReadAsync(ct))
+        while (hasMoreData && !ct.IsCancellationRequested)
         {
-            var jobRunInfo = new JobRunInfo
-            {
-                JobId = reader.GetString(0),
-                JobRunId = reader.GetString(1),
-                ProjectId = reader.GetString(2),
-                BranchName = reader.GetString(3),
-                AgentName = reader.GetString(8),
-                AgentOSName = reader.GetString(9),
-                JobUrl = reader.GetString(10),
-                PipelineId = string.Empty // Дополнительное поле, требуемое для JobRunInfo
-            };
+            var query = @$"
+                SELECT
+                    tr.JobId,
+                    tr.JobRunId,
+                    tr.ProjectId,
+                    tr.BranchName,
+                    tr.TestId,
+                    tr.State,
+                    tr.Duration,
+                    tr.StartDateTime,
+                    tr.AgentName,
+                    tr.AgentOSName,
+                    tr.JobUrl,
+                    tr.JUnitFailureMessage,
+                    tr.JUnitFailureOutput,
+                    tr.JUnitSystemOutput
+                FROM TestRuns tr
+                LIMIT {batchSize} OFFSET {offset}
+            ";
 
-            var testRun = new TestRun
-            {
-                TestId = reader.GetString(4),
-                TestResult = Enum.Parse<TestResult>(reader.GetString(5)),
-                Duration = (long)reader.GetDecimal(6),
-                StartDateTime = reader.GetDateTime(7),
-                JUnitFailureMessage = reader.IsDBNull(11) ? null : reader.GetString(11),
-                JUnitFailureOutput = reader.IsDBNull(12) ? null : reader.GetString(12),
-                JUnitSystemOutput = reader.IsDBNull(13) ? null : reader.GetString(13)
-            };
+            var reader = await connection.ExecuteQueryAsync(query, ct);
+            int rowCount = 0;
 
-            yield return (jobRunInfo, testRun);
+            while (await reader.ReadAsync(ct))
+            {
+                rowCount++;
+                var jobRunInfo = new JobRunInfo
+                {
+                    JobId = reader.GetString(0),
+                    JobRunId = reader.GetString(1),
+                    ProjectId = reader.GetString(2),
+                    BranchName = reader.GetString(3),
+                    AgentName = reader.GetString(8),
+                    AgentOSName = reader.GetString(9),
+                    JobUrl = reader.GetString(10),
+                    PipelineId = string.Empty // Дополнительное поле, требуемое для JobRunInfo
+                };
+
+                var testRun = new TestRun
+                {
+                    TestId = reader.GetString(4),
+                    TestResult = Enum.Parse<TestResult>(reader.GetString(5)),
+                    Duration = (long)reader.GetDecimal(6),
+                    StartDateTime = reader.GetDateTime(7),
+                    JUnitFailureMessage = reader.IsDBNull(11) ? null : reader.GetString(11),
+                    JUnitFailureOutput = reader.IsDBNull(12) ? null : reader.GetString(12),
+                    JUnitSystemOutput = reader.IsDBNull(13) ? null : reader.GetString(13)
+                };
+
+                yield return (jobRunInfo, testRun);
+            }
+
+            hasMoreData = rowCount == batchSize;
+            offset += rowCount;
         }
     }
-
 
     private static readonly string[] Fields =
     [
