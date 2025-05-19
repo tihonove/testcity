@@ -9,22 +9,21 @@ using TestCity.Core.JUnit;
 using TestCity.Core.KafkaMessageQueue;
 using TestCity.Core.Logging;
 using TestCity.Core.Storage;
-using TestCity.Core.Storage.DTO;
 using TestCity.Core.Worker;
 using TestCity.Core.Worker.TaskPayloads;
 using TestCity.Core.Extensions;
 using Microsoft.Extensions.Logging;
 using NGitLab.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text.Json.Serialization;
-using System.Text.Json;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+var loggerFactory = LoggerFactory.Create(builder => builder.AddSimpleConsole(options =>
+{
+    options.IncludeScopes = true;
+    options.SingleLine = true;
+    options.TimestampFormat = "hh:mm:ss ";
+}));
 var logger = loggerFactory.CreateLogger<Program>();
 Log.ConfigureGlobalLogProvider(loggerFactory);
 
@@ -222,7 +221,7 @@ async Task CopyData(ConnectionFactory sourceConnectionFactory, ConnectionFactory
     logger.LogInformation("Начало переноса TestRuns");
 
     // Начинаем с текущей даты и часа
-    var currentDateTime = new DateTime(2025, 04, 29, 23, 0, 0);
+    var currentDateTime = new DateTime(2025, 4, 17, 11, 00, 00);
     // Минимальная дата (6 месяцев назад)
     var minDateTime = new DateTime(2025, 05, 19).AddMonths(-6);
     int totalTestRunsCount = 0;
@@ -245,7 +244,7 @@ async Task CopyData(ConnectionFactory sourceConnectionFactory, ConnectionFactory
         // Если мы уже прошли минимальную дату и нет данных за текущий час, останавливаемся
         if (hourlyCount == 0 && currentDateTime < minDateTime)
         {
-            logger.LogInformation("Обработка завершена, так как нет данных за {DateTime} и обработан минимальный период", 
+            logger.LogInformation("Обработка завершена, так как нет данных за {DateTime} и обработан минимальный период",
                 currentDateTime.ToString("yyyy-MM-dd HH:00"));
             break;
         }
