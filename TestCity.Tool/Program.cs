@@ -218,40 +218,40 @@ async Task CopyData(ConnectionFactory sourceConnectionFactory, ConnectionFactory
     // }
     // logger.LogInformation("Перенос CommitParents завершен. Всего перенесено {Count} записей", commitParentsCount);
 
-    // Перенос TestRuns (потоково, по дням)
+    // Перенос TestRuns (потоково, по часам)
     logger.LogInformation("Начало переноса TestRuns");
 
-    // Начинаем с сегодняшней даты
-    var currentDate = new DateTime(2025, 04, 29);
+    // Начинаем с текущей даты и часа
+    var currentDateTime = new DateTime(2025, 04, 29, 23, 0, 0);
     // Минимальная дата (6 месяцев назад)
-    var minDate = new DateTime(2025, 05, 19).AddMonths(-6);
+    var minDateTime = new DateTime(2025, 05, 19).AddMonths(-6);
     int totalTestRunsCount = 0;
 
-    while (currentDate >= minDate)
+    while (currentDateTime >= minDateTime)
     {
-        logger.LogInformation("Обработка данных TestRuns за {Date}", currentDate.ToString("yyyy-MM-dd"));
+        logger.LogInformation("Обработка данных TestRuns за {DateTime}", currentDateTime.ToString("yyyy-MM-dd HH:00"));
 
-        int dailyCount = 0;
-
-        await foreach (var batch in sourceDb.TestRuns.GetByDateAsync(currentDate).Batches(5000))
+        int hourlyCount = 0;
+        await foreach (var batch in sourceDb.TestRuns.GetByHourAsync(currentDateTime).Batches(5000))
         {
-            dailyCount++;
+            hourlyCount += batch.Count;
             await Retry.Action(() => targetDb.TestRuns.InsertBatchAsync(batch.ToAsyncEnumerable()), TimeSpan.FromMinutes(10));
             totalTestRunsCount += batch.Count;
-            logger.LogInformation("Обработано {BatchCount}/{TotalCount} записей TestRuns за {Date}", batch.Count, dailyCount, currentDate.ToString("yyyy-MM-dd"));
+            logger.LogInformation("Обработано {BatchCount}/{TotalCount} записей TestRuns за {DateTime}", batch.Count, hourlyCount, currentDateTime.ToString("yyyy-MM-dd HH:00"));
         }
 
-        logger.LogInformation("Всего обработано {Count} записей TestRuns за {Date}", dailyCount, currentDate.ToString("yyyy-MM-dd"));
+        logger.LogInformation("Всего обработано {Count} записей TestRuns за {DateTime}", hourlyCount, currentDateTime.ToString("yyyy-MM-dd HH:00"));
 
-        // Если мы уже прошли минимальную дату и нет данных за текущий день, останавливаемся
-        if (dailyCount == 0 && currentDate < minDate)
+        // Если мы уже прошли минимальную дату и нет данных за текущий час, останавливаемся
+        if (hourlyCount == 0 && currentDateTime < minDateTime)
         {
-            logger.LogInformation("Обработка завершена, так как нет данных за {Date} и обработан минимальный период", currentDate.ToString("yyyy-MM-dd"));
+            logger.LogInformation("Обработка завершена, так как нет данных за {DateTime} и обработан минимальный период", 
+                currentDateTime.ToString("yyyy-MM-dd HH:00"));
             break;
         }
 
-        // Переходим к предыдущему дню
-        currentDate = currentDate.AddDays(-1);
+        // Переходим к предыдущему часу
+        currentDateTime = currentDateTime.AddHours(-1);
     }
 
     logger.LogInformation("Перенос TestRuns завершен. Всего перенесено {Count} записей", totalTestRunsCount);

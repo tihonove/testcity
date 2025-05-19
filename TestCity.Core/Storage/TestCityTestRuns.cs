@@ -206,6 +206,77 @@ public class TestCityTestRuns(ConnectionFactory connectionFactory)
         }
     }
 
+    public async IAsyncEnumerable<(JobRunInfo, TestRun)> GetByHourAsync(DateTime dateTime, [EnumeratorCancellation] CancellationToken ct = default)
+    {
+        var startOfHour = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, 0, 0, DateTimeKind.Utc);
+        var endOfHour = startOfHour.AddHours(1);
+
+        var timeoutBudget = TimeSpan.FromMinutes(30);
+        await using var connection = connectionFactory.CreateConnection();
+
+        // Define query for specific hour
+        var query = $@"
+            SELECT
+                tr.JobId,
+                tr.JobRunId,
+                tr.ProjectId,
+                tr.BranchName,
+                tr.TestId,
+                tr.State,
+                tr.Duration,
+                tr.StartDateTime,
+                tr.AgentName,
+                tr.AgentOSName,
+                tr.JobUrl,
+                tr.JUnitFailureMessage,
+                tr.JUnitFailureOutput,
+                tr.JUnitSystemOutput
+            FROM TestRuns tr
+            WHERE tr.StartDateTime >= '{startOfHour:yyyy-MM-dd HH:mm:ss}'
+              AND tr.StartDateTime < '{endOfHour:yyyy-MM-dd HH:mm:ss}'
+        ";
+
+        // Process results with retry logic
+        var results = new List<(JobRunInfo, TestRun)>();
+        await Retry.Action(async () =>
+        {
+            results.Clear();
+            var reader = await connection.ExecuteQueryAsync(query, ct);
+            while (await reader.ReadAsync(ct))
+            {
+                var jobRunInfo = new JobRunInfo
+                {
+                    JobId = reader.GetString(0),
+                    JobRunId = reader.GetString(1),
+                    ProjectId = reader.GetString(2),
+                    BranchName = reader.GetString(3),
+                    AgentName = reader.GetString(8),
+                    AgentOSName = reader.GetString(9),
+                    JobUrl = reader.GetString(10),
+                    PipelineId = string.Empty // Дополнительное поле, требуемое для JobRunInfo
+                };
+
+                var testRun = new TestRun
+                {
+                    TestId = reader.GetString(4),
+                    TestResult = Enum.Parse<TestResult>(reader.GetString(5)),
+                    Duration = (long)reader.GetDecimal(6),
+                    StartDateTime = reader.GetDateTime(7),
+                    JUnitFailureMessage = reader.IsDBNull(11) ? null : reader.GetString(11),
+                    JUnitFailureOutput = reader.IsDBNull(12) ? null : reader.GetString(12),
+                    JUnitSystemOutput = reader.IsDBNull(13) ? null : reader.GetString(13)
+                };
+
+                results.Add((jobRunInfo, testRun));
+            }
+        }, timeoutBudget);
+
+        foreach (var result in results)
+        {
+            yield return result;
+        }
+    }
+
     private static readonly string[] Fields =
     [
         "JobId",
