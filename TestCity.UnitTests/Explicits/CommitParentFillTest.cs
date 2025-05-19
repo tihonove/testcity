@@ -24,7 +24,7 @@ public class CommitParentFillTest
     {
         long projectId = 24783;
         var gitLabClientProvider = new SkbKonturGitLabClientProvider(settings);
-        var service = new CommitParentsBuilderService(gitLabClientProvider, new TestCityDatabase(new ConnectionFactory()));
+        var service = new CommitParentsBuilderService(gitLabClientProvider, new TestCityDatabase(new ConnectionFactory(ClickHouseConnectionSettings.Default)));
         await service.BuildCommitParent(projectId, "2d39e9a8868610dd0a09ed8604e1a259db2059de", default);
     }
 
@@ -37,7 +37,7 @@ public class CommitParentFillTest
         string branchName = "main";
 
         // Создаем экземпляр БД
-        var database = new TestCityDatabase(new ConnectionFactory());
+        var database = new TestCityDatabase(new ConnectionFactory(ClickHouseConnectionSettings.Default));
 
         // Вызываем метод получения изменений
         var changes = await database.GetCommitChangesAsync(commitSha, jobId, branchName);
@@ -127,7 +127,7 @@ public class CommitParentFillTest
         };
 
         // Создаем экземпляр TestCityJobInfo для работы с базой данных
-        var connectionFactory = new ConnectionFactory();
+        var connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
         var testCityJobInfo = new TestCityJobInfo(connectionFactory);
 
         // Вставляем данные

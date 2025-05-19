@@ -22,7 +22,7 @@ public class GitLabCheckAccessToPreconfiguredProjects
         var provider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
         clientEx = provider.GetExtendedClient();
         client = provider.GetClient();
-        var connectionFactory = new ConnectionFactory();
+        var connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
         await using var connection = connectionFactory.CreateConnection();
         await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);
         await TestAnalyticsDatabaseSchema.InsertPredefinedProjects(connectionFactory);
@@ -38,7 +38,7 @@ public class GitLabCheckAccessToPreconfiguredProjects
     public async Task CheckAccessToProject()
     {
         logger = GlobalSetup.TestLoggerFactory.CreateLogger<GitLabCheckAccessToPreconfiguredProjects>();
-        var connectionFactory = new ConnectionFactory();
+        var connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
         var database = new TestCityDatabase(connectionFactory);
         var gitLabProjectsService = new GitLabProjectsService(database);
         var allProjects = await gitLabProjectsService.GetAllProjects();

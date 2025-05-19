@@ -91,7 +91,7 @@ public class GitLabJobProcessorTests
             {
                 try
                 {
-                    bool exists = await new TestCityDatabase(new ConnectionFactory()).JobInfo.ExistsAsync(job.Id.ToString());
+                    bool exists = await new TestCityDatabase(new ConnectionFactory(ClickHouseConnectionSettings.Default)).JobInfo.ExistsAsync(job.Id.ToString());
                     if (exists)
                     {
                         logger.LogInformation("JobRunId '{JobRunId}' exists. Skip processing test runs", job.Id);
@@ -160,7 +160,7 @@ public class GitLabJobProcessorTests
             {
                 try
                 {
-                    bool exists = await new TestCityDatabase(new ConnectionFactory()).JobInfo.ExistsAsync(job.Id.ToString());
+                    bool exists = await new TestCityDatabase(new ConnectionFactory(ClickHouseConnectionSettings.Default)).JobInfo.ExistsAsync(job.Id.ToString());
                     if (exists)
                     {
                         logger.LogInformation("JobRunId '{JobRunId}' exists. Skip processing test runs", job.Id);
@@ -216,7 +216,7 @@ public class GitLabJobProcessorTests
         //var jobs = Enumerable.Take(jobsClient.GetJobsAsync(jobsQuery), 100);
         // logger.LogInformation("Take last {JobsLength} jobs", jobs.Length);
     
-        var database = new TestCityDatabase(new ConnectionFactory());
+        var database = new TestCityDatabase(new ConnectionFactory(ClickHouseConnectionSettings.Default));
         int count = 0;
         foreach (var job in jobs)
         {

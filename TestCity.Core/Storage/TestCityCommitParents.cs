@@ -2,6 +2,7 @@ using ClickHouse.Client.Copy;
 using TestCity.Core.Clickhouse;
 using TestCity.Core.Extensions;
 using TestCity.Core.Storage.DTO;
+using System.Runtime.CompilerServices;
 
 namespace TestCity.Core.Storage;
 
@@ -89,6 +90,39 @@ public class TestCityCommitParents(ConnectionFactory connectionFactory)
         }
 
         return results;
+    }
+
+    public async IAsyncEnumerable<CommitParentsEntry> GetAllAsync([EnumeratorCancellation] CancellationToken ct = default)
+    {
+        await using var connection = connectionFactory.CreateConnection();
+        const string query = @"
+            SELECT 
+                ProjectId,
+                CommitSha,
+                ParentCommitSha,
+                Depth,
+                AuthorName,
+                AuthorEmail,
+                MessagePreview,
+                BranchType
+            FROM CommitParents
+        ";
+
+        var reader = await connection.ExecuteQueryAsync(query, ct);
+        while (await reader.ReadAsync(ct))
+        {
+            yield return new CommitParentsEntry
+            {
+                ProjectId = long.Parse(reader.GetString(0)),
+                CommitSha = reader.GetString(1),
+                ParentCommitSha = reader.GetString(2),
+                Depth = (ushort)reader.GetValue(3),
+                AuthorName = reader.GetString(4),
+                AuthorEmail = reader.GetString(5),
+                MessagePreview = reader.IsDBNull(6) ? null : reader.GetString(6),
+                BranchType = Enum.Parse<BranchType>(reader.GetString(7))
+            };
+        }
     }
 
     private static readonly string[] Fields = [
