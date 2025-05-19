@@ -216,27 +216,9 @@ public class TestCityTestRuns(ConnectionFactory connectionFactory)
         var endOfHour = startOfHour.AddHours(1);
 
         var timeoutBudget = TimeSpan.FromMinutes(30);
-
-        var query = $@"
-            SELECT
-                tr.JobId,
-                tr.JobRunId,
-                tr.ProjectId,
-                tr.BranchName,
-                tr.TestId,
-                tr.State,
-                tr.Duration,
-                tr.StartDateTime,
-                tr.AgentName,
-                tr.AgentOSName,
-                tr.JobUrl,
-                tr.JUnitFailureMessage,
-                tr.JUnitFailureOutput,
-                tr.JUnitSystemOutput
-            FROM TestRuns tr
-            WHERE tr.StartDateTime >= '{startOfHour:yyyy-MM-dd HH:mm:ss}'
-              AND tr.StartDateTime < '{endOfHour:yyyy-MM-dd HH:mm:ss}'
-        ";
+        const int batchSize = 50000;
+        var offset = 0;
+        var hasMoreRecords = true;
 
         // Process results with retry logic
         var results = new List<(JobRunInfo, TestRun)>();
@@ -244,38 +226,70 @@ public class TestCityTestRuns(ConnectionFactory connectionFactory)
         {
             results.Clear();
             await using var connection = connectionFactory.CreateConnection();
-            await using var reader = await connection.ExecuteQueryAsync(query, ct);
-            while (await reader.ReadAsync(ct))
+            
+            while (hasMoreRecords && !ct.IsCancellationRequested)
             {
-                var jobRunInfo = new JobRunInfo
+                var query = $@"
+                    SELECT
+                        tr.JobId,
+                        tr.JobRunId,
+                        tr.ProjectId,
+                        tr.BranchName,
+                        tr.TestId,
+                        tr.State,
+                        tr.Duration,
+                        tr.StartDateTime,
+                        tr.AgentName,
+                        tr.AgentOSName,
+                        tr.JobUrl,
+                        tr.JUnitFailureMessage,
+                        tr.JUnitFailureOutput,
+                        tr.JUnitSystemOutput
+                    FROM TestRuns tr
+                    WHERE tr.StartDateTime >= '{startOfHour:yyyy-MM-dd HH:mm:ss}'
+                      AND tr.StartDateTime < '{endOfHour:yyyy-MM-dd HH:mm:ss}'
+                    LIMIT {batchSize}
+                    OFFSET {offset}
+                ";
+                
+                var batchResults = new List<(JobRunInfo, TestRun)>();
+                await using var reader = await connection.ExecuteQueryAsync(query, ct);
+                while (await reader.ReadAsync(ct))
                 {
-                    JobId = reader.GetString(0),
-                    JobRunId = reader.GetString(1),
-                    ProjectId = reader.GetString(2),
-                    BranchName = reader.GetString(3),
-                    AgentName = reader.GetString(8),
-                    AgentOSName = reader.GetString(9),
-                    JobUrl = reader.GetString(10),
-                    PipelineId = string.Empty // Дополнительное поле, требуемое для JobRunInfo
-                };
+                    var jobRunInfo = new JobRunInfo
+                    {
+                        JobId = reader.GetString(0),
+                        JobRunId = reader.GetString(1),
+                        ProjectId = reader.GetString(2),
+                        BranchName = reader.GetString(3),
+                        AgentName = reader.GetString(8),
+                        AgentOSName = reader.GetString(9),
+                        JobUrl = reader.GetString(10),
+                        PipelineId = string.Empty // Дополнительное поле, требуемое для JobRunInfo
+                    };
 
-                var testRun = new TestRun
-                {
-                    TestId = reader.GetString(4),
-                    TestResult = Enum.Parse<TestResult>(reader.GetString(5)),
-                    Duration = (long)reader.GetDecimal(6),
-                    StartDateTime = reader.GetDateTime(7),
-                    JUnitFailureMessage = reader.IsDBNull(11) ? null : reader.GetString(11),
-                    JUnitFailureOutput = reader.IsDBNull(12) ? null : reader.GetString(12),
-                    JUnitSystemOutput = reader.IsDBNull(13) ? null : reader.GetString(13)
-                };
+                    var testRun = new TestRun
+                    {
+                        TestId = reader.GetString(4),
+                        TestResult = Enum.Parse<TestResult>(reader.GetString(5)),
+                        Duration = (long)reader.GetDecimal(6),
+                        StartDateTime = reader.GetDateTime(7),
+                        JUnitFailureMessage = reader.IsDBNull(11) ? null : reader.GetString(11),
+                        JUnitFailureOutput = reader.IsDBNull(12) ? null : reader.GetString(12),
+                        JUnitSystemOutput = reader.IsDBNull(13) ? null : reader.GetString(13)
+                    };
 
-                results.Add((jobRunInfo, testRun));
+                    batchResults.Add((jobRunInfo, testRun));
 
-                if (results.Count % 1000 == 0)
-                {
-                    logger.LogInformation("  Read {Count} record", results.Count);
+                    if (results.Count % 1000 == 0)
+                    {
+                        logger.LogInformation("  Read {Count} records total", results.Count);
+                    }
                 }
+                
+                results.AddRange(batchResults);
+                hasMoreRecords = batchResults.Count == batchSize;
+                offset += batchResults.Count;                
             }
         }, timeoutBudget, logger);
 
