@@ -18,7 +18,7 @@ const client = createClient({
     host: "http://zzz",
     database: "DATABASE",
     username: "USERNAME",
-    password: "PASSWORD"
+    password: "PASSWORD",
 });
 
 export function useStorageQuery<T>(
