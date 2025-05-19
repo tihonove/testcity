@@ -1,6 +1,5 @@
 using System.Collections.Concurrent;
 using TestCity.Core.GitLab;
-using TestCity.Core.GitLab.Models;
 using TestCity.Core.JobProcessing;
 using TestCity.Core.KafkaMessageQueue;
 using TestCity.Core.Logging;
@@ -63,6 +62,7 @@ public class ProcessInProgressJobTaskHandler(
                 if (!await projectJobTypesCache.JobTypeExistsAsync(projectId, jobType, ct))
                 {
                     logger.LogInformation("Тип задачи {JobType} не существует в списке завершенных задач для проекта {ProjectId}. Пропускаем.", jobType, projectId);
+                    return;
                 }
 
                 var refId = await client.BranchOrRef(task.ProjectId, job.Ref);
