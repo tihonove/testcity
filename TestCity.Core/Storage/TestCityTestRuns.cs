@@ -140,7 +140,7 @@ public class TestCityTestRuns(ConnectionFactory connectionFactory)
         var startOfDay = new DateTime(date.Year, date.Month, date.Day, 0, 0, 0, DateTimeKind.Utc);
         var endOfDay = startOfDay.AddDays(1);
 
-        var timeoutBudget = TimeSpan.FromMinutes(10);
+        var timeoutBudget = TimeSpan.FromMinutes(60);
         await using var connection = connectionFactory.CreateConnection();
 
         // Define query for specific date

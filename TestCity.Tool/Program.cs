@@ -222,9 +222,9 @@ async Task CopyData(ConnectionFactory sourceConnectionFactory, ConnectionFactory
     logger.LogInformation("Начало переноса TestRuns");
 
     // Начинаем с сегодняшней даты
-    var currentDate = DateTime.UtcNow.Date;
+    var currentDate = new DateTime(2025, 04, 29);
     // Минимальная дата (6 месяцев назад)
-    var minDate = currentDate.AddMonths(-6);
+    var minDate = new DateTime(2025, 05, 19).AddMonths(-6);
     int totalTestRunsCount = 0;
 
     while (currentDate >= minDate)
