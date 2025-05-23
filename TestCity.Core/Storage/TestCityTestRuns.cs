@@ -3,6 +3,8 @@ using TestCity.Core.Clickhouse;
 using TestCity.Core.Extensions;
 using TestCity.Core.Storage.DTO;
 using System.Runtime.CompilerServices;
+using TestCity.Core.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace TestCity.Core.Storage;
 
@@ -126,7 +128,7 @@ public class TestCityTestRuns(ConnectionFactory connectionFactory)
                 }
                 hasMoreRecords = currentBatchResults.Count == batchSize;
 
-            }, timeoutBudget);
+            }, timeoutBudget, logger);
             offset += currentBatchResults.Count;
             foreach (var result in currentBatchResults)
             {
@@ -212,9 +214,7 @@ public class TestCityTestRuns(ConnectionFactory connectionFactory)
         var endOfHour = startOfHour.AddHours(1);
 
         var timeoutBudget = TimeSpan.FromMinutes(30);
-        await using var connection = connectionFactory.CreateConnection();
 
-        // Define query for specific hour
         var query = $@"
             SELECT
                 tr.JobId,
@@ -241,7 +241,8 @@ public class TestCityTestRuns(ConnectionFactory connectionFactory)
         await Retry.Action(async () =>
         {
             results.Clear();
-            var reader = await connection.ExecuteQueryAsync(query, ct);
+            await using var connection = connectionFactory.CreateConnection();
+            await using var reader = await connection.ExecuteQueryAsync(query, ct);
             while (await reader.ReadAsync(ct))
             {
                 var jobRunInfo = new JobRunInfo
@@ -268,8 +269,13 @@ public class TestCityTestRuns(ConnectionFactory connectionFactory)
                 };
 
                 results.Add((jobRunInfo, testRun));
+
+                if (results.Count % 1000 == 0)
+                {
+                    logger.LogInformation("  Read {Count} record", results.Count);
+                }
             }
-        }, timeoutBudget);
+        }, timeoutBudget, logger);
 
         foreach (var result in results)
         {
@@ -294,4 +300,5 @@ public class TestCityTestRuns(ConnectionFactory connectionFactory)
         "JUnitFailureOutput",
         "JUnitSystemOutput",
     ];
+    private readonly ILogger logger = Log.GetLog<TestCityTestRuns>();
 }

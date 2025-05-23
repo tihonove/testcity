@@ -18,7 +18,12 @@ using NGitLab.Models;
 DotEnv.Fluent().WithProbeForEnv(10).Load();
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+var loggerFactory = LoggerFactory.Create(builder => builder.AddSimpleConsole(options =>
+{
+    options.IncludeScopes = true;
+    options.SingleLine = true;
+    options.TimestampFormat = "hh:mm:ss ";
+}));
 var logger = loggerFactory.CreateLogger<Program>();
 Log.ConfigureGlobalLogProvider(loggerFactory);
 
