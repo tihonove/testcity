@@ -9,11 +9,18 @@ interface GroupAvatarProps {
 
 export function GroupAvatar(props: GroupAvatarProps) {
     const rootClass = props.size === "20px" ? styles.groupAvatarRoot20 : styles.groupAvatarRoot32;
-    return (
-        <div className={rootClass} style={{ backgroundColor: deterministicColor(props.group.title) }}>
-            {props.group.title[0]}
-        </div>
-    );
+    if (props.group.avatarUrl) {
+        return (
+            <div className={`${rootClass} ${styles.iconWrapper}`}>
+                <div className={styles.avatarWithImage} style={{ backgroundImage: `url(${props.group.avatarUrl})` }} />
+            </div>
+        );
+    } else
+        return (
+            <div className={rootClass} style={{ backgroundColor: deterministicColor(props.group.title) }}>
+                {props.group.title[0]}
+            </div>
+        );
 }
 
 function deterministicColor(input: string) {

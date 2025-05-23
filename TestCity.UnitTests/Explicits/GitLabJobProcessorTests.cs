@@ -1,12 +1,10 @@
 using FluentAssertions;
-using TestCity.Core;
 using TestCity.Core.Clickhouse;
 using TestCity.Core.GitLab;
 using TestCity.Core.JobProcessing;
 using TestCity.Core.JUnit;
 using TestCity.Core.Storage;
 using TestCity.Core.Storage.DTO;
-using TestCity.GitLabJobsCrawler;
 using Microsoft.Extensions.Logging;
 using NGitLab.Models;
 using NUnit.Framework;

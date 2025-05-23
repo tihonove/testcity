@@ -1,4 +1,3 @@
-using TestCity.Core.GitLab;
 using TestCity.Core.GitLab.Models;
 using NUnit.Framework;
 

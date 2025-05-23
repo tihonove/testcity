@@ -1,23 +1,21 @@
 using TestCity.Core.Logging;
 using TestCity.Core.Storage;
 using Microsoft.Extensions.Logging;
-using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
-using System.Runtime.Versioning;
+using TestCity.Core.GitLab;
+using NGitLab;
+using NGitLab.Models;
 
 namespace TestCity.Core.GitlabProjects;
 
 public class GitLabProjectsService : IDisposable
 {
-    public GitLabProjectsService(TestCityDatabase database)
+    public GitLabProjectsService(TestCityDatabase database, SkbKonturGitLabClientProvider gitLabClientProvider)
     {
         this.database = database;
+        this.gitLabClientProvider = gitLabClientProvider;
         logger = this.LogForMe();
-
-        // Инициализируем кэш при создании экземпляра
         _ = UpdateCacheAsync();
-
-        // Запускаем фоновый таймер для обновления кэша
         refreshTimer = new PeriodicTimer(TimeSpan.FromMinutes(1));
         _ = StartRefreshLoop();
     }
@@ -31,7 +29,7 @@ public class GitLabProjectsService : IDisposable
     public async Task<List<GitLabGroupShortInfo>> GetRootGroupsInfo(CancellationToken cancellationToken = default)
     {
         await EnsureCacheInitializedAsync(cancellationToken);
-        return cachedRootGroups.ConvertAll(x => new GitLabGroupShortInfo { Id = x.Id, Title = x.Title, MergeRunsFromJobs = x.MergeRunsFromJobs });
+        return cachedRootGroups.ConvertAll(x => new GitLabGroupShortInfo { Id = x.Id, Title = x.Title, MergeRunsFromJobs = x.MergeRunsFromJobs, AvatarUrl = x.AvatarUrl });
     }
 
     public async Task<GitLabGroup?> GetGroup(string idOrTitle, CancellationToken cancellationToken = default)
@@ -59,6 +57,84 @@ public class GitLabProjectsService : IDisposable
         var allEntities = rootGroups.ToGitLabEntityRecords(null);
         await database.GitLabEntities.UpsertEntitiesAsync(allEntities, cancellationToken);
         await UpdateCacheAsync(cancellationToken);
+    }
+
+    public async Task AddProject(long projectId, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var gitLabClient = gitLabClientProvider.GetClient();
+            var projectInfo = await gitLabClient.Projects.GetByIdAsync(projectId, new SingleProjectQuery());
+            if (projectInfo == null)
+            {
+                throw new Exception($"Не удалось получить доступ к проекту с ID: {projectId} - проект не существует");
+            }
+
+            var exists = await HasProject(projectId, cancellationToken);
+            if (exists)
+            {
+                return;
+            }
+
+            var rootGroup = await BuildGroupHierarchyAsync(projectInfo.Namespace.Id, gitLabClient);
+            GitLabGroup leafGroup = FindGroupById(rootGroup, projectInfo.Namespace.Id.ToString());
+
+            leafGroup.Projects ??= [];
+            leafGroup.Projects.Add(new GitLabProject
+            {
+                Id = projectId.ToString(),
+                Title = projectInfo.Path,
+                UseHooks = true
+            });
+
+            await SaveGitLabHierarchy([rootGroup], cancellationToken);
+
+            logger.LogInformation("Успешно добавлен проект: {ProjectName} (ID: {ProjectId}) в иерархию групп", projectInfo.Name, projectId);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Ошибка при добавлении проекта с ID: {projectId}", ex);
+        }
+    }
+
+    private async Task<GitLabGroup> BuildGroupHierarchyAsync(long namespaceId, IGitLabClient gitLabClient)
+    {
+        var currentGroupInfo = await gitLabClient.Groups.GetByIdAsync(namespaceId);
+        var currentGroup = new GitLabGroup
+        {
+            Id = currentGroupInfo.Id.ToString(),
+            Title = currentGroupInfo.Path,
+            Groups = []
+        };
+
+        if (currentGroupInfo.ParentId.HasValue)
+        {
+            var parentGroup = await BuildGroupHierarchyAsync(currentGroupInfo.ParentId.Value, gitLabClient);
+            var targetParentGroup = FindGroupById(parentGroup, currentGroupInfo.ParentId.Value.ToString());
+            targetParentGroup.Groups ??= [];
+            targetParentGroup.Groups.Add(currentGroup);
+            return parentGroup;
+        }
+
+        return currentGroup;
+    }
+
+    private static GitLabGroup FindGroupById(GitLabGroup group, string targetId)
+    {
+        if (group.Id == targetId)
+            return group;
+
+        if (group.Groups != null)
+        {
+            foreach (var childGroup in group.Groups)
+            {
+                var result = FindGroupById(childGroup, targetId);
+                if (result != null)
+                    return result;
+            }
+        }
+
+        return group;
     }
 
     public void Dispose()
@@ -95,7 +171,21 @@ public class GitLabProjectsService : IDisposable
 
         try
         {
+            var gitLabClient = gitLabClientProvider.GetClient();
             var rootGroups = await database.GitLabEntities.GetAllEntitiesAsync(cancellationToken).ToGitLabGroups(cancellationToken);
+            await rootGroups.TraverseRecursiveAsync(async g =>
+            {
+                if (g.Id == "0")
+                    return;
+                var groupInfo = await gitLabClient.Groups.GetByIdAsync(long.Parse(g.Id));
+                g.AvatarUrl = groupInfo?.AvatarUrl;
+            }, async p =>
+            {
+                if (p.Id == "0")
+                    return;
+                var projectInfo = await gitLabClient.Projects.GetByIdAsync(long.Parse(p.Id), new SingleProjectQuery());
+                p.AvatarUrl = projectInfo?.AvatarUrl;
+            }, cancellationToken: cancellationToken);
             lock (cacheLock)
             {
                 cachedRootGroups = rootGroups;
@@ -135,6 +225,7 @@ public class GitLabProjectsService : IDisposable
     }
 
     private readonly TestCityDatabase database;
+    private readonly SkbKonturGitLabClientProvider gitLabClientProvider;
     private readonly ILogger logger;
     private readonly PeriodicTimer refreshTimer;
     private readonly Lock cacheLock = new();

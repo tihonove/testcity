@@ -8,6 +8,18 @@
     border-radius: 4px;
     outline: 1px solid var(--border-line-color-2);
     outline-offset: -1px;
+
+    &.iconWrapper {
+        margin-bottom: -10px;
+    }
+
+    .avatarWithImage {
+        font-size: 20px;
+        line-height: 32px;
+        width: 32px;
+        height: 32px;
+        border-radius: 4px;
+    }
 }
 
 .groupAvatarRoot32 {
@@ -20,4 +32,36 @@
     border-radius: 4px;
     outline: 1px solid var(--border-line-color-2);
     outline-offset: -1px;
+
+    &.iconWrapper {
+        margin-bottom: -14px;
+    }
+
+    .avatarWithImage {
+        font-size: 24px;
+        line-height: 40px;
+        width: 40px;
+        height: 40px;
+        border-radius: 4px;
+    }
+
+}
+
+.avatarWithImage {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.iconWrapper {
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+[data-theme='dark'] {
+    .iconWrapper {
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+    .avatarWithImage {
+         filter: brightness(1.2) invert(0.2) contrast(1.2);
+    }
 }

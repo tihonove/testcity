@@ -1,6 +1,5 @@
 using TestCity.Core.Clickhouse;
 using TestCity.Core.GitLab;
-using TestCity.Core.GitLab.Models;
 using TestCity.Core.Graphite;
 using TestCity.Core.JobProcessing;
 using TestCity.Core.JUnit;

@@ -1,9 +1,6 @@
-using System.Text.Json;
-
 using TestCity.Core.Clickhouse;
 using TestCity.Core.GitlabProjects;
 using TestCity.Core.Storage;
-using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
 namespace TestCity.UnitTests.Storage;

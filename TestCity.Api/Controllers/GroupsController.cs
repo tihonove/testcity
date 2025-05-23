@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using TestCity.Api.Models;
 using TestCity.Core.GitlabProjects;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +27,7 @@ public class GroupsController(GitLabProjectsService gitLabProjectsService) : Con
         {
             Id = group.Id,
             Title = group.Title,
+            AvatarUrl = group.AvatarUrl,
             MergeRunsFromJobs = group.MergeRunsFromJobs
         };
     }
@@ -39,6 +39,7 @@ public class GroupsController(GitLabProjectsService gitLabProjectsService) : Con
             Id = group.Id,
             Title = group.Title,
             MergeRunsFromJobs = group.MergeRunsFromJobs,
+            AvatarUrl = group.AvatarUrl,
             Groups = group.Groups?.Select(MapToGroupNodeDto).ToList(),
             Projects = group.Projects?.Select(MapToProjectDto).ToList()
         };
@@ -50,6 +51,7 @@ public class GroupsController(GitLabProjectsService gitLabProjectsService) : Con
         {
             Id = project.Id,
             Title = project.Title,
+            AvatarUrl = project.AvatarUrl,
             UseHooks = project.UseHooks
         };
     }

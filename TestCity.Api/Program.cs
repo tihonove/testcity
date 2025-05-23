@@ -1,6 +1,5 @@
 using System.Text;
 using dotenv.net;
-using TestCity.Api.Models;
 using TestCity.Core.Clickhouse;
 using TestCity.Core.GitLab;
 using TestCity.Core.GitlabProjects;

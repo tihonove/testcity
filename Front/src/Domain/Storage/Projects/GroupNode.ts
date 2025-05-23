@@ -1,6 +1,7 @@
 export interface Group {
     id: string;
     title: string;
+    avatarUrl: string;
     mergeRunsFromJobs?: boolean;
 }
 
@@ -12,6 +13,7 @@ export interface GroupNode extends Group {
 export interface Project {
     id: string;
     title: string;
+    avatarUrl: string;
 }
 
 export function isGroup(node: GroupNode | Project): node is GroupNode {
