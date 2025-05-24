@@ -2,6 +2,7 @@ using TestCity.Core.Clickhouse;
 using TestCity.Core.GitlabProjects;
 using TestCity.Core.Storage;
 using NUnit.Framework;
+using TestCity.Core.GitLab;
 
 namespace TestCity.UnitTests.Storage;
 
@@ -11,9 +12,10 @@ public sealed class GitLabProjectsServiceTests : IDisposable
     [SetUp]
     public async Task SetUp()
     {
+        var clientProvider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
         connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
         database = new TestCityDatabase(connectionFactory);
-        service = new GitLabProjectsService(database);
+        service = new GitLabProjectsService(database, clientProvider);
         await using var connection = connectionFactory.CreateConnection();
         await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);
         await TestAnalyticsDatabaseSchema.InsertPredefinedProjects(connectionFactory);

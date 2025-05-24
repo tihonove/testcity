@@ -40,7 +40,8 @@ public class GitLabCheckAccessToPreconfiguredProjects
         logger = GlobalSetup.TestLoggerFactory.CreateLogger<GitLabCheckAccessToPreconfiguredProjects>();
         var connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
         var database = new TestCityDatabase(connectionFactory);
-        var gitLabProjectsService = new GitLabProjectsService(database);
+        var clientProvider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
+        var gitLabProjectsService = new GitLabProjectsService(database, clientProvider);
         var allProjects = await gitLabProjectsService.GetAllProjects();
         foreach (var project in allProjects)
         {

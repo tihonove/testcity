@@ -155,7 +155,7 @@ public class GitLabProjectsService : IDisposable
                 }
                 catch (Exception ex)
                 {
-                    logger?.LogError(ex, "Ошибка при обновлении кэша проектов GitLab");
+                    logger.LogError(ex, "Ошибка при обновлении кэша проектов GitLab");
                 }
             }
         }
@@ -167,7 +167,7 @@ public class GitLabProjectsService : IDisposable
 
     private async Task UpdateCacheAsync(CancellationToken cancellationToken = default)
     {
-        logger?.LogDebug("Обновление кэша GitLab проектов...");
+        logger.LogDebug("Обновление кэша GitLab проектов...");
 
         try
         {
@@ -175,16 +175,31 @@ public class GitLabProjectsService : IDisposable
             var rootGroups = await database.GitLabEntities.GetAllEntitiesAsync(cancellationToken).ToGitLabGroups(cancellationToken);
             await rootGroups.TraverseRecursiveAsync(async g =>
             {
-                if (g.Id == "0")
-                    return;
-                var groupInfo = await gitLabClient.Groups.GetByIdAsync(long.Parse(g.Id));
-                g.AvatarUrl = groupInfo?.AvatarUrl;
+                try
+                {
+                    if (g.Id == "0")
+                        return;
+                    var groupInfo = await gitLabClient.Groups.GetByIdAsync(long.Parse(g.Id));
+                    g.AvatarUrl = groupInfo?.AvatarUrl;
+
+                }
+                catch (Exception ex)
+                {
+                    logger.LogWarning(ex, "Не удалось получить информацию о группе с ID {GroupId} из GitLab", g.Id);
+                }
             }, async p =>
             {
-                if (p.Id == "0")
-                    return;
-                var projectInfo = await gitLabClient.Projects.GetByIdAsync(long.Parse(p.Id), new SingleProjectQuery());
-                p.AvatarUrl = projectInfo?.AvatarUrl;
+                try
+                {
+                    if (p.Id == "0")
+                        return;
+                    var projectInfo = await gitLabClient.Projects.GetByIdAsync(long.Parse(p.Id), new SingleProjectQuery());
+                    p.AvatarUrl = projectInfo?.AvatarUrl;
+                }
+                catch (Exception ex)
+                {
+                    logger.LogWarning(ex, "Не удалось получить информацию о проекте с ID {ProjectId} из GitLab", p.Id);
+                }
             }, cancellationToken: cancellationToken);
             lock (cacheLock)
             {
@@ -192,11 +207,11 @@ public class GitLabProjectsService : IDisposable
                 isCacheInitialized = true;
             }
 
-            logger?.LogDebug("Кэш GitLab проектов обновлен");
+            logger.LogDebug("Кэш GitLab проектов обновлен");
         }
         catch (Exception ex)
         {
-            logger?.LogError(ex, "Не удалось обновить кэш GitLab проектов");
+            logger.LogError(ex, "Не удалось обновить кэш GitLab проектов");
             throw;
         }
     }
