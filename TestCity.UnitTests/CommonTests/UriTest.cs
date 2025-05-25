@@ -53,6 +53,19 @@ public class UriTest(ITestOutputHelper output)
     }
 
     [Fact]
+    public void Test_ToString_WithSlashes()
+    {
+        Assert.Equal("https://example.com/", new Uri("https://example.com").ToString());
+        Assert.Equal("https://example.com/", new Uri("https://example.com/").ToString());
+        Assert.Equal("https://example.com/path", new Uri("https://example.com/path").ToString());
+        Assert.Equal("https://example.com/path/", new Uri("https://example.com/path/").ToString());
+        Assert.Equal("https://example.com/path", new Uri(new Uri("https://example.com/"), "path").ToString());
+        Assert.Equal("https://example.com/path/", new Uri(new Uri("https://example.com/"), "path/").ToString());
+        Assert.Equal("https://example.com/x/path", new Uri(new Uri("https://example.com/x"), "path").ToString());
+        Assert.Equal("https://example.com/x/path/", new Uri(new Uri("https://example.com/x/"), "path/").ToString());
+    }
+
+    [Fact]
     public void ToString_ReturnsOriginalUrl()
     {
         const string originalUrl = "https://example.com/path?query=value#fragment";

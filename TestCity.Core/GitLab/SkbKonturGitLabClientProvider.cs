@@ -6,11 +6,11 @@ public class SkbKonturGitLabClientProvider(GitLabSettings gitLabSettings)
 {
     public IGitLabClient GetClient()
     {
-        return new GitLabClient("https://git.skbkontur.ru", gitLabSettings.Token);
+        return new GitLabClient(gitLabSettings.Url.ToString().TrimEnd('/'), gitLabSettings.Token);
     }
 
     public GitLabExtendedClient GetExtendedClient()
     {
-        return new GitLabExtendedClient("https://git.skbkontur.ru", gitLabSettings.Token);
+        return new GitLabExtendedClient(gitLabSettings.Url, gitLabSettings.Token);
     }
 }

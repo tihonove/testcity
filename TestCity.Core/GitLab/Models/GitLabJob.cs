@@ -51,7 +51,7 @@ public class GitLabJob
     public List<string>? TagList { get; set; }
 
     [JsonPropertyName("id")]
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     [JsonPropertyName("name")]
     public string Name { get; set; }
@@ -189,10 +189,10 @@ public class Artifact
 public class GitLabPipeline
 {
     [JsonPropertyName("id")]
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     [JsonPropertyName("project_id")]
-    public int ProjectId { get; set; }
+    public long ProjectId { get; set; }
 
     [JsonPropertyName("ref")]
     public string? Ref { get; set; }
@@ -213,7 +213,7 @@ public class GitLabPipeline
 public class GitLabRunner
 {
     [JsonPropertyName("id")]
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     [JsonPropertyName("description")]
     public string? Description { get; set; }
@@ -246,7 +246,7 @@ public class GitLabRunner
 public class GitLabRunnerManager
 {
     [JsonPropertyName("id")]
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     [JsonPropertyName("system_id")]
     public string? SystemId { get; set; }
@@ -285,7 +285,7 @@ public class GitLabProject
 public class GitLabUser
 {
     [JsonPropertyName("id")]
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     [JsonPropertyName("name")]
     public string? Name { get; set; }
