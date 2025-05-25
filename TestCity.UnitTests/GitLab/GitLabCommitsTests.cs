@@ -21,11 +21,9 @@ public class GitLabCommitsTests : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    [Fact]
+    [FactEx(SkipOnCI = true)]
     public async Task GetRepositoryCommitsAsync_WithSpecificRefName_ReturnsCommits()
     {
-        if (CIUtils.IsGitHubActions())
-            return;
         const int projectId = 17358;
         const string refName = "2a9b75152e9ce789d47ca310952c4d160d005207";
 
@@ -70,11 +68,9 @@ public class GitLabCommitsTests : IDisposable
 
     }
 
-    [Fact]
+    [FactEx(SkipOnCI = true)]
     public async Task GetRepositoryCommitsAsync_WithKeysetPagination_ReturnsCommits()
     {
-        if (CIUtils.IsGitHubActions())
-            return;
         const int projectId = 17358;
         const int perPage = 10;
 
@@ -103,11 +99,9 @@ public class GitLabCommitsTests : IDisposable
         }
     }
 
-    [Fact]
+    [FactEx(SkipOnCI = true)]
     public async Task GetRepositoryCommitsAsync_WithComplexOptions_ReturnsFilteredCommits()
     {
-        if (CIUtils.IsGitHubActions())
-            return;
         const int projectId = 17358;
 
         var response = await gitLabExtendedClient.GetRepositoryCommitsAsync(

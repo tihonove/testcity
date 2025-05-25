@@ -19,8 +19,6 @@ public class GitLabCheckAccessToPreconfiguredProjects : IDisposable, IAsyncLifet
     public GitLabCheckAccessToPreconfiguredProjects(ITestOutputHelper output)
     {
         XUnitLoggerProvider.ConfigureTestLogger(output);
-        if (CIUtils.IsGitHubActions())
-            return; 
         var provider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
         clientEx = provider.GetExtendedClient();
         client = provider.GetClient();
@@ -45,11 +43,9 @@ public class GitLabCheckAccessToPreconfiguredProjects : IDisposable, IAsyncLifet
         return Task.CompletedTask;
     }
 
-    [Fact]
+    [FactEx(SkipOnCI = true)]
     public async Task CheckAccessToProject()
     {
-        if (CIUtils.IsGitHubActions())
-            return;
         logger = Log.GetLog<GitLabCheckAccessToPreconfiguredProjects>();
         var connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
         var database = new TestCityDatabase(connectionFactory);
@@ -86,7 +82,6 @@ public class GitLabCheckAccessToPreconfiguredProjects : IDisposable, IAsyncLifet
             }
         }
     }
-
     private ILogger logger = Log.GetLog<GitLabCheckAccessToPreconfiguredProjects>();
     private readonly GitLabExtendedClient clientEx;
     private readonly IGitLabClient client;

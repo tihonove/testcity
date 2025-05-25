@@ -23,12 +23,9 @@ public class GitLabJobsTests : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    [Fact]
+    [FactEx(SkipOnCI = true)]
     public async Task GetProjectJobs_ForProject19564_Success()
     {
-        if (CIUtils.IsGitHubActions())
-            return;
-
         try
         {
             const int projectId = 19564;
@@ -64,12 +61,9 @@ public class GitLabJobsTests : IDisposable
         }
     }
 
-    [Fact]
+    [FactEx(SkipOnCI = true)]
     public async Task GetAllProjectJobs_ForProject19564_Success()
     {
-        if (CIUtils.IsGitHubActions())
-            return;
-
         try
         {
             const int projectId = 19564;
@@ -106,12 +100,9 @@ public class GitLabJobsTests : IDisposable
         }
     }
 
-    [Fact]
+    [FactEx(SkipOnCI = true)]
     public async Task CompareJobsRetrieval_SingleRequestVsPagination_ShouldMatchIds()
     {
-        if (CIUtils.IsGitHubActions())
-            return;
-
         try
         {
             const int projectId = 19564;
@@ -173,12 +164,9 @@ public class GitLabJobsTests : IDisposable
         }
     }
 
-    [Fact]
+    [FactEx(SkipOnCI = true)]
     public async Task GetJob_ForSpecificJobId_MatchesExpectedJson()
     {
-        if (CIUtils.IsGitHubActions())
-            return;
-
         const int projectId = 19564;
         const long jobId = 37872976;
 
@@ -246,12 +234,9 @@ public class GitLabJobsTests : IDisposable
         Assert.Empty(job.TagList!);
     }
 
-    [Fact]
+    [FactEx(SkipOnCI = true)]
     public async Task FindJobById_ForSpecificJob_MatchesExpectedJson()
     {
-        if (CIUtils.IsGitHubActions())
-            return;
-
         const int projectId = 19564;
         const long expectedJobId = 37872978;
 
@@ -325,12 +310,9 @@ public class GitLabJobsTests : IDisposable
         }
     }
 
-    [Fact]
+    [FactEx(SkipOnCI = true)]
     public async Task GetLast600Jobs_ForProject4845_Success()
     {
-        if (CIUtils.IsGitHubActions())
-            return;
-
         const int projectId = 4845;
         // const int projectId = 25483;
         const int maxJobsToRetrieve = 600;

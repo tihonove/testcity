@@ -9,8 +9,9 @@ using TestCity.Worker.Handlers;
 using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
+using TestCity.UnitTests.Utils;
 
-namespace TestCity.UnitTests.Handlers;
+namespace TestCity.UnitTests.Explicits;
 
 [Collection("Global")]
 public class ProcessJobRunTaskHandlerTests : IAsyncLifetime
@@ -27,8 +28,6 @@ public class ProcessJobRunTaskHandlerTests : IAsyncLifetime
 
     public ProcessJobRunTaskHandlerTests(ITestOutputHelper output)
     {
-        if (Environment.GetEnvironmentVariable("RUN_EXPLICIT_TESTS") != "1")
-            return;
         logger = GlobalSetup.TestLoggerFactory(output).CreateLogger<ProcessJobRunTaskHandlerTests>();
         gitLabClientProvider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
         var graphiteClient = new NullGraphiteClient();
@@ -49,8 +48,6 @@ public class ProcessJobRunTaskHandlerTests : IAsyncLifetime
 
     public async Task InitializeAsync()
     {
-        if (Environment.GetEnvironmentVariable("RUN_EXPLICIT_TESTS") != "1")
-            return;
         await using var connection = connectionFactory.CreateConnection();
         await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);
         await TestAnalyticsDatabaseSchema.InsertPredefinedProjects(connectionFactory);
@@ -61,12 +58,9 @@ public class ProcessJobRunTaskHandlerTests : IAsyncLifetime
         return Task.CompletedTask;
     }
 
-    [Fact]
+    [FactEx(Explicit = true)]
     public async Task EnqueueAsync_ShouldProcessJob_WhenJobExists2()
     {
-        if (Environment.GetEnvironmentVariable("RUN_EXPLICIT_TESTS") != "1")
-            return;
-
         const long projectId = 17358;
         const long jobRunId = 40119524;
 

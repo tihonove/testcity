@@ -17,24 +17,18 @@ public class CommitParentFillTest
         XUnitLoggerProvider.ConfigureTestLogger(output);
     }
 
-    [Fact]
+    [FactEx(Explicit = true)]
     public async Task FillParents()
     {
-        if (Environment.GetEnvironmentVariable("RUN_EXPLICIT_TESTS") != "1")
-            return;
-
         long projectId = 24783;
         var gitLabClientProvider = new SkbKonturGitLabClientProvider(settings);
         var service = new CommitParentsBuilderService(gitLabClientProvider, new TestCityDatabase(new ConnectionFactory(ClickHouseConnectionSettings.Default)));
         await service.BuildCommitParent(projectId, "2d39e9a8868610dd0a09ed8604e1a259db2059de", default);
     }
 
-    [Fact]
+    [FactEx(Explicit = true)]
     public async Task CommitChangesTest()
     {
-        if (Environment.GetEnvironmentVariable("RUN_EXPLICIT_TESTS") != "1")
-            return;
-
         // Заданные значения из исходного запроса
         string commitSha = "2e1d2a503fa54bb320972d7aeca6af674001cf5b";
         string jobId = "DotNet tests";
@@ -72,12 +66,9 @@ public class CommitParentFillTest
         Assert.Equal("feat: Drop reporter cli", changes[2].MessagePreview);
     }
 
-    [Fact]
+    [FactEx(Explicit = true)]
     public async Task FullJobInfoInsertWithChangesSinceLastRunTest()
     {
-        if (Environment.GetEnvironmentVariable("RUN_EXPLICIT_TESTS") != "1")
-            return;
-
         // Создаем уникальные идентификаторы для изоляции теста
         var jobId = $"test-job-{Guid.NewGuid()}";
         var jobRunId = $"test-run-{Guid.NewGuid()}";
