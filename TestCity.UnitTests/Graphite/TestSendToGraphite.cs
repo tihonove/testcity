@@ -10,7 +10,8 @@ public class TestSendToGraphite
     [Fact]
     public async Task TestSend()
     {
-        CIUtils.SkipOnGitHubActions();
+        if (CIUtils.IsGitHubActions())
+            return;
         var GraphiteHost = Environment.GetEnvironmentVariable("GRAPHITE_RELAY_HOST") ?? throw new InvalidOperationException("GRAPHITE_RELAY_HOST is not set");
         var GraphitePort = int.Parse(Environment.GetEnvironmentVariable("GRAPHITE_RELAY_PORT") ?? throw new InvalidOperationException("GRAPHITE_RELAY_PORT is not set"));
         var client = new GraphiteClient(GraphiteHost, GraphitePort);
@@ -24,7 +25,8 @@ public class TestSendToGraphite
     [Fact]
     public async Task TestSendWithTags()
     {
-        CIUtils.SkipOnGitHubActions();
+        if (CIUtils.IsGitHubActions())
+            return;
         var GraphiteHost = Environment.GetEnvironmentVariable("GRAPHITE_RELAY_HOST") ?? throw new InvalidOperationException("GRAPHITE_RELAY_HOST is not set");
         var GraphitePort = int.Parse(Environment.GetEnvironmentVariable("GRAPHITE_RELAY_PORT") ?? throw new InvalidOperationException("GRAPHITE_RELAY_PORT is not set"));
         // Arrange

@@ -4,6 +4,7 @@ using TestCity.Core.Storage;
 using Xunit;
 using TestCity.Core.GitLab;
 using Xunit.Abstractions;
+using TestCity.UnitTests.Utils;
 
 namespace TestCity.UnitTests.Storage;
 
@@ -12,7 +13,7 @@ public sealed class GitLabProjectsServiceTests : IAsyncLifetime, IAsyncDisposabl
 {
     public GitLabProjectsServiceTests(ITestOutputHelper output)
     {
-        output.WriteLine("Initializing GitLabProjectsServiceTests...");
+        XUnitLoggerProvider.ConfigureTestLogger(output);
         var clientProvider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
         connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
         database = new TestCityDatabase(connectionFactory);
