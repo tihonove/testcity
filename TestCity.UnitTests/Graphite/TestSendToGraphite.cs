@@ -1,14 +1,13 @@
 using TestCity.Core.Graphite;
-using NUnit.Framework;
 using TestCity.UnitTests.Utils;
+using Xunit;
 
 namespace TestCity.UnitTests.Graphite;
 
-
-
+[Collection("Global")]
 public class TestSendToGraphite
 {
-    [Test]
+    [Fact]
     public async Task TestSend()
     {
         CIUtils.SkipOnGitHubActions();
@@ -22,7 +21,7 @@ public class TestSendToGraphite
         await client.SendAsync(metricPath, value, timestamp);
     }
 
-    [Test]
+    [Fact]
     public async Task TestSendWithTags()
     {
         CIUtils.SkipOnGitHubActions();

@@ -1,34 +1,44 @@
 using TestCity.Core.Clickhouse;
 using TestCity.Core.GitlabProjects;
 using TestCity.Core.Storage;
-using NUnit.Framework;
+using Xunit;
 using TestCity.Core.GitLab;
+using Xunit.Abstractions;
 
 namespace TestCity.UnitTests.Storage;
 
-[TestFixture]
-public sealed class GitLabProjectsServiceTests : IDisposable
+[Collection("Global")]
+public sealed class GitLabProjectsServiceTests : IAsyncLifetime, IAsyncDisposable
 {
-    [SetUp]
-    public async Task SetUp()
+    public GitLabProjectsServiceTests(ITestOutputHelper output)
     {
+        output.WriteLine("Initializing GitLabProjectsServiceTests...");
         var clientProvider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
         connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
         database = new TestCityDatabase(connectionFactory);
         service = new GitLabProjectsService(database, clientProvider);
+    }
+
+    public async Task InitializeAsync()
+    {
         await using var connection = connectionFactory.CreateConnection();
         await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);
         await TestAnalyticsDatabaseSchema.InsertPredefinedProjects(connectionFactory);
     }
 
-    [TearDown]
-    public void TearDown()
+    public Task DisposeAsync()
     {
         database.GitLabEntities.DeleteById(100, 1001, 1002, 1003, 2001, 2002, 3001);
         service?.Dispose();
+        return Task.CompletedTask;
     }
 
-    [Test]
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        await DisposeAsync();
+    }
+
+    [Fact]
     public async Task SaveGitLabHierarchy_RetrievesHierarchy_CorrectlyPreservesStructure()
     {
         // Arrange
@@ -41,36 +51,36 @@ public sealed class GitLabProjectsServiceTests : IDisposable
         var allProjects = await service.GetAllProjects(CancellationToken.None);
 
         // Assert
-        Assert.That(retrievedRootGroups, Has.Count.GreaterThanOrEqualTo(1));
-        Assert.That(retrievedRootGroups.First(x => x.Id == "100").Id, Is.EqualTo("100"));
-        Assert.That(retrievedRootGroups.First(x => x.Id == "100").Title, Is.EqualTo("Root Group"));
+        Assert.True(retrievedRootGroups.Count >= 1);
+        Assert.Equal("100", retrievedRootGroups.First(x => x.Id == "100").Id);
+        Assert.Equal("Root Group", retrievedRootGroups.First(x => x.Id == "100").Title);
 
-        Assert.That(retrievedGroup, Is.Not.Null);
-        Assert.That(retrievedGroup!.Title, Is.EqualTo("Root Group"));
-        Assert.That(retrievedGroup.Groups, Has.Count.EqualTo(2));
-        Assert.That(retrievedGroup.Projects, Has.Count.GreaterThanOrEqualTo(2));
+        Assert.NotNull(retrievedGroup);
+        Assert.Equal("Root Group", retrievedGroup!.Title);
+        Assert.Equal(2, retrievedGroup.Groups.Count);
+        Assert.True(retrievedGroup.Projects.Count >= 2);
 
-        Assert.That(allProjects, Has.Count.GreaterThanOrEqualTo(5));
+        Assert.True(allProjects.Count >= 5);
 
         var projectIds = allProjects.Select(p => p.Id).ToHashSet();
-        Assert.That(projectIds, Contains.Item("1001"));
-        Assert.That(projectIds, Contains.Item("1002"));
-        Assert.That(projectIds, Contains.Item("2001"));
-        Assert.That(projectIds, Contains.Item("2002"));
-        Assert.That(projectIds, Contains.Item("3001"));
+        Assert.Contains("1001", projectIds);
+        Assert.Contains("1002", projectIds);
+        Assert.Contains("2001", projectIds);
+        Assert.Contains("2002", projectIds);
+        Assert.Contains("3001", projectIds);
 
         var child1 = retrievedGroup.Groups.FirstOrDefault(g => g.Id == "200");
-        Assert.That(child1, Is.Not.Null);
-        Assert.That(child1!.Title, Is.EqualTo("Child Group 1"));
-        Assert.That(child1.Projects, Has.Count.EqualTo(2));
+        Assert.NotNull(child1);
+        Assert.Equal("Child Group 1", child1!.Title);
+        Assert.Equal(2, child1.Projects.Count);
 
         var child2 = retrievedGroup.Groups.FirstOrDefault(g => g.Id == "300");
-        Assert.That(child2, Is.Not.Null);
-        Assert.That(child2!.Title, Is.EqualTo("Child Group 2"));
-        Assert.That(child2.Projects, Has.Count.EqualTo(1));
+        Assert.NotNull(child2);
+        Assert.Equal("Child Group 2", child2!.Title);
+        Assert.Single(child2.Projects);
     }
 
-    [Test]
+    [Fact]
     public async Task SaveGitLabHierarchy_UpdatesExistingEntities_WithNewData()
     {
         // Arrange
@@ -96,21 +106,21 @@ public sealed class GitLabProjectsServiceTests : IDisposable
         var allProjects = await service.GetAllProjects(CancellationToken.None);
 
         // Assert
-        Assert.That(retrievedGroup, Is.Not.Null);
-        Assert.That(retrievedGroup!.Title, Is.EqualTo("Updated Root Group"));
+        Assert.NotNull(retrievedGroup);
+        Assert.Equal("Updated Root Group", retrievedGroup!.Title);
 
         var child1 = retrievedGroup.Groups.FirstOrDefault(g => g.Id == "200");
-        Assert.That(child1, Is.Not.Null);
-        Assert.That(child1!.Title, Is.EqualTo("Updated Child Group 1"));
+        Assert.NotNull(child1);
+        Assert.Equal("Updated Child Group 1", child1!.Title);
 
-        Assert.That(allProjects, Has.Count.GreaterThanOrEqualTo(6));
+        Assert.True(allProjects.Count >= 6);
 
         var projectTitles = allProjects.ToDictionary(p => p.Id, p => p.Title);
-        Assert.That(projectTitles, Contains.Key("1003"));
-        Assert.That(projectTitles["1003"], Is.EqualTo("New Project"));
+        Assert.True(projectTitles.ContainsKey("1003"));
+        Assert.Equal("New Project", projectTitles["1003"]);
     }
 
-    [Test]
+    [Fact]
     public async Task HasProject_WithExistingId_ReturnsTrue()
     {
         // Arrange
@@ -121,19 +131,19 @@ public sealed class GitLabProjectsServiceTests : IDisposable
         var hasProject = await service.HasProject(1001, CancellationToken.None);
 
         // Assert
-        Assert.That(hasProject, Is.True);
+        Assert.True(hasProject);
     }
 
-    [Test]
+    [Fact]
     public async Task HasProject_WithNonExistingId_ReturnsFalse()
     {
         var rootGroups = CreateTestHierarchy();
         await service.SaveGitLabHierarchy(rootGroups, CancellationToken.None);
         var hasProject = await service.HasProject(9999, CancellationToken.None);
-        Assert.That(hasProject, Is.False);
+        Assert.False(hasProject);
     }
 
-    [Test]
+    [Fact]
     public async Task EnumerateAllProjectsIds_ReturnsAllProjectIds()
     {
         var rootGroups = CreateTestHierarchy();
@@ -144,11 +154,11 @@ public sealed class GitLabProjectsServiceTests : IDisposable
         var projectIds = await projectIdsEnumerable.ToListAsync();
 
         // Assert
-        Assert.That(projectIds, Contains.Item(1001));
-        Assert.That(projectIds, Contains.Item(1002));
-        Assert.That(projectIds, Contains.Item(2001));
-        Assert.That(projectIds, Contains.Item(2002));
-        Assert.That(projectIds, Contains.Item(3001));
+        Assert.Contains(1001, projectIds);
+        Assert.Contains(1002, projectIds);
+        Assert.Contains(2001, projectIds);
+        Assert.Contains(2002, projectIds);
+        Assert.Contains(3001, projectIds);
     }
 
     private static List<GitLabGroup> CreateTestHierarchy()
@@ -210,12 +220,7 @@ public sealed class GitLabProjectsServiceTests : IDisposable
         return [rootGroup];
     }
 
-    private ConnectionFactory connectionFactory = null!;
-    private TestCityDatabase database = null!;
-    private GitLabProjectsService service = null!;
-
-    public void Dispose()
-    {
-        service?.Dispose();
-    }
+    private readonly ConnectionFactory connectionFactory = null!;
+    private readonly TestCityDatabase database = null!;
+    private readonly GitLabProjectsService service = null!;
 }

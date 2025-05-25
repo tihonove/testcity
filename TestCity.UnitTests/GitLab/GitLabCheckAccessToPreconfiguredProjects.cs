@@ -7,37 +7,47 @@ using TestCity.Core.Storage;
 using Microsoft.Extensions.Logging;
 using NGitLab;
 using NGitLab.Models;
-using NUnit.Framework;
+using Xunit;
 using TestCity.UnitTests.Utils;
+using Xunit.Abstractions;
 
 namespace TestCity.UnitTests.GitLab;
 
-[TestFixture]
-public class GitLabCheckAccessToPreconfiguredProjects
+[Collection("Global")]
+public class GitLabCheckAccessToPreconfiguredProjects : IDisposable, IAsyncLifetime
 {
-    [SetUp]
-    public async Task SetUp()
+    public GitLabCheckAccessToPreconfiguredProjects(ITestOutputHelper output)
     {
+        XUnitLoggerProvider.ConfigureTestLogger(output);
         CIUtils.SkipOnGitHubActions();
         var provider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
         clientEx = provider.GetExtendedClient();
         client = provider.GetClient();
+    }
+
+    public void Dispose()
+    {
+        clientEx?.Dispose();
+        GC.SuppressFinalize(this);
+    }
+
+    public async Task InitializeAsync()
+    {
         var connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
         await using var connection = connectionFactory.CreateConnection();
         await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);
         await TestAnalyticsDatabaseSchema.InsertPredefinedProjects(connectionFactory);
     }
 
-    [TearDown]
-    public void TearDown()
+    public Task DisposeAsync()
     {
-        clientEx?.Dispose();
+        return Task.CompletedTask;
     }
 
-    [Test]
+    [Fact]
     public async Task CheckAccessToProject()
     {
-        logger = GlobalSetup.TestLoggerFactory.CreateLogger<GitLabCheckAccessToPreconfiguredProjects>();
+        logger = Log.GetLog<GitLabCheckAccessToPreconfiguredProjects>();
         var connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
         var database = new TestCityDatabase(connectionFactory);
         var clientProvider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
@@ -75,6 +85,6 @@ public class GitLabCheckAccessToPreconfiguredProjects
     }
 
     private ILogger logger = Log.GetLog<GitLabCheckAccessToPreconfiguredProjects>();
-    private GitLabExtendedClient clientEx;
-    private IGitLabClient client;
+    private readonly GitLabExtendedClient clientEx;
+    private readonly IGitLabClient client;
 }

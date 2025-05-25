@@ -1,11 +1,11 @@
 using TestCity.Core.JUnit;
-using NUnit.Framework;
+using Xunit;
 
 namespace TestCity.UnitTests.JUnitExtraction;
 
 public class JobInfoTests
 {
-    [Test]
+    [Fact]
     public void RemoveDuplicatePartInClassNameTests()
     {
         var data = new List<(string className, string testcaseName, string expected)>
@@ -27,7 +27,7 @@ public class JobInfoTests
         foreach (var (className, testcaseName, expected) in data)
         {
             var classNameActual = JUnitReportHelper.RemoveDuplicatePartInClassName(className, testcaseName);
-            Assert.That(expected, Is.EqualTo(classNameActual));
+            Assert.Equal(classNameActual, expected);
         }
     }
 }

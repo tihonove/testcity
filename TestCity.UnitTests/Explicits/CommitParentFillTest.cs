@@ -3,34 +3,38 @@ using TestCity.Core.GitLab;
 using TestCity.Core.JobProcessing;
 using TestCity.Core.Storage;
 using TestCity.Core.Storage.DTO;
-using NUnit.Framework;
+using TestCity.UnitTests.Utils;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace TestCity.UnitTests.Explicits;
 
-[TestFixture]
-[Explicit]
+[Collection("Global")]
 public class CommitParentFillTest
 {
-    private GitLabSettings settings;
-
-    [OneTimeSetUp]
-    public void Setup()
+    public CommitParentFillTest(ITestOutputHelper output)
     {
-        settings = GitLabSettings.Default;
+        XUnitLoggerProvider.ConfigureTestLogger(output);
     }
 
-    [Test]
+    [Fact]
     public async Task FillParents()
     {
+        if (Environment.GetEnvironmentVariable("RUN_EXPLICIT_TESTS") != "1")
+            return;
+
         long projectId = 24783;
         var gitLabClientProvider = new SkbKonturGitLabClientProvider(settings);
         var service = new CommitParentsBuilderService(gitLabClientProvider, new TestCityDatabase(new ConnectionFactory(ClickHouseConnectionSettings.Default)));
         await service.BuildCommitParent(projectId, "2d39e9a8868610dd0a09ed8604e1a259db2059de", default);
     }
 
-    [Test]
+    [Fact]
     public async Task CommitChangesTest()
     {
+        if (Environment.GetEnvironmentVariable("RUN_EXPLICIT_TESTS") != "1")
+            return;
+
         // Заданные значения из исходного запроса
         string commitSha = "2e1d2a503fa54bb320972d7aeca6af674001cf5b";
         string jobId = "DotNet tests";
@@ -43,34 +47,37 @@ public class CommitParentFillTest
         var changes = await database.GetCommitChangesAsync(commitSha, jobId, branchName);
 
         // Проверяем полученные данные
-        Assert.That(changes, Is.Not.Null);
-        Assert.That(changes.Count, Is.EqualTo(3));
+        Assert.NotNull(changes);
+        Assert.Equal(3, changes.Count);
 
         // Проверяем первый результат
-        Assert.That(changes[0].ParentCommitSha, Is.EqualTo("2e1d2a503fa54bb320972d7aeca6af674001cf5b"));
-        Assert.That(changes[0].Depth, Is.EqualTo(0));
-        Assert.That(changes[0].AuthorName, Is.EqualTo("Eugene Tihonov"));
-        Assert.That(changes[0].AuthorEmail, Is.EqualTo("tihonov.ea@gmail.com"));
-        Assert.That(changes[0].MessagePreview, Is.EqualTo("wip"));
+        Assert.Equal("2e1d2a503fa54bb320972d7aeca6af674001cf5b", changes[0].ParentCommitSha);
+        Assert.Equal(0, changes[0].Depth);
+        Assert.Equal("Eugene Tihonov", changes[0].AuthorName);
+        Assert.Equal("tihonov.ea@gmail.com", changes[0].AuthorEmail);
+        Assert.Equal("wip", changes[0].MessagePreview);
 
         // Проверяем второй результат
-        Assert.That(changes[1].ParentCommitSha, Is.EqualTo("c509e25ca44af26aefc70913c6c7074c8c0b7ceb"));
-        Assert.That(changes[1].Depth, Is.EqualTo(1));
-        Assert.That(changes[1].AuthorName, Is.EqualTo("Eugene Tihonov"));
-        Assert.That(changes[1].AuthorEmail, Is.EqualTo("tihonov.ea@gmail.com"));
-        Assert.That(changes[1].MessagePreview, Is.EqualTo("chore: Adjust project names"));
+        Assert.Equal("c509e25ca44af26aefc70913c6c7074c8c0b7ceb", changes[1].ParentCommitSha);
+        Assert.Equal(1, changes[1].Depth);
+        Assert.Equal("Eugene Tihonov", changes[1].AuthorName);
+        Assert.Equal("tihonov.ea@gmail.com", changes[1].AuthorEmail);
+        Assert.Equal("chore: Adjust project names", changes[1].MessagePreview);
 
         // Проверяем третий результат
-        Assert.That(changes[2].ParentCommitSha, Is.EqualTo("8884205553b17e70b8fd320659d3f3fc1c3b9f6e"));
-        Assert.That(changes[2].Depth, Is.EqualTo(2));
-        Assert.That(changes[2].AuthorName, Is.EqualTo("Eugene Tihonov"));
-        Assert.That(changes[2].AuthorEmail, Is.EqualTo("tihonov.ea@gmail.com"));
-        Assert.That(changes[2].MessagePreview, Is.EqualTo("feat: Drop reporter cli"));
+        Assert.Equal("8884205553b17e70b8fd320659d3f3fc1c3b9f6e", changes[2].ParentCommitSha);
+        Assert.Equal(2, changes[2].Depth);
+        Assert.Equal("Eugene Tihonov", changes[2].AuthorName);
+        Assert.Equal("tihonov.ea@gmail.com", changes[2].AuthorEmail);
+        Assert.Equal("feat: Drop reporter cli", changes[2].MessagePreview);
     }
 
-    [Test]
+    [Fact]
     public async Task FullJobInfoInsertWithChangesSinceLastRunTest()
     {
+        if (Environment.GetEnvironmentVariable("RUN_EXPLICIT_TESTS") != "1")
+            return;
+
         // Создаем уникальные идентификаторы для изоляции теста
         var jobId = $"test-job-{Guid.NewGuid()}";
         var jobRunId = $"test-run-{Guid.NewGuid()}";
@@ -135,7 +142,7 @@ public class CommitParentFillTest
 
         // Проверяем, что данные были сохранены
         var exists = await testCityJobInfo.ExistsAsync(jobRunId);
-        Assert.That(exists, Is.True, "Запись должна существовать в базе данных после вставки");
+        Assert.True(exists, "Запись должна существовать в базе данных после вставки");
 
         // Дополнительные проверки можно добавить, если есть метод для извлечения полной информации о задании
     }
@@ -148,4 +155,5 @@ public class CommitParentFillTest
 
         return firstLine[..Math.Min(100, firstLine.Length)];
     }
+    private readonly GitLabSettings settings = GitLabSettings.Default;
 }

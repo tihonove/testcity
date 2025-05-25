@@ -5,19 +5,24 @@ namespace TestCity.Core.Logging;
 
 public static class Log
 {
-    private static ILoggerFactory loggerFactory = new NullLoggerFactory();
+    public static ILoggerFactory LoggerFactory { get; private set; } = new NullLoggerFactory();
 
     public static void ConfigureGlobalLogProvider(ILoggerFactory globalLoggerFactory)
     {
-        loggerFactory = globalLoggerFactory;
+        LoggerFactory = globalLoggerFactory;
     }
 
     public static ILogger LogForMe<T>(this T _)
     {
-        return loggerFactory.CreateLogger<T>();
+        return LoggerFactory.CreateLogger<T>();
     }
     public static ILogger GetLog<T>()
     {
-        return loggerFactory.CreateLogger<T>();
+        return LoggerFactory.CreateLogger<T>();
+    }
+
+    public static ILogger GetLog(string name)
+    {
+        return LoggerFactory.CreateLogger(name);
     }
 }

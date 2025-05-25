@@ -1,12 +1,12 @@
 using TestCity.Core.GitLab.Models;
-using NUnit.Framework;
+using Xunit;
 
 namespace TestCity.UnitTests.GitLab;
 
-[TestFixture]
+[Collection("Global")]
 public class JobScopeExtensionsTests
 {
-    [Test]
+    [Fact]
     public void GetIndividualScopes_WithMultipleFlags_ReturnsIndividualScopes()
     {
         // Arrange
@@ -16,13 +16,13 @@ public class JobScopeExtensionsTests
         var individualScopes = scope.GetIndividualScopes().ToList();
 
         // Assert
-        Assert.That(individualScopes, Has.Count.EqualTo(3));
-        Assert.That(individualScopes, Contains.Item(JobScope.Failed));
-        Assert.That(individualScopes, Contains.Item(JobScope.Success));
-        Assert.That(individualScopes, Contains.Item(JobScope.Canceled));
+        Assert.Equal(3, individualScopes.Count);
+        Assert.Contains(JobScope.Failed, individualScopes);
+        Assert.Contains(JobScope.Success, individualScopes);
+        Assert.Contains(JobScope.Canceled, individualScopes);
     }
 
-    [Test]
+    [Fact]
     public void GetIndividualScopes_WithNone_ReturnsEmptyCollection()
     {
         // Arrange
@@ -32,10 +32,10 @@ public class JobScopeExtensionsTests
         var individualScopes = scope.GetIndividualScopes().ToList();
 
         // Assert
-        Assert.That(individualScopes, Is.Empty);
+        Assert.Empty(individualScopes);
     }
 
-    [Test]
+    [Fact]
     public void GetIndividualScopes_WithAll_ReturnsAllScopes()
     {
         // Arrange
@@ -45,43 +45,44 @@ public class JobScopeExtensionsTests
         var individualScopes = scope.GetIndividualScopes().ToList();
 
         // Assert
-        Assert.That(individualScopes, Has.Count.EqualTo(9));
-        Assert.That(individualScopes, Contains.Item(JobScope.Pending));
-        Assert.That(individualScopes, Contains.Item(JobScope.Running));
-        Assert.That(individualScopes, Contains.Item(JobScope.Failed));
-        Assert.That(individualScopes, Contains.Item(JobScope.Created));
-        Assert.That(individualScopes, Contains.Item(JobScope.Success));
-        Assert.That(individualScopes, Contains.Item(JobScope.Canceled));
-        Assert.That(individualScopes, Contains.Item(JobScope.Skipped));
-        Assert.That(individualScopes, Contains.Item(JobScope.WaitingForResource));
-        Assert.That(individualScopes, Contains.Item(JobScope.Manual));
+        Assert.Equal(9, individualScopes.Count);
+        Assert.Contains(JobScope.Pending, individualScopes);
+        Assert.Contains(JobScope.Running, individualScopes);
+        Assert.Contains(JobScope.Failed, individualScopes);
+        Assert.Contains(JobScope.Created, individualScopes);
+        Assert.Contains(JobScope.Success, individualScopes);
+        Assert.Contains(JobScope.Canceled, individualScopes);
+        Assert.Contains(JobScope.Skipped, individualScopes);
+        Assert.Contains(JobScope.WaitingForResource, individualScopes);
+        Assert.Contains(JobScope.Manual, individualScopes);
     }
 
-    [TestCase(JobScope.Pending, "pending")]
-    [TestCase(JobScope.Running, "running")]
-    [TestCase(JobScope.Failed, "failed")]
-    [TestCase(JobScope.Created, "created")]
-    [TestCase(JobScope.Success, "success")]
-    [TestCase(JobScope.Canceled, "canceled")]
-    [TestCase(JobScope.Skipped, "skipped")]
-    [TestCase(JobScope.WaitingForResource, "waiting_for_resource")]
-    [TestCase(JobScope.Manual, "manual")]
+    [Theory]
+    [InlineData(JobScope.Pending, "pending")]
+    [InlineData(JobScope.Running, "running")]
+    [InlineData(JobScope.Failed, "failed")]
+    [InlineData(JobScope.Created, "created")]
+    [InlineData(JobScope.Success, "success")]
+    [InlineData(JobScope.Canceled, "canceled")]
+    [InlineData(JobScope.Skipped, "skipped")]
+    [InlineData(JobScope.WaitingForResource, "waiting_for_resource")]
+    [InlineData(JobScope.Manual, "manual")]
     public void ToStringValue_WithValidScope_ReturnsCorrectString(JobScope scope, string expected)
     {
         // Act
         var result = scope.ToStringValue();
 
         // Assert
-        Assert.That(result, Is.EqualTo(expected));
+        Assert.Equal(expected, result);
     }
 
-    [Test]
+    [Fact]
     public void ToStringValue_WithNone_ThrowsArgumentOutOfRangeException()
     {
         // Arrange
         var scope = JobScope.None;
 
         // Act & Assert
-        Assert.That(() => scope.ToStringValue(), Throws.Exception.TypeOf<ArgumentOutOfRangeException>());
+        Assert.Throws<ArgumentOutOfRangeException>(() => scope.ToStringValue());
     }
 }

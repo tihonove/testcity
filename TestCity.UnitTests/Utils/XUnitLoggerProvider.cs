@@ -1,20 +1,26 @@
 using Microsoft.Extensions.Logging;
-using NUnit.Framework;
+using TestCity.Core.Logging;
+using Xunit.Abstractions;
 
 namespace TestCity.UnitTests.Utils;
 
-public sealed class NUnitLoggerProvider : ILoggerProvider
+public sealed class XUnitLoggerProvider(ITestOutputHelper output) : ILoggerProvider
 {
+    public static void ConfigureTestLogger(ITestOutputHelper output)
+    {
+        Log.ConfigureGlobalLogProvider(LoggerFactory.Create(builder => builder.AddProvider(new XUnitLoggerProvider(output)).SetMinimumLevel(LogLevel.Debug)));
+    }
+
     public ILogger CreateLogger(string categoryName)
     {
-        return new NUnitLogger(categoryName);
+        return new NUnitLogger(output, categoryName);
     }
 
     public void Dispose()
     {
     }
 
-    private class NUnitLogger(string categoryName) : ILogger
+    private class NUnitLogger(ITestOutputHelper output, string categoryName) : ILogger
     {
         private readonly string categoryName = categoryName.Split(".").Last();
 
@@ -40,11 +46,11 @@ public sealed class NUnitLoggerProvider : ILoggerProvider
                 LogLevel.Critical => "CRITL",
                 _ => "UNKWN"
             };
-            TestContext.Out.WriteLine($"{logLevelString} [{categoryName}] {message}");
+            output.WriteLine($"{logLevelString} [{categoryName}] {message}");
 
             if (exception != null)
             {
-                TestContext.Out.WriteLine(exception);
+                output.WriteLine(exception.ToString());
             }
         }
     }

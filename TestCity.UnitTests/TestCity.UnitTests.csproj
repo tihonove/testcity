@@ -11,11 +11,15 @@
         <PackageReference Include="FluentAssertions" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
         <PackageReference Include="NGitLab" />
-        <PackageReference Include="NUnit" />
-        <PackageReference Include="NUnit3TestAdapter" />
         <PackageReference Include="JunitXml.TestLogger" />
         <PackageReference Include="System.Linq.Async" />
         <PackageReference Include="dotenv.net" />
+        <PackageReference Include="xunit" />
+        <PackageReference Include="xunit.core" />
+        <PackageReference Include="xunit.runner.visualstudio">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
     </ItemGroup>
 
     <ItemGroup>

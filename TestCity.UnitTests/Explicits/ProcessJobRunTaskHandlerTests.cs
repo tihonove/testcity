@@ -7,38 +7,42 @@ using TestCity.Core.Storage;
 using TestCity.Core.Worker.TaskPayloads;
 using TestCity.Worker.Handlers;
 using Microsoft.Extensions.Logging;
-using NUnit.Framework;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace TestCity.UnitTests.Handlers;
 
-[TestFixture]
-[Explicit]
-public class ProcessJobRunTaskHandlerTests
+[Collection("Global")]
+public class ProcessJobRunTaskHandlerTests : IAsyncLifetime
 {
-    private ProcessJobRunTaskHandler handler;
-    private TestMetricsSender metricsSender;
-    private SkbKonturGitLabClientProvider gitLabClientProvider;
-    private TestCityDatabase testCityDatabase;
-    private JUnitExtractor extractor;
-    private ProjectJobTypesCache projectJobTypesCache;
-    private CommitParentsBuilderService commitParentsBuilder;
-    private ILogger logger;
+    private readonly ProcessJobRunTaskHandler handler;
+    private readonly TestMetricsSender metricsSender;
+    private readonly ConnectionFactory connectionFactory;
+    private readonly SkbKonturGitLabClientProvider gitLabClientProvider;
+    private readonly TestCityDatabase testCityDatabase;
+    private readonly JUnitExtractor extractor;
+    private readonly ProjectJobTypesCache projectJobTypesCache;
+    private readonly CommitParentsBuilderService commitParentsBuilder;
+    private readonly ILogger logger;
 
-    [SetUp]
-    public async Task SetUpAsync()
+    public ProcessJobRunTaskHandlerTests(ITestOutputHelper output)
     {
-        logger = GlobalSetup.TestLoggerFactory.CreateLogger<ProcessJobRunTaskHandlerTests>();
+        logger = GlobalSetup.TestLoggerFactory(output).CreateLogger<ProcessJobRunTaskHandlerTests>();
         gitLabClientProvider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
         var graphiteClient = new NullGraphiteClient();
         metricsSender = new TestMetricsSender(graphiteClient);
-        var connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
+        connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
         testCityDatabase = new TestCityDatabase(connectionFactory);
         extractor = new JUnitExtractor();
         projectJobTypesCache = new ProjectJobTypesCache(testCityDatabase);
         commitParentsBuilder = new CommitParentsBuilderService(gitLabClientProvider, testCityDatabase);
-        await using var connection = connectionFactory.CreateConnection();
-        await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);
-        await TestAnalyticsDatabaseSchema.InsertPredefinedProjects(connectionFactory);
+
+        // Инициализируем базу данных асинхронно через синхронный метод
+        using (var connection = connectionFactory.CreateConnection())
+        {
+            TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection).GetAwaiter().GetResult();
+            TestAnalyticsDatabaseSchema.InsertPredefinedProjects(connectionFactory).GetAwaiter().GetResult();
+        }
 
         // Создаем экземпляр тестируемого класса
         handler = new ProcessJobRunTaskHandler(
@@ -50,9 +54,24 @@ public class ProcessJobRunTaskHandlerTests
             commitParentsBuilder);
     }
 
-    [Test]
+    public async Task InitializeAsync()
+    {
+        await using var connection = connectionFactory.CreateConnection();
+        await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);
+        await TestAnalyticsDatabaseSchema.InsertPredefinedProjects(connectionFactory);
+    }
+
+    public Task DisposeAsync()
+    {
+        return Task.CompletedTask;
+    }
+
+    [Fact]
     public async Task EnqueueAsync_ShouldProcessJob_WhenJobExists2()
     {
+        if (Environment.GetEnvironmentVariable("RUN_EXPLICIT_TESTS") != "1")
+            return;
+
         const long projectId = 17358;
         const long jobRunId = 40119524;
 
@@ -63,6 +82,6 @@ public class ProcessJobRunTaskHandlerTests
         };
 
         await handler.EnqueueAsync(payload, CancellationToken.None);
-        Assert.That(true, "Метод успешно выполнился");
+        Assert.True(true, "Метод успешно выполнился");
     }
 }
