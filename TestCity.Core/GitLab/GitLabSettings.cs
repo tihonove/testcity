@@ -6,6 +6,6 @@ public class GitLabSettings
 
     public static GitLabSettings Default => new ()
     {
-        Token = Environment.GetEnvironmentVariable("GITLAB_TOKEN") ?? ""
+        Token = Environment.GetEnvironmentVariable("GITLAB_TOKEN") ?? "NoExistingToken",
     };
 }

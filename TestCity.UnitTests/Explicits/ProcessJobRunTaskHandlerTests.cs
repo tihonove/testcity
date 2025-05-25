@@ -27,6 +27,8 @@ public class ProcessJobRunTaskHandlerTests : IAsyncLifetime
 
     public ProcessJobRunTaskHandlerTests(ITestOutputHelper output)
     {
+        if (Environment.GetEnvironmentVariable("RUN_EXPLICIT_TESTS") != "1")
+            return;
         logger = GlobalSetup.TestLoggerFactory(output).CreateLogger<ProcessJobRunTaskHandlerTests>();
         gitLabClientProvider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
         var graphiteClient = new NullGraphiteClient();
@@ -36,15 +38,6 @@ public class ProcessJobRunTaskHandlerTests : IAsyncLifetime
         extractor = new JUnitExtractor();
         projectJobTypesCache = new ProjectJobTypesCache(testCityDatabase);
         commitParentsBuilder = new CommitParentsBuilderService(gitLabClientProvider, testCityDatabase);
-
-        // Инициализируем базу данных асинхронно через синхронный метод
-        using (var connection = connectionFactory.CreateConnection())
-        {
-            TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection).GetAwaiter().GetResult();
-            TestAnalyticsDatabaseSchema.InsertPredefinedProjects(connectionFactory).GetAwaiter().GetResult();
-        }
-
-        // Создаем экземпляр тестируемого класса
         handler = new ProcessJobRunTaskHandler(
             metricsSender,
             gitLabClientProvider,
