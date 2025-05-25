@@ -1,22 +1,27 @@
 using TestCity.Core.GitLab;
-using NUnit.Framework;
+using Xunit;
 using TestCity.UnitTests.Utils;
 
 namespace TestCity.UnitTests.GitLab;
 
-[TestFixture]
-public class GitLabCommitsTests
+[Collection("Global")]
+public class GitLabCommitsTests : IDisposable
 {
-    private GitLabExtendedClient gitLabExtendedClient;
+    private readonly GitLabExtendedClient gitLabExtendedClient;
 
-    [SetUp]
-    public void Setup()
+    public GitLabCommitsTests()
     {
         var provider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
         gitLabExtendedClient = provider.GetExtendedClient();
     }
 
-    [Test]
+    public void Dispose()
+    {
+        gitLabExtendedClient?.Dispose();
+        GC.SuppressFinalize(this);
+    }
+
+    [Fact]
     public async Task GetRepositoryCommitsAsync_WithSpecificRefName_ReturnsCommits()
     {
         CIUtils.SkipOnGitHubActions();
@@ -28,7 +33,7 @@ public class GitLabCommitsTests
             options => options.ForReference(refName));
 
         var commits = response.Result;
-        Assert.That(commits, Is.Not.Null);
+        Assert.NotNull(commits);
 
         Console.WriteLine($"Found {commits.Count} commits:");
         foreach (var commit in commits)
@@ -64,7 +69,7 @@ public class GitLabCommitsTests
 
     }
 
-    [Test]
+    [Fact]
     public async Task GetRepositoryCommitsAsync_WithKeysetPagination_ReturnsCommits()
     {
         CIUtils.SkipOnGitHubActions();
@@ -79,8 +84,8 @@ public class GitLabCommitsTests
                 sort: "desc"));
 
         var commits = response.Result;
-        Assert.That(commits, Is.Not.Null);
-        Assert.That(commits.Count, Is.LessThanOrEqualTo(perPage));
+        Assert.NotNull(commits);
+        Assert.True(commits.Count <= perPage);
         if (response.NextPageLink != null)
         {
             Console.WriteLine($"Next page link: {response.NextPageLink}");
@@ -96,7 +101,7 @@ public class GitLabCommitsTests
         }
     }
 
-    [Test]
+    [Fact]
     public async Task GetRepositoryCommitsAsync_WithComplexOptions_ReturnsFilteredCommits()
     {
         CIUtils.SkipOnGitHubActions();
@@ -115,7 +120,7 @@ public class GitLabCommitsTests
 
         var commits = response.Result;
 
-        Assert.That(commits, Is.Not.Null);
+        Assert.NotNull(commits);
         Console.WriteLine($"Found {commits.Count} commits from the last month");
     }
 }

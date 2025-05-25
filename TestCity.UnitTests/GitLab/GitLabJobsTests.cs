@@ -1,30 +1,30 @@
 using TestCity.Core.GitLab;
 using TestCity.Core.GitLab.Models;
 using Microsoft.Extensions.Logging;
-using NUnit.Framework;
+using Xunit;
 using TestCity.UnitTests.Utils;
+using Xunit.Abstractions;
 
 namespace TestCity.UnitTests.GitLab;
 
-[TestFixture]
-public class GitLabJobsTests
+[Collection("Global")]
+public class GitLabJobsTests : IDisposable
 {
-    [SetUp]
-    public void SetUp()
+    public GitLabJobsTests(ITestOutputHelper output)
     {
         CIUtils.SkipOnGitHubActions();
+        logger = GlobalSetup.TestLoggerFactory(output).CreateLogger<GitLabJobsTests>();
         var provider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
         gitLabClient = provider.GetExtendedClient();
-        logger = GlobalSetup.TestLoggerFactory.CreateLogger<GitLabJobsTests>();
     }
 
-    [TearDown]
-    public void TearDown()
+    public void Dispose()
     {
         gitLabClient?.Dispose();
+        GC.SuppressFinalize(this);
     }
 
-    [Test]
+    [Fact]
     public async Task GetProjectJobs_ForProject19564_Success()
     {
         try
@@ -34,9 +34,9 @@ public class GitLabJobsTests
 
             var firstPageJobs = await gitLabClient.GetProjectJobsAsync(projectId, null, 1, pageSize);
 
-            Assert.That(firstPageJobs, Is.Not.Null);
-            Assert.That(firstPageJobs.Result, Is.Not.Null);
-            Assert.That(firstPageJobs.Result.Count, Is.EqualTo(pageSize));
+            Assert.NotNull(firstPageJobs);
+            Assert.NotNull(firstPageJobs.Result);
+            Assert.Equal(pageSize, firstPageJobs.Result.Count);
 
             logger.LogInformation($"Retrieved {firstPageJobs.Result.Count} jobs from the first page of project {projectId}");
 
@@ -45,9 +45,9 @@ public class GitLabJobsTests
                 logger.LogInformation("Next page is available. Fetching...");
                 var secondPageJobs = await gitLabClient.GetProjectJobsAsync(projectId, null, 2, pageSize);
 
-                Assert.That(secondPageJobs, Is.Not.Null);
-                Assert.That(secondPageJobs.Result, Is.Not.Null);
-                Assert.That(secondPageJobs.Result.Count, Is.LessThanOrEqualTo(pageSize));
+                Assert.NotNull(secondPageJobs);
+                Assert.NotNull(secondPageJobs.Result);
+                Assert.True(secondPageJobs.Result.Count <= pageSize);
                 logger.LogInformation($"Retrieved {secondPageJobs.Result.Count} jobs from the second page of project {projectId}");
             }
             else
@@ -62,7 +62,7 @@ public class GitLabJobsTests
         }
     }
 
-    [Test]  
+    [Fact]
     public async Task GetAllProjectJobs_ForProject19564_Success()
     {
         try
@@ -74,7 +74,7 @@ public class GitLabJobsTests
                 allJobs.Add(job);
             }
 
-            Assert.That(allJobs, Is.Not.Null);
+            Assert.NotNull(allJobs);
             logger.LogInformation($"Retrieved a total of {allJobs.Count} jobs from all pages for project {projectId}");
 
             foreach (var job in allJobs.Take(3))
@@ -101,7 +101,7 @@ public class GitLabJobsTests
         }
     }
 
-    [Test]
+    [Fact]
     public async Task CompareJobsRetrieval_SingleRequestVsPagination_ShouldMatchIds()
     {
         try
@@ -113,8 +113,8 @@ public class GitLabJobsTests
             // Получаем первые 100 заданий одним запросом
             var singleRequestJobs = await gitLabClient.GetProjectJobsAsync(projectId, null, 1, singleRequestLimit);
 
-            Assert.That(singleRequestJobs, Is.Not.Null);
-            Assert.That(singleRequestJobs.Result, Is.Not.Null);
+            Assert.NotNull(singleRequestJobs);
+            Assert.NotNull(singleRequestJobs.Result);
 
             logger.LogInformation($"Retrieved {singleRequestJobs.Result.Count} jobs with single request");
 
@@ -131,13 +131,13 @@ public class GitLabJobsTests
             logger.LogInformation($"Retrieved {paginatedJobs.Count} jobs with pagination");
 
             // Проверяем, что количества элементов совпадают
-            Assert.That(paginatedJobs.Count, Is.EqualTo(singleRequestJobs.Result.Count));
+            Assert.Equal(singleRequestJobs.Result.Count, paginatedJobs.Count);
 
             // Получаем список ID из обоих запросов и сравниваем
             var singleRequestIds = singleRequestJobs.Result.Select(j => j.Id).OrderBy(id => id).ToList();
             var paginatedIds = paginatedJobs.Select(j => j.Id).OrderBy(id => id).ToList();
 
-            Assert.That(paginatedIds, Is.EqualTo(singleRequestIds));
+            Assert.Equal(singleRequestIds, paginatedIds);
 
             // Проверка содержимого и структуры элементов
             for (int i = 0; i < Math.Min(5, singleRequestJobs.Result.Count); i++)
@@ -145,14 +145,14 @@ public class GitLabJobsTests
                 var singleRequestJob = singleRequestJobs.Result.FirstOrDefault(j => j.Id == paginatedIds[i]);
                 var paginatedJob = paginatedJobs.FirstOrDefault(j => j.Id == paginatedIds[i]);
 
-                Assert.That(singleRequestJob, Is.Not.Null);
-                Assert.That(paginatedJob, Is.Not.Null);
+                Assert.NotNull(singleRequestJob);
+                Assert.NotNull(paginatedJob);
 
                 if (singleRequestJob != null && paginatedJob != null)
                 {
-                    Assert.That(paginatedJob.Name, Is.EqualTo(singleRequestJob.Name));
-                    Assert.That(paginatedJob.Status, Is.EqualTo(singleRequestJob.Status));
-                    Assert.That(paginatedJob.CreatedAt, Is.EqualTo(singleRequestJob.CreatedAt));
+                    Assert.Equal(singleRequestJob.Name, paginatedJob.Name);
+                    Assert.Equal(singleRequestJob.Status, paginatedJob.Status);
+                    Assert.Equal(singleRequestJob.CreatedAt, paginatedJob.CreatedAt);
                 }
             }
 
@@ -165,7 +165,7 @@ public class GitLabJobsTests
         }
     }
 
-    [Test]
+    [Fact]
     public async Task GetJob_ForSpecificJobId_MatchesExpectedJson()
     {
         const int projectId = 19564;
@@ -173,84 +173,69 @@ public class GitLabJobsTests
 
         var job = await gitLabClient.GetJobAsync(projectId, jobId);
 
-        Assert.That(job, Is.Not.Null, $"Job with id {jobId} not found");
+        Assert.NotNull(job);
         logger.LogInformation($"Retrieved job with ID: {job.Id}");
 
         // Проверяем основные поля задачи
-        Assert.That(job.Id, Is.EqualTo(37872976));
-        Assert.That(job.Status, Is.EqualTo(JobStatus.Success));
-        Assert.That(job.Stage, Is.EqualTo("build"));
-        Assert.That(job.Name, Is.EqualTo("Build"));
-        Assert.That(job.Ref, Is.EqualTo("ci-update"));
-        Assert.That(job.Tag, Is.False);
-        Assert.That(job.Coverage, Is.Null);
-        Assert.That(job.AllowFailure, Is.False);
-        Assert.That(job.CreatedAt, Is.EqualTo(DateTime.Parse("2025-04-03T13:17:00.156+05:00")));
-        Assert.That(job.StartedAt, Is.EqualTo(DateTime.Parse("2025-04-03T13:17:05.920+05:00")));
-        Assert.That(job.FinishedAt, Is.EqualTo(DateTime.Parse("2025-04-03T13:19:34.385+05:00")));
-        Assert.That(job.ErasedAt, Is.Null);
-        Assert.That(job.Duration, Is.EqualTo(148.464903).Within(0.0001));
-        Assert.That(job.QueuedDuration, Is.EqualTo(5.324964).Within(0.0001));
+        Assert.Equal(37872976, job.Id);
+        Assert.Equal(JobStatus.Success, job.Status);
+        Assert.Equal("build", job.Stage);
+        Assert.Equal("Build", job.Name);
+        Assert.Equal("ci-update", job.Ref);
+        Assert.False(job.Tag);
+        Assert.Null(job.Coverage);
+        Assert.False(job.AllowFailure);
+        Assert.Equal(DateTime.Parse("2025-04-03T13:17:00.156+05:00"), job.CreatedAt);
+        Assert.Equal(DateTime.Parse("2025-04-03T13:17:05.920+05:00"), job.StartedAt);
+        Assert.Equal(DateTime.Parse("2025-04-03T13:19:34.385+05:00"), job.FinishedAt);
+        Assert.Null(job.ErasedAt);
+        Assert.NotNull(job.Duration);
+        Assert.NotNull(job.QueuedDuration);
+        Assert.Equal(148.464903, job.Duration!.Value, 4);
+        Assert.Equal(5.324964, job.QueuedDuration!.Value, 4);
 
         // Проверяем поля пользователя
-        Assume.That(job.User is not null);
-        Assert.That(job.User.Id, Is.EqualTo(4381));
-        Assert.That(job.User.Username, Is.EqualTo("mnoskov"));
-        Assert.That(job.User.Name, Is.EqualTo("Носков Михаил Юрьевич"));
-        Assert.That(job.User.State, Is.EqualTo("active"));
-        Assert.That(job.User.AvatarUrl, Is.EqualTo("https://git.skbkontur.ru/uploads/-/system/user/avatar/4381/avatar.png"));
-        Assert.That(job.User.WebUrl, Is.EqualTo("https://git.skbkontur.ru/mnoskov"));
+        Assert.NotNull(job.User);
+        Assert.Equal(4381, job.User.Id);
+        Assert.Equal("mnoskov", job.User.Username);
+        Assert.Equal("Носков Михаил Юрьевич", job.User.Name);
+        Assert.Equal("active", job.User.State);
+        Assert.Equal("https://git.skbkontur.ru/uploads/-/system/user/avatar/4381/avatar.png", job.User.AvatarUrl);
+        Assert.Equal("https://git.skbkontur.ru/mnoskov", job.User.WebUrl);
 
         // Проверяем поля коммита
-        Assume.That(job.Commit is not null);
-        Assert.That(job.Commit.Id, Is.EqualTo("d3234b69806023b3fd52e1556e1526efeef93fae"));
-        Assert.That(job.Commit.ShortId, Is.EqualTo("d3234b69"));
-        Assert.That(job.Commit.Title, Is.EqualTo("Лишний аргумент"));
-        Assert.That(job.Commit.Message, Is.EqualTo("Лишний аргумент\n"));
-        Assert.That(job.Commit.AuthorName, Is.EqualTo("Noskov Mikhail"));
-        Assert.That(job.Commit.AuthorEmail, Is.EqualTo("mnoskov@skbkontur.ru"));
-        Assert.That(job.Commit.CreatedAt, Is.EqualTo(DateTime.Parse("2025-04-03T13:16:57.000+05:00")));
+        Assert.NotNull(job.Commit);
+        Assert.Equal("d3234b69806023b3fd52e1556e1526efeef93fae", job.Commit.Id);
+        Assert.Equal("d3234b69", job.Commit.ShortId);
+        Assert.Equal("Лишний аргумент", job.Commit.Title);
+        Assert.Equal("Лишний аргумент\n", job.Commit.Message);
+        Assert.Equal("Noskov Mikhail", job.Commit.AuthorName);
+        Assert.Equal("mnoskov@skbkontur.ru", job.Commit.AuthorEmail);
+        Assert.Equal(DateTime.Parse("2025-04-03T13:16:57.000+05:00"), job.Commit.CreatedAt);
 
         // Проверяем поля пайплайна
-        Assume.That(job.Pipeline is not null);
-        Assert.That(job.Pipeline.Id, Is.EqualTo(4105431));
-        Assert.That(job.Pipeline.ProjectId, Is.EqualTo(19564));
-        Assert.That(job.Pipeline.Sha, Is.EqualTo("d3234b69806023b3fd52e1556e1526efeef93fae"));
-        Assert.That(job.Pipeline.Ref, Is.EqualTo("ci-update"));
-        Assert.That(job.Pipeline.Status, Is.EqualTo("success"));
-        Assert.That(job.Pipeline.Source, Is.EqualTo("push"));
-        Assert.That(job.Pipeline.WebUrl, Is.EqualTo("https://git.skbkontur.ru/testers/fiit/fiit-big-library/-/pipelines/4105431"));
+        Assert.NotNull(job.Pipeline);
+        Assert.Equal(4105431, job.Pipeline.Id);
+        Assert.Equal(19564, job.Pipeline.ProjectId);
+        Assert.Equal("d3234b69806023b3fd52e1556e1526efeef93fae", job.Pipeline.Sha);
+        Assert.Equal("ci-update", job.Pipeline.Ref);
+        Assert.Equal("success", job.Pipeline.Status);
+        Assert.Equal("push", job.Pipeline.Source);
+        Assert.Equal("https://git.skbkontur.ru/testers/fiit/fiit-big-library/-/pipelines/4105431", job.Pipeline.WebUrl);
 
         // Проверяем URL и информацию о проекте
-        Assert.That(job.WebUrl, Is.EqualTo("https://git.skbkontur.ru/testers/fiit/fiit-big-library/-/jobs/37872976"));
-        Assume.That(job.Project is not null);
-        Assert.That(job.Project.CiJobTokenScopeEnabled, Is.False);
-
-        // Проверяем информацию о runner
-        Assume.That(job.Runner is not null);
-        Assert.That(job.Runner.Id, Is.EqualTo(12823));
-        Assert.That(job.Runner.IsShared, Is.True);
-        Assert.That(job.Runner.RunnerType, Is.EqualTo("instance_type"));
-        Assert.That(job.Runner.Online, Is.True);
-        Assert.That(job.Runner.Status, Is.EqualTo("online"));
-
-        // Проверяем информацию о runner manager
-        Assume.That(job.RunnerManager is not null);
-        Assert.That(job.RunnerManager.Id, Is.EqualTo(4756));
-        Assert.That(job.RunnerManager.SystemId, Is.EqualTo("r_OyyT3ZmvERTs"));
-        Assert.That(job.RunnerManager.Version, Is.EqualTo("17.6.0"));
-        Assert.That(job.RunnerManager.Revision, Is.EqualTo("374d34fd"));
-        Assert.That(job.RunnerManager.Platform, Is.EqualTo("linux"));
-        Assert.That(job.RunnerManager.Architecture, Is.EqualTo("amd64"));
-        Assert.That(job.RunnerManager.Status, Is.EqualTo("online"));
+        Assert.Equal("https://git.skbkontur.ru/testers/fiit/fiit-big-library/-/jobs/37872976", job.WebUrl);
+        Assert.NotNull(job.Project);
+        Assert.False(job.Project.CiJobTokenScopeEnabled);
 
         // Проверяем остальные поля
-        Assert.That(job.ArtifactsExpireAt, Is.EqualTo(DateTime.Parse("2025-04-04T13:19:32.351+05:00")));
-        Assert.That(job.Archived, Is.False);
-        Assert.That(job.TagList, Is.Empty);
+        Assert.Equal(DateTime.Parse("2025-04-04T13:19:32.351+05:00"), job.ArtifactsExpireAt);
+        Assert.False(job.Archived);
+        Assert.NotNull(job.TagList);
+        Assert.Empty(job.TagList!);
     }
 
-    [Test]
+    [Fact]
     public async Task FindJobById_ForSpecificJob_MatchesExpectedJson()
     {
         const int projectId = 19564;
@@ -267,78 +252,66 @@ public class GitLabJobsTests
             }
         }
 
-        Assert.That(foundJob, Is.Not.Null, $"Job with id {expectedJobId} not found");
+        Assert.NotNull(foundJob);
 
         if (foundJob != null)
         {
             logger.LogInformation($"Found job with ID: {foundJob.Id}");
 
-            Assert.That(foundJob.Id, Is.EqualTo(37872978));
-            Assert.That(foundJob.Status, Is.EqualTo(JobStatus.Success));
-            Assert.That(foundJob.Stage, Is.EqualTo("tests"));
-            Assert.That(foundJob.Name, Is.EqualTo("Integration tests"));
-            Assert.That(foundJob.Ref, Is.EqualTo("ci-update"));
-            Assert.That(foundJob.Tag, Is.False);
-            Assert.That(foundJob.Coverage, Is.Null);
-            Assert.That(foundJob.AllowFailure, Is.False);
-            Assert.That(foundJob.CreatedAt, Is.EqualTo(DateTime.Parse("2025-04-03T13:17:00.187+05:00")));
-            Assert.That(foundJob.StartedAt, Is.EqualTo(DateTime.Parse("2025-04-03T13:19:39.590+05:00")));
-            Assert.That(foundJob.FinishedAt, Is.EqualTo(DateTime.Parse("2025-04-03T13:20:48.028+05:00")));
-            Assert.That(foundJob.ErasedAt, Is.Null);
-            Assert.That(foundJob.Duration, Is.EqualTo(68.43821).Within(0.0001));
-            Assert.That(foundJob.QueuedDuration, Is.EqualTo(5.016271).Within(0.0001));
+            Assert.Equal(37872978, foundJob.Id);
+            Assert.Equal(JobStatus.Success, foundJob.Status);
+            Assert.Equal("tests", foundJob.Stage);
+            Assert.Equal("Integration tests", foundJob.Name);
+            Assert.Equal("ci-update", foundJob.Ref);
+            Assert.False(foundJob.Tag);
+            Assert.Null(foundJob.Coverage);
+            Assert.False(foundJob.AllowFailure);
+            Assert.Equal(DateTime.Parse("2025-04-03T13:17:00.187+05:00"), foundJob.CreatedAt);
+            Assert.Equal(DateTime.Parse("2025-04-03T13:19:39.590+05:00"), foundJob.StartedAt);
+            Assert.Equal(DateTime.Parse("2025-04-03T13:20:48.028+05:00"), foundJob.FinishedAt);
+            Assert.Null(foundJob.ErasedAt);
+            Assert.NotNull(foundJob.Duration);
+            Assert.NotNull(foundJob.QueuedDuration);
+            Assert.Equal(68.43821, foundJob.Duration!.Value, 4);
+            Assert.Equal(5.016271, foundJob.QueuedDuration!.Value, 4);
 
-            Assume.That(foundJob.User is not null);
-            Assert.That(foundJob.User.Id, Is.EqualTo(4381));
-            Assert.That(foundJob.User.Username, Is.EqualTo("mnoskov"));
-            Assert.That(foundJob.User.Name, Is.EqualTo("Носков Михаил Юрьевич"));
-            Assert.That(foundJob.User.State, Is.EqualTo("active"));
-            Assert.That(foundJob.User.AvatarUrl, Is.EqualTo("https://git.skbkontur.ru/uploads/-/system/user/avatar/4381/avatar.png"));
-            Assert.That(foundJob.User.WebUrl, Is.EqualTo("https://git.skbkontur.ru/mnoskov"));
+            Assert.NotNull(foundJob.User);
+            Assert.Equal(4381, foundJob.User.Id);
+            Assert.Equal("mnoskov", foundJob.User.Username);
+            Assert.Equal("Носков Михаил Юрьевич", foundJob.User.Name);
+            Assert.Equal("active", foundJob.User.State);
+            Assert.Equal("https://git.skbkontur.ru/uploads/-/system/user/avatar/4381/avatar.png", foundJob.User.AvatarUrl);
+            Assert.Equal("https://git.skbkontur.ru/mnoskov", foundJob.User.WebUrl);
 
-            Assume.That(foundJob.Commit is not null);
-            Assert.That(foundJob.Commit.Id, Is.EqualTo("d3234b69806023b3fd52e1556e1526efeef93fae"));
-            Assert.That(foundJob.Commit.ShortId, Is.EqualTo("d3234b69"));
-            Assert.That(foundJob.Commit.Title, Is.EqualTo("Лишний аргумент"));
-            Assert.That(foundJob.Commit.Message, Is.EqualTo("Лишний аргумент\n"));
-            Assert.That(foundJob.Commit.AuthorName, Is.EqualTo("Noskov Mikhail"));
-            Assert.That(foundJob.Commit.AuthorEmail, Is.EqualTo("mnoskov@skbkontur.ru"));
+            Assert.NotNull(foundJob.Commit);
+            Assert.Equal("d3234b69806023b3fd52e1556e1526efeef93fae", foundJob.Commit.Id);
+            Assert.Equal("d3234b69", foundJob.Commit.ShortId);
+            Assert.Equal("Лишний аргумент", foundJob.Commit.Title);
+            Assert.Equal("Лишний аргумент\n", foundJob.Commit.Message);
+            Assert.Equal("Noskov Mikhail", foundJob.Commit.AuthorName);
+            Assert.Equal("mnoskov@skbkontur.ru", foundJob.Commit.AuthorEmail);
 
-            Assume.That(foundJob.Pipeline is not null);
-            Assert.That(foundJob.Pipeline.Id, Is.EqualTo(4105431));
-            Assert.That(foundJob.Pipeline.ProjectId, Is.EqualTo(19564));
-            Assert.That(foundJob.Pipeline.Sha, Is.EqualTo("d3234b69806023b3fd52e1556e1526efeef93fae"));
-            Assert.That(foundJob.Pipeline.Ref, Is.EqualTo("ci-update"));
-            Assert.That(foundJob.Pipeline.Status, Is.EqualTo("success"));
-            Assert.That(foundJob.Pipeline.Source, Is.EqualTo("push"));
-            Assert.That(foundJob.Pipeline.WebUrl, Is.EqualTo("https://git.skbkontur.ru/testers/fiit/fiit-big-library/-/pipelines/4105431"));
+            Assert.NotNull(foundJob.Pipeline);
+            Assert.Equal(4105431, foundJob.Pipeline.Id);
+            Assert.Equal(19564, foundJob.Pipeline.ProjectId);
+            Assert.Equal("d3234b69806023b3fd52e1556e1526efeef93fae", foundJob.Pipeline.Sha);
+            Assert.Equal("ci-update", foundJob.Pipeline.Ref);
+            Assert.Equal("success", foundJob.Pipeline.Status);
+            Assert.Equal("push", foundJob.Pipeline.Source);
+            Assert.Equal("https://git.skbkontur.ru/testers/fiit/fiit-big-library/-/pipelines/4105431", foundJob.Pipeline.WebUrl);
 
-            Assert.That(foundJob.WebUrl, Is.EqualTo("https://git.skbkontur.ru/testers/fiit/fiit-big-library/-/jobs/37872978"));
-            Assume.That(foundJob.Project is not null);
-            Assert.That(foundJob.Project.CiJobTokenScopeEnabled, Is.False);
+            Assert.Equal("https://git.skbkontur.ru/testers/fiit/fiit-big-library/-/jobs/37872978", foundJob.WebUrl);
+            Assert.NotNull(foundJob.Project);
+            Assert.False(foundJob.Project.CiJobTokenScopeEnabled);
 
-            Assume.That(foundJob.Runner is not null);
-            Assert.That(foundJob.Runner.Id, Is.EqualTo(12823));
-            Assert.That(foundJob.Runner.IsShared, Is.True);
-            Assert.That(foundJob.Runner.RunnerType, Is.EqualTo("instance_type"));
-            Assert.That(foundJob.Runner.Online, Is.True);
-            Assert.That(foundJob.Runner.Status, Is.EqualTo("online"));
-
-            Assume.That(foundJob.RunnerManager is not null);
-            Assert.That(foundJob.RunnerManager.Id, Is.EqualTo(4755));
-            Assert.That(foundJob.RunnerManager.SystemId, Is.EqualTo("r_yZyCn21ZXJcF"));
-            Assert.That(foundJob.RunnerManager.Version, Is.EqualTo("17.6.0"));
-            Assert.That(foundJob.RunnerManager.Revision, Is.EqualTo("374d34fd"));
-            Assert.That(foundJob.RunnerManager.Platform, Is.EqualTo("linux"));
-            Assert.That(foundJob.RunnerManager.Architecture, Is.EqualTo("amd64"));
-
-            Assert.That(foundJob.ArtifactsExpireAt, Is.EqualTo(DateTime.Parse("2025-04-04T13:20:45.601+05:00")));
-            Assert.That(foundJob.Archived, Is.False);
-            Assert.That(foundJob.TagList, Is.Empty);
+            Assert.Equal(DateTime.Parse("2025-04-04T13:20:45.601+05:00"), foundJob.ArtifactsExpireAt);
+            Assert.False(foundJob.Archived);
+            Assert.NotNull(foundJob.TagList);
+            Assert.Empty(foundJob.TagList!);
         }
     }
 
-    [Test]
+    [Fact]
     public async Task GetLast600Jobs_ForProject4845_Success()
     {
         const int projectId = 4845;
@@ -353,8 +326,8 @@ public class GitLabJobsTests
                 ~JobScope.Created;
         var retrievedJobs = await gitLabClient.GetAllProjectJobsAsync(projectId, scopes, perPage: 100).Take(maxJobsToRetrieve).ToListAsync();
 
-        Assert.That(retrievedJobs, Is.Not.Null);
-        Assert.That(retrievedJobs.Count, Is.LessThanOrEqualTo(maxJobsToRetrieve));
+        Assert.NotNull(retrievedJobs);
+        Assert.True(retrievedJobs.Count <= maxJobsToRetrieve);
 
         logger.LogInformation($"Retrieved {retrievedJobs.Count} jobs for project {projectId}");
 
@@ -364,7 +337,7 @@ public class GitLabJobsTests
         }
 
         // Проверяем, что все задачи имеют валидные ID
-        Assert.That(retrievedJobs.All(job => job.Id > 0), Is.True, "All jobs should have valid IDs");
+        Assert.True(retrievedJobs.All(job => job.Id > 0));
 
         // Проверяем распределение статусов
         var statusCounts = retrievedJobs
@@ -379,6 +352,6 @@ public class GitLabJobsTests
         }
     }
 
-    private GitLabExtendedClient gitLabClient;
-    private ILogger logger;
+    private readonly GitLabExtendedClient gitLabClient;
+    private readonly ILogger logger;
 }

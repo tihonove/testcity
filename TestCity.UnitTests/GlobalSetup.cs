@@ -1,29 +1,27 @@
 using dotenv.net;
 using TestCity.Core.Logging;
-using TestCity.UnitTests.Utils;
 using Microsoft.Extensions.Logging;
-using NUnit.Framework;
+using Xunit;
+using Xunit.Abstractions;
+using TestCity.UnitTests.Utils;
 
 namespace TestCity.UnitTests;
 
-[SetUpFixture]
-public class GlobalSetup
+public sealed class GlobalSetup
 {
-    private static ILoggerFactory? loggerFactory;
-
-    [OneTimeSetUp]
-    public void LoadEnv()
+    public GlobalSetup()
     {
         DotEnv.Fluent().WithProbeForEnv(10).Load();
-        Log.ConfigureGlobalLogProvider(TestLoggerFactory);
     }
 
-    public static ILoggerFactory TestLoggerFactory
+    public static ILoggerFactory TestLoggerFactory(ITestOutputHelper output)
     {
-        get
-        {
-            loggerFactory ??= LoggerFactory.Create(builder => builder.AddProvider(new NUnitLoggerProvider()).SetMinimumLevel(LogLevel.Debug));
-            return loggerFactory;
-        }
+        XUnitLoggerProvider.ConfigureTestLogger(output);
+        return Log.LoggerFactory;
     }
+}
+
+[CollectionDefinition("Global")]
+public class GlobalCollection : ICollectionFixture<GlobalSetup>
+{
 }

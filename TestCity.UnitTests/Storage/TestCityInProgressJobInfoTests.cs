@@ -1,14 +1,14 @@
 using TestCity.Core.Clickhouse;
 using TestCity.Core.Storage;
 using TestCity.Core.Storage.DTO;
-using NUnit.Framework;
+using Xunit;
 
 namespace TestCity.UnitTests.Storage;
 
-public class TestCityInProgressJobInfoTests
+[Collection("Global")]
+public class TestCityInProgressJobInfoTests : IAsyncLifetime
 {
-    [SetUp]
-    public async Task SetUp()
+    public async Task InitializeAsync()
     {
         var connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
         await using var connection = connectionFactory.CreateConnection();
@@ -16,7 +16,12 @@ public class TestCityInProgressJobInfoTests
         await TestAnalyticsDatabaseSchema.InsertPredefinedProjects(connectionFactory);
     }
 
-    [Test]
+    public Task DisposeAsync()
+    {
+        return Task.CompletedTask;
+    }
+
+    [Fact]
     public async Task Insert_ShouldCorrectlyAddRecord()
     {
         // Arrange
@@ -29,10 +34,10 @@ public class TestCityInProgressJobInfoTests
 
         // Assert
         var exists = await inProgressJobInfo.ExistsAsync(job.ProjectId, job.JobRunId);
-        Assert.That(exists, Is.True, "Запись должна существовать после вставки");
+        Assert.True(exists, "Запись должна существовать после вставки");
     }
 
-    [Test]
+    [Fact]
     public async Task ExistsAsync_ShouldReturnFalse_WhenRecordDoesNotExist()
     {
         // Arrange
@@ -45,10 +50,10 @@ public class TestCityInProgressJobInfoTests
         var exists = await inProgressJobInfo.ExistsAsync(projectId, jobRunId);
 
         // Assert
-        Assert.That(exists, Is.False, "Запись не должна существовать");
+        Assert.False(exists, "Запись не должна существовать");
     }
 
-    [Test]
+    [Fact]
     public async Task ExistsAsync_ShouldReturnTrue_WhenRecordExists()
     {
         // Arrange
@@ -60,10 +65,10 @@ public class TestCityInProgressJobInfoTests
         var exists = await inProgressJobInfo.ExistsAsync(job.ProjectId, job.JobRunId);
 
         // Assert
-        Assert.That(exists, Is.True, "Запись должна существовать после вставки");
+        Assert.True(exists, "Запись должна существовать после вставки");
     }
 
-    [Test]
+    [Fact]
     public async Task ExistsAsync_WithProjectId_ShouldReturnFalse_WhenRecordDoesNotExist()
     {
         // Arrange
@@ -76,10 +81,10 @@ public class TestCityInProgressJobInfoTests
         var exists = await inProgressJobInfo.ExistsAsync(projectId, jobRunId);
 
         // Assert
-        Assert.That(exists, Is.False, "Запись не должна существовать");
+        Assert.False(exists, "Запись не должна существовать");
     }
 
-    [Test]
+    [Fact]
     public async Task ExistsAsync_WithProjectId_ShouldReturnTrue_WhenRecordExists()
     {
         // Arrange
@@ -91,7 +96,7 @@ public class TestCityInProgressJobInfoTests
         var exists = await inProgressJobInfo.ExistsAsync(job.ProjectId, job.JobRunId);
 
         // Assert
-        Assert.That(exists, Is.True, "Запись должна существовать при поиске по ProjectId после вставки");
+        Assert.True(exists, "Запись должна существовать при поиске по ProjectId после вставки");
     }
 
     private static InProgressJobInfo CreateTestInProgressJobInfo()

@@ -7,28 +7,23 @@ using TestCity.Core.Storage;
 using TestCity.Core.Storage.DTO;
 using Microsoft.Extensions.Logging;
 using NGitLab.Models;
-using NUnit.Framework;
+using Xunit;
 using JobScope = TestCity.Core.GitLab.Models.JobScope;
+using Xunit.Abstractions;
 
 namespace TestCity.UnitTests.Explicits;
 
-[TestFixture]
-[Explicit]
-public class GitLabJobProcessorTests
+[Collection("Global")]
+public class GitLabJobProcessorTests(ITestOutputHelper output)
 {
-    private ILogger<GitLabJobProcessor> logger;
-    private GitLabSettings settings;
+    private readonly ILogger<GitLabJobProcessor> logger = GlobalSetup.TestLoggerFactory(output).CreateLogger<GitLabJobProcessor>();
+    private readonly GitLabSettings settings = GitLabSettings.Default;
 
-    [OneTimeSetUp]
-    public void Setup()
-    {
-        logger = GlobalSetup.TestLoggerFactory.CreateLogger<GitLabJobProcessor>();
-        settings = GitLabSettings.Default;
-    }
-
-    [Test]
+    [Fact]
     public async Task PrintJobData_ForSpecificProjectAndJob()
     {
+        if (Environment.GetEnvironmentVariable("RUN_EXPLICIT_TESTS") != "1")
+            return;
         var projectId = 17358;
         var jobId = 37359127;
 
@@ -45,9 +40,11 @@ public class GitLabJobProcessorTests
         processingResult.JobInfo.CustomStatusMessage.Should().Be("Не прошли тесты на подхватывание ресурсов после релиза (exitCode 1)");
     }    
     
-    [Test]
+    [Fact]
     public async Task PrintJobData_ForSpecificProjectAndJob_2()
     {
+        if (Environment.GetEnvironmentVariable("RUN_EXPLICIT_TESTS") != "1")
+            return;
         var projectId = 17358;
         var jobId = 37342578;
 
@@ -62,9 +59,11 @@ public class GitLabJobProcessorTests
         processingResult.JobInfo!.State.Should().Be(JobStatus.Failed);
     }
 
-    [Test]
+    [Fact]
     public async Task IterateOverFiitProject()
     {
+        if (Environment.GetEnvironmentVariable("RUN_EXPLICIT_TESTS") != "1")
+            return;
         var projectId = 19564;
         logger.LogInformation("Starting Test01...");
         var gitlabClientProvider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
@@ -126,9 +125,11 @@ public class GitLabJobProcessorTests
     }
 
 
-    [Test]
+    [Fact]
     public async Task FixMissedFormsJobsForPipeline()
     {
+        if (Environment.GetEnvironmentVariable("RUN_EXPLICIT_TESTS") != "1")
+            return;
         var projectId = 17358;
         // var pipelineId = 4071111;
         logger.LogInformation("Starting Test01...");
@@ -193,9 +194,11 @@ public class GitLabJobProcessorTests
         logger.LogInformation("Processed {Count} jobs", count);
     }
 
-    [Test]
+    [Fact]
     public async Task FixMissedFormsJobs()
     {
+        if (Environment.GetEnvironmentVariable("RUN_EXPLICIT_TESTS") != "1")
+            return;
         var projectId = 19371;
         logger.LogInformation("Starting Test01...");
         var gitlabClientProvider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);

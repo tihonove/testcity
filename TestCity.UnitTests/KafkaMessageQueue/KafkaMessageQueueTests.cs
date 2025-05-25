@@ -3,26 +3,22 @@ using Confluent.Kafka.Admin;
 using TestCity.Core.KafkaMessageQueue;
 using TestCity.Core.Worker;
 using Microsoft.Extensions.Logging;
-using NUnit.Framework;
+using Xunit;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using TestCity.UnitTests.Utils;
+using Xunit.Abstractions;
+using TestCity.Core.Logging;
 
 namespace TestCity.UnitTests.KafkaMessageQueue;
 
-[TestFixture]
-class KafkaMessageQueueTests
+[Collection("Global")]
+public class KafkaMessageQueueTests(ITestOutputHelper output)
 {
     private const string TestTaskType = "test-task";
-    private ILogger logger;
+    private readonly ILogger logger = GlobalSetup.TestLoggerFactory(output).CreateLogger("KafkaMessageQueueTests");
 
-    [SetUp]
-    public void SetUp()
-    {
-        logger = GlobalSetup.TestLoggerFactory.CreateLogger("KafkaMessageQueueTests");
-    }
-
-    [Test]
+    [Fact]
     public async Task TestEnqueueAndExecuteSingleTask()
     {
         var topicPrefix = "test-topic";
@@ -32,15 +28,15 @@ class KafkaMessageQueueTests
         var testHandler = new DelegatedTaskHandler<string>(TestTaskType, _ =>
         {
             count++;
-            GlobalSetup.TestLoggerFactory.CreateLogger("TestHandler").LogInformation("Task handled");
+            Log.GetLog("TestHandler").LogInformation("Task handled");
         });
 
         await using var consumerInstance = TestConsumerInstance.Run(topicPrefix, testHandler);
         await consumerInstance.Client.EnqueueTask(TestTaskType, "test-payload");
-        await AssertEventually.That(() => count, Is.EqualTo(1));
+        await AssertEventually.AssertEqual(() => count, 1);
     }
 
-    [Test]
+    [Fact]
     public async Task TestMultipleTasksSequential()
     {
         var topicPrefix = "test-sequential-topic";
@@ -50,7 +46,7 @@ class KafkaMessageQueueTests
         var testHandler = new DelegatedTaskHandler<string>(TestTaskType, payload =>
         {
             processedPayloads.Add(payload);
-            GlobalSetup.TestLoggerFactory.CreateLogger("TestHandler").LogInformation("Task handled: {Payload}", payload);
+            Log.GetLog("TestHandler").LogInformation("Task handled: {Payload}", payload);
         });
 
         await using var consumerInstance = TestConsumerInstance.Run(topicPrefix, testHandler);
@@ -62,16 +58,16 @@ class KafkaMessageQueueTests
         }
 
         // Verify all tasks are processed
-        await AssertEventually.That(() => processedPayloads.Count, Is.EqualTo(10));
+        await AssertEventually.AssertEqual(() => processedPayloads.Count, 10);
 
         // Verify all expected payloads were processed
         for (int i = 0; i < 10; i++)
         {
-            Assert.That(processedPayloads, Contains.Item($"payload-{i}"));
+            Assert.Contains($"payload-{i}", processedPayloads);
         }
     }
 
-    [Test]
+    [Fact]
     public async Task TestMultipleTasksParallel()
     {
         var topicPrefix = "test-parallel-topic";
@@ -81,7 +77,7 @@ class KafkaMessageQueueTests
         var testHandler = new DelegatedTaskHandler<string>(TestTaskType, payload =>
         {
             processedPayloads.Add(payload);
-            GlobalSetup.TestLoggerFactory.CreateLogger("TestHandler").LogInformation("Task handled: {Payload}", payload);
+            Log.GetLog("TestHandler").LogInformation("Task handled: {Payload}", payload);
         });
 
         await using var consumerInstance = TestConsumerInstance.Run(topicPrefix, testHandler);
@@ -94,16 +90,16 @@ class KafkaMessageQueueTests
         await Task.WhenAll(enqueueTasks);
 
         // Verify all tasks are processed
-        await AssertEventually.That(() => processedPayloads.Count, Is.EqualTo(50));
+        await AssertEventually.AssertEqual(() => processedPayloads.Count, 50);
 
         // Verify all expected payloads were processed
         for (int i = 0; i < 50; i++)
         {
-            Assert.That(processedPayloads, Contains.Item($"parallel-{i}"));
+            Assert.Contains($"parallel-{i}", processedPayloads);
         }
     }
 
-    [Test]
+    [Fact]
     public async Task TestMultipleTaskTypesWithDifferentHandlers()
     {
         var topicPrefix = "test-multiple-types-topic";
@@ -115,13 +111,13 @@ class KafkaMessageQueueTests
         var handler1 = new DelegatedTaskHandler<string>("type1-task", payload =>
         {
             type1Payloads.Add(payload);
-            GlobalSetup.TestLoggerFactory.CreateLogger("Type1Handler").LogInformation("Type1 task handled: {Payload}", payload);
+            Log.GetLog("Type1Handler").LogInformation("Type1 task handled: {Payload}", payload);
         });
 
         var handler2 = new DelegatedTaskHandler<string>("type2-task", payload =>
         {
             type2Payloads.Add(payload);
-            GlobalSetup.TestLoggerFactory.CreateLogger("Type2Handler").LogInformation("Type2 task handled: {Payload}", payload);
+            Log.GetLog("Type2Handler").LogInformation("Type2 task handled: {Payload}", payload);
         });
 
         await using var consumerInstance = TestConsumerInstance.Run(topicPrefix, handler1, handler2);
@@ -134,13 +130,13 @@ class KafkaMessageQueueTests
         }
 
         // Verify all tasks are processed
-        await AssertEventually.That(() => type1Payloads.Count + type2Payloads.Count, Is.EqualTo(10));
+        await AssertEventually.AssertEqual(() => type1Payloads.Count + type2Payloads.Count, 10);
 
-        Assert.That(type1Payloads.Count, Is.EqualTo(5), "Expected 5 tasks of type1");
-        Assert.That(type2Payloads.Count, Is.EqualTo(5), "Expected 5 tasks of type2");
+        Assert.Equal(5, type1Payloads.Count);
+        Assert.Equal(5, type2Payloads.Count);
     }
 
-    [Test]
+    [Fact]
     public async Task TestTasksAreProcessedExactlyOnce()
     {
         var topicPrefix = "test-exactly-once-topic";
@@ -151,7 +147,7 @@ class KafkaMessageQueueTests
         var testHandler = new DelegatedTaskHandler<string>(TestTaskType, payload =>
         {
             processedCounts.AddOrUpdate(payload, 1, (_, count) => count + 1);
-            GlobalSetup.TestLoggerFactory.CreateLogger("TestHandler").LogInformation("Task handled: {Payload}", payload);
+            Log.GetLog("TestHandler").LogInformation("Task handled: {Payload}", payload);
         });
 
         await using var consumerInstance = TestConsumerInstance.Run(topicPrefix, testHandler);
@@ -163,16 +159,16 @@ class KafkaMessageQueueTests
         }
 
         // Wait for all tasks to be processed
-        await AssertEventually.That(() => processedCounts.Count, Is.EqualTo(10));
+        await AssertEventually.AssertEqual(() => processedCounts.Count, 10);
 
         // Verify each task was processed exactly once
         foreach (var kvp in processedCounts)
         {
-            Assert.That(kvp.Value, Is.EqualTo(1), $"Task {kvp.Key} was processed {kvp.Value} times instead of exactly once");
+            Assert.Equal(1, kvp.Value);
         }
     }
 
-    [Test]
+    [Fact]
     public async Task TestHandlerExceptionDoesNotBreakConsumer()
     {
         var topicPrefix = "test-exception-topic";
@@ -205,19 +201,19 @@ class KafkaMessageQueueTests
         }
 
         // Wait for all tasks to be attempted
-        await AssertEventually.That(() => attemptedToProcess.Count, Is.EqualTo(10));
+        await AssertEventually.AssertEqual(() => attemptedToProcess.Count, 10);
 
         // Verify odd-numbered tasks were processed successfully
-        Assert.That(successfullyProcessed.Count, Is.EqualTo(5), "Expected 5 tasks to be processed successfully");
+        Assert.Equal(5, successfullyProcessed.Count);
 
         // Verify the consumer continued running even after exceptions
         var additionalPayload = "after-exception";
         await consumerInstance.Client.EnqueueTask(TestTaskType, additionalPayload);
 
-        await AssertEventually.That(() => successfullyProcessed, Contains.Item(additionalPayload));
+        await AssertEventually.AssertContains(() => successfullyProcessed, additionalPayload);
     }
 
-    [Test]
+    [Fact]
     public async Task TestServiceRestartPreservesUnprocessedTasks()
     {
         var topicPrefix = "test-restart-topic";
@@ -259,19 +255,19 @@ class KafkaMessageQueueTests
         await using var consumerInstance2 = TestConsumerInstance.Run(topicPrefix, testHandler);
 
         // Wait for all remaining tasks to be processed
-        await AssertEventually.That(() => processedPayloads.Count, Is.EqualTo(20));
+        await AssertEventually.AssertEqual(() => processedPayloads.Count, 20);
 
-        Assert.That(firstConsumerCount, Is.LessThan(20), "First consumer should not have processed all tasks");
-        Assert.That(processedPayloads.Count, Is.EqualTo(20), "All tasks should be processed after restart");
+        Assert.True(firstConsumerCount < 20);
+        Assert.Equal(20, processedPayloads.Count);
 
         // Verify all expected payloads were processed
         for (int i = 0; i < 20; i++)
         {
-            Assert.That(processedPayloads, Contains.Item(i));
+            Assert.Contains(i, processedPayloads);
         }
     }
 
-    [Test]
+    [Fact]
     public async Task TestMultipleConsumersLoadBalancing()
     {
         var topicPrefix = "test-load-balancing-topic";
@@ -283,15 +279,15 @@ class KafkaMessageQueueTests
         // Handler for first consumer
         var handler1 = new DelegatedTaskHandler<string>(TestTaskType, payload =>
         {
-            consumer1Payloads.Add(payload);
-            GlobalSetup.TestLoggerFactory.CreateLogger("Consumer1").LogInformation("Consumer 1 handled: {Payload}", payload);
+            consumer1Payloads.Add(payload);            
+            Log.GetLog("Consumer1").LogInformation("Consumer 1 handled: {Payload}", payload);
         });
 
         // Handler for second consumer
         var handler2 = new DelegatedTaskHandler<string>(TestTaskType, payload =>
         {
             consumer2Payloads.Add(payload);
-            GlobalSetup.TestLoggerFactory.CreateLogger("Consumer2").LogInformation("Consumer 2 handled: {Payload}", payload);
+            Log.GetLog("Consumer2").LogInformation("Consumer 2 handled: {Payload}", payload);
         });
 
         // Start two consumers with different consumer group instances but same group ID
@@ -309,21 +305,21 @@ class KafkaMessageQueueTests
         }
 
         // Wait for all tasks to be processed
-        await AssertEventually.That(() => consumer1Payloads.Count + consumer2Payloads.Count, Is.EqualTo(100));
+        await AssertEventually.AssertEqual(() => consumer1Payloads.Count + consumer2Payloads.Count, 100);
 
         // Verify that both consumers received some tasks (load balancing)
-        Assert.That(consumer1Payloads.Count, Is.GreaterThan(0), "Consumer 1 should have processed some tasks");
-        Assert.That(consumer2Payloads.Count, Is.GreaterThan(0), "Consumer 2 should have processed some tasks");
+        Assert.True(consumer1Payloads.Count > 0);
+        Assert.True(consumer2Payloads.Count > 0);
 
         // Verify the total number of processed tasks
-        Assert.That(consumer1Payloads.Count + consumer2Payloads.Count, Is.EqualTo(100), "Total tasks processed");
+        Assert.Equal(100, consumer1Payloads.Count + consumer2Payloads.Count);
 
         // Verify no tasks were processed by both consumers
         var intersection = consumer1Payloads.Intersect(consumer2Payloads).ToList();
-        Assert.That(intersection, Is.Empty, "No task should be processed by both consumers");
+        Assert.Empty(intersection);
     }
 
-    [Test]
+    [Fact]
     public async Task TestHighLoadWithLongRunningTasks()
     {
         var topicPrefix = "test-high-load-topic";
@@ -370,21 +366,21 @@ class KafkaMessageQueueTests
         var enqueueTime = stopwatch.ElapsedMilliseconds;
 
         // Wait for all tasks to be processed
-        await AssertEventually.That(() => processedPayloads.Count, Is.EqualTo(taskCount));
+        await AssertEventually.AssertEqual(() => processedPayloads.Count, taskCount);
         var totalProcessingTime = stopwatch.ElapsedMilliseconds;
 
-        GlobalSetup.TestLoggerFactory.CreateLogger("HighLoadTest").LogInformation(
+        Log.GetLog("HighLoadTest").LogInformation(
             "Processed {TaskCount} tasks in {TotalTime}ms (enqueue: {EnqueueTime}ms). Task breakdown: {TaskBreakdown}",
             taskCount, totalProcessingTime, enqueueTime, string.Join(", ", completedTaskCounts.Select(kvp => $"{kvp.Value} tasks @{kvp.Key}ms")));
 
         // Verify all expected payloads were processed
         for (int i = 0; i < taskCount; i++)
         {
-            Assert.That(processedPayloads, Contains.Item($"load-{i}"));
+            Assert.Contains($"load-{i}", processedPayloads);
         }
     }
 
-    [Test]
+    [Fact]
     public async Task TestUnhandledTasksRemainInQueue()
     {
         var topicPrefix = "test-unhandled-topic";
@@ -407,7 +403,7 @@ class KafkaMessageQueueTests
             await consumer1.Client.EnqueueTask("type2", "task2-should-remain-in-queue");
 
             // Verify type1 tasks are processed
-            await AssertEventually.That(() => handler1Processed.Count, Is.EqualTo(1));
+            await AssertEventually.AssertEqual(() => handler1Processed.Count, 1);
         }
 
         // Second handler handles type2 tasks
@@ -420,12 +416,12 @@ class KafkaMessageQueueTests
         await using var consumer2 = TestConsumerInstance.Run(topicPrefix, handler2);
 
         // Verify type2 tasks that were previously unhandled are now processed
-        await AssertEventually.That(() => handler2Processed.Count, Is.EqualTo(1));
+        await AssertEventually.AssertEqual(() => handler2Processed.Count, 1);
 
-        Assert.That(handler2Processed, Contains.Item("task2-should-remain-in-queue"));
+        Assert.Contains("task2-should-remain-in-queue", handler2Processed);
     }
 
-    [Test]
+    [Fact]
     public async Task TestPayloadDeserialization()
     {
         var topicPrefix = "test-payload-topic";
@@ -436,7 +432,7 @@ class KafkaMessageQueueTests
         var testHandler = new DelegatedTaskHandler<TestData>("complex-task", payload =>
         {
             processedData.Add(payload);
-            GlobalSetup.TestLoggerFactory.CreateLogger("PayloadTest").LogInformation(
+            Log.GetLog("PayloadTest").LogInformation(
                 "Processed complex payload: Id={Id}, Name={Name}", payload.Id, payload.Name);
         });
 
@@ -455,13 +451,13 @@ class KafkaMessageQueueTests
         await consumerInstance.Client.EnqueueTask("complex-task", testData);
 
         // Verify the task is processed with proper deserialization
-        await AssertEventually.That(() => processedData.Count, Is.EqualTo(1));
+        await AssertEventually.AssertEqual(() => processedData.Count, 1);
 
         var receivedData = processedData.First();
-        Assert.That(receivedData.Id, Is.EqualTo(testData.Id));
-        Assert.That(receivedData.Name, Is.EqualTo(testData.Name));
-        Assert.That(receivedData.CreatedAt, Is.EqualTo(testData.CreatedAt).Within(TimeSpan.FromSeconds(1)));
-        Assert.That(receivedData.Values, Is.EquivalentTo(testData.Values));
+        Assert.Equal(testData.Id, receivedData.Id);
+        Assert.Equal(testData.Name, receivedData.Name);
+        Assert.Equal(testData.CreatedAt, receivedData.CreatedAt, TimeSpan.FromSeconds(1));
+        Assert.Equal(testData.Values, receivedData.Values);
     }
 
     private async Task EnsureCleanTopicSet(string topicPrefix, int numPartitions = 1, short replicationFactor = 1)
@@ -529,7 +525,7 @@ internal class TestConsumerInstance : IAsyncDisposable
                 DelayedBase = TimeSpan.FromSeconds(10),
             })
             .WithTaskHandlers(testHandlers)
-            .WithLoggerFactory(GlobalSetup.TestLoggerFactory)
+            .WithLoggerFactory(Log.LoggerFactory)
             .BuildServiceAndClient();
         var tokenSource = new CancellationTokenSource();
         var task = consumerService.ExecuteAsync(tokenSource.Token);
