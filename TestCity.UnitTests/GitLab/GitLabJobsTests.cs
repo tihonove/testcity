@@ -12,7 +12,6 @@ public class GitLabJobsTests : IDisposable
 {
     public GitLabJobsTests(ITestOutputHelper output)
     {
-        CIUtils.SkipOnGitHubActions();
         logger = GlobalSetup.TestLoggerFactory(output).CreateLogger<GitLabJobsTests>();
         var provider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
         gitLabClient = provider.GetExtendedClient();
@@ -27,6 +26,9 @@ public class GitLabJobsTests : IDisposable
     [Fact]
     public async Task GetProjectJobs_ForProject19564_Success()
     {
+        if (CIUtils.IsGitHubActions())
+            return;
+
         try
         {
             const int projectId = 19564;
@@ -65,6 +67,9 @@ public class GitLabJobsTests : IDisposable
     [Fact]
     public async Task GetAllProjectJobs_ForProject19564_Success()
     {
+        if (CIUtils.IsGitHubActions())
+            return;
+
         try
         {
             const int projectId = 19564;
@@ -104,6 +109,9 @@ public class GitLabJobsTests : IDisposable
     [Fact]
     public async Task CompareJobsRetrieval_SingleRequestVsPagination_ShouldMatchIds()
     {
+        if (CIUtils.IsGitHubActions())
+            return;
+
         try
         {
             const int projectId = 19564;
@@ -168,6 +176,9 @@ public class GitLabJobsTests : IDisposable
     [Fact]
     public async Task GetJob_ForSpecificJobId_MatchesExpectedJson()
     {
+        if (CIUtils.IsGitHubActions())
+            return;
+
         const int projectId = 19564;
         const long jobId = 37872976;
 
@@ -238,6 +249,9 @@ public class GitLabJobsTests : IDisposable
     [Fact]
     public async Task FindJobById_ForSpecificJob_MatchesExpectedJson()
     {
+        if (CIUtils.IsGitHubActions())
+            return;
+
         const int projectId = 19564;
         const long expectedJobId = 37872978;
 
@@ -314,6 +328,9 @@ public class GitLabJobsTests : IDisposable
     [Fact]
     public async Task GetLast600Jobs_ForProject4845_Success()
     {
+        if (CIUtils.IsGitHubActions())
+            return;
+
         const int projectId = 4845;
         // const int projectId = 25483;
         const int maxJobsToRetrieve = 600;
