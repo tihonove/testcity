@@ -49,6 +49,8 @@ public class ProcessJobRunTaskHandlerTests : IAsyncLifetime
 
     public async Task InitializeAsync()
     {
+        if (Environment.GetEnvironmentVariable("RUN_EXPLICIT_TESTS") != "1")
+            return;
         await using var connection = connectionFactory.CreateConnection();
         await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);
         await TestAnalyticsDatabaseSchema.InsertPredefinedProjects(connectionFactory);
