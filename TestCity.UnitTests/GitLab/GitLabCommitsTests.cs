@@ -21,7 +21,7 @@ public class GitLabCommitsTests : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    [FactEx(SkipOnCI = true)]
+    [FactEx(SkipOnCI: true)]
     public async Task GetRepositoryCommitsAsync_WithSpecificRefName_ReturnsCommits()
     {
         const int projectId = 17358;
@@ -68,7 +68,7 @@ public class GitLabCommitsTests : IDisposable
 
     }
 
-    [FactEx(SkipOnCI = true)]
+    [FactEx(SkipOnCI: true)]
     public async Task GetRepositoryCommitsAsync_WithKeysetPagination_ReturnsCommits()
     {
         const int projectId = 17358;
@@ -99,7 +99,7 @@ public class GitLabCommitsTests : IDisposable
         }
     }
 
-    [FactEx(SkipOnCI = true)]
+    [FactEx(SkipOnCI: true)]
     public async Task GetRepositoryCommitsAsync_WithComplexOptions_ReturnsFilteredCommits()
     {
         const int projectId = 17358;

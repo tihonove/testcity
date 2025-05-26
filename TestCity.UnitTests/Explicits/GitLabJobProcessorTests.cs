@@ -17,7 +17,7 @@ namespace TestCity.UnitTests.Explicits;
 [Collection("Global")]
 public class GitLabJobProcessorTests(ITestOutputHelper output)
 {
-    [FactEx(Explicit = true)]
+    [FactEx(Explicit: true)]
     public async Task PrintJobData_ForSpecificProjectAndJob()
     {
         var projectId = 17358;
@@ -36,7 +36,7 @@ public class GitLabJobProcessorTests(ITestOutputHelper output)
         processingResult.JobInfo.CustomStatusMessage.Should().Be("Не прошли тесты на подхватывание ресурсов после релиза (exitCode 1)");
     }
 
-    [FactEx(Explicit = true)]
+    [FactEx(Explicit: true)]
     public async Task PrintJobData_ForSpecificProjectAndJob_2()
     {
         var projectId = 17358;
@@ -53,7 +53,7 @@ public class GitLabJobProcessorTests(ITestOutputHelper output)
         processingResult.JobInfo!.State.Should().Be(JobStatus.Failed);
     }
 
-    [FactEx(Explicit = true)]
+    [FactEx(Explicit: true)]
     public async Task IterateOverFiitProject()
     {
         var projectId = 19564;
@@ -117,7 +117,7 @@ public class GitLabJobProcessorTests(ITestOutputHelper output)
     }
 
 
-    [FactEx(Explicit = true)]
+    [FactEx(Explicit: true)]
     public async Task FixMissedFormsJobsForPipeline()
     {
         var projectId = 17358;
@@ -184,7 +184,7 @@ public class GitLabJobProcessorTests(ITestOutputHelper output)
         logger.LogInformation("Processed {Count} jobs", count);
     }
 
-    [FactEx(Explicit = true)]
+    [FactEx(Explicit: true)]
     public async Task FixMissedFormsJobs()
     {
         var projectId = 19371;

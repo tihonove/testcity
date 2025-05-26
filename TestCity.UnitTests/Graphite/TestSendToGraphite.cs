@@ -7,7 +7,7 @@ namespace TestCity.UnitTests.Graphite;
 [Collection("Global")]
 public class TestSendToGraphite
 {
-    [FactEx(SkipOnCI = true)]
+    [FactEx(SkipOnCI: true)]
     public async Task TestSend()
     {
         var GraphiteHost = Environment.GetEnvironmentVariable("GRAPHITE_RELAY_HOST") ?? throw new InvalidOperationException("GRAPHITE_RELAY_HOST is not set");
@@ -20,7 +20,7 @@ public class TestSendToGraphite
         await client.SendAsync(metricPath, value, timestamp);
     }
 
-    [FactEx(SkipOnCI = true)]
+    [FactEx(SkipOnCI: true)]
     public async Task TestSendWithTags()
     {
         var GraphiteHost = Environment.GetEnvironmentVariable("GRAPHITE_RELAY_HOST") ?? throw new InvalidOperationException("GRAPHITE_RELAY_HOST is not set");

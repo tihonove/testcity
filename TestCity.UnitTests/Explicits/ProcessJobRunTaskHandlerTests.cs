@@ -58,7 +58,7 @@ public class ProcessJobRunTaskHandlerTests : IAsyncLifetime
         return Task.CompletedTask;
     }
 
-    [FactEx(Explicit = true)]
+    [FactEx(Explicit: true)]
     public async Task EnqueueAsync_ShouldProcessJob_WhenJobExists2()
     {
         const long projectId = 17358;

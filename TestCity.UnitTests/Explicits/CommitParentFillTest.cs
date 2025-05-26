@@ -17,7 +17,7 @@ public class CommitParentFillTest
         XUnitLoggerProvider.ConfigureTestLogger(output);
     }
 
-    [FactEx(Explicit = true)]
+    [FactEx(Explicit: true)]
     public async Task FillParents()
     {
         long projectId = 24783;
@@ -26,7 +26,7 @@ public class CommitParentFillTest
         await service.BuildCommitParent(projectId, "2d39e9a8868610dd0a09ed8604e1a259db2059de", default);
     }
 
-    [FactEx(Explicit = true)]
+    [FactEx(Explicit: true)]
     public async Task CommitChangesTest()
     {
         // Заданные значения из исходного запроса
@@ -66,7 +66,7 @@ public class CommitParentFillTest
         Assert.Equal("feat: Drop reporter cli", changes[2].MessagePreview);
     }
 
-    [FactEx(Explicit = true)]
+    [FactEx(Explicit: true)]
     public async Task FullJobInfoInsertWithChangesSinceLastRunTest()
     {
         // Создаем уникальные идентификаторы для изоляции теста

@@ -23,7 +23,7 @@ public class GitLabJobsTests : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    [FactEx(SkipOnCI = true)]
+    [FactEx(SkipOnCI: true)]
     public async Task GetProjectJobs_ForProject19564_Success()
     {
         try
@@ -61,7 +61,7 @@ public class GitLabJobsTests : IDisposable
         }
     }
 
-    [FactEx(SkipOnCI = true)]
+    [FactEx(SkipOnCI: true)]
     public async Task GetAllProjectJobs_ForProject19564_Success()
     {
         try
@@ -100,7 +100,7 @@ public class GitLabJobsTests : IDisposable
         }
     }
 
-    [FactEx(SkipOnCI = true)]
+    [FactEx(SkipOnCI: true)]
     public async Task CompareJobsRetrieval_SingleRequestVsPagination_ShouldMatchIds()
     {
         try
@@ -164,7 +164,7 @@ public class GitLabJobsTests : IDisposable
         }
     }
 
-    [FactEx(SkipOnCI = true)]
+    [FactEx(SkipOnCI: true)]
     public async Task GetJob_ForSpecificJobId_MatchesExpectedJson()
     {
         const int projectId = 19564;
@@ -234,7 +234,7 @@ public class GitLabJobsTests : IDisposable
         Assert.Empty(job.TagList!);
     }
 
-    [FactEx(SkipOnCI = true)]
+    [FactEx(SkipOnCI: true)]
     public async Task FindJobById_ForSpecificJob_MatchesExpectedJson()
     {
         const int projectId = 19564;
@@ -310,7 +310,7 @@ public class GitLabJobsTests : IDisposable
         }
     }
 
-    [FactEx(SkipOnCI = true)]
+    [FactEx(SkipOnCI: true)]
     public async Task GetLast600Jobs_ForProject4845_Success()
     {
         const int projectId = 4845;

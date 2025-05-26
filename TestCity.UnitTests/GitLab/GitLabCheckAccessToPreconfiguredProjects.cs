@@ -43,7 +43,7 @@ public class GitLabCheckAccessToPreconfiguredProjects : IDisposable, IAsyncLifet
         return Task.CompletedTask;
     }
 
-    [FactEx(SkipOnCI = true)]
+    [FactEx(SkipOnCI: true)]
     public async Task CheckAccessToProject()
     {
         logger = Log.GetLog<GitLabCheckAccessToPreconfiguredProjects>();
