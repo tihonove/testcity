@@ -86,7 +86,7 @@ public sealed class GitLabCrawlerService(GitLabSettings gitLabSettings, WorkerCl
             {
                 if (processedRunningJobSet.ContainsKey((projectId, job.Id)))
                 {
-                    log.LogInformation("Skip job with id: {JobId}", job.Id);
+                    log.LogDebug("Skip job with id: {JobId}", job.Id);
                     continue;
                 }
 
@@ -100,6 +100,7 @@ public sealed class GitLabCrawlerService(GitLabSettings gitLabSettings, WorkerCl
                         });
                     enqueuedCount++;
                     processedRunningJobSet.TryAdd((projectId, job.Id), 0);
+                    log.LogInformation("Enqueued running job {JobId} for project {ProjectId}", job.Id, projectId);
                 }
                 catch (Exception exception)
                 {
@@ -111,7 +112,7 @@ public sealed class GitLabCrawlerService(GitLabSettings gitLabSettings, WorkerCl
             {
                 if (processedCompletedJobSet.ContainsKey((projectId, job.Id)))
                 {
-                    log.LogInformation("Skip job with id: {JobId}", job.Id);
+                    log.LogDebug("Skip job with id: {JobId}", job.Id);
                     continue;
                 }
 
@@ -125,6 +126,7 @@ public sealed class GitLabCrawlerService(GitLabSettings gitLabSettings, WorkerCl
                         });
                     enqueuedCount++;
                     processedCompletedJobSet.TryAdd((projectId, job.Id), 0);
+                    log.LogInformation("Enqueued completed job {JobId} for project {ProjectId}", job.Id, projectId);
                 }
                 catch (Exception exception)
                 {
