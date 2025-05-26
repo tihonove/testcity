@@ -47,7 +47,7 @@ public class JUnitExtractor
                     using var stream = entry.Open();
                     using var reader = new StreamReader(stream);
                     var jsonFileContent = reader.ReadToEnd();
-                    hasCodeQualityReport = jsonFileContent.Contains("\"fingerprint\"") && jsonFileContent.Contains("\"check_name\"") && jsonFileContent.Contains("\"severity\"");
+                    hasCodeQualityReport = hasCodeQualityReport || jsonFileContent.Contains("\"fingerprint\"") && jsonFileContent.Contains("\"check_name\"") && jsonFileContent.Contains("\"severity\"");
                 }
             }
         }
