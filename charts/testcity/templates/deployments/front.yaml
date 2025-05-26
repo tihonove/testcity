@@ -22,5 +22,8 @@ spec:
           imagePullPolicy: {{ .Values.front.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.front.service.targetPort }}
+          env:
+            - name: GITLAB_URL
+              value: {{ .Values.gitlab.url }}
           resources:
             {{- toYaml .Values.front.resources | nindent 12 }}

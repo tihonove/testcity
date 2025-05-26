@@ -8,10 +8,15 @@ namespace TestCity.Core.GitLab;
 public sealed class GitLabExtendedClient : IDisposable
 {
     public GitLabExtendedClient(string hostUrl, string privateToken)
+        : this(new Uri(hostUrl), privateToken)
+    {
+    }
+
+    public GitLabExtendedClient(Uri hostUrl, string privateToken)
     {
         httpClient = new HttpClient
         {
-            BaseAddress = new Uri($"{hostUrl.TrimEnd('/')}/api/v4/"),
+            BaseAddress = new Uri(hostUrl, "api/v4/"),
         };
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", privateToken);
         httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -115,7 +120,7 @@ public sealed class GitLabExtendedClient : IDisposable
     {
         var options = new RepositoryCommitsQueryOptions();
         optionsBuilder(options);
-        
+
         await foreach (var commit in GetAllRepositoryCommitsAsync(projectId, options, cancellationToken))
         {
             yield return commit;

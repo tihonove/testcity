@@ -21,6 +21,8 @@ spec:
           image: "{{ .Values.worker.image.repository }}:{{ default .Chart.Version .Values.worker.image.tag }}"
           imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
           env:
+            - name: GITLAB_URL
+              value: {{ .Values.gitlab.url }}
             - name: GITLAB_TOKEN
               valueFrom:
                 secretKeyRef:

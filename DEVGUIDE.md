@@ -50,8 +50,8 @@ ClickHouse <----> API <----> Frontend <----> Пользователь
 
 1. Клонировать репозиторий:
    ```bash
-   git clone git@git.skbkontur.ru:forms/test-analytics.git
-   cd test-analytics
+   git clone git@github.com:tihonove/testcity.git
+   cd testcity
    ```
 
 2. Создайте файл `.env` на основе `.env.example`:
@@ -60,7 +60,7 @@ ClickHouse <----> API <----> Frontend <----> Пользователь
    ```
 
 3. Отредактируйте `.env` файл:
-   - Получите GitLab Token по адресу: https://git.skbkontur.ru/-/user_settings/personal_access_tokens
+   - Получите GitLab Token по адресу: {GITLAB_URL}/-/user_settings/personal_access_tokens
 
 ## Запуск проекта
 
@@ -103,7 +103,7 @@ npm run start-prod-api
 - При проблемах с ClickHouse проверьте настройки подключения и запущен ли контейнер
 - Для Frontend проблем, проверьте версию Node.js (должна быть 20+)
 
-Для сообщений о проблемах используйте [Issue Tracker](https://git.skbkontur.ru/forms/test-analytics/-/issues) в GitLab.
+Для сообщений о проблемах используйте [Issue Tracker](https://github.com/tihonove/testcity/issues) в github.
 
 ## Разработка с использованием DevContainer
 
@@ -126,7 +126,7 @@ npm run start-prod-api
 1. Установите необходимые инструменты, перечисленные выше
 2. Клонируйте репозиторий:
    ```bash
-   git clone git@git.skbkontur.ru:forms/test-analytics.git
+   git clone git@github.com:tihonove/testcity.git
    ```
 3. Откройте клонированный репозиторий в VS Code
 4. VS Code автоматически определит наличие конфигурации DevContainer и предложит открыть проект в контейнере
