@@ -23,6 +23,21 @@ public class GitLabJobsTests : IDisposable
         GC.SuppressFinalize(this);
     }
 
+    [Fact]
+    public async Task GetProjectJobs_ForTestProject()
+    {
+        const int projectId = 70134580;
+        const int pageSize = 10;
+
+        var firstPageJobs = await gitLabClient.GetProjectJobsAsync(projectId, null, 1, pageSize);
+
+        Assert.NotNull(firstPageJobs);
+        Assert.NotNull(firstPageJobs.Result);
+        Assert.Single(firstPageJobs.Result);
+
+        logger.LogInformation($"Retrieved {firstPageJobs.Result.Count} jobs from the first page of project {projectId}");
+    }
+
     [FactEx(SkipOnCI: true)]
     public async Task GetProjectJobs_ForProject19564_Success()
     {

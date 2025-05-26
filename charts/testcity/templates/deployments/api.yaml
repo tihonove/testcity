@@ -23,6 +23,8 @@ spec:
           ports:
             - containerPort: {{ .Values.api.service.targetPort }}
           env:
+            - name: GITLAB_URL
+              value: {{ .Values.gitlab.url }}
             - name: GITLAB_TOKEN
               valueFrom:
                 secretKeyRef:
