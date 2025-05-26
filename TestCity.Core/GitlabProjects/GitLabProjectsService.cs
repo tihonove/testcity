@@ -2,6 +2,7 @@ using TestCity.Core.Logging;
 using TestCity.Core.Storage;
 using Microsoft.Extensions.Logging;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using TestCity.Core.GitLab;
 using NGitLab;
 using NGitLab.Models;
@@ -140,6 +141,7 @@ public class GitLabProjectsService : IDisposable
     public void Dispose()
     {
         refreshTimer?.Dispose();
+        cacheInitializationSemaphore?.Dispose();
         GC.SuppressFinalize(this);
     }
 
@@ -165,12 +167,14 @@ public class GitLabProjectsService : IDisposable
         }
     }
 
-    private async Task UpdateCacheAsync(CancellationToken cancellationToken = default)
+    protected virtual async Task UpdateCacheAsync(CancellationToken cancellationToken = default)
     {
-        logger.LogDebug("Обновление кэша GitLab проектов...");
-
+        await cacheInitializationSemaphore.WaitAsync(cancellationToken);
         try
         {
+            cacheInitializationInProgress = true;
+            logger.LogInformation("Обновление кэша GitLab проектов...");
+
             var gitLabClient = gitLabClientProvider.GetClient();
             var rootGroups = await database.GitLabEntities.GetAllEntitiesAsync(cancellationToken).ToGitLabGroups(cancellationToken);
             await rootGroups.TraverseRecursiveAsync(async g =>
@@ -207,19 +211,37 @@ public class GitLabProjectsService : IDisposable
                 isCacheInitialized = true;
             }
 
-            logger.LogDebug("Кэш GitLab проектов обновлен");
+            logger.LogInformation("Кэш GitLab проектов обновлен");
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Не удалось обновить кэш GitLab проектов");
+            logger.LogError(ex, "");
             throw;
+        }
+        finally
+        {
+            cacheInitializationInProgress = false;
+            cacheInitializationSemaphore.Release();
         }
     }
 
-    private async Task EnsureCacheInitializedAsync(CancellationToken cancellationToken = default)
+    protected async Task EnsureCacheInitializedAsync(CancellationToken cancellationToken = default)
     {
-        if (!isCacheInitialized)
+        if (isCacheInitialized)
+            return;
+            
+        if (cacheInitializationInProgress)
         {
+            // Кэш уже инициализируется в другом потоке, ожидаем завершения
+            logger.LogInformation("Ожидание инициализации кэша GitLab проектов...");
+            await cacheInitializationSemaphore.WaitAsync(cancellationToken);
+            cacheInitializationSemaphore.Release(); // Освобождаем семафор для других ожидающих потоков
+        }
+        else if (!isCacheInitialized)
+        {
+            // В редком случае, когда флаг cacheInitializationInProgress не установлен, но кэш не инициализирован
+            // Это может произойти при первом запуске или при сбросе кэша
+            logger.LogInformation("Кэш не инициализирован и не инициализируется, начинаем инициализацию");
             await UpdateCacheAsync(cancellationToken);
         }
     }
@@ -246,4 +268,6 @@ public class GitLabProjectsService : IDisposable
     private readonly Lock cacheLock = new();
     private List<GitLabGroup> cachedRootGroups = [];
     private bool isCacheInitialized;
+    private readonly SemaphoreSlim cacheInitializationSemaphore = new(1, 1);
+    private bool cacheInitializationInProgress;
 }

@@ -1,9 +1,10 @@
 # Тесты
-Для написания тестов используюй xUnit, если я прошу написать тесты
-Для логгеров в тестах используй GlobalSetup.TestLoggerFactory
-Для ассертов в тестах используй новый синтаксис через Assert.That
-Не делай mock-ов для IGitLabClient, если не попросят отдельно. Используй экземпляр, создаваемый в SkbKonturGitLabClientProvider, а ему передавай настройки GitLabSettings.Default
-Тесты создавай в проекте TestCity.UnitTests
+Тесты добавляй только если я порошу и никак иначе.
+Если я попрошу написать тесты тогда следуй этим правилам:
+    - Для написания тестов используюй xUnit, если я прошу написать тесты
+    - Для логгеров в тестах используй GlobalSetup.TestLoggerFactory
+    - Не делай mock-ов для IGitLabClient, если не попросят отдельно. Используй экземпляр, создаваемый в SkbKonturGitLabClientProvider, а ему передавай настройки GitLabSettings.Default
+    - Тесты создавай в проекте TestCity.UnitTests
 
 # Код
 Используй file-scoped namespaces
