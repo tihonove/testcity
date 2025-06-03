@@ -1,0 +1,32 @@
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using TestCity.Api.Models;
+using TestCity.UnitTests.Api.ApiClient;
+
+namespace TestCity.UnitTests.Api;
+
+internal class GroupsApiClient : ApiClientBase
+{
+    public GroupsApiClient(HttpClient httpClient) 
+        : base(httpClient)
+    {
+    }
+    
+    public async Task<List<GroupDto>?> GetRootGroups()
+    {
+        return await GetAsync<List<GroupDto>>("api/groups");
+    }
+    
+    public async Task<GroupNodeDto?> GetGroup(string idOrTitle)
+    {
+        return await GetAsync<GroupNodeDto>($"api/groups/{idOrTitle}");
+    }
+    
+    public async Task<HttpStatusCode> GetGroupStatusCode(string idOrTitle)
+    {
+        var response = await GetResponseAsync($"api/groups/{idOrTitle}");
+        return response.StatusCode;
+    }
+}
