@@ -19,11 +19,12 @@ builder.WebHost.UseUrls("http://0.0.0.0:8124");
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 
-builder.Services.AddSingleton<GitLabSettings>(GitLabSettings.Default);
-builder.Services.AddSingleton<ClickHouseConnectionSettings>(ClickHouseConnectionSettings.Default);
+builder.Services.AddSingleton(GitLabSettings.Default);
+builder.Services.AddSingleton(ClickHouseConnectionSettings.Default);
 builder.Services.AddSingleton<SkbKonturGitLabClientProvider>();
 builder.Services.AddSingleton<WorkerClient>();
 builder.Services.AddSingleton<GitLabProjectsService>();
+builder.Services.AddSingleton<IResetable, GitLabProjectsService>();
 builder.Services.AddSingleton<ConnectionFactory>();
 builder.Services.AddSingleton<TestCityDatabase>();
 builder.Services.AddSingleton<ProjectJobTypesCache>();

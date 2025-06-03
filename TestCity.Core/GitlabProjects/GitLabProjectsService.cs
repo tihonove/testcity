@@ -6,10 +6,11 @@ using System.Threading;
 using TestCity.Core.GitLab;
 using NGitLab;
 using NGitLab.Models;
+using TestCity.Core.Infrastructure;
 
 namespace TestCity.Core.GitlabProjects;
 
-public class GitLabProjectsService : IDisposable
+public class GitLabProjectsService : IDisposable, IResetable
 {
     public GitLabProjectsService(TestCityDatabase database, SkbKonturGitLabClientProvider gitLabClientProvider)
     {
@@ -261,6 +262,20 @@ public class GitLabProjectsService : IDisposable
         }
     }
 
+    /// <summary>
+    /// Сбрасывает кэш проектов GitLab
+    /// </summary>
+    public void Reset()
+    {
+        logger.LogInformation("Сброс кэша проектов GitLab по запросу");
+        lock (cacheLock)
+        {
+            isCacheInitialized = false;
+            cachedRootGroups = [];
+        }
+        _ = UpdateCacheAsync();
+    }
+    
     private readonly TestCityDatabase database;
     private readonly SkbKonturGitLabClientProvider gitLabClientProvider;
     private readonly ILogger logger;
