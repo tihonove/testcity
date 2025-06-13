@@ -11,11 +11,11 @@ await connection.EnsureDbIsAccessibleAsync(TimeSpan.FromMinutes(20));
 await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);
 Console.WriteLine("Database schema actualized successfully.");
 
-if (Environment.GetCommandLineArgs().Contains("--add-predefined-projects"))
-{
-    await TestAnalyticsDatabaseSchema.InsertPredefinedProjects(connectionFactory);
-    Console.WriteLine("Actualized predefined projects.");
-}
+// if (Environment.GetCommandLineArgs().Contains("--add-predefined-projects"))
+// {
+//     await TestAnalyticsDatabaseSchema.InsertPredefinedProjects(connectionFactory);
+//     Console.WriteLine("Actualized predefined projects.");
+// }
 
 await KafkaTopicActualizer.EnsureKafkaTopicExists();
 Console.WriteLine("Kafka topics verified successfully.");

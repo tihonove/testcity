@@ -19,6 +19,7 @@
     <script>
       // NOTE Это нужно для корректной работы sub_filter в nginx и замены X-Forwarded-Prefix
       __webpack_public_path__ = "/";
+      var process = { env: { GITLAB_URL: "__GITLAB_URL__" } };
     </script>
     <link rel="preload" href="https://s.kontur.ru/common-v2/fonts/LabGrotesque/LabGrotesque-Regular.woff2" as="font"
           type="font/woff2" crossorigin="anonymous"/>

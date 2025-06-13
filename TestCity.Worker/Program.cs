@@ -30,7 +30,8 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddSingleton<SkbKonturGitLabClientProvider>();
         services.AddSingleton<WorkerClient>();
         services.AddSingleton<GitLabProjectsService>();
-        services.AddSingleton<ClickHouseConnectionSettings>(ClickHouseConnectionSettings.Default);
+        services.AddSingleton<IResetable, GitLabProjectsService>();
+        services.AddSingleton(ClickHouseConnectionSettings.Default);
         services.AddSingleton<ConnectionFactory>();
         services.AddSingleton<TestCityDatabase>();
         services.AddSingleton<ProjectJobTypesCache>();

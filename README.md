@@ -70,4 +70,4 @@ npm run start-prod-api
 
 ## Поддержка
 
-Для сообщений о проблемах или предложений используйте наш [Issue Tracker](https://git.skbkontur.ru/forms/test-analytics/-/issues) в GitLab.
+Для сообщений о проблемах или предложений используйте наш [Issue Tracker](https://github.com/tihonove/testcity/issues) в github.

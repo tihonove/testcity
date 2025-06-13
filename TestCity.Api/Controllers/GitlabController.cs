@@ -8,6 +8,7 @@ using TestCity.Core.Worker.TaskPayloads;
 using Microsoft.AspNetCore.Mvc;
 using NGitLab;
 using NGitLab.Models;
+using System.Collections.Concurrent;
 
 namespace TestCity.Api.Controllers;
 
@@ -18,9 +19,6 @@ public class GitlabController(
     GitLabProjectsService gitLabProjectsService,
     WorkerClient workerClient) : Controller
 {
-    private readonly ILogger logger = Log.GetLog<GitlabController>();
-    private readonly IGitLabClient gitLabClient = gitLabClientProvider.GetClient();
-
     [HttpGet("{projectId}/jobs/{jobId}/codequality")]
     public IActionResult Get(long projectId, long jobId)
     {
@@ -42,7 +40,7 @@ public class GitlabController(
     [HttpPost("webhook")]
     public async Task<IActionResult> WebhookHandler()
     {
-        logger.LogInformation("Получен webhook от GitLab");
+        log.LogInformation("Получен webhook от GitLab");
 
         GitLabJobEventInfo? jobEventInfo;
         try
@@ -52,30 +50,30 @@ public class GitlabController(
 
             if (string.IsNullOrEmpty(requestBody))
             {
-                logger.LogWarning("Получен пустой запрос от GitLab webhook");
+                log.LogWarning("Получен пустой запрос от GitLab webhook");
                 return BadRequest("Тело запроса не может быть пустым");
             }
 
-            logger.LogDebug("Содержимое webhook: {RequestBody}", requestBody);
+            log.LogDebug("Содержимое webhook: {RequestBody}", requestBody);
 
             jobEventInfo = System.Text.Json.JsonSerializer.Deserialize<GitLabJobEventInfo>(requestBody);
             if (jobEventInfo == null)
 
             {
-                logger.LogWarning("Не удалось десериализовать тело запроса в GitLabJobEventInfo");
+                log.LogWarning("Не удалось десериализовать тело запроса в GitLabJobEventInfo");
                 return BadRequest("Неверный формат данных");
             }
 
-            logger.LogInformation("Получен webhook от GitLab и десериализован: {ProjectId}, {JobRunId}", jobEventInfo.ProjectId, jobEventInfo.BuildId);
+            log.LogInformation("Получен webhook от GitLab и десериализован: {ProjectId}, {JobRunId}", jobEventInfo.ProjectId, jobEventInfo.BuildId);
         }
         catch (System.Text.Json.JsonException jsonEx)
         {
-            logger.LogError(jsonEx, "Ошибка при десериализации webhook данных от GitLab");
+            log.LogError(jsonEx, "Ошибка при десериализации webhook данных от GitLab");
             return BadRequest("Неверный формат JSON");
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Ошибка при чтении данных запроса GitLab webhook");
+            log.LogError(ex, "Ошибка при чтении данных запроса GitLab webhook");
             return StatusCode(500);
         }
 
@@ -104,7 +102,7 @@ public class GitlabController(
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Ошибка при обработке webhook от GitLab");
+            log.LogError(ex, "Ошибка при обработке webhook от GitLab");
             return StatusCode(500);
         }
     }
@@ -112,14 +110,14 @@ public class GitlabController(
     [HttpGet("projects/{projectId}/access-check")]
     public async Task<IActionResult> CheckProjectAccess(long projectId)
     {
-        logger.LogInformation("Проверка доступа к проекту GitLab с ID: {ProjectId}", projectId);
+        log.LogInformation("Проверка доступа к проекту GitLab с ID: {ProjectId}", projectId);
 
         try
         {
             var projectInfo = await gitLabClient.Projects.GetByIdAsync(projectId, new SingleProjectQuery());
             if (projectInfo == null)
             {
-                logger.LogWarning("Не удалось получить доступ к проекту с ID: {ProjectId} - проект не существует", projectId);
+                log.LogWarning("Не удалось получить доступ к проекту с ID: {ProjectId} - проект не существует", projectId);
                 return BadRequest("Проект не существует или нет доступа к нему. Проверьте ID проекта и права доступа.");
             }
 
@@ -131,7 +129,7 @@ public class GitlabController(
             }
             catch (Exception ex)
             {
-                logger.LogWarning(ex, "Не удалось получить доступ к джобам проекта с ID: {ProjectId}", projectId);
+                log.LogWarning(ex, "Не удалось получить доступ к джобам проекта с ID: {ProjectId}", projectId);
                 return BadRequest($"Проект '{projectInfo.Name}' найден, но нет доступа к его джобам. Проверьте права доступа.");
             }
 
@@ -141,27 +139,99 @@ public class GitlabController(
             }
             catch (Exception ex)
             {
-                logger.LogWarning(ex, "Не удалось получить доступ к коммитам проекта с ID: {ProjectId}", projectId);
+                log.LogWarning(ex, "Не удалось получить доступ к коммитам проекта с ID: {ProjectId}", projectId);
                 return BadRequest($"Проект '{projectInfo.Name}' найден, но нет доступа к его коммитам. Проверьте права доступа.");
             }
 
-            logger.LogInformation("Успешная проверка доступа к проекту: {ProjectName} (ID: {ProjectId})", projectInfo.Name, projectId);
+            log.LogInformation("Успешная проверка доступа к проекту: {ProjectName} (ID: {ProjectId})", projectInfo.Name, projectId);
             return Ok($"Доступ к проекту '{projectInfo.Name}' и его данным подтвержден.");
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Ошибка при проверке доступа к проекту с ID: {ProjectId}", projectId);
+            log.LogError(ex, "Ошибка при проверке доступа к проекту с ID: {ProjectId}", projectId);
             return BadRequest("Не удалось проверить доступ к проекту. Проверьте ID проекта и права доступа.");
         }
     }
 
     [HttpPost("projects/{projectId}/add")]
-    public async Task<IActionResult> AddProject(long projectId)
+    public async Task<IActionResult> AddProject(long projectId, CancellationToken token)
     {
-        logger.LogInformation("Запрос на добавление проекта GitLab с ID: {ProjectId}", projectId);
-        await gitLabProjectsService.AddProject(projectId);            
+        log.LogInformation("Запрос на добавление проекта GitLab с ID: {ProjectId}", projectId);
+        await gitLabProjectsService.AddProject(projectId);
+        await ProcessProjectLastJobsAsync(projectId, token);
         return Ok($"Проект '{projectId}' успешно добавлен в систему.");
     }
+
+    private async ValueTask ProcessProjectLastJobsAsync(long projectId, CancellationToken token)
+    {
+        var clientEx = gitLabClientProvider.GetExtendedClient();
+        ConcurrentDictionary<(long, long), byte> processedCompletedJobSet = new();
+        ConcurrentDictionary<(long, long), byte> processedRunningJobSet = new();
+        log.LogInformation("Pulling jobs for project {ProjectId}", projectId);
+        var jobs = await clientEx
+            .GetAllProjectJobsAsync(projectId, Core.GitLab.Models.JobScope.Failed | Core.GitLab.Models.JobScope.Success | Core.GitLab.Models.JobScope.Running | Core.GitLab.Models.JobScope.Canceled, perPage: 100, token)
+            .Take(600)
+            .ToListAsync(token);
+        jobs.Reverse();
+        log.LogInformation("Take last {jobsLength} jobs", jobs.Count);
+        var enqueuedCount = 0;
+        foreach (var job in jobs)
+        {
+            if (job.Status == Core.GitLab.Models.JobStatus.Running)
+            {
+                if (processedRunningJobSet.ContainsKey((projectId, job.Id)))
+                {
+                    log.LogInformation("Skip job with id: {JobId}", job.Id);
+                    continue;
+                }
+
+                try
+                {
+                    await workerClient.Enqueue(
+                        new ProcessInProgressJobTaskPayload
+                        {
+                            ProjectId = projectId,
+                            JobRunId = job.Id,
+                        });
+                    enqueuedCount++;
+                    processedRunningJobSet.TryAdd((projectId, job.Id), 0);
+                }
+                catch (Exception exception)
+                {
+                    log.LogError(exception, "Failed to enqueue job {JobId}", job.Id);
+                    continue;
+                }
+            }
+            else
+            {
+                if (processedCompletedJobSet.ContainsKey((projectId, job.Id)))
+                {
+                    log.LogInformation("Skip job with id: {JobId}", job.Id);
+                    continue;
+                }
+
+                try
+                {
+                    await workerClient.Enqueue(
+                        new ProcessJobRunTaskPayload
+                        {
+                            ProjectId = projectId,
+                            JobRunId = job.Id,
+                        });
+                    enqueuedCount++;
+                    processedCompletedJobSet.TryAdd((projectId, job.Id), 0);
+                }
+                catch (Exception exception)
+                {
+                    log.LogError(exception, "Failed to enqueue job {JobId}", job.Id);
+                    continue;
+                }
+            }
+        }
+
+        log.LogInformation("Enqueued {JobCount} jobs for {ProjectId}.", enqueuedCount, projectId);
+    }
+
 
     [HttpGet("{projectId}/pipelines/{pipelineId}/manual-jobs")]
     public ManualJobRunInfo[] GetManualJobInfos(long projectId, long pipelineId)
@@ -220,5 +290,7 @@ public class GitlabController(
     }
 
     private readonly GitLabExtendedClient gitLabExtendedClient = gitLabClientProvider.GetExtendedClient();
+    private readonly ILogger log = Log.GetLog<GitlabController>();
+    private readonly IGitLabClient gitLabClient = gitLabClientProvider.GetClient();
 }
 

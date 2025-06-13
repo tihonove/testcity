@@ -119,6 +119,8 @@ jobs:
           TESTANALYTICS_CLICKHOUSE_USER: testanalytics-user
           TESTANALYTICS_CLICKHOUSE_PASSWORD: 123123
           KAFKA_BOOTSTRAP_SERVERS: localhost:9092
+          GITLAB_URL: https://gitlab.com/
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
         run: dotnet test --logger "junit;LogFilePath=../.test-reports/{assembly}.test-result.xml;FailureBodyFormat=Verbose"
       
       - name: Publish Test Results

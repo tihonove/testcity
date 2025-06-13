@@ -31,6 +31,7 @@ builder.Services.AddSingleton<GitLabCrawlerService>();
 builder.Services.AddSingleton<SkbKonturGitLabClientProvider>();
 builder.Services.AddSingleton<WorkerClient>();
 builder.Services.AddSingleton<GitLabProjectsService>();
+builder.Services.AddSingleton<IResetable, GitLabProjectsService>();
 builder.Services.AddSingleton<ClickHouseConnectionSettings>(ClickHouseConnectionSettings.Default);
 builder.Services.AddSingleton<ConnectionFactory>();
 builder.Services.AddSingleton<TestCityDatabase>();

@@ -1,6 +1,9 @@
 global:
   environment: cloud
 
+gitlab:
+  url: https://gitlab.com/
+
 clickhouse:
   host: vm-ch2-stg.dev.kontur.ru
   port: "8123"
