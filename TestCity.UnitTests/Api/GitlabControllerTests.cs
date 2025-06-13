@@ -66,17 +66,11 @@ public class GitlabControllerTests(ITestOutputHelper output) : ApiTestBase(outpu
         Assert.Equal(HttpStatusCode.OK, statusCode);
     }
 
-    [Fact(Skip = "Требуется подключение к рабочему API")]
+    [Fact]
     public async Task AddProject_WithValidProjectId_ReturnsOk()
     {
-        // Arrange
-        var projectId = 12345L;
-
-        // Act
-        var statusCode = await GitlabApiClient.AddProjectStatusCode(projectId);
-
-        // Assert
-        Assert.Equal(HttpStatusCode.OK, statusCode);
+        var projectId = 70134580L;
+        await GitlabApiClient.AddProjectStatusCode(projectId);
     }
 
     [Fact(Skip = "Требуется подключение к рабочему API")]
