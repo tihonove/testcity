@@ -40,7 +40,7 @@ public class ProcessJobRunTaskHandler(
                 return;
             }
             var job = await clientEx.GetJobAsync(task.ProjectId, task.JobRunId);
-            Baggage.SetBaggage("JobId", job.Name.ToString());
+            Baggage.SetBaggage("JobId", job.Name);
             if (job.Ref is not null)
                 Baggage.SetBaggage("Ref", job.Ref);
             if (job.Commit?.Id is not null)
@@ -48,7 +48,7 @@ public class ProcessJobRunTaskHandler(
             var needProcessFailedJob = await projectJobTypesCache.JobTypeExistsAsync(task.ProjectId.ToString(), job.Name, ct);
             var jobProcessor = new GitLabJobProcessor(client, clientEx, extractor, logger);
             var projectInfo = await client.Projects.GetByIdAsync(task.ProjectId, new SingleProjectQuery(), ct);
-            var processingResult = await jobProcessor.ProcessJobAsync(task.ProjectId, task.JobRunId, job, needProcessFailedJob);
+            var processingResult = await jobProcessor.ProcessJobAsync(task.ProjectId, task.JobRunId, job);
 
             if (processingResult.JobInfo != null)
             {
@@ -59,12 +59,13 @@ public class ProcessJobRunTaskHandler(
                 if (processingResult.TestReportData != null)
                 {
                     await testCityDatabase.TestRuns.InsertBatchAsync(processingResult.JobInfo, processingResult.TestReportData.Runs);
-                    await metricsSender.SendAsync(
-                        projectInfo,
-                        processingResult.JobInfo.BranchName,
-                        job,
-                        processingResult.TestReportData);
                 }
+
+                await metricsSender.SendAsync(
+                    projectInfo,
+                    processingResult.JobInfo.BranchName,
+                    job,
+                    processingResult.TestReportData);
             }
             else
             {

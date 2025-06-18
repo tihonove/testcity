@@ -80,7 +80,7 @@ async Task ProcessTasksInInProgressJobs(GitLabProject project)
             logger.LogInformation("JobId '{JobId}'. NeedProcessFailedJob: {needProcessFailedJob}", unprocessedJob.JobId, needProcessFailedJob);
             var jobProcessor = new GitLabJobProcessor(client, clientEx, extractor, logger);
             var projectInfo = await client.Projects.GetByIdAsync(projectId, new SingleProjectQuery(), ct);
-            var processingResult = await jobProcessor.ProcessJobAsync(projectId, jobRunId, null, needProcessFailedJob);
+            var processingResult = await jobProcessor.ProcessJobAsync(projectId, jobRunId, null);
 
             if (processingResult.JobInfo != null)
             {

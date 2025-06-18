@@ -10,60 +10,49 @@ namespace TestCity.Core.JobProcessing;
 
 public class GitLabJobProcessor(IGitLabClient client, GitLabExtendedClient clientEx, JUnitExtractor extractor, ILogger logger)
 {
-    public async Task<GitLabJobProcessingResult> ProcessJobAsync(long projectId, long jobRunId, GitLabJob? job, bool needProcessFailedJob)
+    public async Task<GitLabJobProcessingResult> ProcessJobAsync(long projectId, long jobRunId, GitLabJob? job)
     {
         logger.LogInformation("Start processing job with id: ProjectId: {ProjectId} JobId: {JobRunId}", projectId, jobRunId);
         try
         {
             var jobClient = client.GetJobs(projectId);
             job ??= await clientEx.GetJobAsync(projectId, jobRunId);
-            var result = new GitLabJobProcessingResult
-            {
-                JobInfo = null,
-                TestReportData = null,
-            };
 
             const long maxArtifactSize = 500 * 1024 * 1024; // 500 MB
             var hasArtifacts = job.Artifacts?.Count > 0;
             var size = job.Artifacts?.FirstOrDefault(x => x.Filename == "artifacts.zip")?.Size;
-            var artifactContents = hasArtifacts && size < maxArtifactSize  ? jobClient.GetJobArtifactsOrNull(job.Id) : null;
-            if (artifactContents == null && !needProcessFailedJob)
+            var artifactContents = hasArtifacts && size is < maxArtifactSize  ? jobClient.GetJobArtifactsOrNull(job.Id) : null;
+
+            if (size > maxArtifactSize)
             {
-                if (size.HasValue && size > maxArtifactSize) {
-                    logger.LogInformation("Artifacts to large. {artifactSize}. {JobId}", size, job.Id);
-                } else {
-                    logger.LogInformation("Artifacts does not exist for id: {JobId}", job.Id);
-                }
-                return result;
+                logger.LogInformation("Artifacts to large. {artifactSize}. {JobId}", size, job.Id);
+            }
+            else if (artifactContents is null)
+            {
+                logger.LogInformation("Artifacts does not exist for id: {JobId}", job.Id);
             }
             else
             {
-                if (size.HasValue && size > maxArtifactSize) {
-                    logger.LogInformation("Artifacts to large. {artifactSize}. {JobId}", size, job.Id);
-                }
-                if (needProcessFailedJob)
-                    logger.LogInformation("Artifacts does not exist for id: {JobId}. But job must be processed", job.Id);
-                else
-                    logger.LogInformation("Artifact size for job with id: {JobId}. Size: {Size} bytes", job.Id, artifactContents?.Length ?? 0);
+                logger.LogInformation("Artifact size for job with id: {JobId}. Size: {Size} bytes", job.Id, artifactContents.Length);
             }
 
-            var jobTrace = await CreateTraceTextReader(jobClient, jobRunId);
-            var customStatusMessage = await ExtractTeamCityStatusMessage(jobTrace);
             var extractResult = artifactContents != null ? extractor.TryExtractTestRunsFromGitlabArtifact(artifactContents) : null;
             if (extractResult?.TestReportData == null && !(extractResult?.HasCodeQualityReport ?? false))
             {
                 logger.LogInformation("JobRunId '{JobRunId}' does not contain any tests or code quality reports. Skip uploading test runs", job.Id);
-                if (!needProcessFailedJob)
-                    return result;
             }
 
-            result.TestReportData = extractResult?.TestReportData;
             var refId = await client.BranchOrRef(projectId, job.Ref);
-            result.JobInfo = GitLabHelpers.GetFullJobInfo(job, refId, extractResult, projectId.ToString());
+            var jobInfo = GitLabHelpers.GetFullJobInfo(job, refId, extractResult, projectId.ToString());
+            var result = new GitLabJobProcessingResult
+            {
+                JobInfo = jobInfo,
+                TestReportData = extractResult?.TestReportData
+            };
 
             if (result.JobInfo != null)
             {
-                result.JobInfo.CustomStatusMessage = customStatusMessage;
+                result.JobInfo.CustomStatusMessage = await ExtractTeamCityStatusMessage(jobClient, jobRunId);
             }
 
             return result;
@@ -74,20 +63,20 @@ public class GitLabJobProcessor(IGitLabClient client, GitLabExtendedClient clien
         }
     }
 
-    private static async Task<string?> ExtractTeamCityStatusMessage(TextReader jobTrace)
+    private static async Task<string?> ExtractTeamCityStatusMessage(IJobClient jobClient, long jobRunId)
     {
-        var pattern = @"##(team|test)city\[buildStatus text='(?<statusText>.*?)'\]";
+        const string pattern = @"##(team|test)city\[buildStatus text='(?<statusText>.*?)'\]";
         var regex = new Regex(pattern);
 
-        string? line;
         string? lastStatusMessage = null;
 
-        while ((line = await jobTrace.ReadLineAsync()) != null)
+        using var jobTrace = await CreateTraceTextReader(jobClient, jobRunId);
+        while (await jobTrace.ReadLineAsync() is { } line)
         {
             var match = regex.Match(line);
             if (match.Success)
             {
-                string escapedMessage = match.Groups["statusText"].Value;
+                var escapedMessage = match.Groups["statusText"].Value;
                 lastStatusMessage = UnescapeTeamCityMessage(escapedMessage);
             }
         }
