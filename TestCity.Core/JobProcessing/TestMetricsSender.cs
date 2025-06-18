@@ -19,36 +19,39 @@ public sealed class TestMetricsSender(IGraphiteClient graphiteClient)
                 { "tc-namespace", project.Namespace.Name },
                 { "tc-project", project.Name },
                 { "tc-ref", refId ?? "<empty>" },
-                { "tc-job", job.Name },
+                { "tc-job", job.Name }
             };
+
+            var dateTime = job.FinishedAt;
 
             var metrics = new List<MetricPoint>
             {
-                new ("TotalTests", data.Counters.Total, tags),
-                new ("FailedTests", data.Counters.Failed, tags),
-                new ("SkippedTests", data.Counters.Skipped, tags),
-                new ("SuccessTests", data.Counters.Success, tags),
-                new ("TestSumDuration", data.Runs.Sum(x => x.Duration), tags),
+                new("TotalTests", data.Counters.Total, tags, dateTime),
+                new("FailedTests", data.Counters.Failed, tags, dateTime),
+                new("SkippedTests", data.Counters.Skipped, tags, dateTime),
+                new("SuccessTests", data.Counters.Success, tags, dateTime),
+                new("TestSumDuration", data.Runs.Sum(x => x.Duration), tags, dateTime)
             };
 
             if (job.Duration.HasValue)
             {
-                metrics.Add(new MetricPoint("JobDuration", job.Duration.Value, tags));
+                metrics.Add(new MetricPoint("JobDuration", job.Duration.Value, tags, dateTime));
             }
 
             if (job.Coverage.HasValue)
             {
-                metrics.Add(new MetricPoint("Coverage", job.Coverage.Value, tags));
+                metrics.Add(new MetricPoint("Coverage", job.Coverage.Value, tags, dateTime));
             }
 
             if (job.Artifacts != null)
             {
-                metrics.Add(new MetricPoint("ArtifactSize", job.ArtifactsFile?.Size ?? job.Artifacts?.Sum(x => x.Size) ?? 0, tags));
+                metrics.Add(new MetricPoint("ArtifactSize",
+                    job.ArtifactsFile?.Size ?? job.Artifacts?.Sum(x => x.Size) ?? 0, tags, dateTime));
             }
 
             if (job.QueuedDuration.HasValue)
             {
-                metrics.Add(new MetricPoint("QueuedDuration", job.QueuedDuration.Value, tags));
+                metrics.Add(new MetricPoint("QueuedDuration", job.QueuedDuration.Value, tags, dateTime));
             }
 
             await graphiteClient.SendAsync(metrics);
