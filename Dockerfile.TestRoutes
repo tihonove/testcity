@@ -1,0 +1,10 @@
+FROM nginx:alpine
+
+# Копируем нашу конфигурацию nginx
+COPY test-routes-nginx.conf /etc/nginx/conf.d/default.conf
+
+# Открываем порт
+EXPOSE 80
+
+# Запускаем nginx
+CMD ["nginx", "-g", "daemon off;"]

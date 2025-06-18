@@ -1,5 +1,4 @@
 using dotenv.net;
-using TestCity.Core.Logging;
 using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
@@ -16,8 +15,7 @@ public sealed class GlobalSetup
 
     public static ILoggerFactory TestLoggerFactory(ITestOutputHelper output)
     {
-        XUnitLoggerProvider.ConfigureTestLogger(output);
-        return Log.LoggerFactory;
+        return XUnitLoggerProvider.ConfigureTestLogger(output);
     }
 }
 

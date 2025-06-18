@@ -61,7 +61,7 @@ public class UriTest(ITestOutputHelper output)
         Assert.Equal("https://example.com/path/", new Uri("https://example.com/path/").ToString());
         Assert.Equal("https://example.com/path", new Uri(new Uri("https://example.com/"), "path").ToString());
         Assert.Equal("https://example.com/path/", new Uri(new Uri("https://example.com/"), "path/").ToString());
-        Assert.Equal("https://example.com/x/path", new Uri(new Uri("https://example.com/x"), "path").ToString());
+        Assert.Equal("https://example.com/path", new Uri(new Uri("https://example.com/x"), "path").ToString());
         Assert.Equal("https://example.com/x/path/", new Uri(new Uri("https://example.com/x/"), "path/").ToString());
     }
 

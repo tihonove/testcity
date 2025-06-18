@@ -1,22 +1,22 @@
 using Microsoft.Extensions.Logging;
 using TestCity.Core.GitLab;
-using TestCity.UnitTests.Api.ApiClient;
+using TestCity.SystemTests.Api.ApiClient;
 using Xunit.Abstractions;
 
-namespace TestCity.UnitTests.Api;
+namespace TestCity.SystemTests.Api;
 
 public abstract class ApiTestBase : IDisposable
 {
     protected ApiTestBase(ITestOutputHelper output)
     {
         Output = output;
-        LoggerFactory = GlobalSetup.TestLoggerFactory(output);
+        LoggerFactory = SystemTestsSetup.TestLoggerFactory(output);
         HttpClient = CreateHttpClient();
         GitLabClientProvider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
 
         GroupsApiClient = new GroupsApiClient(HttpClient);
         GitlabApiClient = new GitlabApiClient(HttpClient);
-        ResetCacheApiClient = new ResetCacheApiClient(HttpClient);
+        TestCityApiClient = new TestCityApiClient(HttpClient);
     }
 
     protected ITestOutputHelper Output { get; }
@@ -25,7 +25,7 @@ public abstract class ApiTestBase : IDisposable
     protected SkbKonturGitLabClientProvider GitLabClientProvider { get; }
     internal GroupsApiClient GroupsApiClient { get; }
     internal GitlabApiClient GitlabApiClient { get; }
-    internal ResetCacheApiClient ResetCacheApiClient { get; }
+    internal TestCityApiClient TestCityApiClient { get; }
 
     protected virtual HttpClient CreateHttpClient()
     {

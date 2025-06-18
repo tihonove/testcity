@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace TestCity.UnitTests.Api;
+namespace TestCity.SystemTests.Api;
 
 // Модели из TestCity.Api.Models, необходимые для тестирования API
 public class GroupDto

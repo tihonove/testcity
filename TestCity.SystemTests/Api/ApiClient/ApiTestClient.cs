@@ -2,7 +2,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 
-namespace TestCity.UnitTests.Api.ApiClient;
+namespace TestCity.SystemTests.Api.ApiClient;
 
 internal abstract class ApiClientBase(HttpClient httpClient)
 {
