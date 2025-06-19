@@ -3,9 +3,9 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using TestCity.Api.Models;
-using TestCity.UnitTests.Api.ApiClient;
+using TestCity.SystemTests.Api.ApiClient;
 
-namespace TestCity.UnitTests.Api;
+namespace TestCity.SystemTests.Api;
 
 internal class GroupsApiClient : ApiClientBase
 {

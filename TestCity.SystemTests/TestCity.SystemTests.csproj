@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>TestCity.SystemTests</RootNamespace>
+        <AssemblyName>TestCity.SystemTests</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ClickHouse.Client" />
+        <PackageReference Include="Confluent.Kafka" />
+        <PackageReference Include="FluentAssertions" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" />
+        <PackageReference Include="NGitLab" />
+        <PackageReference Include="JunitXml.TestLogger" />
+        <PackageReference Include="System.Linq.Async" />
+        <PackageReference Include="dotenv.net" />
+        <PackageReference Include="xunit" />
+        <PackageReference Include="xunit.core" />
+        <PackageReference Include="xunit.runner.visualstudio">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="../TestCity.Core/TestCity.Core.csproj" />
+        <ProjectReference Include="../TestCity.Worker/TestCity.Worker.csproj" />
+        <ProjectReference Include="../TestCity.GitLabJobsCrawler/TestCity.GitLabJobsCrawler.csproj" />
+        <ProjectReference Include="../TestCity.Api/TestCity.Api.csproj" />
+        <ProjectReference Include="../TestCity.UnitTests/TestCity.UnitTests.csproj" />
+    </ItemGroup>
+
+</Project>

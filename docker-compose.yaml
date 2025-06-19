@@ -9,6 +9,7 @@ services:
       CLICKHOUSE_PASSWORD: 123123
     volumes:
       - clickhouse_data:/var/lib/clickhouse
+
   kafka:
     image: bitnami/kafka:4.0
     container_name: kafka
@@ -20,7 +21,7 @@ services:
       - KAFKA_CFG_PROCESS_ROLES=broker,controller
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka:9093
       - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
       - KAFKA_KRAFT_CLUSTER_ID=2451c12e-a37d-4349-b744-a1047b01cbd3
@@ -28,6 +29,114 @@ services:
     restart: unless-stopped
     volumes:
       - kafka_data:/bitnami/kafka
+
+  db-actualizer:
+    build:
+      context: .
+      dockerfile: Dockerfile.ActualizeDb
+    container_name: test-city-db-actualizer
+    depends_on:
+      - clickhouse
+      - kafka
+    environment:
+      - GITLAB_URL=https://gitlab.com/
+      - GITLAB_TOKEN=${GITLAB_TOKEN:-}
+      - TESTANALYTICS_CLICKHOUSE_HOST=clickhouse
+      - TESTANALYTICS_CLICKHOUSE_PORT=8123
+      - TESTANALYTICS_CLICKHOUSE_DB=default
+      - TESTANALYTICS_CLICKHOUSE_USER=testanalytics-user
+      - TESTANALYTICS_CLICKHOUSE_PASSWORD=123123
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+    restart: "no"
+    profiles: ["services"]
+
+  # Сервисы проекта TestCity
+  front:
+    build:
+      context: .
+      dockerfile: Dockerfile.Front
+    container_name: test-city-front
+    ports:
+      - "8079:80"
+    environment:
+      - GITLAB_URL=https://gitlab.com/
+    profiles: ["services"]
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.TestCity.Api
+    container_name: test-city-api
+    ports:
+      - "8124:8124"
+    environment:
+      - GITLAB_URL=https://gitlab.com/
+      - GITLAB_TOKEN=${GITLAB_TOKEN:-}
+      - TESTANALYTICS_CLICKHOUSE_HOST=clickhouse
+      - TESTANALYTICS_CLICKHOUSE_PORT=8123
+      - TESTANALYTICS_CLICKHOUSE_DB=default
+      - TESTANALYTICS_CLICKHOUSE_USER=testanalytics-user
+      - TESTANALYTICS_CLICKHOUSE_PASSWORD=123123
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+    depends_on:
+      - clickhouse
+      - kafka
+      - db-actualizer
+    profiles: ["services"]
+
+  crawler:
+    build:
+      context: .
+      dockerfile: Dockerfile.TestCity.GitLabJobsCrawler
+    container_name: test-city-crawler
+    ports:
+      - "8125:8125"
+    environment:
+      - GITLAB_URL=https://gitlab.com/
+      - GITLAB_TOKEN=${GITLAB_TOKEN:-}
+      - TESTANALYTICS_CLICKHOUSE_HOST=clickhouse
+      - TESTANALYTICS_CLICKHOUSE_PORT=8123
+      - TESTANALYTICS_CLICKHOUSE_DB=default
+      - TESTANALYTICS_CLICKHOUSE_USER=testanalytics-user
+      - TESTANALYTICS_CLICKHOUSE_PASSWORD=123123
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+    depends_on:
+      - clickhouse
+      - kafka
+      - db-actualizer
+    profiles: ["services"]
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.Worker
+    container_name: test-city-worker
+    environment:
+      - GITLAB_URL=https://gitlab.com/
+      - GITLAB_TOKEN=${GITLAB_TOKEN:-}
+      - TESTANALYTICS_CLICKHOUSE_HOST=clickhouse
+      - TESTANALYTICS_CLICKHOUSE_PORT=8123
+      - TESTANALYTICS_CLICKHOUSE_DB=default
+      - TESTANALYTICS_CLICKHOUSE_USER=testanalytics-user
+      - TESTANALYTICS_CLICKHOUSE_PASSWORD=123123
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+    depends_on:
+      - clickhouse
+      - kafka
+      - db-actualizer
+    profiles: ["services"]
+
+  test-routes:
+    build:
+      context: .
+      dockerfile: Dockerfile.TestRoutes
+    container_name: test-city-routes
+    ports:
+      - "8080:80"
+    depends_on:
+      - front
+      - api
+    profiles: ["services"]
 
 volumes:
   clickhouse_data:

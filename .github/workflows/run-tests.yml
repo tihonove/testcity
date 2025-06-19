@@ -121,7 +121,51 @@ jobs:
           KAFKA_BOOTSTRAP_SERVERS: localhost:9092
           GITLAB_URL: https://gitlab.com/
           GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
-        run: dotnet test --logger "junit;LogFilePath=../.test-reports/{assembly}.test-result.xml;FailureBodyFormat=Verbose"
+        run: dotnet test --filter "FullyQualifiedName~TestCity.UnitTests" --logger "junit;LogFilePath=../.test-reports/{assembly}.test-result.xml;FailureBodyFormat=Verbose"
+      
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: .test-reports/**/*.xml
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  dotnet-system-tests:
+    name: DotNet System Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0.x'
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Run docker compose
+        env:
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+        run: docker compose --profile services up -d
+
+      - name: Run .NET System Tests
+        env:
+          GRAPHITE_RELAY_HOST: graphite-relay.skbkontur.ru
+          GRAPHITE_RELAY_PORT: 2003
+          TESTANALYTICS_CLICKHOUSE_HOST: localhost
+          TESTANALYTICS_CLICKHOUSE_PORT: 8123
+          TESTANALYTICS_CLICKHOUSE_DB: default
+          TESTANALYTICS_CLICKHOUSE_USER: testanalytics-user
+          TESTANALYTICS_CLICKHOUSE_PASSWORD: 123123
+          KAFKA_BOOTSTRAP_SERVERS: localhost:9092
+          GITLAB_URL: https://gitlab.com/
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+          TESTCITY_API_URL: http://localhost:8124
+        run: dotnet test --filter "FullyQualifiedName~TestCity.SystemTests" --logger "junit;LogFilePath=../.test-reports/{assembly}.test-result.xml;FailureBodyFormat=Verbose"
       
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2

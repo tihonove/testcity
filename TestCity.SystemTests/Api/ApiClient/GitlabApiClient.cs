@@ -1,7 +1,7 @@
 using System.Net;
 using System.Text;
 
-namespace TestCity.UnitTests.Api.ApiClient;
+namespace TestCity.SystemTests.Api.ApiClient;
 
 internal class GitlabApiClient(HttpClient httpClient) : ApiClientBase(httpClient)
 {

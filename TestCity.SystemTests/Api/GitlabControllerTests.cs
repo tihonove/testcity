@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace TestCity.UnitTests.Api;
+namespace TestCity.SystemTests.Api;
 
-[Collection("Global")]
+[Collection("System")]
 public class GitlabControllerTests(ITestOutputHelper output) : ApiTestBase(output)
 {
 
@@ -64,6 +64,12 @@ public class GitlabControllerTests(ITestOutputHelper output) : ApiTestBase(outpu
         var projectId = 70134580L;
         var statusCode = await GitlabApiClient.CheckProjectAccessStatusCode(projectId);
         Assert.Equal(HttpStatusCode.OK, statusCode);
+    }
+
+    [Fact]
+    public async Task CheckHealth()
+    {
+        await TestCityApiClient.CheckHealth();
     }
 
     [Fact]
