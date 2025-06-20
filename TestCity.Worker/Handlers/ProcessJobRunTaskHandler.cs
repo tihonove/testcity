@@ -45,32 +45,40 @@ public class ProcessJobRunTaskHandler(
                 Baggage.SetBaggage("Ref", job.Ref);
             if (job.Commit?.Id is not null)
                 await commitParentsBuilder.BuildCommitParent(task.ProjectId, job.Commit.Id, ct);
-            var needProcessFailedJob = await projectJobTypesCache.JobTypeExistsAsync(task.ProjectId.ToString(), job.Name, ct);
+            var isKnownTestJob = await projectJobTypesCache.JobTypeExistsAsync(task.ProjectId.ToString(), job.Name, ct);
             var jobProcessor = new GitLabJobProcessor(client, clientEx, extractor, logger);
             var projectInfo = await client.Projects.GetByIdAsync(task.ProjectId, new SingleProjectQuery(), ct);
             var processingResult = await jobProcessor.ProcessJobAsync(task.ProjectId, task.JobRunId, job);
 
-            if (processingResult.JobInfo != null)
+            if (processingResult.JobInfo is null)
             {
-                logger.LogInformation("JobRunId '{JobRunId}' does not exist. Uploading test runs", processingResult.JobInfo.JobRunId);
-                if (job.Commit?.Id is not null && job.Ref is not null)
-                    processingResult.JobInfo.ChangesSinceLastRun = await testCityDatabase.GetCommitChangesAsync(job.Commit.Id, job.Name, job.Ref, ct);
+                logger.LogInformation("No job info was found for job run id: {JobRunId}", task.JobRunId);
+                return;
+            }
+
+            if (job.Commit?.Id is not null && job.Ref is not null)
+            {
+                processingResult.JobInfo.ChangesSinceLastRun =
+                    await testCityDatabase.GetCommitChangesAsync(job.Commit.Id, job.Name, job.Ref, ct);
+            }
+
+            if (isKnownTestJob || processingResult.TestReportData != null)
+            {
+                logger.LogInformation("JobRunId '{JobRunId}' does not exist. Uploading test runs",
+                    processingResult.JobInfo.JobRunId);
                 await testCityDatabase.JobInfo.InsertAsync(processingResult.JobInfo);
                 if (processingResult.TestReportData != null)
                 {
-                    await testCityDatabase.TestRuns.InsertBatchAsync(processingResult.JobInfo, processingResult.TestReportData.Runs);
+                    await testCityDatabase.TestRuns.InsertBatchAsync(processingResult.JobInfo,
+                        processingResult.TestReportData.Runs);
                 }
+            }
 
-                await metricsSender.SendAsync(
-                    projectInfo,
-                    processingResult.JobInfo.BranchName,
-                    job,
-                    processingResult.TestReportData);
-            }
-            else
-            {
-                logger.LogInformation("No job info was found for job run id: {JobRunId}", task.JobRunId);
-            }
+            await metricsSender.SendAsync(
+                projectInfo,
+                processingResult.JobInfo.BranchName,
+                job,
+                processingResult.TestReportData);
         }
         catch (HttpRequestException httpRequestException)
         {

@@ -76,8 +76,8 @@ async Task ProcessTasksInInProgressJobs(GitLabProject project)
                 logger.LogInformation("JobRunId '{JobRunId}' in '{ProjectId}' already exists. Skipping upload of test runs", jobRunId, projectId);
                 continue;
             }
-            var needProcessFailedJob = await projectJobTypesCache.JobTypeExistsAsync(projectId.ToString(), unprocessedJob.JobId.ToString(), ct);
-            logger.LogInformation("JobId '{JobId}'. NeedProcessFailedJob: {needProcessFailedJob}", unprocessedJob.JobId, needProcessFailedJob);
+            var isKnownTestJob = await projectJobTypesCache.JobTypeExistsAsync(projectId.ToString(), unprocessedJob.JobId, ct);
+            logger.LogInformation("JobId '{JobId}'. ForceProcessJob: {forceProcessJob}", unprocessedJob.JobId, isKnownTestJob);
             var jobProcessor = new GitLabJobProcessor(client, clientEx, extractor, logger);
             var projectInfo = await client.Projects.GetByIdAsync(projectId, new SingleProjectQuery(), ct);
             var processingResult = await jobProcessor.ProcessJobAsync(projectId, jobRunId, null);
