@@ -124,7 +124,7 @@ public class TestCityInProgressJobInfo(ConnectionFactory connectionFactory)
                 AgentOSName = reader.IsDBNull(11) ? null : reader.GetString(11),
                 ProjectId = reader.GetString(12),
                 PipelineId = reader.IsDBNull(13) ? null : reader.GetString(13),
-                // ChangesSinceLastRun не вычитываем, так как оно используется только при вставке
+                // We don't read ChangesSinceLastRun as it is only used during insertion
             };
             result.Add(info);
         }

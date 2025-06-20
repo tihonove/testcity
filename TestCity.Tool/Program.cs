@@ -188,36 +188,36 @@ async Task CopyData(ConnectionFactory sourceConnectionFactory, ConnectionFactory
     var logger = loggerFactory.CreateLogger<Program>();
 
     // Перенос GitLabEntities (маленькая таблица, используем весь набор данных сразу)
-    logger.LogInformation("Начало переноса GitLabEntities");
+    logger.LogInformation("Starting GitLabEntities migration");
     var gitLabEntities = await sourceDb.GitLabEntities.GetAllEntitiesAsync().ToListAsync();
-    logger.LogInformation("Получено {Count} записей GitLabEntities", gitLabEntities.Count);
+    logger.LogInformation("Received {Count} GitLabEntities records", gitLabEntities.Count);
     await targetDb.GitLabEntities.UpsertEntitiesAsync(gitLabEntities);
-    logger.LogInformation("Перенос GitLabEntities завершен");
+    logger.LogInformation("GitLabEntities migration completed");
 
     // Перенос JobInfo (потоково, пакетами по 1000)
-    logger.LogInformation("Начало переноса JobInfo");
+    logger.LogInformation("Starting JobInfo migration");
     int jobInfoCount = 0;
     await foreach (var batch in sourceDb.JobInfo.GetAllAsync().Batches(1000))
     {
         jobInfoCount += batch.Count;
-        logger.LogInformation("Получена пачка {Count} записей JobInfo", batch.Count);
+        logger.LogInformation("Received batch of {Count} JobInfo records", batch.Count);
         await targetDb.JobInfo.InsertAsync(batch);
-        logger.LogInformation("Перенесено {Count} записей JobInfo", jobInfoCount);
+        logger.LogInformation("Migrated {Count} JobInfo records", jobInfoCount);
     }
-    logger.LogInformation("Перенос JobInfo завершен. Всего перенесено {Count} записей", jobInfoCount);
+    logger.LogInformation("JobInfo migration completed. Total migrated: {Count} records", jobInfoCount);
 
-    logger.LogInformation("Начало переноса CommitParents");
+    logger.LogInformation("Starting CommitParents migration");
     int commitParentsCount = 0;
     await foreach (var batch in sourceDb.CommitParents.GetAllAsync().Batches(10000))
     {
         await Retry.Action(() => targetDb.CommitParents.InsertBatchAsync(batch), TimeSpan.FromMinutes(10));
         commitParentsCount += batch.Count;
-        logger.LogInformation("Перенесено {Count} записей CommitParents", commitParentsCount);
+        logger.LogInformation("Migrated {Count} CommitParents records", commitParentsCount);
     }
-    logger.LogInformation("Перенос CommitParents завершен. Всего перенесено {Count} записей", commitParentsCount);
+    logger.LogInformation("CommitParents migration completed. Total migrated: {Count} records", commitParentsCount);
 
     // Перенос TestRuns (потоково, по часам)
-    logger.LogInformation("Начало переноса TestRuns");
+    logger.LogInformation("Starting TestRuns migration");
 
     // Начинаем с текущей даты и часа
     var currentDateTime = new DateTime(2025, 04, 29, 23, 0, 0);
@@ -227,7 +227,7 @@ async Task CopyData(ConnectionFactory sourceConnectionFactory, ConnectionFactory
 
     while (currentDateTime >= minDateTime)
     {
-        logger.LogInformation("Обработка данных TestRuns за {DateTime}", currentDateTime.ToString("yyyy-MM-dd HH:00"));
+        logger.LogInformation("Processing TestRuns data for {DateTime}", currentDateTime.ToString("yyyy-MM-dd HH:00"));
 
         int hourlyCount = 0;
         await foreach (var batch in sourceDb.TestRuns.GetByHourAsync(currentDateTime).Batches(5000))
@@ -235,15 +235,15 @@ async Task CopyData(ConnectionFactory sourceConnectionFactory, ConnectionFactory
             hourlyCount += batch.Count;
             await Retry.Action(() => targetDb.TestRuns.InsertBatchAsync(batch.ToAsyncEnumerable()), TimeSpan.FromMinutes(10));
             totalTestRunsCount += batch.Count;
-            logger.LogInformation("Обработано {BatchCount}/{TotalCount} записей TestRuns за {DateTime}", batch.Count, hourlyCount, currentDateTime.ToString("yyyy-MM-dd HH:00"));
+            logger.LogInformation("Processed {BatchCount}/{TotalCount} TestRuns records for {DateTime}", batch.Count, hourlyCount, currentDateTime.ToString("yyyy-MM-dd HH:00"));
         }
 
-        logger.LogInformation("Всего обработано {Count} записей TestRuns за {DateTime}", hourlyCount, currentDateTime.ToString("yyyy-MM-dd HH:00"));
+        logger.LogInformation("Total processed {Count} TestRuns records for {DateTime}", hourlyCount, currentDateTime.ToString("yyyy-MM-dd HH:00"));
 
         // Если мы уже прошли минимальную дату и нет данных за текущий час, останавливаемся
         if (hourlyCount == 0 && currentDateTime < minDateTime)
         {
-            logger.LogInformation("Обработка завершена, так как нет данных за {DateTime} и обработан минимальный период",
+            logger.LogInformation("Processing completed as there is no data for {DateTime} and the minimum period has been processed",
                 currentDateTime.ToString("yyyy-MM-dd HH:00"));
             break;
         }
@@ -252,5 +252,5 @@ async Task CopyData(ConnectionFactory sourceConnectionFactory, ConnectionFactory
         currentDateTime = currentDateTime.AddHours(-1);
     }
 
-    logger.LogInformation("Перенос TestRuns завершен. Всего перенесено {Count} записей", totalTestRunsCount);
+    logger.LogInformation("TestRuns migration completed. Total migrated: {Count} records", totalTestRunsCount);
 }

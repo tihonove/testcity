@@ -30,13 +30,13 @@ public class ProjectJobTypesCache(TestCityDatabase testCityDatabase)
             {
                 return;
             }
-            logger.LogInformation("Обновление кэша типов задач для проекта {ProjectId}", projectId);
+            logger.LogInformation("Updating job types cache for project {ProjectId}", projectId);
             var jobTypes = new HashSet<string>();
             await foreach (var jt in testCityDatabase.JobInfo.GetAllJonRunIdsAsync(long.Parse(projectId), ct))
             {
                 jobTypes.Add(jt);
             }
-            logger.LogInformation("Получено {Count} типов задач для проекта {ProjectId}", jobTypes.Count, projectId);
+            logger.LogInformation("Retrieved {Count} job types for project {ProjectId}", jobTypes.Count, projectId);
             projectJobTypesCache[projectId] = new ProjectJobTypesEntry
             {
                 JobTypes = jobTypes,
@@ -51,7 +51,7 @@ public class ProjectJobTypesCache(TestCityDatabase testCityDatabase)
 
     private static bool IsExpired(DateTime timestamp)
     {
-        // Кэш считается устаревшим после 1 часа
+        // Cache is considered outdated after 1 hour
         return (DateTime.UtcNow - timestamp).TotalHours > 1;
     }
 

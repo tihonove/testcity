@@ -1,42 +1,42 @@
 namespace TestCity.Api.Models;
 
 /// <summary>
-/// Результат проверки доступа к проекту GitLab
+/// Result of checking access to a GitLab project
 /// </summary>
 public class ProjectAccessCheckResult
 {
     /// <summary>
-    /// ID проекта GitLab
+    /// GitLab project ID
     /// </summary>
     public long ProjectId { get; set; }
     
     /// <summary>
-    /// Название проекта (если доступ получен)
+    /// Project name (if access is granted)
     /// </summary>
     public string? ProjectName { get; set; }
     
     /// <summary>
-    /// Флаг общего результата проверки доступа
+    /// Flag of the overall access check result
     /// </summary>
     public bool HasAccess { get; set; }
     
     /// <summary>
-    /// Флаг успешного доступа к данным самого проекта
+    /// Flag of successful access to the project data itself
     /// </summary>
     public bool ProjectAccessible { get; set; }
     
     /// <summary>
-    /// Флаг успешного доступа к данным джобов проекта
+    /// Flag of successful access to project jobs data
     /// </summary>
     public bool JobsAccessible { get; set; }
     
     /// <summary>
-    /// Флаг успешного доступа к данным коммитов проекта
+    /// Flag of successful access to project commits data
     /// </summary>
     public bool CommitsAccessible { get; set; }
     
     /// <summary>
-    /// Сообщение с дополнительной информацией о результате проверки
+    /// Message with additional information about the check result
     /// </summary>
     public string? Message { get; set; }
 }

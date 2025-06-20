@@ -103,7 +103,7 @@ public class JUnitExtractor
                 }
                 else if (reader.Name == "testcase")
                 {
-                    // Начало нового testcase, сбросим значения
+                    // Start of a new testcase, reset values
                     testCaseClassName = reader.GetAttribute("classname");
                     testCaseName = reader.GetAttribute("name");
                     var timeStr = reader.GetAttribute("time");
@@ -115,10 +115,10 @@ public class JUnitExtractor
                     hasSkipped = false;
                     hasFailure = false;
 
-                    // Проверяем, является ли элемент пустым (самозакрывающимся)
+                    // Check if the element is empty (self-closing)
                     if (reader.IsEmptyElement)
                     {
-                        // Если элемент пустой, сразу обрабатываем его как завершенный
+                        // If the element is empty, we process it as completed immediately
                         ProcessTestCase(testCaseClassName, testCaseName, testCaseTime, currentTestSuiteName,
                             currentTestSuiteTimestamp, hasSkipped, hasFailure, failureMessage, failureOutput,
                             systemOutput, testRuns, testCount);
@@ -128,7 +128,7 @@ public class JUnitExtractor
                 {
                     hasFailure = true;
                     failureMessage = reader.GetAttribute("message");
-                    // Содержимое failure будем читать как текст
+                    // We will read the failure content as text
                 }
                 else if (reader.Name == "skipped")
                 {
@@ -136,7 +136,7 @@ public class JUnitExtractor
                 }
                 else if (reader.Name == "system-out")
                 {
-                    // Содержимое system-out будем читать как текст
+                    // We will read the system-out content as text
                 }
             }
             else if (reader.NodeType == XmlNodeType.Text)

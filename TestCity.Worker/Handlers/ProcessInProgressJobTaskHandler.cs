@@ -31,7 +31,7 @@ public class ProcessInProgressJobTaskHandler(
         (string, long JobRunId) processingKey = (task.ProjectId.ToString(), task.JobRunId);
         if (processedJobs.Contains(processingKey))
         {
-            logger.LogInformation("Задача {JobRunId} в проекте {ProjectId} уже была обработана, пропускаем", task.JobRunId, task.ProjectId);
+            logger.LogInformation("Task {JobRunId} in project {ProjectId} has already been processed, skipping", task.JobRunId, task.ProjectId);
             return;
         }
 
@@ -46,7 +46,7 @@ public class ProcessInProgressJobTaskHandler(
 
             if (job.Status != Core.GitLab.Models.JobStatus.Running)
             {
-                logger.LogInformation("Задача {JobRunId} в проекте {ProjectId} завершилась со статусом {Status}. Пропускаем.", task.JobRunId, task.ProjectId, job.Status);
+                logger.LogInformation("Task {JobRunId} in project {ProjectId} completed with status {Status}. Skipping.", task.JobRunId, task.ProjectId, job.Status);
                 processedJobs.Add(processingKey);
                 return;
             }
@@ -61,7 +61,7 @@ public class ProcessInProgressJobTaskHandler(
 
                 if (!await projectJobTypesCache.JobTypeExistsAsync(projectId, jobType, ct))
                 {
-                    logger.LogInformation("Тип задачи {JobType} не существует в списке завершенных задач для проекта {ProjectId}. Пропускаем.", jobType, projectId);
+                    logger.LogInformation("Job type {JobType} does not exist in the list of completed tasks for project {ProjectId}. Skipping.", jobType, projectId);
                     return;
                 }
 

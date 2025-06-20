@@ -171,8 +171,8 @@ public class TestCityJobInfo(ConnectionFactory connectionFactory)
             };
 
             var changes = (Tuple<string,ushort,string,string,string>[])reader.GetValue(23);
-            // Мы не обрабатываем ChangesSinceLastRun, так как это сложная структура в формате JSON
-            // При необходимости эту структуру можно парсить из reader.GetString(23)
+            // We don't process ChangesSinceLastRun as it's a complex JSON structure
+            // If needed, this structure can be parsed from reader.GetString(23)
             if (changes != null)
             {
                 info.ChangesSinceLastRun = new List<CommitParentsChangesEntry>();

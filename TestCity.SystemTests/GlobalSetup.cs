@@ -39,7 +39,7 @@ public sealed class SystemTestsSetup : IAsyncLifetime
             var startTime = DateTime.UtcNow;
             var timeBudget = TimeSpan.FromMinutes(5);
 
-            logger.LogInformation("Ожидание доступности API сервиса...");
+            logger.LogInformation("Waiting for API service availability...");
 
             while (DateTime.UtcNow - startTime < timeBudget)
             {
@@ -47,17 +47,17 @@ public sealed class SystemTestsSetup : IAsyncLifetime
                 {
                     await apiClient.CheckHealth();
                     isInitialized = true;
-                    logger.LogInformation("API сервис успешно запущен и доступен");
+                    logger.LogInformation("API service successfully started and available");
                     return;
                 }
                 catch (Exception ex)
                 {
-                    logger.LogWarning(ex, "API сервис пока не доступен. Повторная попытка через 1 секунду...");
+                    logger.LogWarning(ex, "API service is not available yet. Retrying in 1 second...");
                     await Task.Delay(1000);
                 }
             }
 
-            throw new TimeoutException($"API сервис не стал доступен в течение {timeBudget}");
+            throw new TimeoutException($"API service did not become available within {timeBudget}");
         }
         catch (Exception ex)
         {

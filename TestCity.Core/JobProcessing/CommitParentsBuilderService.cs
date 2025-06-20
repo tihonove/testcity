@@ -26,7 +26,7 @@ public sealed class CommitParentsBuilderService(SkbKonturGitLabClientProvider gi
         await processLock.WaitAsync(ct);
         try
         {
-            // Проверка наличия корневого коммита (с Depth = 0) в таблице CommitParents
+            // Checking for the root commit (with Depth = 0) in the CommitParents table
             bool commitExists = await testCityDatabase.CommitParents.ExistsAsync(projectId, commitSha, ct);
             if (commitExists)
             {

@@ -18,7 +18,7 @@ export function SvgPieChart({ percentage, size = 20, thickness = 4 }: PieChartPr
             height={size}
             viewBox={`0 0 ${size.toString()} ${size.toString()}`}
             style={{ verticalAlign: "middle", marginRight: "8px" }}>
-            {/* Фоновый красный круг (неуспешная часть) */}
+            {/* Background red circle (unsuccessful part) */}
             <circle
                 cx={radius}
                 cy={radius}
@@ -28,7 +28,7 @@ export function SvgPieChart({ percentage, size = 20, thickness = 4 }: PieChartPr
                 strokeWidth={thickness}
             />
 
-            {/* Зелёный сектор (успешная часть) */}
+            {/* Green sector (successful part) */}
             {percentage > 0 && (
                 <circle
                     cx={radius}

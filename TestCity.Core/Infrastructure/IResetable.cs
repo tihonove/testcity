@@ -1,12 +1,12 @@
 namespace TestCity.Core.Infrastructure;
 
 /// <summary>
-/// Интерфейс для объектов, поддерживающих сброс кэшей
+/// Interface for objects that support cache reset
 /// </summary>
 public interface IResetable
 {
     /// <summary>
-    /// Сбросить все кэши
+    /// Reset all caches
     /// </summary>
     void Reset();
 }

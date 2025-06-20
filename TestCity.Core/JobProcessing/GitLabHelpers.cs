@@ -19,7 +19,7 @@ public static class GitLabHelpers
             JobRunId = job.Id.ToString(),
             BranchName = refId,
 
-            // TODO Надо добавить в модельки NGitLab поля
+            // TODO Need to add fields to the NGitLab models
             AgentName = job.Runner?.Name ?? job.Runner?.Description ?? $"agent_${job.Runner?.Id ?? 0}",
             AgentOSName = job.RunnerManager?.Platform ?? "Unknown",
         };

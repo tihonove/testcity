@@ -1,6 +1,6 @@
 FROM nginx:alpine
 
-# Копируем нашу конфигурацию nginx
+# Copy our nginx configuration
 COPY test-routes-nginx.conf /etc/nginx/conf.d/default.conf
 
 # Открываем порт
