@@ -9,7 +9,7 @@ namespace TestCity.Core.JobProcessing;
 
 public sealed class TestMetricsSender(IGraphiteClient graphiteClient)
 {
-    public async Task SendAsync(Project project, string? refId, GitLabJob job, TestReportData data)
+    public async Task SendAsync(Project project, string? refId, GitLabJob job, TestReportData? data)
     {
         try
         {
@@ -24,14 +24,15 @@ public sealed class TestMetricsSender(IGraphiteClient graphiteClient)
 
             var dateTime = job.FinishedAt;
 
-            var metrics = new List<MetricPoint>
+            var metrics = new List<MetricPoint>();
+            if (data != null)
             {
-                new("TotalTests", data.Counters.Total, tags, dateTime),
-                new("FailedTests", data.Counters.Failed, tags, dateTime),
-                new("SkippedTests", data.Counters.Skipped, tags, dateTime),
-                new("SuccessTests", data.Counters.Success, tags, dateTime),
-                new("TestSumDuration", data.Runs.Sum(x => x.Duration), tags, dateTime)
-            };
+                metrics.Add(new MetricPoint("TotalTests", data.Counters.Total, tags, dateTime));
+                metrics.Add(new MetricPoint("FailedTests", data.Counters.Failed, tags, dateTime));
+                metrics.Add(new MetricPoint("SkippedTests", data.Counters.Skipped, tags, dateTime));
+                metrics.Add(new MetricPoint("SuccessTests", data.Counters.Success, tags, dateTime));
+                metrics.Add(new MetricPoint("TestSumDuration", data.Runs.Sum(x => x.Duration), tags, dateTime));
+            }
 
             if (job.Duration.HasValue)
             {
