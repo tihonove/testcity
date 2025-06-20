@@ -110,7 +110,7 @@ public class TestCityTestRuns(ConnectionFactory connectionFactory)
                         AgentName = reader.GetString(8),
                         AgentOSName = reader.GetString(9),
                         JobUrl = reader.GetString(10),
-                        PipelineId = string.Empty // Дополнительное поле, требуемое для JobRunInfo
+                        PipelineId = string.Empty // Additional field required for JobRunInfo
                     };
 
                     var testRun = new TestRun
@@ -184,7 +184,7 @@ public class TestCityTestRuns(ConnectionFactory connectionFactory)
                     AgentName = reader.GetString(8),
                     AgentOSName = reader.GetString(9),
                     JobUrl = reader.GetString(10),
-                    PipelineId = string.Empty // Дополнительное поле, требуемое для JobRunInfo
+                    PipelineId = string.Empty // Additional field required for JobRunInfo
                 };
 
                 var testRun = new TestRun
@@ -254,7 +254,7 @@ public class TestCityTestRuns(ConnectionFactory connectionFactory)
                     AgentName = reader.GetString(8),
                     AgentOSName = reader.GetString(9),
                     JobUrl = reader.GetString(10),
-                    PipelineId = string.Empty // Дополнительное поле, требуемое для JobRunInfo
+                    PipelineId = string.Empty // Additional field required for JobRunInfo
                 };
 
                 var testRun = new TestRun

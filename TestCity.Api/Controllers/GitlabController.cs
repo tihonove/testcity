@@ -40,7 +40,7 @@ public class GitlabController(
     [HttpPost("webhook")]
     public async Task<IActionResult> WebhookHandler()
     {
-        log.LogInformation("Получен webhook от GitLab");
+        log.LogInformation("Received webhook from GitLab");
 
         GitLabJobEventInfo? jobEventInfo;
         try
@@ -50,30 +50,30 @@ public class GitlabController(
 
             if (string.IsNullOrEmpty(requestBody))
             {
-                log.LogWarning("Получен пустой запрос от GitLab webhook");
-                return BadRequest("Тело запроса не может быть пустым");
+                log.LogWarning("Received empty request from GitLab webhook");
+                return BadRequest("Request body cannot be empty");
             }
 
-            log.LogDebug("Содержимое webhook: {RequestBody}", requestBody);
+            log.LogDebug("Webhook content: {RequestBody}", requestBody);
 
             jobEventInfo = System.Text.Json.JsonSerializer.Deserialize<GitLabJobEventInfo>(requestBody);
             if (jobEventInfo == null)
 
             {
-                log.LogWarning("Не удалось десериализовать тело запроса в GitLabJobEventInfo");
-                return BadRequest("Неверный формат данных");
+                log.LogWarning("Failed to deserialize request body to GitLabJobEventInfo");
+                return BadRequest("Invalid data format");
             }
 
-            log.LogInformation("Получен webhook от GitLab и десериализован: {ProjectId}, {JobRunId}", jobEventInfo.ProjectId, jobEventInfo.BuildId);
+            log.LogInformation("Received webhook from GitLab and deserialized: {ProjectId}, {JobRunId}", jobEventInfo.ProjectId, jobEventInfo.BuildId);
         }
         catch (System.Text.Json.JsonException jsonEx)
         {
-            log.LogError(jsonEx, "Ошибка при десериализации webhook данных от GitLab");
-            return BadRequest("Неверный формат JSON");
+            log.LogError(jsonEx, "Error deserializing webhook data from GitLab");
+            return BadRequest("Invalid JSON format");
         }
         catch (Exception ex)
         {
-            log.LogError(ex, "Ошибка при чтении данных запроса GitLab webhook");
+            log.LogError(ex, "Error reading GitLab webhook request data");
             return StatusCode(500);
         }
 
@@ -102,7 +102,7 @@ public class GitlabController(
         }
         catch (Exception ex)
         {
-            log.LogError(ex, "Ошибка при обработке webhook от GitLab");
+            log.LogError(ex, "Error processing webhook from GitLab");
             return StatusCode(500);
         }
     }
@@ -110,15 +110,15 @@ public class GitlabController(
     [HttpGet("projects/{projectId}/access-check")]
     public async Task<IActionResult> CheckProjectAccess(long projectId)
     {
-        log.LogInformation("Проверка доступа к проекту GitLab с ID: {ProjectId}", projectId);
+        log.LogInformation("Checking access to GitLab project with ID: {ProjectId}", projectId);
 
         try
         {
             var projectInfo = await gitLabClient.Projects.GetByIdAsync(projectId, new SingleProjectQuery());
             if (projectInfo == null)
             {
-                log.LogWarning("Не удалось получить доступ к проекту с ID: {ProjectId} - проект не существует", projectId);
-                return BadRequest("Проект не существует или нет доступа к нему. Проверьте ID проекта и права доступа.");
+                log.LogWarning("Failed to access project with ID: {ProjectId} - project does not exist", projectId);
+                return BadRequest("Project does not exist or access is denied. Check project ID and access permissions.");
             }
 
             var clientEx = gitLabClientProvider.GetExtendedClient();
@@ -129,8 +129,8 @@ public class GitlabController(
             }
             catch (Exception ex)
             {
-                log.LogWarning(ex, "Не удалось получить доступ к джобам проекта с ID: {ProjectId}", projectId);
-                return BadRequest($"Проект '{projectInfo.Name}' найден, но нет доступа к его джобам. Проверьте права доступа.");
+                log.LogWarning(ex, "Failed to access jobs in project with ID: {ProjectId}", projectId);
+                return BadRequest($"Project '{projectInfo.Name}' was found, but access to its jobs is denied. Check access permissions.");
             }
 
             try
@@ -139,27 +139,27 @@ public class GitlabController(
             }
             catch (Exception ex)
             {
-                log.LogWarning(ex, "Не удалось получить доступ к коммитам проекта с ID: {ProjectId}", projectId);
-                return BadRequest($"Проект '{projectInfo.Name}' найден, но нет доступа к его коммитам. Проверьте права доступа.");
+                log.LogWarning(ex, "Failed to access commits in project with ID: {ProjectId}", projectId);
+                return BadRequest($"Project '{projectInfo.Name}' was found, but access to its commits is denied. Check access permissions.");
             }
 
-            log.LogInformation("Успешная проверка доступа к проекту: {ProjectName} (ID: {ProjectId})", projectInfo.Name, projectId);
-            return Ok($"Доступ к проекту '{projectInfo.Name}' и его данным подтвержден.");
+            log.LogInformation("Successfully verified access to project: {ProjectName} (ID: {ProjectId})", projectInfo.Name, projectId);
+            return Ok($"Access to project '{projectInfo.Name}' and its data confirmed.");
         }
         catch (Exception ex)
         {
-            log.LogError(ex, "Ошибка при проверке доступа к проекту с ID: {ProjectId}", projectId);
-            return BadRequest("Не удалось проверить доступ к проекту. Проверьте ID проекта и права доступа.");
+            log.LogError(ex, "Error while checking access to project with ID: {ProjectId}", projectId);
+            return BadRequest("Failed to verify project access. Check project ID and access permissions.");
         }
     }
 
     [HttpPost("projects/{projectId}/add")]
     public async Task<IActionResult> AddProject(long projectId, CancellationToken token)
     {
-        log.LogInformation("Запрос на добавление проекта GitLab с ID: {ProjectId}", projectId);
+        log.LogInformation("Request to add GitLab project with ID: {ProjectId}", projectId);
         await gitLabProjectsService.AddProject(projectId);
         await ProcessProjectLastJobsAsync(projectId, token);
-        return Ok($"Проект '{projectId}' успешно добавлен в систему.");
+        return Ok($"Project '{projectId}' successfully added to the system.");
     }
 
     private async ValueTask ProcessProjectLastJobsAsync(long projectId, CancellationToken token)

@@ -91,7 +91,7 @@ public class GitLabProjectsService : IDisposable, IResetable
 
             await SaveGitLabHierarchy([rootGroup], cancellationToken);
 
-            logger.LogInformation("Успешно добавлен проект: {ProjectName} (ID: {ProjectId}) в иерархию групп", projectInfo.Name, projectId);
+            logger.LogInformation("Successfully added project: {ProjectName} (ID: {ProjectId}) to the group hierarchy", projectInfo.Name, projectId);
         }
         catch (Exception ex)
         {
@@ -164,7 +164,7 @@ public class GitLabProjectsService : IDisposable, IResetable
         }
         catch (OperationCanceledException)
         {
-            // Нормальное завершение при вызове Dispose
+            // Normal termination when Dispose is called
         }
     }
 
@@ -174,7 +174,7 @@ public class GitLabProjectsService : IDisposable, IResetable
         try
         {
             cacheInitializationInProgress = true;
-            logger.LogInformation("Обновление кэша GitLab проектов...");
+            logger.LogInformation("Updating GitLab projects cache...");
 
             var gitLabClient = gitLabClientProvider.GetClient();
             var rootGroups = await database.GitLabEntities.GetAllEntitiesAsync(cancellationToken).ToGitLabGroups(cancellationToken);
@@ -190,7 +190,7 @@ public class GitLabProjectsService : IDisposable, IResetable
                 }
                 catch (Exception ex)
                 {
-                    logger.LogWarning(ex, "Не удалось получить информацию о группе с ID {GroupId} из GitLab", g.Id);
+                    logger.LogWarning(ex, "Failed to retrieve information about group with ID {GroupId} from GitLab", g.Id);
                 }
             }, async p =>
             {
@@ -203,7 +203,7 @@ public class GitLabProjectsService : IDisposable, IResetable
                 }
                 catch (Exception ex)
                 {
-                    logger.LogWarning(ex, "Не удалось получить информацию о проекте с ID {ProjectId} из GitLab", p.Id);
+                    logger.LogWarning(ex, "Failed to retrieve information about project with ID {ProjectId} from GitLab", p.Id);
                 }
             }, cancellationToken: cancellationToken);
             lock (cacheLock)
@@ -233,15 +233,15 @@ public class GitLabProjectsService : IDisposable, IResetable
             
         if (cacheInitializationInProgress)
         {
-            // Кэш уже инициализируется в другом потоке, ожидаем завершения
-            logger.LogInformation("Ожидание инициализации кэша GitLab проектов...");
+            // Cache is already being initialized in another thread, waiting for completion
+            logger.LogInformation("Waiting for GitLab projects cache initialization...");
             await cacheInitializationSemaphore.WaitAsync(cancellationToken);
-            cacheInitializationSemaphore.Release(); // Освобождаем семафор для других ожидающих потоков
+            cacheInitializationSemaphore.Release(); // Releasing semaphore for other waiting threads
         }
         else if (!isCacheInitialized)
         {
-            // В редком случае, когда флаг cacheInitializationInProgress не установлен, но кэш не инициализирован
-            // Это может произойти при первом запуске или при сбросе кэша
+            // In rare cases when the cacheInitializationInProgress flag is not set, but the cache is not initialized
+            // This can happen during the first run or when the cache is reset
             logger.LogInformation("Кэш не инициализирован и не инициализируется, начинаем инициализацию");
             await UpdateCacheAsync(cancellationToken);
         }
@@ -263,7 +263,7 @@ public class GitLabProjectsService : IDisposable, IResetable
     }
 
     /// <summary>
-    /// Сбрасывает кэш проектов GitLab
+    /// Resets the GitLab projects cache
     /// </summary>
     public void Reset()
     {

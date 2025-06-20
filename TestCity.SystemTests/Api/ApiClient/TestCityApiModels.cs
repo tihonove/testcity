@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace TestCity.SystemTests.Api;
 
-// Модели из TestCity.Api.Models, необходимые для тестирования API
+// Models from TestCity.Api.Models required for API testing
 public class GroupDto
 {
     public string Id { get; set; } = null!;

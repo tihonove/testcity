@@ -21,9 +21,9 @@ public static class Retry
             {
                 if (stopwatch.Elapsed + TimeSpan.FromSeconds(1) >= timeBudget)
                 {
-                    throw new Exception($"Не удалось выполнить действие после {attemptCount} попыток в течение {timeBudget.TotalSeconds} секунд. Последняя ошибка: {ex.Message}", ex);
+                    throw new Exception($"Failed to perform action after {attemptCount} attempts during {timeBudget.TotalSeconds} seconds. Last error: {ex.Message}", ex);
                 }
-                logger?.LogWarning("Не удалось выполнить действие с {attemptCount} попытки. Пробуем ещё раз. {message}", attemptCount, ex.Message);
+                logger?.LogWarning("Failed to perform action on attempt {attemptCount}. Trying again. {message}", attemptCount, ex.Message);
                 await Task.Delay(TimeSpan.FromSeconds(1));
             }
         }

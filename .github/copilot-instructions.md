@@ -1,12 +1,12 @@
-# Тесты
-Тесты добавляй только если я порошу и никак иначе.
-Если я попрошу написать тесты тогда следуй этим правилам:
-    - Для написания тестов используюй xUnit, если я прошу написать тесты
-    - Для логгеров в тестах используй GlobalSetup.TestLoggerFactory
-    - Не делай mock-ов для IGitLabClient, если не попросят отдельно. Используй экземпляр, создаваемый в SkbKonturGitLabClientProvider, а ему передавай настройки GitLabSettings.Default
-    - Тесты создавай в проекте TestCity.UnitTests
+# Tests
+Add tests only if I explicitly ask for them.
+If I ask you to write tests, follow these rules:
+    - Use xUnit framework for writing tests
+    - Use GlobalSetup.TestLoggerFactory for loggers in tests
+    - Don't create mocks for IGitLabClient unless specifically requested. Use the instance created in SkbKonturGitLabClientProvider and pass GitLabSettings.Default settings to it
+    - Create tests in the TestCity.UnitTests project
 
-# Код
-Используй file-scoped namespaces
-Все неймспейсы должны начинаться с TestCity.
-Приватные поля класса должны быть объявлены в самом низу класса
+# Code (English)
+Use file-scoped namespaces
+All namespaces must begin with TestCity.
+Private class fields should be declared at the bottom of the class

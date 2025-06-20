@@ -1,73 +1,67 @@
-# TestCity
+# TestCity ![Docker Image Version](https://img.shields.io/docker/v/tihonove/testcity)
 
-Инструмент для мониторинга и аналитики тестов, аналогичный TeamCity. TestCity интегрируется с GitLab для отслеживания и анализа запусков тестов, обеспечивая наглядную визуализацию результатов тестирования.
+A test monitoring and analytics tool similar to TeamCity. TestCity integrates with GitLab to track and analyze test runs, providing clear visualization of testing results.
 
-## Основные возможности
+## Key Features
 
-- Иерархия: организация по командам, проектам и группам как в GitLab
-- Отображение запусков тестов как в TeamCity:
-  - Выбор ветки для анализа
-  - История запусков тестов 
-  - Графики времени выполнения и падений тестов
-  - TODO: Отслеживание трендов выполнения
-  - TODO: Анализ стабильности тестов
+- Hierarchy: organization by teams, projects, and groups similar to GitLab
+- Test runs visualization similar to TeamCity:
+  - Branch selection for analysis
+  - Test run history
+  - Test execution time and failure graphs
+  - TODO: Execution trend tracking
+  - TODO: Test stability analysis
 
+### Important Information:
 
-## Как добавить проект
+- For tests to be visible outside GitLab, they must be included in artifacts, not just in the JUnit report. (For more details, see the [GitLab documentation](https://docs.gitlab.com/api/job_artifacts/#downloading-artifactsreports-files).)
+- If your project needs to be accessible to the system account, you must grant access to the service account (check with your system administrator for details).
 
-Добавление нового проекта на текущем этапе происходит вручную.
+After adding TestCity, it will begin scanning the specified project and collecting test data.
 
-Чтобы добавить проект, обратитесь в канал [#testcity](https://chat.skbkontur.ru/kontur/channels/testcity) в Mattermost или напрямую к [@tihonove](https://staff.skbkontur.ru/profile/tihonove).
+## Architecture
 
-### Важная информация:
+TestCity consists of several components:
+- Crawler: collects data from GitLab for projects that don't work with webhooks
+- Worker: extracts data from GitLab, including test artifacts
+- Database (ClickHouse): stores structured test data
+- API: proxies requests from the frontend to the database/GitLab
+- Frontend: web interface for analytics access, with queries directly on pages
 
-- Чтобы тесты были видны за пределами GitLab, они должны попадать в артефакты, а не только в JUnit report. (Подробнее см. [документацию GitLab](https://docs.gitlab.com/api/job_artifacts/#downloading-artifactsreports-files).)
-- Если ваш проект не открыт для всех контуровцев, необходимо будет выдать доступ учетной записи, под которой работает сервис (уточним при добавлении).
+## Development
 
-После добавления TestCity начнет сканировать указанный проект и собирать данные о тестах.
+For local development and running TestCity, check the [contributor's guide](DEVGUIDE.md).
 
-## Архитектура
+The project supports development using DevContainer, allowing you to quickly set up a development environment without installing dependencies locally. Details are in the [guide](DEVGUIDE.md).
 
-Test City состоит из нескольких компонентов:
-- Краулер: извлекает данные из GitLab, включая артефакты тестов
-- База данных (ClickHouse): хранит структурированные данные тестов
-- API: проксирует запросы от фронтенда к базе данных/GitLab
-- Фронтенд: веб-интерфейс для доступа к аналитике, с запросами прямо на страницах
+Quick start information:
 
-## Как разрабатывать
-
-Для разработки и запуска TestCity локально, ознакомьтесь с [руководством для контрибьюторов](DEVGUIDE.md).
-
-Проект поддерживает разработку с использованием DevContainer, что позволяет быстро настроить среду разработки без установки зависимостей локально. Подробности в [руководстве](DEVGUIDE.md).
-
-Краткая информация по запуску:
-
-### Режим полного окружения
+### Full Environment Mode
 ```bash
-# Запустить все компоненты: БД, API и фронтенд
+# Launch all components: DB, API, and frontend
 ./start-all.sh
 ```
 
-### Режим только фронтенда
+### Frontend-Only Mode
 ```bash
-# Перейти в директорию фронтенда
+# Navigate to the frontend directory
 cd Front
 
-# Запустить фронтенд с подключением к рабочему API
+# Start the frontend with connection to the production API
 npm run start-prod-api
 ```
 
-После запуска веб-интерфейс будет доступен по адресу: http://localhost:8080
+After startup, the web interface will be available at: http://localhost:8080
 
-## Системные требования 
+## System Requirements
 
 - Node.js 20+
 - .NET 9 SDK
 - Docker
 - taskfile.dev
 
-или можно использовать DevContainer. 
+or you can use DevContainer.
 
-## Поддержка
+## Support
 
-Для сообщений о проблемах или предложений используйте наш [Issue Tracker](https://github.com/tihonove/testcity/issues) в github.
+For issue reports or suggestions, use our [Issue Tracker](https://github.com/tihonove/testcity/issues) on GitHub.

@@ -1,148 +1,171 @@
-# Архитектура TestCity
+# TestCity Architecture
 
-## Обзор компонентов
+## Component Overview
 
-TestCity состоит из нескольких ключевых компонентов, которые взаимодействуют для обеспечения полной функциональности:
+TestCity consists of several key components that interact to provide full functionality:
 
-1. **Краулер** - компонент, который:
-   - Извлекает данные из GitLab (проекты, пайплайны, джобы)
-   - Скачивает артефакты с результатами тестов
-   - Парсит результаты и преобразует их в структурированный формат
-   - Сохраняет обработанные данные в базу данных
+1. **Crawler** - a component that:
+   - Periodically reads job data for projects that don't work with webhooks
+   - Sends collected data to Kafka
 
-2. **База данных (ClickHouse)** :
-   - Хранит данные запусков job-ов и отдельно взятых тестов
-   - Документация: [ClickHouse](https://clickhouse.com/docs)
+2. **API** - a .NET service that:
+   - Proxies requests from the frontend to the database or GitLab
+   - Interacts with GitLab API to obtain additional data
+   - Receives data from GitLab via WebHooks
+   - Sends the received data to Kafka
 
-3. **API** - .NET сервис, который:
-   - Проксирует запросы от фронтенда к базе данных или GitLab
-   - Взаимодействует с GitLab API для получения дополнительных данных
+3. **Kafka** - message queue:
+   - Provides asynchronous data transfer between components
+   - Receives data from the Crawler and API
+   - Delivers data to the Worker for processing
 
-4. **Frontend** - веб-интерфейс пользователя:
-   - Предоставляет интерактивные дашборды и графики
-   - Обеспечивает навигацию по проектам и 
-   - В продакшене обслуживается через Nginx
+4. **Worker** - a component that:
+   - Reads data from Kafka
+   - Extracts data from GitLab (projects, pipelines, jobs)
+   - Downloads artifacts with test results
+   - Parses results and transforms them into a structured format
+   - Saves processed data to the database
 
-В продакшен-окружении запросы к статике и API разделяются балансировщиком нагрузки (Ingress в Kubernetes).
+5. **Database (ClickHouse)**:
+   - Stores data of job runs and individual tests
+   - Documentation: [ClickHouse](https://clickhouse.com/docs)
 
-## Схема взаимодействия
+6. **Frontend** - user web interface:
+   - Provides interactive dashboards and charts
+   - Enables navigation across projects
+   - In production, it's served via Nginx
+
+In the production environment, requests to static files and API are separated by a load balancer (Ingress in Kubernetes).
+
+## Interaction Diagram
 
 ```
-GitLab  <----+ ----+
-    |              |
-    v              |
- Краулер           |
-    |              |
-    v              |
-ClickHouse <----> API <----> Frontend <----> Пользователь
+GitLab  <----+ -------------+
+    |                       |
+    v                       |
+ Crawler     +---------- WebHooks
+    |        |              |
+    v        |              v
+   Kafka <---+             API <----> Frontend <----> User
+    |                       |
+    v                       |
+  Worker                    |
+    |                       |
+    v                       |
+ClickHouse <----------------+
 ```
 
-## Среда разработки
+## Development Environment
 
-### Необходимое ПО: 
+### Required Software:
 
-- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0) - для разработки backend
-- [Node.js 20+](https://nodejs.org/en/download/) - для разработки frontend
-- [Docker](https://www.docker.com/products/docker-desktop/) - для запуска баз данных и других сервисов
-- [Task](https://taskfile.dev/installation/) (taskfile.dev) - для автоматизации команд
+- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0) - for backend development
+- [Node.js 20+](https://nodejs.org/en/download/) - for frontend development
+- [Docker](https://www.docker.com/products/docker-desktop/) - for running databases and other services
+- [Task](https://taskfile.dev/installation/) (taskfile.dev) - for command automation
 
-### Настройка локальной среды
+### Setting up Local Environment
 
-1. Клонировать репозиторий:
+1. Clone the repository:
    ```bash
    git clone git@github.com:tihonove/testcity.git
    cd testcity
    ```
 
-2. Создайте файл `.env` на основе `.env.example`:
+2. Create a `.env` file based on `.env.example`:
    ```bash
    cp .env.example .env
    ```
 
-3. Отредактируйте `.env` файл:
-   - Получите GitLab Token по адресу: {GITLAB_URL}/-/user_settings/personal_access_tokens
+3. Edit the `.env` file:
+   - Get a GitLab Token at: {GITLAB_URL}/-/user_settings/personal_access_tokens
 
-## Запуск проекта
+## Running the Project
 
-Есть два основных режима разработки:
+There are two main development modes:
 
-### 1. Полное окружение (API + БД + Frontend)
+### 1. Full Environment (API + DB + Kafka + Worker + Frontend)
 
-Этот режим запускает все компоненты:
-- ClickHouse через Docker Compose
-- Backend API на локальном хосте
-- Frontend в режиме разработки с hot-reload
+This mode launches all components:
+- ClickHouse via Docker Compose
+- Kafka via Docker Compose
+- Backend API on the local host
+- Worker on the local host
+- Frontend in development mode with hot-reload
 
 ```bash
-# В корневой директории проекта
+# In the project root directory
 ./start-all.sh
 ```
 
-После запуска:
-- Frontend будет доступен по адресу: http://localhost:8080
-- API будет доступен по адресу: http://localhost:8124
-- ClickHouse будет доступен по адресу: http://localhost:8123
+After startup:
+- Frontend will be available at: http://localhost:8080
+- API will be available at: http://localhost:8124
+- ClickHouse will be available at: http://localhost:8123
+- Kafka will be available at: localhost:9092
 
-### 2. Только Frontend (с подключением к продакшен API)
+### 2. Frontend Only (connected to production API)
 
-Этот режим подходит, когда вы работаете только над Frontend и хотите использовать существующий API:
+This mode is suitable when you're working only on the Frontend and want to use an existing API:
 
 ```bash
-# Перейдите в директорию Frontend
+# Navigate to the Frontend directory
 cd Front
 
-# Запустите Frontend, который будет обращаться к API в продакшене
+# Start the Frontend that will connect to the production API
 npm run start-prod-api
 ```
 
-**Важно**: Проверьте, что в файле `webpack.config.prod-api.js` указан корректный URL API.
+**Important**: Make sure that the correct API URL is specified in the `webpack.config.prod-api.js` file.
 
-## Решение проблем
+## Troubleshooting
 
-- Если у вас проблемы с доступом к GitLab API, проверьте правильность GitLab Token
-- При проблемах с ClickHouse проверьте настройки подключения и запущен ли контейнер
-- Для Frontend проблем, проверьте версию Node.js (должна быть 20+)
+- If you have problems accessing the GitLab API, check your GitLab Token
+- For ClickHouse issues, check connection settings and if the container is running
+- For Kafka issues, check container logs and connection settings
+- For Worker problems, check logs and Kafka connection
+- For Frontend issues, verify the Node.js version (should be 20+)
 
-Для сообщений о проблемах используйте [Issue Tracker](https://github.com/tihonove/testcity/issues) в github.
+For issue reports, use our [Issue Tracker](https://github.com/tihonove/testcity/issues) on GitHub.
 
-## Разработка с использованием DevContainer
+## Development with DevContainer
 
-Проект поддерживает разработку с использованием [DevContainer](https://containers.dev/), что позволяет быстро начать разработку без установки зависимостей на локальной машине.
+The project supports development using [DevContainer](https://containers.dev/), allowing you to quickly start development without installing dependencies on your local machine.
 
-### Требования для работы с DevContainer
+### Requirements for Working with DevContainer
 
-- [Docker](https://www.docker.com/products/docker-desktop/) 
+- [Docker](https://www.docker.com/products/docker-desktop/)
 - [Visual Studio Code](https://code.visualstudio.com/)
-- Расширение [Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
+- [Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) extension
 
-или
+or
 
 - [JetBrains Rider](https://www.jetbrains.com/rider/) (2022.3+)
 
-### Начало работы с DevContainer
+### Getting Started with DevContainer
 
 #### Visual Studio Code
 
-1. Установите необходимые инструменты, перечисленные выше
-2. Клонируйте репозиторий:
+1. Install the required tools listed above
+2. Clone the repository:
    ```bash
    git clone git@github.com:tihonove/testcity.git
    ```
-3. Откройте клонированный репозиторий в VS Code
-4. VS Code автоматически определит наличие конфигурации DevContainer и предложит открыть проект в контейнере
-5. Нажмите на кнопку "Reopen in Container" или выберите команду "Remote-Containers: Open Folder in Container" через палитру команд (F1)
-6. Дождитесь завершения сборки и настройки контейнера
+3. Open the cloned repository in VS Code
+4. VS Code will automatically detect the DevContainer configuration and suggest opening the project in a container
+5. Click the "Reopen in Container" button or select "Remote-Containers: Open Folder in Container" via the command palette (F1)
+6. Wait for the container to build and configure
 
 #### JetBrains Rider
 
-0. Тоже может, но как по мне -- сплошная боль
-1. Если кто-то пробует -- опишите тут инструкцию
+0. It's also possible, but in my opinion — quite painful
+1. If someone tries it — please add instructions here
 
-После этого вы окажетесь в полностью настроенной среде разработки, где можно сразу начать работу с проектом. Для запуска проекта надо запустить ./start-all.sh в контейнере через консоль в среде или через подключение к контейнеру.
+After this, you'll be in a fully configured development environment where you can immediately start working with the project. To run the project, execute ./start-all.sh in the container through the environment console or via container connection.
 
-### Дополнительная информация
+### Additional Information
 
-- [Официальная документация по DevContainer](https://code.visualstudio.com/docs/devcontainers/containers)
-- [Документация JetBrains по Dev Containers](https://www.jetbrains.com/help/rider/dev-environments-devcontainers.html)
-- [Спецификация DevContainer](https://containers.dev/)
-- [Коллекция готовых DevContainer конфигураций](https://github.com/microsoft/vscode-dev-containers)
+- [Official DevContainer Documentation](https://code.visualstudio.com/docs/devcontainers/containers)
+- [JetBrains Dev Containers Documentation](https://www.jetbrains.com/help/rider/dev-environments-devcontainers.html)
+- [DevContainer Specification](https://containers.dev/)
+- [Collection of Ready-made DevContainer Configurations](https://github.com/microsoft/vscode-dev-containers)
