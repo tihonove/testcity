@@ -68,7 +68,7 @@ public class ProcessJobRunTaskHandler(
 
             await metricsSender.SendAsync(
                 projectInfo,
-                processingResult.JobInfo?.BranchName,
+                processingResult.JobInfo?.BranchName ?? await client.BranchOrRef(projectInfo.Id, job.Ref),
                 job,
                 processingResult.TestReportData);
         }
