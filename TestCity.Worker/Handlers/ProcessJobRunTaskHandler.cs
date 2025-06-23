@@ -59,17 +59,18 @@ public class ProcessJobRunTaskHandler(
                 if (processingResult.TestReportData != null)
                 {
                     await testCityDatabase.TestRuns.InsertBatchAsync(processingResult.JobInfo, processingResult.TestReportData.Runs);
-                    await metricsSender.SendAsync(
-                        projectInfo,
-                        processingResult.JobInfo.BranchName,
-                        job,
-                        processingResult.TestReportData);
                 }
             }
             else
             {
                 logger.LogInformation("No job info was found for job run id: {JobRunId}", task.JobRunId);
             }
+
+            await metricsSender.SendAsync(
+                projectInfo,
+                processingResult.JobInfo?.BranchName ?? await client.BranchOrRef(projectInfo.Id, job.Ref),
+                job,
+                processingResult.TestReportData);
         }
         catch (HttpRequestException httpRequestException)
         {
