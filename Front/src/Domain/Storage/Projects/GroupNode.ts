@@ -47,10 +47,20 @@ export function resolvePathToNodes(
         const prevNode = result[result.length - 1];
         const nextGroupOrProject =
             ("groups" in prevNode
-                ? prevNode.groups?.find(x => x.id === groupIdOrTitle || x.title === groupIdOrTitle.toLowerCase())
+                ? prevNode.groups?.find(
+                      x =>
+                          x.id === groupIdOrTitle ||
+                          x.title === groupIdOrTitle.toLowerCase() ||
+                          x.title === groupIdOrTitle
+                  )
                 : undefined) ??
             ("projects" in prevNode
-                ? prevNode.projects?.find(x => x.id === groupIdOrTitle || x.title === groupIdOrTitle.toLowerCase())
+                ? prevNode.projects?.find(
+                      x =>
+                          x.id === groupIdOrTitle ||
+                          x.title === groupIdOrTitle.toLowerCase() ||
+                          x.title === groupIdOrTitle
+                  )
                 : undefined);
         if (nextGroupOrProject != undefined) {
             result.push(nextGroupOrProject);
