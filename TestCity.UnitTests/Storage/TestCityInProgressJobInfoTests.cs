@@ -1,3 +1,4 @@
+using FluentAssertions;
 using TestCity.Core.Clickhouse;
 using TestCity.Core.Storage;
 using TestCity.Core.Storage.DTO;
@@ -24,17 +25,13 @@ public class TestCityInProgressJobInfoTests : IAsyncLifetime
     [Fact]
     public async Task Insert_ShouldCorrectlyAddRecord()
     {
-        // Arrange
         var connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
         var inProgressJobInfo = new TestCityDatabase(connectionFactory).InProgressJobInfo;
         var job = CreateTestInProgressJobInfo();
-
-        // Act
         await inProgressJobInfo.InsertAsync(job);
 
-        // Assert
         var exists = await inProgressJobInfo.ExistsAsync(job.ProjectId, job.JobRunId);
-        Assert.True(exists, "Запись должна существовать после вставки");
+        exists.Should().BeTrue("запись должна существовать после вставки");
     }
 
     [Fact]
@@ -46,11 +43,9 @@ public class TestCityInProgressJobInfoTests : IAsyncLifetime
         const string projectId = "non-existent-project-id";
         const string jobRunId = "non-existent-job-run-id";
 
-        // Act
+        // Act & Assert
         var exists = await inProgressJobInfo.ExistsAsync(projectId, jobRunId);
-
-        // Assert
-        Assert.False(exists, "Запись не должна существовать");
+        exists.Should().BeFalse("запись не должна существовать");
     }
 
     [Fact]
@@ -60,12 +55,11 @@ public class TestCityInProgressJobInfoTests : IAsyncLifetime
         var connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
         var inProgressJobInfo = new TestCityDatabase(connectionFactory).InProgressJobInfo;
         var job = CreateTestInProgressJobInfo();
-        // Act
+        // Act & Assert
         await inProgressJobInfo.InsertAsync(job);
+        
         var exists = await inProgressJobInfo.ExistsAsync(job.ProjectId, job.JobRunId);
-
-        // Assert
-        Assert.True(exists, "Запись должна существовать после вставки");
+        exists.Should().BeTrue("запись должна существовать после вставки");
     }
 
     [Fact]
@@ -77,11 +71,9 @@ public class TestCityInProgressJobInfoTests : IAsyncLifetime
         const string projectId = "non-existent-project-id";
         const string jobRunId = "non-existent-job-run-id";
 
-        // Act
+        // Act & Assert
         var exists = await inProgressJobInfo.ExistsAsync(projectId, jobRunId);
-
-        // Assert
-        Assert.False(exists, "Запись не должна существовать");
+        exists.Should().BeFalse("запись не должна существовать");
     }
 
     [Fact]
@@ -91,12 +83,11 @@ public class TestCityInProgressJobInfoTests : IAsyncLifetime
         var connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
         var inProgressJobInfo = new TestCityDatabase(connectionFactory).InProgressJobInfo;
         var job = CreateTestInProgressJobInfo();
-        // Act
+        // Act & Assert
         await inProgressJobInfo.InsertAsync(job);
+        
         var exists = await inProgressJobInfo.ExistsAsync(job.ProjectId, job.JobRunId);
-
-        // Assert
-        Assert.True(exists, "Запись должна существовать при поиске по ProjectId после вставки");
+        exists.Should().BeTrue("запись должна существовать при поиске по ProjectId после вставки");
     }
 
     private static InProgressJobInfo CreateTestInProgressJobInfo()
