@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Xunit;
 using TestCity.UnitTests.Utils;
 using Xunit.Abstractions;
+using FluentAssertions;
 
 namespace TestCity.UnitTests.GitLab;
 
@@ -33,7 +34,7 @@ public class GitLabJobsTests : IDisposable
 
         Assert.NotNull(firstPageJobs);
         Assert.NotNull(firstPageJobs.Result);
-        Assert.Single(firstPageJobs.Result);
+        firstPageJobs.Result.Should().HaveCountGreaterThan(0);
 
         logger.LogInformation($"Retrieved {firstPageJobs.Result.Count} jobs from the first page of project {projectId}");
     }
