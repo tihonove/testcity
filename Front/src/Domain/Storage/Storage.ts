@@ -2,9 +2,9 @@ import { ClickHouseClient } from "@clickhouse/client-web";
 import { uuidv4 } from "../../Utils/Guids";
 import { reject } from "../../Utils/TypeHelpers";
 import { JobIdWithParentProject } from "../JobIdWithParentProject";
-import { PipelineRunsQueryRow } from "./PipelineRunsQueryRow";
 import { TestPerJobRunQueryRow } from "../TestPerJobRunQueryRow";
 import { JobRunFullInfoQueryRow, JobsQueryRow } from "./JobsQuery";
+import { PipelineRunsQueryRow } from "./PipelineRunsQueryRow";
 import { GroupNode, Project } from "./Projects/GroupNode";
 import { TestRunQueryRow } from "./TestRunQuery";
 
@@ -504,6 +504,81 @@ export class TestAnalyticsStorage {
         return await this.executeClickHouseQuery<TestRunQueryRow[]>(query);
     }
 
+    public async getTestListWithStat(
+        jobRunIds: string[],
+        sortField?: "State" | "TestId" | "Duration" | "StartDateTime",
+        sortDirection?: "ASC" | "DESC",
+        testIdQuery?: string,
+        testStateFilter?: "Failed" | "Success" | "Skipped",
+        itemsPerPage: number = 100,
+        page: number = 0
+    ): Promise<[TestRunQueryRow[], TestListStats]> {
+        let condition = `JobRunId in [${jobRunIds.map(x => "'" + x + "'").join(",")}]`;
+        if (testIdQuery?.trim()) condition += ` AND TestId LIKE '%${testIdQuery}%'`;
+        let havingCondition = "";
+        const finalStateExpression =
+            "if(has(groupArray(t.State), 'Success'),  'Success', if(has(groupArray(t.State), 'Failed'), 'Failed', any(t.State)))";
+        if (testStateFilter != undefined) havingCondition = `${finalStateExpression} = '${testStateFilter}'`;
+
+        const testListQuery = `
+            SELECT 
+                ${finalStateExpression} AS FinalState,
+                TestId,
+                avg(Duration) AS AvgDuration,
+                min(Duration) AS MinDuration,
+                max(Duration) AS MaxDuration,
+                any(JobId) AS JobId,
+                arrayStringConcat(groupArray(t.State), ',') AS AllStates,
+                min(StartDateTime) AS StartDateTime,
+                count() AS TotalRuns,
+                sum(
+                    CASE 
+                        WHEN t.State = 'Failed' THEN 100
+                        WHEN t.State = 'Success' THEN 1
+                        WHEN t.State = 'Skipped' THEN 0
+                        ELSE 0
+                    END
+                ) AS StateWeight
+            FROM TestRunsByRun t
+            WHERE ${condition} 
+            GROUP BY TestId
+            ${havingCondition ? `HAVING ${havingCondition}` : ""}
+            ORDER BY ${sortField ?? "StateWeight"}  ${sortField ? (sortDirection ?? "ASC") : "DESC"}
+            LIMIT ${(itemsPerPage * page).toString()}, ${itemsPerPage.toString()}
+            `;
+
+        const statsQuery = `
+            SELECT 
+                COUNT(TestId) AS totalTestsCount,
+                SUM(CASE WHEN FinalState = 'Success' THEN 1 ELSE 0 END) AS successTestsCount,
+                SUM(CASE WHEN FinalState = 'Skipped' THEN 1 ELSE 0 END) AS skippedTestsCount,
+                SUM(CASE WHEN FinalState = 'Failed' THEN 1 ELSE 0 END) AS failedTestsCount
+            FROM (
+                SELECT 
+                    TestId,
+                    ${finalStateExpression} AS FinalState
+                FROM TestRunsByRun t
+                WHERE ${condition}
+                GROUP BY TestId
+                ${havingCondition ? `HAVING ${havingCondition}` : ""}
+            ) grouped_tests
+        `;
+
+        const [testListResult, statsResult] = await Promise.all([
+            this.executeClickHouseQuery<TestRunQueryRow[]>(testListQuery),
+            this.executeClickHouseQuery<[[number, number, number, number]]>(statsQuery),
+        ]);
+
+        const stats: TestListStats = {
+            totalTestsCount: statsResult[0][0],
+            successTestsCount: statsResult[0][1],
+            skippedTestsCount: statsResult[0][2],
+            failedTestsCount: statsResult[0][3],
+        };
+
+        return [testListResult, stats];
+    }
+
     public async findBranches(projectIds?: string[], jobId?: string): Promise<string[]> {
         const query = `
             SELECT DISTINCT 
@@ -614,4 +689,11 @@ interface PipelineInfo {
     commitAuthor: string;
     triggered: string;
     pipelineSource: string;
+}
+
+interface TestListStats {
+    totalTestsCount: number;
+    successTestsCount: number;
+    skippedTestsCount: number;
+    failedTestsCount: number;
 }

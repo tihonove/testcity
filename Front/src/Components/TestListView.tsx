@@ -25,9 +25,6 @@ import styles from "./TestListView.module.css";
 interface TestListViewProps {
     jobRunIds: string[];
     pathToProject: string[];
-    successTestsCount: number;
-    skippedTestsCount: number;
-    failedTestsCount: number;
     linksBlock?: React.ReactNode;
 }
 
@@ -50,15 +47,15 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
         useSearchParamDebouncedAsState("filter", 500, "");
     const itemsPerPage = 100;
     const [page, setPage] = useUrlBasedPaging();
-    const totalRowCount = props.successTestsCount + props.failedTestsCount + props.skippedTestsCount;
     const searchValue = useDeferredValue(debouncedSearchValue);
 
     const [outputModalIds, setOutputModalIds] = useSearchParamsAsState(["oid", "ojobid"]);
 
-    const testList = useStorageQuery(
-        s => s.getTestList(props.jobRunIds, sortField, sortDirection, searchValue, testCasesType, 100, page),
+    const [testList, stats] = useStorageQuery(
+        s => s.getTestListWithStat(props.jobRunIds, sortField, sortDirection, searchValue, testCasesType, 100, page),
         [props.jobRunIds, sortField, sortDirection, searchValue, testCasesType, page]
     );
+    const totalRowCount = stats.totalTestsCount;
 
     async function createAndDownloadCSV(): Promise<void> {
         const data = await storage.getTestListForCsv(props.jobRunIds);
@@ -96,7 +93,7 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
                         <TestTypeFilterButton
                             type={undefined}
                             currentType={testCasesType}
-                            count={props.successTestsCount + props.failedTestsCount + props.skippedTestsCount}
+                            count={stats.totalTestsCount}
                             onClick={setTestCasesType}
                         />
                     </Fit>
@@ -104,7 +101,7 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
                         <TestTypeFilterButton
                             type="Success"
                             currentType={testCasesType}
-                            count={props.successTestsCount}
+                            count={stats.successTestsCount}
                             onClick={setTestCasesType}
                         />
                     </Fit>
@@ -112,7 +109,7 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
                         <TestTypeFilterButton
                             type="Failed"
                             currentType={testCasesType}
-                            count={props.failedTestsCount}
+                            count={stats.failedTestsCount}
                             onClick={setTestCasesType}
                         />
                     </Fit>
@@ -120,7 +117,7 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
                         <TestTypeFilterButton
                             type="Skipped"
                             currentType={testCasesType}
-                            count={props.skippedTestsCount}
+                            count={stats.skippedTestsCount}
                             onClick={setTestCasesType}
                         />
                     </Fit>
