@@ -23,6 +23,32 @@ public class TestAnalyticsDatabaseSchema
         }
     }
 
+    public static async Task InsertPredefinedGitLabProjects(ConnectionFactory connectionFactory)
+    {
+        var db = new TestCityDatabase(connectionFactory);
+        if (await db.GitLabEntities.IsEmpty() || !await db.GitLabEntities.HasProject(24783))
+        {
+            var testGroups = new List<GitLabGroup>
+            {
+                new() {
+                    Id = "108143093",
+                    Title = "test-group-1",
+                    Projects =
+                    [
+                        new() {
+                            Id = "70134580",
+                            Title = "test-project-1",
+                            UseHooks = false
+                        }
+                    ],
+                    MergeRunsFromJobs = false
+                },
+            };
+
+            await db.GitLabEntities.UpsertEntitiesAsync(testGroups.ToGitLabEntityRecords(null));
+        }
+    }
+
     public static async Task InsertPredefinedProjects(ConnectionFactory connectionFactory)
     {
         var db = new TestCityDatabase(connectionFactory);

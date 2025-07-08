@@ -40,7 +40,26 @@ tasks:
       - npm start
     silent: false
 
+  # Задачи для dev окружения с зависимостью от actualize-db
+  dev-api:
+    deps: [actualize-db]
+    cmds:
+      - task: api
+    silent: false
+
+  dev-worker:
+    deps: [actualize-db]
+    cmds:
+      - task: worker
+    silent: false
+
+  dev-crawler:
+    deps: [actualize-db]
+    cmds:
+      - task: crawler
+    silent: false
+
   dev:
-    deps: [db, actualize-db, api, worker, crawler, front]
+    deps: [db, dev-api, dev-worker, dev-crawler, front]
     silent: false
 
