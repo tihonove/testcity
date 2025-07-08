@@ -175,9 +175,6 @@ export function JobRunTestListPage(): React.JSX.Element {
                         <TestListView
                             jobRunIds={[jobRunId]}
                             pathToProject={pathToGroup}
-                            successTestsCount={Number(successTestsCount)}
-                            failedTestsCount={Number(failedTestsCount)}
-                            skippedTestsCount={Number(skippedTestsCount)}
                             linksBlock={
                                 <Fit>
                                     <Link

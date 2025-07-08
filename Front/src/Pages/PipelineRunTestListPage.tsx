@@ -52,13 +52,7 @@ export function PipelineRunTestListPage(): React.JSX.Element {
                     />
                 </Fit>
                 <Fit>
-                    <TestListView
-                        pathToProject={pathToGroup}
-                        jobRunIds={pipelineInfo.jobRunIds}
-                        successTestsCount={pipelineInfo.successTestsCount}
-                        skippedTestsCount={pipelineInfo.skippedTestsCount}
-                        failedTestsCount={pipelineInfo.failedTestsCount}
-                    />
+                    <TestListView pathToProject={pathToGroup} jobRunIds={pipelineInfo.jobRunIds} />
                 </Fit>
             </ColumnStack>
         </main>
