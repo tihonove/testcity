@@ -9,6 +9,8 @@ services:
       CLICKHOUSE_PASSWORD: 123123
     volumes:
       - clickhouse_data:/var/lib/clickhouse
+    networks:
+      - testcity-network
 
   kafka:
     image: bitnami/kafka:4.0
@@ -16,19 +18,23 @@ services:
     ports:
       - "9092:9092"
       - "9093:9093"
+      - "9094:9094"
     environment:
       - KAFKA_CFG_NODE_ID=1
       - KAFKA_CFG_PROCESS_ROLES=broker,controller
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@localhost:9093
-      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
-      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=EXTERNAL://:9092,CONTROLLER://:9093,PLAINTEXT://:9094
+      - KAFKA_CFG_ADVERTISED_LISTENERS=EXTERNAL://localhost:9092,PLAINTEXT://kafka:9094
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
       - KAFKA_KRAFT_CLUSTER_ID=2451c12e-a37d-4349-b744-a1047b01cbd3
       - ALLOW_PLAINTEXT_LISTENER=yes
     restart: unless-stopped
     volumes:
       - kafka_data:/bitnami/kafka
+    networks:
+      - testcity-network
 
   db-actualizer:
     build:
@@ -46,9 +52,11 @@ services:
       - TESTANALYTICS_CLICKHOUSE_DB=default
       - TESTANALYTICS_CLICKHOUSE_USER=testanalytics-user
       - TESTANALYTICS_CLICKHOUSE_PASSWORD=123123
-      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9094
     restart: "no"
     profiles: ["services"]
+    networks:
+      - testcity-network
 
   # Сервисы проекта TestCity
   front:
@@ -61,6 +69,8 @@ services:
     environment:
       - GITLAB_URL=https://gitlab.com/
     profiles: ["services"]
+    networks:
+      - testcity-network
 
   api:
     build:
@@ -77,12 +87,14 @@ services:
       - TESTANALYTICS_CLICKHOUSE_DB=default
       - TESTANALYTICS_CLICKHOUSE_USER=testanalytics-user
       - TESTANALYTICS_CLICKHOUSE_PASSWORD=123123
-      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9094
     depends_on:
       - clickhouse
       - kafka
       - db-actualizer
     profiles: ["services"]
+    networks:
+      - testcity-network
 
   crawler:
     build:
@@ -99,12 +111,14 @@ services:
       - TESTANALYTICS_CLICKHOUSE_DB=default
       - TESTANALYTICS_CLICKHOUSE_USER=testanalytics-user
       - TESTANALYTICS_CLICKHOUSE_PASSWORD=123123
-      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9094
     depends_on:
       - clickhouse
       - kafka
       - db-actualizer
     profiles: ["services"]
+    networks:
+      - testcity-network
 
   worker:
     build:
@@ -119,12 +133,14 @@ services:
       - TESTANALYTICS_CLICKHOUSE_DB=default
       - TESTANALYTICS_CLICKHOUSE_USER=testanalytics-user
       - TESTANALYTICS_CLICKHOUSE_PASSWORD=123123
-      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9094
     depends_on:
       - clickhouse
       - kafka
       - db-actualizer
     profiles: ["services"]
+    networks:
+      - testcity-network
 
   test-routes:
     build:
@@ -137,6 +153,12 @@ services:
       - front
       - api
     profiles: ["services"]
+    networks:
+      - testcity-network
+
+networks:
+  testcity-network:
+    driver: bridge
 
 volumes:
   clickhouse_data:
