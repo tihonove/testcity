@@ -469,7 +469,7 @@ export class TestAnalyticsStorage {
         page: number = 0
     ): Promise<TestRunQueryRow[]> {
         let condition = `JobRunId in [${jobRunIds.map(x => "'" + x + "'").join(",")}]`;
-        if (testIdQuery?.trim()) condition += ` AND TestId LIKE '%${testIdQuery}%'`;
+        if (testIdQuery?.trim()) condition += ` AND TestId ILIKE '%${testIdQuery}%'`;
         let havingCondition = "";
         const finalStateExpression =
             "if(has(groupArray(t.State), 'Success'),  'Success', if(has(groupArray(t.State), 'Failed'), 'Failed', any(t.State)))";
@@ -514,7 +514,7 @@ export class TestAnalyticsStorage {
         page: number = 0
     ): Promise<[TestRunQueryRow[], TestListStats]> {
         let condition = `JobRunId in [${jobRunIds.map(x => "'" + x + "'").join(",")}]`;
-        if (testIdQuery?.trim()) condition += ` AND TestId LIKE '%${testIdQuery}%'`;
+        if (testIdQuery?.trim()) condition += ` AND TestId ILIKE '%${testIdQuery}%'`;
         let havingCondition = "";
         const finalStateExpression =
             "if(has(groupArray(t.State), 'Success'),  'Success', if(has(groupArray(t.State), 'Failed'), 'Failed', any(t.State)))";
