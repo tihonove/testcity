@@ -161,100 +161,53 @@ ORDER BY (Id, Type)
 SETTINGS index_granularity = 8192;
 
 -- divider --
-CREATE TABLE IF NOT EXISTS `.inner-FlakyTestsWeeklyRaw`
+CREATE TABLE IF NOT EXISTS TestStatsDailyData
 (
-    WeekStart   Date,
-    ProjectId   LowCardinality(String),
-    JobId       LowCardinality(String),
-    TestId      LowCardinality(String),
-
-    RunsState   AggregateFunction(count,  UInt32),
-    FailState   AggregateFunction(sum,    UInt32),
-    SeqState    AggregateFunction(groupArray, Tuple(DateTime, UInt8))
+    `StartDate` Date,
+    `ProjectId` LowCardinality(String),
+    `JobId` LowCardinality(String),
+    `TestId` String,
+    `RunsState` AggregateFunction(count),
+    `FailState` AggregateFunction(sum, UInt32),
+    `EntropyState` AggregateFunction(entropy, UInt8)
 )
 ENGINE = AggregatingMergeTree
-ORDER BY (WeekStart, ProjectId, JobId, TestId)
-TTL WeekStart + toIntervalMonth(12) DELETE
+ORDER BY (StartDate, ProjectId, JobId, TestId)
+TTL StartDate + toIntervalDay(7) DELETE
 SETTINGS index_granularity = 8192;
 
-
 -- divider --
-CREATE MATERIALIZED VIEW IF NOT EXISTS FillFlakyWeeklyRaw
-TO `.inner-FlakyTestsWeeklyRaw`
+CREATE MATERIALIZED VIEW IF NOT EXISTS TestStatsDaily
+TO TestStatsDailyData
 AS
 SELECT
-    toMonday(StartDateTime)                                 AS WeekStart,
+    toDate(StartDateTime) as StartDate,
     ProjectId,
     JobId,
     TestId,
-    countState()                                            AS RunsState,
-    sumState(toUInt32(State = 'Failed'))                    AS FailState,
-    groupArrayState(tuple(StartDateTime, toUInt8(State)))   AS SeqState
+    countState() AS RunsState,
+    sumState(toUInt32(State = 'Failed')) AS FailState,
+    entropyStateIf(toUInt8(State), State != 'Skipped') AS EntropyState
 FROM TestRuns
-WHERE StartDateTime >= now() - INTERVAL 7 DAY
 GROUP BY
-    WeekStart,
+    StartDate,
     ProjectId,
     JobId,
     TestId;
 
-
 -- divider --
-CREATE TABLE IF NOT EXISTS `.inner-FlakyTestsWeekly`
-(
-    WeekStart    Date,
-    ProjectId    LowCardinality(String),
-    JobId        LowCardinality(String),
-    TestId       LowCardinality(String),
-
-    TotalRuns    UInt32,
-    FailedRuns   UInt32,
-    Flips        UInt32,
-    FlipRate     Float32,
-
-    LastEventTs  DateTime
-)
-ENGINE = ReplacingMergeTree(LastEventTs)
-ORDER BY (WeekStart, ProjectId, JobId, TestId)
-TTL WeekStart + toIntervalMonth(12) DELETE
-SETTINGS index_granularity = 8192;
-
-
--- divider --
-CREATE MATERIALIZED VIEW IF NOT EXISTS FlakyWeekly
-TO `.inner-FlakyTestsWeekly`
+CREATE VIEW IF NOT EXISTS TestDashboardWeekly
 AS
 SELECT
-    WeekStart,
     ProjectId,
     JobId,
     TestId,
-    TotalRuns,
-    FailedRuns,
-    Flips,
-    round(Flips / greatest(TotalRuns - 1, 1), 3)            AS FlipRate,
-    now()                                                   AS LastEventTs
-FROM
-(
-    SELECT
-        WeekStart,
-        ProjectId,
-        JobId,
-        TestId,
+    max(StartDate) as LastRunDate,
+    countMerge(RunsState)  AS RunCount,
+    sumMerge(FailState)    AS FailCount,
+    entropyMerge(EntropyState) as Entropy
+FROM TestStatsDaily
+WHERE 
+    StartDate>= today() - INTERVAL 7 DAY
+GROUP BY ProjectId, JobId, TestId;
 
-        countMerge(RunsState)                               AS TotalRuns,
-        sumMerge(FailState)                                 AS FailedRuns,
-
-        arrayMap(t -> t.2,
-                 arraySort(x -> x.1, groupArrayMerge(SeqState))) AS StatusSeq,
-
-        arrayCount(i -> StatusSeq[i] != StatusSeq[i-1],
-                   arrayEnumerate(StatusSeq))               AS Flips
-    FROM FillFlakyWeeklyRaw
-    GROUP BY
-        WeekStart,
-        ProjectId,
-        JobId,
-        TestId
-    HAVING TotalRuns > 1
-);

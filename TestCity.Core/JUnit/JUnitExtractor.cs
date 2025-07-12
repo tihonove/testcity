@@ -44,10 +44,12 @@ public class JUnitExtractor
                 }
                 else if (entry.FullName.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
                 {
+                    if (hasCodeQualityReport)
+                        continue;
                     using var stream = entry.Open();
                     using var reader = new StreamReader(stream);
                     var jsonFileContent = reader.ReadToEnd();
-                    hasCodeQualityReport = hasCodeQualityReport || jsonFileContent.Contains("\"fingerprint\"") && jsonFileContent.Contains("\"check_name\"") && jsonFileContent.Contains("\"severity\"");
+                    hasCodeQualityReport = jsonFileContent.Contains("\"fingerprint\"") && jsonFileContent.Contains("\"check_name\"") && jsonFileContent.Contains("\"severity\"");
                 }
             }
         }
@@ -59,12 +61,7 @@ public class JUnitExtractor
         };
     }
 
-    public TestReportData CollectTestRunsFromJunit(Stream stream)
-    {
-        return CollectTestRunsFromJunitInternal(stream);
-    }
-
-    private TestReportData CollectTestRunsFromJunitInternal(Stream stream)
+    private static TestReportData CollectTestRunsFromJunit(Stream stream)
     {
         var testRuns = new List<TestRun>();
         var testCount = new TestCount();
@@ -169,7 +166,7 @@ public class JUnitExtractor
         return new TestReportData(testCount, testRuns);
     }
 
-    private void ProcessTestCase(string? testCaseClassName, string? testCaseName, double? testCaseTime,
+    private static void ProcessTestCase(string? testCaseClassName, string? testCaseName, double? testCaseTime,
         string? currentTestSuiteName, DateTimeOffset? currentTestSuiteTimestamp,
         bool hasSkipped, bool hasFailure, string? failureMessage, string? failureOutput, string? systemOutput,
         List<TestRun> testRuns, TestCount testCount)
