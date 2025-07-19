@@ -7,5 +7,5 @@ public record TestDashboardWeeklyEntry
     public required string TestId { get; init; }
     public required ulong RunCount { get; init; }
     public required ulong FailCount { get; init; }
-    public required double Entropy { get; init; }
+    public required ulong FlipCount { get; init; }
 }

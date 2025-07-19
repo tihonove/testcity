@@ -21,7 +21,7 @@ public class TestCityTestDashboardWeekly(ConnectionFactory connectionFactory)
                 TestId,
                 RunCount,
                 FailCount,
-                Entropy
+                FlipCount
             FROM TestDashboardWeekly
             WHERE ProjectId = '{projectId}' AND JobId = '{jobId}'";
 
@@ -40,7 +40,7 @@ public class TestCityTestDashboardWeekly(ConnectionFactory connectionFactory)
                     TestId = reader.GetString(2),
                     RunCount = Convert.ToUInt64(reader.GetValue(3)),
                     FailCount = Convert.ToUInt64(reader.GetValue(4)),
-                    Entropy = reader.GetDouble(5),
+                    FlipCount = Convert.ToUInt64(reader.GetValue(5)),
                 });
             }
         }, TimeSpan.FromMinutes(2), logger);
@@ -63,7 +63,7 @@ public class TestCityTestDashboardWeekly(ConnectionFactory connectionFactory)
                 TestId,
                 RunCount,
                 FailCount,
-                Entropy
+                FlipCount
             FROM TestDashboardWeekly
             WHERE ProjectId = '{projectId}' 
               AND JobId = '{jobId}' 
@@ -85,7 +85,7 @@ public class TestCityTestDashboardWeekly(ConnectionFactory connectionFactory)
                     TestId = reader.GetString(2),
                     RunCount = Convert.ToUInt64(reader.GetValue(3)),
                     FailCount = Convert.ToUInt64(reader.GetValue(4)),
-                    Entropy = reader.GetDouble(5),
+                    FlipCount = Convert.ToUInt64(reader.GetValue(5)),
                 };
             }
         }, TimeSpan.FromMinutes(2), logger);
@@ -112,7 +112,7 @@ public class TestCityTestDashboardWeekly(ConnectionFactory connectionFactory)
                 TestId,
                 RunCount,
                 FailCount,
-                Entropy
+                FlipCount
             FROM TestDashboardWeekly
             {whereClause}
             ORDER BY Entropy DESC
@@ -133,7 +133,7 @@ public class TestCityTestDashboardWeekly(ConnectionFactory connectionFactory)
                     TestId = reader.GetString(2),
                     RunCount = Convert.ToUInt64(reader.GetValue(3)),
                     FailCount = Convert.ToUInt64(reader.GetValue(4)),
-                    Entropy = reader.GetDouble(5),
+                    FlipCount = Convert.ToUInt64(reader.GetValue(5)),
                 });
             }
         }, TimeSpan.FromMinutes(2), logger);

@@ -49,7 +49,7 @@ await CopyData(new ConnectionFactory(ClickHouseConnectionSettings.Default), new 
     Port = 8123,
     Database = "default",
     Username = "svc_testcity_gitlab",
-    Password = "2AxgkGF10x4H0OgypWIp"
+    Password = "***"
 }));
 logger.LogInformation("Processing completed for all projects");
 

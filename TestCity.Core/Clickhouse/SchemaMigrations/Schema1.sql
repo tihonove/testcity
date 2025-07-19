@@ -164,12 +164,14 @@ SETTINGS index_granularity = 8192;
 CREATE TABLE IF NOT EXISTS TestStatsDailyData
 (
     `StartDate` Date,
+    `MaxStartDateState` DateTime,
     `ProjectId` LowCardinality(String),
     `JobId` LowCardinality(String),
+    `BranchName` LowCardinality(String),
     `TestId` String,
-    `RunsState` AggregateFunction(count),
-    `FailState` AggregateFunction(sum, UInt32),
-    `EntropyState` AggregateFunction(entropy, UInt8)
+    `RunCountState` AggregateFunction(count),
+    `FailCountState` AggregateFunction(sum, UInt32),
+    `StateListState` AggregateFunction(groupArray, UInt8)
 )
 ENGINE = AggregatingMergeTree
 ORDER BY (StartDate, ProjectId, JobId, TestId)
@@ -182,17 +184,20 @@ TO TestStatsDailyData
 AS
 SELECT
     toDate(StartDateTime) as StartDate,
+    max(StartDateTime) as MaxStartDateState,
     ProjectId,
     JobId,
+    BranchName,
     TestId,
-    countState() AS RunsState,
-    sumState(toUInt32(State = 'Failed')) AS FailState,
-    entropyStateIf(toUInt8(State), State != 'Skipped') AS EntropyState
-FROM TestRuns
+    countState() AS RunCountState,
+    sumState(toUInt32(State = 'Failed')) AS FailCountState,
+    groupArrayStateIf(toUInt8(State), State != 'Skipped') AS StateListState
+FROM (SELECT * FROM TestRuns ORDER BY StartDateTime ASC)
 GROUP BY
     StartDate,
     ProjectId,
     JobId,
+    BranchName,
     TestId;
 
 -- divider --
@@ -203,11 +208,10 @@ SELECT
     JobId,
     TestId,
     max(StartDate) as LastRunDate,
-    countMerge(RunsState)  AS RunCount,
-    sumMerge(FailState)    AS FailCount,
-    entropyMerge(EntropyState) as Entropy
-FROM TestStatsDaily
+    countMerge(RunCountState)  AS RunCount,
+    sumMerge(FailCountState)    AS FailCount,
+    arrayCount(i -> i != 0, arrayDifference(groupArrayMerge(StateListState))) as FlipCount
+FROM (SELECT * FROM TestStatsDailyData WHERE BranchName = 'master' OR BranchName = 'main' ORDER BY MaxStartDateState)
 WHERE 
     StartDate>= today() - INTERVAL 7 DAY
 GROUP BY ProjectId, JobId, TestId;
-
