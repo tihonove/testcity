@@ -201,17 +201,17 @@ GROUP BY
     TestId;
 
 -- divider --
-CREATE VIEW IF NOT EXISTS TestDashboardWeekly
-AS
-SELECT
-    ProjectId,
-    JobId,
-    TestId,
-    max(StartDate) as LastRunDate,
-    countMerge(RunCountState)  AS RunCount,
-    sumMerge(FailCountState)    AS FailCount,
-    arrayCount(i -> i != 0, arrayDifference(groupArrayMerge(StateListState))) as FlipCount
-FROM (SELECT * FROM TestStatsDailyData WHERE BranchName = 'master' OR BranchName = 'main' ORDER BY MaxStartDateState)
-WHERE 
-    StartDate>= today() - INTERVAL 7 DAY
-GROUP BY ProjectId, JobId, TestId;
+CREATE TABLE IF NOT EXISTS TestDashboardWeekly
+(
+    `ProjectId` LowCardinality(String),
+    `JobId` LowCardinality(String),
+    `TestId` String,
+    `LastRunDate` Date,
+    `RunCount` UInt64,
+    `FailCount` UInt64,
+    `FlipCount` UInt64,
+    `UpdatedAt` DateTime DEFAULT now()
+)
+ENGINE = ReplacingMergeTree(UpdatedAt)
+ORDER BY (ProjectId, JobId, TestId)
+SETTINGS index_granularity = 8192;

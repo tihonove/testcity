@@ -40,6 +40,9 @@ public class TestCityTestDashboardWeeklyTests(ITestOutputHelper output) : IAsync
         // Act
         await InsertTestDataSequentially(database, testData);
 
+        // Actualize the dashboard data
+        await database.TestDashboardWeekly.ActualizeAsync("test-project", "test-job", "main");
+
         // Assert
         var entry = await database.TestDashboardWeekly.GetTestAsync("test-project", "test-job", testId);
         entry.Should().NotBeNull();
@@ -61,6 +64,9 @@ public class TestCityTestDashboardWeeklyTests(ITestOutputHelper output) : IAsync
 
         // Act
         await InsertTestDataSequentially(database, testData);
+
+        // Actualize the dashboard data
+        await database.TestDashboardWeekly.ActualizeAsync("test-project", "test-job", "main");
 
         // Assert
         var entry = await database.TestDashboardWeekly.GetTestAsync("test-project", "test-job", testId);
@@ -89,6 +95,9 @@ public class TestCityTestDashboardWeeklyTests(ITestOutputHelper output) : IAsync
         // Act
         await InsertTestDataSequentially(database, testData);
 
+        // Actualize the dashboard data
+        await database.TestDashboardWeekly.ActualizeAsync("test-project", "test-job", "main");
+
         // Assert
         var entry = await database.TestDashboardWeekly.GetTestAsync("test-project", "test-job", testId);
         entry.Should().NotBeNull();
@@ -115,6 +124,9 @@ public class TestCityTestDashboardWeeklyTests(ITestOutputHelper output) : IAsync
 
         // Act
         await InsertTestDataSequentially(database, testData);
+
+        // Actualize the dashboard data
+        await database.TestDashboardWeekly.ActualizeAsync("test-project", "test-job", "main");
 
         // Assert
         var entry = await database.TestDashboardWeekly.GetTestAsync("test-project", "test-job", testId);
@@ -144,6 +156,9 @@ public class TestCityTestDashboardWeeklyTests(ITestOutputHelper output) : IAsync
         // Act
         await InsertTestDataSequentially(database, testData);
 
+        // Actualize the dashboard data
+        await database.TestDashboardWeekly.ActualizeAsync("test-project", "test-job", "main");
+
         var entry = await database.TestDashboardWeekly.GetTestAsync("test-project", "test-job", testId);
         entry.Should().NotBeNull();
         entry!.RunCount.Should().Be(4UL);
@@ -169,6 +184,9 @@ public class TestCityTestDashboardWeeklyTests(ITestOutputHelper output) : IAsync
 
         // Act
         await InsertTestDataSequentially(database, testData);
+
+        // Actualize the dashboard data
+        await database.TestDashboardWeekly.ActualizeAsync("test-project", "test-job", "main");
 
         // Assert
         var entry = await database.TestDashboardWeekly.GetTestAsync("test-project", "test-job", testId);
@@ -197,6 +215,9 @@ public class TestCityTestDashboardWeeklyTests(ITestOutputHelper output) : IAsync
         // Act
         await InsertTestDataSequentially(database, testData);
 
+        // Actualize the dashboard data
+        await database.TestDashboardWeekly.ActualizeAsync("test-project", "test-job", "main");
+
         // Assert
         var entry = await database.TestDashboardWeekly.GetTestAsync("test-project", "test-job", testId);
         entry.Should().NotBeNull();
@@ -220,6 +241,9 @@ public class TestCityTestDashboardWeeklyTests(ITestOutputHelper output) : IAsync
             CreateTestData(testId, "Failed", today.AddDays(-6)),
             CreateTestData(testId, "Success", today.AddDays(-1))
         );
+
+        // Actualize the dashboard data
+        await database.TestDashboardWeekly.ActualizeAsync("test-project", "test-job", "main");
 
         // Assert
         var entry = await database.TestDashboardWeekly.GetTestAsync("test-project", "test-job", testId);
@@ -246,6 +270,10 @@ public class TestCityTestDashboardWeeklyTests(ITestOutputHelper output) : IAsync
 
         // Act
         await InsertTestDataSequentially(database, testData);
+
+        // Actualize the dashboard data for both projects
+        await database.TestDashboardWeekly.ActualizeAsync("project1", "test-job", "main");
+        await database.TestDashboardWeekly.ActualizeAsync("project2", "test-job", "main");
 
         // Assert
         var entry1 = await database.TestDashboardWeekly.GetTestAsync("project1", "test-job", testId);
@@ -276,6 +304,9 @@ public class TestCityTestDashboardWeeklyTests(ITestOutputHelper output) : IAsync
         var firstRun = CreateTestData(testId, "Success", baseTime);
         await InsertTestDataSequentially(database, firstRun);
 
+        // Actualize the dashboard data
+        await database.TestDashboardWeekly.ActualizeAsync("test-project", "test-job", "main");
+
         var firstEntry = await database.TestDashboardWeekly.GetTestAsync("test-project", "test-job", testId);
         firstEntry.Should().NotBeNull();
         firstEntry!.RunCount.Should().Be(1UL);
@@ -286,12 +317,18 @@ public class TestCityTestDashboardWeeklyTests(ITestOutputHelper output) : IAsync
         var secondRun = CreateTestData(testId, "Failed", baseTime.AddMinutes(30));
         await InsertTestDataSequentially(database, secondRun);
 
+        // Actualize the dashboard data again
+        await database.TestDashboardWeekly.ActualizeAsync("test-project", "test-job", "main");
+
         // Assert - aggregate updated, flips appeared
-        var updatedEntry = await database.TestDashboardWeekly.GetTestAsync("test-project", "test-job", testId);
-        updatedEntry.Should().NotBeNull();
-        updatedEntry!.RunCount.Should().Be(2UL);
-        updatedEntry.FailCount.Should().Be(1UL);
-        updatedEntry.FlipCount.Should().Be(1UL); // Success->Failed = 1 flip
+        await AssertEventually.SuccessAsync(async () =>
+        {
+            var updatedEntry = await database.TestDashboardWeekly.GetTestAsync("test-project", "test-job", testId);
+            updatedEntry.Should().NotBeNull();
+            updatedEntry!.RunCount.Should().Be(2UL);
+            updatedEntry.FailCount.Should().Be(1UL);
+            updatedEntry.FlipCount.Should().Be(1UL); // Success->Failed = 1 flip
+        });
     }
 
     [Fact]
@@ -315,6 +352,9 @@ public class TestCityTestDashboardWeeklyTests(ITestOutputHelper output) : IAsync
 
         // Act
         await InsertTestDataSequentially(database, testData.ToArray());
+
+        // Actualize the dashboard data
+        await database.TestDashboardWeekly.ActualizeAsync("test-project", "test-job", "main");
 
         // Assert
         var entry = await database.TestDashboardWeekly.GetTestAsync("test-project", "test-job", testId);
@@ -354,6 +394,9 @@ public class TestCityTestDashboardWeeklyTests(ITestOutputHelper output) : IAsync
         // Act
         await InsertTestDataSequentially(database, testData.ToArray());
 
+        // Actualize the dashboard data
+        await database.TestDashboardWeekly.ActualizeAsync("test-project", "test-job", "main");
+
         // Assert
         var entry = await database.TestDashboardWeekly.GetTestAsync("test-project", "test-job", testId);
         entry.Should().NotBeNull();
@@ -385,6 +428,9 @@ public class TestCityTestDashboardWeeklyTests(ITestOutputHelper output) : IAsync
         // Act
         await InsertTestDataSequentially(database, testData.ToArray());
 
+        // Actualize the dashboard data
+        await database.TestDashboardWeekly.ActualizeAsync("test-project", "test-job", "main");
+
         // Assert
         var entry = await database.TestDashboardWeekly.GetTestAsync("test-project", "test-job", testId);
         entry.Should().NotBeNull();
@@ -414,6 +460,9 @@ public class TestCityTestDashboardWeeklyTests(ITestOutputHelper output) : IAsync
 
         // Act
         await InsertTestDataSequentially(database, testData.ToArray());
+
+        // Actualize the dashboard data
+        await database.TestDashboardWeekly.ActualizeAsync("test-project", "test-job", "main");
 
         // Assert
         var entry = await database.TestDashboardWeekly.GetTestAsync("test-project", "test-job", testId);
@@ -447,6 +496,9 @@ public class TestCityTestDashboardWeeklyTests(ITestOutputHelper output) : IAsync
 
         // Act
         await InsertTestDataSequentially(database, testData.ToArray());
+
+        // Actualize the dashboard data
+        await database.TestDashboardWeekly.ActualizeAsync("test-project", "test-job", "main");
 
         // Assert
         var entry = await database.TestDashboardWeekly.GetTestAsync("test-project", "test-job", testId);
@@ -488,6 +540,9 @@ public class TestCityTestDashboardWeeklyTests(ITestOutputHelper output) : IAsync
 
         // Act
         await InsertTestDataSequentially(database, testData.ToArray());
+
+        // Actualize the dashboard data
+        await database.TestDashboardWeekly.ActualizeAsync("test-project", "test-job", "main");
 
         // Assert
         var entry = await database.TestDashboardWeekly.GetTestAsync("test-project", "test-job", testId);
@@ -554,6 +609,12 @@ public class TestCityTestDashboardWeeklyTests(ITestOutputHelper output) : IAsync
         {
             await database.TestRuns.InsertBatchAsync(new[] { data }.ToAsyncEnumerable());
         }
+    }
+
+    private static async Task ActualizeAndGetTestAsync(TestCityDatabase database, string projectId, string jobId, string testId)
+    {
+        // Actualize the dashboard data with main branch
+        await database.TestDashboardWeekly.ActualizeAsync(projectId, jobId, "main");
     }
 
     private readonly ILogger log = XUnitLoggerProvider.ConfigureTestLogger(output).CreateLogger<TestCityTestDashboardWeeklyTests>();

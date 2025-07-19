@@ -102,8 +102,8 @@ public class TestCityTestDashboardWeekly(ConnectionFactory connectionFactory)
         await using var connection = connectionFactory.CreateConnection();
 
         var whereClause = projectId != null
-            ? $"WHERE ProjectId = '{projectId}' AND Entropy >= {minEntropy.ToString(System.Globalization.CultureInfo.InvariantCulture)}"
-            : $"WHERE Entropy >= {minEntropy.ToString(System.Globalization.CultureInfo.InvariantCulture)}";
+            ? $"WHERE ProjectId = '{projectId}' AND (RunCount > 0 AND (toFloat64(FlipCount) / toFloat64(RunCount)) >= {minEntropy.ToString(System.Globalization.CultureInfo.InvariantCulture)})"
+            : $"WHERE RunCount > 0 AND (toFloat64(FlipCount) / toFloat64(RunCount)) >= {minEntropy.ToString(System.Globalization.CultureInfo.InvariantCulture)}";
 
         var query = $@"
             SELECT 
@@ -112,7 +112,8 @@ public class TestCityTestDashboardWeekly(ConnectionFactory connectionFactory)
                 TestId,
                 RunCount,
                 FailCount,
-                FlipCount
+                FlipCount,
+                toFloat64(FlipCount) / toFloat64(RunCount) as Entropy
             FROM TestDashboardWeekly
             {whereClause}
             ORDER BY Entropy DESC
@@ -139,6 +140,45 @@ public class TestCityTestDashboardWeekly(ConnectionFactory connectionFactory)
         }, TimeSpan.FromMinutes(2), logger);
 
         return results;
+    }
+
+    public async Task ActualizeAsync(
+        string projectId,
+        string jobId,
+        string branchName,
+        CancellationToken ct = default)
+    {
+        await using var connection = connectionFactory.CreateConnection();
+
+        var query = $@"
+            INSERT INTO TestDashboardWeekly (ProjectId, JobId, TestId, LastRunDate, RunCount, FailCount, FlipCount, UpdatedAt)
+            SELECT
+                ProjectId,
+                JobId,
+                TestId,
+                max(StartDate) as LastRunDate,
+                countMerge(RunCountState) AS RunCount,
+                sumMerge(FailCountState) AS FailCount,
+                arrayCount(i -> i != 0, arrayDifference(groupArrayMerge(StateListState))) as FlipCount,
+                now() as UpdatedAt
+            FROM (
+                SELECT * 
+                FROM TestStatsDailyData 
+                WHERE 
+                    StartDate >= today() - INTERVAL 7 DAY 
+                    AND ProjectId = '{projectId}' 
+                    AND JobId = '{jobId}' 
+                    AND BranchName = '{branchName}' 
+                ORDER BY MaxStartDateState
+            )
+            GROUP BY ProjectId, JobId, TestId";
+
+        await Retry.Action(async () =>
+        {
+            await connection.ExecuteQueryAsync(query, ct);
+        }, TimeSpan.FromMinutes(2), logger);
+
+        logger.LogInformation("Actualized TestDashboardWeekly for ProjectId: {ProjectId}, JobId: {JobId}, BranchName: {BranchName}", projectId, jobId, branchName);
     }
 
     private readonly ILogger logger = Log.GetLog<TestCityTestDashboardWeekly>();
