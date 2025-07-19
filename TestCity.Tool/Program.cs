@@ -43,15 +43,19 @@ var workerClient = new WorkerClient(messageQueueClient);
 var ct = CancellationToken.None;
 
 logger.LogInformation("Starting to process projects");
-await CopyData(new ConnectionFactory(ClickHouseConnectionSettings.Default), new ConnectionFactory(new ClickHouseConnectionSettings()
-{
-    Host = "vm-ch-tstct-1",
-    Port = 8123,
-    Database = "default",
-    Username = "svc_testcity_gitlab",
-    Password = "2AxgkGF10x4H0OgypWIp"
-}));
-logger.LogInformation("Processing completed for all projects");
+
+// Заполняем TestStatsDailyData
+await FillTestStatsDailyData();
+
+// await CopyData(new ConnectionFactory(ClickHouseConnectionSettings.Default), new ConnectionFactory(new ClickHouseConnectionSettings()
+// {
+//     Host = "vm-ch-tstct-1",
+//     Port = 8123,
+//     Database = "default",
+//     Username = "svc_testcity_gitlab",
+//     Password = "***"
+// }));
+// logger.LogInformation("Processing completed for all projects");
 
 #pragma warning disable CS8321 // Local function is declared but never used
 async Task ProcessTasksInInProgressJobs(GitLabProject project)
@@ -179,7 +183,83 @@ async Task ProcessCommits(GitLabProject project)
         logger.LogError(ex, "Error processing project {ProjectId}: {ProjectTitle}", project.Id, project.Title);
     }
 }
-#pragma warning restore CS8321 // Local function is declared but never used
+
+async Task FillTestStatsDailyData()
+{
+    logger.LogInformation("Starting TestStatsDailyData filling");
+
+    // Начинаем с недели назад
+    var startDateTime = DateTime.UtcNow.Date.AddDays(-7);
+    // Конечная дата - сегодня
+    var endDateTime = DateTime.UtcNow.Date.AddDays(1); // включаем сегодняшний день
+
+    var currentDateTime = startDateTime;
+    int totalHoursProcessed = 0;
+
+    while (currentDateTime < endDateTime)
+    {
+        var nextHour = currentDateTime.AddHours(1);
+
+        logger.LogInformation("Processing TestStatsDailyData for hour {DateTime}", currentDateTime.ToString("yyyy-MM-dd HH:00"));
+
+        var query = $@"
+INSERT INTO TestStatsDailyData (
+    StartDate,
+    MaxStartDateState, 
+    ProjectId,
+    JobId,
+    BranchName,
+    TestId,
+    RunCountState,
+    FailCountState,
+    StateListState
+)
+SELECT
+    toDate(StartDateTime) as StartDate,
+    max(StartDateTime) as MaxStartDateState,
+    ProjectId,
+    JobId,
+    BranchName,
+    TestId,
+    countState() AS RunCountState,
+    sumState(toUInt32(State = 'Failed')) AS FailCountState,
+    groupArrayStateIf(toUInt8(State), State != 'Skipped') AS StateListState
+FROM (
+    SELECT * FROM TestRuns 
+    WHERE StartDateTime >= '{currentDateTime:yyyy-MM-dd HH:mm:ss}' 
+      AND StartDateTime < '{nextHour:yyyy-MM-dd HH:mm:ss}'
+    ORDER BY StartDateTime ASC
+)
+GROUP BY
+    StartDate,
+    ProjectId,
+    JobId,
+    BranchName,
+    TestId";
+
+        try
+        {
+            await Retry.Action(async () =>
+            {
+                await using var command = connection.CreateCommand();
+                command.CommandText = query;
+                await command.ExecuteNonQueryAsync();
+            }, TimeSpan.FromMinutes(5));
+
+            totalHoursProcessed++;
+            logger.LogInformation("Successfully processed hour {DateTime} with records. Total hours processed: {Count}",
+                currentDateTime.ToString("yyyy-MM-dd HH:00"), totalHoursProcessed);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to process hour {DateTime} after retries", currentDateTime.ToString("yyyy-MM-dd HH:00"));
+        }
+
+        currentDateTime = nextHour;
+    }
+
+    logger.LogInformation("TestStatsDailyData filling completed. Total hours processed: {Count}", totalHoursProcessed);
+}
 
 async Task CopyData(ConnectionFactory sourceConnectionFactory, ConnectionFactory targetConnectionFactory)
 {
@@ -254,3 +334,4 @@ async Task CopyData(ConnectionFactory sourceConnectionFactory, ConnectionFactory
 
     logger.LogInformation("TestRuns migration completed. Total migrated: {Count} records", totalTestRunsCount);
 }
+#pragma warning restore CS8321 // Local function is declared but never used

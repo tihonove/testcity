@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
 using TestCity.UnitTests.Utils;
+using TestCity.Core.KafkaMessageQueue;
+using TestCity.Core.Worker;
 
 namespace TestCity.UnitTests.Explicits;
 
@@ -28,7 +30,8 @@ public class ProcessJobRunTaskHandlerTests : IAsyncLifetime
 
     public ProcessJobRunTaskHandlerTests(ITestOutputHelper output)
     {
-        logger = GlobalSetup.TestLoggerFactory(output).CreateLogger<ProcessJobRunTaskHandlerTests>();
+        var testLoggerFactory = GlobalSetup.TestLoggerFactory(output);
+        logger = testLoggerFactory.CreateLogger<ProcessJobRunTaskHandlerTests>();
         gitLabClientProvider = new SkbKonturGitLabClientProvider(GitLabSettings.Default);
         var graphiteClient = new NullGraphiteClient();
         metricsSender = new TestMetricsSender(graphiteClient);
@@ -37,13 +40,15 @@ public class ProcessJobRunTaskHandlerTests : IAsyncLifetime
         extractor = new JUnitExtractor();
         projectJobTypesCache = new ProjectJobTypesCache(testCityDatabase);
         commitParentsBuilder = new CommitParentsBuilderService(gitLabClientProvider, testCityDatabase);
+        var workerClient = new WorkerClient(KafkaMessageQueueClient.CreateDefault(testLoggerFactory.CreateLogger<KafkaMessageQueueClient>()));
         handler = new ProcessJobRunTaskHandler(
             metricsSender,
             gitLabClientProvider,
             testCityDatabase,
             extractor,
             projectJobTypesCache,
-            commitParentsBuilder);
+            commitParentsBuilder,
+            workerClient);
     }
 
     public async Task InitializeAsync()

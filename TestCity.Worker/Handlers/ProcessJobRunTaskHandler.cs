@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using NGitLab;
 using NGitLab.Models;
 using OpenTelemetry;
+using System.Collections.Concurrent;
 
 namespace TestCity.Worker.Handlers;
 
@@ -19,7 +20,8 @@ public class ProcessJobRunTaskHandler(
     TestCityDatabase testCityDatabase,
     JUnitExtractor extractor,
     ProjectJobTypesCache projectJobTypesCache,
-    CommitParentsBuilderService commitParentsBuilder
+    CommitParentsBuilderService commitParentsBuilder,
+    WorkerClient workerClient
     ) : TaskHandler<ProcessJobRunTaskPayload>
 {
     public override bool CanHandle(RawTask task)
@@ -59,6 +61,19 @@ public class ProcessJobRunTaskHandler(
                 if (processingResult.TestReportData != null)
                 {
                     await testCityDatabase.TestRuns.InsertBatchAsync(processingResult.JobInfo, processingResult.TestReportData.Runs);
+
+                    if (processingResult.JobInfo.BranchName == "master" || processingResult.JobInfo.BranchName == "main")
+                    {
+                        if (ShouldEnqueueRecalculateTask(task.ProjectId, processingResult.JobInfo.JobId))
+                        {
+                            await workerClient.Enqueue(new RecalculateTestStatisticsTaskPayload
+                            {
+                                ProjectId = task.ProjectId,
+                                JobId = processingResult.JobInfo.JobId,
+                                BranchName = processingResult.JobInfo.BranchName
+                            });
+                        }
+                    }
                 }
             }
             else
@@ -90,6 +105,24 @@ public class ProcessJobRunTaskHandler(
         }
     }
 
+    private bool ShouldEnqueueRecalculateTask(long projectId, string jobId)
+    {
+        var key = $"{projectId}:{jobId}";
+        var now = DateTime.UtcNow;
+        
+        if (lastRecalculateTaskEnqueueTime.TryGetValue(key, out var lastEnqueueTime))
+        {
+            if (now - lastEnqueueTime < TimeSpan.FromHours(1))
+            {
+                return false;
+            }
+        }
+        
+        lastRecalculateTaskEnqueueTime[key] = now;
+        return true;
+    }
+
+    private static readonly ConcurrentDictionary<string, DateTime> lastRecalculateTaskEnqueueTime = new();
     private readonly ILogger logger = Log.GetLog<ProcessJobRunTaskHandler>();
     private readonly IGitLabClient client = gitLabClientProvider.GetClient();
     private readonly GitLabExtendedClient clientEx = gitLabClientProvider.GetExtendedClient();

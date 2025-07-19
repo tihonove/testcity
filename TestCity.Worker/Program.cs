@@ -40,6 +40,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddSingleton<ITaskHandler, ProcessJobRunTaskHandler>();
         services.AddSingleton<ITaskHandler, BuildCommitParentsHandler>();
         services.AddSingleton<ITaskHandler, ProcessInProgressJobTaskHandler>();
+        services.AddSingleton<ITaskHandler, RecalculateTestStatisticsHandler>();
 
         var graphiteHost = Environment.GetEnvironmentVariable("GRAPHITE_RELAY_HOST");
         var graphitePortStr = Environment.GetEnvironmentVariable("GRAPHITE_RELAY_PORT");

@@ -161,100 +161,57 @@ ORDER BY (Id, Type)
 SETTINGS index_granularity = 8192;
 
 -- divider --
-CREATE TABLE IF NOT EXISTS `.inner-FlakyTestsWeeklyRaw`
+CREATE TABLE IF NOT EXISTS TestStatsDailyData
 (
-    WeekStart   Date,
-    ProjectId   LowCardinality(String),
-    JobId       LowCardinality(String),
-    TestId      LowCardinality(String),
-
-    RunsState   AggregateFunction(count,  UInt32),
-    FailState   AggregateFunction(sum,    UInt32),
-    SeqState    AggregateFunction(groupArray, Tuple(DateTime, UInt8))
+    `StartDate` Date,
+    `MaxStartDateState` DateTime,
+    `ProjectId` LowCardinality(String),
+    `JobId` LowCardinality(String),
+    `BranchName` LowCardinality(String),
+    `TestId` String,
+    `RunCountState` AggregateFunction(count),
+    `FailCountState` AggregateFunction(sum, UInt32),
+    `StateListState` AggregateFunction(groupArray, UInt8)
 )
 ENGINE = AggregatingMergeTree
-ORDER BY (WeekStart, ProjectId, JobId, TestId)
-TTL WeekStart + toIntervalMonth(12) DELETE
+ORDER BY (StartDate, ProjectId, JobId, TestId)
+TTL StartDate + toIntervalDay(7) DELETE
 SETTINGS index_granularity = 8192;
 
-
 -- divider --
-CREATE MATERIALIZED VIEW IF NOT EXISTS FillFlakyWeeklyRaw
-TO `.inner-FlakyTestsWeeklyRaw`
+CREATE MATERIALIZED VIEW IF NOT EXISTS TestStatsDaily
+TO TestStatsDailyData
 AS
 SELECT
-    toMonday(StartDateTime)                                 AS WeekStart,
+    toDate(StartDateTime) as StartDate,
+    max(StartDateTime) as MaxStartDateState,
     ProjectId,
     JobId,
+    BranchName,
     TestId,
-    countState()                                            AS RunsState,
-    sumState(toUInt32(State = 'Failed'))                    AS FailState,
-    groupArrayState(tuple(StartDateTime, toUInt8(State)))   AS SeqState
-FROM TestRuns
-WHERE StartDateTime >= now() - INTERVAL 7 DAY
+    countState() AS RunCountState,
+    sumState(toUInt32(State = 'Failed')) AS FailCountState,
+    groupArrayStateIf(toUInt8(State), State != 'Skipped') AS StateListState
+FROM (SELECT * FROM TestRuns ORDER BY StartDateTime ASC)
 GROUP BY
-    WeekStart,
+    StartDate,
     ProjectId,
     JobId,
+    BranchName,
     TestId;
 
-
 -- divider --
-CREATE TABLE IF NOT EXISTS `.inner-FlakyTestsWeekly`
+CREATE TABLE IF NOT EXISTS TestDashboardWeekly
 (
-    WeekStart    Date,
-    ProjectId    LowCardinality(String),
-    JobId        LowCardinality(String),
-    TestId       LowCardinality(String),
-
-    TotalRuns    UInt32,
-    FailedRuns   UInt32,
-    Flips        UInt32,
-    FlipRate     Float32,
-
-    LastEventTs  DateTime
+    `ProjectId` LowCardinality(String),
+    `JobId` LowCardinality(String),
+    `TestId` String,
+    `LastRunDate` Date,
+    `RunCount` UInt64,
+    `FailCount` UInt64,
+    `FlipCount` UInt64,
+    `UpdatedAt` DateTime DEFAULT now()
 )
-ENGINE = ReplacingMergeTree(LastEventTs)
-ORDER BY (WeekStart, ProjectId, JobId, TestId)
-TTL WeekStart + toIntervalMonth(12) DELETE
+ENGINE = ReplacingMergeTree(UpdatedAt)
+ORDER BY (ProjectId, JobId, TestId)
 SETTINGS index_granularity = 8192;
-
-
--- divider --
-CREATE MATERIALIZED VIEW IF NOT EXISTS FlakyWeekly
-TO `.inner-FlakyTestsWeekly`
-AS
-SELECT
-    WeekStart,
-    ProjectId,
-    JobId,
-    TestId,
-    TotalRuns,
-    FailedRuns,
-    Flips,
-    round(Flips / greatest(TotalRuns - 1, 1), 3)            AS FlipRate,
-    now()                                                   AS LastEventTs
-FROM
-(
-    SELECT
-        WeekStart,
-        ProjectId,
-        JobId,
-        TestId,
-
-        countMerge(RunsState)                               AS TotalRuns,
-        sumMerge(FailState)                                 AS FailedRuns,
-
-        arrayMap(t -> t.2,
-                 arraySort(x -> x.1, groupArrayMerge(SeqState))) AS StatusSeq,
-
-        arrayCount(i -> StatusSeq[i] != StatusSeq[i-1],
-                   arrayEnumerate(StatusSeq))               AS Flips
-    FROM FillFlakyWeeklyRaw
-    GROUP BY
-        WeekStart,
-        ProjectId,
-        JobId,
-        TestId
-    HAVING TotalRuns > 1
-);

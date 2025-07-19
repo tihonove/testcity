@@ -15,14 +15,6 @@ internal static class AssertEventually
                 var actualValue = getActualValue();
                 Assert.Equal(expected, getActualValue());
                 return;
-                // if (actualValue != expected)
-                // {
-                //     await Task.Delay(1000);
-                // }
-                // else
-                // {
-                //     return;
-                // }
             }
             catch
             {
@@ -44,14 +36,6 @@ internal static class AssertEventually
                 var actualValue = getActualValue();
                 Assert.Contains(expected, getActualValue());
                 return;
-                // if (actualValue != expected)
-                // {
-                //     await Task.Delay(1000);
-                // }
-                // else
-                // {
-                //     return;
-                // }
             }
             catch
             {
@@ -94,6 +78,28 @@ internal static class AssertEventually
         {
             Assert.True(assertion(value()));
         }
+    }
+
+    internal static async Task SuccessAsync(Func<Task> assertAction)
+    {
+        Exception? lastException = null;
+        var sw = Stopwatch.StartNew();
+        while (sw.Elapsed < TimeSpan.FromSeconds(60))
+        {
+            try
+            {
+                await assertAction();
+                return;
+            }
+            catch (Exception e)
+            {
+                lastException = e;
+                await Task.Delay(1000);
+            }
+        }
+
+        if (lastException != null)
+            throw lastException;
     }
 
     // Вспомогательные методы для удобства использования в тестах

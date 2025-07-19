@@ -10,6 +10,7 @@ public class TestCityDatabase(ConnectionFactory connectionFactory)
     public TestCityJobInfo JobInfo { get; } = new TestCityJobInfo(connectionFactory);
     public TestCityInProgressJobInfo InProgressJobInfo { get; } = new TestCityInProgressJobInfo(connectionFactory);
     public TestCityGitLabEntities GitLabEntities { get; } = new TestCityGitLabEntities(connectionFactory);
+    public TestCityTestDashboardWeekly TestDashboardWeekly { get; } = new TestCityTestDashboardWeekly(connectionFactory);
 
     public async Task<List<CommitParentsChangesEntry>> GetCommitChangesAsync(string commitSha, string jobId, string branchName, CancellationToken ct = default)
     {
