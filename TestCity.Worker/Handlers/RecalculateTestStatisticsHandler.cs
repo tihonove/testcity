@@ -1,10 +1,11 @@
 using TestCity.Core.KafkaMessageQueue;
+using TestCity.Core.Storage;
 using TestCity.Core.Worker;
 using TestCity.Core.Worker.TaskPayloads;
 
 namespace TestCity.Worker.Handlers;
 
-public sealed class RecalculateTestStatisticsHandler : TaskHandler<RecalculateTestStatisticsTaskPayload>
+public sealed class RecalculateTestStatisticsHandler(TestCityDatabase testCityDatabase) : TaskHandler<RecalculateTestStatisticsTaskPayload>
 {
     public override bool CanHandle(RawTask task)
     {
@@ -13,12 +14,6 @@ public sealed class RecalculateTestStatisticsHandler : TaskHandler<RecalculateTe
 
     public override async ValueTask EnqueueAsync(RecalculateTestStatisticsTaskPayload task, CancellationToken ct)
     {
-        // TODO: Implement test statistics recalculation logic
-        // Available fields:
-        // - task.ProjectId (long)
-        // - task.JobId (long) 
-        // - task.BranchName (string)
-
-        await Task.CompletedTask;
+        await testCityDatabase.TestDashboardWeekly.ActualizeAsync(task.ProjectId.ToString(), task.JobId, task.BranchName);
     }
 }
