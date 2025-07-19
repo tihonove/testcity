@@ -183,7 +183,6 @@ async Task ProcessCommits(GitLabProject project)
         logger.LogError(ex, "Error processing project {ProjectId}: {ProjectTitle}", project.Id, project.Title);
     }
 }
-#pragma warning restore CS8321 // Local function is declared but never used
 
 async Task FillTestStatsDailyData()
 {
@@ -335,3 +334,4 @@ async Task CopyData(ConnectionFactory sourceConnectionFactory, ConnectionFactory
 
     logger.LogInformation("TestRuns migration completed. Total migrated: {Count} records", totalTestRunsCount);
 }
+#pragma warning restore CS8321 // Local function is declared but never used
