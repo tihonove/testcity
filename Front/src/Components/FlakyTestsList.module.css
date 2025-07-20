@@ -1,0 +1,51 @@
+.flakyTestsList {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.flakyTestsListHeadRow {
+    border-bottom: 1px solid var(--border-line-color-2);
+}
+
+.flakyTestsList th {
+    text-align: left;
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+.flakyTestsList td {
+    padding: 6px 8px;
+}
+
+.testIdCell {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.actionsCell {
+    width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.flipRate {
+    font-weight: 600;
+    color: var(--failed-text-color);
+}
+
+.dateCell {
+    white-space: nowrap;
+    color: #666;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+}
+
+.emptyState p {
+    margin: 0;
+    font-size: 16px;
+}

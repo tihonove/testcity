@@ -659,7 +659,12 @@ export class TestAnalyticsStorage {
         return this.executeClickHouseQuery<TestPerJobRunQueryRow[]>(query);
     }
 
-    public async getFlakyTests(projectId: string, jobId: string, limit: number = 100): Promise<FlakyTestQueryRow[]> {
+    public async getFlakyTests(
+        projectId: string,
+        jobId: string,
+        limit: number = 100,
+        offset: number = 0
+    ): Promise<FlakyTestQueryRow[]> {
         const query = `
             SELECT 
                 ProjectId,
@@ -680,6 +685,7 @@ export class TestAnalyticsStorage {
             HAVING argMax(t.FlipCount, t.UpdatedAt) / argMax(t.RunCount, t.UpdatedAt) > ${flipRateThreshold.toString()}
             ORDER BY FlipRate DESC
             LIMIT ${limit.toString()}
+            OFFSET ${offset.toString()}
         `;
         return this.executeClickHouseQuery<FlakyTestQueryRow[]>(query);
     }
