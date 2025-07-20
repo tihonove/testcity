@@ -31,15 +31,16 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
     const brushContainer = useRef<HTMLDivElement>(null);
 
     const druggingRef = React.useRef<boolean>(false);
+    const [left, setLeft] = React.useState(0);
+    const [right, setRight] = React.useState(100);
 
     useLayoutEffect(() => {
         if (scrollContainer.current != undefined) scrollContainer.current.scrollLeft = 100000;
     }, []);
 
     useLayoutEffect(() => {
-        console.log(111)
+        console.log(111);
     }, []);
-
 
     return (
         <div>
@@ -98,44 +99,74 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
                     <div className={styles.datesContainer}></div>
                 </div>
             </div>
-            <div style={{ backgroundColor: "red", height: "100px" }} ref={brushContainer}>
+            <div style={{ backgroundColor: "red", height: "100px" }}>
                 <Draggable
                     axis="x"
-                    bounds={{ left: 0, right: brushContainer.current?.clientWidth - 5 }}
-                    onStart={() => {
-                        druggingRef.current = true;
-                    }}
-                    onDrag={(e, { x, y }) => {
-                        // setBrushLeft(x);
-                        const s = scrollContainer.current;
-                        s.scrollLeft = x * (container.current?.scrollWidth / brushContainer.current?.clientWidth);
+                    position={{ x: left, y: 0 }}
+                    bounds={{ left: 0, right: 1000 - 5 }}
+                    onStart={() => {}}
+                    onDrag={(e, { deltaX }) => {
+                        setLeft(x => x + deltaX);
                     }}
                     onStop={(e, { x, y }) => {
-                        // setBrushLeft(x);
-                        druggingRef.current = false;
+                        setLeft(x);
                     }}>
-                    <div ref={brushLeft} style={{ position: "absolute", height: "100px", width: "5px", backgroundColor: "blue" }}></div>
+                    <div style={{ position: "absolute", height: "100px", width: "5px", backgroundColor: "blue" }}></div>
                 </Draggable>
                 <Draggable
                     axis="x"
+                    position={{ x: right, y: 0 }}
                     defaultPosition={{ x: 100, y: 0 }}
-                    bounds={{ left: 0, right: brushContainer.current?.clientWidth - 5 }}
-                    onStart={() => {
-                        druggingRef.current = true;
-                    }}
-                    onDrag={(e, { x, y }) => {
+                    bounds={{ left: 0, right: 1000 - 5 }}
+                    onStart={() => {}}
+                    onDrag={(e, { x, y, deltaX }) => {
                         // setBrushLeft(x);
-                        const s = scrollContainer.current;
-                        s.scrollLeft = x * (container.current?.scrollWidth / brushContainer.current?.clientWidth);
-                        brushLeft.current.style.transform = `translate(${x - 100}px, 0)`;
+                        setLeft(x => x + deltaX);
+                        setRight(x => x + deltaX);
                     }}
                     onStop={(e, { x, y }) => {
-                        // setBrushLeft(x);
-                        druggingRef.current = false;
+                        setRight(x);
                     }}>
                     <div style={{ position: "absolute", height: "100px", width: "5px", backgroundColor: "blue" }}></div>
                 </Draggable>
             </div>
+        </div>
+    );
+}
+
+function Brush(props) {
+    const [left, setLeft] = React.useState(0);
+    const [right, setRight] = React.useState(100);
+    return (
+        <div style={{ backgroundColor: "red", height: "100px" }}>
+            <Draggable
+                axis="x"
+                position={{ x: left, y: 0 }}
+                bounds={{ left: 0, right: 1000 - 5 }}
+                onStart={() => {}}
+                onDrag={(e, { deltaX }) => {
+                    setLeft(x => x + deltaX);
+                }}
+                onStop={(e, { x, y }) => {
+                    setLeft(x);
+                }}>
+                <div style={{ position: "absolute", height: "100px", width: "5px", backgroundColor: "blue" }}></div>
+            </Draggable>
+            <Draggable
+                axis="x"
+                defaultPosition={{ x: 100, y: 0 }}
+                bounds={{ left: 0, right: 1000 - 5 }}
+                onStart={() => {}}
+                onDrag={(e, { x, y, deltaX }) => {
+                    // setBrushLeft(x);
+                    setLeft(x => x + deltaX);
+                    setRight(x => x + deltaX);
+                }}
+                onStop={(e, { x, y }) => {
+                    setLeft(x);
+                }}>
+                <div style={{ position: "absolute", height: "100px", width: "5px", backgroundColor: "blue" }}></div>
+            </Draggable>
         </div>
     );
 }
