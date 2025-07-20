@@ -1,7 +1,14 @@
 .chartContainer {
-    display: flex;
-    position: relative;
-    align-items: stretch;
+    display: block;
+    height: 200px;
+}
+
+.tooltip {
+    font-size: 12px;
+    background-color: rgb(from var(--primary-bg) r g b / 80%);
+    border: 1px solid var(--border-line-color-2);
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .scrollContainer {
