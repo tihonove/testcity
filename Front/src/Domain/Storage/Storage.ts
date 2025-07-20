@@ -3,6 +3,7 @@ import { uuidv4 } from "../../Utils/Guids";
 import { reject } from "../../Utils/TypeHelpers";
 import { JobIdWithParentProject } from "../JobIdWithParentProject";
 import { TestPerJobRunQueryRow } from "../TestPerJobRunQueryRow";
+import { FlakyTestQueryRow } from "./FlakyTestQuery";
 import { JobRunFullInfoQueryRow, JobsQueryRow } from "./JobsQuery";
 import { PipelineRunsQueryRow } from "./PipelineRunsQueryRow";
 import { GroupNode, Project } from "./Projects/GroupNode";
@@ -11,6 +12,8 @@ import { TestRunQueryRow } from "./TestRunQuery";
 export function findPathToProjectById(groupNode: GroupNode, projectId: string): [GroupNode[], Project] {
     return findPathToProjectByIdOrNull(groupNode, projectId) ?? reject(`Project with id ${projectId} not found`);
 }
+
+const flipRateThreshold = 0.1;
 
 export function findPathToProjectByIdOrNull(
     groupNode: GroupNode,
@@ -654,6 +657,59 @@ export class TestAnalyticsStorage {
         ORDER BY TestRuns.StartDateTime DESC 
         LIMIT ${(pageSize * page).toString()}, ${pageSize.toString()}`;
         return this.executeClickHouseQuery<TestPerJobRunQueryRow[]>(query);
+    }
+
+    public async getFlakyTests(
+        projectId: string,
+        jobId: string,
+        limit: number = 100,
+        offset: number = 0
+    ): Promise<FlakyTestQueryRow[]> {
+        const query = `
+            SELECT 
+                ProjectId,
+                JobId,
+                TestId,
+                argMax(LastRunDate, t.UpdatedAt) as LastRunDate,
+                argMax(RunCount, t.UpdatedAt) as RunCount,
+                argMax(FailCount, t.UpdatedAt) as FailCount,
+                argMax(FlipCount, t.UpdatedAt) as FlipCount,
+                max(t.UpdatedAt) as UpdatedAt,
+                argMax(t.FlipCount, t.UpdatedAt) / argMax(t.RunCount, t.UpdatedAt) as FlipRate
+            FROM TestDashboardWeekly t
+            WHERE
+                ProjectId = '${projectId}'
+                AND JobId = '${jobId}'
+                AND t.LastRunDate >= now() - INTERVAL 7 DAY
+            GROUP BY ProjectId, JobId, TestId
+            HAVING argMax(t.FlipCount, t.UpdatedAt) / argMax(t.RunCount, t.UpdatedAt) > ${flipRateThreshold.toString()}
+            ORDER BY FlipRate DESC
+            LIMIT ${limit.toString()}
+            OFFSET ${offset.toString()}
+        `;
+        return this.executeClickHouseQuery<FlakyTestQueryRow[]>(query);
+    }
+
+    public async getFlakyTestsCount(projectId: string, jobId: string): Promise<number> {
+        const query = `
+            SELECT COUNT(*) as TotalCount
+            FROM (
+                SELECT 
+                    ProjectId,
+                    JobId,
+                    TestId,
+                    argMax(t.FlipCount, t.UpdatedAt) / argMax(t.RunCount, t.UpdatedAt) as FlipRate
+                FROM TestDashboardWeekly t
+                WHERE
+                    ProjectId = '${projectId}'
+                    AND JobId = '${jobId}'
+                    AND t.LastRunDate >= now() - INTERVAL 7 DAY
+                GROUP BY ProjectId, JobId, TestId
+                HAVING argMax(t.FlipCount, t.UpdatedAt) / argMax(t.RunCount, t.UpdatedAt) > ${flipRateThreshold.toString()}
+            ) as subquery
+        `;
+        const result = await this.executeClickHouseQuery<[number][]>(query);
+        return result[0]?.[0] ?? 0;
     }
 
     public async getTestRunCount(testId: string, jobIds: string[], branchName?: string): Promise<number> {
