@@ -112,3 +112,9 @@ export function getLinkToPipeline(pathToProject: string[], pipelineId: string): 
         [...pathToProject, "-", "pipelines", pipelineId].map(x => encodeURIComponent(x)).join("/")
     );
 }
+
+export function getLinkToCommit(pathToProject: string[], sha: string): string {
+    return (
+        "https://git.skbkontur.ru/" + [...pathToProject, "-", "commit", sha].map(x => encodeURIComponent(x)).join("/")
+    );
+}

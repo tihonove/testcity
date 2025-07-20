@@ -1,8 +1,16 @@
 import * as React from "react";
-import { CommitRowProps } from "../Pages/JobRunTestListPage";
 import { Fit, RowStack } from "@skbkontur/react-stack-layout";
 import { GravatarImage } from "./GravatarImage";
 import styles from "./CommitRow.module.css";
+import { getLinkToCommit } from "../Domain/Navigation";
+
+interface CommitRowProps {
+    pathToProject: string[];
+    sha: string;
+    authorName: string;
+    authorEmail: string;
+    messagePreview: string;
+}
 
 export function CommitRow(props: CommitRowProps) {
     return (
@@ -18,7 +26,8 @@ export function CommitRow(props: CommitRowProps) {
             <Fit>
                 <div className={styles.message}>{props.messagePreview}</div>
                 <div className={styles.details}>
-                    {props.authorName} · #{props.sha.substring(0, 7)}
+                    {props.authorName} ·
+                    <a href={getLinkToCommit(props.pathToProject, props.sha)}>#{props.sha.substring(0, 7)}</a>
                 </div>
             </Fit>
         </RowStack>

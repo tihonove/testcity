@@ -154,6 +154,7 @@ export function JobRunTestListPage(): React.JSX.Element {
                                             {coveredCommits.map(commit => (
                                                 <Fit>
                                                     <CommitRow
+                                                        pathToProject={pathToGroup}
                                                         sha={Array.isArray(commit) ? commit[0] : commit.CommitSha}
                                                         authorName={
                                                             Array.isArray(commit) ? commit[1] : commit.AuthorName
@@ -272,11 +273,4 @@ function CodeQualityIssuesTabContent({ projectId, jobId }: { projectId: string; 
             {report && <IssuesTab report={report} />}
         </Loader>
     );
-}
-
-export interface CommitRowProps {
-    sha: string;
-    authorName: string;
-    authorEmail: string;
-    messagePreview: string;
 }
