@@ -7,6 +7,7 @@ import { BranchSelect } from "../Components/BranchSelect";
 import { FlakyTestsList } from "../Components/FlakyTestsList";
 import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
 import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
+import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { useSearchParamAsState } from "../Utils";
 import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
 import { reject } from "../Utils/TypeHelpers";
@@ -21,6 +22,8 @@ export function JobRunsPage(): React.JSX.Element {
     usePopularBranchStoring(currentBranchName);
 
     const [section, setSection] = useSearchParamAsState("section", "overview");
+
+    const flakyTestsCount = useStorageQuery(x => x.getFlakyTestsCount(project.id, jobId), [project.id, jobId]);
 
     return (
         <ColumnStack block stretch gap={4}>
@@ -38,8 +41,8 @@ export function JobRunsPage(): React.JSX.Element {
             <Fit>
                 <Tabs value={section ?? "overview"} onValueChange={setSection}>
                     <Tabs.Tab id="overview">Overview</Tabs.Tab>
-                    <Tabs.Tab id="statistics">Statistics</Tabs.Tab>
-                    <Tabs.Tab id="flaky-tests">Flaky Tests</Tabs.Tab>
+                    {/* <Tabs.Tab id="statistics">Statistics</Tabs.Tab> */}
+                    <Tabs.Tab id="flaky-tests">Flaky Tests ({flakyTestsCount})</Tabs.Tab>
                 </Tabs>
             </Fit>
             <Fit>
@@ -53,7 +56,12 @@ export function JobRunsPage(): React.JSX.Element {
                     </div>
                 )}
                 {section === "flaky-tests" && (
-                    <FlakyTestsList pathToProject={pathToGroup} projectId={project.id} jobId={jobId} />
+                    <FlakyTestsList
+                        pathToProject={pathToGroup}
+                        projectId={project.id}
+                        jobId={jobId}
+                        totalCount={flakyTestsCount}
+                    />
                 )}
             </Fit>
         </ColumnStack>

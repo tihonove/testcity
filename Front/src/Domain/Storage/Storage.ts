@@ -690,6 +690,28 @@ export class TestAnalyticsStorage {
         return this.executeClickHouseQuery<FlakyTestQueryRow[]>(query);
     }
 
+    public async getFlakyTestsCount(projectId: string, jobId: string): Promise<number> {
+        const query = `
+            SELECT COUNT(*) as TotalCount
+            FROM (
+                SELECT 
+                    ProjectId,
+                    JobId,
+                    TestId,
+                    argMax(t.FlipCount, t.UpdatedAt) / argMax(t.RunCount, t.UpdatedAt) as FlipRate
+                FROM TestDashboardWeekly t
+                WHERE
+                    ProjectId = '${projectId}'
+                    AND JobId = '${jobId}'
+                    AND t.LastRunDate >= now() - INTERVAL 7 DAY
+                GROUP BY ProjectId, JobId, TestId
+                HAVING argMax(t.FlipCount, t.UpdatedAt) / argMax(t.RunCount, t.UpdatedAt) > ${flipRateThreshold.toString()}
+            ) as subquery
+        `;
+        const result = await this.executeClickHouseQuery<[number][]>(query);
+        return result[0]?.[0] ?? 0;
+    }
+
     public async getTestRunCount(testId: string, jobIds: string[], branchName?: string): Promise<number> {
         let condition = `TestId = '${testId}'`;
         condition += ` AND JobId IN [${jobIds.map(x => `'${x}'`).join(", ")}]`;

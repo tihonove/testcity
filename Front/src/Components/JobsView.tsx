@@ -75,15 +75,10 @@ export function JobsView({
                                     ) : (
                                         <ShapeSquareIcon16Regular color="var(--success-text-color)" />
                                     )}{" "}
-                                    <a
-                                        href={createLinkToJob(
-                                            rootProjectStructure,
-                                            projectId,
-                                            jobId,
-                                            currentBranchName
-                                        )}>
+                                    <Link
+                                        to={createLinkToJob(rootProjectStructure, projectId, jobId, currentBranchName)}>
                                         {jobId}
-                                    </a>
+                                    </Link>
                                 </th>
                             </tr>
                         </thead>

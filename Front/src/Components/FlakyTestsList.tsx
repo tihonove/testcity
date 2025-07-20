@@ -15,11 +15,12 @@ interface FlakyTestsListProps {
     pathToProject: string[];
     projectId: string;
     jobId: string;
+    totalCount?: number;
 }
 
 const ITEMS_PER_PAGE = 50;
 
-export function FlakyTestsList({ projectId, jobId, ...props }: FlakyTestsListProps) {
+export function FlakyTestsList({ projectId, jobId, totalCount, ...props }: FlakyTestsListProps) {
     const basePrefix = useBasePrefix();
     const [page, setPage] = useUrlBasedPaging();
     const flakyTests = useStorageQuery(
@@ -82,7 +83,7 @@ export function FlakyTestsList({ projectId, jobId, ...props }: FlakyTestsListPro
                     ))}
                 </tbody>
             </table>
-            {flakyTests.length > 0 && (
+            {(totalCount ?? 0) > 0 && (
                 <Paging
                     activePage={page + 1}
                     onPageChange={x => {
@@ -90,10 +91,10 @@ export function FlakyTestsList({ projectId, jobId, ...props }: FlakyTestsListPro
                             setPage(x - 1);
                         });
                     }}
-                    pagesCount={Math.max(1, Math.ceil(1000 / ITEMS_PER_PAGE))} // Примерное количество страниц
+                    pagesCount={Math.max(1, Math.ceil((totalCount ?? 0) / ITEMS_PER_PAGE))}
                 />
             )}
-            {flakyTests.length === 0 && (
+            {(totalCount ?? 0) === 0 && (
                 <div className={styles.emptyState}>
                     <p>Good news! There are no flaky tests.</p>
                 </div>
