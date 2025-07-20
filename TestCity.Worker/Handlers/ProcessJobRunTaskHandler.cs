@@ -66,6 +66,8 @@ public class ProcessJobRunTaskHandler(
                     {
                         if (ShouldEnqueueRecalculateTask(task.ProjectId, processingResult.JobInfo.JobId))
                         {
+                            logger.LogInformation("Enqueuing recalculation task for project {ProjectId}, job {JobId}, branch {BranchName}",
+                                task.ProjectId, processingResult.JobInfo.JobId, processingResult.JobInfo.BranchName);
                             await workerClient.Enqueue(new RecalculateTestStatisticsTaskPayload
                             {
                                 ProjectId = task.ProjectId,
