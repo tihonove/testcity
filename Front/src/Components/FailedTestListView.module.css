@@ -3,8 +3,9 @@
     color: var(--muted-text-color);
 }
 
-.testOutputRow {
-    max-height: 0;
+.groupTitle {
+    font-weight: 500;
+    color: var(--text-color);
 }
 
 .testOutputRowExpanded {
@@ -20,4 +21,50 @@
     overflow: hidden;
     padding: 15px;
     border: 1px solid var(--border-line-color-2);
+}
+
+.testOutputRow {
+    max-height: 0;
+}
+
+.testRunRowHeader {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 2px;
+    padding: 6px 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.testRunRowHeader:hover {
+    background-color: rgb(var(--inverse-color-base) / 0.05);
+}
+
+.testRunRowContent {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    gap: 4px;
+}
+
+.testRunRowLink {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-shrink: 1;
+}
+
+.testHistoryLink {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.testRunRowContainer {
+    margin-left: 10px;
+}
+
+.copyButtonContainer {
+    font-size: 12px;
 }

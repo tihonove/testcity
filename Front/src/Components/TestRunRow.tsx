@@ -20,6 +20,7 @@ interface TestRunRowProps {
     jobRunIds: string[];
     onSetSearchTextImmediate: (value: string) => void;
     onSetOutputModalIds: (ids: [string, string] | undefined) => void;
+    flakyTestNames: Set<string>;
 }
 
 export function TestRunRow({
@@ -29,6 +30,7 @@ export function TestRunRow({
     jobRunIds,
     onSetSearchTextImmediate,
     onSetOutputModalIds,
+    flakyTestNames,
 }: TestRunRowProps): React.JSX.Element {
     const [expandOutput, setExpandOutput] = React.useState(false);
     const [[failedOutput, failedMessage, systemOutput], setOutputValues] = React.useState(["", "", ""]);
@@ -109,6 +111,7 @@ export function TestRunRow({
                             onSetSearchTextImmediate(x);
                         }}
                         value={testRun[TestRunQueryRowNames.TestId]}
+                        isFlaky={flakyTestNames.has(testRun[TestRunQueryRowNames.TestId])}
                     />
                 </td>
                 <td className={styles.durationCell}>

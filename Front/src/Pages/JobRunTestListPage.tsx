@@ -123,7 +123,9 @@ export function JobRunTestListPage(): React.JSX.Element {
                                             </>
                                         }>
                                         <FailedTestListView
-                                            jobRunIds={[jobRunId]}
+                                            projectId={projectId}
+                                            jobId={jobId}
+                                            jobRunId={jobRunId}
                                             pathToProject={pathToGroup}
                                             failedTestsCount={Number(failedTestsCount)}
                                             linksBlock={
@@ -173,6 +175,8 @@ export function JobRunTestListPage(): React.JSX.Element {
                     )}
                     {section === "tests" && (
                         <TestListView
+                            projectId={projectId}
+                            jobId={jobId}
                             jobRunIds={[jobRunId]}
                             pathToProject={pathToGroup}
                             linksBlock={

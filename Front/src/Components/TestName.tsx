@@ -3,11 +3,13 @@ import * as React from "react";
 import { useMemo } from "react";
 import styles from "./TestName.module.css";
 import { NativeLinkButton } from "./NativeLinkButton";
+import { FlakyTestBadge } from "./FlakyTestBadge";
 
 interface TestNameProps {
     value: string;
     onTestNameClick: (() => void) | undefined;
     onSetSearchValue: (value: string) => void;
+    isFlaky?: boolean;
 }
 
 export function TestName(props: TestNameProps): React.JSX.Element {
@@ -23,6 +25,12 @@ export function TestName(props: TestNameProps): React.JSX.Element {
                 </NativeLinkButton>
             ) : (
                 splitValue[1]
+            )}
+            {props.isFlaky && (
+                <>
+                    {" "}
+                    <FlakyTestBadge />
+                </>
             )}
             <div className={styles.testNamePrefix}>{splitValue[0]}</div>
         </>

@@ -1,0 +1,6 @@
+.red {
+    color: var(--failed-text-color)
+}
+.green {
+    color: var(--success-text-color)
+}

@@ -682,7 +682,9 @@ export class TestAnalyticsStorage {
                 AND JobId = '${jobId}'
                 AND t.LastRunDate >= now() - INTERVAL 7 DAY
             GROUP BY ProjectId, JobId, TestId
-            HAVING argMax(t.FlipCount, t.UpdatedAt) / argMax(t.RunCount, t.UpdatedAt) > ${flipRateThreshold.toString()}
+            HAVING 
+                argMax(t.RunCount, t.UpdatedAt) > 20 AND
+                argMax(t.FlipCount, t.UpdatedAt) / argMax(t.RunCount, t.UpdatedAt) > ${flipRateThreshold.toString()}
             ORDER BY FlipRate DESC
             LIMIT ${limit.toString()}
             OFFSET ${offset.toString()}
@@ -710,6 +712,26 @@ export class TestAnalyticsStorage {
         `;
         const result = await this.executeClickHouseQuery<[number][]>(query);
         return result[0]?.[0] ?? 0;
+    }
+
+    public async getFlakyTestNames(projectId: string, jobId: string): Promise<string[]> {
+        const query = `
+            SELECT 
+                TestId
+            FROM TestDashboardWeekly t
+            WHERE
+                ProjectId = '${projectId}'
+                AND JobId = '${jobId}'
+                AND t.LastRunDate >= now() - INTERVAL 7 DAY
+            GROUP BY ProjectId, JobId, TestId
+            HAVING 
+                argMax(t.RunCount, t.UpdatedAt) > 20 AND
+                argMax(t.FlipCount, t.UpdatedAt) / argMax(t.RunCount, t.UpdatedAt) > ${flipRateThreshold.toString()}
+            LIMIT 1000
+        `;
+
+        const result = await this.executeClickHouseQuery<[string][]>(query);
+        return result.map(row => row[0]);
     }
 
     public async getTestRunCount(testId: string, jobIds: string[], branchName?: string): Promise<number> {

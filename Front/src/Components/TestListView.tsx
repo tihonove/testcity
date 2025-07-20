@@ -23,6 +23,8 @@ import { useUrlBasedPaging } from "./useUrlBasedPaging";
 import styles from "./TestListView.module.css";
 
 interface TestListViewProps {
+    projectId?: string;
+    jobId?: string;
     jobRunIds: string[];
     pathToProject: string[];
     linksBlock?: React.ReactNode;
@@ -56,6 +58,15 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
         [props.jobRunIds, sortField, sortDirection, searchValue, testCasesType, page]
     );
     const totalRowCount = stats.totalTestsCount;
+
+    const flakyTestNamesArray = useStorageQuery(
+        s => (props.projectId && props.jobId ? s.getFlakyTestNames(props.projectId, props.jobId) : []),
+        [props.projectId, props.jobId]
+    );
+
+    const flakyTestNamesSet = React.useMemo(() => {
+        return new Set(flakyTestNamesArray);
+    }, [flakyTestNamesArray]);
 
     async function createAndDownloadCSV(): Promise<void> {
         const data = await storage.getTestListForCsv(props.jobRunIds);
@@ -164,6 +175,7 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
                                 pathToProject={props.pathToProject}
                                 onSetSearchTextImmediate={setSearchTextImmediate}
                                 onSetOutputModalIds={setOutputModalIds}
+                                flakyTestNames={flakyTestNamesSet}
                             />
                         ))}
                     </tbody>
