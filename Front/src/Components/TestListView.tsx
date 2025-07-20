@@ -147,39 +147,41 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
                         </Button>
                     </Fit>
                 </RowStack>
-                <table className={styles.testList}>
-                    <thead>
-                        <tr className={styles.testRunsTableHeadRow}>
-                            <th style={{ width: 100 }}>Status</th>
-                            <th>Name</th>
-                            <th style={{ width: 80 }}>
-                                <SortHeaderLink
-                                    onChangeSortKey={setSortField}
-                                    onChangeSortDirection={setSortDirection}
-                                    sortKey={"Duration"}
-                                    currentSortDirection={sortDirection}
-                                    currentSortKey={sortField}>
-                                    Duration
-                                </SortHeaderLink>
-                            </th>
-                            <th style={{ width: 20 }}></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {testList.map((x, i) => (
-                            <TestRunRow
-                                key={i.toString() + x[TestRunQueryRowNames.TestId]}
-                                testRun={x}
-                                jobRunIds={props.jobRunIds}
-                                basePrefix={basePrefix}
-                                pathToProject={props.pathToProject}
-                                onSetSearchTextImmediate={setSearchTextImmediate}
-                                onSetOutputModalIds={setOutputModalIds}
-                                flakyTestNames={flakyTestNamesSet}
-                            />
-                        ))}
-                    </tbody>
-                </table>
+                <div className={styles.tableContainer}>
+                    <table className={styles.testList}>
+                        <thead>
+                            <tr className={styles.testRunsTableHeadRow}>
+                                <th style={{ width: 100 }}>Status</th>
+                                <th>Name</th>
+                                <th style={{ width: 80 }}>
+                                    <SortHeaderLink
+                                        onChangeSortKey={setSortField}
+                                        onChangeSortDirection={setSortDirection}
+                                        sortKey={"Duration"}
+                                        currentSortDirection={sortDirection}
+                                        currentSortKey={sortField}>
+                                        Duration
+                                    </SortHeaderLink>
+                                </th>
+                                <th className={styles.testRunActionsHeaderCell}></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {testList.map((x, i) => (
+                                <TestRunRow
+                                    key={i.toString() + x[TestRunQueryRowNames.TestId]}
+                                    testRun={x}
+                                    jobRunIds={props.jobRunIds}
+                                    basePrefix={basePrefix}
+                                    pathToProject={props.pathToProject}
+                                    onSetSearchTextImmediate={setSearchTextImmediate}
+                                    onSetOutputModalIds={setOutputModalIds}
+                                    flakyTestNames={flakyTestNamesSet}
+                                />
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
                 <Paging
                     activePage={page + 1}
                     onPageChange={x => {

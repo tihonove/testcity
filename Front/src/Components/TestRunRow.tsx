@@ -12,6 +12,7 @@ import { KebabButton } from "./KebabButton";
 import { formatDuration } from "./RunStatisticsChart/DurationUtils";
 import { RunStatus } from "./RunStatus";
 import { TestName } from "./TestName";
+import { Link } from "react-router-dom";
 
 interface TestRunRowProps {
     testRun: TestRunQueryRow;
@@ -121,28 +122,59 @@ export function TestRunRow({
                     )}
                 </td>
                 <td className={styles.actionsCell}>
-                    <DropdownMenu caption={<KebabButton />}>
-                        <MenuItem
-                            icon={<TimeClockFastIcon16Regular />}
-                            href={createLinkToTestHistory(
+                    <div className={styles.actionsList}>
+                        {testRun[TestRunQueryRowNames.State] === "Failed" && (
+                            <>
+                                <a
+                                    href="#output"
+                                    onClick={e => {
+                                        onSetOutputModalIds([
+                                            testRun[TestRunQueryRowNames.TestId],
+                                            testRun[TestRunQueryRowNames.JobId],
+                                        ]);
+                                        e.preventDefault();
+                                        return false;
+                                    }}>
+                                    <ClipboardTextIcon16Regular />
+                                    Test output
+                                </a>
+                                &nbsp; &nbsp; &nbsp;
+                            </>
+                        )}
+                        <Link
+                            to={createLinkToTestHistory(
                                 basePrefix,
                                 testRun[TestRunQueryRowNames.TestId],
                                 pathToProject
                             )}>
-                            Show test history
-                        </MenuItem>
-                        <MenuItem
-                            icon={<ClipboardTextIcon16Regular />}
-                            disabled={testRun[TestRunQueryRowNames.State] !== "Failed"}
-                            onClick={() => {
-                                onSetOutputModalIds([
+                            <TimeClockFastIcon16Regular />
+                            Test history
+                        </Link>
+                    </div>
+                    <div className={styles.dropdownMenu}>
+                        <DropdownMenu caption={<KebabButton />}>
+                            <MenuItem
+                                icon={<TimeClockFastIcon16Regular />}
+                                href={createLinkToTestHistory(
+                                    basePrefix,
                                     testRun[TestRunQueryRowNames.TestId],
-                                    testRun[TestRunQueryRowNames.JobId],
-                                ]);
-                            }}>
-                            Show test outpout
-                        </MenuItem>
-                    </DropdownMenu>
+                                    pathToProject
+                                )}>
+                                Show test history
+                            </MenuItem>
+                            <MenuItem
+                                icon={<ClipboardTextIcon16Regular />}
+                                disabled={testRun[TestRunQueryRowNames.State] !== "Failed"}
+                                onClick={() => {
+                                    onSetOutputModalIds([
+                                        testRun[TestRunQueryRowNames.TestId],
+                                        testRun[TestRunQueryRowNames.JobId],
+                                    ]);
+                                }}>
+                                Show test outpout
+                            </MenuItem>
+                        </DropdownMenu>
+                    </div>
                 </td>
             </tr>
             <tr className={expandOutput ? styles.testOutputRowExpanded : styles.testOutputRow}>

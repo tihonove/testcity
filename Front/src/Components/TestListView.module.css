@@ -1,6 +1,5 @@
 .testRunsTableHeadRow th {
     font-size: 12px;
-    text-align: left;
     padding: 4px 8px;
 }
 
@@ -13,3 +12,14 @@
     max-width: 100vw;
     table-layout: fixed;
 }
+
+.testRunActionsHeaderCell {
+    width: 20px;
+}
+
+@media (min-width: 1200px) {
+    .testRunActionsHeaderCell {
+        width: 220px;
+    }
+}
+

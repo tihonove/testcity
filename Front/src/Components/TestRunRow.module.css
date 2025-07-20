@@ -1,5 +1,4 @@
 .testRunsTableRow td {
-    text-align: left;
     padding: 6px 8px;
 }
 
@@ -20,7 +19,7 @@
 }
 
 .testOutputCell {
-    /* Empty class for highlighting test output cell */
+    background-color: var(--bg-color);
 }
 
 .code {
@@ -35,11 +34,35 @@
 }
 
 .durationCell {
+    text-align: right;
     width: 80px;
 }
 
 .actionsCell {
     width: 20px;
+}
+
+.actionsList {
+    display: none;
+}
+
+.dropdownMenu {
+    display: block;
+}
+
+@media (min-width: 1200px) {
+    .actionsCell {
+        width: 220px;
+        text-align: right;
+    }
+    
+    .actionsList {
+        display: inline-block;
+    }
+    
+    .dropdownMenu {
+        display: none;
+    }
 }
 
 .testNameCell {
