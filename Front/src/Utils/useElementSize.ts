@@ -12,8 +12,8 @@ export function useElementSize<T extends HTMLElement>(ref: React.RefObject<T>): 
         const updateSize = () => {
             if (ref.current) {
                 setSize({
-                    width: ref.current.scrollWidth,
-                    height: ref.current.scrollHeight,
+                    width: ref.current.clientWidth,
+                    height: ref.current.clientHeight,
                 });
             }
         };

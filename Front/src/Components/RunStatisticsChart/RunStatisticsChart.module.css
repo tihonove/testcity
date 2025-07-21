@@ -69,7 +69,6 @@
         flex-shrink: 0;
         box-sizing: border-box;
         position: relative;
-        margin-left: 1px;
         border-top: 2px solid rgb(var(--inverse-color-base) / 0.4);
 
         &[data-state='Success'] {
@@ -90,6 +89,38 @@
     }
 }
 
+.brushContainer {
+    position: relative;
+}
+
+.brushBackgroundContainer {
+    pointer-events: none;
+    display: flex;
+    flex-direction: row;
+    flex-flow: revert;
+    align-items: flex-end;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    > div{
+        flex-grow: 1;
+        flex-shrink: 1;
+        box-sizing: border-box;
+        position: relative;
+        border-top: 1px solid rgb(var(--inverse-color-base) / 0.4);
+
+        &[data-state='Success'] {
+            background-color: rgb(var(--inverse-color-base) / 0.1);            
+        }    
+
+        &[data-state='Failed'] {
+            background-color: rgb(from var(--failed-bg-color) r g b / 50%);
+        }
+    }
+}
 
 
 .datesContainer {

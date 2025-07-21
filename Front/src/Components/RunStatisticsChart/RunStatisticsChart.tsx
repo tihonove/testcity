@@ -11,7 +11,6 @@ interface RunStatisticsChartProps {
 }
 
 export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.Element {
-    const [scale, setScale] = React.useState(2);
     const maxVisibleDuration = React.useMemo(() => {
         const maxDuration = props.value.reduce((x, y) => (x > y[1] ? x : y[1]), 0);
         if (maxDuration == 0) return 100;
@@ -26,72 +25,87 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
     }, [props.value]);
 
     const durationLabelStep = maxVisibleDuration / 4;
-    const brushLeft = useRef<HTMLDivElement>(null);
 
     const brushContainer = useRef<HTMLDivElement>(null);
     const scrollContainer = useRef<HTMLDivElement>(null);
-    const brushContainerSize = useElementSize(brushContainer);
     const container = useRef<HTMLDivElement>(null);
-    const containerSize = useElementSize(container);
 
+    const brushContainerSize = useElementSize(brushContainer);
+    const scrollContainerSize = useElementSize(scrollContainer);
 
     const druggingRef = React.useRef<boolean>(false);
     const [left, setLeft] = React.useState(0);
     const [right, setRight] = React.useState(100);
+    const barWidth = React.useMemo(() => {
+        console.log(3, left, right);
+        if (!scrollContainerSize || !brushContainerSize) return undefined;
+        return (scrollContainerSize.width * brushContainerSize.width) / ((right - left) * props.value.length);
+    }, [left, right]);
+    const containerWidth = React.useMemo(
+        () => (barWidth ? barWidth * props.value.length : undefined),
+        [barWidth, props.value]
+    );
 
     useLayoutEffect(() => {
-        // if (scrollContainer.current != undefined) scrollContainer.current.scrollLeft = 100000;
-    }, []);
+        if (barWidth == undefined && brushContainerSize && scrollContainerSize) {
+            setLeft(
+                Math.max(
+                    brushContainerSize.width -
+                        (scrollContainerSize.width * brushContainerSize.width) / (20 * props.value.length),
+                    0
+                )
+            );
+            setRight(brushContainerSize.width);
+        }
+    }, [brushContainerSize, scrollContainerSize]);
 
-    const handleScrollRef = React.useRef<() => void>();
-    const handleScroll = React.useCallback(() => {
+    const syncFromScrollPositionToBrush = React.useCallback(() => {
+        if (!brushContainerSize || !containerWidth) return;
         const scrollContainerEl = scrollContainer.current;
-        if (scrollContainerEl) {
+        if (scrollContainerEl && scrollContainerSize) {
             if (scrollContainerEl.scrollLeft > 0) {
-                setLeft(Math.floor(scrollContainerEl.scrollLeft * (brushContainerSize.width / containerSize.width)));
+                setLeft(Math.floor(scrollContainerEl.scrollLeft * (brushContainerSize.width / containerWidth)));
+                setRight(
+                    Math.floor(
+                        (scrollContainerEl.scrollLeft + scrollContainerSize.width) *
+                            (brushContainerSize.width / containerWidth)
+                    )
+                );
+                scrollContainerEl.scrollLeft = 10000;
             }
         }
-    }, [brushContainerSize, containerSize]);
-    useEffect(() => {
-        handleScrollRef.current = handleScroll;
-    }, [handleScroll]);
-    useEffect(() => {
-        handleScroll();
-    }, [brushContainerSize, containerSize]);
+    }, [brushContainerSize, scrollContainerSize, containerWidth]);
+
+    // useEffect(() => {
+    //     syncFromScrollPositionToBrush();
+    // }, [brushContainerSize]);
+
+    // const handleScrollRef = React.useRef<() => void>();
+    // const handleScroll = React.useCallback(() => {
+    //     if (!druggingRef.current) syncFromScrollPositionToBrush();
+    // }, [syncFromScrollPositionToBrush]);
+    // useEffect(() => {
+    //     handleScrollRef.current = handleScroll;
+    // }, [handleScroll]);
+    // useLayoutEffect(() => {
+    //     const scrollContainerEl = scrollContainer.current;
+    //     if (scrollContainerEl) {
+    //         scrollContainerEl.onscroll = () => {
+    //             handleScrollRef.current?.();
+    //         };
+    //     }
+    // }, []);
 
     useLayoutEffect(() => {
         const scrollContainerEl = scrollContainer.current;
-        if (scrollContainerEl) {
-            scrollContainerEl.onscroll = () => {
-                handleScrollRef.current?.();
-            };
+        if (scrollContainerEl && brushContainerSize && containerWidth) {
+            scrollContainerEl.scrollLeft = left * (containerWidth / brushContainerSize.width);
         }
-    }, []);
-
-    useLayoutEffect(() => {
-        const scrollContainerEl = scrollContainer.current;
-        if (scrollContainerEl && brushContainerSize && containerSize) {
-            scrollContainerEl.scrollLeft = left * (containerSize.width / brushContainerSize.width);
-        }
-    }, [left]);
+    }, [left, containerWidth]);
 
     return (
         <div>
             <div className={styles.chartContainer}>
-                <div className={styles.scaleButtons}>
-                    <Button
-                        onClick={() => {
-                            setScale(scale / 2);
-                        }}>
-                        -
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            setScale(scale * 2);
-                        }}>
-                        +
-                    </Button>
-                </div>
                 <div className={styles.gaugeLabels}>
                     <div style={{ top: 0 }}>
                         {formatDuration(maxVisibleDuration, maxVisibleDuration - 0 * durationLabelStep)}
@@ -115,108 +129,114 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
                 <div className={styles.gridLine} />
                 <div className={styles.scrollContainer} ref={scrollContainer}>
                     <div className={styles.container} ref={container}>
-                        {reverse(props.value).map((x, index) => (
-                            <Tooltip trigger={"hover"} render={() => x[2]} key={index}>
-                                <div
-                                    data-state={x[0] === "Success" ? "Success" : "Failed"}
-                                    key={index}
-                                    style={{
-                                        height: `${(100 * (x[1] / maxVisibleDuration)).toString()}px`,
-                                        flexBasis: `${(16 * scale).toString()}px`,
-                                    }}>
-                                    {index % (8 / scale) === 0 && <div className={styles.dateLabel}>{x[2]}</div>}
-                                </div>
-                            </Tooltip>
-                        ))}
+                        {barWidth != undefined &&
+                            reverse(props.value).map((x, index) => (
+                                <Tooltip trigger={"hover"} render={() => x[2]} key={index}>
+                                    <div
+                                        data-state={x[0] === "Success" ? "Success" : "Failed"}
+                                        key={index}
+                                        style={{
+                                            height: `${(100 * (x[1] / maxVisibleDuration)).toString()}px`,
+                                            flexBasis: `${barWidth.toString()}px`,
+                                        }}>
+                                        {index % Math.floor(200 / barWidth) === 0 && (
+                                            <div className={styles.dateLabel}>{x[2]}</div>
+                                        )}
+                                    </div>
+                                </Tooltip>
+                            ))}
                     </div>
                     <div className={styles.datesContainer}></div>
                 </div>
             </div>
-            <div style={{ backgroundColor: "red", height: "100px" }} ref={brushContainer}>
-                {brushContainerSize && containerSize && (
-                    <>
-                        <Draggable
-                            axis="x"
-                            scale={1}
-                            position={{ x: left, y: 0 }}
-                            bounds={{ left: 0, right: 1000 - 5 }}
-                            onStart={() => {}}
-                            onDrag={(e, { deltaX }) => {
-                                setLeft(x => x + deltaX);
-                            }}
-                            onStop={(e, { x, y }) => {
-                                setLeft(x);
-                            }}>
-                            <div
-                                style={{
-                                    position: "absolute",
-                                    height: "100px",
-                                    width: "5px",
-                                    backgroundColor: "blue",
-                                }}></div>
-                        </Draggable>
-                        <Draggable
-                            axis="x"
-                            position={{ x: right, y: 0 }}
-                            defaultPosition={{ x: 100, y: 0 }}
-                            bounds={{ left: 0, right: 1000 - 5 }}
-                            onStart={() => {}}
-                            onDrag={(e, { x, y, deltaX }) => {
-                                // setBrushLeft(x);
-                                setLeft(x => x + deltaX);
-                                setRight(x => x + deltaX);
-                            }}
-                            onStop={(e, { x, y }) => {
-                                setRight(x);
-                            }}>
-                            <div
-                                style={{
-                                    position: "absolute",
-                                    height: "100px",
-                                    width: "5px",
-                                    backgroundColor: "blue",
-                                }}></div>
-                        </Draggable>
-                    </>
-                )}
+            <div className={styles.brushContainer} style={{ height: "20px" }} ref={brushContainer}>
+                <div className={styles.brushBackgroundContainer}>
+                    {reverse(props.value).map((x, index) => (
+                        <div
+                            data-state={x[0] === "Success" ? "Success" : "Failed"}
+                            style={{
+                                height: `${(100 * (x[1] / maxVisibleDuration)).toString()}%`,
+                                flexBasis: `100%`,
+                            }}></div>
+                    ))}
+                </div>
+                <Draggable
+                    axis="x"
+                    scale={1}
+                    position={{ x: left, y: 0 }}
+                    bounds={{ left: 0, right: right - 10 }}
+                    onStart={() => {
+                        druggingRef.current = true;
+                    }}
+                    onDrag={(e, { deltaX }) => {
+                        setLeft(x => x + deltaX);
+                    }}
+                    onStop={(e, { x, y }) => {
+                        druggingRef.current = false;
+                        setLeft(x);
+                    }}>
+                    <div
+                        style={{
+                            position: "absolute",
+                            top: 0,
+                            bottom: 0,
+                            width: "5px",
+                            left: 0,
+                            backgroundColor: "blue",
+                            opacity: 0.5,
+                        }}></div>
+                </Draggable>
+                <Draggable
+                    axis="x"
+                    scale={1}
+                    position={{ x: left + 5, y: 0 }}
+                    bounds={{ left: 5, right: (brushContainerSize?.width ?? 1000) - (right - left - 5) }}
+                    onStart={() => {
+                        druggingRef.current = true;
+                    }}
+                    onDrag={(e, { deltaX }) => {
+                        setLeft(x => x + deltaX);
+                        setRight(x => x + deltaX);
+                    }}
+                    onStop={(e, { x, y }) => {
+                        druggingRef.current = false;
+                    }}>
+                    <div
+                        style={{
+                            position: "absolute",
+                            top: 0,
+                            bottom: 0,
+                            width: right - left - 5,
+                            left: 0,
+                            backgroundColor: "green",
+                            opacity: 0.5,
+                        }}></div>
+                </Draggable>
+                <Draggable
+                    axis="x"
+                    position={{ x: right, y: 0 }}
+                    bounds={{ left: left + 10, right: brushContainerSize?.width ?? 1000 }}
+                    onStart={() => {
+                        druggingRef.current = true;
+                    }}
+                    onDrag={(e, { x, y, deltaX }) => {
+                        setRight(x => x + deltaX);
+                    }}
+                    onStop={(e, { x, y }) => {
+                        druggingRef.current = false;
+                        setRight(x);
+                    }}>
+                    <div
+                        style={{
+                            position: "absolute",
+                            top: 0,
+                            bottom: 0,
+                            width: "5px",
+                            backgroundColor: "blue",
+                            opacity: 0.5,
+                        }}></div>
+                </Draggable>
             </div>
-        </div>
-    );
-}
-
-function Brush(props) {
-    const [left, setLeft] = React.useState(0);
-    const [right, setRight] = React.useState(100);
-    return (
-        <div style={{ backgroundColor: "red", height: "100px" }}>
-            <Draggable
-                axis="x"
-                position={{ x: left, y: 0 }}
-                bounds={{ left: 0, right: 1000 - 5 }}
-                onStart={() => {}}
-                onDrag={(e, { deltaX }) => {
-                    setLeft(x => x + deltaX);
-                }}
-                onStop={(e, { x, y }) => {
-                    setLeft(x);
-                }}>
-                <div style={{ position: "absolute", height: "100px", width: "5px", backgroundColor: "blue" }}></div>
-            </Draggable>
-            <Draggable
-                axis="x"
-                defaultPosition={{ x: 100, y: 0 }}
-                bounds={{ left: 0, right: 1000 - 5 }}
-                onStart={() => {}}
-                onDrag={(e, { x, y, deltaX }) => {
-                    // setBrushLeft(x);
-                    setLeft(x => x + deltaX);
-                    setRight(x => x + deltaX);
-                }}
-                onStop={(e, { x, y }) => {
-                    setLeft(x);
-                }}>
-                <div style={{ position: "absolute", height: "100px", width: "5px", backgroundColor: "blue" }}></div>
-            </Draggable>
         </div>
     );
 }
