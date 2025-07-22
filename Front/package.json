@@ -10,7 +10,7 @@
     "lint": "eslint",
     "test": "jest",
     "typecheck": "tsc",
-    "ladle-serve": "ladle serve"
+    "ladle-serve": "ladle serve --host 0.0.0.0"
   },
   "author": "",
   "license": "ISC",
