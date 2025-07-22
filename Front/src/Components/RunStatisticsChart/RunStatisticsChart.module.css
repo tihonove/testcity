@@ -63,7 +63,9 @@
     align-items: flex-end;
     height: 110px;
     position: relative;
-
+    padding-bottom: 20px;
+    overflow: hidden;
+    
     > div{
         flex-grow: 0;
         flex-shrink: 0;
@@ -91,9 +93,11 @@
 
 .brushContainer {
     position: relative;
+    overflow: visible;
 }
 
 .brushBackgroundContainer {
+    background-color: red;
     pointer-events: none;
     display: flex;
     flex-direction: row;
@@ -122,10 +126,14 @@
     }
 }
 
-
 .datesContainer {
     height: 20px;
-}
+    overflow: hidden;
+    /* position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0; */
+}   
 
 .dateLabel {
     background-color: transparent;

@@ -37,7 +37,6 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
     const [left, setLeft] = React.useState(0);
     const [right, setRight] = React.useState(100);
     const barWidth = React.useMemo(() => {
-        console.log(3, left, right);
         if (!scrollContainerSize || !brushContainerSize) return undefined;
         return (scrollContainerSize.width * brushContainerSize.width) / ((right - left) * props.value.length);
     }, [left, right]);
@@ -103,6 +102,8 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
         }
     }, [left, containerWidth]);
 
+    console.log(brushContainerSize?.width);
+
     return (
         <div>
             <div className={styles.chartContainer}>
@@ -128,7 +129,7 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
                 <div className={styles.gridLine} />
                 <div className={styles.gridLine} />
                 <div className={styles.scrollContainer} ref={scrollContainer}>
-                    <div className={styles.container} ref={container}>
+                    <div className={styles.container} ref={container} style={{ width: containerWidth }}>
                         {barWidth != undefined &&
                             reverse(props.value).map((x, index) => (
                                 <Tooltip trigger={"hover"} render={() => x[2]} key={index}>
@@ -146,7 +147,6 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
                                 </Tooltip>
                             ))}
                     </div>
-                    <div className={styles.datesContainer}></div>
                 </div>
             </div>
             <div className={styles.brushContainer} style={{ height: "20px" }} ref={brushContainer}>
@@ -180,8 +180,8 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
                             position: "absolute",
                             top: 0,
                             bottom: 0,
-                            width: "5px",
-                            left: 0,
+                            width: "10px",
+                            left: -5,
                             backgroundColor: "blue",
                             opacity: 0.5,
                         }}></div>
@@ -189,8 +189,8 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
                 <Draggable
                     axis="x"
                     scale={1}
-                    position={{ x: left + 5, y: 0 }}
-                    bounds={{ left: 5, right: (brushContainerSize?.width ?? 1000) - (right - left - 5) }}
+                    position={{ x: left, y: 0 }}
+                    bounds={{ left: 0, right: (brushContainerSize?.width ?? 1000) - (right - left) }}
                     onStart={() => {
                         druggingRef.current = true;
                     }}
@@ -206,8 +206,8 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
                             position: "absolute",
                             top: 0,
                             bottom: 0,
-                            width: right - left - 5,
-                            left: 0,
+                            width: right - left - 10,
+                            left: 5,
                             backgroundColor: "green",
                             opacity: 0.5,
                         }}></div>
@@ -215,7 +215,7 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
                 <Draggable
                     axis="x"
                     position={{ x: right, y: 0 }}
-                    bounds={{ left: left + 10, right: brushContainerSize?.width ?? 1000 }}
+                    bounds={{ left: 0, right: brushContainerSize?.width ?? 1000 }}
                     onStart={() => {
                         druggingRef.current = true;
                     }}
@@ -231,7 +231,8 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
                             position: "absolute",
                             top: 0,
                             bottom: 0,
-                            width: "5px",
+                            left: -5,
+                            width: "10px",
                             backgroundColor: "blue",
                             opacity: 0.5,
                         }}></div>
