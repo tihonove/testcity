@@ -1,9 +1,10 @@
 import * as React from "react";
 import { formatDuration } from "./DurationUtils";
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useEffect } from "react";
 import styles from "./RunStatisticsChart.module.css";
 import Draggable from "react-draggable";
 import { useElementSize } from "../../Utils/useElementSize";
+import { useWindowSize } from "../../Utils/useWindowSize";
 import { ChartBars } from "./ChartBars";
 import { BrushBackground } from "./BrushBackground";
 
@@ -32,6 +33,7 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
 
     const brushContainerSize = useElementSize(brushContainer);
     const scrollContainerSize = useElementSize(scrollContainer);
+    const windowSize = useWindowSize();
     const druggingRef = React.useRef<boolean>(false);
 
     const [left, setLeft] = React.useState(0);
@@ -56,6 +58,17 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
                 )
             );
             setRight(brushContainerSize.width);
+        } else if (brushContainerSize && scrollContainerSize) {
+            // syncFromScrollPositionToBrush()
+            const scrollContainerEl = scrollContainer.current;
+            if (scrollContainerEl && containerWidth && barWidth) {
+                setLeft(scrollContainerEl.scrollLeft * (brushContainerSize.width / containerWidth));
+                setRight(
+                    scrollContainerEl.scrollLeft * (brushContainerSize.width / containerWidth) + 
+                    
+                    (scrollContainerSize.width * brushContainerSize.width) / (barWidth * props.value.length)
+                );
+            }
         }
     }, [brushContainerSize, scrollContainerSize]);
 
@@ -71,10 +84,14 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
                             (brushContainerSize.width / containerWidth)
                     )
                 );
-                scrollContainerEl.scrollLeft = 10000;
             }
         }
     }, [brushContainerSize, scrollContainerSize, containerWidth]);
+
+    // // Вызываем syncFromScrollPositionToBrush при изменении размеров окна
+    // useEffect(() => {
+    //     syncFromScrollPositionToBrush();
+    // }, [windowSize.width, syncFromScrollPositionToBrush]);
 
     // useEffect(() => {
     //     syncFromScrollPositionToBrush();
@@ -131,9 +148,9 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
                     {barWidth != undefined && containerWidth != undefined && (
                         <ChartBars
                             data={props.value}
-                            barWidth={barWidth}
+                            barWidth={Math.round(barWidth * 10000) / 10000}
                             maxVisibleDuration={maxVisibleDuration}
-                            containerWidth={containerWidth}
+                            containerWidth={Math.round(containerWidth * 10000) / 10000}
                         />
                     )}
                 </div>
