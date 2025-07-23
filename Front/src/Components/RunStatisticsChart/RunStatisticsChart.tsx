@@ -64,9 +64,8 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
             if (scrollContainerEl && containerWidth && barWidth) {
                 setLeft(scrollContainerEl.scrollLeft * (brushContainerSize.width / containerWidth));
                 setRight(
-                    scrollContainerEl.scrollLeft * (brushContainerSize.width / containerWidth) + 
-                    
-                    (scrollContainerSize.width * brushContainerSize.width) / (barWidth * props.value.length)
+                    scrollContainerEl.scrollLeft * (brushContainerSize.width / containerWidth) +
+                        (scrollContainerSize.width * brushContainerSize.width) / (barWidth * props.value.length)
                 );
             }
         }
@@ -88,30 +87,6 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
         }
     }, [brushContainerSize, scrollContainerSize, containerWidth]);
 
-    // // Вызываем syncFromScrollPositionToBrush при изменении размеров окна
-    // useEffect(() => {
-    //     syncFromScrollPositionToBrush();
-    // }, [windowSize.width, syncFromScrollPositionToBrush]);
-
-    // useEffect(() => {
-    //     syncFromScrollPositionToBrush();
-    // }, [brushContainerSize]);
-
-    // const handleScrollRef = React.useRef<() => void>();
-    // const handleScroll = React.useCallback(() => {
-    //     if (!druggingRef.current) syncFromScrollPositionToBrush();
-    // }, [syncFromScrollPositionToBrush]);
-    // useEffect(() => {
-    //     handleScrollRef.current = handleScroll;
-    // }, [handleScroll]);
-    // useLayoutEffect(() => {
-    //     const scrollContainerEl = scrollContainer.current;
-    //     if (scrollContainerEl) {
-    //         scrollContainerEl.onscroll = () => {
-    //             handleScrollRef.current?.();
-    //         };
-    //     }
-    // }, []);
 
     useLayoutEffect(() => {
         const scrollContainerEl = scrollContainer.current;
@@ -150,7 +125,6 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
                             data={props.value}
                             barWidth={Math.round(barWidth * 10000) / 10000}
                             maxVisibleDuration={maxVisibleDuration}
-                            containerWidth={Math.round(containerWidth * 10000) / 10000}
                         />
                     )}
                 </div>
