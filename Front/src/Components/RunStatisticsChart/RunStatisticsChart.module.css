@@ -73,6 +73,10 @@
         position: relative;
         border-top: 2px solid rgb(var(--inverse-color-base) / 0.4);
 
+        > .errorLine {
+            display: none;
+        }
+
         &[data-state='Success'] {
             background-color: rgb(var(--inverse-color-base) / 0.1);
             
@@ -87,6 +91,16 @@
             &:hover {
                 background-color: rgb(from var(--failed-bg-color) r g b / 70%);
             }
+
+            > .errorLine {
+                z-index: 1; 
+                display: block;
+                position: absolute;
+                left: 50%;
+                width: 1px;
+                background-color: rgb(from var(--failed-bg-color) r g b / 30%);
+            }
+
         }
     }
 }
@@ -110,6 +124,10 @@
     top: 0;
     bottom: 0;
 
+    > .errorLine {
+        display: none;
+    }
+
     > div{
         flex-grow: 1;
         flex-shrink: 1;
@@ -123,6 +141,15 @@
 
         &[data-state='Failed'] {
             background-color: rgb(from var(--failed-bg-color) r g b / 50%);
+
+            > .errorLine {
+                z-index: 1; 
+                display: block;
+                position: absolute;
+                left: 50%;
+                width: 1px;
+                background-color: rgb(from var(--failed-bg-color) r g b / 30%);
+            }
         }
     }
 }

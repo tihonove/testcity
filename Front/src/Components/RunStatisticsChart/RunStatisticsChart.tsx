@@ -1,10 +1,11 @@
 import * as React from "react";
-import { Button, Tooltip } from "@skbkontur/react-ui";
 import { formatDuration } from "./DurationUtils";
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import styles from "./RunStatisticsChart.module.css";
 import Draggable from "react-draggable";
 import { useElementSize } from "../../Utils/useElementSize";
+import { ChartBars } from "./ChartBars";
+import { BrushBackground } from "./BrushBackground";
 
 interface RunStatisticsChartProps {
     value: Array<[state: string, duration: number, startDate: string]>;
@@ -28,7 +29,6 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
 
     const brushContainer = useRef<HTMLDivElement>(null);
     const scrollContainer = useRef<HTMLDivElement>(null);
-    const container = useRef<HTMLDivElement>(null);
 
     const brushContainerSize = useElementSize(brushContainer);
     const scrollContainerSize = useElementSize(scrollContainer);
@@ -103,8 +103,6 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
         }
     }, [left, containerWidth]);
 
-    console.log(brushContainerSize?.width);
-
     return (
         <div>
             <div className={styles.chartContainer}>
@@ -130,37 +128,18 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
                 <div className={styles.gridLine} />
                 <div className={styles.gridLine} />
                 <div className={styles.scrollContainer} ref={scrollContainer}>
-                    <div className={styles.container} ref={container} style={{ width: containerWidth }}>
-                        {barWidth != undefined &&
-                            reverse(props.value).map((x, index) => (
-                                <Tooltip trigger={"hover"} render={() => x[2]} key={index}>
-                                    <div
-                                        data-state={x[0] === "Success" ? "Success" : "Failed"}
-                                        key={index}
-                                        style={{
-                                            height: `${(100 * (x[1] / maxVisibleDuration)).toString()}px`,
-                                            flexBasis: `${barWidth.toString()}px`,
-                                        }}>
-                                        {index % Math.floor(200 / barWidth) === 0 && (
-                                            <div className={styles.dateLabel}>{x[2]}</div>
-                                        )}
-                                    </div>
-                                </Tooltip>
-                            ))}
-                    </div>
+                    {barWidth != undefined && containerWidth != undefined && (
+                        <ChartBars
+                            data={props.value}
+                            barWidth={barWidth}
+                            maxVisibleDuration={maxVisibleDuration}
+                            containerWidth={containerWidth}
+                        />
+                    )}
                 </div>
             </div>
             <div className={styles.brushContainer} ref={brushContainer}>
-                <div className={styles.brushBackgroundContainer}>
-                    {reverse(props.value).map((x, index) => (
-                        <div
-                            data-state={x[0] === "Success" ? "Success" : "Failed"}
-                            style={{
-                                height: `${(100 * (x[1] / maxVisibleDuration)).toString()}%`,
-                                flexBasis: `100%`,
-                            }}></div>
-                    ))}
-                </div>
+                <BrushBackground data={props.value} maxVisibleDuration={maxVisibleDuration} />
                 <Draggable
                     axis="x"
                     scale={1}
@@ -214,12 +193,4 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
             </div>
         </div>
     );
-}
-
-function reverse<T>(items: T[]): T[] {
-    const result = [];
-    for (let i = 0; i < items.length; i++) {
-        result[items.length - 1 - i] = items[i];
-    }
-    return result;
 }
