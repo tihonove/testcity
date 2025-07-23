@@ -32,10 +32,11 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
 
     const brushContainerSize = useElementSize(brushContainer);
     const scrollContainerSize = useElementSize(scrollContainer);
-
     const druggingRef = React.useRef<boolean>(false);
+
     const [left, setLeft] = React.useState(0);
     const [right, setRight] = React.useState(100);
+
     const barWidth = React.useMemo(() => {
         if (!scrollContainerSize || !brushContainerSize) return undefined;
         return (scrollContainerSize.width * brushContainerSize.width) / ((right - left) * props.value.length);
@@ -50,7 +51,7 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
             setLeft(
                 Math.max(
                     brushContainerSize.width -
-                        (scrollContainerSize.width * brushContainerSize.width) / (20 * props.value.length),
+                        (scrollContainerSize.width * brushContainerSize.width) / (10 * props.value.length),
                     0
                 )
             );
@@ -149,7 +150,7 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
                     </div>
                 </div>
             </div>
-            <div className={styles.brushContainer} style={{ height: "20px" }} ref={brushContainer}>
+            <div className={styles.brushContainer} ref={brushContainer}>
                 <div className={styles.brushBackgroundContainer}>
                     {reverse(props.value).map((x, index) => (
                         <div
@@ -175,16 +176,7 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
                         druggingRef.current = false;
                         setLeft(x);
                     }}>
-                    <div
-                        style={{
-                            position: "absolute",
-                            top: 0,
-                            bottom: 0,
-                            width: "10px",
-                            left: -5,
-                            backgroundColor: "blue",
-                            opacity: 0.5,
-                        }}></div>
+                    <div className={styles.brushHandle}></div>
                 </Draggable>
                 <Draggable
                     axis="x"
@@ -201,16 +193,7 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
                     onStop={(e, { x, y }) => {
                         druggingRef.current = false;
                     }}>
-                    <div
-                        style={{
-                            position: "absolute",
-                            top: 0,
-                            bottom: 0,
-                            width: right - left - 10,
-                            left: 5,
-                            backgroundColor: "green",
-                            opacity: 0.5,
-                        }}></div>
+                    <div className={styles.brushMiddle} style={{ width: right - left }}></div>
                 </Draggable>
                 <Draggable
                     axis="x"
@@ -226,16 +209,7 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
                         druggingRef.current = false;
                         setRight(x);
                     }}>
-                    <div
-                        style={{
-                            position: "absolute",
-                            top: 0,
-                            bottom: 0,
-                            left: -5,
-                            width: "10px",
-                            backgroundColor: "blue",
-                            opacity: 0.5,
-                        }}></div>
+                    <div className={styles.brushHandleRight}></div>
                 </Draggable>
             </div>
         </div>
