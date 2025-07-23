@@ -87,7 +87,6 @@ export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.El
         }
     }, [brushContainerSize, scrollContainerSize, containerWidth]);
 
-
     useLayoutEffect(() => {
         const scrollContainerEl = scrollContainer.current;
         if (scrollContainerEl && brushContainerSize && containerWidth) {
