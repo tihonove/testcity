@@ -19,3 +19,15 @@ export const LotOfItems: Story = () => (
             ])}
     />
 );
+
+export const HugeAmountOfItems: Story = () => (
+    <RunStatisticsChart
+        value={new Array(1000)
+            .fill(null)
+            .map((x, index) => [
+                Math.random() < 0.05 ? "Failed" : "Success",
+                Math.random() * 10 * 60 * 1000,
+                "2010-01-01T12:00:00Z",
+            ])}
+    />
+);
