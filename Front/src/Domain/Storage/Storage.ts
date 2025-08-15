@@ -707,7 +707,9 @@ export class TestAnalyticsStorage {
                     AND JobId = '${jobId}'
                     AND t.LastRunDate >= now() - INTERVAL 7 DAY
                 GROUP BY ProjectId, JobId, TestId
-                HAVING argMax(t.FlipCount, t.UpdatedAt) / argMax(t.RunCount, t.UpdatedAt) > ${flipRateThreshold.toString()}
+                HAVING 
+                    argMax(t.RunCount, t.UpdatedAt) > 20 AND
+                    argMax(t.FlipCount, t.UpdatedAt) / argMax(t.RunCount, t.UpdatedAt) > ${flipRateThreshold.toString()}
             ) as subquery
         `;
         const result = await this.executeClickHouseQuery<[number][]>(query);
