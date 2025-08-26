@@ -150,11 +150,11 @@ export class TestAnalyticsStorage {
                 length(filtered.ChangesSinceLastRun) as TotalCoveredCommitCount
             FROM (
                 SELECT *,
-                ROW_NUMBER() OVER (PARTITION BY JobId ORDER BY StartDateTime DESC) AS rnj
+                ROW_NUMBER() OVER (PARTITION BY ProjectId, JobId ORDER BY StartDateTime DESC) AS rnj
                 FROM (
                     SELECT
                         *,
-                        ROW_NUMBER() OVER (PARTITION BY JobId, BranchName ORDER BY StartDateTime DESC) AS rn
+                        ROW_NUMBER() OVER (PARTITION BY ProjectId, JobId, BranchName ORDER BY StartDateTime DESC) AS rn
                     FROM JobInfo 
                     WHERE 
                         StartDateTime >= now() - INTERVAL 30 DAY 
