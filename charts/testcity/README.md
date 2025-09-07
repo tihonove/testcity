@@ -1,77 +1,97 @@
 # TestCity Helm Chart
 
-Этот Helm chart позволяет установить приложение TestCity в Kubernetes кластер.
+This Helm chart allows you to install the TestCity application in a Kubernetes cluster.
 
-## Предварительные требования
+## Prerequisites
 
 - Kubernetes 1.19+
 - Helm 3.2.0+
 
-## Установка чарта
+## Installing the Chart
 
-Для установки чарта с именем релиза `testcity`:
+To install the chart with the release name `testcity`:
 
 ```bash
-# Обновляем репозиторий Helm (если чарт находится в репозитории)
+# Update the Helm repository (if the chart is located in a repository)
 # helm repo update
 
-# Устанавливаем чарт
+# Install the chart
 helm install testcity ./charts/testcity \
   --set secrets.gitlab.token=$GITLAB_TOKEN \
   --set secrets.otlp.headers=$OTEL_EXPORTER_OTLP_HEADERS \
-  --set global.tag=0.1.0-test.<commit_hash>
+  --set front.image.tag=0.1.0-test.<commit_hash> \
+  --set api.image.tag=0.1.0-test.<commit_hash> \
+  --set crawler.image.tag=0.1.0-test.<commit_hash> \
+  --set worker.image.tag=0.1.0-test.<commit_hash>
 ```
 
-## Обновление чарта
+## Upgrading the Chart
 
-Для обновления установленного релиза `testcity`:
+To upgrade the installed `testcity` release:
 
 ```bash
 helm upgrade testcity ./charts/testcity \
   --set secrets.gitlab.token=$GITLAB_TOKEN \
   --set secrets.otlp.headers=$OTEL_EXPORTER_OTLP_HEADERS \
-  --set global.tag=0.1.0-test.<new_commit_hash>
+  --set front.image.tag=0.1.0-test.<new_commit_hash> \
+  --set api.image.tag=0.1.0-test.<new_commit_hash> \
+  --set crawler.image.tag=0.1.0-test.<new_commit_hash> \
+  --set worker.image.tag=0.1.0-test.<new_commit_hash>
 ```
 
-## Удаление чарта
+## Uninstalling the Chart
 
-Для удаления установленного релиза `testcity`:
+To uninstall the `testcity` release:
 
 ```bash
 helm uninstall testcity
 ```
 
-## Параметры
+## Parameters
 
-В таблице ниже представлены основные параметры чарта и их значения по умолчанию.
+The table below shows the main chart parameters and their default values.
 
-| Параметр | Описание | Значение по умолчанию |
+| Parameter | Description | Default Value |
 |-----|-----|-----|
-| `global.tag` | Глобальный тег образа для всех компонентов | `latest` |
-| `global.environment` | Окружение для телеметрии | `cloud` |
-| `front.replicaCount` | Количество реплик Frontend | `2` |
-| `front.image.repository` | Репозиторий образа Frontend | `tihonove/testcity-front` |
-| `api.replicaCount` | Количество реплик API | `2` |
-| `api.image.repository` | Репозиторий образа API | `tihonove/testcity-api` |
-| `crawler.replicaCount` | Количество реплик Crawler | `1` |
-| `crawler.image.repository` | Репозиторий образа Crawler | `tihonove/testcity-crawler` |
-| `worker.replicaCount` | Количество реплик Worker | `2` |
-| `worker.image.repository` | Репозиторий образа Worker | `tihonove/testcity-worker` |
-| `secrets.gitlab.token` | GitLab токен для доступа к API | `""` |
-| `secrets.otlp.headers` | Заголовки для OpenTelemetry | `""` |
-| `ingress.enabled` | Включить Ingress | `true` |
-| `ingress.host` | Хост для Ingress | `testcity.kube.testkontur.ru` |
+| `global.environment` | Environment for telemetry | `cloud` |
+| `front.replicaCount` | Number of Frontend replicas | `2` |
+| `front.image.repository` | Frontend image repository | `tihonove/testcity-front` |
+| `front.image.tag` | Frontend image tag | `""` (uses version from Chart.yaml: `1.4.2`) |
+| `api.replicaCount` | Number of API replicas | `2` |
+| `api.image.repository` | API image repository | `tihonove/testcity-api` |
+| `api.image.tag` | API image tag | `""` (uses version from Chart.yaml: `1.4.2`) |
+| `crawler.replicaCount` | Number of Crawler replicas | `1` |
+| `crawler.image.repository` | Crawler image repository | `tihonove/testcity-crawler` |
+| `crawler.image.tag` | Crawler image tag | `""` (uses version from Chart.yaml: `1.4.2`) |
+| `worker.replicaCount` | Number of Worker replicas | `2` |
+| `worker.image.repository` | Worker image repository | `tihonove/testcity-worker` |
+| `worker.image.tag` | Worker image tag | `""` (uses version from Chart.yaml: `1.4.2`) |
+| `clickhouse.host` | ClickHouse host | `vm-ch2-stg.dev.kontur.ru` |
+| `clickhouse.port` | ClickHouse port | `8123` |
+| `clickhouse.db` | ClickHouse database | `test_analytics` |
+| `clickhouse.user` | ClickHouse user | `tihonove` |
+| `clickhouse.password` | ClickHouse password | `12487562` |
+| `gitlab.url` | GitLab URL | `https://gitlab.com/` |
+| `kafka.bootstrapServers` | Kafka servers | `""` |
+| `otlp.endpoint` | OpenTelemetry endpoint | `""` |
+| `graphite.relay.host` | Graphite Relay host | `graphite-relay.skbkontur.ru` |
+| `graphite.relay.port` | Graphite Relay port | `2003` |
+| `secrets.gitlab.token` | GitLab token for API access | `""` |
+| `secrets.otlp.headers` | OpenTelemetry headers | `""` |
+| `ingress.enabled` | Enable Ingress | `true` |
+| `ingress.className` | Ingress class | `nginx` |
+| `ingress.host` | Ingress host | `testcity.kube.testkontur.ru` |
 
-Полный список параметров смотрите в файле `values.yaml`.
+For a complete list of parameters, see the `values.yaml` file.
 
 ## CI/CD Pipeline
 
-Для автоматизации деплоя в CI/CD pipeline рекомендуется использовать следующие шаги:
+To automate deployment in CI/CD pipeline, it is recommended to use the following steps:
 
-1. Сборка и публикация Docker образов
-2. Установка/обновление Helm чарта
+1. Build and publish Docker images
+2. Install/upgrade Helm chart
 
-Пример для GitHub Actions:
+Example for GitHub Actions:
 
 ```yaml
 - name: Deploy to Kubernetes
@@ -79,5 +99,8 @@ helm uninstall testcity
     helm upgrade --install testcity ./charts/testcity \
       --set secrets.gitlab.token=${{ secrets.GITLAB_TOKEN }} \
       --set secrets.otlp.headers=${{ secrets.OTLP_HEADERS }} \
-      --set global.tag=0.1.0-test.${{ env.SHORT_SHA }}
+      --set front.image.tag=0.1.0-test.${{ env.SHORT_SHA }} \
+      --set api.image.tag=0.1.0-test.${{ env.SHORT_SHA }} \
+      --set crawler.image.tag=0.1.0-test.${{ env.SHORT_SHA }} \
+      --set worker.image.tag=0.1.0-test.${{ env.SHORT_SHA }}
 ```
