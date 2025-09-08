@@ -6,7 +6,6 @@ import {
     TransportAirRocketIcon16Light,
     UiMenuShapeCircle4Icon20Light,
     UiMenuShapeCircle4Icon24Regular,
-    UiMenuShapeSquare4TiltIcon20Light,
     UiMenuShapeSquare4TiltIcon24Regular,
 } from "@skbkontur/icons";
 import { ColumnStack, Fill, Fit, RowStack } from "@skbkontur/react-stack-layout";
@@ -17,21 +16,20 @@ import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { BranchSelect } from "../Components/BranchSelect";
 import { GroupAvatar } from "../Components/GroupAvatar";
 import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
-import { JobsView } from "../Components/JobsView";
 import { LogoPageBlock } from "../Components/LogoPageBlock";
 import { ManualJobsInfo } from "../Components/ManualJobsInfo";
-import { PipelineRuns } from "../Components/PipelineRuns";
+import { ProjectItem, ProjectItemProps } from "../Components/ProjectItem";
 import { SubIcon } from "../Components/SubIcon";
 import { SuspenseFadingWrapper, useDelayedTransition } from "../Components/useDelayedTransition";
 import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
-import { JobIdWithParentProjectNames, JobIdWithParentProject } from "../Domain/JobIdWithParentProject";
+import { JobIdWithParentProject } from "../Domain/JobIdWithParentProject";
 import { createLinkToCreateNewPipeline, createLinkToGroupOrProject, createLinkToProject } from "../Domain/Navigation";
 import { JobsQueryRow } from "../Domain/Storage/JobsQuery";
 import { PipelineRunsQueryRow } from "../Domain/Storage/PipelineRunsQueryRow";
 import { GroupNode, Project, getProjects, isGroup, isProject } from "../Domain/Storage/Projects/GroupNode";
 import { useSearchParamAsState } from "../Utils";
 import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
-import { ProjectsWithRunsTable, RunsTable } from "./ProjectsWithRunsTable";
+import { ProjectsWithRunsTable } from "./ProjectsWithRunsTable";
 
 import styles from "./ProjectsDashboardPage.module.css";
 
@@ -293,107 +291,4 @@ function GroupItem({
     );
 }
 
-interface ProjectItemProps {
-    project: Project;
-    level: number;
-    nodes: (GroupNode | Project)[];
-    currentGroupOrProject: GroupNode | Project;
-    rootGroup: GroupNode;
-    currentBranchName: string | undefined;
-    usePipelineGrouping: boolean;
-    allPipelineRuns: PipelineRunsQueryRow[];
-    allJobs: JobIdWithParentProject[];
-    allJobRuns: JobsQueryRow[];
-    noRuns: string | undefined;
-}
 
-function ProjectItem({
-    project,
-    level,
-    nodes,
-    currentGroupOrProject,
-    rootGroup,
-    currentBranchName,
-    usePipelineGrouping,
-    allPipelineRuns,
-    allJobs,
-    allJobRuns,
-    noRuns,
-}: ProjectItemProps): React.JSX.Element {
-    const [collapsed, setCollapsed] = React.useState(false);
-
-    return (
-        <React.Fragment key={project.id}>
-            {project !== currentGroupOrProject && (
-                <thead>
-                    <tr>
-                        <td colSpan={RunsTable.columnCount} style={{ paddingLeft: 25 * level }}>
-                            <div className={styles.sectionTitle}>
-                                <RowStack gap={2} baseline block>
-                                    <Fit>
-                                        <UiMenuShapeSquare4TiltIcon20Light />
-                                    </Fit>
-                                    <Fit>
-                                        <GroupAvatar size="20px" group={project}></GroupAvatar>
-                                    </Fit>
-                                    <Fit>
-                                        <Link
-                                            className="no-underline"
-                                            to={createLinkToProject(rootGroup, project.id, currentBranchName)}>
-                                            <h3 className={styles.header3}>{project.title}</h3>
-                                        </Link>
-                                    </Fit>
-                                    <Fill />
-                                    <Fit style={{ minHeight: "35px" }}>
-                                        <ManualJobsInfo
-                                            key={project.id + (currentBranchName ?? "all")}
-                                            projectId={project.id}
-                                            allPipelineRuns={allPipelineRuns}
-                                        />
-                                    </Fit>
-                                    <Fit>
-                                        <Hint text="Create new pipeline">
-                                            <ReactUILink
-                                                href={createLinkToCreateNewPipeline(
-                                                    rootGroup,
-                                                    project.id,
-                                                    currentBranchName
-                                                )}
-                                                target="_blank"
-                                                icon={
-                                                    <SubIcon sub={<PlusCircleIcon16Solid />}>
-                                                        <TransportAirRocketIcon16Light />
-                                                    </SubIcon>
-                                                }>
-                                                New pipeline
-                                            </ReactUILink>
-                                        </Hint>
-                                    </Fit>
-                                </RowStack>
-                            </div>
-                        </td>
-                    </tr>
-                </thead>
-            )}
-            {usePipelineGrouping ? (
-                <PipelineRuns
-                    groupNodes={nodes}
-                    indentLevel={level}
-                    project={project}
-                    currentBranchName={currentBranchName}
-                    rootProjectStructure={rootGroup}
-                    allPipelineRuns={allPipelineRuns}
-                />
-            ) : (
-                <JobsView
-                    indentLevel={level}
-                    hideRuns={noRuns === "1"}
-                    currentBranchName={currentBranchName}
-                    rootProjectStructure={rootGroup}
-                    allJobs={allJobs.filter(j => j[JobIdWithParentProjectNames.ProjectId] === project.id)}
-                    allJobRuns={allJobRuns}
-                />
-            )}
-        </React.Fragment>
-    );
-}
