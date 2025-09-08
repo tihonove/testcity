@@ -27,5 +27,9 @@
             "name": "vm-ch-tstct-1",
             "group": "kontur"
         }
-    ]
+    ],
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+        "*.tsx": "${capture}.module.css"
+    }
 }
