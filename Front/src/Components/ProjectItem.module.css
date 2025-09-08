@@ -1,8 +1,16 @@
 .sectionTitle {
     margin-top: 16px;
+    margin-left: -32px;
 }
 
 .header3 {
     font-size: 22px;
     line-height: 24px;
+}
+
+.iconButton {
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
 }

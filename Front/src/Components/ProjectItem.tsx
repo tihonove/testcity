@@ -1,12 +1,15 @@
 import {
+    ArrowShapeTriangleADownIcon20Light,
+    ArrowShapeTriangleARightIcon20Light,
     PlusCircleIcon16Solid,
     TransportAirRocketIcon16Light,
     UiMenuShapeSquare4TiltIcon20Light,
 } from "@skbkontur/icons";
-import { Fill, Fit, RowStack } from "@skbkontur/react-stack-layout";
-import { Hint, Link as ReactUILink } from "@skbkontur/react-ui";
+import { Fill, Fit, Fixed, RowStack } from "@skbkontur/react-stack-layout";
+import { Button, Hint, Link as ReactUILink } from "@skbkontur/react-ui";
 import * as React from "react";
 import { Link } from "react-router-dom";
+import { useLocalStorage } from "usehooks-ts";
 import { GroupAvatar } from "./GroupAvatar";
 import { JobsView } from "./JobsView";
 import { ManualJobsInfo } from "./ManualJobsInfo";
@@ -20,6 +23,7 @@ import { GroupNode, Project } from "../Domain/Storage/Projects/GroupNode";
 import { RunsTable } from "../Pages/ProjectsWithRunsTable";
 
 import styles from "./ProjectItem.module.css";
+import { useUserSettings } from "../Utils/useUserSettings";
 
 export interface ProjectItemProps {
     project: Project;
@@ -48,7 +52,7 @@ export function ProjectItem({
     allJobRuns,
     noRuns,
 }: ProjectItemProps): React.JSX.Element {
-    const [collapsed, setCollapsed] = React.useState(false);
+    const [collapsed, setCollapsed] = useUserSettings(["collapsed", nodes.map(n => n.id).join(".")], false);
 
     return (
         <React.Fragment key={project.id}>
@@ -58,6 +62,21 @@ export function ProjectItem({
                         <td colSpan={RunsTable.columnCount} style={{ paddingLeft: 25 * level }}>
                             <div className={styles.sectionTitle}>
                                 <RowStack gap={2} baseline block>
+                                    <Fixed width={20}>
+                                        <button
+                                            className={styles.iconButton}
+                                            type="button"
+                                            onClick={() => {
+                                                setCollapsed(!collapsed);
+                                                return false;
+                                            }}>
+                                            {collapsed ? (
+                                                <ArrowShapeTriangleARightIcon20Light />
+                                            ) : (
+                                                <ArrowShapeTriangleADownIcon20Light />
+                                            )}
+                                        </button>
+                                    </Fixed>
                                     <Fit>
                                         <UiMenuShapeSquare4TiltIcon20Light />
                                     </Fit>
@@ -103,24 +122,28 @@ export function ProjectItem({
                     </tr>
                 </thead>
             )}
-            {usePipelineGrouping ? (
-                <PipelineRuns
-                    groupNodes={nodes}
-                    indentLevel={level}
-                    project={project}
-                    currentBranchName={currentBranchName}
-                    rootProjectStructure={rootGroup}
-                    allPipelineRuns={allPipelineRuns}
-                />
-            ) : (
-                <JobsView
-                    indentLevel={level}
-                    hideRuns={noRuns === "1"}
-                    currentBranchName={currentBranchName}
-                    rootProjectStructure={rootGroup}
-                    allJobs={allJobs.filter(j => j[JobIdWithParentProjectNames.ProjectId] === project.id)}
-                    allJobRuns={allJobRuns}
-                />
+            {!collapsed && (
+                <>
+                    {usePipelineGrouping ? (
+                        <PipelineRuns
+                            groupNodes={nodes}
+                            indentLevel={level}
+                            project={project}
+                            currentBranchName={currentBranchName}
+                            rootProjectStructure={rootGroup}
+                            allPipelineRuns={allPipelineRuns}
+                        />
+                    ) : (
+                        <JobsView
+                            indentLevel={level}
+                            hideRuns={noRuns === "1"}
+                            currentBranchName={currentBranchName}
+                            rootProjectStructure={rootGroup}
+                            allJobs={allJobs.filter(j => j[JobIdWithParentProjectNames.ProjectId] === project.id)}
+                            allJobRuns={allJobRuns}
+                        />
+                    )}
+                </>
             )}
         </React.Fragment>
     );
