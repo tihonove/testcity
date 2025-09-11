@@ -52,7 +52,10 @@ export function ProjectItem({
     allJobRuns,
     noRuns,
 }: ProjectItemProps): React.JSX.Element {
-    const [collapsed, setCollapsed] = useUserSettings(["collapsed", nodes.map(n => n.id).join(".")], false);
+    const [collapsed, setCollapsed] = useUserSettings(
+        ["collapsed", [...nodes, project].map(n => n.id).join(".")],
+        false
+    );
 
     return (
         <React.Fragment key={project.id}>
@@ -127,14 +130,16 @@ export function ProjectItem({
                     {usePipelineGrouping ? (
                         <PipelineRuns
                             groupNodes={nodes}
-                            indentLevel={level}
                             project={project}
+                            indentLevel={level}
                             currentBranchName={currentBranchName}
                             rootProjectStructure={rootGroup}
                             allPipelineRuns={allPipelineRuns}
                         />
                     ) : (
                         <JobsView
+                            groupNodes={nodes}
+                            project={project}
                             indentLevel={level}
                             hideRuns={noRuns === "1"}
                             currentBranchName={currentBranchName}

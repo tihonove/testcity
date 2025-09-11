@@ -11,6 +11,6 @@
 .iconButton {
     padding: 0;
     border: none;
-    background: none;
+    background: transparent;
     cursor: pointer;
 }
