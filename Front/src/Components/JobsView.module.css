@@ -6,33 +6,3 @@
 .jobHeader a {
     font-weight: 600;
 }
-
-.numberCell {
-    width: 80px;
-    text-align: left;
-}
-
-.paddingCell {
-    padding: 0 !important;
-    min-width: 12px;
-}
-
-.countCell {
-    max-width: 300px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.changesCell {
-    max-width: 300px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.attributesCell {
-    max-width: 80px;
-    white-space: nowrap;
-    text-align: left;
-}
