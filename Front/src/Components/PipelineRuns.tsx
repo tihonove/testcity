@@ -15,11 +15,11 @@ import { CommitChanges } from "./CommitChanges";
 import styles from "./PipelineRuns.module.css";
 
 interface PipelineRunsProps {
-    indentLevel: number;
+    groupNodes: (GroupNode | Project)[];
     project: Project;
+    indentLevel: number;
     currentBranchName?: string;
     rootProjectStructure: GroupNode;
-    groupNodes: (GroupNode | Project)[];
     allPipelineRuns: PipelineRunsQueryRow[];
 }
 
