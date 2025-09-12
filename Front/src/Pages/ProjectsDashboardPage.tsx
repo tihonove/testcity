@@ -18,7 +18,7 @@ import { GroupAvatar } from "../Components/GroupAvatar";
 import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
 import { LogoPageBlock } from "../Components/LogoPageBlock";
 import { ManualJobsInfo } from "../Components/ManualJobsInfo";
-import { ProjectItem, ProjectItemProps } from "../Components/ProjectItem";
+import { ProjectItemDashboardTable, ProjectItemProps } from "../Components/ProjectItemDashboardTable";
 import { SubIcon } from "../Components/SubIcon";
 import { SuspenseFadingWrapper, useDelayedTransition } from "../Components/useDelayedTransition";
 import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
@@ -67,7 +67,7 @@ export function ProjectsDashboardPage(): React.JSX.Element {
     );
 
     const renderProject = (project: Project, level: number, nodes: (GroupNode | Project)[]) => (
-        <ProjectItem
+        <ProjectItemDashboardTable
             key={project.id}
             project={project}
             level={level}
@@ -271,7 +271,7 @@ function GroupItem({
                 </tr>
             </thead>
             {(group.projects ?? []).map(x => (
-                <ProjectItem
+                <ProjectItemDashboardTable
                     key={x.id}
                     project={x}
                     level={level + 1}
@@ -290,5 +290,3 @@ function GroupItem({
         </React.Fragment>
     );
 }
-
-

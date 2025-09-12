@@ -22,6 +22,7 @@ interface JobsViewProps {
 }
 
 export function JobsView({
+    groupNodes,
     rootProjectStructure,
     hideRuns,
     allJobs,
@@ -47,6 +48,7 @@ export function JobsView({
         <>
             {jobsWithRuns.map(({ job, jobRuns }) => (
                 <JobRunsTable
+                    groupNodes={groupNodes}
                     key={job[JobIdWithParentProjectNames.JobId] + job[JobIdWithParentProjectNames.ProjectId]}
                     job={job}
                     jobRuns={jobRuns}

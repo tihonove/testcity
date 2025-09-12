@@ -22,7 +22,7 @@ import { PipelineRunsQueryRow } from "../Domain/Storage/PipelineRunsQueryRow";
 import { GroupNode, Project } from "../Domain/Storage/Projects/GroupNode";
 import { RunsTable } from "../Pages/ProjectsWithRunsTable";
 
-import styles from "./ProjectItem.module.css";
+import styles from "./ProjectItemDashboardTable.module.css";
 import { useUserSettings } from "../Utils/useUserSettings";
 
 export interface ProjectItemProps {
@@ -39,7 +39,7 @@ export interface ProjectItemProps {
     noRuns: string | undefined;
 }
 
-export function ProjectItem({
+export function ProjectItemDashboardTable({
     project,
     level,
     nodes,
@@ -53,7 +53,7 @@ export function ProjectItem({
     noRuns,
 }: ProjectItemProps): React.JSX.Element {
     const [collapsed, setCollapsed] = useUserSettings(
-        ["collapsed", [...nodes, project].map(n => n.id).join(".")],
+        ["ui", ...[...nodes, project].map(n => n.id), "collapsed"],
         false
     );
 

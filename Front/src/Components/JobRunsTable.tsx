@@ -1,4 +1,6 @@
 import {
+    ArrowShapeTriangleADownIcon20Light,
+    ArrowShapeTriangleARightIcon20Light,
     FileTypeMarkupIcon16Regular,
     SearchLoupePlusIcon16Solid,
     ShapeSquareIcon16Regular,
@@ -12,7 +14,7 @@ import { createLinkToJob, createLinkToJobRun } from "../Domain/Navigation";
 import { getLinkToJob, getText } from "../Utils";
 import { JobIdWithParentProject, JobIdWithParentProjectNames } from "../Domain/JobIdWithParentProject";
 import { JobRunNames, JobsQueryRow } from "../Domain/Storage/JobsQuery";
-import { GroupNode } from "../Domain/Storage/Projects/GroupNode";
+import { GroupNode, Project } from "../Domain/Storage/Projects/GroupNode";
 import { SubIcon } from "./SubIcon";
 import { Hint } from "@skbkontur/react-ui";
 import { RunsTable } from "../Pages/ProjectsWithRunsTable";
@@ -20,9 +22,12 @@ import { BranchBox } from "./BranchBox";
 import { JobLink } from "./JobLink";
 import { TimingCell } from "./TimingCell";
 import { RotatingSpinner } from "./RotatingSpinner";
+import { useUserSettings } from "../Utils/useUserSettings";
 import styles from "./JobRunsTable.module.css";
+import { Fit, Fixed, RowStack } from "@skbkontur/react-stack-layout";
 
 interface JobRunsTableProps {
+    groupNodes: (GroupNode | Project)[];
     job: JobIdWithParentProject;
     jobRuns: JobsQueryRow[];
     currentBranchName?: string;
@@ -34,6 +39,7 @@ interface JobRunsTableProps {
 export function JobRunsTable({
     job,
     jobRuns,
+    groupNodes,
     rootProjectStructure,
     currentBranchName,
     indentLevel,
@@ -41,7 +47,12 @@ export function JobRunsTable({
 }: JobRunsTableProps) {
     const jobId = job[JobIdWithParentProjectNames.JobId];
     const projectId = job[JobIdWithParentProjectNames.ProjectId];
+
     const hasFailedRuns = jobRuns.some(x => x[JobRunNames.State] != "Success" && x[JobRunNames.State] != "Canceled");
+    const [collapsed, setCollapsed] = useUserSettings(
+        ["ui", ...groupNodes.map(x => x.id), projectId, jobId, "collapsed"],
+        false
+    );
 
     return (
         <>
@@ -51,18 +62,39 @@ export function JobRunsTable({
                         className={styles.jobHeader}
                         colSpan={RunsTable.columnCount}
                         style={{ paddingLeft: indentLevel * 25, paddingRight: 0 }}>
-                        {hasFailedRuns ? (
-                            <ShapeSquareIcon16Solid color="var(--failed-text-color)" />
-                        ) : (
-                            <ShapeSquareIcon16Regular color="var(--success-text-color)" />
-                        )}{" "}
-                        <Link to={createLinkToJob(rootProjectStructure, projectId, jobId, currentBranchName)}>
-                            {jobId}
-                        </Link>
+                        <RowStack gap={2} baseline block className={styles.jobHeaderRow}>
+                            <Fixed width={20}>
+                                <button
+                                    className={styles.iconButton}
+                                    type="button"
+                                    onClick={() => {
+                                        setCollapsed(!collapsed);
+                                        return false;
+                                    }}>
+                                    {collapsed ? (
+                                        <ArrowShapeTriangleARightIcon20Light />
+                                    ) : (
+                                        <ArrowShapeTriangleADownIcon20Light />
+                                    )}
+                                </button>
+                            </Fixed>
+                            <Fit>
+                                {hasFailedRuns ? (
+                                    <ShapeSquareIcon16Solid color="var(--failed-text-color)" />
+                                ) : (
+                                    <ShapeSquareIcon16Regular color="var(--success-text-color)" />
+                                )}
+                            </Fit>
+                            <Fit>
+                                <Link to={createLinkToJob(rootProjectStructure, projectId, jobId, currentBranchName)}>
+                                    {jobId}
+                                </Link>
+                            </Fit>
+                        </RowStack>
                     </th>
                 </tr>
             </thead>
-            {!hideRuns && (
+            {!hideRuns && !collapsed && (
                 <tbody>
                     {jobRuns
                         .sort(

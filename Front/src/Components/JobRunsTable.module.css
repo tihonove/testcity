@@ -3,6 +3,10 @@
     text-align: left;
 }
 
+.jobHeaderRow {
+    margin-left: -32px;
+}
+
 .jobHeader a {
     font-weight: 600;
 }
@@ -35,4 +39,11 @@
     max-width: 80px;
     white-space: nowrap;
     text-align: left;
+}
+
+.iconButton {
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
 }
