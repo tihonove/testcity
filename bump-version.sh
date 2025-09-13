@@ -66,8 +66,8 @@ NEW_VERSION="$MAJOR.$MINOR.$PATCH"
 echo "New version: $NEW_VERSION"
 
 # Updating version in Chart.yaml file
-sed -i "s/^version:.*/version: $NEW_VERSION/" "$CHART_FILE"
-sed -i "s/^appVersion:.*/appVersion: $NEW_VERSION/" "$CHART_FILE"
+sed -i "" "s/^version:.*/version: $NEW_VERSION/" "$CHART_FILE"
+sed -i "" "s/^appVersion:.*/appVersion: $NEW_VERSION/" "$CHART_FILE"
 
 echo "Version in $CHART_FILE updated."
 
