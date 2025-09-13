@@ -10,20 +10,20 @@ import { Button, Hint, Link as ReactUILink } from "@skbkontur/react-ui";
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
-import { GroupAvatar } from "./GroupAvatar";
-import { JobsView } from "./JobsView";
-import { ManualJobsInfo } from "./ManualJobsInfo";
-import { PipelineRuns } from "./PipelineRuns";
-import { SubIcon } from "./SubIcon";
-import { JobIdWithParentProjectNames, JobIdWithParentProject } from "../Domain/JobIdWithParentProject";
-import { createLinkToCreateNewPipeline, createLinkToProject } from "../Domain/Navigation";
-import { JobsQueryRow } from "../Domain/Storage/JobsQuery";
-import { PipelineRunsQueryRow } from "../Domain/Storage/PipelineRunsQueryRow";
-import { GroupNode, Project } from "../Domain/Storage/Projects/GroupNode";
-import { RunsTable } from "../Pages/ProjectsWithRunsTable";
+import { GroupAvatar } from "../../../Components/GroupAvatar";
+import { JobsView } from "../../../Components/JobsView";
+import { ManualJobsInfo } from "../../../Components/ManualJobsInfo";
+import { PipelineRuns } from "../../../Components/PipelineRuns";
+import { SubIcon } from "../../../Components/SubIcon";
+import { JobIdWithParentProjectNames, JobIdWithParentProject } from "../../../Domain/JobIdWithParentProject";
+import { createLinkToCreateNewPipeline, createLinkToProject } from "../../../Domain/Navigation";
+import { JobsQueryRow } from "../../../Domain/Storage/JobsQuery";
+import { PipelineRunsQueryRow } from "../../../Domain/Storage/PipelineRunsQueryRow";
+import { GroupNode, Project } from "../../../Domain/Storage/Projects/GroupNode";
+import { RunsTable } from "./ProjectsWithRunsTable";
 
 import styles from "./ProjectItemDashboardTable.module.css";
-import { useUserSettings } from "../Utils/useUserSettings";
+import { useUserSettings } from "../../../Utils/useUserSettings";
 
 export interface ProjectItemProps {
     project: Project;

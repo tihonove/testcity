@@ -5,7 +5,7 @@ import { createLinkToJob } from "../Domain/Navigation";
 import { JobIdWithParentProject, JobIdWithParentProjectNames } from "../Domain/JobIdWithParentProject";
 import { JobRunNames, JobsQueryRow } from "../Domain/Storage/JobsQuery";
 import { GroupNode, Project } from "../Domain/Storage/Projects/GroupNode";
-import { RunsTable } from "../Pages/ProjectsWithRunsTable";
+import { RunsTable } from "../Pages/ProjectsDashboardPage/Components/ProjectsWithRunsTable";
 import { stableGroupBy } from "../Utils/ArrayUtils";
 import { JobRunsTable } from "./JobRunsTable";
 import styles from "./JobsView.module.css";

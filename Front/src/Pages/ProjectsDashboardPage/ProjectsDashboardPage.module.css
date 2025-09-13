@@ -4,10 +4,6 @@
     margin: 24px auto;
 }
 
-.sectionTitle {
-    margin-top: 16px;
-}
-
 .root {
     display: flex;
 }
@@ -16,11 +12,6 @@
     position: fixed;
     right: 40px;
     top: 10px;
-}
-
-.header3 {
-    font-size: 22px;
-    line-height: 24px;
 }
 
 .rootGroupTitle {

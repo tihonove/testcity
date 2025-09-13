@@ -4,32 +4,28 @@ import {
     PlusCircleIcon16Solid,
     TextBulletIcon20Regular,
     TransportAirRocketIcon16Light,
-    UiMenuShapeCircle4Icon20Light,
     UiMenuShapeCircle4Icon24Regular,
     UiMenuShapeSquare4TiltIcon24Regular,
 } from "@skbkontur/icons";
 import { ColumnStack, Fill, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import { Button, Hint, Link as ReactUILink } from "@skbkontur/react-ui";
 import * as React from "react";
-import { Link } from "react-router-dom";
-import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
-import { BranchSelect } from "../Components/BranchSelect";
-import { GroupAvatar } from "../Components/GroupAvatar";
-import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
-import { LogoPageBlock } from "../Components/LogoPageBlock";
-import { ManualJobsInfo } from "../Components/ManualJobsInfo";
-import { ProjectItemDashboardTable, ProjectItemProps } from "../Components/ProjectItemDashboardTable";
-import { SubIcon } from "../Components/SubIcon";
-import { SuspenseFadingWrapper, useDelayedTransition } from "../Components/useDelayedTransition";
-import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
-import { JobIdWithParentProject } from "../Domain/JobIdWithParentProject";
-import { createLinkToCreateNewPipeline, createLinkToGroupOrProject, createLinkToProject } from "../Domain/Navigation";
-import { JobsQueryRow } from "../Domain/Storage/JobsQuery";
-import { PipelineRunsQueryRow } from "../Domain/Storage/PipelineRunsQueryRow";
-import { GroupNode, Project, getProjects, isGroup, isProject } from "../Domain/Storage/Projects/GroupNode";
-import { useSearchParamAsState } from "../Utils";
-import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
-import { ProjectsWithRunsTable } from "./ProjectsWithRunsTable";
+import { useStorageQuery } from "../../ClickhouseClientHooksWrapper";
+import { BranchSelect } from "../../Components/BranchSelect";
+import { GroupAvatar } from "../../Components/GroupAvatar";
+import { GroupBreadcrumps } from "../../Components/GroupBreadcrumps";
+import { GroupItemDashboardTable } from "./Components/GroupItemDashboardTable";
+import { LogoPageBlock } from "../../Components/LogoPageBlock";
+import { ManualJobsInfo } from "../../Components/ManualJobsInfo";
+import { ProjectItemDashboardTable } from "./Components/ProjectItemDashboardTable";
+import { SubIcon } from "../../Components/SubIcon";
+import { SuspenseFadingWrapper, useDelayedTransition } from "../../Components/useDelayedTransition";
+import { useProjectContextFromUrlParams } from "../../Components/useProjectContextFromUrlParams";
+import { createLinkToCreateNewPipeline } from "../../Domain/Navigation";
+import { GroupNode, Project, getProjects, isGroup, isProject } from "../../Domain/Storage/Projects/GroupNode";
+import { useSearchParamAsState } from "../../Utils";
+import { usePopularBranchStoring } from "../../Utils/PopularBranchStoring";
+import { ProjectsWithRunsTable } from "./Components/ProjectsWithRunsTable";
 
 import styles from "./ProjectsDashboardPage.module.css";
 
@@ -87,7 +83,7 @@ export function ProjectsDashboardPage(): React.JSX.Element {
         return (
             <>
                 {groups.map(x => (
-                    <GroupItem
+                    <GroupItemDashboardTable
                         key={x.id}
                         group={x}
                         nodesPath={[...nodesPath, x]}
@@ -212,81 +208,5 @@ export function ProjectsDashboardPage(): React.JSX.Element {
                 </div>
             )}
         </main>
-    );
-}
-
-interface GroupItemProps {
-    group: GroupNode;
-    nodesPath: GroupNode[];
-    level: number;
-    currentBranchName: string | undefined;
-    renderGroupList: (groups: GroupNode[], nodesPath: GroupNode[], level: number) => React.JSX.Element;
-    // Props for ProjectItem
-    currentGroupOrProject: GroupNode | Project;
-    rootGroup: GroupNode;
-    usePipelineGrouping: boolean;
-    allPipelineRuns: PipelineRunsQueryRow[];
-    allJobs: JobIdWithParentProject[];
-    allJobRuns: JobsQueryRow[];
-    noRuns: string | undefined;
-}
-
-function GroupItem({
-    group,
-    nodesPath,
-    level,
-    currentBranchName,
-    renderGroupList,
-    currentGroupOrProject,
-    rootGroup,
-    usePipelineGrouping,
-    allPipelineRuns,
-    allJobs,
-    allJobRuns,
-    noRuns,
-}: GroupItemProps): React.JSX.Element {
-    const [collapsed, setCollapsed] = React.useState(false);
-
-    return (
-        <React.Fragment key={group.id}>
-            <thead>
-                <tr>
-                    <td colSpan={5} style={{ paddingLeft: 25 * level }}>
-                        <div className={styles.sectionTitle}>
-                            <RowStack gap={2} baseline block>
-                                <Fit>
-                                    <UiMenuShapeCircle4Icon20Light />
-                                </Fit>
-                                <Fit>
-                                    <GroupAvatar size="20px" group={group}></GroupAvatar>
-                                </Fit>
-                                <Fit>
-                                    <Link to={createLinkToGroupOrProject(nodesPath, currentBranchName)}>
-                                        <h3 className={styles.header3}>{group.title}</h3>
-                                    </Link>
-                                </Fit>
-                            </RowStack>
-                        </div>
-                    </td>
-                </tr>
-            </thead>
-            {(group.projects ?? []).map(x => (
-                <ProjectItemDashboardTable
-                    key={x.id}
-                    project={x}
-                    level={level + 1}
-                    nodes={[...nodesPath, x]}
-                    currentGroupOrProject={currentGroupOrProject}
-                    rootGroup={rootGroup}
-                    currentBranchName={currentBranchName}
-                    usePipelineGrouping={usePipelineGrouping}
-                    allPipelineRuns={allPipelineRuns}
-                    allJobs={allJobs}
-                    allJobRuns={allJobRuns}
-                    noRuns={noRuns}
-                />
-            ))}
-            {renderGroupList(group.groups ?? [], [...nodesPath, group], level + 1)}
-        </React.Fragment>
     );
 }

@@ -17,7 +17,7 @@ import { JobRunNames, JobsQueryRow } from "../Domain/Storage/JobsQuery";
 import { GroupNode, Project } from "../Domain/Storage/Projects/GroupNode";
 import { SubIcon } from "./SubIcon";
 import { Hint } from "@skbkontur/react-ui";
-import { RunsTable } from "../Pages/ProjectsWithRunsTable";
+import { RunsTable } from "../Pages/ProjectsDashboardPage/Components/ProjectsWithRunsTable";
 import { BranchBox } from "./BranchBox";
 import { JobLink } from "./JobLink";
 import { TimingCell } from "./TimingCell";
