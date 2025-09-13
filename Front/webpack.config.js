@@ -80,7 +80,7 @@ module.exports = (env, argv) => {
         ].filter(Boolean),
         devServer: {
             historyApiFallback: {
-                index: "/",
+                disableDotRule: true,
             },
             hot: true,
             client: {

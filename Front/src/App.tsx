@@ -8,7 +8,7 @@ import { GroupsPage } from "./Pages/GroupsPage";
 import { JobRunsPage } from "./Pages/JobRunsPage";
 import { JobRunTestListPage } from "./Pages/JobRunTestListPage";
 import { PipelineRunTestListPage } from "./Pages/PipelineRunTestListPage";
-import { ProjectsDashboardPage } from "./Pages/ProjectsDashboardPage";
+import { ProjectsDashboardPage } from "./Pages/ProjectsDashboardPage/ProjectsDashboardPage";
 import { TestHistoryPage } from "./Pages/TestHistoryPage";
 import { TestsTreeMapChart } from "./Components/TestsTreeMapChart";
 import { TestsTreeView } from "./Components/TestsTreeView";

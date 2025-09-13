@@ -33,10 +33,6 @@
     outline: 1px solid var(--border-line-color-2);
     outline-offset: -1px;
 
-    &.iconWrapper {
-        margin-bottom: -14px;
-    }
-
     .avatarWithImage {
         font-size: 24px;
         line-height: 40px;
@@ -44,7 +40,6 @@
         height: 40px;
         border-radius: 4px;
     }
-
 }
 
 .avatarWithImage {
