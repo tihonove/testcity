@@ -14,7 +14,7 @@ services:
       - testcity-network
 
   kafka:
-    image: bitnami/kafka:4.0
+    image: bitnamilegacy/kafka:4.0
     container_name: kafka
     ports:
       - "9092:9092"

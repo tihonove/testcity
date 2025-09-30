@@ -86,7 +86,7 @@ jobs:
           CLICKHOUSE_PASSWORD: 123123
       
       kafka:
-        image: bitnami/kafka
+        image: bitnamilegacy/kafka
         ports:
           - 9092:9092
         env:
