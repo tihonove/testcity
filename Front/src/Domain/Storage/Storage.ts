@@ -124,7 +124,7 @@ export class TestAnalyticsStorage {
                 JobId, ProjectId 
             FROM JobInfo 
             WHERE 
-                StartDateTime >= DATE_ADD(MONTH, -1, NOW()) AND 
+                StartDateTime >= DATE_ADD(DAY, -14, NOW()) AND 
                 ProjectId IN [${projectIds.map(x => "'" + x + "'").join(", ")}]
         `;
 
@@ -161,7 +161,7 @@ export class TestAnalyticsStorage {
                         ROW_NUMBER() OVER (PARTITION BY ProjectId, JobId, BranchName ORDER BY StartDateTime DESC) AS rn
                     FROM JobInfo 
                     WHERE 
-                        StartDateTime >= now() - INTERVAL 30 DAY 
+                        StartDateTime >= now() - INTERVAL 14 DAY 
                         AND ProjectId IN [${projectIds.map(x => "'" + x + "'").join(", ")}]
                         ${currentBranchName ? `AND BranchName = '${currentBranchName}'` : ""}
                 ) AS filtered_inner 
@@ -200,7 +200,7 @@ export class TestAnalyticsStorage {
             LEFT JOIN JobInfo AS ji ON ji.JobId = ipji.JobId AND ji.JobRunId = ipji.JobRunId
             WHERE 
                 ji.JobRunId = ''
-                AND ipji.StartDateTime >= now() - INTERVAL 30 DAY 
+                AND ipji.StartDateTime >= now() - INTERVAL 14 DAY 
                 AND ipji.ProjectId IN [${projectIds.map(x => "'" + x + "'").join(", ")}]
                 ${currentBranchName ? `AND ipji.BranchName = '${currentBranchName}'` : ""}
             ORDER BY ipji.JobId, ipji.StartDateTime DESC
@@ -592,7 +592,7 @@ export class TestAnalyticsStorage {
                 BranchName
             FROM JobInfo
             WHERE 
-                StartDateTime >= DATE_ADD(MONTH, -1, NOW()) AND BranchName != '' 
+                StartDateTime >= DATE_ADD(DAY, -14, NOW()) AND BranchName != '' 
                 ${projectIds ? `AND ProjectId IN [${projectIds.map(x => "'" + x + "'").join(", ")}]` : ""}
                 ${jobId ? `AND JobId = '${jobId}'` : ""}
             ORDER BY StartDateTime DESC;
