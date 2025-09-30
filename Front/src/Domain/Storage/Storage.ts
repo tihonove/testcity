@@ -92,12 +92,16 @@ export class TestAnalyticsStorage {
                 JUnitSystemOutput
             FROM TestRuns
             WHERE 
-                TestId = '${testId}' 
-                AND JobId = '${jobId}'
-                AND JobRunId IN [${jobRunIds.map(x => `'${x}'`).join(", ")}]
+                TestId = {testId:String} 
+                AND JobId = {jobId:String}
+                AND JobRunId IN {jobRunIds:Array(String)}
             LIMIT 1
         `;
-        const result = await this.executeClickHouseQuery<[string, string, string][]>(query);
+        const result = await this.executeClickHouseQuery<[string, string, string][]>(query, {
+            testId: testId,
+            jobId: jobId,
+            jobRunIds: jobRunIds,
+        });
         return result[0];
     }
 
@@ -597,9 +601,15 @@ export class TestAnalyticsStorage {
         return result.map(row => row[0]);
     }
 
-    private async executeClickHouseQuery<T>(query: string): Promise<T> {
+    private async executeClickHouseQuery<T>(query: string, params?: Record<string, unknown>): Promise<T> {
         const id = getQueryId();
-        const response = await this.client.query({ query: query, format: "JSONCompact", query_id: id });
+        const queryOptions = {
+            query: query,
+            format: "JSONCompact" as const,
+            query_id: id,
+            ...(params && { query_params: params }),
+        };
+        const response = await this.client.query(queryOptions);
         const result = await response.json();
         if (typeof result === "object") {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -615,19 +625,30 @@ export class TestAnalyticsStorage {
         jobIds: string[],
         branchName?: string
     ): Promise<[string, number, string][]> {
-        let condition = `TestId = '${testId}'`;
-        condition += ` AND JobId IN [${jobIds.map(x => `'${x}'`).join(", ")}]`;
-        if (branchName != undefined) condition += ` AND BranchName = '${branchName}'`;
+        const branchCondition = branchName !== undefined ? "AND BranchName = {branchName:String}" : "";
         const query = `
             SELECT
                 State, 
                 Duration, 
                 StartDateTime 
             FROM TestRuns 
-            WHERE ${condition} 
+            WHERE 
+                TestId = {testId:String}
+                AND JobId IN {jobIds:Array(String)}
+                ${branchCondition}
             ORDER BY StartDateTime DESC
             LIMIT 1000`;
-        return this.executeClickHouseQuery<[string, number, string][]>(query);
+
+        const params: Record<string, unknown> = {
+            testId,
+            jobIds,
+        };
+
+        if (branchName !== undefined) {
+            params.branchName = branchName;
+        }
+
+        return this.executeClickHouseQuery<[string, number, string][]>(query, params);
     }
 
     public async getTestRuns(
@@ -637,10 +658,7 @@ export class TestAnalyticsStorage {
         page: number = 0,
         pageSize: number = 50
     ): Promise<TestPerJobRunQueryRow[]> {
-        let condition = `TestRuns.TestId = '${testId}'`;
-        condition += ` AND TestRuns.JobId IN [${jobIds.map(x => `'${x}'`).join(", ")}]`;
-        if (branchName != undefined) condition += ` AND TestRuns.BranchName = '${branchName}'`;
-
+        const branchCondition = branchName !== undefined ? "AND TestRuns.BranchName = {branchName:String}" : "";
         const query = `
         SELECT 
             TestRuns.JobId, 
@@ -653,10 +671,25 @@ export class TestAnalyticsStorage {
             JobInfo.CustomStatusMessage
         FROM TestRuns 
         ANY INNER JOIN JobInfo ON JobInfo.JobRunId = TestRuns.JobRunId 
-        WHERE ${condition} 
+        WHERE 
+            TestRuns.TestId = {testId:String}
+            AND TestRuns.JobId IN {jobIds:Array(String)}
+            ${branchCondition}
         ORDER BY TestRuns.StartDateTime DESC 
-        LIMIT ${(pageSize * page).toString()}, ${pageSize.toString()}`;
-        return this.executeClickHouseQuery<TestPerJobRunQueryRow[]>(query);
+        LIMIT {offset:UInt64}, {limit:UInt64}`;
+
+        const params: Record<string, unknown> = {
+            testId,
+            jobIds,
+            offset: pageSize * page,
+            limit: pageSize,
+        };
+
+        if (branchName !== undefined) {
+            params.branchName = branchName;
+        }
+
+        return this.executeClickHouseQuery<TestPerJobRunQueryRow[]>(query, params);
     }
 
     public async getFlakyTests(
@@ -737,12 +770,25 @@ export class TestAnalyticsStorage {
     }
 
     public async getTestRunCount(testId: string, jobIds: string[], branchName?: string): Promise<number> {
-        let condition = `TestId = '${testId}'`;
-        condition += ` AND JobId IN [${jobIds.map(x => `'${x}'`).join(", ")}]`;
-        if (branchName != undefined) condition += ` AND BranchName = '${branchName}'`;
+        const branchCondition = branchName !== undefined ? "AND BranchName = {branchName:String}" : "";
+        const query = `
+            SELECT COUNT(*) 
+            FROM TestRuns 
+            WHERE 
+                TestId = {testId:String}
+                AND JobId IN {jobIds:Array(String)}
+                ${branchCondition}`;
 
-        const query = `SELECT COUNT(*) FROM TestRuns WHERE ${condition}`;
-        const result = await this.executeClickHouseQuery<[string][]>(query);
+        const params: Record<string, unknown> = {
+            testId,
+            jobIds,
+        };
+
+        if (branchName !== undefined) {
+            params.branchName = branchName;
+        }
+
+        const result = await this.executeClickHouseQuery<[string][]>(query, params);
         return Number(result[0][0]);
     }
 
