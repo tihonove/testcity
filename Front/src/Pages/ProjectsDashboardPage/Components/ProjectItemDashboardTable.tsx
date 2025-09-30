@@ -57,6 +57,7 @@ export function ProjectItemDashboardTable({
         false
     );
 
+    console.log(project, currentGroupOrProject);
     return (
         <React.Fragment key={project.id}>
             {project !== currentGroupOrProject && (
@@ -125,7 +126,7 @@ export function ProjectItemDashboardTable({
                     </tr>
                 </thead>
             )}
-            {!collapsed && (
+            {(!collapsed || project === currentGroupOrProject) && (
                 <>
                     {usePipelineGrouping ? (
                         <PipelineRuns
