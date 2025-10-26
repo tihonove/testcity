@@ -66,8 +66,16 @@ NEW_VERSION="$MAJOR.$MINOR.$PATCH"
 echo "New version: $NEW_VERSION"
 
 # Updating version in Chart.yaml file
-sed -i "" "s/^version:.*/version: $NEW_VERSION/" "$CHART_FILE"
-sed -i "" "s/^appVersion:.*/appVersion: $NEW_VERSION/" "$CHART_FILE"
+# Detecting OS for correct sed syntax
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS
+    sed -i "" "s/^version:.*/version: $NEW_VERSION/" "$CHART_FILE"
+    sed -i "" "s/^appVersion:.*/appVersion: $NEW_VERSION/" "$CHART_FILE"
+else
+    # Linux and others
+    sed -i "s/^version:.*/version: $NEW_VERSION/" "$CHART_FILE"
+    sed -i "s/^appVersion:.*/appVersion: $NEW_VERSION/" "$CHART_FILE"
+fi
 
 echo "Version in $CHART_FILE updated."
 
