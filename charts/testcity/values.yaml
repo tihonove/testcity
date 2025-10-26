@@ -8,8 +8,6 @@ clickhouse:
   host: vm-ch2-stg.dev.kontur.ru
   port: "8123"
   db: test_analytics
-  user: tihonove
-  password: "12487562"
 
 otlp:
   endpoint: ""
@@ -111,3 +109,6 @@ secrets:
     token: ""
   otlp:
     headers: ""
+  clickhouse:
+    user: ""
+    password: ""

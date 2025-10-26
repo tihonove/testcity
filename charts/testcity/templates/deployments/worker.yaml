@@ -39,9 +39,15 @@ spec:
             - name: TESTANALYTICS_CLICKHOUSE_DB
               value: {{ .Values.clickhouse.db }}
             - name: TESTANALYTICS_CLICKHOUSE_USER
-              value: {{ .Values.clickhouse.user }}
+              valueFrom:
+                secretKeyRef:
+                  name: clickhouse-credentials
+                  key: user
             - name: TESTANALYTICS_CLICKHOUSE_PASSWORD
-              value: {{ .Values.clickhouse.password | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: clickhouse-credentials
+                  key: password
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: {{ .Values.otlp.endpoint | quote }}
             - name: OTEL_EXPORTER_OTLP_HEADERS
