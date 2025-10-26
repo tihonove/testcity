@@ -6,12 +6,12 @@ import { Link } from "react-router-dom";
 import { GroupAvatar } from "../Components/GroupAvatar";
 import { groupLink, useBasePrefix } from "../Domain/Navigation";
 import { LogoPageBlock } from "../Components/LogoPageBlock";
-import { useRootGroups } from "../Components/useProjectContextFromUrlParams";
 import styles from "./GroupsPage.module.css";
+import { useTestCityApi } from "../TestCityApiClient";
 
 export function GroupsPage() {
     const [searchText, setSearchText] = React.useState("");
-    const projects = useRootGroups();
+    const projects = useTestCityApi(c => c.getRootGroups());
     const filteredGroups = React.useMemo(
         () => projects.filter(p => !searchText.trim() || p.title.toLowerCase().includes(searchText.toLowerCase())),
         [searchText, projects]
