@@ -2,5 +2,5 @@ apiVersion: v2
 name: testcity
 description: A Helm chart for TestCity application
 type: application
-version: 1.5.4
-appVersion: 1.5.4
+version: 1.6.0
+appVersion: 1.6.0
