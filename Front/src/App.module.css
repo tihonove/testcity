@@ -1,6 +1,13 @@
 .themeSwitchContainer {
     position: fixed;
     top: 10px;
+    right: 40px;
+    color: var(--primary-text-color);
+}
+
+.userProfileContainer {
+    position: fixed;
+    top: 10px;
     right: 10px;
     color: var(--primary-text-color);
 }

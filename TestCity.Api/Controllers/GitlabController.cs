@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using NGitLab;
 using NGitLab.Models;
 using System.Collections.Concurrent;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TestCity.Api.Controllers;
 
@@ -231,9 +232,8 @@ public class GitlabController(
 
         log.LogInformation("Enqueued {JobCount} jobs for {ProjectId}.", enqueuedCount, projectId);
     }
-
-
     [HttpGet("{projectId}/pipelines/{pipelineId}/manual-jobs")]
+
     public ManualJobRunInfo[] GetManualJobInfos(long projectId, long pipelineId)
     {
         var jobs = gitLabClient.GetPipelines(projectId).GetJobs(pipelineId);

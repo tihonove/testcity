@@ -7,11 +7,11 @@ import { GroupAvatar } from "../Components/GroupAvatar";
 import { groupLink, useBasePrefix } from "../Domain/Navigation";
 import { LogoPageBlock } from "../Components/LogoPageBlock";
 import styles from "./GroupsPage.module.css";
-import { useTestCityApi } from "../TestCityApiClient";
+import { useTestCityRequest } from "../TestCityApiClient";
 
 export function GroupsPage() {
     const [searchText, setSearchText] = React.useState("");
-    const projects = useTestCityApi(c => c.getRootGroups());
+    const projects = useTestCityRequest(c => c.getRootGroups());
     const filteredGroups = React.useMemo(
         () => projects.filter(p => !searchText.trim() || p.title.toLowerCase().includes(searchText.toLowerCase())),
         [searchText, projects]

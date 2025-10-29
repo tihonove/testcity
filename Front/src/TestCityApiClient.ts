@@ -7,7 +7,7 @@ export function useTestCityClient(): TestCityApiClient {
     return new TestCityApiClient(apiUrl);
 }
 
-export function useTestCityApi<T>(fn: (client: TestCityApiClient) => Promise<T>, deps?: React.DependencyList): T {
+export function useTestCityRequest<T>(fn: (client: TestCityApiClient) => Promise<T>, deps?: React.DependencyList): T {
     const client = useTestCityClient();
     return usePromise(async () => {
         return await fn(client);
@@ -29,6 +29,10 @@ export class TestCityApiClient {
         return (await response.json()) as Group[];
     }
 
+    public async getUser(): Promise<UserInfoDto | null> {
+        return (await (await fetch(`${this.apiUrl}auth/user`, { redirect: "manual" })).json()) as UserInfoDto | null;
+    }
+
     public async getRootGroup(groupIdOrTitle: string): Promise<GroupNode> {
         const response = await fetch(`${this.apiUrl}groups/${encodeURIComponent(groupIdOrTitle)}`);
         if (!response.ok) {
@@ -36,4 +40,10 @@ export class TestCityApiClient {
         }
         return (await response.json()) as GroupNode;
     }
+}
+
+interface UserInfoDto {
+    userName: string | null;
+    displayName: string | null;
+    avatarUrl: string | null;
 }

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TestCity.Core.Clickhouse;
 
@@ -5,6 +6,7 @@ namespace TestCity.Api.Controllers;
 
 [ApiController]
 [Route("api/clickhouse")]
+[Authorize]
 public class ClickhouseProxyController(ClickHouseConnectionSettings clickHouseConnectionSettings) : Controller
 {
     [Route("{*query}")]
