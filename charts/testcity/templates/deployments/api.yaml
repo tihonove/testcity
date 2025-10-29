@@ -57,5 +57,21 @@ spec:
               value: {{ .Values.global.environment | quote }}
             - name: KAFKA_BOOTSTRAP_SERVERS
               value: {{ .Values.kafka.bootstrapServers }}
+            - name: AUTHORIZATION_TYPE
+              value: {{ .Values.authorization.type | quote }}
+            {{- if eq .Values.authorization.type "OpenIdConnect" }}
+            - name: OIDC_AUTHORITY
+              value: {{ .Values.authorization.oidc.authority | quote }}
+            - name: OIDC_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: oidc-credentials
+                  key: clientId
+            - name: OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: oidc-credentials
+                  key: clientSecret
+            {{- end }}
           resources:
             {{- toYaml .Values.api.resources | nindent 12 }}

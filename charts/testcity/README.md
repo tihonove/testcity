@@ -19,6 +19,10 @@ To install the chart with the release name `testcity`:
 helm install testcity ./charts/testcity \
   --set secrets.gitlab.token=$GITLAB_TOKEN \
   --set secrets.otlp.headers=$OTEL_EXPORTER_OTLP_HEADERS \
+  --set authorization.type=OpenIdConnect \
+  --set authorization.oidc.authority=https://your-oidc-provider.com/ \
+  --set secrets.oidc.clientId=$OIDC_CLIENT_ID \
+  --set secrets.oidc.clientSecret=$OIDC_CLIENT_SECRET \
   --set front.image.tag=0.1.0-test.<commit_hash> \
   --set api.image.tag=0.1.0-test.<commit_hash> \
   --set crawler.image.tag=0.1.0-test.<commit_hash> \
@@ -33,6 +37,10 @@ To upgrade the installed `testcity` release:
 helm upgrade testcity ./charts/testcity \
   --set secrets.gitlab.token=$GITLAB_TOKEN \
   --set secrets.otlp.headers=$OTEL_EXPORTER_OTLP_HEADERS \
+  --set authorization.type=OpenIdConnect \
+  --set authorization.oidc.authority=https://your-oidc-provider.com/ \
+  --set secrets.oidc.clientId=$OIDC_CLIENT_ID \
+  --set secrets.oidc.clientSecret=$OIDC_CLIENT_SECRET \
   --set front.image.tag=0.1.0-test.<new_commit_hash> \
   --set api.image.tag=0.1.0-test.<new_commit_hash> \
   --set crawler.image.tag=0.1.0-test.<new_commit_hash> \
@@ -78,11 +86,44 @@ The table below shows the main chart parameters and their default values.
 | `graphite.relay.port` | Graphite Relay port | `2003` |
 | `secrets.gitlab.token` | GitLab token for API access | `""` |
 | `secrets.otlp.headers` | OpenTelemetry headers | `""` |
+| `secrets.oidc.clientId` | OIDC Client ID for authentication | `""` |
+| `secrets.oidc.clientSecret` | OIDC Client Secret for authentication | `""` |
+| `authorization.type` | Authorization type (Fake or OpenIdConnect) | `Fake` |
+| `authorization.oidc.authority` | OIDC Authority URL when using OpenIdConnect | `""` |
 | `ingress.enabled` | Enable Ingress | `true` |
 | `ingress.className` | Ingress class | `nginx` |
 | `ingress.host` | Ingress host | `testcity.kube.testkontur.ru` |
 
 For a complete list of parameters, see the `values.yaml` file.
+
+## Authorization Configuration
+
+TestCity supports two types of authorization:
+
+### Fake Authorization (Default)
+
+For development and testing environments:
+
+```bash
+helm install testcity ./charts/testcity \
+  --set authorization.type=Fake \
+  # ... other parameters
+```
+
+### OpenID Connect Authorization
+
+For production environments:
+
+```bash
+helm install testcity ./charts/testcity \
+  --set authorization.type=OpenIdConnect \
+  --set authorization.oidc.authority=https://your-oidc-provider.com/ \
+  --set secrets.oidc.clientId=$OIDC_CLIENT_ID \
+  --set secrets.oidc.clientSecret=$OIDC_CLIENT_SECRET \
+  # ... other parameters
+```
+
+Note: When using OpenIdConnect, the OIDC credentials will be stored in a separate Kubernetes secret named `oidc-credentials`.
 
 ## CI/CD Pipeline
 
@@ -99,6 +140,10 @@ Example for GitHub Actions:
     helm upgrade --install testcity ./charts/testcity \
       --set secrets.gitlab.token=${{ secrets.GITLAB_TOKEN }} \
       --set secrets.otlp.headers=${{ secrets.OTLP_HEADERS }} \
+      --set authorization.type=OpenIdConnect \
+      --set authorization.oidc.authority=${{ vars.OIDC_AUTHORITY }} \
+      --set secrets.oidc.clientId=${{ secrets.OIDC_CLIENT_ID }} \
+      --set secrets.oidc.clientSecret=${{ secrets.OIDC_CLIENT_SECRET }} \
       --set front.image.tag=0.1.0-test.${{ env.SHORT_SHA }} \
       --set api.image.tag=0.1.0-test.${{ env.SHORT_SHA }} \
       --set crawler.image.tag=0.1.0-test.${{ env.SHORT_SHA }} \
