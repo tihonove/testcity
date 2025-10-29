@@ -104,6 +104,11 @@ ingress:
       service: test-city-api-service
       port: 30111
 
+authorization:
+  type: Fake  # Can be: Fake, OpenIdConnect
+  oidc:
+    authority: ""  # e.g. https://oidc.endpoint.com/
+
 secrets:
   gitlab:
     token: ""
@@ -112,3 +117,6 @@ secrets:
   clickhouse:
     user: ""
     password: ""
+  oidc:
+    clientId: ""
+    clientSecret: ""

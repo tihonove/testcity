@@ -1,11 +1,14 @@
 using TestCity.Api.Models;
 using TestCity.Core.GitlabProjects;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using System.Reflection.Metadata.Ecma335;
 
 namespace TestCity.Api.Controllers;
 
 [ApiController]
 [Route("api/groups")]
+[Authorize]
 public class GroupsController(GitLabProjectsService gitLabProjectsService) : ControllerBase
 {
     [HttpGet("")]

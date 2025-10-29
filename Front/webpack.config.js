@@ -92,6 +92,10 @@ module.exports = (env, argv) => {
                     context: ["/api/"],
                     target: "http://localhost:8124",
                 },
+                {
+                    context: ["/signin-oidc"],
+                    target: "http://localhost:8124",
+                },
             ],
         },
     };

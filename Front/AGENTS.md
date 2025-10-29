@@ -1,0 +1,1 @@
+For styles, use a *.module.css file next to the component

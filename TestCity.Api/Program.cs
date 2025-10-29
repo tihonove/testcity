@@ -1,5 +1,6 @@
 using System.Text;
 using dotenv.net;
+using TestCity.Api.Authorization;
 using TestCity.Core.Clickhouse;
 using TestCity.Core.GitLab;
 using TestCity.Core.GitlabProjects;
@@ -21,6 +22,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddSingleton(GitLabSettings.Default);
 builder.Services.AddSingleton(ClickHouseConnectionSettings.Default);
+builder.Services.AddSingleton(AuthorizationSettings.Default);
 builder.Services.AddSingleton<SkbKonturGitLabClientProvider>();
 builder.Services.AddSingleton<WorkerClient>();
 builder.Services.AddSingleton<GitLabProjectsService>();
@@ -29,6 +31,40 @@ builder.Services.AddSingleton<ConnectionFactory>();
 builder.Services.AddSingleton<TestCityDatabase>();
 builder.Services.AddSingleton<ProjectJobTypesCache>();
 builder.Services.AddSingleton(r => KafkaMessageQueueClient.CreateDefault(r.GetRequiredService<ILogger<KafkaMessageQueueClient>>()));
+
+var authSettings = AuthorizationSettings.Default;
+
+if (authSettings.Type == AuthorizationType.OpenIdConnect)
+{
+    if (authSettings.Oidc == null)
+    {
+        throw new InvalidOperationException("OIDC settings are not configured");
+    }
+    builder.Services
+        .AddAuthentication(o => { o.DefaultScheme = "Cookies"; o.DefaultChallengeScheme = "oidc"; })
+        .AddCookie("Cookies")
+        .AddOpenIdConnect("oidc", o =>
+        {
+            o.Authority = authSettings.Oidc.Authority;
+            o.RequireHttpsMetadata = true;
+            o.ClientId = authSettings.Oidc.ClientId;
+            o.ClientSecret = authSettings.Oidc.ClientSecret;
+            o.ResponseType = "code";
+            o.UsePkce = true;
+            o.SaveTokens = true;
+            o.Scope.Clear();
+            o.Scope.Add("openid");
+            o.Scope.Add("profile");
+            o.CallbackPath = "/signin-oidc";
+        });
+}
+else
+{
+    builder.Services.AddAuthentication("NoAuth").AddScheme<NoAuthSchemeOptions, NoAuthHandler>("NoAuth", _ => { });
+    builder.Services.AddSingleton<Microsoft.AspNetCore.Authorization.IAuthorizationHandler, ConditionalAuthorizationHandler>();
+}
+
+builder.Services.AddAuthorization();
 builder.Logging.AddSimpleConsole(options =>
 {
     options.IncludeScopes = true;
@@ -55,6 +91,9 @@ if (OpenTelemetryExtensions.IsOpenTelemetryEnabled())
 }
 
 var app = builder.Build();
+app.UseForwardedHeaders();
+app.UseAuthentication();
+app.UseAuthorization();
 Log.ConfigureGlobalLogProvider(app.Services.GetRequiredService<ILoggerFactory>());
 
 if (app.Environment.IsDevelopment())
