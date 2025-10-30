@@ -18,6 +18,7 @@ kafka:
 redis:
   host: "test-city-redis-service"
   port: "6379"
+  image: "redis:7.4.1-alpine"
 
 graphite:
   relay:
