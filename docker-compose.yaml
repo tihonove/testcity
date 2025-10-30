@@ -1,4 +1,12 @@
 services:
+  redis:
+    image: "redis:7-alpine"
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    networks:
+      - testcity-network
+
   clickhouse:
     image: "clickhouse/clickhouse-server:24.8-alpine"
     ports:
@@ -89,9 +97,11 @@ services:
       - TESTANALYTICS_CLICKHOUSE_USER=testanalytics-user
       - TESTANALYTICS_CLICKHOUSE_PASSWORD=123123
       - KAFKA_BOOTSTRAP_SERVERS=kafka:9094
+      - REDIS_CONNECTION_STRING=redis:6379
     depends_on:
       - clickhouse
       - kafka
+      - redis
       - db-actualizer
     profiles: ["services"]
     networks:

@@ -30,7 +30,12 @@ TestCity consists of several key components that interact to provide full functi
    - Stores data of job runs and individual tests
    - Documentation: [ClickHouse](https://clickhouse.com/docs)
 
-6. **Frontend** - user web interface:
+6. **Redis**:
+   - Used for storing OIDC authentication keys (DataProtection)
+   - Provides shared key storage across multiple API instances
+   - Documentation: [Redis](https://redis.io/docs/)
+
+7. **Frontend** - user web interface:
    - Provides interactive dashboards and charts
    - Enables navigation across projects
    - In production, it's served via Nginx
@@ -89,6 +94,7 @@ There are two main development modes:
 This mode launches all components:
 - ClickHouse via Docker Compose
 - Kafka via Docker Compose
+- Redis via Docker Compose
 - Backend API on the local host
 - Worker on the local host
 - Frontend in development mode with hot-reload
@@ -103,6 +109,7 @@ After startup:
 - API will be available at: http://localhost:8124
 - ClickHouse will be available at: http://localhost:8123
 - Kafka will be available at: localhost:9092
+- Redis will be available at: localhost:6379
 
 ### 2. Frontend Only (connected to production API)
 

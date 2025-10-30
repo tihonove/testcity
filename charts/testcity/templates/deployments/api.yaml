@@ -57,6 +57,10 @@ spec:
               value: {{ .Values.global.environment | quote }}
             - name: KAFKA_BOOTSTRAP_SERVERS
               value: {{ .Values.kafka.bootstrapServers }}
+            {{- if .Values.redis.host }}
+            - name: REDIS_CONNECTION_STRING
+              value: "{{ .Values.redis.host }}:{{ .Values.redis.port }}"
+            {{- end }}
             - name: AUTHORIZATION_TYPE
               value: {{ .Values.authorization.type | quote }}
             {{- if eq .Values.authorization.type "OpenIdConnect" }}

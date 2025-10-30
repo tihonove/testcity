@@ -1,0 +1,37 @@
+{{- if .Values.redis.host }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-city-redis
+  labels:
+    app: test-city-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-city-redis
+  template:
+    metadata:
+      labels:
+        app: test-city-redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:7-alpine
+          ports:
+            - containerPort: 6379
+              name: redis
+          command:
+            - redis-server
+            - "--save"
+            - ""
+            - --appendonly
+            - "no"
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+{{- end }}

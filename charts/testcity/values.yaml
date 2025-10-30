@@ -15,6 +15,10 @@ otlp:
 kafka:
   bootstrapServers: 
 
+redis:
+  host: "test-city-redis-service"
+  port: "6379"
+
 graphite:
   relay:
     host: graphite-relay.skbkontur.ru

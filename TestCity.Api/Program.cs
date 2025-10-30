@@ -1,5 +1,6 @@
 using System.Text;
 using dotenv.net;
+using Microsoft.AspNetCore.DataProtection;
 using TestCity.Api.Authorization;
 using TestCity.Core.Clickhouse;
 using TestCity.Core.GitLab;
@@ -11,6 +12,7 @@ using TestCity.Core.Storage;
 using TestCity.Core.Worker;
 using OpenTelemetry.Metrics;
 using Microsoft.AspNetCore.HttpOverrides;
+using StackExchange.Redis;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -20,6 +22,16 @@ builder.WebHost.UseUrls("http://0.0.0.0:8124");
 
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
+
+var redisConnectionString = Environment.GetEnvironmentVariable("REDIS_CONNECTION_STRING") ?? "localhost:6379";
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = redisConnectionString;
+    options.InstanceName = "TestCity_";
+});
+
+builder.Services.AddDataProtection()
+    .PersistKeysToStackExchangeRedis(StackExchange.Redis.ConnectionMultiplexer.Connect(redisConnectionString), "DataProtection-Keys");
 
 builder.Services.AddSingleton(GitLabSettings.Default);
 builder.Services.AddSingleton(ClickHouseConnectionSettings.Default);
@@ -100,11 +112,14 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
     KnownNetworks = { },
     KnownProxies = { }
 });
-app.Use((context, next) =>
+if (!app.Environment.IsDevelopment())
 {
-    context.Request.Scheme = "https";
-    return next();
-});
+    app.Use((context, next) =>
+    {
+        context.Request.Scheme = "https";
+        return next();
+    });
+}
 app.UseAuthentication();
 app.UseAuthorization();
 Log.ConfigureGlobalLogProvider(app.Services.GetRequiredService<ILoggerFactory>());
