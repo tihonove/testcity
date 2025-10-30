@@ -100,6 +100,11 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
     KnownNetworks = { },
     KnownProxies = { }
 });
+app.Use((context, next) =>
+{
+    context.Request.Scheme = "https";
+    return next();
+});
 app.UseAuthentication();
 app.UseAuthorization();
 Log.ConfigureGlobalLogProvider(app.Services.GetRequiredService<ILoggerFactory>());
