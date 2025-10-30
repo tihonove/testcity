@@ -10,6 +10,7 @@ using TestCity.Core.Logging;
 using TestCity.Core.Storage;
 using TestCity.Core.Worker;
 using OpenTelemetry.Metrics;
+using Microsoft.AspNetCore.HttpOverrides;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -91,7 +92,14 @@ if (OpenTelemetryExtensions.IsOpenTelemetryEnabled())
 }
 
 var app = builder.Build();
-app.UseForwardedHeaders();
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
+    RequireHeaderSymmetry = false,
+    ForwardLimit = null,
+    KnownNetworks = { },
+    KnownProxies = { }
+});
 app.UseAuthentication();
 app.UseAuthorization();
 Log.ConfigureGlobalLogProvider(app.Services.GetRequiredService<ILoggerFactory>());
