@@ -103,6 +103,10 @@ ingress:
       pathType: Prefix
       service: test-city-api-service
       port: 30111
+    - path: /signin-oidc
+      pathType: Prefix
+      service: test-city-api-service
+      port: 30111
 
 authorization:
   type: Fake  # Can be: Fake, OpenIdConnect
