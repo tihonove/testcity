@@ -27,6 +27,7 @@
         <ProjectReference Include="../TestCity.Worker/TestCity.Worker.csproj" />
         <ProjectReference Include="../TestCity.GitLabJobsCrawler/TestCity.GitLabJobsCrawler.csproj" />
         <ProjectReference Include="../TestCity.Api/TestCity.Api.csproj" />
+        <ProjectReference Include="..\TestCity.Cerberus\TestCity.Cerberus.csproj" />
     </ItemGroup>
 
 </Project>
