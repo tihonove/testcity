@@ -716,7 +716,7 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
                 AgentName = "agent-1",
                 AgentOSName = "linux",
                 JobUrl = "http://test.com/recent",
-                StartDateTime = DateTime.UtcNow.AddDays(-7),
+                StartDateTime = DateTime.UtcNow.AddDays(-5),
                 ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
             },
             new()
