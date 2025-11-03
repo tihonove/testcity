@@ -1,6 +1,8 @@
 import usePromise from "react-promise-suspense";
-import { apiUrlPrefix, useApiUrl } from "./Domain/Navigation";
-import { Group, GroupNode } from "./Domain/Storage/Projects/GroupNode";
+import { apiUrlPrefix, useApiUrl } from "../Navigation";
+import { Group, GroupNode } from "../Storage/Projects/GroupNode";
+import { TestCityRunsApiClient } from "./TestCityRunsApiClient";
+import { UserInfoDto } from "./DTO/UserInfoDto";
 
 export function useTestCityClient(): TestCityApiClient {
     const apiUrl = useApiUrl();
@@ -16,9 +18,11 @@ export function useTestCityRequest<T>(fn: (client: TestCityApiClient) => Promise
 
 export class TestCityApiClient {
     private readonly apiUrl: string;
+    public readonly runs: TestCityRunsApiClient;
 
     public constructor(apiUrl: string) {
         this.apiUrl = apiUrl;
+        this.runs = new TestCityRunsApiClient(apiUrl);
     }
 
     public async getRootGroups(): Promise<Group[]> {
@@ -40,10 +44,4 @@ export class TestCityApiClient {
         }
         return (await response.json()) as GroupNode;
     }
-}
-
-interface UserInfoDto {
-    userName: string | null;
-    displayName: string | null;
-    avatarUrl: string | null;
 }

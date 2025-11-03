@@ -2,7 +2,7 @@ import * as React from "react";
 import { useParams } from "react-router-dom";
 import { GroupNode, Project, resolvePathToNodes } from "../Domain/Storage/Projects/GroupNode";
 import { reject } from "../Utils/TypeHelpers";
-import { useTestCityRequest } from "../TestCityApiClient";
+import { useTestCityRequest } from "../Domain/Api/TestCityApiClient";
 
 export function useProjectContextFromUrlParams(): {
     rootGroup: GroupNode;

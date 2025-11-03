@@ -152,7 +152,7 @@ export function JobRunTestListPage(): React.JSX.Element {
                                         openedByDefault={true}>
                                         <ColumnStack gap={2} stretch block>
                                             {coveredCommits.map(commit => (
-                                                <Fit>
+                                                <Fit key={Array.isArray(commit) ? commit[0] : commit.CommitSha}>
                                                     <CommitRow
                                                         pathToProject={pathToGroup}
                                                         sha={Array.isArray(commit) ? commit[0] : commit.CommitSha}

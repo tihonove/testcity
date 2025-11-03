@@ -1,69 +1,44 @@
 import { ShapeSquareIcon16Regular } from "@skbkontur/icons";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { createLinkToJob } from "../Domain/Navigation";
-import { JobIdWithParentProject, JobIdWithParentProjectNames } from "../Domain/JobIdWithParentProject";
-import { JobRunNames, JobsQueryRow } from "../Domain/Storage/JobsQuery";
-import { GroupNode, Project } from "../Domain/Storage/Projects/GroupNode";
+import { createLinkToJob2 } from "../Domain/Navigation";
+import { JobDashboardInfo, ProjectDashboardNode } from "../Domain/ProjectDashboardNode";
 import { RunsTable } from "../Pages/ProjectsDashboardPage/Components/ProjectsWithRunsTable";
 import { stableGroupBy } from "../Utils/ArrayUtils";
 import { JobRunsTable } from "./JobRunsTable";
 import styles from "./JobsView.module.css";
 
 interface JobsViewProps {
-    groupNodes: (GroupNode | Project)[];
-    project: Project;
+    project: ProjectDashboardNode;
     hideRuns?: boolean;
     currentBranchName?: string;
-    rootProjectStructure: GroupNode;
-    allJobs: JobIdWithParentProject[];
-    allJobRuns: JobsQueryRow[];
+    jobs: JobDashboardInfo[];
     indentLevel: number;
 }
 
-export function JobsView({
-    groupNodes,
-    rootProjectStructure,
-    hideRuns,
-    allJobs,
-    allJobRuns,
-    currentBranchName,
-    indentLevel,
-}: JobsViewProps) {
-    const jobsWithTheirRuns = allJobs.map(job => {
-        const jobId = job[JobIdWithParentProjectNames.JobId];
-        const projectId = job[JobIdWithParentProjectNames.ProjectId];
-        const jobRuns = allJobRuns.filter(
-            x => x[JobRunNames.JobId] === jobId && x[JobRunNames.ProjectId] === projectId
-        );
-        return { job, jobRuns };
-    });
-
-    const groupedJobs = stableGroupBy(jobsWithTheirRuns, item => item.jobRuns.length > 0);
+export function JobsView({ project, jobs, hideRuns, currentBranchName, indentLevel }: JobsViewProps) {
+    const groupedJobs = stableGroupBy(jobs, item => item.runs.length > 0);
 
     const jobsWithRuns = groupedJobs.get(true) || [];
     const jobsWithoutRuns = groupedJobs.get(false) || [];
 
     return (
         <>
-            {jobsWithRuns.map(({ job, jobRuns }) => (
+            {jobsWithRuns.map(({ jobId, runs }) => (
                 <JobRunsTable
-                    groupNodes={groupNodes}
-                    key={job[JobIdWithParentProjectNames.JobId] + job[JobIdWithParentProjectNames.ProjectId]}
-                    job={job}
-                    jobRuns={jobRuns}
-                    rootProjectStructure={rootProjectStructure}
+                    project={project}
+                    key={jobId + project.id}
+                    job={[jobId, project.id]}
+                    jobRuns={runs}
                     currentBranchName={currentBranchName}
                     indentLevel={indentLevel}
                     hideRuns={hideRuns}
                 />
             ))}
 
-            {jobsWithoutRuns.map(({ job }) => {
-                const jobId = job[JobIdWithParentProjectNames.JobId];
-                const projectId = job[JobIdWithParentProjectNames.ProjectId];
+            {jobsWithoutRuns.map(({ jobId }) => {
                 return (
-                    <React.Fragment key={jobId + projectId}>
+                    <React.Fragment key={jobId + project.id}>
                         <thead>
                             <tr>
                                 <th
@@ -73,7 +48,7 @@ export function JobsView({
                                     <ShapeSquareIcon16Regular color="var(--muted-text-color)" />{" "}
                                     <Link
                                         className="no-underline"
-                                        to={createLinkToJob(rootProjectStructure, projectId, jobId, currentBranchName)}>
+                                        to={createLinkToJob2(project.link, jobId, currentBranchName)}>
                                         {jobId}
                                     </Link>
                                 </th>

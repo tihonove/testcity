@@ -4,36 +4,37 @@ import { PipelineRunsNames, PipelineRunsQueryRow } from "../Domain/Storage/Pipel
 import { Button } from "@skbkontur/react-ui";
 import { RunJobModal } from "./RunJobModal";
 import { ManualJobRunInfo } from "../Domain/ManualJobRunInfo";
+import { delay } from "../Utils/AsyncUtils";
 
 interface ManualJobsInfoProps {
     projectId: string;
-    allPipelineRuns: PipelineRunsQueryRow[];
 }
 
 export function ManualJobsInfo(props: ManualJobsInfoProps) {
+    // TODO Reborn this component to use allow run manual jobs
     const apiUrl = useApiUrl();
     const [showRunModal, setShowRunModal] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     const [jobInfos, setReport] = React.useState<undefined | ManualJobRunInfo[]>([]);
-    const projectPipelines = props.allPipelineRuns.filter(x => x[PipelineRunsNames.ProjectId] == props.projectId);
-    const firstPipeline = projectPipelines[0];
+    const firstPipeline: PipelineRunsQueryRow | null = null;
 
     const fetcher = async () => {
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (firstPipeline == undefined) {
+            await delay(0);
             return;
         }
-        setLoading(true);
-        try {
-            const res = await fetch(
-                `${apiUrl}gitlab/${props.projectId}/pipelines/${firstPipeline[PipelineRunsNames.PipelineId]}/manual-jobs`
-            );
+        // setLoading(true);
+        // try {
+        //     const res = await fetch(
+        //         `${apiUrl}gitlab/${props.projectId}/pipelines/${firstPipeline[PipelineRunsNames.PipelineId]}/manual-jobs`
+        //     );
 
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-            setReport(await res.json());
-        } finally {
-            setLoading(false);
-        }
+        //     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        //     setReport(await res.json());
+        // } finally {
+        //     setLoading(false);
+        // }
     };
 
     React.useEffect(() => {
@@ -55,7 +56,7 @@ export function ManualJobsInfo(props: ManualJobsInfoProps) {
                     }}
                     projectId={props.projectId}
                     jobInfos={jobInfos ?? []}
-                    pipelines={projectPipelines}
+                    pipelines={[]}
                 />
             )}
             {(jobInfos ?? []).length >= 1 ? (

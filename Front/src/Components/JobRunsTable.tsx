@@ -10,7 +10,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { BranchCell, SelectedOnHoverTr } from "./Cells";
 import { CommitChanges } from "./CommitChanges";
-import { createLinkToJob, createLinkToJobRun } from "../Domain/Navigation";
+import { createLinkToJob2, createLinkToJobRun2 } from "../Domain/Navigation";
 import { getLinkToJob, getText } from "../Utils";
 import { JobIdWithParentProject, JobIdWithParentProjectNames } from "../Domain/JobIdWithParentProject";
 import { JobRunNames, JobsQueryRow } from "../Domain/Storage/JobsQuery";
@@ -25,32 +25,23 @@ import { RotatingSpinner } from "./RotatingSpinner";
 import { useUserSettings } from "../Utils/useUserSettings";
 import styles from "./JobRunsTable.module.css";
 import { Fit, Fixed, RowStack } from "@skbkontur/react-stack-layout";
+import { ProjectDashboardNode } from "../Domain/ProjectDashboardNode";
 
 interface JobRunsTableProps {
-    groupNodes: (GroupNode | Project)[];
+    project: ProjectDashboardNode;
     job: JobIdWithParentProject;
     jobRuns: JobsQueryRow[];
     currentBranchName?: string;
     indentLevel: number;
     hideRuns?: boolean;
-    rootProjectStructure: GroupNode;
 }
 
-export function JobRunsTable({
-    job,
-    jobRuns,
-    groupNodes,
-    rootProjectStructure,
-    currentBranchName,
-    indentLevel,
-    hideRuns,
-}: JobRunsTableProps) {
+export function JobRunsTable({ project, job, jobRuns, currentBranchName, indentLevel, hideRuns }: JobRunsTableProps) {
     const jobId = job[JobIdWithParentProjectNames.JobId];
-    const projectId = job[JobIdWithParentProjectNames.ProjectId];
 
     const hasFailedRuns = jobRuns.some(x => x[JobRunNames.State] != "Success" && x[JobRunNames.State] != "Canceled");
     const [collapsed, setCollapsed] = useUserSettings(
-        ["ui", ...groupNodes.map(x => x.id), projectId, jobId, "collapsed"],
+        ["ui", ...project.fullPathSlug.map(x => x.id), jobId, "collapsed"],
         false
     );
 
@@ -86,9 +77,7 @@ export function JobRunsTable({
                                 )}
                             </Fit>
                             <Fit>
-                                <Link to={createLinkToJob(rootProjectStructure, projectId, jobId, currentBranchName)}>
-                                    {jobId}
-                                </Link>
+                                <Link to={createLinkToJob2(project.link, jobId, currentBranchName)}>{jobId}</Link>
                             </Fit>
                         </RowStack>
                     </th>
@@ -128,9 +117,8 @@ export function JobRunsTable({
                                     ) : (
                                         <JobLink
                                             state={x[JobRunNames.State]}
-                                            to={createLinkToJobRun(
-                                                rootProjectStructure,
-                                                projectId,
+                                            to={createLinkToJobRun2(
+                                                project.link,
                                                 jobId,
                                                 x[JobRunNames.JobRunId],
                                                 currentBranchName

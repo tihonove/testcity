@@ -17,7 +17,7 @@ import { AddNewProjectsWizard } from "./Pages/AddNewProjectsWizard";
 import styles from "./App.module.css";
 import { FeedbackPageBlock } from "./Components/FeedbackPageBlock";
 import { NavigationTracker } from "./Components/NavigationTracker";
-import { useTestCityRequest } from "./TestCityApiClient";
+import { useTestCityRequest } from "./Domain/Api/TestCityApiClient";
 import { AuthenticationContainer } from "./AuthenticationContainer";
 import { UserProfileMenu } from "./Components/UserProfileMenu";
 

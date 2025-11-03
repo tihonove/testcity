@@ -6,12 +6,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="ClickHouse.Client" />
+        <PackageReference Include="dotenv.net" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
         <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
         <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" />
         <PackageReference Include="NGitLab" />
-        <PackageReference Include="dotenv.net" />
         <PackageReference Include="OpenTelemetry.Exporter.Console" />
         <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" />
         <PackageReference Include="OpenTelemetry.Extensions.Hosting" />

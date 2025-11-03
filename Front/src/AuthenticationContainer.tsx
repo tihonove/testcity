@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useLocalStorage } from "usehooks-ts";
-import { useTestCityClient } from "./TestCityApiClient";
+import { useTestCityClient } from "./Domain/Api/TestCityApiClient";
 import { runAsyncAction } from "./Utils/TypeHelpers";
 import { UserProvider, UserInfo } from "./Contexts/UserContext";
 

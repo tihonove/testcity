@@ -16,21 +16,26 @@ export function createLinkToTestHistory(basePrefix: string, testId: string, path
     return result;
 }
 
-export function createLinkToProject(groupNode: GroupNode, projectId: string, currentBranchName?: string): string {
+export function createLinkToProject(groupNode: GroupNode, projectId: string): string {
+    const [groups, project] = findPathToProjectById(groupNode, projectId);
+    return urlPrefix + [...groups.map(x => x.title), project.title].map(x => encodeURIComponent(x)).join("/");
+}
+
+export function createLinkToGroupOrProject(nodesPath: (GroupNode | Project)[]): string {
+    return urlPrefix + [...nodesPath.map(x => x.title)].map(x => encodeURIComponent(x)).join("/");
+}
+
+export function createLinkToGitLabProject(groupNode: GroupNode, projectId: string, branchName?: string): string {
     const [groups, project] = findPathToProjectById(groupNode, projectId);
     return (
-        urlPrefix +
+        "https://git.skbkontur.ru/" +
         [...groups.map(x => x.title), project.title].map(x => encodeURIComponent(x)).join("/") +
-        (currentBranchName ? `?branch=${encodeURIComponent(currentBranchName)}` : "")
+        (branchName ? `?ref=${encodeURIComponent(branchName)}` : "")
     );
 }
 
-export function createLinkToGroupOrProject(nodesPath: (GroupNode | Project)[], currentBranchName?: string): string {
-    return (
-        urlPrefix +
-        [...nodesPath.map(x => x.title)].map(x => encodeURIComponent(x)).join("/") +
-        (currentBranchName ? `?branch=${encodeURIComponent(currentBranchName)}` : "")
-    );
+export function addBranchToLink(groupOrProjectLink: string, currentBranchName?: string): string {
+    return groupOrProjectLink + (currentBranchName ? `?branch=${encodeURIComponent(currentBranchName)}` : "");
 }
 
 export function createLinkToJob(
@@ -43,6 +48,15 @@ export function createLinkToJob(
     return (
         urlPrefix +
         [...groups.map(x => x.title), project.title, "jobs", jobId].map(x => encodeURIComponent(x)).join("/") +
+        (currentBranchName ? `?branch=${encodeURIComponent(currentBranchName)}` : "")
+    );
+}
+
+export function createLinkToJob2(projectLink: string, jobId: string, currentBranchName?: string): string {
+    return (
+        projectLink +
+        "/" +
+        ["jobs", jobId].map(x => encodeURIComponent(x)).join("/") +
         (currentBranchName ? `?branch=${encodeURIComponent(currentBranchName)}` : "")
     );
 }
@@ -64,18 +78,16 @@ export function createLinkToJobRun(
     );
 }
 
-export function createLinkToPipelineRun(
-    groupNode: GroupNode,
-    projectId: string,
-    pipelineId: string,
+export function createLinkToJobRun2(
+    projectLink: string,
+    jobId: string,
+    jobRunId: string,
     currentBranchName?: string
 ): string {
-    const [groups, project] = findPathToProjectById(groupNode, projectId);
     return (
-        urlPrefix +
-        [...groups.map(x => x.title), project.title, "pipelines", pipelineId]
-            .map(x => encodeURIComponent(x))
-            .join("/") +
+        projectLink +
+        "/" +
+        ["jobs", jobId, "runs", jobRunId].map(x => encodeURIComponent(x)).join("/") +
         (currentBranchName ? `?branch=${encodeURIComponent(currentBranchName)}` : "")
     );
 }
@@ -87,6 +99,15 @@ export function createLinkToCreateNewPipeline(groupNode: GroupNode, projectId: s
         [...groups.map(x => x.title), project.title, "-", "pipelines", "new"]
             .map(x => encodeURIComponent(x))
             .join("/") +
+        (branchName ? `?ref=${encodeURIComponent(branchName)}` : "")
+    );
+}
+
+export function createLinkToCreateNewPipeline2(gitlabProjectLink: string, branchName?: string): string {
+    return (
+        gitlabProjectLink +
+        "/" +
+        ["-", "pipelines", "new"].map(x => encodeURIComponent(x)).join("/") +
         (branchName ? `?ref=${encodeURIComponent(branchName)}` : "")
     );
 }

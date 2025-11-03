@@ -6,61 +6,43 @@ import {
     UiMenuShapeSquare4TiltIcon20Light,
 } from "@skbkontur/icons";
 import { Fill, Fit, Fixed, RowStack } from "@skbkontur/react-stack-layout";
-import { Button, Hint, Link as ReactUILink } from "@skbkontur/react-ui";
+import { Hint, Link as ReactUILink } from "@skbkontur/react-ui";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { useLocalStorage } from "usehooks-ts";
 import { GroupAvatar } from "../../../Components/GroupAvatar";
 import { JobsView } from "../../../Components/JobsView";
 import { ManualJobsInfo } from "../../../Components/ManualJobsInfo";
-import { PipelineRuns } from "../../../Components/PipelineRuns";
 import { SubIcon } from "../../../Components/SubIcon";
-import { JobIdWithParentProjectNames, JobIdWithParentProject } from "../../../Domain/JobIdWithParentProject";
-import { createLinkToCreateNewPipeline, createLinkToProject } from "../../../Domain/Navigation";
-import { JobsQueryRow } from "../../../Domain/Storage/JobsQuery";
-import { PipelineRunsQueryRow } from "../../../Domain/Storage/PipelineRunsQueryRow";
-import { GroupNode, Project } from "../../../Domain/Storage/Projects/GroupNode";
+import { createLinkToCreateNewPipeline2 } from "../../../Domain/Navigation";
 import { RunsTable } from "./ProjectsWithRunsTable";
 
-import styles from "./ProjectItemDashboardTable.module.css";
+import { ProjectDashboardNode } from "../../../Domain/ProjectDashboardNode";
 import { useUserSettings } from "../../../Utils/useUserSettings";
+import styles from "./ProjectItemDashboardTable.module.css";
 
 export interface ProjectItemProps {
-    project: Project;
+    project: ProjectDashboardNode;
     level: number;
-    nodes: (GroupNode | Project)[];
-    currentGroupOrProject: GroupNode | Project;
-    rootGroup: GroupNode;
     currentBranchName: string | undefined;
-    usePipelineGrouping: boolean;
-    allPipelineRuns: PipelineRunsQueryRow[];
-    allJobs: JobIdWithParentProject[];
-    allJobRuns: JobsQueryRow[];
     noRuns: string | undefined;
+    doNotRenderHeader?: boolean;
 }
 
 export function ProjectItemDashboardTable({
     project,
     level,
-    nodes,
-    currentGroupOrProject,
-    rootGroup,
     currentBranchName,
-    usePipelineGrouping,
-    allPipelineRuns,
-    allJobs,
-    allJobRuns,
     noRuns,
+    doNotRenderHeader,
 }: ProjectItemProps): React.JSX.Element {
     const [collapsed, setCollapsed] = useUserSettings(
-        ["ui", ...[...nodes, project].map(n => n.id), "collapsed"],
+        ["ui", ...[...project.fullPathSlug].map(n => n.id), "collapsed"],
         false
     );
 
-    console.log(project, currentGroupOrProject);
     return (
         <React.Fragment key={project.id}>
-            {project !== currentGroupOrProject && (
+            {!doNotRenderHeader && (
                 <thead>
                     <tr>
                         <td colSpan={RunsTable.columnCount} style={{ paddingLeft: 25 * level }}>
@@ -90,7 +72,9 @@ export function ProjectItemDashboardTable({
                                     <Fit>
                                         <Link
                                             className="no-underline"
-                                            to={createLinkToProject(rootGroup, project.id, currentBranchName)}>
+                                            to={
+                                                project.link + (currentBranchName ? `?branch=${currentBranchName}` : "")
+                                            }>
                                             <h3 className={styles.header3}>{project.title}</h3>
                                         </Link>
                                     </Fit>
@@ -99,15 +83,13 @@ export function ProjectItemDashboardTable({
                                         <ManualJobsInfo
                                             key={project.id + (currentBranchName ?? "all")}
                                             projectId={project.id}
-                                            allPipelineRuns={allPipelineRuns}
                                         />
                                     </Fit>
                                     <Fit>
                                         <Hint text="Create new pipeline">
                                             <ReactUILink
-                                                href={createLinkToCreateNewPipeline(
-                                                    rootGroup,
-                                                    project.id,
+                                                href={createLinkToCreateNewPipeline2(
+                                                    project.gitLabLink,
                                                     currentBranchName
                                                 )}
                                                 target="_blank"
@@ -126,30 +108,14 @@ export function ProjectItemDashboardTable({
                     </tr>
                 </thead>
             )}
-            {(!collapsed || project === currentGroupOrProject) && (
-                <>
-                    {usePipelineGrouping ? (
-                        <PipelineRuns
-                            groupNodes={nodes}
-                            project={project}
-                            indentLevel={level}
-                            currentBranchName={currentBranchName}
-                            rootProjectStructure={rootGroup}
-                            allPipelineRuns={allPipelineRuns}
-                        />
-                    ) : (
-                        <JobsView
-                            groupNodes={nodes}
-                            project={project}
-                            indentLevel={level}
-                            hideRuns={noRuns === "1"}
-                            currentBranchName={currentBranchName}
-                            rootProjectStructure={rootGroup}
-                            allJobs={allJobs.filter(j => j[JobIdWithParentProjectNames.ProjectId] === project.id)}
-                            allJobRuns={allJobRuns}
-                        />
-                    )}
-                </>
+            {(!collapsed || doNotRenderHeader) && (
+                <JobsView
+                    project={project}
+                    jobs={project.jobs}
+                    indentLevel={level}
+                    hideRuns={noRuns === "1"}
+                    currentBranchName={currentBranchName}
+                />
             )}
         </React.Fragment>
     );

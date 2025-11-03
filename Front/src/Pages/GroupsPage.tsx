@@ -7,7 +7,7 @@ import { GroupAvatar } from "../Components/GroupAvatar";
 import { groupLink, useBasePrefix } from "../Domain/Navigation";
 import { LogoPageBlock } from "../Components/LogoPageBlock";
 import styles from "./GroupsPage.module.css";
-import { useTestCityRequest } from "../TestCityApiClient";
+import { useTestCityRequest } from "../Domain/Api/TestCityApiClient";
 
 export function GroupsPage() {
     const [searchText, setSearchText] = React.useState("");

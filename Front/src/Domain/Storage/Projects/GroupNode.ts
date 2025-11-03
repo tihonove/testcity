@@ -2,7 +2,6 @@ export interface Group {
     id: string;
     title: string;
     avatarUrl: string;
-    mergeRunsFromJobs?: boolean;
 }
 
 export interface GroupNode extends Group {

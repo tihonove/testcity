@@ -36,7 +36,12 @@ export function JobRunsPage(): React.JSX.Element {
                 </h1>
             </Fit>
             <Fit>
-                <BranchSelect branch={currentBranchName} onChangeBranch={setCurrentBranchName} jobId={jobId} />
+                <BranchSelect
+                    pathToGroup={pathToGroup}
+                    branch={currentBranchName}
+                    onChangeBranch={setCurrentBranchName}
+                    jobId={jobId}
+                />
             </Fit>
             <Fit>
                 <Tabs value={section ?? "overview"} onValueChange={setSection}>

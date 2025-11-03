@@ -22,7 +22,14 @@ public sealed class GitLabCrawlerService(GitLabSettings gitLabSettings, WorkerCl
 
             var gitLabProjectIds = (await gitLabProjectsService.GetAllProjects()).ToList();
             if (hostEnvironment.IsDevelopment())
-                gitLabProjectIds = gitLabProjectIds.Where(x => x.Id == "2680" || x.Id == "24783" || x.Id == "70134580").ToList();
+                gitLabProjectIds = gitLabProjectIds
+                .Where(x =>
+                    x.Id == "2680"
+                    || x.Id == "24783" 
+                    || x.Id == "19371" 
+                    || x.Id == "807" 
+                    || x.Id == "17358" 
+                    || x.Id == "70134580").ToList();
             var gitLabClientProvider = new SkbKonturGitLabClientProvider(gitLabSettings);
             var client = gitLabClientProvider.GetClient();
             var clientEx = gitLabClientProvider.GetExtendedClient();

@@ -7,13 +7,8 @@ using TestCity.SystemTests.Api.ApiClient;
 
 namespace TestCity.SystemTests.Api;
 
-internal class GroupsApiClient : ApiClientBase
+internal class GroupsApiClient(HttpClient httpClient) : ApiClientBase(httpClient)
 {
-    public GroupsApiClient(HttpClient httpClient) 
-        : base(httpClient)
-    {
-    }
-    
     public async Task<List<GroupDto>?> GetRootGroups()
     {
         return await GetAsync<List<GroupDto>>("api/groups");

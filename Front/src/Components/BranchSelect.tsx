@@ -4,11 +4,12 @@ import * as React from "react";
 import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { usePopularBranches } from "../Utils/PopularBranchStoring";
 import styles from "./BranchSelect.module.css";
+import { useTestCityRequest } from "../Domain/Api/TestCityApiClient";
 
 interface BranchSelectProps {
     branch: undefined | string;
     onChangeBranch: (nextValue: undefined | string) => void;
-    projectIds?: string[];
+    pathToGroup: string[];
     jobId?: string;
     branchNames?: string[];
 }
@@ -18,12 +19,12 @@ export const DEFAULT_BRANCHE_NAMES = ["main", "master"];
 
 export function BranchSelect({
     branch,
-    projectIds,
+    pathToGroup,
     jobId,
     branchNames,
     onChangeBranch,
 }: BranchSelectProps): React.JSX.Element {
-    const queriedBranches = useStorageQuery(storage => storage.findBranches(projectIds, jobId), [projectIds, jobId]);
+    const queriedBranches = useTestCityRequest(c => c.runs.findAllBranches(pathToGroup, jobId), [pathToGroup, jobId]);
 
     const sortedBranches = React.useMemo(() => {
         return [...queriedBranches, ...(branchNames ?? [])].sort(createMoveToTopSorter(TOP_BRANCHES));
