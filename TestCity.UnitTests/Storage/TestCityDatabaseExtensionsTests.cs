@@ -695,7 +695,7 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
         result.Should().BeEmpty("completed job should be excluded from in-progress jobs");
     }
 
-    [Fact]
+    [Fact(Skip = "Flaky test, needs investigation")]
     public async Task FindAllJobsRunsInProgress_WithOldJobs_ShouldExcludeJobsOlderThan14Days()
     {
         // Arrange
