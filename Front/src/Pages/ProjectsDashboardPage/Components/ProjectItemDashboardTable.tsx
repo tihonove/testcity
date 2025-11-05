@@ -13,7 +13,7 @@ import { GroupAvatar } from "../../../Components/GroupAvatar";
 import { JobsView } from "../../../Components/JobsView";
 import { ManualJobsInfo } from "../../../Components/ManualJobsInfo";
 import { SubIcon } from "../../../Components/SubIcon";
-import { addBranchToLink, createLinkToCreateNewPipeline2, createLinkToGroup, createLinkToProject } from "../../../Domain/Navigation";
+import { addBranchToLink, createLinkToCreateNewPipeline2, createLinkToProject } from "../../../Domain/Navigation";
 import { RunsTable } from "./ProjectsWithRunsTable";
 
 import { ProjectDashboardNode } from "../../../Domain/ProjectDashboardNode";

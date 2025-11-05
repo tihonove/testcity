@@ -12,7 +12,6 @@ export function CommitChanges({ totalCoveredCommitCount, coveredCommits }: Commi
     if (totalCoveredCommitCount <= 0) {
         return <span className={style.noChanges}>No changes</span>;
     }
-    console.log(coveredCommits)
     return (
         <Tooltip
             trigger="click"

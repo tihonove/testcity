@@ -26,5 +26,4 @@ export class TestCityRunsApiClient {
         }
         return (await response.json()) as GroupDashboardNode;
     }
-
 }
