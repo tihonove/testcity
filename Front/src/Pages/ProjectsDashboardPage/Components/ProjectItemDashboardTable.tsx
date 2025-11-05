@@ -13,7 +13,7 @@ import { GroupAvatar } from "../../../Components/GroupAvatar";
 import { JobsView } from "../../../Components/JobsView";
 import { ManualJobsInfo } from "../../../Components/ManualJobsInfo";
 import { SubIcon } from "../../../Components/SubIcon";
-import { createLinkToCreateNewPipeline2 } from "../../../Domain/Navigation";
+import { addBranchToLink, createLinkToCreateNewPipeline2, createLinkToGroup, createLinkToProject } from "../../../Domain/Navigation";
 import { RunsTable } from "./ProjectsWithRunsTable";
 
 import { ProjectDashboardNode } from "../../../Domain/ProjectDashboardNode";
@@ -72,9 +72,10 @@ export function ProjectItemDashboardTable({
                                     <Fit>
                                         <Link
                                             className="no-underline"
-                                            to={
-                                                project.link + (currentBranchName ? `?branch=${currentBranchName}` : "")
-                                            }>
+                                            to={addBranchToLink(
+                                                createLinkToProject(project.fullPathSlug),
+                                                currentBranchName
+                                            )}>
                                             <h3 className={styles.header3}>{project.title}</h3>
                                         </Link>
                                     </Fit>

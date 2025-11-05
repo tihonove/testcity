@@ -18,6 +18,32 @@ public class JobRunQueryResult
     public string JobUrl { get; set; } = string.Empty;
     public string ProjectId { get; set; } = string.Empty;
     public bool HasCodeQualityReport { get; set; }
-    public List<CommitParentsChangesEntry> ChangesSinceLastRun { get; set; } = new();
-    public int TotalCoveredCommitCount { get; set; }
+    public Tuple<string, ushort, string, string, string>[] ChangesSinceLastRunTuple { get; set; } = [];
+    public List<CommitParentsChangesEntry> ChangesSinceLastRun
+    {
+        get
+        {
+            return ChangesSinceLastRunTuple
+                .Select(c => new CommitParentsChangesEntry
+                {
+                    ParentCommitSha = c.Item1,
+                    Depth = c.Item2,
+                    AuthorName = c.Item3,
+                    AuthorEmail = c.Item4,
+                    MessagePreview = c.Item5
+                })
+                .ToList();
+        }
+        set
+        {
+            ChangesSinceLastRunTuple = value
+                .Select(c => Tuple.Create(
+                    c.ParentCommitSha,
+                    c.Depth,
+                    c.AuthorName,
+                    c.AuthorEmail,
+                    c.MessagePreview))
+                .ToArray();
+        }
+    }        public int TotalCoveredCommitCount { get; set; }
 }

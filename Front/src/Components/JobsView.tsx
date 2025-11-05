@@ -1,7 +1,7 @@
 import { ShapeSquareIcon16Regular } from "@skbkontur/icons";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { createLinkToJob2 } from "../Domain/Navigation";
+import { createLinkToJob2, createLinkToProject } from "../Domain/Navigation";
 import { JobDashboardInfo, ProjectDashboardNode } from "../Domain/ProjectDashboardNode";
 import { RunsTable } from "../Pages/ProjectsDashboardPage/Components/ProjectsWithRunsTable";
 import { stableGroupBy } from "../Utils/ArrayUtils";
@@ -48,7 +48,11 @@ export function JobsView({ project, jobs, hideRuns, currentBranchName, indentLev
                                     <ShapeSquareIcon16Regular color="var(--muted-text-color)" />{" "}
                                     <Link
                                         className="no-underline"
-                                        to={createLinkToJob2(project.link, jobId, currentBranchName)}>
+                                        to={createLinkToJob2(
+                                            createLinkToProject(project.fullPathSlug),
+                                            jobId,
+                                            currentBranchName
+                                        )}>
                                         {jobId}
                                     </Link>
                                 </th>

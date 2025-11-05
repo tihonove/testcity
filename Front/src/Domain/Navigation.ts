@@ -1,5 +1,6 @@
 import { findPathToProjectById } from "./Storage/Storage";
 import { GroupNode, Project } from "./Storage/Projects/GroupNode";
+import { GroupOrProjectPathSlugItem } from "./ProjectDashboardNode";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -16,9 +17,12 @@ export function createLinkToTestHistory(basePrefix: string, testId: string, path
     return result;
 }
 
-export function createLinkToProject(groupNode: GroupNode, projectId: string): string {
-    const [groups, project] = findPathToProjectById(groupNode, projectId);
-    return urlPrefix + [...groups.map(x => x.title), project.title].map(x => encodeURIComponent(x)).join("/");
+export function createLinkToGroup(nodesPath: GroupOrProjectPathSlugItem[]): string {
+    return urlPrefix + [...nodesPath.map(x => x.title)].map(x => encodeURIComponent(x)).join("/");
+}
+
+export function createLinkToProject(nodesPath: GroupOrProjectPathSlugItem[]): string {
+    return urlPrefix + [...nodesPath.map(x => x.title)].map(x => encodeURIComponent(x)).join("/");
 }
 
 export function createLinkToGroupOrProject(nodesPath: (GroupNode | Project)[]): string {

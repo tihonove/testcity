@@ -1,3 +1,5 @@
+import { DashboardNode, GroupDashboardNode } from "../ProjectDashboardNode";
+
 export class TestCityRunsApiClient {
     private readonly apiUrl: string;
 
@@ -14,4 +16,15 @@ export class TestCityRunsApiClient {
         }
         return (await response.json()) as string[];
     }
+
+    public async getDashboard(groupOrProjectPath: string[], branchName?: string): Promise<DashboardNode> {
+        const response = await fetch(
+            `${this.apiUrl}groups-v2/${groupOrProjectPath.map(x => encodeURIComponent(x)).join("/")}/dashboard${branchName ? `?branchName=${encodeURIComponent(branchName)}` : ""}`
+        );
+        if (!response.ok) {
+            throw new Error(`Unable to find group ${groupOrProjectPath.join("/")}`);
+        }
+        return (await response.json()) as GroupDashboardNode;
+    }
+
 }

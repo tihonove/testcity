@@ -10,10 +10,9 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { BranchCell, SelectedOnHoverTr } from "./Cells";
 import { CommitChanges } from "./CommitChanges";
-import { createLinkToJob2, createLinkToJobRun2 } from "../Domain/Navigation";
+import { createLinkToJob2, createLinkToJobRun2, createLinkToProject } from "../Domain/Navigation";
 import { getLinkToJob, getText } from "../Utils";
 import { JobIdWithParentProject, JobIdWithParentProjectNames } from "../Domain/JobIdWithParentProject";
-import { JobRunNames, JobsQueryRow } from "../Domain/Storage/JobsQuery";
 import { GroupNode, Project } from "../Domain/Storage/Projects/GroupNode";
 import { SubIcon } from "./SubIcon";
 import { Hint } from "@skbkontur/react-ui";
@@ -25,12 +24,12 @@ import { RotatingSpinner } from "./RotatingSpinner";
 import { useUserSettings } from "../Utils/useUserSettings";
 import styles from "./JobRunsTable.module.css";
 import { Fit, Fixed, RowStack } from "@skbkontur/react-stack-layout";
-import { ProjectDashboardNode } from "../Domain/ProjectDashboardNode";
+import { JobRun, ProjectDashboardNode } from "../Domain/ProjectDashboardNode";
 
 interface JobRunsTableProps {
     project: ProjectDashboardNode;
     job: JobIdWithParentProject;
-    jobRuns: JobsQueryRow[];
+    jobRuns: JobRun[];
     currentBranchName?: string;
     indentLevel: number;
     hideRuns?: boolean;
@@ -39,7 +38,7 @@ interface JobRunsTableProps {
 export function JobRunsTable({ project, job, jobRuns, currentBranchName, indentLevel, hideRuns }: JobRunsTableProps) {
     const jobId = job[JobIdWithParentProjectNames.JobId];
 
-    const hasFailedRuns = jobRuns.some(x => x[JobRunNames.State] != "Success" && x[JobRunNames.State] != "Canceled");
+    const hasFailedRuns = jobRuns.some(x => x.state !== "Success" && x.state !== "Canceled");
     const [collapsed, setCollapsed] = useUserSettings(
         ["ui", ...project.fullPathSlug.map(x => x.id), jobId, "collapsed"],
         false
@@ -77,7 +76,14 @@ export function JobRunsTable({ project, job, jobRuns, currentBranchName, indentL
                                 )}
                             </Fit>
                             <Fit>
-                                <Link to={createLinkToJob2(project.link, jobId, currentBranchName)}>{jobId}</Link>
+                                <Link
+                                    to={createLinkToJob2(
+                                        createLinkToProject(project.fullPathSlug),
+                                        jobId,
+                                        currentBranchName
+                                    )}>
+                                    {jobId}
+                                </Link>
                             </Fit>
                         </RowStack>
                     </th>
@@ -86,67 +92,59 @@ export function JobRunsTable({ project, job, jobRuns, currentBranchName, indentL
             {!hideRuns && !collapsed && (
                 <tbody>
                     {jobRuns
-                        .sort(
-                            (a, b) =>
-                                Number(b[JobIdWithParentProjectNames.ProjectId]) -
-                                Number(a[JobIdWithParentProjectNames.ProjectId])
-                        )
+                        .sort((a, b) => Number(b.projectId) - Number(a.projectId))
                         .map(x => (
-                            <SelectedOnHoverTr key={x[JobRunNames.JobRunId]}>
+                            <SelectedOnHoverTr key={x.jobRunId}>
                                 <td
                                     className={styles.paddingCell}
                                     style={{ paddingLeft: indentLevel * 25, paddingRight: 0 }}
                                 />
                                 <td className={styles.numberCell}>
-                                    <Link
-                                        to={
-                                            x[JobRunNames.JobUrl] ||
-                                            getLinkToJob(x[JobRunNames.JobRunId], x[JobRunNames.ProjectId])
-                                        }>
-                                        #{x[JobRunNames.JobRunId]}
-                                    </Link>
+                                    <Link to={x.jobUrl || getLinkToJob(x.jobRunId, x.projectId)}>#{x.jobRunId}</Link>
                                 </td>
                                 <BranchCell>
-                                    <BranchBox name={x[JobRunNames.BranchName]} />
+                                    <BranchBox name={x.branchName} />
                                 </BranchCell>
                                 <td className={styles.countCell}>
-                                    {x[JobRunNames.State] === "Running" ? (
+                                    {x.state === "Running" ? (
                                         <>
                                             <RotatingSpinner /> Running...
                                         </>
                                     ) : (
                                         <JobLink
-                                            state={x[JobRunNames.State]}
+                                            state={x.state}
                                             to={createLinkToJobRun2(
-                                                project.link,
+                                                createLinkToProject(project.fullPathSlug),
                                                 jobId,
-                                                x[JobRunNames.JobRunId],
+                                                x.jobRunId,
                                                 currentBranchName
                                             )}>
                                             {getText(
-                                                x[JobRunNames.TotalTestsCount]?.toString() ?? "0",
-                                                x[JobRunNames.SuccessTestsCount]?.toString() ?? "0",
-                                                x[JobRunNames.SkippedTestsCount]?.toString() ?? "0",
-                                                x[JobRunNames.FailedTestsCount]?.toString() ?? "0",
-                                                x[JobRunNames.State],
-                                                x[JobRunNames.CustomStatusMessage],
-                                                x[JobRunNames.HasCodeQualityReport]
+                                                x.totalTestsCount?.toString() ?? "0",
+                                                x.successTestsCount?.toString() ?? "0",
+                                                x.skippedTestsCount?.toString() ?? "0",
+                                                x.failedTestsCount?.toString() ?? "0",
+                                                x.state,
+                                                x.customStatusMessage,
+                                                x.hasCodeQualityReport ? 1 : 0
                                             )}
                                         </JobLink>
                                     )}
                                 </td>
                                 <td className={styles.changesCell}>
                                     <CommitChanges
-                                        totalCoveredCommitCount={x[JobRunNames.TotalCoveredCommitCount]}
-                                        coveredCommits={x[JobRunNames.CoveredCommits] || []}
+                                        totalCoveredCommitCount={x.totalCoveredCommitCount}
+                                        coveredCommits={x.changesSinceLastRun.map(commit => ({
+                                            CommitSha: commit.parentCommitSha,
+                                            AuthorName: commit.authorName,
+                                            AuthorEmail: commit.authorEmail,
+                                            MessagePreview: commit.messagePreview,
+                                        }))}
                                     />
                                 </td>
-                                <TimingCell
-                                    startDateTime={x[JobRunNames.StartDateTime]}
-                                    duration={x[JobRunNames.Duration]}
-                                />
+                                <TimingCell startDateTime={x.startDateTime} duration={x.duration} />
                                 <td className={styles.attributesCell}>
-                                    {x[JobRunNames.HasCodeQualityReport] != 0 && (
+                                    {x.hasCodeQualityReport && (
                                         <Hint text="Code quality report available">
                                             <SubIcon sub={<SearchLoupePlusIcon16Solid />}>
                                                 <FileTypeMarkupIcon16Regular />

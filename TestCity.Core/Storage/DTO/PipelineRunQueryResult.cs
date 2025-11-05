@@ -18,13 +18,13 @@ public class PipelineRunQueryResult
     public string CommitAuthor { get; set; } = string.Empty;
     public string CommitSha { get; set; } = string.Empty;
     public bool HasCodeQualityReport { get; set; }
-    public Tuple<string, ushort, string, string, string>[] ChangesSinceLastRun { get; set; } = [];
+    public Tuple<string, ushort, string, string, string>[] ChangesSinceLastRunTuple { get; set; } = [];
 
-    public List<CommitParentsChangesEntry> ChangesSinceLastRunTyped
+    public List<CommitParentsChangesEntry> ChangesSinceLastRun
     {
         get
         {
-            return ChangesSinceLastRun
+            return ChangesSinceLastRunTuple
                 .Select(c => new CommitParentsChangesEntry
                 {
                     ParentCommitSha = c.Item1,
@@ -37,7 +37,7 @@ public class PipelineRunQueryResult
         }
         set
         {
-            ChangesSinceLastRun = value
+            ChangesSinceLastRunTuple = value
                 .Select(c => Tuple.Create(
                     c.ParentCommitSha,
                     c.Depth,

@@ -5,6 +5,7 @@ using TestCity.Core.Storage.DTO;
 using TestCity.UnitTests.Utils;
 using Xunit;
 using Xunit.Abstractions;
+using static TestCity.UnitTests.Utils.TestDataBuilders;
 
 namespace TestCity.UnitTests.Storage;
 
@@ -12,6 +13,8 @@ namespace TestCity.UnitTests.Storage;
 public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 {
     private readonly ITestOutputHelper output;
+    private ConnectionFactory connectionFactory = null!;
+    private TestCityDatabase database = null!;
 
     public TestCityDatabaseExtensionsTests(ITestOutputHelper output)
     {
@@ -21,7 +24,8 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
     public async Task InitializeAsync()
     {
-        var connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
+        connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
+        database = new TestCityDatabase(connectionFactory);
         await using var connection = connectionFactory.CreateConnection();
         await TestAnalyticsDatabaseSchema.ActualizeDatabaseSchemaAsync(connection);
         await TestAnalyticsDatabaseSchema.InsertPredefinedProjects(connectionFactory);
@@ -36,32 +40,15 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
     public async Task GetFailedTestOutput_WithFailedTest_ShouldReturnCorrectOutput()
     {
         // Arrange
-        var connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
-        var database = new TestCityDatabase(connectionFactory);
-        
-        var jobRunInfo = new JobRunInfo
-        {
-            JobId = "test-job",
-            JobRunId = Guid.NewGuid().ToString(),
-            ProjectId = "test-project",
-            BranchName = "main",
-            AgentName = "test-agent",
-            AgentOSName = "linux",
-            JobUrl = "http://test.com",
-            PipelineId = "pipeline-1"
-        };
-
+        var jobRunInfo = CreateJobRunInfo();
         var testId = $"test-{Guid.NewGuid()}";
-        var failedTest = new TestRun
-        {
-            TestId = testId,
-            TestResult = TestResult.Failed,
-            Duration = 10000L, // 10 seconds in milliseconds
-            StartDateTime = DateTime.UtcNow,
-            JUnitFailureMessage = "Test assertion failed",
-            JUnitFailureOutput = "Expected: 5, Actual: 3",
-            JUnitSystemOutput = "System output for failed test"
-        };
+        var failedTest = CreateTestRun(
+            testId: testId,
+            result: TestResult.Failed,
+            duration: 10000L,
+            failureMessage: "Test assertion failed",
+            failureOutput: "Expected: 5, Actual: 3",
+            systemOutput: "System output for failed test");
 
         await database.TestRuns.InsertBatchAsync(jobRunInfo, new[] { failedTest });
 
@@ -82,32 +69,11 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
     public async Task GetFailedTestOutput_WithSuccessfulTest_ShouldReturnNull()
     {
         // Arrange
-        var connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
-        var database = new TestCityDatabase(connectionFactory);
-        
-        var jobRunInfo = new JobRunInfo
-        {
-            JobId = "test-job-success",
-            JobRunId = Guid.NewGuid().ToString(),
-            ProjectId = "test-project",
-            BranchName = "main",
-            AgentName = "test-agent",
-            AgentOSName = "linux",
-            JobUrl = "http://test.com",
-            PipelineId = "pipeline-1"
-        };
-
+        var jobRunInfo = CreateJobRunInfo(jobId: "test-job-success");
         var testId = $"test-success-{Guid.NewGuid()}";
-        var successfulTest = new TestRun
-        {
-            TestId = testId,
-            TestResult = TestResult.Success,
-            Duration = 5000L, // 5 seconds in milliseconds
-            StartDateTime = DateTime.UtcNow,
-            JUnitFailureMessage = null,
-            JUnitFailureOutput = null,
-            JUnitSystemOutput = "System output for successful test"
-        };
+        var successfulTest = CreateTestRun(
+            testId: testId,
+            systemOutput: "System output for successful test");
 
         await database.TestRuns.InsertBatchAsync(jobRunInfo, new[] { successfulTest });
 
@@ -124,9 +90,7 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
     [Fact]
     public async Task GetFailedTestOutput_WithNonExistentTest_ShouldReturnNull()
     {
-        // Arrange
-        var connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
-        var database = new TestCityDatabase(connectionFactory);
+        // Arrange - no setup needed
 
         // Act
         var result = await database.GetFailedTestOutput(
@@ -142,55 +106,27 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
     public async Task GetFailedTestOutput_WithMultipleJobRunIds_ShouldReturnMostRecentFailure()
     {
         // Arrange
-        var connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
-        var database = new TestCityDatabase(connectionFactory);
-        
-        var olderJobRunInfo = new JobRunInfo
-        {
-            JobId = "test-job-multiple",
-            JobRunId = Guid.NewGuid().ToString(),
-            ProjectId = "test-project",
-            BranchName = "main",
-            AgentName = "test-agent",
-            AgentOSName = "linux",
-            JobUrl = "http://test.com",
-            PipelineId = "pipeline-1"
-        };
-
-        var newerJobRunInfo = new JobRunInfo
-        {
-            JobId = "test-job-multiple",
-            JobRunId = Guid.NewGuid().ToString(),
-            ProjectId = "test-project",
-            BranchName = "main", 
-            AgentName = "test-agent",
-            AgentOSName = "linux",
-            JobUrl = "http://test.com",
-            PipelineId = "pipeline-1"
-        };
+        var olderJobRunInfo = CreateJobRunInfo(jobId: "test-job-multiple");
+        var newerJobRunInfo = CreateJobRunInfo(jobId: "test-job-multiple");
 
         var testId = $"test-multiple-{Guid.NewGuid()}";
-        var olderFailedTest = new TestRun
-        {
-            TestId = testId,
-            TestResult = TestResult.Failed,
-            Duration = 10000L, // 10 seconds in milliseconds
-            StartDateTime = DateTime.UtcNow.AddHours(-1),
-            JUnitFailureMessage = "Older failure message",
-            JUnitFailureOutput = "Older failure output",
-            JUnitSystemOutput = "Older system output"
-        };
+        var olderFailedTest = CreateTestRun(
+            testId: testId,
+            result: TestResult.Failed,
+            duration: 10000L,
+            startDateTime: DateTime.UtcNow.AddHours(-1),
+            failureMessage: "Older failure message",
+            failureOutput: "Older failure output",
+            systemOutput: "Older system output");
 
-        var newerFailedTest = new TestRun
-        {
-            TestId = testId,
-            TestResult = TestResult.Failed,
-            Duration = 15000L, // 15 seconds in milliseconds
-            StartDateTime = DateTime.UtcNow,
-            JUnitFailureMessage = "Newer failure message",
-            JUnitFailureOutput = "Newer failure output",
-            JUnitSystemOutput = "Newer system output"
-        };
+        var newerFailedTest = CreateTestRun(
+            testId: testId,
+            result: TestResult.Failed,
+            duration: 15000L,
+            startDateTime: DateTime.UtcNow,
+            failureMessage: "Newer failure message",
+            failureOutput: "Newer failure output",
+            systemOutput: "Newer system output");
 
         await database.TestRuns.InsertBatchAsync(olderJobRunInfo, new[] { olderFailedTest });
         await database.TestRuns.InsertBatchAsync(newerJobRunInfo, new[] { newerFailedTest });
@@ -258,64 +194,13 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
     public async Task FindAllJobs_WithMultipleProjects_ShouldReturnDistinctJobs()
     {
         // Arrange
-        var connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
-        var database = new TestCityDatabase(connectionFactory);
-
         var project1Id = $"project-{Guid.NewGuid()}";
         var project2Id = $"project-{Guid.NewGuid()}";
 
         var jobs = new List<FullJobInfo>
         {
-            new()
-            {
-                JobId = "job-1",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = project1Id,
-                PipelineId = "pipeline-1",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job1",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "job-2",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = project2Id,
-                PipelineId = "pipeline-2",
-                BranchName = "main",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job2",
-                State = JobStatus.Success,
-                Duration = 2000,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(2),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 5,
-                SuccessTestsCount = 5,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "job-1", projectId: project1Id),
+            CreateFullJobInfo(jobId: "job-2", projectId: project2Id, pipelineId: "pipeline-2", agentName: "agent-2", duration: 2000, totalTests: 5, successTests: 5)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -334,63 +219,12 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
     public async Task FindAllJobs_WithOldJobs_ShouldExcludeJobsOlderThan14Days()
     {
         // Arrange
-        var connectionFactory = new ConnectionFactory(ClickHouseConnectionSettings.Default);
-        var database = new TestCityDatabase(connectionFactory);
-
         var projectId = $"project-{Guid.NewGuid()}";
 
         var jobs = new List<FullJobInfo>
         {
-            new()
-            {
-                JobId = "recent-job",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-1",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/recent",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow.AddDays(-7),
-                EndDateTime = DateTime.UtcNow.AddDays(-7).AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "old-job",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-2",
-                BranchName = "main",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/old",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow.AddDays(-20),
-                EndDateTime = DateTime.UtcNow.AddDays(-20).AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 5,
-                SuccessTestsCount = 5,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "recent-job", projectId: projectId, startDateTime: DateTime.UtcNow.AddDays(-7)),
+            CreateFullJobInfo(jobId: "old-job", projectId: projectId, pipelineId: "pipeline-2", agentName: "agent-2", startDateTime: DateTime.UtcNow.AddDays(-20), totalTests: 5, successTests: 5)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -416,56 +250,8 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var jobs = new List<FullJobInfo>
         {
-            new()
-            {
-                JobId = "same-job",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-1",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/run1",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow.AddDays(-1),
-                EndDateTime = DateTime.UtcNow.AddDays(-1).AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "same-job",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-1",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/run2",
-                State = JobStatus.Success,
-                Duration = 1500,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1.5),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "same-job", projectId: projectId, pipelineId: "pipeline-1", startDateTime: DateTime.UtcNow.AddDays(-1)),
+            CreateFullJobInfo(jobId: "same-job", projectId: projectId, pipelineId: "pipeline-1", startDateTime: DateTime.UtcNow, duration: 1500)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -522,32 +308,8 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var inProgressJobs = new List<InProgressJobInfo>
         {
-            new()
-            {
-                JobId = "in-progress-job-1",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = project1Id,
-                PipelineId = "pipeline-1",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/inprogress1",
-                StartDateTime = DateTime.UtcNow.AddMinutes(-5),
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "in-progress-job-2",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = project2Id,
-                PipelineId = "pipeline-2",
-                BranchName = "develop",
-                AgentName = "agent-2",
-                AgentOSName = "windows",
-                JobUrl = "http://test.com/inprogress2",
-                StartDateTime = DateTime.UtcNow.AddMinutes(-10),
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateInProgressJobInfo(jobId: "in-progress-job-1", projectId: project1Id, pipelineId: "pipeline-1", startDateTime: DateTime.UtcNow.AddMinutes(-5)),
+            CreateInProgressJobInfo(jobId: "in-progress-job-2", projectId: project2Id, pipelineId: "pipeline-2", branchName: "develop", agentName: "agent-2", agentOSName: "windows", startDateTime: DateTime.UtcNow.AddMinutes(-10))
         };
 
         foreach (var job in inProgressJobs)
@@ -588,32 +350,8 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var inProgressJobs = new List<InProgressJobInfo>
         {
-            new()
-            {
-                JobId = "job-main",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-1",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/main",
-                StartDateTime = DateTime.UtcNow,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "job-develop",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-2",
-                BranchName = "develop",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/develop",
-                StartDateTime = DateTime.UtcNow,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateInProgressJobInfo(jobId: "job-main", projectId: projectId, pipelineId: "pipeline-1", branchName: "main"),
+            CreateInProgressJobInfo(jobId: "job-develop", projectId: projectId, pipelineId: "pipeline-2", branchName: "develop", agentName: "agent-2")
         };
 
         foreach (var job in inProgressJobs)
@@ -642,48 +380,12 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
         var sharedJobRunId = Guid.NewGuid().ToString();
 
         // Создаем in-progress job
-        var inProgressJob = new InProgressJobInfo
-        {
-            JobId = "job-1",
-            JobRunId = sharedJobRunId,
-            ProjectId = projectId,
-            PipelineId = "pipeline-1",
-            BranchName = "main",
-            AgentName = "agent-1",
-            AgentOSName = "linux",
-            JobUrl = "http://test.com/job",
-            StartDateTime = DateTime.UtcNow,
-            ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-        };
+        var inProgressJob = CreateInProgressJobInfo(jobId: "job-1", jobRunId: sharedJobRunId, projectId: projectId, pipelineId: "pipeline-1");
 
         await database.InProgressJobInfo.InsertAsync(inProgressJob);
 
         // Создаем completed job с тем же JobRunId
-        var completedJob = new FullJobInfo
-        {
-            JobId = "job-1",
-            JobRunId = sharedJobRunId,
-            ProjectId = projectId,
-            PipelineId = "pipeline-1",
-            BranchName = "main",
-            AgentName = "agent-1",
-            AgentOSName = "linux",
-            JobUrl = "http://test.com/job",
-            State = JobStatus.Success,
-            Duration = 1000,
-            StartDateTime = DateTime.UtcNow,
-            EndDateTime = DateTime.UtcNow.AddSeconds(1),
-            Triggered = null,
-            PipelineSource = null,
-            CommitSha = null,
-            CommitMessage = null,
-            CommitAuthor = null,
-            TotalTestsCount = 10,
-            SuccessTestsCount = 10,
-            FailedTestsCount = 0,
-            SkippedTestsCount = 0,
-            ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-        };
+        var completedJob = CreateFullJobInfo(jobId: "job-1", jobRunId: sharedJobRunId, projectId: projectId, pipelineId: "pipeline-1");
 
         await database.JobInfo.InsertAsync(completedJob);
 
@@ -706,32 +408,8 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var inProgressJobs = new List<InProgressJobInfo>
         {
-            new()
-            {
-                JobId = "recent-job",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-1",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/recent",
-                StartDateTime = DateTime.UtcNow.AddDays(-5),
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "old-job",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-2",
-                BranchName = "main",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/old",
-                StartDateTime = DateTime.UtcNow.AddDays(-20),
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateInProgressJobInfo(jobId: "recent-job", projectId: projectId, pipelineId: "pipeline-1", startDateTime: DateTime.UtcNow.AddDays(-5)),
+            CreateInProgressJobInfo(jobId: "old-job", projectId: projectId, pipelineId: "pipeline-2", agentName: "agent-2", startDateTime: DateTime.UtcNow.AddDays(-20))
         };
 
         foreach (var job in inProgressJobs)
@@ -775,84 +453,9 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var jobs = new List<FullJobInfo>
         {
-            // Older run on main branch
-            new()
-            {
-                JobId = jobId,
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-1",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/older",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow.AddDays(-2),
-                EndDateTime = DateTime.UtcNow.AddDays(-2).AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            // Newer run on main branch
-            new()
-            {
-                JobId = jobId,
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-2",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/newer",
-                State = JobStatus.Success,
-                Duration = 1200,
-                StartDateTime = DateTime.UtcNow.AddDays(-1),
-                EndDateTime = DateTime.UtcNow.AddDays(-1).AddSeconds(1.2),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 12,
-                SuccessTestsCount = 12,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            // Run on develop branch
-            new()
-            {
-                JobId = jobId,
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-3",
-                BranchName = "develop",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/develop",
-                State = JobStatus.Failed,
-                Duration = 900,
-                StartDateTime = DateTime.UtcNow.AddHours(-6),
-                EndDateTime = DateTime.UtcNow.AddHours(-6).AddSeconds(0.9),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 8,
-                SuccessTestsCount = 7,
-                FailedTestsCount = 1,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: jobId, projectId: projectId, pipelineId: "pipeline-1", startDateTime: DateTime.UtcNow.AddDays(-2)),
+            CreateFullJobInfo(jobId: jobId, projectId: projectId, pipelineId: "pipeline-2", startDateTime: DateTime.UtcNow.AddDays(-1), duration: 1200, totalTests: 12, successTests: 12),
+            CreateFullJobInfo(jobId: jobId, projectId: projectId, pipelineId: "pipeline-3", branchName: "develop", agentName: "agent-2", state: JobStatus.Failed, startDateTime: DateTime.UtcNow.AddHours(-6), duration: 900, totalTests: 8, successTests: 7, failedTests: 1)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -885,56 +488,8 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var jobs = new List<FullJobInfo>
         {
-            new()
-            {
-                JobId = "job-main",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-1",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/main",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "job-develop",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-2",
-                BranchName = "develop",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/develop",
-                State = JobStatus.Success,
-                Duration = 1500,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1.5),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 5,
-                SuccessTestsCount = 5,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "job-main", projectId: projectId, pipelineId: "pipeline-1", branchName: "main"),
+            CreateFullJobInfo(jobId: "job-develop", projectId: projectId, pipelineId: "pipeline-2", branchName: "develop", agentName: "agent-2", duration: 1500, totalTests: 5, successTests: 5)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -963,31 +518,13 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
         var jobs = new List<FullJobInfo>();
         for (int i = 0; i < 7; i++)
         {
-            jobs.Add(new FullJobInfo
-            {
-                JobId = jobId,
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = $"pipeline-{i}",
-                BranchName = $"branch-{i}",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = $"http://test.com/run{i}",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow.AddDays(-i - 5), // Older than 3 days
-                EndDateTime = DateTime.UtcNow.AddDays(-i - 5).AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            });
+            jobs.Add(CreateFullJobInfo(
+                jobId: jobId,
+                projectId: projectId,
+                pipelineId: $"pipeline-{i}",
+                branchName: $"branch-{i}",
+                startDateTime: DateTime.UtcNow.AddDays(-i - 5)
+            ));
         }
 
         await database.JobInfo.InsertAsync(jobs);
@@ -998,7 +535,7 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
         // Assert
         result.Should().NotBeNull();
         // Should return max 5 runs per job (rnj <= 5), unless they're within 3 days
-        result.Where(r => r.JobId == jobId).Should().HaveCountLessOrEqualTo(5);
+        result.Where(r => r.JobId == jobId).Should().HaveCount(5);
     }
 
     [Fact]
@@ -1015,31 +552,13 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
         var jobs = new List<FullJobInfo>();
         for (int i = 0; i < 7; i++)
         {
-            jobs.Add(new FullJobInfo
-            {
-                JobId = jobId,
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = $"pipeline-{i}",
-                BranchName = $"branch-{i}",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = $"http://test.com/run{i}",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow.AddHours(-i * 6), // Within last 2 days
-                EndDateTime = DateTime.UtcNow.AddHours(-i * 6).AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            });
+            jobs.Add(CreateFullJobInfo(
+                jobId: jobId,
+                projectId: projectId,
+                pipelineId: $"pipeline-{i}",
+                branchName: $"branch-{i}",
+                startDateTime: DateTime.UtcNow.AddHours(-i * 6)
+            ));
         }
 
         await database.JobInfo.InsertAsync(jobs);
@@ -1064,56 +583,8 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var jobs = new List<FullJobInfo>
         {
-            new()
-            {
-                JobId = "recent-job",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-1",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/recent",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow.AddDays(-7),
-                EndDateTime = DateTime.UtcNow.AddDays(-7).AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "old-job",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-2",
-                BranchName = "main",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/old",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow.AddDays(-20),
-                EndDateTime = DateTime.UtcNow.AddDays(-20).AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 5,
-                SuccessTestsCount = 5,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "recent-job", projectId: projectId, pipelineId: "pipeline-1", startDateTime: DateTime.UtcNow.AddDays(-7)),
+            CreateFullJobInfo(jobId: "old-job", projectId: projectId, pipelineId: "pipeline-2", agentName: "agent-2", startDateTime: DateTime.UtcNow.AddDays(-20), totalTests: 5, successTests: 5)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -1158,31 +629,15 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
             new() { ParentCommitSha = "commit3", Depth = 2, AuthorName = "Author3", AuthorEmail = "author3@test.com", MessagePreview = "Message 3" }
         };
 
-        var job = new FullJobInfo
-        {
-            JobId = "job-with-commits",
-            JobRunId = Guid.NewGuid().ToString(),
-            ProjectId = projectId,
-            PipelineId = "pipeline-1",
-            BranchName = "main",
-            AgentName = "agent-1",
-            AgentOSName = "linux",
-            JobUrl = "http://test.com/job",
-            State = JobStatus.Success,
-            Duration = 1000,
-            StartDateTime = DateTime.UtcNow,
-            EndDateTime = DateTime.UtcNow.AddSeconds(1),
-            Triggered = null,
-            PipelineSource = null,
-            CommitSha = "commit1",
-            CommitMessage = "Latest commit",
-            CommitAuthor = "Author1",
-            TotalTestsCount = 10,
-            SuccessTestsCount = 10,
-            FailedTestsCount = 0,
-            SkippedTestsCount = 0,
-            ChangesSinceLastRun = changesSinceLastRun
-        };
+        var job = CreateFullJobInfo(
+            jobId: "job-with-commits",
+            projectId: projectId,
+            pipelineId: "pipeline-1",
+            commitSha: "commit1",
+            commitMessage: "Latest commit",
+            commitAuthor: "Author1",
+            changes: changesSinceLastRun
+        );
 
         await database.JobInfo.InsertAsync(job);
 
@@ -1193,7 +648,7 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
         result.Should().NotBeNull();
         result.Should().HaveCount(1);
         result[0].TotalCoveredCommitCount.Should().Be(3);
-        result[0].ChangesSinceLastRun.Should().HaveCountLessOrEqualTo(20); // arraySlice(, 1, 20)
+        result[0].ChangesSinceLastRun.Should().HaveCount(3); // arraySlice(, 1, 20)
     }
 
     [Fact]
@@ -1208,81 +663,9 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var jobs = new List<FullJobInfo>
         {
-            new()
-            {
-                JobId = "job-1",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = project1Id,
-                PipelineId = "pipeline-1",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job1",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "job-2",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = project2Id,
-                PipelineId = "pipeline-2",
-                BranchName = "develop",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job2",
-                State = JobStatus.Success,
-                Duration = 2000,
-                StartDateTime = DateTime.UtcNow.AddHours(-1),
-                EndDateTime = DateTime.UtcNow.AddHours(-1).AddSeconds(2),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 5,
-                SuccessTestsCount = 5,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "job-3",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = project1Id,
-                PipelineId = "pipeline-3",
-                BranchName = "feature/test",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job3",
-                State = JobStatus.Success,
-                Duration = 1500,
-                StartDateTime = DateTime.UtcNow.AddHours(-2),
-                EndDateTime = DateTime.UtcNow.AddHours(-2).AddSeconds(1.5),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 8,
-                SuccessTestsCount = 8,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "job-1", projectId: project1Id, pipelineId: "pipeline-1"),
+            CreateFullJobInfo(jobId: "job-2", projectId: project2Id, pipelineId: "pipeline-2", branchName: "develop", agentName: "agent-2", startDateTime: DateTime.UtcNow.AddHours(-1), duration: 2000, totalTests: 5, successTests: 5),
+            CreateFullJobInfo(jobId: "job-3", projectId: project1Id, pipelineId: "pipeline-3", branchName: "feature/test", startDateTime: DateTime.UtcNow.AddHours(-2), duration: 1500, totalTests: 8, successTests: 8)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -1311,81 +694,9 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var jobs = new List<FullJobInfo>
         {
-            new()
-            {
-                JobId = job1Id,
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-1",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job1",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = job1Id,
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-2",
-                BranchName = "develop",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job1-2",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow.AddHours(-1),
-                EndDateTime = DateTime.UtcNow.AddHours(-1).AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = job2Id,
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-3",
-                BranchName = "feature/other",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job2",
-                State = JobStatus.Success,
-                Duration = 2000,
-                StartDateTime = DateTime.UtcNow.AddHours(-2),
-                EndDateTime = DateTime.UtcNow.AddHours(-2).AddSeconds(2),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 5,
-                SuccessTestsCount = 5,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: job1Id, projectId: projectId, pipelineId: "pipeline-1"),
+            CreateFullJobInfo(jobId: job1Id, projectId: projectId, pipelineId: "pipeline-2", branchName: "develop", startDateTime: DateTime.UtcNow.AddHours(-1)),
+            CreateFullJobInfo(jobId: job2Id, projectId: projectId, pipelineId: "pipeline-3", branchName: "feature/other", agentName: "agent-2", duration: 2000, startDateTime: DateTime.UtcNow.AddHours(-2), totalTests: 5, successTests: 5)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -1412,56 +723,8 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var jobs = new List<FullJobInfo>
         {
-            new()
-            {
-                JobId = "job-with-branch",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-1",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job1",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "job-without-branch",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-2",
-                BranchName = "",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job2",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow.AddHours(-1),
-                EndDateTime = DateTime.UtcNow.AddHours(-1).AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 5,
-                SuccessTestsCount = 5,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "job-with-branch", projectId: projectId, pipelineId: "pipeline-1"),
+            CreateFullJobInfo(jobId: "job-without-branch", projectId: projectId, pipelineId: "pipeline-2", branchName: "", agentName: "agent-2", startDateTime: DateTime.UtcNow.AddHours(-1), totalTests: 5, successTests: 5)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -1486,56 +749,8 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var jobs = new List<FullJobInfo>
         {
-            new()
-            {
-                JobId = "recent-job",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-1",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/recent",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow.AddDays(-7),
-                EndDateTime = DateTime.UtcNow.AddDays(-7).AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "old-job",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-2",
-                BranchName = "old-branch",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/old",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow.AddDays(-20),
-                EndDateTime = DateTime.UtcNow.AddDays(-20).AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 5,
-                SuccessTestsCount = 5,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "recent-job", projectId: projectId, pipelineId: "pipeline-1", startDateTime: DateTime.UtcNow.AddDays(-7)),
+            CreateFullJobInfo(jobId: "old-job", projectId: projectId, pipelineId: "pipeline-2", branchName: "old-branch", agentName: "agent-2", startDateTime: DateTime.UtcNow.AddDays(-20), totalTests: 5, successTests: 5)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -1558,31 +773,11 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var projectId = $"project-{Guid.NewGuid()}";
 
-        var job = new FullJobInfo
-        {
-            JobId = "test-job",
-            JobRunId = Guid.NewGuid().ToString(),
-            ProjectId = projectId,
-            PipelineId = "pipeline-1",
-            BranchName = "test-branch",
-            AgentName = "agent-1",
-            AgentOSName = "linux",
-            JobUrl = "http://test.com/job",
-            State = JobStatus.Success,
-            Duration = 1000,
-            StartDateTime = DateTime.UtcNow,
-            EndDateTime = DateTime.UtcNow.AddSeconds(1),
-            Triggered = null,
-            PipelineSource = null,
-            CommitSha = null,
-            CommitMessage = null,
-            CommitAuthor = null,
-            TotalTestsCount = 10,
-            SuccessTestsCount = 10,
-            FailedTestsCount = 0,
-            SkippedTestsCount = 0,
-            ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-        };
+        var job = CreateFullJobInfo(
+            jobId: "test-job",
+            projectId: projectId,
+            pipelineId: "pipeline-1",
+            branchName: "test-branch");
 
         await database.JobInfo.InsertAsync(job);
 
@@ -1605,56 +800,8 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var jobs = new List<FullJobInfo>
         {
-            new()
-            {
-                JobId = "job-1",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-1",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job1",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "job-2",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-2",
-                BranchName = "main",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job2",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow.AddHours(-1),
-                EndDateTime = DateTime.UtcNow.AddHours(-1).AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 5,
-                SuccessTestsCount = 5,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "job-1", projectId: projectId, pipelineId: "pipeline-1"),
+            CreateFullJobInfo(jobId: "job-2", projectId: projectId, pipelineId: "pipeline-2", agentName: "agent-2", startDateTime: DateTime.UtcNow.AddHours(-1), totalTests: 5, successTests: 5)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -1679,56 +826,8 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var jobs = new List<FullJobInfo>
         {
-            new()
-            {
-                JobId = "job-1",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-1",
-                BranchName = "older-branch",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job1",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow.AddDays(-5),
-                EndDateTime = DateTime.UtcNow.AddDays(-5).AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "job-2",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-2",
-                BranchName = "newer-branch",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job2",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 5,
-                SuccessTestsCount = 5,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "job-1", projectId: projectId, pipelineId: "pipeline-1", branchName: "older-branch", startDateTime: DateTime.UtcNow.AddDays(-5)),
+            CreateFullJobInfo(jobId: "job-2", projectId: projectId, pipelineId: "pipeline-2", branchName: "newer-branch", agentName: "agent-2", totalTests: 5, successTests: 5)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -1757,56 +856,8 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var jobs = new List<FullJobInfo>
         {
-            new()
-            {
-                JobId = "job-1",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = pipelineId,
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job1",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = "abc123",
-                CommitMessage = "Test commit",
-                CommitAuthor = "Author",
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "job-2",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = pipelineId,
-                BranchName = "main",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job2",
-                State = JobStatus.Success,
-                Duration = 2000,
-                StartDateTime = DateTime.UtcNow.AddMinutes(-1),
-                EndDateTime = DateTime.UtcNow.AddMinutes(-1).AddSeconds(2),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = "abc123",
-                CommitMessage = "Test commit",
-                CommitAuthor = "Author",
-                TotalTestsCount = 5,
-                SuccessTestsCount = 5,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "job-1", projectId: projectId, pipelineId: pipelineId, commitSha: "abc123"),
+            CreateFullJobInfo(jobId: "job-2", projectId: projectId, pipelineId: pipelineId, agentName: "agent-2", duration: 2000, startDateTime: DateTime.UtcNow.AddMinutes(-1), commitSha: "abc123", totalTests: 5, successTests: 5)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -1844,56 +895,8 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var jobs = new List<FullJobInfo>
         {
-            new()
-            {
-                JobId = "job-main",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-main",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/main",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "job-develop",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-develop",
-                BranchName = "develop",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/develop",
-                State = JobStatus.Success,
-                Duration = 1500,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1.5),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 5,
-                SuccessTestsCount = 5,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "job-main", projectId: projectId, pipelineId: "pipeline-main"),
+            CreateFullJobInfo(jobId: "job-develop", projectId: projectId, pipelineId: "pipeline-develop", branchName: "develop", agentName: "agent-2", duration: 1500, totalTests: 5, successTests: 5)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -1919,56 +922,8 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var jobs = new List<FullJobInfo>
         {
-            new()
-            {
-                JobId = "job-with-pipeline",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-1",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job1",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "job-without-pipeline",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "",
-                BranchName = "main",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job2",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 5,
-                SuccessTestsCount = 5,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "job-with-pipeline", projectId: projectId, pipelineId: "pipeline-1"),
+            CreateFullJobInfo(jobId: "job-without-pipeline", projectId: projectId, pipelineId: "", agentName: "agent-2", totalTests: 5, successTests: 5)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -1994,56 +949,8 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var jobs = new List<FullJobInfo>
         {
-            new()
-            {
-                JobId = "job-success",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = pipelineId,
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/success",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "job-failed",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = pipelineId,
-                BranchName = "main",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/failed",
-                State = JobStatus.Failed,
-                Duration = 500,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(0.5),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 5,
-                SuccessTestsCount = 4,
-                FailedTestsCount = 1,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "job-success", projectId: projectId, pipelineId: pipelineId),
+            CreateFullJobInfo(jobId: "job-failed", projectId: projectId, pipelineId: pipelineId, agentName: "agent-2", state: JobStatus.Failed, duration: 500, totalTests: 5, successTests: 4, failedTests: 1)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -2069,58 +976,8 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var jobs = new List<FullJobInfo>
         {
-            new()
-            {
-                JobId = "job-1",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = pipelineId,
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job1",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                CustomStatusMessage = "Message 1",
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "job-2",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = pipelineId,
-                BranchName = "main",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job2",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                CustomStatusMessage = "Message 2",
-                TotalTestsCount = 5,
-                SuccessTestsCount = 5,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "job-1", projectId: projectId, pipelineId: pipelineId, customStatusMessage: "Message 1"),
+            CreateFullJobInfo(jobId: "job-2", projectId: projectId, pipelineId: pipelineId, agentName: "agent-2", customStatusMessage: "Message 2", totalTests: 5, successTests: 5)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -2146,56 +1003,8 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var jobs = new List<FullJobInfo>
         {
-            new()
-            {
-                JobId = "job-old",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-old",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/old",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow.AddDays(-5),
-                EndDateTime = DateTime.UtcNow.AddDays(-5).AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "job-new",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-new",
-                BranchName = "main",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/new",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 5,
-                SuccessTestsCount = 5,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "job-old", projectId: projectId, pipelineId: "pipeline-old", startDateTime: DateTime.UtcNow.AddDays(-5)),
+            CreateFullJobInfo(jobId: "job-new", projectId: projectId, pipelineId: "pipeline-new", agentName: "agent-2", totalTests: 5, successTests: 5)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -2222,31 +1031,11 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
         var jobs = new List<FullJobInfo>();
         for (int i = 0; i < 250; i++)
         {
-            jobs.Add(new FullJobInfo
-            {
-                JobId = $"job-{i}",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = $"pipeline-{i}",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = $"http://test.com/job{i}",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow.AddMinutes(-i),
-                EndDateTime = DateTime.UtcNow.AddMinutes(-i).AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            });
+            jobs.Add(CreateFullJobInfo(
+                jobId: $"job-{i}",
+                projectId: projectId,
+                pipelineId: $"pipeline-{i}",
+                startDateTime: DateTime.UtcNow.AddMinutes(-i)));
         }
 
         await database.JobInfo.InsertAsync(jobs);
@@ -2256,7 +1045,7 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         // Assert
         result.Should().NotBeNull();
-        result.Should().HaveCountLessOrEqualTo(200);
+        result.Should().HaveCount(200);
     }
 
     [Fact]
@@ -2290,31 +1079,14 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
             new() { ParentCommitSha = "commit2", Depth = 1, AuthorName = "Author2", AuthorEmail = "author2@test.com", MessagePreview = "Message 2" }
         };
 
-        var job = new FullJobInfo
-        {
-            JobId = "job-with-commits",
-            JobRunId = Guid.NewGuid().ToString(),
-            ProjectId = projectId,
-            PipelineId = pipelineId,
-            BranchName = "main",
-            AgentName = "agent-1",
-            AgentOSName = "linux",
-            JobUrl = "http://test.com/job",
-            State = JobStatus.Success,
-            Duration = 1000,
-            StartDateTime = DateTime.UtcNow,
-            EndDateTime = DateTime.UtcNow.AddSeconds(1),
-            Triggered = null,
-            PipelineSource = null,
-            CommitSha = "commit1",
-            CommitMessage = "Latest commit",
-            CommitAuthor = "Author1",
-            TotalTestsCount = 10,
-            SuccessTestsCount = 10,
-            FailedTestsCount = 0,
-            SkippedTestsCount = 0,
-            ChangesSinceLastRun = changesSinceLastRun
-        };
+        var job = CreateFullJobInfo(
+            jobId: "job-with-commits",
+            projectId: projectId,
+            pipelineId: pipelineId,
+            commitSha: "commit1",
+            commitMessage: "Latest commit",
+            commitAuthor: "Author1",
+            changes: changesSinceLastRun);
 
         await database.JobInfo.InsertAsync(job);
 
@@ -2325,7 +1097,7 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
         result.Should().NotBeNull();
         result.Should().HaveCount(1);
         result[0].TotalCoveredCommitCount.Should().Be(2);
-        result[0].ChangesSinceLastRun.Should().HaveCountLessOrEqualTo(20);
+        result[0].ChangesSinceLastRun.Should().HaveCount(2);
     }
 
     [Fact]
@@ -2341,83 +1113,11 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
         var jobs = new List<FullJobInfo>
         {
             // Project 1 - main branch - older run
-            new()
-            {
-                JobId = "job-1",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = project1Id,
-                PipelineId = "pipeline-1-old",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job1-old",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow.AddHours(-2),
-                EndDateTime = DateTime.UtcNow.AddHours(-2).AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
+            CreateFullJobInfo(jobId: "job-1", projectId: project1Id, pipelineId: "pipeline-1-old", startDateTime: DateTime.UtcNow.AddHours(-2)),
             // Project 1 - main branch - newer run (should be returned)
-            new()
-            {
-                JobId = "job-2",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = project1Id,
-                PipelineId = "pipeline-1-new",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job1-new",
-                State = JobStatus.Success,
-                Duration = 1200,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1.2),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 12,
-                SuccessTestsCount = 12,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
+            CreateFullJobInfo(jobId: "job-2", projectId: project1Id, pipelineId: "pipeline-1-new", duration: 1200, totalTests: 12, successTests: 12),
             // Project 2 - develop branch
-            new()
-            {
-                JobId = "job-3",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = project2Id,
-                PipelineId = "pipeline-2",
-                BranchName = "develop",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job3",
-                State = JobStatus.Failed,
-                Duration = 900,
-                StartDateTime = DateTime.UtcNow.AddMinutes(-30),
-                EndDateTime = DateTime.UtcNow.AddMinutes(-30).AddSeconds(0.9),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 8,
-                SuccessTestsCount = 7,
-                FailedTestsCount = 1,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "job-3", projectId: project2Id, pipelineId: "pipeline-2", branchName: "develop", agentName: "agent-2", state: JobStatus.Failed, duration: 900, startDateTime: DateTime.UtcNow.AddMinutes(-30), totalTests: 8, successTests: 7, failedTests: 1)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -2451,56 +1151,8 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var jobs = new List<FullJobInfo>
         {
-            new()
-            {
-                JobId = "job-main",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-main",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/main",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "job-develop",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-develop",
-                BranchName = "develop",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/develop",
-                State = JobStatus.Success,
-                Duration = 1500,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1.5),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 5,
-                SuccessTestsCount = 5,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "job-main", projectId: projectId, pipelineId: "pipeline-main"),
+            CreateFullJobInfo(jobId: "job-develop", projectId: projectId, pipelineId: "pipeline-develop", branchName: "develop", agentName: "agent-2", duration: 1500, totalTests: 5, successTests: 5)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -2526,56 +1178,8 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var jobs = new List<FullJobInfo>
         {
-            new()
-            {
-                JobId = "job-with-pipeline",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-1",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job1",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "job-without-pipeline",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "",
-                BranchName = "main",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job2",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 5,
-                SuccessTestsCount = 5,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "job-with-pipeline", projectId: projectId, pipelineId: "pipeline-1"),
+            CreateFullJobInfo(jobId: "job-without-pipeline", projectId: projectId, pipelineId: "", agentName: "agent-2", totalTests: 5, successTests: 5)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -2601,83 +1205,11 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
         var jobs = new List<FullJobInfo>
         {
             // Older pipeline on main branch
-            new()
-            {
-                JobId = "job-old-main",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-old-main",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/old-main",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow.AddDays(-1),
-                EndDateTime = DateTime.UtcNow.AddDays(-1).AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
+            CreateFullJobInfo(jobId: "job-old-main", projectId: projectId, pipelineId: "pipeline-old-main", startDateTime: DateTime.UtcNow.AddDays(-1)),
             // Newer pipeline on main branch
-            new()
-            {
-                JobId = "job-new-main",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-new-main",
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/new-main",
-                State = JobStatus.Success,
-                Duration = 1200,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1.2),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 12,
-                SuccessTestsCount = 12,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
+            CreateFullJobInfo(jobId: "job-new-main", projectId: projectId, pipelineId: "pipeline-new-main", duration: 1200, totalTests: 12, successTests: 12),
             // Pipeline on develop branch
-            new()
-            {
-                JobId = "job-develop",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-develop",
-                BranchName = "develop",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/develop",
-                State = JobStatus.Success,
-                Duration = 900,
-                StartDateTime = DateTime.UtcNow.AddHours(-1),
-                EndDateTime = DateTime.UtcNow.AddHours(-1).AddSeconds(0.9),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 8,
-                SuccessTestsCount = 8,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "job-develop", projectId: projectId, pipelineId: "pipeline-develop", branchName: "develop", agentName: "agent-2", duration: 900, startDateTime: DateTime.UtcNow.AddHours(-1), totalTests: 8, successTests: 8)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -2710,56 +1242,8 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var jobs = new List<FullJobInfo>
         {
-            new()
-            {
-                JobId = "job-1",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = pipelineId,
-                BranchName = "main",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job1",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = "abc123",
-                CommitMessage = "Test commit",
-                CommitAuthor = "Author",
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "job-2",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = pipelineId,
-                BranchName = "main",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/job2",
-                State = JobStatus.Success,
-                Duration = 2000,
-                StartDateTime = DateTime.UtcNow.AddMinutes(-1),
-                EndDateTime = DateTime.UtcNow.AddMinutes(-1).AddSeconds(2),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = "abc123",
-                CommitMessage = "Test commit",
-                CommitAuthor = "Author",
-                TotalTestsCount = 5,
-                SuccessTestsCount = 5,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "job-1", projectId: projectId, pipelineId: pipelineId, commitSha: "abc123"),
+            CreateFullJobInfo(jobId: "job-2", projectId: projectId, pipelineId: pipelineId, agentName: "agent-2", duration: 2000, startDateTime: DateTime.UtcNow.AddMinutes(-1), commitSha: "abc123", totalTests: 5, successTests: 5)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -2794,31 +1278,12 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
         // Create 1100 pipelines (each on different branch to avoid rn filtering)
         for (int i = 0; i < 1100; i++)
         {
-            jobs.Add(new FullJobInfo
-            {
-                JobId = $"job-{i}",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = $"pipeline-{i}",
-                BranchName = $"branch-{i}",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = $"http://test.com/job{i}",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow.AddMinutes(-i),
-                EndDateTime = DateTime.UtcNow.AddMinutes(-i).AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            });
+            jobs.Add(CreateFullJobInfo(
+                jobId: $"job-{i}",
+                projectId: projectId,
+                pipelineId: $"pipeline-{i}",
+                branchName: $"branch-{i}",
+                startDateTime: DateTime.UtcNow.AddMinutes(-i)));
         }
 
         await database.JobInfo.InsertAsync(jobs);
@@ -2828,7 +1293,7 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         // Assert
         result.Should().NotBeNull();
-        result.Should().HaveCountLessOrEqualTo(1000);
+        result.Should().HaveCount(1000);
     }
 
     [Fact]
@@ -2872,56 +1337,8 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
 
         var jobs = new List<FullJobInfo>
         {
-            new()
-            {
-                JobId = "job-old",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-old",
-                BranchName = "branch-old",
-                AgentName = "agent-1",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/old",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow.AddDays(-5),
-                EndDateTime = DateTime.UtcNow.AddDays(-5).AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 10,
-                SuccessTestsCount = 10,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            },
-            new()
-            {
-                JobId = "job-new",
-                JobRunId = Guid.NewGuid().ToString(),
-                ProjectId = projectId,
-                PipelineId = "pipeline-new",
-                BranchName = "branch-new",
-                AgentName = "agent-2",
-                AgentOSName = "linux",
-                JobUrl = "http://test.com/new",
-                State = JobStatus.Success,
-                Duration = 1000,
-                StartDateTime = DateTime.UtcNow,
-                EndDateTime = DateTime.UtcNow.AddSeconds(1),
-                Triggered = null,
-                PipelineSource = null,
-                CommitSha = null,
-                CommitMessage = null,
-                CommitAuthor = null,
-                TotalTestsCount = 5,
-                SuccessTestsCount = 5,
-                FailedTestsCount = 0,
-                SkippedTestsCount = 0,
-                ChangesSinceLastRun = new List<CommitParentsChangesEntry>()
-            }
+            CreateFullJobInfo(jobId: "job-old", projectId: projectId, pipelineId: "pipeline-old", branchName: "branch-old", startDateTime: DateTime.UtcNow.AddDays(-5)),
+            CreateFullJobInfo(jobId: "job-new", projectId: projectId, pipelineId: "pipeline-new", branchName: "branch-new", agentName: "agent-2", totalTests: 5, successTests: 5)
         };
 
         await database.JobInfo.InsertAsync(jobs);
@@ -2953,31 +1370,14 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
             new() { ParentCommitSha = "commit3", Depth = 2, AuthorName = "Author3", AuthorEmail = "author3@test.com", MessagePreview = "Message 3" }
         };
 
-        var job = new FullJobInfo
-        {
-            JobId = "job-with-commits",
-            JobRunId = Guid.NewGuid().ToString(),
-            ProjectId = projectId,
-            PipelineId = pipelineId,
-            BranchName = "main",
-            AgentName = "agent-1",
-            AgentOSName = "linux",
-            JobUrl = "http://test.com/job",
-            State = JobStatus.Success,
-            Duration = 1000,
-            StartDateTime = DateTime.UtcNow,
-            EndDateTime = DateTime.UtcNow.AddSeconds(1),
-            Triggered = null,
-            PipelineSource = null,
-            CommitSha = "commit1",
-            CommitMessage = "Latest commit",
-            CommitAuthor = "Author1",
-            TotalTestsCount = 10,
-            SuccessTestsCount = 10,
-            FailedTestsCount = 0,
-            SkippedTestsCount = 0,
-            ChangesSinceLastRun = changesSinceLastRun
-        };
+        var job = CreateFullJobInfo(
+            jobId: "job-with-commits",
+            projectId: projectId,
+            pipelineId: pipelineId,
+            commitSha: "commit1",
+            commitMessage: "Latest commit",
+            commitAuthor: "Author1",
+            changes: changesSinceLastRun);
 
         await database.JobInfo.InsertAsync(job);
 
@@ -2988,7 +1388,7 @@ public class TestCityDatabaseExtensionsTests : IAsyncLifetime
         result.Should().NotBeNull();
         result.Should().HaveCount(1);
         result[0].TotalCoveredCommitCount.Should().Be(3);
-        result[0].ChangesSinceLastRun.Should().HaveCountLessOrEqualTo(20);
+        result[0].ChangesSinceLastRun.Should().HaveCount(3);
     }
 }
 

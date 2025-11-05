@@ -1,7 +1,7 @@
 export interface Group {
     id: string;
     title: string;
-    avatarUrl: string;
+    avatarUrl: null | string;
 }
 
 export interface GroupNode extends Group {

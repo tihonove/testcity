@@ -117,7 +117,7 @@ public static class TestCityDatabaseExtensions
                 filtered.JobUrl,
                 filtered.ProjectId,
                 filtered.HasCodeQualityReport,
-                arraySlice(filtered.ChangesSinceLastRun, 1, 20),
+                arraySlice(filtered.ChangesSinceLastRun, 1, 20) as ChangesSinceLastRunTuple,
                 length(filtered.ChangesSinceLastRun) as TotalCoveredCommitCount
             FROM (
                 SELECT *,
@@ -197,7 +197,7 @@ public static class TestCityDatabaseExtensions
                 arrayElement(topK(1)(CommitAuthor), 1) as CommitAuthor,
                 arrayElement(topK(1)(CommitSha), 1) as CommitSha,
                 0 as HasCodeQualityReport,
-                arraySlice(any(ji.ChangesSinceLastRun), 1, 20),
+                arraySlice(any(ji.ChangesSinceLastRun), 1, 20) as ChangesSinceLastRunTuple,
                 length(any(ji.ChangesSinceLastRun)) as TotalCoveredCommitCount
             FROM JobInfo ji
             WHERE 
@@ -242,7 +242,7 @@ public static class TestCityDatabaseExtensions
                 CommitAuthor,
                 CommitSha,
                 HasCodeQualityReport,
-                ChangesSinceLastRun,
+                ChangesSinceLastRun as ChangesSinceLastRunTuple,
                 TotalCoveredCommitCount
             FROM ( 
                 SELECT 

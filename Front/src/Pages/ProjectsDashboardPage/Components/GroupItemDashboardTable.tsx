@@ -7,7 +7,7 @@ import { Fit, Fixed, RowStack } from "@skbkontur/react-stack-layout";
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { GroupAvatar } from "../../../Components/GroupAvatar";
-import { addBranchToLink } from "../../../Domain/Navigation";
+import { addBranchToLink, createLinkToGroup } from "../../../Domain/Navigation";
 import { ProjectItemDashboardTable } from "./ProjectItemDashboardTable";
 
 import { GroupDashboardNode } from "../../../Domain/ProjectDashboardNode";
@@ -61,7 +61,11 @@ export function GroupItemDashboardTable({
                                         <GroupAvatar size="20px" group={group}></GroupAvatar>
                                     </Fit>
                                     <Fit>
-                                        <Link to={addBranchToLink(group.link, currentBranchName)}>
+                                        <Link
+                                            to={addBranchToLink(
+                                                createLinkToGroup(group.fullPathSlug),
+                                                currentBranchName
+                                            )}>
                                             <h3 className={styles.header3}>{group.title}</h3>
                                         </Link>
                                     </Fit>

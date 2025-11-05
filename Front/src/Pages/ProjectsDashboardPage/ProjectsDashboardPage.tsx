@@ -25,8 +25,8 @@ import { GroupItemDashboardTable } from "./Components/GroupItemDashboardTable";
 import { ProjectItemDashboardTable } from "./Components/ProjectItemDashboardTable";
 import { ProjectsWithRunsTable } from "./Components/ProjectsWithRunsTable";
 
-import { getProjectsDashboardData } from "../../Domain/ProjectsDashboardDataOperation";
 import styles from "./ProjectsDashboardPage.module.css";
+import { useTestCityRequest } from "../../Domain/Api/TestCityApiClient";
 
 export function ProjectsDashboardPage(): React.JSX.Element {
     const { rootGroup, groupNodes, pathToGroup } = useProjectContextFromUrlParams();
@@ -35,7 +35,14 @@ export function ProjectsDashboardPage(): React.JSX.Element {
     usePopularBranchStoring(currentBranchName);
     const [noRuns, setNoRuns] = useSearchParamAsState("noruns");
 
-    const dashboardData = getProjectsDashboardData(rootGroup, groupNodes, currentBranchName);
+    const dashboardData = useTestCityRequest(
+        c =>
+            c.runs.getDashboard(
+                groupNodes.map(x => x.title),
+                currentBranchName
+            ),
+        [...groupNodes.map(x => x.title), currentBranchName]
+    );
 
     return (
         <main className={styles.root}>
