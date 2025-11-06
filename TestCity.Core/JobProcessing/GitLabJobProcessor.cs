@@ -25,7 +25,8 @@ public class GitLabJobProcessor(IGitLabClient client, GitLabExtendedClient clien
 
             const long maxArtifactSize = 500 * 1024 * 1024; // 500 MB
             var hasArtifacts = job.Artifacts?.Count > 0;
-            var size = job.Artifacts?.FirstOrDefault(x => x.Filename == "artifacts.zip")?.Size;
+            var size = job.Artifacts?.FirstOrDefault(x => x.Filename == "artifacts.zip")?.Size ??
+                       job.Artifacts?.FirstOrDefault(x => x.FileFormat == "zip")?.Size;
             var artifactContents = hasArtifacts && size < maxArtifactSize  ? jobClient.GetJobArtifactsOrNull(job.Id) : null;
             if (artifactContents == null && !needProcessFailedJob)
             {
