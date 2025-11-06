@@ -1,7 +1,7 @@
 import { Button, SingleToast } from "@skbkontur/react-ui";
 import * as React from "react";
 
-import { CopyIcon16Light, TimeClockFastIcon16Regular } from "@skbkontur/icons";
+import { ClipboardTextIcon16Regular, CopyIcon16Light, TimeClockFastIcon16Regular } from "@skbkontur/icons";
 import { Fill, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import { Toast } from "@skbkontur/react-ui";
 import { Suspense } from "react";
@@ -16,6 +16,7 @@ import { splitTestName } from "./TestName";
 import { Spoiler } from "./Spoiler";
 import { FlakyTestBadge } from "./FlakyTestBadge";
 import { Link } from "react-router-dom";
+import { TestOutputModal } from "./TestOutputModal";
 
 interface FailedTestListViewProps {
     projectId: string;
@@ -99,6 +100,7 @@ export function TestRunRow({
     const [expandOutput, setExpandOutput] = React.useState(false);
     const [[failedOutput, failedMessage, systemOutput], setOutputValues] = React.useState(["", "", ""]);
     const storage = useStorage();
+    const [showOutputModal, setShowOutputModal] = React.useState(false);
 
     React.useEffect(() => {
         if (expandOutput && !failedOutput && !failedMessage && !systemOutput)
@@ -129,6 +131,16 @@ export function TestRunRow({
 
     return (
         <div className={styles.testRunRowContainer}>
+            {showOutputModal && (
+                <TestOutputModal
+                    testId={testRun[TestRunQueryRowNames.TestId]}
+                    jobId={testRun[TestRunQueryRowNames.JobId]}
+                    jobRunIds={[jobRunId]}
+                    onClose={() => {
+                        setShowOutputModal(false);
+                    }}
+                />
+            )}
             <div className={styles.testRunRowHeader}>
                 <div className={styles.testRunRowContent}>
                     <a
@@ -142,6 +154,18 @@ export function TestRunRow({
                         {name}
                     </a>
                     {isFlaky && <FlakyTestBadge />}
+                </div>
+                <div className={styles.testOutputLink}>
+                    <a
+                        href="#output"
+                        onClick={e => {
+                            setShowOutputModal(true);
+                            e.preventDefault();
+                            return false;
+                        }}>
+                        <ClipboardTextIcon16Regular />
+                        Test output
+                    </a>
                 </div>
                 <div className={styles.testHistoryLink}>
                     <Link to={createLinkToTestHistory(basePrefix, testRun[TestRunQueryRowNames.TestId], pathToProject)}>

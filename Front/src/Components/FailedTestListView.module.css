@@ -61,6 +61,12 @@
     white-space: nowrap;
 }
 
+.testOutputLink {
+    flex-shrink: 0;
+    white-space: nowrap;
+    margin-right: 10px;
+}
+
 .testRunRowContainer {
     margin-left: 10px;
 }
