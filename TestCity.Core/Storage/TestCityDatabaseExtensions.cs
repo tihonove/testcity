@@ -76,6 +76,7 @@ public static class TestCityDatabaseExtensions
                 ipji.JobUrl,
                 ipji.ProjectId,
                 0 as HasCodeQualityReport,
+                arraySlice(ipji.ChangesSinceLastRun, 1, 20) as ChangesSinceLastRunTuple,
                 length(ipji.ChangesSinceLastRun) as TotalCoveredCommitCount
             FROM InProgressJobInfo ipji
             LEFT JOIN JobInfo AS ji ON ji.JobId = ipji.JobId AND ji.JobRunId = ipji.JobRunId
