@@ -1,13 +1,10 @@
 import { NetDownloadIcon24Regular } from "@skbkontur/icons";
-import { Button, Input, Paging, Spinner } from "@skbkontur/react-ui";
+import { Button, Input, Link, Paging, Spinner } from "@skbkontur/react-ui";
 import * as React from "react";
 
 import { Fill, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import { Suspense, useDeferredValue } from "react";
-import { Link } from "react-router-dom";
-import { useClickhouseClient, useStorage, useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { useBasePrefix } from "../Domain/Navigation";
-import { TestRunQueryRowNames } from "../Domain/Storage/TestRunQuery";
 import {
     useFilteredValues,
     useSearchParamAsState,
@@ -15,17 +12,18 @@ import {
     useSearchParamsAsState,
 } from "../Utils";
 import { SortHeaderLink } from "./SortHeaderLink";
+import styles from "./TestListView.module.css";
 import { TestOutputModal } from "./TestOutputModal";
 import { TestRunRow } from "./TestRunRow";
 import { TestTypeFilterButton } from "./TestTypeFilterButton";
 import { SuspenseFadingWrapper, useDelayedTransition } from "./useDelayedTransition";
 import { useUrlBasedPaging } from "./useUrlBasedPaging";
-import styles from "./TestListView.module.css";
+import { useTestCityClient, useTestCityRequest } from "../Domain/Api/TestCityApiClient";
 
 interface TestListViewProps {
     projectId?: string;
-    jobId?: string;
-    jobRunIds: string[];
+    jobId: string;
+    jobRunId: string;
     pathToProject: string[];
     linksBlock?: React.ReactNode;
 }
@@ -42,7 +40,7 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
         ["State", "TestId", "Duration", "StartDateTime"] as const,
         undefined
     );
-    const storage = useStorage();
+    const client = useTestCityClient();
     const [sortDirectionRaw, setSortDirection] = useSearchParamAsState("direction", "desc");
     const sortDirection = useFilteredValues(sortDirectionRaw, ["ASC", "DESC"] as const, undefined);
     const [searchText, setSearchText, debouncedSearchValue = "", setSearchTextImmediate] =
@@ -53,36 +51,49 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
 
     const [outputModalIds, setOutputModalIds] = useSearchParamsAsState(["oid", "ojobid"]);
 
-    const [testList, stats] = useStorageQuery(
-        s => s.getTestListWithStat(props.jobRunIds, sortField, sortDirection, searchValue, testCasesType, 100, page),
-        [props.jobRunIds, sortField, sortDirection, searchValue, testCasesType, page]
+    // const [testList, stats] = useStorageQuery(
+    //     s => s.getTestListWithStat([props.jobRunId], sortField, sortDirection, searchValue, testCasesType, 100, page),
+    //     [props.jobRunId, sortField, sortDirection, searchValue, testCasesType, page]
+    // );
+    const [testList, stats] = useTestCityRequest(
+        s => {
+            return Promise.all([
+                s.runs.getTestList(props.pathToProject, props.jobId, props.jobRunId, {
+                    sortField: sortField,
+                    sortDirection: sortDirection,
+                    testIdQuery: searchValue,
+                    testStateFilter: testCasesType,
+                    itemsPerPage: 100,
+                    page: page,
+                }),
+                s.runs.getTestsStats(props.pathToProject, props.jobId, props.jobRunId, {
+                    testIdQuery: searchValue,
+                    testStateFilter: testCasesType,
+                }),
+            ]);
+        },
+        [props.jobRunId, sortField, sortDirection, searchValue, testCasesType, page]
     );
     const totalRowCount = stats.totalTestsCount;
 
-    const flakyTestNamesArray = useStorageQuery(
-        s => (props.projectId && props.jobId ? s.getFlakyTestNames(props.projectId, props.jobId) : []),
-        [props.projectId, props.jobId]
+    const flakyTestNamesArray = useTestCityRequest(
+        s => (props.jobId ? s.runs.getFlakyTestsNames(props.pathToProject, props.jobId) : Promise.resolve([])),
+        [props.pathToProject, props.jobId]
     );
 
     const flakyTestNamesSet = React.useMemo(() => {
         return new Set(flakyTestNamesArray);
     }, [flakyTestNamesArray]);
 
-    async function createAndDownloadCSV(): Promise<void> {
-        const data = await storage.getTestListForCsv(props.jobRunIds);
-        data.unshift(["Order#", "Test Name", "Status", "Duration(ms)"]);
-        const csvString = convertToCSV(data);
-        downloadCSV(`${props.jobRunIds.join("-")}.csv`, csvString);
-    }
-
     return (
         <Suspense fallback={<div className="loading">Загрузка...</div>}>
             <SuspenseFadingWrapper fading={isFading}>
                 {outputModalIds && (
                     <TestOutputModal
+                        pathToProject={props.pathToProject}
                         testId={outputModalIds[0]}
                         jobId={outputModalIds[1]}
-                        jobRunIds={props.jobRunIds}
+                        jobRunId={props.jobRunId}
                         onClose={() => {
                             setOutputModalIds(undefined);
                         }}
@@ -135,16 +146,13 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
                     <Fill />
                     {props.linksBlock}
                     <Fit>
-                        <Button
-                            use="link"
+                        <Link
                             title="Download tests list in CSV"
                             icon={<NetDownloadIcon24Regular />}
-                            onClick={() => {
-                                // eslint-disable-next-line @typescript-eslint/no-floating-promises
-                                createAndDownloadCSV();
-                            }}>
+                            target="__blank"
+                            href={client.runs.getDownloadTestsCsvUrl(props.pathToProject, props.jobId, props.jobRunId)}>
                             Download tests as csv
-                        </Button>
+                        </Link>
                     </Fit>
                 </RowStack>
                 <div className={styles.tableContainer}>
@@ -169,9 +177,9 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
                         <tbody>
                             {testList.map((x, i) => (
                                 <TestRunRow
-                                    key={i.toString() + x[TestRunQueryRowNames.TestId]}
+                                    key={i.toString() + x.testId}
                                     testRun={x}
-                                    jobRunIds={props.jobRunIds}
+                                    jobRunId={props.jobRunId}
                                     basePrefix={basePrefix}
                                     pathToProject={props.pathToProject}
                                     onSetSearchTextImmediate={setSearchTextImmediate}
@@ -194,30 +202,4 @@ export function TestListView(props: TestListViewProps): React.JSX.Element {
             </SuspenseFadingWrapper>
         </Suspense>
     );
-}
-
-function convertToCSV(data: string[][]): string {
-    return data
-        .map(row =>
-            row
-                .map(cell => {
-                    if (typeof cell === "string" && (cell.includes(",") || cell.includes('"'))) {
-                        return `"${cell.replace(/"/g, '""')}"`;
-                    }
-                    return cell;
-                })
-                .join(",")
-        )
-        .join("\n");
-}
-
-function downloadCSV(filename: string, csvData: string): void {
-    const blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
-
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = filename;
-    link.click();
-
-    URL.revokeObjectURL(link.href);
 }

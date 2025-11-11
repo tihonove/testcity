@@ -1,3 +1,4 @@
+import { RunStatus } from "../Components/RunStatus";
 import { JobsQueryRow } from "./Storage/JobsQuery";
 import { Group, Project } from "./Storage/Projects/GroupNode";
 
@@ -62,4 +63,44 @@ export interface JobRun {
     hasCodeQualityReport: boolean;
     changesSinceLastRun: CommitParentsChangesEntry[];
     totalCoveredCommitCount: number;
+}
+
+export interface JobInfo {
+    jobId: string;
+    jobRunId: string;
+    branchName: string;
+    agentName: string;
+    startDateTime: string;
+    endDateTime: string;
+    totalTestsCount: number | null;
+    agentOSName: string;
+    duration: number | null;
+    successTestsCount: number | null;
+    skippedTestsCount: number | null;
+    failedTestsCount: number | null;
+    state: string;
+    customStatusMessage: string;
+    jobUrl: string;
+    projectId: string;
+    pipelineSource: string | null;
+    triggered: string | null;
+    hasCodeQualityReport: boolean;
+    changesSinceLastRun: CommitParentsChangesEntry[];
+    totalCoveredCommitCount: number;
+    pipelineId: string | null;
+    commitSha: string | null;
+    commitMessage: string | null;
+    commitAuthor: string | null;
+}
+
+export interface TestRun {
+    finalState: RunStatus;
+    testId: string;
+    avgDuration: number;
+    minDuration: number;
+    maxDuration: number;
+    jobId: string;
+    allStates: string;
+    startDateTime: string;
+    totalRuns: number;
 }

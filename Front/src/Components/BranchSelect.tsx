@@ -1,7 +1,6 @@
 import { ShareNetworkIcon, TimeClockMoveBackIcon16Light } from "@skbkontur/icons";
 import { ComboBox, MenuSeparator } from "@skbkontur/react-ui";
 import * as React from "react";
-import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { usePopularBranches } from "../Utils/PopularBranchStoring";
 import styles from "./BranchSelect.module.css";
 import { useTestCityRequest } from "../Domain/Api/TestCityApiClient";

@@ -6,21 +6,14 @@ namespace TestCity.Api.Controllers;
 
 [ApiController]
 [Route("api/reset")]
-public class ResetCacheController : Controller
+public class ResetCacheController(IServiceProvider serviceProvider) : Controller
 {
-    private readonly IServiceProvider serviceProvider;
-
-    public ResetCacheController(IServiceProvider serviceProvider)
-    {
-        this.serviceProvider = serviceProvider;
-    }
-
     [HttpPost]
     public IActionResult ResetAllCaches()
     {
         var resetableServices = serviceProvider.GetServices<IResetable>();
 
-        if (resetableServices == null || !resetableServices.Any())
+        if (resetableServices?.Any() != true)
         {
             return Ok(new { message = "No resetable services found" });
         }

@@ -8,7 +8,7 @@ namespace TestCity.Core.Clickhouse;
 
 public static class FormattableStringExtensions
 {
-    public static async Task<DbDataReader> ExecuteQueryAsync(
+    public static async Task<DbDataReader> ExecuteQueryAsyncWithParams(
         this DbConnection connection,
         [InterpolatedStringHandlerArgument("connection")] ClickHouseQueryInterpolatedStringHandler query,
         CancellationToken ct = default)

@@ -71,7 +71,8 @@ public static class TestDataBuilders
         string? triggered = null,
         string? pipelineSource = null,
         string? customStatusMessage = null,
-        List<CommitParentsChangesEntry>? changes = null)
+        List<CommitParentsChangesEntry>? changes = null,
+        bool hasCodeQualityReport = false)
     {
         var start = startDateTime ?? DateTime.UtcNow;
         var effectiveJobId = jobId ?? "job-1";
@@ -99,7 +100,8 @@ public static class TestDataBuilders
             FailedTestsCount = failedTests,
             SkippedTestsCount = skippedTests,
             ChangesSinceLastRun = changes ?? new List<CommitParentsChangesEntry>(),
-            CustomStatusMessage = customStatusMessage
+            CustomStatusMessage = customStatusMessage,
+            HasCodeQualityReport = hasCodeQualityReport
         };
     }
 

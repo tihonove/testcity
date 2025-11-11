@@ -7,12 +7,13 @@ import { BranchSelect } from "../Components/BranchSelect";
 import { FlakyTestsList } from "../Components/FlakyTestsList";
 import { GroupBreadcrumps } from "../Components/GroupBreadcrumps";
 import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
-import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { useSearchParamAsState } from "../Utils";
 import { usePopularBranchStoring } from "../Utils/PopularBranchStoring";
 import { reject } from "../Utils/TypeHelpers";
 import styles from "./JobRunsPage.module.css";
 import { JobRunList } from "./JobRunList";
+import { useTestCityRequest } from "../Domain/Api/TestCityApiClient";
+import { flipRateThreshold } from "../Domain/Storage/Storage";
 
 export function JobRunsPage(): React.JSX.Element {
     const { jobId = "" } = useParams();
@@ -23,7 +24,10 @@ export function JobRunsPage(): React.JSX.Element {
 
     const [section, setSection] = useSearchParamAsState("section", "overview");
 
-    const flakyTestsCount = useStorageQuery(x => x.getFlakyTestsCount(project.id, jobId), [project.id, jobId]);
+    const flakyTestsCount = useTestCityRequest(
+        x => x.runs.getFlakyTestsCount(pathToGroup, jobId, flipRateThreshold),
+        [project.id, jobId]
+    );
 
     return (
         <ColumnStack block stretch gap={4}>
@@ -52,7 +56,12 @@ export function JobRunsPage(): React.JSX.Element {
             </Fit>
             <Fit>
                 {section === "overview" && (
-                    <JobRunList project={project} jobId={jobId} branchName={currentBranchName} rootGroup={rootGroup} />
+                    <JobRunList
+                        pathToGroup={pathToGroup}
+                        jobId={jobId}
+                        branchName={currentBranchName}
+                        rootGroup={rootGroup}
+                    />
                 )}
                 {section === "statistics" && (
                     <div>

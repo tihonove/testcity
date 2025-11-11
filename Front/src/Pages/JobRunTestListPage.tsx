@@ -4,7 +4,6 @@ import * as React from "react";
 import { Loader, Tabs } from "@skbkontur/react-ui";
 import { format, parseISO } from "date-fns";
 import { Link, useParams } from "react-router-dom";
-import { useClickhouseClient, useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { AdditionalJobInfo } from "../Components/AdditionalJobInfo";
 import { BranchBox } from "../Components/BranchBox";
 import { ColorByState } from "../Components/Cells";
@@ -18,10 +17,16 @@ import { JonRunIcon } from "../Components/Icons";
 import { Spoiler } from "../Components/Spoiler";
 import { TestListView } from "../Components/TestListView";
 import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
-import { useApiUrl, useBasePrefix } from "../Domain/Navigation";
+import {
+    createLinkToProject,
+    createLinkToProjectByPath,
+    createLinkToTreeMap,
+    useApiUrl,
+    useBasePrefix,
+} from "../Domain/Navigation";
 import { useSearchParamAsState, useSearchParamDebouncedAsState } from "../Utils";
-import { reject } from "../Utils/TypeHelpers";
 import styles from "./JobRunTestListPage.module.css";
+import { useTestCityRequest } from "../Domain/Api/TestCityApiClient";
 
 export function JobRunTestListPage(): React.JSX.Element {
     const basePrefix = useBasePrefix();
@@ -30,13 +35,11 @@ export function JobRunTestListPage(): React.JSX.Element {
     const { jobId = "", jobRunId = "" } = useParams();
     useSearchParamDebouncedAsState("filter", 500, "");
 
-    const client = useClickhouseClient();
-    const jobInfo =
-        useStorageQuery(x => x.getJobInfo(projectId, jobId, jobRunId), [projectId, jobId, jobRunId]) ??
-        reject("JobInfo not found");
-    const [
-        ,
-        ,
+    const jobInfo = useTestCityRequest(
+        x => x.runs.getJobRun(pathToGroup, jobId, jobRunId),
+        [pathToGroup, jobId, jobRunId]
+    );
+    const {
         branchName,
         agentName,
         startDateTime,
@@ -50,13 +53,12 @@ export function JobRunTestListPage(): React.JSX.Element {
         state,
         customStatusMessage,
         jobUrl,
-        ,
         pipelineSource,
         triggered,
         hasCodeQualityReport,
-        coveredCommits,
+        changesSinceLastRun: coveredCommits,
         totalCoveredCommitCount,
-    ] = jobInfo;
+    } = jobInfo;
 
     const [section, setSection] = useSearchParamAsState("section", "overview");
 
@@ -78,8 +80,8 @@ export function JobRunTestListPage(): React.JSX.Element {
                         <h3 className={styles.statusMessage}>{customStatusMessage}</h3>
                         <span className={styles.testsStatusMessage}>
                             Tests passed: {successTestsCount}
-                            {Number(failedTestsCount) > 0 && `, failed: ${failedTestsCount.toString()}`}
-                            {Number(skippedTestsCount) > 0 && `, ignored: ${skippedTestsCount.toString()}`}.
+                            {Number(failedTestsCount) > 0 && `, failed: ${Number(failedTestsCount).toString()}`}
+                            {Number(skippedTestsCount) > 0 && `, ignored: ${Number(skippedTestsCount).toString()}`}.
                         </span>
                     </ColorByState>
                 </Fit>
@@ -90,9 +92,9 @@ export function JobRunTestListPage(): React.JSX.Element {
                     <AdditionalJobInfo
                         startDateTime={startDateTime}
                         endDateTime={endDateTime}
-                        duration={duration}
-                        triggered={triggered}
-                        pipelineSource={pipelineSource}
+                        duration={duration ?? 0}
+                        triggered={triggered ?? ""}
+                        pipelineSource={pipelineSource ?? ""}
                     />
                 </Fit>
 
@@ -111,7 +113,7 @@ export function JobRunTestListPage(): React.JSX.Element {
                 <Fit>
                     {section === "overview" && (
                         <ColumnStack gap={4} stretch block>
-                            {failedTestsCount > 0 && (
+                            {Number(failedTestsCount) > 0 && (
                                 <Fit>
                                     <Spoiler
                                         openedByDefault={true}
@@ -131,7 +133,11 @@ export function JobRunTestListPage(): React.JSX.Element {
                                             linksBlock={
                                                 <Fit>
                                                     <Link
-                                                        to={`${basePrefix}jobs/${encodeURIComponent(jobId)}/runs/${encodeURIComponent(jobRunId)}/treemap`}>
+                                                        to={createLinkToTreeMap(
+                                                            createLinkToProjectByPath(pathToGroup),
+                                                            jobId,
+                                                            jobRunId
+                                                        )}>
                                                         Open tree map
                                                     </Link>
                                                 </Fit>
@@ -152,19 +158,13 @@ export function JobRunTestListPage(): React.JSX.Element {
                                         openedByDefault={true}>
                                         <ColumnStack gap={2} stretch block>
                                             {coveredCommits.map(commit => (
-                                                <Fit key={Array.isArray(commit) ? commit[0] : commit.CommitSha}>
+                                                <Fit key={commit.parentCommitSha}>
                                                     <CommitRow
                                                         pathToProject={pathToGroup}
-                                                        sha={Array.isArray(commit) ? commit[0] : commit.CommitSha}
-                                                        authorName={
-                                                            Array.isArray(commit) ? commit[1] : commit.AuthorName
-                                                        }
-                                                        authorEmail={
-                                                            Array.isArray(commit) ? commit[2] : commit.AuthorEmail
-                                                        }
-                                                        messagePreview={
-                                                            Array.isArray(commit) ? commit[3] : commit.MessagePreview
-                                                        }
+                                                        sha={commit.parentCommitSha}
+                                                        authorName={commit.authorName}
+                                                        authorEmail={commit.authorEmail}
+                                                        messagePreview={commit.messagePreview}
                                                     />
                                                 </Fit>
                                             ))}
@@ -178,12 +178,16 @@ export function JobRunTestListPage(): React.JSX.Element {
                         <TestListView
                             projectId={projectId}
                             jobId={jobId}
-                            jobRunIds={[jobRunId]}
+                            jobRunId={jobRunId}
                             pathToProject={pathToGroup}
                             linksBlock={
                                 <Fit>
                                     <Link
-                                        to={`${basePrefix}jobs/${encodeURIComponent(jobId)}/runs/${encodeURIComponent(jobRunId)}/treemap`}>
+                                        to={createLinkToTreeMap(
+                                            createLinkToProjectByPath(pathToGroup),
+                                            jobId,
+                                            jobRunId
+                                        )}>
                                         Open tree map
                                     </Link>
                                 </Fit>

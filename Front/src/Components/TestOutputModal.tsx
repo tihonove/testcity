@@ -1,27 +1,28 @@
 import * as React from "react";
 import { Button, Modal, Toast } from "@skbkontur/react-ui";
-import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { ColumnStack, Fill, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import { CopyIcon16Light } from "@skbkontur/icons";
 import { runAsyncAction } from "../Utils/TypeHelpers";
 import styles from "./TestOutputModal.module.css";
+import { useTestCityRequest } from "../Domain/Api/TestCityApiClient";
 
 interface TestOutputModalProps {
+    pathToProject: string[];
     jobId: string;
-    jobRunIds: string[];
+    jobRunId: string;
     testId: string;
     onClose: () => void;
 }
 
 export function TestOutputModal(props: TestOutputModalProps): React.JSX.Element {
-    const [failedOutput, failedMessage, systemOutput] = useStorageQuery(
-        x => x.getFailedTestOutput(props.jobId, props.testId, props.jobRunIds),
-        [props.jobId, props.testId, props.jobRunIds]
+    const { failureOutput, failureMessage, systemOutput } = useTestCityRequest(
+        x => x.runs.getTestOutput(props.pathToProject, props.jobId, props.jobRunId, props.testId),
+        [props.pathToProject, props.jobId, props.testId, props.jobRunId]
     );
 
     const handleCopyToClipboard = React.useCallback(() => {
         runAsyncAction(async () => {
-            const textToCopy = [props.testId, "---", failedMessage, "---", failedOutput, "---", systemOutput].join(
+            const textToCopy = [props.testId, "---", failureMessage, "---", failureOutput, "---", systemOutput].join(
                 "\n"
             );
             await navigator.clipboard.writeText(textToCopy);
@@ -29,7 +30,7 @@ export function TestOutputModal(props: TestOutputModalProps): React.JSX.Element 
             // eslint-disable-next-line @typescript-eslint/no-deprecated
             Toast.push("Copied to clipboard");
         });
-    }, [failedMessage, failedOutput, systemOutput, props.testId]);
+    }, [failureMessage, failureOutput, systemOutput, props.testId]);
 
     return (
         <Modal onClose={props.onClose} width="1000px">
@@ -51,9 +52,9 @@ export function TestOutputModal(props: TestOutputModalProps): React.JSX.Element 
                     </Fit>
                     <Fit>
                         <pre className={styles.code}>
-                            {failedMessage}
+                            {failureMessage}
                             ---
-                            {failedOutput}
+                            {failureOutput}
                             ---
                             {systemOutput}
                         </pre>

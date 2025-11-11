@@ -9,7 +9,7 @@ import { ChartBars } from "./ChartBars";
 import { BrushBackground } from "./BrushBackground";
 
 interface RunStatisticsChartProps {
-    value: Array<[state: string, duration: number, startDate: string]>;
+    value: Array<readonly [state: string, duration: number, startDate: string]>;
 }
 
 export function RunStatisticsChart(props: RunStatisticsChartProps): React.JSX.Element {

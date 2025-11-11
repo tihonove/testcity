@@ -3,19 +3,18 @@ import * as React from "react";
 
 import { ClipboardTextIcon16Regular, CopyIcon16Light, TimeClockFastIcon16Regular } from "@skbkontur/icons";
 import { Fill, Fit, RowStack } from "@skbkontur/react-stack-layout";
-import { Toast } from "@skbkontur/react-ui";
 import { Suspense } from "react";
-import styles from "./FailedTestListView.module.css";
-import { useStorage, useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { createLinkToTestHistory, useBasePrefix } from "../Domain/Navigation";
-import { TestRunQueryRowNames } from "../Domain/Storage/TestRunQuery";
+import styles from "./FailedTestListView.module.css";
 
-import { TestRunQueryRow } from "../Domain/Storage/TestRunQuery";
-import { runAsyncAction } from "../Utils/TypeHelpers";
-import { splitTestName } from "./TestName";
-import { Spoiler } from "./Spoiler";
-import { FlakyTestBadge } from "./FlakyTestBadge";
 import { Link } from "react-router-dom";
+import { useTestCityClient, useTestCityRequest } from "../Domain/Api/TestCityApiClient";
+import { TestOutput } from "../Domain/Api/TestCityRunsApiClient";
+import { TestRun } from "../Domain/ProjectDashboardNode";
+import { runAsyncAction } from "../Utils/TypeHelpers";
+import { FlakyTestBadge } from "./FlakyTestBadge";
+import { Spoiler } from "./Spoiler";
+import { splitTestName } from "./TestName";
 import { TestOutputModal } from "./TestOutputModal";
 
 interface FailedTestListViewProps {
@@ -29,14 +28,19 @@ interface FailedTestListViewProps {
 
 export function FailedTestListView(props: FailedTestListViewProps): React.JSX.Element {
     const basePrefix = useBasePrefix();
-    const testList = useStorageQuery(
-        s => s.getTestList([props.jobRunId], undefined, undefined, "", "Failed", 50, 0),
+    const testList = useTestCityRequest(
+        c =>
+            c.runs.getTestList(props.pathToProject, props.jobId, props.jobRunId, {
+                testStateFilter: "Failed",
+                itemsPerPage: 50,
+                page: 0,
+            }),
         [props.jobRunId]
     );
 
-    const flakyTestNamesArray = useStorageQuery(
-        s => s.getFlakyTestNames(props.projectId, props.jobId),
-        [props.projectId, props.jobId]
+    const flakyTestNamesArray = useTestCityRequest(
+        s => s.runs.getFlakyTestsNames(props.pathToProject, props.jobId),
+        [props.pathToProject, props.jobId]
     );
 
     const flakyTestNamesSet = React.useMemo(() => {
@@ -44,10 +48,10 @@ export function FailedTestListView(props: FailedTestListViewProps): React.JSX.El
     }, [flakyTestNamesArray]);
 
     const groupedTests = React.useMemo(() => {
-        const groups: Record<string, TestRunQueryRow[]> = {};
+        const groups: Record<string, TestRun[]> = {};
 
         testList.forEach(test => {
-            const [prefix] = splitTestName(test[TestRunQueryRowNames.TestId]);
+            const [prefix] = splitTestName(test.testId);
             if (!(prefix in groups)) {
                 groups[prefix] = [];
             }
@@ -67,7 +71,7 @@ export function FailedTestListView(props: FailedTestListViewProps): React.JSX.El
                         openedByDefault={true}>
                         {tests.map((test, i) => (
                             <TestRunRow
-                                key={i.toString() + test[TestRunQueryRowNames.TestId]}
+                                key={i.toString() + test.testId}
                                 testRun={test}
                                 jobRunId={props.jobRunId}
                                 basePrefix={basePrefix}
@@ -83,7 +87,7 @@ export function FailedTestListView(props: FailedTestListViewProps): React.JSX.El
 }
 
 interface TestRunRowProps {
-    testRun: TestRunQueryRow;
+    testRun: TestRun;
     basePrefix: string;
     pathToProject: string[];
     jobRunId: string;
@@ -98,44 +102,45 @@ export function TestRunRow({
     flakyTestNames,
 }: TestRunRowProps): React.JSX.Element {
     const [expandOutput, setExpandOutput] = React.useState(false);
-    const [[failedOutput, failedMessage, systemOutput], setOutputValues] = React.useState(["", "", ""]);
-    const storage = useStorage();
+    const [{ failureOutput, failureMessage, systemOutput }, setOutputValues] = React.useState<TestOutput>({
+        failureOutput: null,
+        failureMessage: null,
+        systemOutput: null,
+    });
+    const client = useTestCityClient();
     const [showOutputModal, setShowOutputModal] = React.useState(false);
 
     React.useEffect(() => {
-        if (expandOutput && !failedOutput && !failedMessage && !systemOutput)
+        if (expandOutput && !failureOutput && !failureMessage && !systemOutput)
             runAsyncAction(async () => {
                 setOutputValues(
-                    await storage.getFailedTestOutput(
-                        testRun[TestRunQueryRowNames.JobId],
-                        testRun[TestRunQueryRowNames.TestId],
-                        [jobRunId]
-                    )
+                    await client.runs.getTestOutput(pathToProject, testRun.jobId, jobRunId, testRun.testId)
                 );
             });
     }, [expandOutput]);
 
     const handleCopyToClipboard = React.useCallback(() => {
         runAsyncAction(async () => {
-            const textToCopy = [testRun[TestRunQueryRowNames.TestId], failedMessage, failedOutput, systemOutput]
+            const textToCopy = [testRun.testId, failureMessage, failureOutput, systemOutput]
                 .filter(x => x)
                 .join("------\n");
             await navigator.clipboard.writeText(textToCopy);
             // eslint-disable-next-line @typescript-eslint/no-deprecated
             SingleToast.push("Copied to clipboard");
         });
-    }, [failedMessage, failedOutput, systemOutput, testRun[TestRunQueryRowNames.TestId]]);
+    }, [failureMessage, failureOutput, systemOutput, testRun.testId]);
 
-    const [prefix, name] = splitTestName(testRun[TestRunQueryRowNames.TestId]);
-    const isFlaky = flakyTestNames.has(testRun[TestRunQueryRowNames.TestId]);
+    const [prefix, name] = splitTestName(testRun.testId);
+    const isFlaky = flakyTestNames.has(testRun.testId);
 
     return (
         <div className={styles.testRunRowContainer}>
             {showOutputModal && (
                 <TestOutputModal
-                    testId={testRun[TestRunQueryRowNames.TestId]}
-                    jobId={testRun[TestRunQueryRowNames.JobId]}
-                    jobRunIds={[jobRunId]}
+                    pathToProject={pathToProject}
+                    testId={testRun.testId}
+                    jobId={testRun.jobId}
+                    jobRunId={jobRunId}
                     onClose={() => {
                         setShowOutputModal(false);
                     }}
@@ -168,13 +173,13 @@ export function TestRunRow({
                     </a>
                 </div>
                 <div className={styles.testHistoryLink}>
-                    <Link to={createLinkToTestHistory(basePrefix, testRun[TestRunQueryRowNames.TestId], pathToProject)}>
+                    <Link to={createLinkToTestHistory(basePrefix, testRun.testId, pathToProject)}>
                         <TimeClockFastIcon16Regular /> Test history
                     </Link>
                 </div>
             </div>
             <div className={expandOutput ? styles.testOutputRowExpanded : styles.testOutputRow}>
-                {expandOutput && (failedOutput || failedMessage || systemOutput) && (
+                {expandOutput && (failureOutput || failureMessage || systemOutput) && (
                     <>
                         <RowStack block>
                             <Fill />
@@ -185,9 +190,9 @@ export function TestRunRow({
                             </Fit>
                         </RowStack>
                         <pre className={styles.code}>
-                            {failedOutput}
+                            {failureOutput}
                             ---
-                            {failedMessage}
+                            {failureMessage}
                             ---
                             {systemOutput}
                         </pre>

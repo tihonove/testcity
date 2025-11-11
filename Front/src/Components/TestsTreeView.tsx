@@ -6,10 +6,11 @@ import { XCircleIcon16Regular } from "@skbkontur/icons/XCircleIcon16Regular";
 import React, { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./TestsTreeView.module.css";
-import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
 import { ApproximateUnits, ITEMS_UNITS, TIME_UNITS } from "./ApproximateUnits";
 import { TreeNode, TreeView } from "./TreeView";
 import { RunStatus } from "./RunStatus";
+import { useTestCityRequest } from "../Domain/Api/TestCityApiClient";
+import { useProjectContextFromUrlParams } from "./useProjectContextFromUrlParams";
 
 interface TestInfo {
     testId: string;
@@ -22,13 +23,17 @@ type TestStats = { duration: number } & Record<RunStatus, number>;
 const initialStats: TestStats = { duration: 0, Failed: 0, Skipped: 0, Success: 0 };
 
 export function TestsTreeView(): React.JSX.Element {
+    const { pathToGroup } = useProjectContextFromUrlParams();
     const { jobId = "", jobRunId = "" } = useParams();
-    const client = useClickhouseClient();
     const [prefix, onChangePrefix] = React.useState<string | undefined>(undefined);
 
-    const allTests1 = client.useData2<[RunStatus, string, number]>(
-        `SELECT State, TestId, Duration FROM TestRunsByRun WHERE JobId = '${jobId}' AND JobRunId = '${jobRunId}'`,
-        [jobId, jobRunId, "all test runs 2"]
+    const allTestsRaw = useTestCityRequest(
+        c => c.runs.getTestList(pathToGroup, jobId, jobRunId, { itemsPerPage: 10000 }),
+        [pathToGroup, jobId, jobRunId]
+    );
+    const allTests1 = useMemo(
+        () => allTestsRaw.map(x => [x.finalState, x.testId, x.maxDuration] as const),
+        [allTestsRaw]
     );
 
     const allTests = useMemo(

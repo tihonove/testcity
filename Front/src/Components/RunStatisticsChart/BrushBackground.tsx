@@ -3,7 +3,7 @@ import styles from "./RunStatisticsChart.module.css";
 import { reverse } from "./ChartBars";
 
 interface BrushBackgroundProps {
-    data: Array<[state: string, duration: number, startDate: string]>;
+    data: Array<readonly [state: string, duration: number, startDate: string]>;
     maxVisibleDuration: number;
 }
 

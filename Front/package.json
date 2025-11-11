@@ -22,7 +22,6 @@
     "@babel/preset-react": "^7.26.3",
     "@babel/preset-typescript": "^7.26.0",
     "@carrotsearch/foamtree": "^3.5.1",
-    "@clickhouse/client-web": "^1.10.0",
     "@skbkontur/icons": "^1.15.2",
     "@skbkontur/react-stack-layout": "^2.1.0",
     "@skbkontur/react-ui": "^5.0.8",

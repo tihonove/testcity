@@ -4,21 +4,22 @@ import { Fill, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import * as React from "react";
 import styles from "./TestRunRow.module.css";
 
-import { useStorage } from "../ClickhouseClientHooksWrapper";
 import { createLinkToTestHistory } from "../Domain/Navigation";
-import { TestRunQueryRow, TestRunQueryRowNames } from "../Domain/Storage/TestRunQuery";
 import { runAsyncAction } from "../Utils/TypeHelpers";
 import { KebabButton } from "./KebabButton";
 import { formatDuration } from "./RunStatisticsChart/DurationUtils";
 import { RunStatus } from "./RunStatus";
 import { TestName } from "./TestName";
 import { Link } from "react-router-dom";
+import { useTestCityClient } from "../Domain/Api/TestCityApiClient";
+import { TestOutput } from "../Domain/Api/TestCityRunsApiClient";
+import { TestRun } from "../Domain/ProjectDashboardNode";
 
 interface TestRunRowProps {
-    testRun: TestRunQueryRow;
+    testRun: TestRun;
     basePrefix: string;
     pathToProject: string[];
-    jobRunIds: string[];
+    jobRunId: string;
     onSetSearchTextImmediate: (value: string) => void;
     onSetOutputModalIds: (ids: [string, string] | undefined) => void;
     flakyTestNames: Set<string>;
@@ -28,45 +29,39 @@ export function TestRunRow({
     testRun,
     basePrefix,
     pathToProject,
-    jobRunIds,
+    jobRunId,
     onSetSearchTextImmediate,
     onSetOutputModalIds,
     flakyTestNames,
 }: TestRunRowProps): React.JSX.Element {
     const [expandOutput, setExpandOutput] = React.useState(false);
-    const [[failedOutput, failedMessage, systemOutput], setOutputValues] = React.useState(["", "", ""]);
-    const storage = useStorage();
+    const [{ failureOutput, failureMessage, systemOutput }, setOutputValues] = React.useState<TestOutput>({
+        failureOutput: null,
+        failureMessage: null,
+        systemOutput: null,
+    });
+    const client = useTestCityClient();
     React.useEffect(() => {
-        if (expandOutput && !failedOutput && !failedMessage && !systemOutput)
+        if (expandOutput && !failureOutput && !failureMessage && !systemOutput)
             runAsyncAction(async () => {
                 setOutputValues(
-                    await storage.getFailedTestOutput(
-                        testRun[TestRunQueryRowNames.JobId],
-                        testRun[TestRunQueryRowNames.TestId],
-                        jobRunIds
-                    )
+                    await client.runs.getTestOutput(pathToProject, testRun.jobId, jobRunId, testRun.testId)
                 );
             });
     }, [expandOutput]);
 
     const handleCopyToClipboard = React.useCallback(() => {
         runAsyncAction(async () => {
-            const textToCopy = [
-                testRun[TestRunQueryRowNames.TestId],
-                "---",
-                failedMessage,
-                "---",
-                failedOutput,
-                "---",
-                systemOutput,
-            ].join("\n");
+            const textToCopy = [testRun.testId, "---", failureMessage, "---", failureOutput, "---", systemOutput].join(
+                "\n"
+            );
             await navigator.clipboard.writeText(textToCopy);
 
             // eslint-disable-next-line @typescript-eslint/no-deprecated
             Toast.push("Copied to clipboard");
         });
-    }, [failedMessage, failedOutput, systemOutput, testRun[TestRunQueryRowNames.TestId]]);
-    const statuses = testRun[TestRunQueryRowNames.AllStates].split(",");
+    }, [failureMessage, failureOutput, systemOutput, testRun.testId]);
+    const statuses = testRun.allStates.split(",");
     const failureCount = statuses.filter(x => x === "Failed").length;
     const successCount = statuses.filter(x => x === "Success").length;
 
@@ -80,9 +75,9 @@ export function TestRunRow({
     return (
         <>
             <tr className={styles.testRunsTableRow}>
-                <td className={getStatusCellClass(testRun[TestRunQueryRowNames.State])}>
-                    {testRun[TestRunQueryRowNames.State]}
-                    {testRun[TestRunQueryRowNames.TotalRuns] > 1 && (
+                <td className={getStatusCellClass(testRun.finalState)}>
+                    {testRun.finalState}
+                    {testRun.totalRuns > 1 && (
                         <span className={styles.runCountInfo}>
                             {" ("}
                             {failureCount == 0 && successCount > 0 ? (
@@ -102,7 +97,7 @@ export function TestRunRow({
                 <td className={styles.testNameCell}>
                     <TestName
                         onTestNameClick={
-                            testRun[TestRunQueryRowNames.State] === "Failed"
+                            testRun.finalState === "Failed"
                                 ? () => {
                                       setExpandOutput(!expandOutput);
                                   }
@@ -111,27 +106,19 @@ export function TestRunRow({
                         onSetSearchValue={x => {
                             onSetSearchTextImmediate(x);
                         }}
-                        value={testRun[TestRunQueryRowNames.TestId]}
-                        isFlaky={flakyTestNames.has(testRun[TestRunQueryRowNames.TestId])}
+                        value={testRun.testId}
+                        isFlaky={flakyTestNames.has(testRun.testId)}
                     />
                 </td>
-                <td className={styles.durationCell}>
-                    {formatDuration(
-                        testRun[TestRunQueryRowNames.AvgDuration],
-                        testRun[TestRunQueryRowNames.AvgDuration]
-                    )}
-                </td>
+                <td className={styles.durationCell}>{formatDuration(testRun.avgDuration, testRun.avgDuration)}</td>
                 <td className={styles.actionsCell}>
                     <div className={styles.actionsList}>
-                        {testRun[TestRunQueryRowNames.State] === "Failed" && (
+                        {testRun.finalState === "Failed" && (
                             <>
                                 <a
                                     href="#output"
                                     onClick={e => {
-                                        onSetOutputModalIds([
-                                            testRun[TestRunQueryRowNames.TestId],
-                                            testRun[TestRunQueryRowNames.JobId],
-                                        ]);
+                                        onSetOutputModalIds([testRun.testId, testRun.jobId]);
                                         e.preventDefault();
                                         return false;
                                     }}>
@@ -141,12 +128,7 @@ export function TestRunRow({
                                 &nbsp; &nbsp; &nbsp;
                             </>
                         )}
-                        <Link
-                            to={createLinkToTestHistory(
-                                basePrefix,
-                                testRun[TestRunQueryRowNames.TestId],
-                                pathToProject
-                            )}>
+                        <Link to={createLinkToTestHistory(basePrefix, testRun.testId, pathToProject)}>
                             <TimeClockFastIcon16Regular />
                             Test history
                         </Link>
@@ -155,21 +137,14 @@ export function TestRunRow({
                         <DropdownMenu caption={<KebabButton />}>
                             <MenuItem
                                 icon={<TimeClockFastIcon16Regular />}
-                                href={createLinkToTestHistory(
-                                    basePrefix,
-                                    testRun[TestRunQueryRowNames.TestId],
-                                    pathToProject
-                                )}>
+                                href={createLinkToTestHistory(basePrefix, testRun.testId, pathToProject)}>
                                 Show test history
                             </MenuItem>
                             <MenuItem
                                 icon={<ClipboardTextIcon16Regular />}
-                                disabled={testRun[TestRunQueryRowNames.State] !== "Failed"}
+                                disabled={testRun.finalState !== "Failed"}
                                 onClick={() => {
-                                    onSetOutputModalIds([
-                                        testRun[TestRunQueryRowNames.TestId],
-                                        testRun[TestRunQueryRowNames.JobId],
-                                    ]);
+                                    onSetOutputModalIds([testRun.testId, testRun.jobId]);
                                 }}>
                                 Show test outpout
                             </MenuItem>
@@ -179,7 +154,7 @@ export function TestRunRow({
             </tr>
             <tr className={expandOutput ? styles.testOutputRowExpanded : styles.testOutputRow}>
                 <td className={styles.testOutputCell} colSpan={4}>
-                    {expandOutput && (failedOutput || failedMessage || systemOutput) && (
+                    {expandOutput && (failureOutput || failureMessage || systemOutput) && (
                         <>
                             <RowStack block>
                                 <Fill />
@@ -190,19 +165,16 @@ export function TestRunRow({
                                 </Fit>
                             </RowStack>
                             <pre className={styles.code}>
-                                {failedOutput}
+                                {failureOutput}
                                 ---
-                                {failedMessage}
+                                {failureMessage}
                                 ---
                                 {systemOutput}
                             </pre>
                             <a
                                 href="#"
                                 onClick={e => {
-                                    onSetOutputModalIds([
-                                        testRun[TestRunQueryRowNames.TestId],
-                                        testRun[TestRunQueryRowNames.JobId],
-                                    ]);
+                                    onSetOutputModalIds([testRun.testId, testRun.jobId]);
                                     e.preventDefault();
                                     return false;
                                 }}>

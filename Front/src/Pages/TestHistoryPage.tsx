@@ -3,13 +3,10 @@ import { ColumnStack, Fit, RowStack } from "@skbkontur/react-stack-layout";
 import { Paging } from "@skbkontur/react-ui";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { BranchSelect } from "../Components/BranchSelect";
 import { NumberCell } from "../Components/Cells";
 import { SvgPieChart } from "../Components/PieChart";
-import { JobRunNames } from "../Domain/Storage/JobsQuery";
 import { useBasePrefix } from "../Domain/Navigation";
-import { TestPerJobRunQueryRowNames } from "../Domain/TestPerJobRunQueryRow";
 import { formatDuration } from "../Components/RunStatisticsChart/DurationUtils";
 import { RunStatisticsChart } from "../Components/RunStatisticsChart/RunStatisticsChart";
 import { getOffsetTitle, toLocalTimeFromUtc, useSearchParam, useSearchParamAsState } from "../Utils";
@@ -19,6 +16,7 @@ import { RunStatus } from "../Components/RunStatus";
 import { SuspenseFadingWrapper, useDelayedTransition } from "../Components/useDelayedTransition";
 import { useProjectContextFromUrlParams } from "../Components/useProjectContextFromUrlParams";
 import styles from "./TestHistoryPage.module.css";
+import { useTestCityRequest } from "../Domain/Api/TestCityApiClient";
 
 export function TestHistoryPage(): React.JSX.Element {
     const [testId] = useSearchParam("id");
@@ -34,20 +32,18 @@ export function TestHistoryPage(): React.JSX.Element {
 
     if (testId == null) return <div>Test id not specified</div>;
 
-    const jobs = useStorageQuery(x => x.findAllJobs([currentProjectId]), [currentProjectId]);
-    const jobIds = jobs.map(x => x[0]);
+    const stats = useTestCityRequest(
+        x => x.runs.getTestStats(pathToGroup, testId, currentBranchName),
+        [testId, pathToGroup, currentBranchName]
+    );
 
-    const stats = useStorageQuery(
-        x => x.getTestStats(testId, jobIds, currentBranchName),
-        [testId, jobIds, currentBranchName]
+    const testRuns = useTestCityRequest(
+        x => x.runs.getTestRuns(pathToGroup, testId, currentBranchName, page),
+        [testId, pathToGroup, currentBranchName, page]
     );
-    const testRuns = useStorageQuery(
-        x => x.getTestRuns(testId, jobIds, currentBranchName, page),
-        [testId, jobIds, currentBranchName, page]
-    );
-    const totalRunCount = useStorageQuery(
-        x => x.getTestRunCount(testId, jobIds, currentBranchName),
-        [testId, jobIds, currentBranchName]
+    const totalRunCount = useTestCityRequest(
+        x => x.runs.getTestRunCount(pathToGroup, testId, currentBranchName),
+        [testId, pathToGroup, currentBranchName]
     );
 
     const buildStatus = (status: string, message?: string): string => {
@@ -62,6 +58,7 @@ export function TestHistoryPage(): React.JSX.Element {
     };
 
     const [suiteId, testName] = splitTestId(testId);
+    const statsTuples = React.useMemo(() => stats.map(x => [x.state, x.duration, x.startDateTime] as const), [stats]);
     // Success Rate: 0.7% (Last 149 Runs) 148 failed 1 successful Download
     return (
         <ColumnStack gap={4} block stretch>
@@ -77,22 +74,22 @@ export function TestHistoryPage(): React.JSX.Element {
                 <RowStack verticalAlign="center">
                     <Fit>
                         <SvgPieChart
-                            percentage={stats.reduce((x, y) => (y[0] == "Success" ? x + 1 : x), 0) / stats.length}
+                            percentage={stats.reduce((x, y) => (y.state == "Success" ? x + 1 : x), 0) / stats.length}
                             size={20}
                         />
                     </Fit>
                     <Fit>
                         <span className={styles.successRateText}>
                             {`Success Rate: ${(
-                                (stats.reduce((x, y) => (y[0] == "Success" ? x + 1 : x), 0) / stats.length) *
+                                (stats.reduce((x, y) => (y.state == "Success" ? x + 1 : x), 0) / stats.length) *
                                 100
                             ).toFixed(1)}% (Last ${stats.length.toString()} Runs)`}
                         </span>
                         <span className={styles.failedText}>
-                            {`${stats.reduce((x, y) => (y[0] != "Success" ? x + 1 : x), 0).toString()} failed`}
+                            {`${stats.reduce((x, y) => (y.state != "Success" ? x + 1 : x), 0).toString()} failed`}
                         </span>
                         <span className={styles.successfulText}>
-                            {`${stats.reduce((x, y) => (y[0] == "Success" ? x + 1 : x), 0).toString()} successful`}
+                            {`${stats.reduce((x, y) => (y.state == "Success" ? x + 1 : x), 0).toString()} successful`}
                         </span>
                     </Fit>
                 </RowStack>
@@ -109,7 +106,7 @@ export function TestHistoryPage(): React.JSX.Element {
                 </RowStack>
             </Fit>
             <Fit>
-                <RunStatisticsChart value={stats} />
+                <RunStatisticsChart value={statsTuples} />
             </Fit>
             <Fit>
                 <React.Suspense fallback={"Loading test list...."}>
@@ -129,34 +126,27 @@ export function TestHistoryPage(): React.JSX.Element {
                                 {testRuns.map(x => (
                                     <tr
                                         className={`${styles.testRunsTableRow} ${styles.testRunsTableRowHover}`}
-                                        key={
-                                            x[TestPerJobRunQueryRowNames.JobId] +
-                                            "-" +
-                                            x[TestPerJobRunQueryRowNames.JobRunId]
-                                        }>
+                                        key={x.jobId + "-" + x.jobRunId}>
                                         <NumberCell>
-                                            <Link to={x[TestPerJobRunQueryRowNames.JobUrl]} target="_blank">
-                                                #{x[TestPerJobRunQueryRowNames.JobRunId]}
+                                            <Link to={x.jobUrl} target="_blank">
+                                                #{x.jobRunId}
                                             </Link>
                                         </NumberCell>
-                                        <td className={getStatusCellClass(x[TestPerJobRunQueryRowNames.State])}>
-                                            {buildStatus(
-                                                x[TestPerJobRunQueryRowNames.State],
-                                                x[TestPerJobRunQueryRowNames.CustomStatusMessage]
-                                            )}
+                                        <td className={getStatusCellClass(x.state)}>
+                                            {buildStatus(x.state, x.customStatusMessage)}
                                         </td>
-                                        <td className={styles.durationCell}>{formatDuration(x[4], x[4])}</td>
+                                        <td className={styles.durationCell}>
+                                            {formatDuration(x.duration, x.duration)}
+                                        </td>
                                         <td>
-                                            <ShareNetworkIcon /> {x[JobRunNames.BranchName]}
+                                            <ShareNetworkIcon /> {x.branchName}
                                         </td>
                                         <td className={styles.jobIdCell}>
-                                            <Link to={`${basePrefix}jobs/${x[TestPerJobRunQueryRowNames.JobId]}`}>
-                                                <ShapeSquareIcon16Regular /> {x[TestPerJobRunQueryRowNames.JobId]}
+                                            <Link to={`${basePrefix}jobs/${x.jobId}`}>
+                                                <ShapeSquareIcon16Regular /> {x.jobId}
                                             </Link>
                                         </td>
-                                        <td className={styles.startDateCell}>
-                                            {toLocalTimeFromUtc(x[TestPerJobRunQueryRowNames.StartDateTime])}
-                                        </td>
+                                        <td className={styles.startDateCell}>{toLocalTimeFromUtc(x.startDateTime)}</td>
                                     </tr>
                                 ))}
                             </tbody>

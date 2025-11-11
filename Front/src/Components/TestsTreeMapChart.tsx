@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
-import { useClickhouseClient } from "../ClickhouseClientHooksWrapper";
 import CarrotSearchFoamTree from "@carrotsearch/foamtree";
 import { useMemo } from "react";
 
@@ -11,13 +10,13 @@ interface TestTreeItem {
 }
 
 export function TestsTreeMapChart(): React.JSX.Element {
+    const { pathToGroup } = useProjectContextFromUrlParams();
     const { jobId = "", jobRunId = "" } = useParams();
-    const client = useClickhouseClient();
-
-    const allTests1 = client.useData2<[string, number]>(
-        `SELECT TestId, Duration FROM TestRunsByRun WHERE JobId = '${jobId}' AND JobRunId = '${jobRunId}'`,
-        [jobId, jobRunId, "all test runs 2"]
+    const allTestsRaw = useTestCityRequest(
+        c => c.runs.getTestList(pathToGroup, jobId, jobRunId, { itemsPerPage: 10000 }),
+        [pathToGroup, jobId, jobRunId]
     );
+    const allTests1 = useMemo(() => allTestsRaw.map(x => [x.testId, x.maxDuration] as const), [allTestsRaw]);
 
     const allTests = useMemo(
         () => allTests1.map(x => [x[0].split(": ").slice(1).join(": "), x[1]] as const),
@@ -79,6 +78,8 @@ interface FoamTreeProps {
 }
 
 import { useEffect, useRef } from "react";
+import { useTestCityRequest } from "../Domain/Api/TestCityApiClient";
+import { useProjectContextFromUrlParams } from "./useProjectContextFromUrlParams";
 
 function FoamTree({ groups }: FoamTreeProps) {
     const elementRef = useRef<HTMLDivElement | null>(null);

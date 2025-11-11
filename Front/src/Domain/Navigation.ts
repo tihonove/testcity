@@ -25,6 +25,10 @@ export function createLinkToProject(nodesPath: GroupOrProjectPathSlugItem[]): st
     return urlPrefix + [...nodesPath.map(x => x.title)].map(x => encodeURIComponent(x)).join("/");
 }
 
+export function createLinkToProjectByPath(nodesPath: string[]): string {
+    return urlPrefix + nodesPath.map(x => encodeURIComponent(x)).join("/");
+}
+
 export function createLinkToGroupOrProject(nodesPath: (GroupNode | Project)[]): string {
     return urlPrefix + [...nodesPath.map(x => x.title)].map(x => encodeURIComponent(x)).join("/");
 }
@@ -63,6 +67,10 @@ export function createLinkToJob2(projectLink: string, jobId: string, currentBran
         ["jobs", jobId].map(x => encodeURIComponent(x)).join("/") +
         (currentBranchName ? `?branch=${encodeURIComponent(currentBranchName)}` : "")
     );
+}
+
+export function createLinkToTreeMap(projectLink: string, jobId: string, jobRunId: string): string {
+    return projectLink + "/" + ["jobs", jobId, "runs", jobRunId, "treemap"].map(x => encodeURIComponent(x)).join("/");
 }
 
 export function createLinkToJobRun(

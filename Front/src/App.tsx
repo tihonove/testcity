@@ -7,7 +7,6 @@ import { CodeQualityPage } from "./Pages/CodeQualityPage";
 import { GroupsPage } from "./Pages/GroupsPage";
 import { JobRunsPage } from "./Pages/JobRunsPage";
 import { JobRunTestListPage } from "./Pages/JobRunTestListPage";
-import { PipelineRunTestListPage } from "./Pages/PipelineRunTestListPage";
 import { ProjectsDashboardPage } from "./Pages/ProjectsDashboardPage/ProjectsDashboardPage";
 import { TestHistoryPage } from "./Pages/TestHistoryPage";
 import { TestsTreeMapChart } from "./Components/TestsTreeMapChart";
@@ -58,7 +57,6 @@ export function App(): React.JSX.Element {
                             <Route path="jobs/:jobId/runs/:jobRunId" element={<JobRunTestListPage />} />
                             <Route path="jobs/:jobId/runs/:jobRunId/treemap" element={<TestsTreeMapChart />} />
                             <Route path="jobs/:jobId/runs/:jobRunId/treeview" element={<TestsTreeView />} />
-                            <Route path="pipelines/:pipelineId" element={<PipelineRunTestListPage />} />
                             <Route path="test-history" element={<TestHistoryPage />} />
                         </Route>
 
@@ -68,7 +66,6 @@ export function App(): React.JSX.Element {
                             <Route path="jobs/:jobId/runs/:jobRunId" element={<JobRunTestListPage />} />
                             <Route path="jobs/:jobId/runs/:jobRunId/treemap" element={<TestsTreeMapChart />} />
                             <Route path="jobs/:jobId/runs/:jobRunId/treeview" element={<TestsTreeView />} />
-                            <Route path="pipelines/:pipelineId" element={<PipelineRunTestListPage />} />
                             <Route path="test-history" element={<TestHistoryPage />} />
                         </Route>
 
@@ -78,7 +75,6 @@ export function App(): React.JSX.Element {
                             <Route path="jobs/:jobId/runs/:jobRunId" element={<JobRunTestListPage />} />
                             <Route path="jobs/:jobId/runs/:jobRunId/treemap" element={<TestsTreeMapChart />} />
                             <Route path="jobs/:jobId/runs/:jobRunId/treeview" element={<TestsTreeView />} />
-                            <Route path="pipelines/:pipelineId" element={<PipelineRunTestListPage />} />
                             <Route path="test-history" element={<TestHistoryPage />} />
                         </Route>
 

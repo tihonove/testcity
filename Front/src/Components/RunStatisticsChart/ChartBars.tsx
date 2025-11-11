@@ -24,7 +24,7 @@ function useDebounceWithForceUpdate<T>(value: T, delay: number): [T, (newValue: 
 }
 
 interface ChartBarsProps {
-    data: Array<[state: string, duration: number, startDate: string]>;
+    data: Array<readonly [state: string, duration: number, startDate: string]>;
     barWidth: number;
     maxVisibleDuration: number;
 }

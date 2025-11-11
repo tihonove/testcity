@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using TestCity.Api.Controllers;
-using TestCity.Api.Models;
+using TestCity.Api.Models.Dashboard;
 using TestCity.Core.Clickhouse;
 using TestCity.Core.GitLab;
 using TestCity.Core.GitlabProjects;

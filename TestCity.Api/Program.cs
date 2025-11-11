@@ -2,6 +2,7 @@ using System.Text;
 using dotenv.net;
 using Microsoft.AspNetCore.DataProtection;
 using TestCity.Api.Authorization;
+using TestCity.Api.Exceptions;
 using TestCity.Core.Clickhouse;
 using TestCity.Core.GitLab;
 using TestCity.Core.GitlabProjects;
@@ -21,7 +22,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseUrls("http://0.0.0.0:8124");
 
 builder.Services.AddOpenApi();
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<HttpStatusExceptionFilter>();
+});
 
 var redisConnectionString = Environment.GetEnvironmentVariable("REDIS_CONNECTION_STRING") ?? "localhost:6379";
 builder.Services.AddStackExchangeRedisCache(options =>

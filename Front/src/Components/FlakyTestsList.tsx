@@ -1,15 +1,13 @@
 import { Paging } from "@skbkontur/react-ui";
 import * as React from "react";
-import { useStorageQuery } from "../ClickhouseClientHooksWrapper";
 import { NumberCell, SelectedOnHoverTr } from "./Cells";
 import { SuspenseFadingWrapper, useDelayedTransition } from "./useDelayedTransition";
 import { useUrlBasedPaging } from "./useUrlBasedPaging";
-import { FlakyTestQueryRowNames } from "../Domain/Storage/FlakyTestQuery";
-import { toLocalTimeFromUtc } from "../Utils";
 import styles from "./FlakyTestsList.module.css";
 import { TestName } from "./TestName";
 import { TimeClockFastIcon16Regular } from "@skbkontur/icons";
 import { createLinkToTestHistory, useBasePrefix } from "../Domain/Navigation";
+import { useTestCityRequest } from "../Domain/Api/TestCityApiClient";
 
 interface FlakyTestsListProps {
     pathToProject: string[];
@@ -23,8 +21,8 @@ const ITEMS_PER_PAGE = 50;
 export function FlakyTestsList({ projectId, jobId, totalCount, ...props }: FlakyTestsListProps) {
     const basePrefix = useBasePrefix();
     const [page, setPage] = useUrlBasedPaging();
-    const flakyTests = useStorageQuery(
-        x => x.getFlakyTests(projectId, jobId, ITEMS_PER_PAGE, page * ITEMS_PER_PAGE),
+    const flakyTests = useTestCityRequest(
+        x => x.runs.getFlakyTests(props.pathToProject, jobId, undefined, page),
         [projectId, jobId, page]
     );
     const [isPending, startTransition, isFading] = useDelayedTransition();
@@ -45,7 +43,7 @@ export function FlakyTestsList({ projectId, jobId, totalCount, ...props }: Flaky
                 </thead>
                 <tbody>
                     {flakyTests.map((test, index) => (
-                        <SelectedOnHoverTr key={test[FlakyTestQueryRowNames.TestId]}>
+                        <SelectedOnHoverTr key={test.testId}>
                             <td className={styles.testIdCell}>
                                 <TestName
                                     onTestNameClick={
@@ -59,26 +57,19 @@ export function FlakyTestsList({ projectId, jobId, totalCount, ...props }: Flaky
                                     onSetSearchValue={x => {
                                         // onSetSearchTextImmediate(x);
                                     }}
-                                    value={test[FlakyTestQueryRowNames.TestId]}
+                                    value={test.testId}
                                 />
                             </td>
                             <td className={styles.actionsCell}>
-                                <a
-                                    href={createLinkToTestHistory(
-                                        basePrefix,
-                                        test[FlakyTestQueryRowNames.TestId],
-                                        props.pathToProject
-                                    )}>
+                                <a href={createLinkToTestHistory(basePrefix, test.testId, props.pathToProject)}>
                                     <TimeClockFastIcon16Regular /> Show test history
                                 </a>
                             </td>
                             <NumberCell>
-                                <span className={styles.flipRate}>
-                                    {formatFlipRate(test[FlakyTestQueryRowNames.FlipRate])}
-                                </span>
+                                <span className={styles.flipRate}>{formatFlipRate(test.flipRate)}</span>
                             </NumberCell>
-                            <NumberCell>{test[FlakyTestQueryRowNames.RunCount]}</NumberCell>
-                            <NumberCell>{test[FlakyTestQueryRowNames.FailCount]}</NumberCell>
+                            <NumberCell>{test.runCount}</NumberCell>
+                            <NumberCell>{test.failCount}</NumberCell>
                         </SelectedOnHoverTr>
                     ))}
                 </tbody>
