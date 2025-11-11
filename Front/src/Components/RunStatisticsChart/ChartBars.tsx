@@ -39,7 +39,7 @@ export function reverse<T>(items: T[]): T[] {
 
 // Компонент для отрисовки массива столбцов - мемоизируется только при изменении debouncedBarWidth
 const ChartBarsContent = React.memo<{
-    reversedData: Array<[state: string, duration: number, startDate: string]>;
+    reversedData: Array<readonly [state: string, duration: number, startDate: string]>;
     debouncedBarWidth: number;
     maxVisibleDuration: number;
 }>(({ reversedData, debouncedBarWidth, maxVisibleDuration }) => {
