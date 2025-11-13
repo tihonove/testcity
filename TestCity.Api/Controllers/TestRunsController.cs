@@ -15,7 +15,7 @@ namespace TestCity.Api.Controllers;
 [Route("api/groups-v2/{groupPath1}/{groupPath2}/{groupPath3}")]
 [Route("api/groups-v2/{groupPath1}/{groupPath2}/{groupPath3}/{groupPath4}")]
 [Route("api/groups-v2/{groupPath1}/{groupPath2}/{groupPath3}/{groupPath4}/{groupPath5}")]
-public class TestRunsContoller(GitLabProjectsService gitLabProjectsService, TestCityDatabase database, GitLabSettings gitLabSettings) : ControllerBase
+public class TestRunsController(GitLabPathResolver gitLabPathResolver, TestCityDatabase database, GitLabSettings gitLabSettings) : ControllerBase
 {
     [HttpGet("")]
     public async Task<ActionResult<EntityNodeDto>> GetEntity()
@@ -273,7 +273,7 @@ public class TestRunsContoller(GitLabProjectsService gitLabProjectsService, Test
     public async Task<ActionResult<DashboardNodeDto>> GetDashboardData([FromQuery] string? branchName = null)
     {
         var groupOrProjectPath = await ResolveGroupOrProjectPathFromContext();
-        var projects = GetAllProjectsRecursive(groupOrProjectPath).ToArray();
+        var projects = await ResolveProjectsFromContext();
         var projectIds = projects.Select(p => p.Id).ToArray();
 
         var allJobs = await database.FindAllJobs(projectIds);
@@ -387,83 +387,20 @@ public class TestRunsContoller(GitLabProjectsService gitLabProjectsService, Test
         return new GroupOrProjectPathSlugItemDto { Id = node.Id, Title = node.Title, AvatarUrl = node.AvatarUrl };
     }
 
-    private static IEnumerable<GitLabProject> GetAllProjectsRecursive(List<GitLabEntity> groupOrProjectPath)
-    {
-        var currentNode = groupOrProjectPath[^1];
-
-        if (currentNode is GitLabProject project)
-        {
-            yield return project;
-        }
-        else if (currentNode is GitLabGroup group)
-        {
-            foreach (var p in group.Projects)
-            {
-                yield return p;
-            }
-            foreach (var childGroup in group.Groups)
-            {
-                var childPath = new List<GitLabEntity>(groupOrProjectPath) { childGroup };
-                foreach (var p in GetAllProjectsRecursive(childPath))
-                {
-                    yield return p;
-                }
-            }
-        }
-    }
-
     private async Task<List<GitLabEntity>> ResolveGroupOrProjectPathFromContext()
     {
-        var groupSegments = RouteData.Values
+        return await gitLabPathResolver.ResolveGroupOrProjectPath(ExtractGroupPathFromRoute());
+    }
+
+    private string[] ExtractGroupPathFromRoute()
+    {
+        return RouteData.Values
             .Where(kv => kv.Key.StartsWith("groupPath"))
             .OrderBy(kv => kv.Key)
             .Select(kv => kv.Value?.ToString())
             .Where(s => !string.IsNullOrEmpty(s))
+            .Select(s => s!)
             .ToArray();
-        return await ResolveGroupOrProjectPath(groupSegments!);
-    }
-
-    private async Task<List<GitLabEntity>> ResolveGroupOrProjectPath(string[] groupIdOrTitles)
-    {
-        var result = new List<GitLabEntity>();
-        GitLabGroup? currentGroup = null;
-
-        for (int i = 0; i < groupIdOrTitles.Length; i++)
-        {
-            var idOrTitle = groupIdOrTitles[i];
-            if (currentGroup == null)
-            {
-                currentGroup = await gitLabProjectsService.GetGroup(idOrTitle);
-                if (currentGroup == null)
-                    throw new Exception($"Группа с идентификатором или названием '{idOrTitle}' не найдена");
-                result.Add(currentGroup);
-            }
-            else
-            {
-                var nextGroup = currentGroup.Groups.FirstOrDefault(g => g.Id.ToString() == idOrTitle || g.Title == idOrTitle);
-                if (nextGroup == null && i == groupIdOrTitles.Length - 1)
-                {
-                    var project = currentGroup.Projects.FirstOrDefault(p => p.Id == idOrTitle || p.Title == idOrTitle);
-                    if (project != null)
-                    {
-                        result.Add(project);
-                        return result;
-                    }
-                }
-
-                if (nextGroup != null)
-                {
-                    currentGroup = nextGroup;
-                    result.Add(nextGroup);
-                }
-                else
-                {
-                    throw new Exception($"Группа с идентификатором или названием '{idOrTitle}' не найдена");
-                }
-            }
-        }
-
-        return result;
     }
 
     private async Task<GitLabProject> GetProjectFromContext()
@@ -481,62 +418,7 @@ public class TestRunsContoller(GitLabProjectsService gitLabProjectsService, Test
 
     private async Task<GitLabProject[]> ResolveProjectsFromContext()
     {
-        var groupSegments = RouteData.Values
-            .Where(kv => kv.Key.StartsWith("groupPath"))
-            .OrderBy(kv => kv.Key)
-            .Select(kv => kv.Value?.ToString())
-            .Where(s => !string.IsNullOrEmpty(s))
-            .ToArray();
-        return await ResolveProjects(groupSegments!);
-    }
-
-    private async Task<GitLabProject[]> ResolveProjects(string[] groupIdOrTitles)
-    {
-        GitLabGroup? currentGroup = null;
-        for (int i = 0; i < groupIdOrTitles.Length; i++)
-        {
-            var idOrTitle = groupIdOrTitles[i];
-            if (currentGroup == null)
-            {
-                currentGroup = await gitLabProjectsService.GetGroup(idOrTitle);
-            }
-            else
-            {
-                var nextGroup = currentGroup.Groups.FirstOrDefault(g => g.Id.ToString() == idOrTitle || g.Title == idOrTitle);
-                if (nextGroup == null && i == groupIdOrTitles.Length - 1)
-                {
-                    var project = currentGroup.Projects.FirstOrDefault(p => p.Id == idOrTitle || p.Title == idOrTitle);
-                    if (project != null)
-                    {
-                        return [project];
-                    }
-                }
-                currentGroup = nextGroup;
-            }
-
-            if (currentGroup == null)
-                throw new Exception($"Группа с идентификатором или названием '{idOrTitle}' не найдена");
-        }
-
-        if (currentGroup == null)
-            return [];
-
-        return GetAllProjectsRecursive(currentGroup).ToArray();
-    }
-
-    private static IEnumerable<GitLabProject> GetAllProjectsRecursive(GitLabGroup group)
-    {
-        foreach (var project in group.Projects ?? [])
-        {
-            yield return project;
-        }
-        foreach (var childGroup in group.Groups ?? [])
-        {
-            foreach (var project in GetAllProjectsRecursive(childGroup))
-            {
-                yield return project;
-            }
-        }
+        return await gitLabPathResolver.ResolveProjects(ExtractGroupPathFromRoute());
     }
 
     private static JobRunDto MapToJobRunDto(JobRunQueryResult source)

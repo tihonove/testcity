@@ -47,6 +47,7 @@ builder.Services.AddSingleton<IResetable, GitLabProjectsService>();
 builder.Services.AddSingleton<ConnectionFactory>();
 builder.Services.AddSingleton<TestCityDatabase>();
 builder.Services.AddSingleton<ProjectJobTypesCache>();
+builder.Services.AddSingleton<GitLabPathResolver>();
 builder.Services.AddSingleton(r => KafkaMessageQueueClient.CreateDefault(r.GetRequiredService<ILogger<KafkaMessageQueueClient>>()));
 
 var authSettings = AuthorizationSettings.Default;
