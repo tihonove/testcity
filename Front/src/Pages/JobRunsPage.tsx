@@ -17,8 +17,8 @@ import { flipRateThreshold } from "../Domain/Storage/Storage";
 
 export function JobRunsPage(): React.JSX.Element {
     const { jobId = "" } = useParams();
-    const { groupNodes, rootGroup, pathToGroup } = useProjectContextFromUrlParams();
-    const project = groupNodes[groupNodes.length - 1] ?? reject("Project not found");
+    const { rootGroup, pathToGroup } = useProjectContextFromUrlParams();
+    const project = rootGroup;
     const [currentBranchName, setCurrentBranchName] = useSearchParamAsState("branch");
     usePopularBranchStoring(currentBranchName);
 
@@ -32,7 +32,7 @@ export function JobRunsPage(): React.JSX.Element {
     return (
         <ColumnStack block stretch gap={4}>
             <Fit>
-                <GroupBreadcrumps branchName={currentBranchName} nodes={groupNodes} />
+                <GroupBreadcrumps branchName={currentBranchName} pathToProject={pathToGroup} />
             </Fit>
             <Fit>
                 <h1 className={styles.header1}>
@@ -56,12 +56,7 @@ export function JobRunsPage(): React.JSX.Element {
             </Fit>
             <Fit>
                 {section === "overview" && (
-                    <JobRunList
-                        pathToGroup={pathToGroup}
-                        jobId={jobId}
-                        branchName={currentBranchName}
-                        rootGroup={rootGroup}
-                    />
+                    <JobRunList pathToGroup={pathToGroup} jobId={jobId} branchName={currentBranchName} />
                 )}
                 {section === "statistics" && (
                     <div>

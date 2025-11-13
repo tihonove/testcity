@@ -1,12 +1,11 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
-import { GroupNode, Project, resolvePathToNodes } from "../Domain/Storage/Projects/GroupNode";
-import { reject } from "../Utils/TypeHelpers";
 import { useTestCityRequest } from "../Domain/Api/TestCityApiClient";
+import { GroupEntityNode, ProjectEntityNode } from "../Domain/Api/TestCityRunsApiClient";
+import { GroupNode, Project } from "../Domain/Storage/Projects/GroupNode";
 
 export function useProjectContextFromUrlParams(): {
-    rootGroup: GroupNode;
-    groupNodes: (GroupNode | Project)[];
+    rootGroup: ProjectEntityNode | GroupEntityNode;
     pathToGroup: string[];
 } {
     const { groupIdLevel1, groupIdLevel2, groupIdLevel3 } = useParams();
@@ -18,15 +17,10 @@ export function useProjectContextFromUrlParams(): {
         () => [groupIdLevel1, groupIdLevel2, groupIdLevel3].filter(x => x != null),
         [groupIdLevel1, groupIdLevel2, groupIdLevel3]
     );
-    const rootProjectStructure = useTestCityRequest(c => c.getRootGroup(groupIdLevel1), [groupIdLevel1]);
-    const groupNodes = React.useMemo(
-        () => resolvePathToNodes(rootProjectStructure, pathToGroup.slice(1)) ?? reject("Undefined is no allowed"),
-        [rootProjectStructure, pathToGroup]
-    );
+    const result = useTestCityRequest(c => c.runs.getEntity(pathToGroup), [pathToGroup]);
 
     return {
-        rootGroup: rootProjectStructure,
-        groupNodes: groupNodes,
+        rootGroup: result,
         pathToGroup: pathToGroup,
     };
 }

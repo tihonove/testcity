@@ -29,19 +29,15 @@ import styles from "./ProjectsDashboardPage.module.css";
 import { useTestCityRequest } from "../../Domain/Api/TestCityApiClient";
 
 export function ProjectsDashboardPage(): React.JSX.Element {
-    const { rootGroup, groupNodes, pathToGroup } = useProjectContextFromUrlParams();
+    const { pathToGroup } = useProjectContextFromUrlParams();
     const [isPending, startTransition, isFading] = useDelayedTransition();
     const [currentBranchName, setCurrentBranchName] = useSearchParamAsState("branch");
     usePopularBranchStoring(currentBranchName);
     const [noRuns, setNoRuns] = useSearchParamAsState("noruns");
 
     const dashboardData = useTestCityRequest(
-        c =>
-            c.runs.getDashboard(
-                groupNodes.map(x => x.title),
-                currentBranchName
-            ),
-        [...groupNodes.map(x => x.title), currentBranchName]
+        c => c.runs.getDashboard(pathToGroup, currentBranchName),
+        [pathToGroup, currentBranchName]
     );
 
     return (
@@ -54,7 +50,7 @@ export function ProjectsDashboardPage(): React.JSX.Element {
                             <Fit nextGap={4}>
                                 <GroupBreadcrumps
                                     branchName={currentBranchName}
-                                    nodes={dashboardData.fullPathSlug.slice(0, -1)}
+                                    pathToProject={pathToGroup.slice(0, -1)}
                                 />
                             </Fit>
                             <Fit>

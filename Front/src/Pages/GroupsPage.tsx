@@ -11,7 +11,7 @@ import { useTestCityRequest } from "../Domain/Api/TestCityApiClient";
 
 export function GroupsPage() {
     const [searchText, setSearchText] = React.useState("");
-    const projects = useTestCityRequest(c => c.getRootGroups());
+    const projects = useTestCityRequest(c => c.runs.getRootGroupsV2());
     const filteredGroups = React.useMemo(
         () => projects.filter(p => !searchText.trim() || p.title.toLowerCase().includes(searchText.toLowerCase())),
         [searchText, projects]

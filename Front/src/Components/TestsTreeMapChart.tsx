@@ -2,6 +2,9 @@ import * as React from "react";
 import { useParams } from "react-router-dom";
 import CarrotSearchFoamTree from "@carrotsearch/foamtree";
 import { useMemo } from "react";
+import { useEffect, useRef } from "react";
+import { useTestCityRequest } from "../Domain/Api/TestCityApiClient";
+import { useProjectContextFromUrlParams } from "./useProjectContextFromUrlParams";
 
 interface TestTreeItem {
     name: string;
@@ -76,10 +79,6 @@ interface FoamTreeGroup {
 interface FoamTreeProps {
     groups: FoamTreeGroup[];
 }
-
-import { useEffect, useRef } from "react";
-import { useTestCityRequest } from "../Domain/Api/TestCityApiClient";
-import { useProjectContextFromUrlParams } from "./useProjectContextFromUrlParams";
 
 function FoamTree({ groups }: FoamTreeProps) {
     const elementRef = useRef<HTMLDivElement | null>(null);

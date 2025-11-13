@@ -29,9 +29,8 @@ import styles from "./JobRunTestListPage.module.css";
 import { useTestCityRequest } from "../Domain/Api/TestCityApiClient";
 
 export function JobRunTestListPage(): React.JSX.Element {
-    const basePrefix = useBasePrefix();
-    const { groupNodes, pathToGroup } = useProjectContextFromUrlParams();
-    const projectId = groupNodes[groupNodes.length - 1].id;
+    const { rootGroup, pathToGroup } = useProjectContextFromUrlParams();
+    const projectId = rootGroup.id;
     const { jobId = "", jobRunId = "" } = useParams();
     useSearchParamDebouncedAsState("filter", 500, "");
 
@@ -66,7 +65,7 @@ export function JobRunTestListPage(): React.JSX.Element {
         <main className={styles.root}>
             <ColumnStack gap={4} block stretch>
                 <Fit>
-                    <GroupBreadcrumps branchName={branchName} nodes={groupNodes} jobId={jobId} />
+                    <GroupBreadcrumps branchName={branchName} pathToProject={pathToGroup} jobId={jobId} />
                 </Fit>
                 <Fit>
                     <ColorByState state={state}>

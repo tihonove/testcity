@@ -22,8 +22,7 @@ export function TestHistoryPage(): React.JSX.Element {
     const [testId] = useSearchParam("id");
     const basePrefix = useBasePrefix();
     const [_, startTransition, isFading] = useDelayedTransition();
-    const { pathToGroup, groupNodes } = useProjectContextFromUrlParams();
-    const currentProjectId = groupNodes[groupNodes.length - 1].id;
+    const { pathToGroup } = useProjectContextFromUrlParams();
     const [currentBranchName, setCurrentBranchName] = useSearchParamAsState("branch");
     usePopularBranchStoring(currentBranchName);
 
@@ -63,7 +62,7 @@ export function TestHistoryPage(): React.JSX.Element {
     return (
         <ColumnStack gap={4} block stretch>
             <Fit>
-                <GroupBreadcrumps branchName={currentBranchName} nodes={groupNodes} />
+                <GroupBreadcrumps branchName={currentBranchName} pathToProject={pathToGroup} />
             </Fit>
 
             <Fit>

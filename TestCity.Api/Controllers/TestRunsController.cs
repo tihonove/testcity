@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TestCity.Api.Exceptions;
+using TestCity.Api.Models;
 using TestCity.Api.Models.Dashboard;
 using TestCity.Core.GitLab;
 using TestCity.Core.GitlabProjects;
@@ -16,6 +17,60 @@ namespace TestCity.Api.Controllers;
 [Route("api/groups-v2/{groupPath1}/{groupPath2}/{groupPath3}/{groupPath4}/{groupPath5}")]
 public class TestRunsContoller(GitLabProjectsService gitLabProjectsService, TestCityDatabase database, GitLabSettings gitLabSettings) : ControllerBase
 {
+    [HttpGet("")]
+    public async Task<ActionResult<EntityNodeDto>> GetEntity()
+    {
+        var groupOrProjectPath = await ResolveGroupOrProjectPathFromContext();
+        var currentNode = groupOrProjectPath[^1];
+
+        if (currentNode is GitLabProject project)
+        {
+            return Ok(new ProjectEntityNodeDto
+            {
+                Id = project.Id,
+                Title = project.Title,
+                AvatarUrl = project.AvatarUrl
+            });
+        }
+        else if (currentNode is GitLabGroup group)
+        {
+            return Ok(BuildGroupEntityNode(group));
+        }
+
+        throw new InvalidOperationException("Unknown node type");
+    }
+
+    private GroupEntityNodeDto BuildGroupEntityNode(GitLabGroup group)
+    {
+        var projects = new List<ProjectEntityNodeDto>();
+        var groups = new List<GroupEntityNodeDto>();
+
+        foreach (var childGroup in group.Groups)
+        {
+            groups.Add(BuildGroupEntityNode(childGroup));
+        }
+
+        foreach (var childProject in group.Projects)
+        {
+            projects.Add(new ProjectEntityNodeDto
+            {
+                Id = childProject.Id,
+                Title = childProject.Title,
+                AvatarUrl = childProject.AvatarUrl
+            });
+        }
+
+        return new GroupEntityNodeDto
+        {
+            Id = group.Id,
+            Title = group.Title,
+            AvatarUrl = group.AvatarUrl,
+            Groups = groups,
+            Projects = projects
+        };
+    }
+
+
     [HttpGet("branches")]
     public async Task<ActionResult<string[]>> FindAllBranches([FromQuery] string? jobId = null)
     {

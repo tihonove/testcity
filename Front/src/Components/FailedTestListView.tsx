@@ -125,7 +125,6 @@ export function TestRunRow({
                 .filter(x => x)
                 .join("------\n");
             await navigator.clipboard.writeText(textToCopy);
-            // eslint-disable-next-line @typescript-eslint/no-deprecated
             SingleToast.push("Copied to clipboard");
         });
     }, [failureMessage, failureOutput, systemOutput, testRun.testId]);

@@ -13,7 +13,7 @@ public class CerberusAuthorizationManualTests(ITestOutputHelper output)
     private readonly ILogger logger = GlobalSetup.TestLoggerFactory(output).CreateLogger(nameof(CerberusAuthorizationManualTests));
 
     [Fact(Skip = "Требуется подключение к рабочему Cerberus API")]
-    public async Task TestAuthorize()
+    public async Task TestCheckObjectsAll()
     {
         var settings = CerberusSettings.Default;
         var cerberusClient = new CerberusClient(settings.Url, settings.ApiKey, logger);
@@ -21,11 +21,11 @@ public class CerberusAuthorizationManualTests(ITestOutputHelper output)
         var request = new CheckObjectsByHierarchyLevelRequest
         {
             Service = settings.DefaultService ?? "test-service",
-            SubjectIdentity = new ApiKeyIdentity
+            SubjectIdentity = new AuthSidIdentity
             {
-                ApiKey = settings.ApiKey ?? "test-api-key"
+                SessionId = "...",
             },
-            Operations = new[] { "read-project" },
+            Operations = ["read-project"],
             HierarchyLevel = 1
         };
 

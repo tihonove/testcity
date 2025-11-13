@@ -6,23 +6,21 @@ import { BranchCell, NumberCell, SelectedOnHoverTr } from "../Components/Cells";
 import { CommitChanges } from "../Components/CommitChanges";
 import { JobLink } from "../Components/JobLink";
 import { RotatingSpinner } from "../Components/RotatingSpinner";
+import { TimingCell } from "../Components/TimingCell";
 import { SuspenseFadingWrapper, useDelayedTransition } from "../Components/useDelayedTransition";
 import { useUrlBasedPaging } from "../Components/useUrlBasedPaging";
-import { createLinkToJobRun } from "../Domain/Navigation";
+import { useTestCityRequest } from "../Domain/Api/TestCityApiClient";
+import { createLinkToJobRun2, createLinkToProjectByPath } from "../Domain/Navigation";
 import { getText } from "../Utils";
 import styles from "./JobRunList.module.css";
-import { GroupNode } from "../Domain/Storage/Projects/GroupNode";
-import { TimingCell } from "../Components/TimingCell";
-import { useTestCityRequest } from "../Domain/Api/TestCityApiClient";
 
 interface JobRunListProps {
-    rootGroup: GroupNode;
     pathToGroup: string[];
     jobId: string;
     branchName: string | undefined;
 }
 
-export function JobRunList({ rootGroup, pathToGroup, jobId, branchName }: JobRunListProps) {
+export function JobRunList({ pathToGroup, jobId, branchName }: JobRunListProps) {
     const [page, setPage] = useUrlBasedPaging();
     const jobRuns = useTestCityRequest(
         x => x.runs.getJobRuns(pathToGroup, jobId, branchName, page),
@@ -59,7 +57,12 @@ export function JobRunList({ rootGroup, pathToGroup, jobId, branchName }: JobRun
                                 ) : (
                                     <JobLink
                                         state={x.state}
-                                        to={createLinkToJobRun(rootGroup, x.projectId, jobId, x.jobRunId, branchName)}>
+                                        to={createLinkToJobRun2(
+                                            createLinkToProjectByPath(pathToGroup),
+                                            jobId,
+                                            x.jobRunId,
+                                            branchName
+                                        )}>
                                         {getText(
                                             x.totalTestsCount?.toString() ?? "0",
                                             x.successTestsCount?.toString() ?? "0",

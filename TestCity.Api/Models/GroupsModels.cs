@@ -4,7 +4,6 @@ public class GroupDto
 {
     public string Id { get; set; } = null!;
     public string Title { get; set; } = null!;
-    public bool? MergeRunsFromJobs { get; set; }
     public string? AvatarUrl { get; internal set; }
 }
 

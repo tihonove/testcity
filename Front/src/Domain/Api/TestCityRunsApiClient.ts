@@ -43,11 +43,49 @@ export interface TestListStats {
     failedTestsCount: number;
 }
 
+export interface EntityNode {
+    id: string;
+    title: string;
+    avatarUrl: string | null;
+    type: "group" | "project";
+}
+
+export interface GroupEntityShortInfoNode extends EntityNode {
+    type: "group";
+}
+
+export interface GroupEntityNode extends GroupEntityShortInfoNode {
+    groups: GroupEntityNode[];
+    projects: ProjectEntityNode[];
+}
+
+export interface ProjectEntityNode extends EntityNode {
+    type: "project";
+}
+
 export class TestCityRunsApiClient {
     private readonly apiUrl: string;
 
     public constructor(apiUrl: string) {
         this.apiUrl = apiUrl;
+    }
+
+    public async getRootGroupsV2(): Promise<GroupEntityShortInfoNode[]> {
+        const response = await fetch(`${this.apiUrl}groups-v2`);
+        if (!response.ok) {
+            throw new Error("Unable to load root groups");
+        }
+        return (await response.json()) as GroupEntityShortInfoNode[];
+    }
+
+    public async getEntity(groupOrProjectPath: string[]): Promise<ProjectEntityNode | GroupEntityNode> {
+        const response = await fetch(
+            `${this.apiUrl}groups-v2/${groupOrProjectPath.map(x => encodeURIComponent(x)).join("/")}`
+        );
+        if (!response.ok) {
+            throw new Error(`Unable to load entity for ${groupOrProjectPath.join("/")}`);
+        }
+        return (await response.json()) as ProjectEntityNode | GroupEntityNode;
     }
 
     public async findAllBranches(groupOrProjectPath: string[], jobId: string | null = null): Promise<string[]> {

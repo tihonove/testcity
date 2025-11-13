@@ -7,14 +7,17 @@ using System.Reflection.Metadata.Ecma335;
 namespace TestCity.Api.Controllers;
 
 [ApiController]
-[Route("api/groups")]
+[Route("api")]
 [Authorize]
 public class GroupsController(GitLabProjectsService gitLabProjectsService) : ControllerBase
 {
-    [HttpGet("")]
+    [HttpGet("groups")]
     public async Task<ActionResult<List<GroupDto>>> GetRootGroups() => Ok((await gitLabProjectsService.GetRootGroupsInfo()).ConvertAll(MapToGroupDto));
 
-    [HttpGet("{idOrTitle}")]
+    [HttpGet("groups-v2")]
+    public async Task<ActionResult<List<GroupEntityShoriInfoNodeDto>>> GetRootGroupsV2() => Ok((await gitLabProjectsService.GetRootGroupsInfo()).ConvertAll(MapToGroupV2));
+
+    [HttpGet("groups/{idOrTitle}")]
     public async Task<ActionResult<GroupNodeDto>> GetGroup(string idOrTitle)
     {
         var group = await gitLabProjectsService.GetGroup(idOrTitle);
@@ -30,8 +33,17 @@ public class GroupsController(GitLabProjectsService gitLabProjectsService) : Con
         {
             Id = group.Id,
             Title = group.Title,
+            AvatarUrl = group.AvatarUrl
+        };
+    }
+
+    private static GroupEntityShoriInfoNodeDto MapToGroupV2(GitLabGroupShortInfo group)
+    {
+        return new GroupEntityNodeDto
+        {
+            Id = group.Id,
+            Title = group.Title,
             AvatarUrl = group.AvatarUrl,
-            MergeRunsFromJobs = group.MergeRunsFromJobs
         };
     }
 
@@ -41,7 +53,6 @@ public class GroupsController(GitLabProjectsService gitLabProjectsService) : Con
         {
             Id = group.Id,
             Title = group.Title,
-            MergeRunsFromJobs = group.MergeRunsFromJobs,
             AvatarUrl = group.AvatarUrl,
             Groups = group.Groups?.Select(MapToGroupNodeDto).ToList(),
             Projects = group.Projects?.Select(MapToProjectDto).ToList()

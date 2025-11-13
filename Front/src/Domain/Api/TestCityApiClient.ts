@@ -25,23 +25,7 @@ export class TestCityApiClient {
         this.runs = new TestCityRunsApiClient(apiUrl);
     }
 
-    public async getRootGroups(): Promise<Group[]> {
-        const response = await fetch(`${this.apiUrl}groups`);
-        if (!response.ok) {
-            throw new Error("Unable to load root groups");
-        }
-        return (await response.json()) as Group[];
-    }
-
     public async getUser(): Promise<UserInfoDto | null> {
         return (await (await fetch(`${this.apiUrl}auth/user`, { redirect: "manual" })).json()) as UserInfoDto | null;
-    }
-
-    public async getRootGroup(groupIdOrTitle: string): Promise<GroupNode> {
-        const response = await fetch(`${this.apiUrl}groups/${encodeURIComponent(groupIdOrTitle)}`);
-        if (!response.ok) {
-            throw new Error(`Unable to find group ${groupIdOrTitle}`);
-        }
-        return (await response.json()) as GroupNode;
     }
 }
