@@ -1,9 +1,6 @@
 namespace TestCity.Core.GitlabProjects;
 
-public class GitLabProject
+public class GitLabProject : GitLabEntity
 {
-    public required string Id { get; set; }
-    public required string Title { get; set; }
     public bool UseHooks { get; set; }
-    public string? AvatarUrl { get; set; }
 }

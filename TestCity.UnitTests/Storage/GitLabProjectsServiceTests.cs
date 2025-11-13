@@ -168,7 +168,6 @@ public sealed class GitLabProjectsServiceTests : IAsyncLifetime, IAsyncDisposabl
         {
             Id = "100",
             Title = "Root Group",
-            MergeRunsFromJobs = true,
             Groups = [
                 new GitLabGroup
                 {

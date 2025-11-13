@@ -40,8 +40,7 @@ public class TestAnalyticsDatabaseSchema
                             Title = "test-project-1",
                             UseHooks = false
                         }
-                    ],
-                    MergeRunsFromJobs = false
+                    ]
                 },
             };
 
@@ -76,8 +75,7 @@ public class TestAnalyticsDatabaseSchema
                             Title = "candy",
                             UseHooks = true
                         }
-                    ],
-                    MergeRunsFromJobs = false
+                    ]
                 },
                 new() {
                     Id = "53",
@@ -89,7 +87,6 @@ public class TestAnalyticsDatabaseSchema
                             Title = "diadoc"
                         }
                     ],
-                    MergeRunsFromJobs = false
                 },
                 new() {
                     Id = "23830",
@@ -173,7 +170,6 @@ public class TestAnalyticsDatabaseSchema
                             Title = "plugin"
                         }
                     ],
-                    MergeRunsFromJobs = false
                 },
                 new() {
                     Id = "2113",
@@ -185,7 +181,6 @@ public class TestAnalyticsDatabaseSchema
                             Title = "marking"
                         }
                     ],
-                    MergeRunsFromJobs = false
                 },
                 new() {
                     Id = "0",
@@ -198,7 +193,6 @@ public class TestAnalyticsDatabaseSchema
                             UseHooks = true
                         }
                     ],
-                    MergeRunsFromJobs = false
                 },
                 new() {
                     Id = "24609",
@@ -221,7 +215,6 @@ public class TestAnalyticsDatabaseSchema
                             Title = "kedo"
                         }
                     ],
-                    MergeRunsFromJobs = false
                 },
                 new() {
                     Id = "27200",
@@ -233,7 +226,6 @@ public class TestAnalyticsDatabaseSchema
                             Title = "fiit-big-library"
                         }
                     ],
-                    MergeRunsFromJobs = false
                 },
                 new () {
                     Id = "867",
@@ -245,7 +237,6 @@ public class TestAnalyticsDatabaseSchema
                             Title = "isup"
                         }
                     ],
-                    MergeRunsFromJobs = false
                 }
             };
 

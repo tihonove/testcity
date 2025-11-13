@@ -31,7 +31,7 @@ public class GitLabProjectsService : IDisposable, IResetable
     public async Task<List<GitLabGroupShortInfo>> GetRootGroupsInfo(CancellationToken cancellationToken = default)
     {
         await EnsureCacheInitializedAsync(cancellationToken);
-        return cachedRootGroups.ConvertAll(x => new GitLabGroupShortInfo { Id = x.Id, Title = x.Title, MergeRunsFromJobs = x.MergeRunsFromJobs, AvatarUrl = x.AvatarUrl });
+        return cachedRootGroups.ConvertAll(x => new GitLabGroupShortInfo { Id = x.Id, Title = x.Title, AvatarUrl = x.AvatarUrl });
     }
 
     public async Task<GitLabGroup?> GetGroup(string idOrTitle, CancellationToken cancellationToken = default)

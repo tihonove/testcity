@@ -289,7 +289,6 @@ public class GitlabController(
         }
     }
 
-    private readonly GitLabExtendedClient gitLabExtendedClient = gitLabClientProvider.GetExtendedClient();
     private readonly ILogger log = Log.GetLog<GitlabController>();
     private readonly IGitLabClient gitLabClient = gitLabClientProvider.GetClient();
 }

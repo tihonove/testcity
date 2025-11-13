@@ -70,7 +70,6 @@ public class TestRunsContoller(GitLabProjectsService gitLabProjectsService, Test
         };
     }
 
-
     [HttpGet("branches")]
     public async Task<ActionResult<string[]>> FindAllBranches([FromQuery] string? jobId = null)
     {
@@ -286,7 +285,7 @@ public class TestRunsContoller(GitLabProjectsService gitLabProjectsService, Test
     }
 
     private DashboardNodeDto BuildDashboardData(
-        List<object> groupOrProjectPath,
+        List<GitLabEntity> groupOrProjectPath,
         JobIdWithParentProject[] allJobs,
         JobRunQueryResult[] inProgressJobRuns,
         JobRunQueryResult[] allJobRuns)
@@ -306,7 +305,7 @@ public class TestRunsContoller(GitLabProjectsService gitLabProjectsService, Test
     }
 
     private ProjectDashboardNodeDto BuildProjectDashboardData(
-        List<object> groupOrProjectPath,
+        List<GitLabEntity> groupOrProjectPath,
         GitLabProject project,
         JobIdWithParentProject[] allJobs,
         JobRunQueryResult[] inProgressJobRuns,
@@ -341,7 +340,7 @@ public class TestRunsContoller(GitLabProjectsService gitLabProjectsService, Test
     }
 
     private GroupDashboardNodeDto BuildGroupDashboardData(
-        List<object> groupOrProjectPath,
+        List<GitLabEntity> groupOrProjectPath,
         GitLabGroup group,
         JobIdWithParentProject[] allJobs,
         JobRunQueryResult[] inProgressJobRuns,
@@ -351,13 +350,13 @@ public class TestRunsContoller(GitLabProjectsService gitLabProjectsService, Test
 
         foreach (var childProject in group.Projects)
         {
-            var childPath = new List<object>(groupOrProjectPath) { childProject };
+            var childPath = new List<GitLabEntity>(groupOrProjectPath) { childProject };
             children.Add(BuildProjectDashboardData(childPath, childProject, allJobs, inProgressJobRuns, allJobRuns));
         }
 
         foreach (var childGroup in group.Groups)
         {
-            var childPath = new List<object>(groupOrProjectPath) { childGroup };
+            var childPath = new List<GitLabEntity>(groupOrProjectPath) { childGroup };
             children.Add(BuildGroupDashboardData(childPath, childGroup, allJobs, inProgressJobRuns, allJobRuns));
         }
 
@@ -373,37 +372,22 @@ public class TestRunsContoller(GitLabProjectsService gitLabProjectsService, Test
         };
     }
 
-    private static string GetNodeId(object node)
+    private static string GetNodeId(GitLabEntity node)
     {
-        return node switch
-        {
-            GitLabProject p => p.Id,
-            GitLabGroup g => g.Id,
-            _ => throw new InvalidOperationException("Unknown node type")
-        };
+        return node.Id;
     }
 
-    private static string GetNodePathItem(object node)
+    private static string GetNodePathItem(GitLabEntity node)
     {
-        return node switch
-        {
-            GitLabProject p => p.Title,
-            GitLabGroup g => g.Title,
-            _ => throw new InvalidOperationException("Unknown node type")
-        };
+        return node.Title;
     }
 
-    private static GroupOrProjectPathSlugItemDto CreatePathSlugItem(object node)
+    private static GroupOrProjectPathSlugItemDto CreatePathSlugItem(GitLabEntity node)
     {
-        return node switch
-        {
-            GitLabProject p => new GroupOrProjectPathSlugItemDto { Id = p.Id, Title = p.Title, AvatarUrl = p.AvatarUrl },
-            GitLabGroup g => new GroupOrProjectPathSlugItemDto { Id = g.Id, Title = g.Title, AvatarUrl = g.AvatarUrl },
-            _ => throw new InvalidOperationException("Unknown node type")
-        };
+        return new GroupOrProjectPathSlugItemDto { Id = node.Id, Title = node.Title, AvatarUrl = node.AvatarUrl };
     }
 
-    private static IEnumerable<GitLabProject> GetAllProjectsRecursive(List<object> groupOrProjectPath)
+    private static IEnumerable<GitLabProject> GetAllProjectsRecursive(List<GitLabEntity> groupOrProjectPath)
     {
         var currentNode = groupOrProjectPath[^1];
 
@@ -419,7 +403,7 @@ public class TestRunsContoller(GitLabProjectsService gitLabProjectsService, Test
             }
             foreach (var childGroup in group.Groups)
             {
-                var childPath = new List<object>(groupOrProjectPath) { childGroup };
+                var childPath = new List<GitLabEntity>(groupOrProjectPath) { childGroup };
                 foreach (var p in GetAllProjectsRecursive(childPath))
                 {
                     yield return p;
@@ -428,7 +412,7 @@ public class TestRunsContoller(GitLabProjectsService gitLabProjectsService, Test
         }
     }
 
-    private async Task<List<object>> ResolveGroupOrProjectPathFromContext()
+    private async Task<List<GitLabEntity>> ResolveGroupOrProjectPathFromContext()
     {
         var groupSegments = RouteData.Values
             .Where(kv => kv.Key.StartsWith("groupPath"))
@@ -439,9 +423,9 @@ public class TestRunsContoller(GitLabProjectsService gitLabProjectsService, Test
         return await ResolveGroupOrProjectPath(groupSegments!);
     }
 
-    private async Task<List<object>> ResolveGroupOrProjectPath(string[] groupIdOrTitles)
+    private async Task<List<GitLabEntity>> ResolveGroupOrProjectPath(string[] groupIdOrTitles)
     {
-        var result = new List<object>();
+        var result = new List<GitLabEntity>();
         GitLabGroup? currentGroup = null;
 
         for (int i = 0; i < groupIdOrTitles.Length; i++)

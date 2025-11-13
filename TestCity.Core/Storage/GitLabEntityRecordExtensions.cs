@@ -35,9 +35,6 @@ public static class GitLabEntityRecordExtensions
                 {
                     Id = g.Id.ToString(),
                     Title = g.Title,
-                    MergeRunsFromJobs = groupParams.TryGetValue("mergeRunsFromJobs", out var merge) && merge is JsonElement element
-                        ? element.GetBoolean()
-                        : false,
                     Projects = [],
                     Groups = []
                 };
@@ -87,10 +84,6 @@ public static class GitLabEntityRecordExtensions
         foreach (var group in groups)
         {
             var groupParams = new Dictionary<string, object>();
-            if (group.MergeRunsFromJobs.HasValue)
-            {
-                groupParams["mergeRunsFromJobs"] = group.MergeRunsFromJobs;
-            }
             yield return new GitLabEntityRecord
             {
                 Id = long.Parse(group.Id),
