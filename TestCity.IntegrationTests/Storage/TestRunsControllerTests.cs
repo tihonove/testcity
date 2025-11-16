@@ -14,7 +14,7 @@ using TestCity.UnitTests.Utils;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace TestCity.UnitTests.Storage;
+namespace TestCity.IntegrationTests.Storage;
 
 [Collection("Global")]
 public class TestRunsControllerTests : IAsyncLifetime, IAsyncDisposable

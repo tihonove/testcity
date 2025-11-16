@@ -1,11 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <RootNamespace>TestCity.UnitTests</RootNamespace>
-        <AssemblyName>TestCity.UnitTests</AssemblyName>
+        <RootNamespace>TestCity.IntegrationTests</RootNamespace>
+        <AssemblyName>TestCity.IntegrationTests</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="ClickHouse.Client" />
+        <PackageReference Include="Confluent.Kafka" />
         <PackageReference Include="FluentAssertions" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
         <PackageReference Include="NGitLab" />
@@ -25,7 +27,7 @@
         <ProjectReference Include="../TestCity.Worker/TestCity.Worker.csproj" />
         <ProjectReference Include="../TestCity.GitLabJobsCrawler/TestCity.GitLabJobsCrawler.csproj" />
         <ProjectReference Include="../TestCity.Api/TestCity.Api.csproj" />
-        <ProjectReference Include="../TestCity.Cerberus/TestCity.Cerberus.csproj" />
+        <ProjectReference Include="../TestCity.UnitTests/TestCity.UnitTests.csproj" />
     </ItemGroup>
 
 </Project>

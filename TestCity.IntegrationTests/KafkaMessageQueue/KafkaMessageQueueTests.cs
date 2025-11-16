@@ -9,8 +9,9 @@ using System.Diagnostics;
 using TestCity.UnitTests.Utils;
 using Xunit.Abstractions;
 using TestCity.Core.Logging;
+using TestCity.UnitTests;
 
-namespace TestCity.UnitTests.KafkaMessageQueue;
+namespace TestCity.IntegrationTests.KafkaMessageQueue;
 
 [Collection("Global")]
 public class KafkaMessageQueueTests(ITestOutputHelper output)

@@ -6,7 +6,7 @@ using TestCity.Core.GitLab;
 using Xunit.Abstractions;
 using TestCity.UnitTests.Utils;
 
-namespace TestCity.UnitTests.Storage;
+namespace TestCity.IntegrationTests.Storage;
 
 [Collection("Global")]
 public sealed class GitLabProjectsServiceTests : IAsyncLifetime, IAsyncDisposable

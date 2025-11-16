@@ -4,7 +4,7 @@ using TestCity.Core.Storage;
 using TestCity.Core.Storage.DTO;
 using Xunit;
 
-namespace TestCity.UnitTests.Storage;
+namespace TestCity.IntegrationTests.Storage;
 
 [Collection("Global")]
 public class TestCityInProgressJobInfoTests : IAsyncLifetime

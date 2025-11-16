@@ -7,8 +7,9 @@ using TestCity.Core.Storage.DTO;
 using TestCity.UnitTests.Utils;
 using Xunit;
 using Xunit.Abstractions;
+using TestCity.UnitTests.Utils;
 
-namespace TestCity.UnitTests.Storage;
+namespace TestCity.IntegrationTests.Storage;
 
 [Collection("Global")]
 public class TestCityTestDashboardWeeklyTests(ITestOutputHelper output) : IAsyncLifetime

@@ -7,7 +7,7 @@ using Xunit;
 using Xunit.Abstractions;
 using static TestCity.UnitTests.Utils.TestDataBuilders;
 
-namespace TestCity.UnitTests.Storage;
+namespace TestCity.IntegrationTests.Storage;
 
 [Collection("Global")]
 public class TestCityDatabaseExtensionsTests : IAsyncLifetime

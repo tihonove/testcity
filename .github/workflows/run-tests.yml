@@ -75,6 +75,33 @@ jobs:
     name: DotNet Tests
     runs-on: ubuntu-latest
     
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0.x'
+      
+      - name: Run .NET Tests
+        env:
+          GITLAB_URL: https://gitlab.com/
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+        run: dotnet test --filter "FullyQualifiedName~TestCity.UnitTests" --logger "junit;LogFilePath=../.test-reports/{assembly}.test-result.xml;FailureBodyFormat=Verbose"
+      
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: .test-reports/**/*.xml
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  dotnet-integration-tests:
+    name: DotNet Integration Tests
+    runs-on: ubuntu-latest
+    
     services:
       clickhouse:
         image: clickhouse/clickhouse-server
@@ -121,7 +148,7 @@ jobs:
           KAFKA_BOOTSTRAP_SERVERS: localhost:9092
           GITLAB_URL: https://gitlab.com/
           GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
-        run: dotnet test --filter "FullyQualifiedName~TestCity.UnitTests" --logger "junit;LogFilePath=../.test-reports/{assembly}.test-result.xml;FailureBodyFormat=Verbose"
+        run: dotnet test --filter "FullyQualifiedName~TestCity.IntegrationTests" --logger "junit;LogFilePath=../.test-reports/{assembly}.test-result.xml;FailureBodyFormat=Verbose"
       
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
