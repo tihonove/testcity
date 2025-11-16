@@ -8,7 +8,6 @@ namespace TestCity.SystemTests.Api;
 [Collection("System")]
 public class GitlabControllerTests(ITestOutputHelper output) : ApiTestBase(output)
 {
-
     // Примечание: Это простые заглушки для тестов, которые будут реализованы позже
     // Они показывают, как можно использовать созданный клиент API
 

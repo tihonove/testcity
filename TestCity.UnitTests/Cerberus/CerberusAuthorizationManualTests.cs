@@ -12,7 +12,7 @@ public class CerberusAuthorizationManualTests(ITestOutputHelper output)
 {
     private readonly ILogger logger = GlobalSetup.TestLoggerFactory(output).CreateLogger(nameof(CerberusAuthorizationManualTests));
 
-    [Fact]
+    [Fact(Skip = "Требуется рабочий Cerberus API и корректные параметры в CerberusSettings")]
     public async Task TestCheckObjectsAll()
     {
         var settings = CerberusSettings.Default;
@@ -41,7 +41,7 @@ public class CerberusAuthorizationManualTests(ITestOutputHelper output)
         }
     }
 
-    [Fact]
+    [Fact(Skip = "Требуется рабочий Cerberus API и корректные параметры в CerberusSettings")]
     public async Task TestCheckObjectsByName()
     {
         var settings = CerberusSettings.Default;
