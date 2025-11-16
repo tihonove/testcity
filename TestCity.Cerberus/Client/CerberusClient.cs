@@ -24,7 +24,7 @@ public class CerberusClient(Uri cerberusEndpoint, String apiKey, ILogger logger)
         CheckObjectsByHierarchyLevelRequest request,
         CancellationToken cancellationToken = default)
     {
-        const string endpoint = "/cerberus/v2.1/check/objects/all";
+        const string endpoint = "v2.1/check/objects/all";
 
         try
         {
@@ -67,7 +67,7 @@ public class CerberusClient(Uri cerberusEndpoint, String apiKey, ILogger logger)
         CheckObjectsByNameRequest request,
         CancellationToken cancellationToken = default)
     {
-        const string endpoint = "/cerberus/v2.1/check/objects";
+        const string endpoint = "v2.1/check/objects";
 
         try
         {
