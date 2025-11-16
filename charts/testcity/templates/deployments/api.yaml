@@ -63,7 +63,7 @@ spec:
             {{- end }}
             - name: AUTHORIZATION_TYPE
               value: {{ .Values.authorization.type | quote }}
-            {{- if eq .Values.authorization.type "OpenIdConnect" }}
+            {{- if or (eq .Values.authorization.type "OpenIdConnect") (eq .Values.authorization.type "OpenIdConnectWithCerberus") }}
             - name: OIDC_AUTHORITY
               value: {{ .Values.authorization.oidc.authority | quote }}
             - name: OIDC_CLIENT_ID
@@ -76,6 +76,17 @@ spec:
                 secretKeyRef:
                   name: oidc-credentials
                   key: clientSecret
+            {{- end }}
+            {{- if eq .Values.authorization.type "OpenIdConnectWithCerberus" }}
+            - name: CERBERUS_URL
+              value: {{ .Values.cerberus.url | quote }}
+            - name: CERBERUS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cerberus-credentials
+                  key: apiKey
+            - name: CERBERUS_SERVICE
+              value: {{ .Values.cerberus.service | quote }}
             {{- end }}
           resources:
             {{- toYaml .Values.api.resources | nindent 12 }}

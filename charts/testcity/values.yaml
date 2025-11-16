@@ -118,6 +118,11 @@ authorization:
   oidc:
     authority: ""  # e.g. https://oidc.endpoint.com/
 
+cerberus:
+  url: ""  # e.g. https://cerberus.endpoint.com/cerberus/
+  apiKey: ""
+  service: ""
+
 secrets:
   gitlab:
     token: ""
@@ -129,3 +134,5 @@ secrets:
   oidc:
     clientId: ""
     clientSecret: ""
+  cerberus:
+    apiKey: ""
