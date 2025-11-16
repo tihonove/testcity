@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace TestCity.SystemTests.Api;
 
 // Models from TestCity.Api.Models required for API testing

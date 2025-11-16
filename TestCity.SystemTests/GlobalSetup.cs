@@ -1,12 +1,9 @@
 using dotenv.net;
 using TestCity.Core.Logging;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 using TestCity.UnitTests.Utils;
-using System.Net.Http;
 using TestCity.SystemTests.Api.ApiClient;
 
 namespace TestCity.SystemTests;

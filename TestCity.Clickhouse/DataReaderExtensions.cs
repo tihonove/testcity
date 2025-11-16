@@ -1,14 +1,7 @@
 using System.Data.Common;
 using System.Reflection;
-using TestCity.Core.Storage.DTO;
 
-namespace TestCity.Core.Clickhouse;
-
-[AttributeUsage(AttributeTargets.Property)]
-public class ColumnBindingAttribute(string columnName) : Attribute
-{
-    public string ColumnName { get; } = columnName;
-}
+namespace TestCity.Clickhouse;
 
 public static class DataReaderExtensions
 {
@@ -73,7 +66,7 @@ public static class DataReaderExtensions
 
     private static T MapToObject<T>(DbDataReader reader, PropertyMapping[] propertyMappings) where T : class, new()
     {
-        var obj = new T();
+        var result = new T();
 
         foreach (var mapping in propertyMappings)
         {
@@ -81,42 +74,20 @@ public static class DataReaderExtensions
 
             if (value != null)
             {
-                // Special handling for List<CommitParentsChangesEntry> from ClickHouse Tuple array
-                // if (mapping.PropertyType == typeof(List<CommitParentsChangesEntry>) && 
-                //     value is Array array)
-                // {
-                //     var list = new List<CommitParentsChangesEntry>();
-                //     foreach (var item in array)
-                //     {
-                //         if (item is Tuple<string, ushort, string, string, string> tuple)
-                //         {
-                //             list.Add(new CommitParentsChangesEntry
-                //             {
-                //                 ParentCommitSha = tuple.Item1,
-                //                 Depth = tuple.Item2,
-                //                 AuthorName = tuple.Item3,
-                //                 AuthorEmail = tuple.Item4,
-                //                 MessagePreview = tuple.Item5
-                //             });
-                //         }
-                //     }
-                //     mapping.Property.SetValue(obj, list);
-                // }
-                // else
                 if (mapping.IsString)
                 {
-                    mapping.Property.SetValue(obj, value.ToString());
+                    mapping.Property.SetValue(result, value.ToString());
                 }
                 else if (value.GetType() == mapping.PropertyType || mapping.PropertyType.IsAssignableFrom(value.GetType()))
                 {
-                    mapping.Property.SetValue(obj, value);
+                    mapping.Property.SetValue(result, value);
                 }
                 else
                 {
                     try
                     {
                         var convertedValue = Convert.ChangeType(value, mapping.PropertyType);
-                        mapping.Property.SetValue(obj, convertedValue);
+                        mapping.Property.SetValue(result, convertedValue);
                     }
                     catch
                     {
@@ -126,10 +97,10 @@ public static class DataReaderExtensions
             }
             else if (mapping.IsString)
             {
-                mapping.Property.SetValue(obj, string.Empty);
+                mapping.Property.SetValue(result, string.Empty);
             }
         }
 
-        return obj;
+        return result;
     }
 }

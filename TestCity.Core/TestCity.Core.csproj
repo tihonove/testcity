@@ -16,6 +16,10 @@
 
     <ItemGroup>
         <EmbeddedResource Include="Clickhouse\SchemaMigrations\Schema1.sql" />
-   </ItemGroup>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="../TestCity.Clickhouse/TestCity.Clickhouse.csproj" />
+    </ItemGroup>
 
 </Project>

@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using ClickHouse.Client.Utility;
+using TestCity.Clickhouse;
 using TestCity.Core.Clickhouse;
 using TestCity.Core.Storage.DTO;
 

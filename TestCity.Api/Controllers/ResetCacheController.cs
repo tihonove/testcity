@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using TestCity.Core.Infrastructure;
 
 namespace TestCity.Api.Controllers;

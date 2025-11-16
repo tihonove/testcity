@@ -1,6 +1,6 @@
 using ClickHouse.Client.ADO;
 
-namespace TestCity.Core.Clickhouse;
+namespace TestCity.Clickhouse;
 
 public static class ClickHouseConnectionExtensions
 {

@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using NGitLab;
 using NGitLab.Models;
 using System.Collections.Concurrent;
-using Microsoft.AspNetCore.Authorization;
 
 namespace TestCity.Api.Controllers;
 

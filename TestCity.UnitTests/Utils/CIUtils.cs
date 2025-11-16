@@ -1,5 +1,3 @@
-using Xunit.Sdk;
-
 namespace TestCity.UnitTests.Utils;
 
 public static class CIUtils

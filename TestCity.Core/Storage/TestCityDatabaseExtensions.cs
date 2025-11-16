@@ -1,5 +1,4 @@
-using TestCity.Core.Clickhouse;
-using TestCity.Core.Storage;
+using TestCity.Clickhouse;
 using TestCity.Core.Storage.DTO;
 
 namespace TestCity.Core.Storage;

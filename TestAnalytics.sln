@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCity.Cerberus", "TestCi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCity.IntegrationTests", "TestCity.IntegrationTests\TestCity.IntegrationTests.csproj", "{8EAC8720-7D2C-4335-B352-C88C1D7D4574}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCity.Clickhouse", "TestCity.Clickhouse\TestCity.Clickhouse.csproj", "{0362C4CB-15A2-46EC-96AC-B46D62E3E33B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -150,6 +152,18 @@ Global
 		{8EAC8720-7D2C-4335-B352-C88C1D7D4574}.Release|x64.Build.0 = Release|Any CPU
 		{8EAC8720-7D2C-4335-B352-C88C1D7D4574}.Release|x86.ActiveCfg = Release|Any CPU
 		{8EAC8720-7D2C-4335-B352-C88C1D7D4574}.Release|x86.Build.0 = Release|Any CPU
+		{0362C4CB-15A2-46EC-96AC-B46D62E3E33B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0362C4CB-15A2-46EC-96AC-B46D62E3E33B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0362C4CB-15A2-46EC-96AC-B46D62E3E33B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0362C4CB-15A2-46EC-96AC-B46D62E3E33B}.Debug|x64.Build.0 = Debug|Any CPU
+		{0362C4CB-15A2-46EC-96AC-B46D62E3E33B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0362C4CB-15A2-46EC-96AC-B46D62E3E33B}.Debug|x86.Build.0 = Debug|Any CPU
+		{0362C4CB-15A2-46EC-96AC-B46D62E3E33B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0362C4CB-15A2-46EC-96AC-B46D62E3E33B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0362C4CB-15A2-46EC-96AC-B46D62E3E33B}.Release|x64.ActiveCfg = Release|Any CPU
+		{0362C4CB-15A2-46EC-96AC-B46D62E3E33B}.Release|x64.Build.0 = Release|Any CPU
+		{0362C4CB-15A2-46EC-96AC-B46D62E3E33B}.Release|x86.ActiveCfg = Release|Any CPU
+		{0362C4CB-15A2-46EC-96AC-B46D62E3E33B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

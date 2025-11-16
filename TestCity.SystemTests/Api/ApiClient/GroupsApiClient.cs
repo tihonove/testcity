@@ -1,8 +1,4 @@
-using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using TestCity.Api.Models;
 using TestCity.SystemTests.Api.ApiClient;
 
 namespace TestCity.SystemTests.Api;

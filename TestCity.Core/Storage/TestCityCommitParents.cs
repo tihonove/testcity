@@ -3,6 +3,7 @@ using TestCity.Core.Clickhouse;
 using TestCity.Core.Extensions;
 using TestCity.Core.Storage.DTO;
 using System.Runtime.CompilerServices;
+using TestCity.Clickhouse;
 
 namespace TestCity.Core.Storage;
 

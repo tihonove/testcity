@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <AssemblyName>TestCity.Clickhouse</AssemblyName>
+        <RootNamespace>TestCity.Clickhouse</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="System.Linq.Async" />
+        <PackageReference Include="ClickHouse.Client" />
+    </ItemGroup>
+
+</Project>

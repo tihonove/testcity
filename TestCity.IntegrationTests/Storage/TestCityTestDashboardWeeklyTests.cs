@@ -7,7 +7,6 @@ using TestCity.Core.Storage.DTO;
 using TestCity.UnitTests.Utils;
 using Xunit;
 using Xunit.Abstractions;
-using TestCity.UnitTests.Utils;
 
 namespace TestCity.IntegrationTests.Storage;
 

@@ -5,6 +5,7 @@ using TestCity.Core.Storage.DTO;
 using System.Runtime.CompilerServices;
 using TestCity.Core.Logging;
 using Microsoft.Extensions.Logging;
+using TestCity.Clickhouse;
 
 namespace TestCity.Core.Storage;
 

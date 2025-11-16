@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http;
 using TestCity.Cerberus.Client;
 using TestCity.Cerberus.Client.Models;
 using TestCity.Core.GitlabProjects.AccessChecking;

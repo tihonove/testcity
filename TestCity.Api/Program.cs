@@ -13,9 +13,7 @@ using TestCity.Core.Storage;
 using TestCity.Core.Worker;
 using OpenTelemetry.Metrics;
 using Microsoft.AspNetCore.HttpOverrides;
-using StackExchange.Redis;
 using TestCity.Core.GitlabProjects.AccessChecking;
-using System.Runtime.ConstrainedExecution;
 using TestCity.Cerberus.Client;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();

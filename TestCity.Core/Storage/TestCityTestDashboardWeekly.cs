@@ -2,6 +2,7 @@ using TestCity.Core.Clickhouse;
 using TestCity.Core.Storage.DTO;
 using Microsoft.Extensions.Logging;
 using TestCity.Core.Logging;
+using TestCity.Clickhouse;
 
 namespace TestCity.Core.Storage;
 

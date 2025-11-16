@@ -1,4 +1,5 @@
 using FluentAssertions;
+using TestCity.Clickhouse;
 using TestCity.Core.Clickhouse;
 using TestCity.Core.Storage;
 using TestCity.Core.Storage.DTO;

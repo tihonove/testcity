@@ -1,5 +1,3 @@
-using System.Reflection.Metadata;
-using TestCity.Core.GitLab;
 using TestCity.Core.GitlabProjects.AccessChecking;
 
 namespace TestCity.Core.GitlabProjects;
@@ -160,14 +158,5 @@ public class GitLabPathResolver(IGitLabProjectsService gitLabProjectsService, IG
                 yield return project;
             }
         }
-    }
-}
-
-public record ResolveGroupOrProjectPathResult(GitLabEntity[] PathSlug, GitLabEntity ResolvedEntity);
-
-public class AccessToEntityForbiddenException : Exception
-{
-    public AccessToEntityForbiddenException(string message) : base(message)
-    {
     }
 }

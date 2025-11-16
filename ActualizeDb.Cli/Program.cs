@@ -1,4 +1,5 @@
 ﻿using dotenv.net;
+using TestCity.Clickhouse;
 using TestCity.Core.Clickhouse;
 using TestCity.Core.GitLab;
 using TestCity.Core.Worker;
