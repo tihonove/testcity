@@ -98,6 +98,7 @@ services:
       - TESTANALYTICS_CLICKHOUSE_PASSWORD=123123
       - KAFKA_BOOTSTRAP_SERVERS=kafka:9094
       - REDIS_CONNECTION_STRING=redis:6379
+      - AUTHORIZATION_TYPE=Fake
     depends_on:
       - clickhouse
       - kafka

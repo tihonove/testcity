@@ -9,9 +9,10 @@ public class GitLabPathResolver(IGitLabProjectsService gitLabProjectsService, IG
     public async Task<List<GitLabGroupShortInfo>> GetRootGroupsInfo()
     {
         var accessEntries = await accessContext.ListAccessEntries();
-        var accessibleRoots = accessEntries.Select(x => x.PathSlug[0]).ToHashSet();
+        var rootAccessEntry = accessEntries.FirstOrDefault(x => x.PathSlug.Length == 0);
+        var rootGroupsAccessEntries = accessEntries.Where(x => x.PathSlug.Length > 0).Select(x => x.PathSlug[0]).ToHashSet();
         var allGroups = await gitLabProjectsService.GetRootGroups();
-        return allGroups.Where(g => (g.IsPublic ?? false) || accessibleRoots.Contains(g.Title)).ToList();
+        return allGroups.Where(g => (g.IsPublic ?? false) || rootAccessEntry?.HasAccess == true || rootGroupsAccessEntries.Contains(g.Title)).ToList();
     }
 
     public async Task<ResolveGroupOrProjectPathResult> ResolveGroupOrProjectPath(string[] pathSlug)

@@ -13,7 +13,7 @@ public class GroupsController(GitLabPathResolver gitLabPathResolver) : Controlle
 {
     [HttpGet("groups-v2")]
     public async Task<ActionResult<List<GroupEntityShoriInfoNodeDto>>> GetRootGroupsV2() => Ok((await gitLabPathResolver.GetRootGroupsInfo()).ConvertAll(MapToGroupV2));
-    
+
     private static GroupEntityShoriInfoNodeDto MapToGroupV2(GitLabGroupShortInfo group)
     {
         return new GroupEntityNodeDto
