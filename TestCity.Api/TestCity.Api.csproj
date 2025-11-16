@@ -22,6 +22,7 @@
     
     <ItemGroup>
         <ProjectReference Include="../TestCity.Core/TestCity.Core.csproj" />
+        <ProjectReference Include="../TestCity.Cerberus/TestCity.Cerberus.csproj" />
     </ItemGroup>
 
 </Project>

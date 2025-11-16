@@ -9,10 +9,10 @@ namespace TestCity.Api.Controllers;
 [ApiController]
 [Route("api")]
 [Authorize]
-public class GroupsController(GitLabProjectsService gitLabProjectsService) : ControllerBase
+public class GroupsController(GitLabPathResolver gitLabPathResolver) : ControllerBase
 {
     [HttpGet("groups-v2")]
-    public async Task<ActionResult<List<GroupEntityShoriInfoNodeDto>>> GetRootGroupsV2() => Ok((await gitLabProjectsService.GetRootGroupsInfo()).ConvertAll(MapToGroupV2));
+    public async Task<ActionResult<List<GroupEntityShoriInfoNodeDto>>> GetRootGroupsV2() => Ok((await gitLabPathResolver.GetRootGroupsInfo()).ConvertAll(MapToGroupV2));
     
     private static GroupEntityShoriInfoNodeDto MapToGroupV2(GitLabGroupShortInfo group)
     {

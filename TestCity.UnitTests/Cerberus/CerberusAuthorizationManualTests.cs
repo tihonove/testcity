@@ -12,7 +12,7 @@ public class CerberusAuthorizationManualTests(ITestOutputHelper output)
 {
     private readonly ILogger logger = GlobalSetup.TestLoggerFactory(output).CreateLogger(nameof(CerberusAuthorizationManualTests));
 
-    [Fact(Skip = "Требуется подключение к рабочему Cerberus API")]
+    [Fact]
     public async Task TestCheckObjectsAll()
     {
         var settings = CerberusSettings.Default;
@@ -21,12 +21,20 @@ public class CerberusAuthorizationManualTests(ITestOutputHelper output)
         var request = new CheckObjectsByHierarchyLevelRequest
         {
             Service = settings.DefaultService ?? "test-service",
+            // SubjectIdentity = new AuthSidIdentity
+            // {
+            //     SessionId = "...",
+            // },
+            // SubjectIdentity = new PortalUserIdentity
+            // {
+            //     UserId = Guid.Parse("26a173f1-b883-45cb-aa16-88d98bd6f825"),
+            // },
             SubjectIdentity = new AuthSidIdentity
             {
-                SessionId = "...",
+                SessionId = "F173A12683B8CB45AA1688D98BD6F825BEDBAC191E4E8D4B958E834664651BB0",
             },
             Operations = ["read-project"],
-            HierarchyLevel = 1
+            HierarchyLevel = 5
         };
 
         var response = await cerberusClient.CheckObjectsAsync(request);
@@ -41,7 +49,7 @@ public class CerberusAuthorizationManualTests(ITestOutputHelper output)
         }
     }
 
-    [Fact(Skip = "Требуется подключение к рабочему Cerberus API")]
+    [Fact]
     public async Task TestCheckObjectsByName()
     {
         var settings = CerberusSettings.Default;
@@ -50,9 +58,14 @@ public class CerberusAuthorizationManualTests(ITestOutputHelper output)
         var request = new CheckObjectsByNameRequest
         {
             Service = settings.DefaultService,
+            // SubjectIdentity = new PortalUserIdentity
+            // {
+            //     // UserId = Guid.Parse("26a173f1-b883-45cb-aa16-88d98bd6f825"),
+            //     UserId = Guid.Parse("1df68246-5f73-420b-ad9a-fe472ebf0d4f"),
+            // },
             SubjectIdentity = new AuthSidIdentity
             {
-                SessionId = "...",
+                SessionId = "F173A12683B8CB45AA1688D98BD6F825BEDBAC191E4E8D4B958E834664651BB0",
             },
             Objects = ["/forms"],
             Operations = ["read-project"],

@@ -9,6 +9,7 @@ using TestCity.Core.GitLab;
 using TestCity.Core.GitlabProjects;
 using TestCity.Core.Storage;
 using TestCity.Core.Storage.DTO;
+using TestCity.UnitTests.AccessChecking;
 using TestCity.UnitTests.Utils;
 using Xunit;
 using Xunit.Abstractions;
@@ -113,7 +114,7 @@ public class TestRunsControllerTests : IAsyncLifetime, IAsyncDisposable
 
         await database.JobInfo.InsertAsync(jobInfo);
 
-        var controller = new TestRunsContoller(gitLabProjectsService, database, GitLabSettings.Default);
+        var controller = new TestRunsController(new GitLabPathResolver(gitLabProjectsService, new InMemoryGitLabEntityAccessContext()), database, GitLabSettings.Default);
         controller.ControllerContext = new ControllerContext
         {
             HttpContext = new DefaultHttpContext(),
@@ -187,7 +188,7 @@ public class TestRunsControllerTests : IAsyncLifetime, IAsyncDisposable
 
         await gitLabProjectsService.SaveGitLabHierarchy(new List<GitLabGroup> { group }, CancellationToken.None);
 
-        var controller = new TestRunsContoller(gitLabProjectsService, database, GitLabSettings.Default);
+        var controller = new TestRunsController(new GitLabPathResolver(gitLabProjectsService, new InMemoryGitLabEntityAccessContext()), database, GitLabSettings.Default);
         controller.ControllerContext = new ControllerContext
         {
             HttpContext = new DefaultHttpContext(),

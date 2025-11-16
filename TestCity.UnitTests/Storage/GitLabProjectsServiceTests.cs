@@ -47,8 +47,8 @@ public sealed class GitLabProjectsServiceTests : IAsyncLifetime, IAsyncDisposabl
 
         // Act
         await service.SaveGitLabHierarchy(rootGroups, CancellationToken.None);
-        var retrievedRootGroups = await service.GetRootGroupsInfo(CancellationToken.None);
-        var retrievedGroup = await service.GetGroup("100", CancellationToken.None);
+        var retrievedRootGroups = await service.GetRootGroups(CancellationToken.None);
+        var retrievedGroup = await service.GetRootGroup("100", CancellationToken.None);
         var allProjects = await service.GetAllProjects(CancellationToken.None);
 
         // Assert
@@ -103,7 +103,7 @@ public sealed class GitLabProjectsServiceTests : IAsyncLifetime, IAsyncDisposabl
 
         // Act
         await service.SaveGitLabHierarchy(updatedRootGroups, CancellationToken.None);
-        var retrievedGroup = await service.GetGroup("100", CancellationToken.None);
+        var retrievedGroup = await service.GetRootGroup("100", CancellationToken.None);
         var allProjects = await service.GetAllProjects(CancellationToken.None);
 
         // Assert
@@ -142,24 +142,6 @@ public sealed class GitLabProjectsServiceTests : IAsyncLifetime, IAsyncDisposabl
         await service.SaveGitLabHierarchy(rootGroups, CancellationToken.None);
         var hasProject = await service.HasProject(9999, CancellationToken.None);
         Assert.False(hasProject);
-    }
-
-    [Fact]
-    public async Task EnumerateAllProjectsIds_ReturnsAllProjectIds()
-    {
-        var rootGroups = CreateTestHierarchy();
-        await service.SaveGitLabHierarchy(rootGroups, CancellationToken.None);
-
-        // Act
-        var projectIdsEnumerable = service.EnumerateAllProjectsIds(CancellationToken.None);
-        var projectIds = await projectIdsEnumerable.ToListAsync();
-
-        // Assert
-        Assert.Contains(1001, projectIds);
-        Assert.Contains(1002, projectIds);
-        Assert.Contains(2001, projectIds);
-        Assert.Contains(2002, projectIds);
-        Assert.Contains(3001, projectIds);
     }
 
     private static List<GitLabGroup> CreateTestHierarchy()

@@ -7,7 +7,7 @@ public class ConditionalAuthorizationHandler : IAuthorizationHandler
     public Task HandleAsync(AuthorizationHandlerContext context)
     {
         var authorizationEnabled = Environment.GetEnvironmentVariable("AUTHORIZATION_ENABLED")?.ToLowerInvariant() == "true";
-        
+
         if (!authorizationEnabled)
         {
             // Если авторизация отключена, разрешаем все запросы

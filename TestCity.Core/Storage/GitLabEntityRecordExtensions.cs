@@ -30,14 +30,17 @@ public static class GitLabEntityRecordExtensions
             {
                 var paramsJson = g.ParamsJson;
                 var groupParams = ReadParams(paramsJson);
-
-                return new GitLabGroup
+                var result = new GitLabGroup
                 {
                     Id = g.Id.ToString(),
                     Title = g.Title,
                     Projects = [],
-                    Groups = []
+                    Groups = [],
+                    IsPublic = groupParams.TryGetValue("isPublic", out var isPublic) && isPublic is JsonElement element
+                        ? element.GetBoolean()
+                        : null,
                 };
+                return result;
             })
             .ToDictionary(g => long.Parse(g.Id));
 
@@ -84,6 +87,8 @@ public static class GitLabEntityRecordExtensions
         foreach (var group in groups)
         {
             var groupParams = new Dictionary<string, object>();
+            if (group.IsPublic != null)
+                groupParams.Add("isPublic", group.IsPublic);
             yield return new GitLabEntityRecord
             {
                 Id = long.Parse(group.Id),

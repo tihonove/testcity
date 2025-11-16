@@ -12,6 +12,7 @@ public static class GitLabGroupExtensions
         }
         await group.Groups.TraverseRecursiveAsync(groupAction, projectAction, cancellationToken);
     }
+
     public static async Task TraverseRecursiveAsync(this IEnumerable<GitLabGroup> groups, Func<GitLabGroup, Task> groupAction, Func<GitLabProject, Task> projectAction, CancellationToken cancellationToken = default)
     {
         foreach (var project in groups)
@@ -20,5 +21,4 @@ public static class GitLabGroupExtensions
             await project.TraverseRecursiveAsync(groupAction, projectAction, cancellationToken);
         }
     }
-
 }

@@ -14,6 +14,9 @@ using TestCity.Core.Worker;
 using OpenTelemetry.Metrics;
 using Microsoft.AspNetCore.HttpOverrides;
 using StackExchange.Redis;
+using TestCity.Core.GitlabProjects.AccessChecking;
+using System.Runtime.ConstrainedExecution;
+using TestCity.Cerberus.Client;
 
 DotEnv.Fluent().WithProbeForEnv(10).Load();
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -34,6 +37,8 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.InstanceName = "TestCity_";
 });
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddDataProtection()
     .PersistKeysToStackExchangeRedis(StackExchange.Redis.ConnectionMultiplexer.Connect(redisConnectionString), "DataProtection-Keys");
 
@@ -44,15 +49,16 @@ builder.Services.AddSingleton<SkbKonturGitLabClientProvider>();
 builder.Services.AddSingleton<WorkerClient>();
 builder.Services.AddSingleton<GitLabProjectsService>();
 builder.Services.AddSingleton<IResetable, GitLabProjectsService>();
+builder.Services.AddSingleton<IGitLabProjectsService, GitLabProjectsService>();
 builder.Services.AddSingleton<ConnectionFactory>();
 builder.Services.AddSingleton<TestCityDatabase>();
 builder.Services.AddSingleton<ProjectJobTypesCache>();
-builder.Services.AddSingleton<GitLabPathResolver>();
+builder.Services.AddScoped<GitLabPathResolver>();
 builder.Services.AddSingleton(r => KafkaMessageQueueClient.CreateDefault(r.GetRequiredService<ILogger<KafkaMessageQueueClient>>()));
 
 var authSettings = AuthorizationSettings.Default;
 
-if (authSettings.Type == AuthorizationType.OpenIdConnect)
+if (authSettings.Type == AuthorizationType.OpenIdConnect || authSettings.Type == AuthorizationType.OpenIdConnectWithCerberus)
 {
     if (authSettings.Oidc == null)
     {
@@ -73,6 +79,7 @@ if (authSettings.Type == AuthorizationType.OpenIdConnect)
             o.Scope.Clear();
             o.Scope.Add("openid");
             o.Scope.Add("profile");
+            o.Scope.Add("upn");
             o.CallbackPath = "/signin-oidc";
         });
 }
@@ -80,6 +87,20 @@ else
 {
     builder.Services.AddAuthentication("NoAuth").AddScheme<NoAuthSchemeOptions, NoAuthHandler>("NoAuth", _ => { });
     builder.Services.AddSingleton<Microsoft.AspNetCore.Authorization.IAuthorizationHandler, ConditionalAuthorizationHandler>();
+}
+
+if (authSettings.Type == AuthorizationType.OpenIdConnectWithCerberus)
+{
+    if (authSettings.Cerberus == null)
+    {
+        throw new InvalidOperationException("Cerberus settings are not configured");
+    }
+    builder.Services.AddSingleton(authSettings.Cerberus);
+    builder.Services.AddSingleton(x => new CerberusClient(authSettings.Cerberus.Url, authSettings.Cerberus.ApiKey, x.GetRequiredService<ILogger<CerberusGitLabEntityAccessContext>>()));
+    builder.Services.AddScoped<IGitLabEntityAccessContext, CerberusGitLabEntityAccessContext>();
+} else
+{
+    builder.Services.AddScoped<IGitLabEntityAccessContext, AllowAllGitLabEntityAccessContext>();
 }
 
 builder.Services.AddAuthorization();

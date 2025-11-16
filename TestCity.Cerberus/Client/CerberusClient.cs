@@ -44,6 +44,13 @@ public class CerberusClient(Uri cerberusEndpoint, String apiKey, ILogger logger)
                 return result;
             }
 
+            // 403 означает отсутствие доступа к объектам - возвращаем пустой список
+            if (response.StatusCode == HttpStatusCode.Forbidden)
+            {
+                logger.LogDebug("No access to any objects for service {Service}, returning empty list", request.Service);
+                return new CheckObjectsAllResponse { Objects = [] };
+            }
+
             await HandleErrorResponseAsync(response, cancellationToken);
 
             // Unreachable, but needed for compiler

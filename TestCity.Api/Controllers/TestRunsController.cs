@@ -21,7 +21,7 @@ public class TestRunsController(GitLabPathResolver gitLabPathResolver, TestCityD
     public async Task<ActionResult<EntityNodeDto>> GetEntity()
     {
         var groupOrProjectPath = await ResolveGroupOrProjectPathFromContext();
-        var currentNode = groupOrProjectPath[^1];
+        var currentNode = groupOrProjectPath.ResolvedEntity;
 
         if (currentNode is GitLabProject project)
         {
@@ -285,27 +285,27 @@ public class TestRunsController(GitLabPathResolver gitLabPathResolver, TestCityD
     }
 
     private DashboardNodeDto BuildDashboardData(
-        List<GitLabEntity> groupOrProjectPath,
+        ResolveGroupOrProjectPathResult groupOrProjectPath,
         JobIdWithParentProject[] allJobs,
         JobRunQueryResult[] inProgressJobRuns,
         JobRunQueryResult[] allJobRuns)
     {
-        var currentNode = groupOrProjectPath[^1];
+        var currentNode = groupOrProjectPath.ResolvedEntity;
 
         if (currentNode is GitLabProject project)
         {
-            return BuildProjectDashboardData(groupOrProjectPath, project, allJobs, inProgressJobRuns, allJobRuns);
+            return BuildProjectDashboardData(groupOrProjectPath.PathSlug, project, allJobs, inProgressJobRuns, allJobRuns);
         }
         else if (currentNode is GitLabGroup group)
         {
-            return BuildGroupDashboardData(groupOrProjectPath, group, allJobs, inProgressJobRuns, allJobRuns);
+            return BuildGroupDashboardData(groupOrProjectPath.PathSlug, group, allJobs, inProgressJobRuns, allJobRuns);
         }
 
         throw new InvalidOperationException("Unknown node type");
     }
 
     private ProjectDashboardNodeDto BuildProjectDashboardData(
-        List<GitLabEntity> groupOrProjectPath,
+        GitLabEntity[] groupOrProjectPath,
         GitLabProject project,
         JobIdWithParentProject[] allJobs,
         JobRunQueryResult[] inProgressJobRuns,
@@ -340,7 +340,7 @@ public class TestRunsController(GitLabPathResolver gitLabPathResolver, TestCityD
     }
 
     private GroupDashboardNodeDto BuildGroupDashboardData(
-        List<GitLabEntity> groupOrProjectPath,
+        GitLabEntity[] groupOrProjectPath,
         GitLabGroup group,
         JobIdWithParentProject[] allJobs,
         JobRunQueryResult[] inProgressJobRuns,
@@ -350,13 +350,13 @@ public class TestRunsController(GitLabPathResolver gitLabPathResolver, TestCityD
 
         foreach (var childProject in group.Projects)
         {
-            var childPath = new List<GitLabEntity>(groupOrProjectPath) { childProject };
+            var childPath = new List<GitLabEntity>(groupOrProjectPath) { childProject }.ToArray();
             children.Add(BuildProjectDashboardData(childPath, childProject, allJobs, inProgressJobRuns, allJobRuns));
         }
 
         foreach (var childGroup in group.Groups)
         {
-            var childPath = new List<GitLabEntity>(groupOrProjectPath) { childGroup };
+            var childPath = new List<GitLabEntity>(groupOrProjectPath) { childGroup }.ToArray();
             children.Add(BuildGroupDashboardData(childPath, childGroup, allJobs, inProgressJobRuns, allJobRuns));
         }
 
@@ -387,7 +387,7 @@ public class TestRunsController(GitLabPathResolver gitLabPathResolver, TestCityD
         return new GroupOrProjectPathSlugItemDto { Id = node.Id, Title = node.Title, AvatarUrl = node.AvatarUrl };
     }
 
-    private async Task<List<GitLabEntity>> ResolveGroupOrProjectPathFromContext()
+    private async Task<ResolveGroupOrProjectPathResult> ResolveGroupOrProjectPathFromContext()
     {
         return await gitLabPathResolver.ResolveGroupOrProjectPath(ExtractGroupPathFromRoute());
     }
@@ -406,7 +406,7 @@ public class TestRunsController(GitLabPathResolver gitLabPathResolver, TestCityD
     private async Task<GitLabProject> GetProjectFromContext()
     {
         var groupOrProjectPath = await ResolveGroupOrProjectPathFromContext();
-        var currentNode = groupOrProjectPath[^1];
+        var currentNode = groupOrProjectPath.ResolvedEntity;
 
         if (currentNode is not GitLabProject project)
         {

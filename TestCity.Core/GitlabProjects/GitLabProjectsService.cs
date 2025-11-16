@@ -10,7 +10,7 @@ using TestCity.Core.Infrastructure;
 
 namespace TestCity.Core.GitlabProjects;
 
-public class GitLabProjectsService : IDisposable, IResetable
+public class GitLabProjectsService : IGitLabProjectsService, IDisposable, IResetable
 {
     public GitLabProjectsService(TestCityDatabase database, SkbKonturGitLabClientProvider gitLabClientProvider)
     {
@@ -28,19 +28,19 @@ public class GitLabProjectsService : IDisposable, IResetable
         return GetAllProjectsRecursive(cachedRootGroups).ToList();
     }
 
-    public async Task<List<GitLabGroupShortInfo>> GetRootGroupsInfo(CancellationToken cancellationToken = default)
+    public async Task<List<GitLabGroupShortInfo>> GetRootGroups(CancellationToken cancellationToken = default)
     {
         await EnsureCacheInitializedAsync(cancellationToken);
-        return cachedRootGroups.ConvertAll(x => new GitLabGroupShortInfo { Id = x.Id, Title = x.Title, AvatarUrl = x.AvatarUrl });
+        return cachedRootGroups.ConvertAll(x => x.CloneShortInfo());
     }
 
-    public async Task<GitLabGroup?> GetGroup(string idOrTitle, CancellationToken cancellationToken = default)
+    public async Task<GitLabGroup?> GetRootGroup(string idOrTitle, CancellationToken cancellationToken = default)
     {
         await EnsureCacheInitializedAsync(cancellationToken);
         return cachedRootGroups.FirstOrDefault(g => g.Id == idOrTitle || g.Title.Equals(idOrTitle, StringComparison.OrdinalIgnoreCase));
     }
 
-    public async IAsyncEnumerable<long> EnumerateAllProjectsIds([EnumeratorCancellation] CancellationToken cancellationToken = default)
+    private async IAsyncEnumerable<long> EnumerateAllProjectsIds([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         var allProjects = await GetAllProjects(cancellationToken);
         foreach (var project in allProjects)
@@ -230,7 +230,7 @@ public class GitLabProjectsService : IDisposable, IResetable
     {
         if (isCacheInitialized)
             return;
-            
+
         if (cacheInitializationInProgress)
         {
             // Cache is already being initialized in another thread, waiting for completion
@@ -275,7 +275,7 @@ public class GitLabProjectsService : IDisposable, IResetable
         }
         _ = UpdateCacheAsync();
     }
-    
+
     private readonly TestCityDatabase database;
     private readonly SkbKonturGitLabClientProvider gitLabClientProvider;
     private readonly ILogger logger;

@@ -5,8 +5,8 @@ namespace TestCity.Cerberus.Client.Models;
 [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
 [JsonDerivedType(typeof(AuthSidIdentity), typeDiscriminator: "authSid")]
 [JsonDerivedType(typeof(ApiKeyIdentity), typeDiscriminator: "apiKey")]
-[JsonDerivedType(typeof(PortalUserIdentity), typeDiscriminator: "portalUser")]
-[JsonDerivedType(typeof(PortalApplicationIdentity), typeDiscriminator: "portalApplication")]
+[JsonDerivedType(typeof(PortalUserIdentity), typeDiscriminator: "portalUserId")]
+[JsonDerivedType(typeof(PortalApplicationIdentity), typeDiscriminator: "ApplicationId")]
 public abstract class SubjectIdentity
 {
 }
@@ -25,12 +25,12 @@ public class ApiKeyIdentity : SubjectIdentity
 
 public class PortalUserIdentity : SubjectIdentity
 {
-    [JsonPropertyName("portalUserId")]
-    public required Guid PortalUserId { get; init; }
+    [JsonPropertyName("userId")]
+    public required Guid UserId { get; init; }
 }
 
 public class PortalApplicationIdentity : SubjectIdentity
 {
-    [JsonPropertyName("portalApplicationId")]
-    public required Guid PortalApplicationId { get; init; }
+    [JsonPropertyName("appId")]
+    public required Guid AppId { get; init; }
 }
